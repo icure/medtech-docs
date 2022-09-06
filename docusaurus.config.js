@@ -35,7 +35,20 @@ const config = {
             'content-docs',
             {
                 id: 'default',
-                sidebarPath: require.resolve('./sidebars.js'),
+                path: './docs',
+                routeBasePath: 'docs',
+                sidebarPath: require.resolve('./sidebarsSDK.js'),
+                editUrl:
+                    'https://github.com/icure-io/medtech-docs/edit/main/',
+            },
+        ],
+        [
+            'content-docs',
+            {
+                id: 'cockpit',
+                path: './cockpit',
+                routeBasePath: 'cockpit',
+                sidebarPath: require.resolve('./sidebarsCockpit.js'),
                 editUrl:
                     'https://github.com/icure-io/medtech-docs/edit/main/',
             },
@@ -79,7 +92,14 @@ const config = {
                         type: 'doc',
                         docId: 'intro',
                         position: 'left',
-                        label: 'Documentation',
+                        label: 'SDKs',
+                    },
+                    {
+                        type: 'doc',
+                        docId: 'intro',
+                        position: 'left',
+                        label: 'Cockpit',
+                        docsPluginId: 'cockpit',
                     },
                     {
                         href: `https://github.com/orgs/${GITHUB_USERNAME}/repositories?q=medical-device&type=all&language=&sort=`,
@@ -95,8 +115,12 @@ const config = {
                         title: 'Docs',
                         items: [
                             {
-                                label: 'Documentation',
+                                label: 'SDKs',
                                 to: '/docs/intro',
+                            },
+                            {
+                                label: 'Cockpit',
+                                to: '/cockpit/intro',
                             },
                         ],
                     },
