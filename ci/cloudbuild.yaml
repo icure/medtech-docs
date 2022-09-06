@@ -1,0 +1,11 @@
+steps:
+  -   name: 'node:16'
+      entrypoint: sh
+      args: [ '-c', 'yarn install && yarn run build' ]
+
+  -   name: 'gcr.io/cloud-builders/gsutil'
+      args: ["-m", "rsync", "-r", "-c", "-d", "./build", "gs://docs.icure.com"]
+
+options:
+  machineType: 'N1_HIGHCPU_8'
+timeout: 1800s
