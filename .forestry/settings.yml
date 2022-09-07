@@ -15,4 +15,4 @@ build:
   preview_docker_image: node:16
   mount_path: "/site"
   working_dir: "/srv"
-  instant_preview_command: yarn run build
+  instant_preview_command: yarn build
