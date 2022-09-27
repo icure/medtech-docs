@@ -1,0 +1,14 @@
+{
+  "name": "patient-manager",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "node index.mjs"
+  },
+  "dependencies": {
+    "@icure/api": "^4.0.36",
+    "node-fetch": "^2.6.1",
+    "node-localstorage": "^2.1.6"
+  }
+}
