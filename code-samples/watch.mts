@@ -1,26 +1,31 @@
-import { watch, readFile, writeFile, FileChangeInfo } from 'node:fs/promises'
+import {readdir, readFile, watch, writeFile} from 'node:fs/promises'
+import * as Path from "path";
 
 const receivers: {[key: string]: string[]} = {} //Paths that subscribe to changes for file://aFile|snippet
-const examples: {[key: string]: string} = {} //Paths that subscribe to changes for file://aFile|snippet
+const examples: {[key: string]: string} = {}
 
 const inject = async (path: string) => {
     const text = await readFile(path, 'utf8')
     let dst = ''
     let currentExample = false
     text.split(/\n/).forEach(line => {
-        const [_, injector, snippet] = [...(line.match('<\!-- *(file://\W+) *snippet: (.+?) *-->') ?? [])]
+        const [_, injector, snippet] = [...(line.match('<\!-- *file://(.+?) *snippet:(.+?)-->') ?? [])]
         if (injector && snippet) {
             let ex = examples[`${injector}|${snippet}`]
-            while (ex.lastIndexOf('\n\n') == ex.length - 2) {
-                ex = ex.slice(0, ex.length - 1)
+            if (ex) {
+                while (ex.lastIndexOf('\n\n') == ex.length - 2) {
+                    ex = ex.slice(0, ex.length - 1)
+                }
+                ex = ex.replace(/\/\* truncate \*\/"(.+?)"/g, (_, s) => `"${s.slice(0, 10)}...${s.slice(s.length - 10)}"`)
+                ex = ex.replace(/\/\* truncate \*\/'(.+?)'/g, (_, s) => `'${s.slice(0, 10)}...${s.slice(s.length - 10)}'`)
+                dst += line + '\n'
+                dst += '```typescript\n'
+                dst += ex
+                dst += '```\n'
+                currentExample = true
+            } else {
+                dst += line + '\n'
             }
-            ex = ex.replace(/\/\* truncate \*\/"(.+?)"/g, (_, s) => `"${s.slice(0, 10)}...${s.slice(s.length - 10)}"`)
-            ex = ex.replace(/\/\* truncate \*\/'(.+?)'/g, (_, s) => `'${s.slice(0, 10)}...${s.slice(s.length - 10)}'`)
-            dst += line + '\n'
-            dst += '```typescript\n'
-            dst += ex
-            dst += '```\n'
-            currentExample = true
         } else if (currentExample) {
             if (line.match(/^```$/)) {
                 currentExample = false
@@ -32,44 +37,58 @@ const inject = async (path: string) => {
     return dst
 }
 
-async function registerExample(event: FileChangeInfo<string>) {
-    const text = await readFile(event.filename, 'utf8')
+async function registerExample(path: string) {
+    if (!path.endsWith('.ts') && !path.endsWith('.js') && !path.endsWith('.mts') && !path.endsWith('.mjs')) { return }
+    const text = await readFile(path, 'utf8')
     const ex = text.split('//tech-doc: ').slice(1)
     ex.forEach((x: string) => {
         const parts = x.split('\n');
-        examples[`${event.filename}|${parts[0]}`] = parts.slice(1).join('\n')
+        examples[`${Path.join('code-samples', path)}|${parts[0]}`] = parts.slice(1).join('\n')
     })
     Object.entries(receivers).forEach(([path, receivers]) => {
-        if (path.startsWith(event.filename)) {
+        if (path.startsWith(path)) {
             receivers.forEach(async (receiver) => {
-                const dst = await inject(receiver)
-                await writeFile(receiver, dst)
+                await writeFile(receiver, await inject(receiver))
             })
         }
     })
 }
 
-async function registerReceiver(event: FileChangeInfo<string>) {
-    const text = await readFile(event.filename, 'utf8')
+async function registerReceiver(path: string) {
+    if (!path.endsWith('.md')) { return }
+    const text = await readFile(path, 'utf8')
     text.split('\n').forEach((line, index) => {
-        const [_, injector, snippet] = [...(line.match('<\!-- *(file://\W+) *snippet: (.+?) *-->') ?? [])]
+        const [_, injector, snippet] = [...(line.match('<\!-- *file://(.+?) *snippet:(.+?)-->') ?? [])]
         if (injector && snippet) {
-            receivers[`${injector}|${snippet}`] = (receivers[`${injector}|${snippet}`] ?? []).filter((x) => x !== event.filename).concat([event.filename])
+            receivers[`${injector}|${snippet}`] = (receivers[`${injector}|${snippet}`] ?? []).filter((x) => x !== path).concat([path])
         }
     })
 }
 
+const traverseFileSystem = async(
+    container: string,
+    skipper: (path: string) => boolean = (path) => !path.endsWith('node_modules') && !path.endsWith('.git') && !path.endsWith('.idea'),
+): Promise<string[]> =>
+    (await readdir(container, {withFileTypes: true})).reduce(async (acc, item) => {
+        if (item.isDirectory()) {
+            return [...(await acc), ...(await traverseFileSystem(`${container}/${item.name}`))]
+        } else {
+            return [...(await acc), `${container}/${item.name}`]
+        }
+    }, Promise.resolve([] as string[]))
 
 
-
-await Promise.all([...['contact-manager', 'introduction', 'login-user-management', 'medtech-fhir', 'patient-manager'].map(async (__filename) => {
-    const watcher = watch(__filename, { recursive: true })
+await Promise.all([...['contact-manager', 'introduction', 'login-user-management', 'medtech-fhir', 'patient-manager'].map(async (fileName) => {
+    await (await traverseFileSystem(fileName)).reduce(async (p, path) => { await p; await registerExample(path); }, Promise.resolve())
+    const watcher = watch(fileName, { recursive: true })
     for await (const event of watcher) {
-        await registerExample(event);
+        await registerExample(Path.join(fileName, event.filename));
     }
-}), ...['../sdks'].map(async (__filename) => {
-    const watcher = watch(__filename, { recursive: true })
+}), ...['../sdks'].map(async (fileName) => {
+    await (await traverseFileSystem(fileName)).reduce(async (p, path) => { await p; await registerReceiver(path); }, Promise.resolve())
+    const watcher = watch(fileName, { recursive: true })
     for await (const event of watcher) {
-        await registerReceiver(event);
+        let recPath = Path.join(fileName, event.filename);
+        await registerReceiver(recPath);
     }
 })])

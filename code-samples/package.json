@@ -2,7 +2,8 @@
   "name": "icure-code-samples",
   "private": true,
   "scripts": {
-    "scan": "tsc && node watch.mjs"
+    "build": "tsc",
+    "scan": "node watch.mjs"
   },
   "workspaces": [
     "introduction",

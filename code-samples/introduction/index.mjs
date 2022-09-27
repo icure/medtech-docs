@@ -11,7 +11,6 @@ const {
 } = Api(host, 'esmith', 'mypassword', crypto)
 
 const loggedUser = await userApi.getCurrentUser();
-const loggedHcp = await healthcarePartyApi.getCurrentHealthcareParty()
 
 await cryptoApi.loadKeyPairsAsTextInBrowserLocalStorage(
 	loggedUser.healthcarePartyId,
