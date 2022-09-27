@@ -35,8 +35,8 @@ const config = {
             'content-docs',
             {
                 id: 'default',
-                path: './docs',
-                routeBasePath: 'docs',
+                path: './sdks',
+                routeBasePath: 'sdks',
                 sidebarPath: require.resolve('./sidebarsSDK.js'),
                 editUrl:
                     'https://github.com/icure-io/medtech-docs/edit/main/',
@@ -116,7 +116,7 @@ const config = {
                         items: [
                             {
                                 label: 'SDKs',
-                                to: '/docs/intro',
+                                to: '/sdks/intro',
                             },
                             {
                                 label: 'Cockpit',
