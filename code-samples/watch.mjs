@@ -1,7 +1,9 @@
 import { readdir, readFile, watch, writeFile } from 'node:fs/promises';
+import { Mutex } from 'async-mutex';
 import * as Path from "path";
 const receivers = {}; //Paths that subscribe to changes for file://aFile|snippet
 const examples = {};
+const mutexes = {};
 const inject = async (path) => {
     const text = await readFile(path, 'utf8');
     let dst = '';
@@ -46,22 +48,28 @@ async function registerExample(path) {
     }
     const text = await readFile(path, 'utf8');
     const ex = text.split('//tech-doc: ').slice(1);
+    const fullPath = `${Path.join('code-samples', path)}`;
     ex.forEach((x) => {
         const parts = x.split('\n');
-        examples[`${Path.join('code-samples', path)}|${parts[0]}`] = parts.slice(1).join('\n');
+        examples[`${fullPath}|${parts[0]}`] = parts.slice(1).join('\n');
     });
-    Object.entries(receivers).forEach(([path, receivers]) => {
-        if (path.startsWith(path)) {
-            receivers.forEach(async (receiver) => {
-                try {
-                    await writeFile(receiver, await inject(receiver));
-                }
-                catch (e) {
-                    console.error(e);
-                }
+    const filesToInject = Object.entries(receivers).reduce((filesToInject, [recPath, receivers]) => {
+        if (recPath.startsWith(fullPath + '|')) {
+            receivers.forEach((r) => filesToInject.add(r));
+        }
+        return filesToInject;
+    }, new Set());
+    await [...filesToInject].reduce(async (p, receiver) => {
+        await p;
+        try {
+            await (mutexes[receiver] ?? (mutexes[receiver] = new Mutex())).runExclusive(async () => {
+                await writeFile(receiver, await inject(receiver));
             });
         }
-    });
+        catch (e) {
+            console.error(e);
+        }
+    }, Promise.resolve());
 }
 async function registerReceiver(path) {
     if (!path.endsWith('.md')) {
@@ -75,22 +83,29 @@ async function registerReceiver(path) {
         }
     });
 }
-const traverseFileSystem = async (container, skipper = (path) => !path.endsWith('node_modules') && !path.endsWith('.git') && !path.endsWith('.idea')) => (await readdir(container, { withFileTypes: true })).reduce(async (acc, item) => {
-    if (item.isDirectory()) {
-        return [...(await acc), ...(await traverseFileSystem(`${container}/${item.name}`))];
+const traverseFileSystem = async (container, skipper = (path) => path.endsWith('node_modules') || path.endsWith('.git') || path.endsWith('.idea')) => (await readdir(container, { withFileTypes: true })).reduce(async (acc, item) => {
+    const fullPath = `${container}/${item.name}`;
+    if (item.isDirectory() && !skipper(fullPath)) {
+        return [...(await acc), ...(await traverseFileSystem(fullPath))];
     }
     else {
-        return [...(await acc), `${container}/${item.name}`];
+        return [...(await acc), fullPath];
     }
 }, Promise.resolve([]));
-await Promise.all([...['contact-manager', 'introduction', 'login-user-management', 'medtech-fhir', 'patient-manager'].map(async (fileName) => {
-        await (await traverseFileSystem(fileName)).reduce(async (p, path) => { await p; await registerExample(path); }, Promise.resolve());
+const sampleDirectories = ['contact-manager', 'introduction', 'login-user-management', 'medtech-fhir', 'patient-manager'];
+const docDirectories = ['../sdks'];
+await (docDirectories.reduce(async (p, dir) => {
+    await (await traverseFileSystem(dir)).reduce(async (p, path) => { await p; await registerReceiver(path); }, Promise.resolve());
+}, Promise.resolve()));
+await (sampleDirectories.reduce(async (p, dir) => {
+    await (await traverseFileSystem(dir)).reduce(async (p, path) => { await p; await registerExample(path); }, Promise.resolve());
+}, Promise.resolve()));
+await Promise.all([...sampleDirectories.map(async (fileName) => {
         const watcher = watch(fileName, { recursive: true });
         for await (const event of watcher) {
             await registerExample(Path.join(fileName, event.filename));
         }
-    }), ...['../sdks'].map(async (fileName) => {
-        await (await traverseFileSystem(fileName)).reduce(async (p, path) => { await p; await registerReceiver(path); }, Promise.resolve());
+    }), ...docDirectories.map(async (fileName) => {
         const watcher = watch(fileName, { recursive: true });
         for await (const event of watcher) {
             let recPath = Path.join(fileName, event.filename);

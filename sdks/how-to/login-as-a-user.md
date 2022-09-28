@@ -242,3 +242,28 @@ console.log(JSON.stringify(fetchedPatient, null, ' '))
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

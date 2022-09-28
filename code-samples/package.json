@@ -14,6 +14,7 @@
     "medtech-fhir"
   ],
   "dependencies": {
+    "async-mutex": "^0.4.0",
     "watch": "^1.0.2",
     "yarn": "^1.22.17"
   },
