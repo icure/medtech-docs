@@ -38,8 +38,6 @@ const fetchedPatient = await patientApi.getPatientWithUser(loggedUser, patient.i
 console.log(JSON.stringify(fetchedPatient, null, ' '))
 ```
 
-aaa
-
 <!-- file://code-samples/introduction/index.mjs snippet:How to use-->
 ```typescript
 import {Api, hex2ua, Patient} from '@icure/api'
@@ -74,6 +72,15 @@ const patient = await patientApi.createPatientWithUser(loggedUser,
 const fetchedPatient = await patientApi.getPatientWithUser(loggedUser, patient.id)
 console.log(JSON.stringify(fetchedPatient, null, ' '))
 ```
+
+
+
+
+
+
+
+
+
 
 
 

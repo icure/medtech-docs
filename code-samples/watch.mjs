@@ -27,7 +27,7 @@ const inject = async (path) => {
             }
         }
         else if (currentExample) {
-            if (line.match(/^```$/)) {
+            if (line.match(/```[ \t]*$/)) {
                 currentExample = false;
             }
         }
@@ -35,6 +35,9 @@ const inject = async (path) => {
             dst += line + '\n';
         }
     });
+    if (currentExample) {
+        throw new Error('Unclosed code block detected');
+    }
     return dst;
 };
 async function registerExample(path) {
@@ -50,7 +53,12 @@ async function registerExample(path) {
     Object.entries(receivers).forEach(([path, receivers]) => {
         if (path.startsWith(path)) {
             receivers.forEach(async (receiver) => {
-                await writeFile(receiver, await inject(receiver));
+                try {
+                    await writeFile(receiver, await inject(receiver));
+                }
+                catch (e) {
+                    console.error(e);
+                }
             });
         }
     });
