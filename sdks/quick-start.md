@@ -8,7 +8,7 @@ Node version 16 or higher is fully supported as it includes a webcrypto compatib
 
 We recommend using yarn for package management but npm works fine as well.
 
-The main dependency for using iCure is `@icure/medical-device-sdk`, two extra dependencies are required for node : `fetch-isomorphic` and `node-localstorage`.
+The main dependency for using iCure is `@icure/medical-device-sdk`, two extra dependencies are required for node : `isomorphic-fetch` and `node-localstorage`.
 
 ```bash
 mkdir healthcare-project
@@ -17,7 +17,7 @@ yarn init -y
 yarn add @icure/medical-device-sdk
 
 #if you are using node two other dependencies are needed
-yarn add node-fetch node-localstorage
+yarn add isomorphic-fetch node-localstorage
 ```
 
 ## Installing the backend or using iCure cloud
@@ -44,7 +44,7 @@ Then, run the following command:
 ```bash
 mkdir icure-api
 cd icure-api
-curl -O https://raw.githubusercontent.com/icure/icure-kraken-oss/main/docker/docker-compose.yml
+curl -O https://raw.githubusercontent.com/icure/icure-kraken-oss/main/docker/docker-compose.yaml
 docker compose up -d
 ```
 
@@ -63,7 +63,7 @@ Those credentials are going to be used later. Please note them down.
 
 ### Manual installation
 
-You can also install the Kraken manually without relying on docker. This involves installing and configuring a local or remote instance of CouchDB and then installing and starting the Kraken jar. The installation instructions are available in the [Kraken repository](../how-to-install-icure-kraken.md).
+You can also install the Kraken manually without relying on docker. This involves installing and configuring a local or remote instance of CouchDB and then installing and starting the Kraken jar. The installation instructions are available in the [How to install Kraken](../how-to-install-icure-kraken.md) section.
 
 ## Using the SDK
 
@@ -95,3 +95,5 @@ console.log(JSON.stringify(user))
 
 Congratulations, you are now ready to use the SDK to interact with the iCure API.
 You can now head to the [Tutorial](../tutorial/index.md) to learn how to use the SDK to create a simple application.
+
+
