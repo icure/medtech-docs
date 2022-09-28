@@ -1,0 +1,68 @@
+---
+slug: introduction
+---
+
+# Introduction
+
+iCure uses cryptographic algorithms to ensure that only the intended recipients can read sensitive data.
+The iCure SDKs encrypt and decrypt sensitive data on the client-side (end-to-end), this way the sensitive data
+travelling over the internet and stored in our servers can't be read by any third party.
+This also includes us: the keys necessary to decrypt the sensitive data are stored only on the client side, therefore we
+won't be able to read the sensitive data we receive.
+
+## Symmetric and asymmetric cryptography: basics
+
+The end-to-end encryption scheme in iCure uses standard symmetric (AES-256) and asymmetric (RSA-2048) cryptography
+algorithms.
+
+Symmetric cryptography algorithms use a single secret key to encrypt and decrypt the data: if you want to share data
+with other users using symmetric cryptography you will first have to agree on this key.
+
+Asymmetric cryptography algorithms instead use pairs of keys, and each pair is composed of a `private key`, which must be
+kept secret, and a `public key`, which can be safely shared with anyone. Data encrypted using the public key can be
+decrypted only by using the corresponding private key. So if *Bob* wants to share a secret message with *Alice* he can
+encrypt the message using *Alice*'s public key, and only she will be able to read it.
+
+<center><figure>
+
+![Asymmetric encryption example](https://upload.wikimedia.org/wikipedia/commons/f/f9/Public_key_encryption.svg#light)
+
+![Asymmetric encryption example](./assets/pkenc_example.svg#dark)
+
+<figcaption>Davidgothberg, Public domain, via Wikimedia Commons</figcaption>
+
+</figure></center>
+
+Both approaches have advantages and disadvantages: symmetric encryption is orders of magnitude faster than asymmetric
+encryption, and it can be used to share data with multiple participants at the same time.
+However, if the participants don't share the key over a secure channel a malicious third party may be able to intercept
+it, compromising the confidentiality of the data.
+For this reason a common pattern is to use asymmetric encryption to share the key used for the symmetric encryption of
+the confidential data.
+In iCure we also follow this pattern to ensure that we can keep data confidentiality without sacrificing too much in
+terms of performance.
+
+## iCure encryption scheme: objectives {#objectives}
+
+The design of the iCure encryption model is based on the following objectives:
+
+- Data owners can access the sensitive data that they created or that other data owners shared with them. For this
+purpose each data owner will have a public+private key pair.
+
+- A data owner should be able to decrypt sensitive data they have access to by knowing only their private key. The full
+decryption process requires multiple steps and uses also other keys, but only the private key is required to start
+the process.
+
+- A data owner should not be able to decrypt sensitive data that was not shared with them.
+
+- Third parties should not be able to access any kind of sensitive data.
+
+- Third parties should not be able to infer any relationships between entities that may leak sensitive data. For
+example, third parties should not be able to understand that a certain patient is having frequent doctor visits. This is
+different from the previous objective, which only required third parties to not be able to access sensitive information
+of the patient or the reason of the visits.
+
+- If a data owner loses access to their private key but shared sensitive data with other data owners they should be able
+to regain access to this data.
+
+The following chapters explain how iCure's encryption scheme achieves these objectives.
