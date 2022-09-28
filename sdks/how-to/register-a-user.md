@@ -1,4 +1,4 @@
 ---
-slug: test-how-to
+slug: register-a-user
 ---
-# Test How to
+# Register a user

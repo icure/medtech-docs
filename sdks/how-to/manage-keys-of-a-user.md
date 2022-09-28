@@ -1,4 +1,4 @@
 ---
-slug: test-how-to
+slug: manage-keys-of-a-user
 ---
-# Test How to
+# Manage keys of a user
