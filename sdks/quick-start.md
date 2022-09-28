@@ -63,7 +63,7 @@ Those credentials are going to be used later. Please note them down.
 
 ### Manual installation
 
-You can also install the Kraken manually without relying on docker. This involves installing and configuring a local or remote instance of CouchDB and then installing and starting the Kraken jar. The installation instructions are available in the [How to install Kraken](../how-to-install-icure-kraken.md) section.
+You can also install the Kraken manually without relying on docker. This involves installing and configuring a local or remote instance of CouchDB and then installing and starting the Kraken jar. The installation instructions are available in the [How to install Kraken](./how-to/how-to-install-icure-kraken-locally.md) section.
 
 ## Using the SDK
 
@@ -94,6 +94,6 @@ console.log(JSON.stringify(user))
 ```
 
 Congratulations, you are now ready to use the SDK to interact with the iCure API.
-You can now head to the [Tutorial](../tutorial/index.md) to learn how to use the SDK to create a simple application.
+You can now head to the [Tutorial](./tutorial/index.md) to learn how to use the SDK to create a simple application.
 
 
