@@ -71,6 +71,7 @@ const sidebarsSDK = {
         },
       ],
     },
+    'glossary'
   ],
 };
 
