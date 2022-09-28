@@ -2,7 +2,7 @@
 slug: listen-to-icure-events
 ---
 
-# How to listen to iCure events ?
+# Listening to iCure events ?
 
 At some point, you may want to listen to iCure events. For example, you may want to be notified when a new patient is created. This is possible with the iCure Medtech SDK.
 
