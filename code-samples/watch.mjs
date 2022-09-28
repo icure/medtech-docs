@@ -92,7 +92,7 @@ const traverseFileSystem = async (container, skipper = (path) => path.endsWith('
         return [...(await acc), fullPath];
     }
 }, Promise.resolve([]));
-const sampleDirectories = ['contact-manager', 'introduction', 'login-user-management', 'medtech-fhir', 'patient-manager'];
+const sampleDirectories = (await readdir('.', { withFileTypes: true })).filter((x) => x.isDirectory() && !['git', '.idea', 'node_modules'].includes(x.name)).map((x) => x.name);
 const docDirectories = ['../sdks'];
 await (docDirectories.reduce(async (p, dir) => {
     await (await traverseFileSystem(dir)).reduce(async (p, path) => { await p; await registerReceiver(path); }, Promise.resolve());

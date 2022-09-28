@@ -94,7 +94,7 @@ const traverseFileSystem = async(
     }, Promise.resolve([] as string[]))
 
 
-const sampleDirectories = ['contact-manager', 'quick-start', 'login-user-management', 'medtech-fhir', 'patient-manager']
+const sampleDirectories = (await readdir('.', {withFileTypes: true})).filter((x) => x.isDirectory() && !['git','.idea','node_modules'].includes(x.name)).map((x) => x.name)
 const docDirectories = ['../sdks']
 
 await (docDirectories.reduce(async (p, dir) => {
