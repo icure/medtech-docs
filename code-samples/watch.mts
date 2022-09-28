@@ -94,7 +94,7 @@ const traverseFileSystem = async(
     }, Promise.resolve([] as string[]))
 
 
-const sampleDirectories = ['contact-manager', 'introduction', 'login-user-management', 'medtech-fhir', 'patient-manager']
+const sampleDirectories = ['contact-manager', 'quick-start', 'login-user-management', 'medtech-fhir', 'patient-manager']
 const docDirectories = ['../sdks']
 
 await (docDirectories.reduce(async (p, dir) => {
