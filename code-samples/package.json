@@ -11,7 +11,8 @@
     "login-user-management",
     "contact-manager",
     "patient-manager",
-    "medtech-fhir"
+    "medtech-fhir",
+    "rsocket"
   ],
   "dependencies": {
     "async-mutex": "^0.4.0",
