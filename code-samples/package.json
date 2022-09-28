@@ -6,7 +6,7 @@
     "scan": "node watch.mjs"
   },
   "workspaces": [
-    "introduction",
+    "quick-start",
     "setup",
     "login-user-management",
     "contact-manager",
