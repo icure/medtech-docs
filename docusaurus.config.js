@@ -8,6 +8,11 @@ const GITHUB_USERNAME = 'icure'
 
 async function createConfig() {
     const mdxMermaid = await import('mdx-mermaid')
+    const { remarkKroki } = await import('remark-kroki');
+    const krokiConfig = {
+        server: 'https://kroki.io/',
+        alias: ['plantuml']
+    }
 
     /** @type {import('@docusaurus/types').Config} */
     return {
@@ -44,7 +49,7 @@ async function createConfig() {
                     sidebarPath: require.resolve('./sidebarsSDK.js'),
                     editUrl:
                         `https://github.com/${GITHUB_USERNAME}/medtech-docs/edit/main/`,
-                    remarkPlugins: [mdxMermaid.default],
+                    remarkPlugins: [mdxMermaid.default, [remarkKroki, krokiConfig]],
                 },
             ],
             [
@@ -56,7 +61,7 @@ async function createConfig() {
                     sidebarPath: require.resolve('./sidebarsCockpit.js'),
                     editUrl:
                         `https://github.com/${GITHUB_USERNAME}/medtech-docs/edit/main/`,
-                    remarkPlugins: [mdxMermaid.default],
+                    remarkPlugins: [mdxMermaid.default, [remarkKroki, krokiConfig]],
                 },
             ],
             [
