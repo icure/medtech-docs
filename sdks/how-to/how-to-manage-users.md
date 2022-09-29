@@ -52,3 +52,5 @@ const createdPatientUser = await api.userApi.createAndInviteUser(
 
 For the gory details of all you can do with users using the SDK, check out the [UserApi](../references/interfaces/UserApi.md) documentation.
 
+
+
