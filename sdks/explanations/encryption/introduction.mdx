@@ -5,8 +5,8 @@ slug: introduction
 # Introduction
 
 iCure uses cryptographic algorithms to ensure that only the intended recipients can read sensitive data.
-The iCure SDKs encrypt and decrypt sensitive data on the client-side (end-to-end), this way the sensitive data
-travelling over the internet and stored in our servers can't be read by any third party.
+The iCure SDKs encrypt and decrypt sensitive data on the client-side (end-to-end), to insure the sensitive data
+travelling over the internet and stored in our servers cannot be read by any third party.
 This also includes us: the keys necessary to decrypt the sensitive data are stored only on the client side, therefore we
 won't be able to read the sensitive data we receive.
 
@@ -16,9 +16,9 @@ The end-to-end encryption scheme in iCure uses standard symmetric (AES-256) and 
 algorithms.
 
 Symmetric cryptography algorithms use a single secret key to encrypt and decrypt the data: if you want to share data
-with other users using symmetric cryptography you will first have to agree on this key.
+with other users using symmetric cryptography, you will first have to agree on this key.
 
-Asymmetric cryptography algorithms instead use pairs of keys, and each pair is composed of a `private key`, which must be
+Asymmetric cryptography algorithms instead use pairs of keys. Each pair is composed of a `private key`, which must be
 kept secret, and a `public key`, which can be safely shared with anyone. Data encrypted using the public key can be
 decrypted only by using the corresponding private key. So if *Bob* wants to share a secret message with *Alice* he can
 encrypt the message using *Alice*'s public key, and only she will be able to read it.
