@@ -8,13 +8,15 @@
 		"start": "yarn build && node runall.mjs"
 	},
 	"dependencies": {
-		"@icure/medical-device-sdk": "^0.5.0",
+		"@icure/medical-device-sdk": "^0.6.0",
 		"@icure/api": "4.2.38",
 		"isomorphic-fetch": "^3.0.0",
 		"node-localstorage": "^2.2.1",
 		"node-fetch": "^2.6.1"
 	},
 	"devDependencies": {
-		"typescript": "^4.8.4"
+		"@types/chai": "^4.3.0",
+		"typescript": "^4.8.4",
+		"chai": "^4.3.6"
 	}
 }

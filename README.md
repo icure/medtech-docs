@@ -21,6 +21,12 @@ Go to the project directory
 cd medtech-docs
 ```
 
+Use a Node version >= 16.14
+
+```bash
+nvm use 18
+```
+
 Install dependencies
 
 ```bash
