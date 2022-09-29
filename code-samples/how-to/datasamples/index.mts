@@ -1,28 +1,13 @@
 import {CodingReference, DataSample, DataSampleFilter, medTechApi, Patient} from '@icure/medical-device-sdk'
-import { webcrypto } from "crypto";
 import {hex2ua, sleep} from "@icure/api";
 import "isomorphic-fetch";
-import {LocalStorage} from "node-localstorage";
-import * as os from "os";
 import * as console from "console";
-import * as process from "process";
 
-const tmp = os.tmpdir();
-console.log("Saving keys in " + tmp);
-(global as any).localStorage = new LocalStorage(tmp, 5 * 1024 * 1024 * 1024);
-(global as any).Storage = "";
+import {initLocalStorage, initMedTechApi, privKey} from "../../utils/index.mjs";
 
-const password = process.env.USER_PASSWORD
-const userName = process.env.USER_NAME
-const privKey = process.env.USER_PRIV_KEY
-const host = process.env.ICURE_URL
+initLocalStorage()
 
-const api = await medTechApi()
-	.withICureBasePath(host)
-	.withUserName(userName)
-	.withPassword(password)
-	.withCrypto(webcrypto as any)
-	.build()
+const api = await initMedTechApi()
 
 const loggedUser = await api.userApi.getLoggedUser();
 await api!.cryptoApi.loadKeyPairsAsTextInBrowserLocalStorage(
