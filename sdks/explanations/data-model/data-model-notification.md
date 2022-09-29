@@ -23,13 +23,72 @@ A Healthcare Professional can modify a Notification shared with them.
 
 ## Examples
 
-### A Doctor Registering a Visit and Sharing the Outcome with the Patient
+### A Doctor Receives a Data Sharing Request
 
-A Gynaecologist (Healthcare Professional) wants to update the status of one of their patients. After a visit, they
-create a new Data Sample to register the outcome of the visit in the application.  
-After that, the Patient asks to access their medical data using a Notification.
-The doctor receives the Notification and shares the data with the Patient.
+After a visit, a Doctor register the symptoms the Patient is experiencing (fatigue) as a new Data Sample.  
+Then, they add the diagnosis (hay fever) as associated Healthcare Element.
 
+<!-- file://code-samples/explanation/doctor-shares-data-with-patient/index.mts snippet:doctor shares medical data-->
 ```typescript
-const promise = "SAME AS HEALTHCARE PROFESSIONAL";
+const healthcareElement = await api.healthcareElementApi.createOrModifyHealthcareElement(
+    new HealthcareElement({
+        description: 'My diagnosis is that the patient has Hay Fever',
+        codes: new Set([
+            new CodingReference({
+                id: 'SNOMEDCT|21719001|20020131',
+                type: 'SNOMEDCT',
+                code: '21719001',
+                version: '20020131'
+            })
+        ])
+    }),
+    patient.id
+)
+const dataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
+    patient.id,
+    new DataSample({
+        content: { 'en': new Content({
+                stringValue: 'The patient has fatigue'
+            })},
+        codes: new Set([
+            new CodingReference({
+                id: 'SNOMEDCT|84229001|20020131',
+                type: 'SNOMEDCT',
+                code: '84229001',
+                version: '20020131'
+            })
+        ]),
+        healthcareElementIds: new Set([healthcareElement.id])
+    })
+)
+```
+
+Then, the Patient sends a Notification to the doctor to ask for access on the data.
+
+<!-- file://code-samples/explanation/doctor-shares-data-with-patient/index.mts snippet:patient sends notification-->
+```typescript
+const accessNotification = await patientApi.notificationApi.createOrModifyNotification(
+    new Notification({
+        id: uuid(),
+        status: "pending",
+        author: patientUser.id,
+        responsible: patientUser.patientId,
+        type: NotificationTypeEnum.OTHER
+    }),
+    user.healthcarePartyId
+);
+```
+
+After that, the Doctor receives a notification from the Patient and shares the data with them.
+
+<!-- file://code-samples/explanation/doctor-shares-data-with-patient/index.mts snippet:doctor receives notification-->
+```typescript
+const newNotifications = await api.notificationApi.getPendingNotifications();
+const newPatientNotifications = newNotifications.filter( notification => notification.type === NotificationTypeEnum.OTHER && notification.responsible === patientUser.patientId);
+
+if (!!newPatientNotifications && newPatientNotifications.length > 0) {
+    await api.healthcareElementApi.giveAccessTo(healthcareElement, patient.id)
+    await api.dataSampleApi.giveAccessTo(dataSample, patient.id)
+    await api.notificationApi.updateNotificationStatus(newPatientNotifications[0], "completed")
+}
 ```

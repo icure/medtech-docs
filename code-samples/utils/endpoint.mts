@@ -16,3 +16,5 @@ export const patientId = requireDefined(process.env.ICURE_PATIENT_ID, "ICURE_PAT
 export const patientUserName = requireDefined(process.env.ICURE_PATIENT_USER_NAME, "ICURE_PATIENT_USER_NAME")
 export const patientPassword = requireDefined(process.env.ICURE_PATIENT_PASSWORD, "ICURE_PATIENT_PASSWORD")
 export const patientPrivKey = requireDefined(process.env.ICURE_PATIENT_PRIV_KEY, "ICURE_PATIENT_PRIV_KEY")
+export const msgGtwUrl = requireDefined(process.env.ICURE_MSG_GTW_URL, "ICURE_MSG_GTW_URL")
+export const specId = requireDefined(process.env.SPEC_ID, "SPEC_ID")

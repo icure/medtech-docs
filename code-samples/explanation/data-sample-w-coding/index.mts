@@ -10,6 +10,7 @@ import { hex2ua} from "@icure/api";
 import { LocalStorage } from 'node-localstorage';
 import { host, password, patientId, privKey, userName } from "../../utils/index.mjs";
 import os from "os";
+import {expect} from 'chai';
 
 const tmp = os.tmpdir();
 (global as any).localStorage = new LocalStorage(tmp, 5 * 1024**3);
@@ -45,8 +46,9 @@ const healthcareElement = await api.healthcareElementApi.createOrModifyHealthcar
 	}),
 	patient.id
 )
-
-await api.dataSampleApi.createOrModifyDataSampleFor(
+expect(!!healthcareElement).to.eq(true); //skip
+expect(healthcareElement.description).to.eq('My diagnosis is that the patient has Hay Fever'); //skip
+const dataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
 	patient.id,
 	new DataSample({
 		content: { 'en': new Content({
@@ -65,3 +67,4 @@ await api.dataSampleApi.createOrModifyDataSampleFor(
 )
 
 //tech-doc: STOP HERE
+expect(!!dataSample).to.eq(true); //skip

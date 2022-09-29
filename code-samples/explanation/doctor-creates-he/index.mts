@@ -9,6 +9,7 @@ import { hex2ua} from "@icure/api";
 import { LocalStorage } from 'node-localstorage';
 import { host, password, patientId, privKey, userName } from "../../utils/index.mjs";
 import os from "os";
+import {expect} from 'chai';
 
 const tmp = os.tmpdir();
 (global as any).localStorage = new LocalStorage(tmp, 5 * 1024**3);
@@ -30,7 +31,7 @@ await api.cryptoApi.loadKeyPairsAsTextInBrowserLocalStorage(
 const patient = await api.patientApi.getPatient(patientId)
 
 //tech-doc: doctor can create HE
-await api.healthcareElementApi.createOrModifyHealthcareElement(
+const healthcareElement = await api.healthcareElementApi.createOrModifyHealthcareElement(
     new HealthcareElement({
         description: 'The patient is pregnant',
         codes: new Set([
@@ -47,3 +48,5 @@ await api.healthcareElementApi.createOrModifyHealthcareElement(
 )
 
 //tech-doc: STOP HERE
+expect(!!healthcareElement).to.eq(true); //skip
+expect(healthcareElement.description).to.eq('The patient is pregnant'); //skip
