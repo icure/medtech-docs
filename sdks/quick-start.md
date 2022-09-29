@@ -78,6 +78,7 @@ If you use the cloud version, this is the credentials you got from the cockpit. 
 
 <!-- file://code-samples/quick-start/index.mts snippet:instantiate the api-->
 ```typescript
+import 'isomorphic-fetch'
 import { medTechApi } from '@icure/medical-device-sdk'
 import { webcrypto } from 'crypto'
 import * as process from 'process'
