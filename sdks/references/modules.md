@@ -1,5 +1,3 @@
-
-
 # @icure/medical-device-sdk
 
 ## Table of contents
@@ -24,6 +22,8 @@
 - [HealthcareElementFilter](classes/HealthcareElementFilter.md)
 - [HealthcareProfessional](classes/HealthcareProfessional.md)
 - [HealthcareProfessionalFilter](classes/HealthcareProfessionalFilter.md)
+- [ICureRegistrationEmail](classes/ICureRegistrationEmail.md)
+- [ICureRegistrationSMS](classes/ICureRegistrationSMS.md)
 - [Identifier](classes/Identifier.md)
 - [InlineResponse403](classes/InlineResponse403.md)
 - [Measure](classes/Measure.md)
@@ -64,16 +64,21 @@
 - [Connection](interfaces/Connection.md)
 - [DataOwnerApi](interfaces/DataOwnerApi.md)
 - [DataSampleApi](interfaces/DataSampleApi.md)
+- [EmailMessageFactory](interfaces/EmailMessageFactory.md)
 - [HealthcareElementApi](interfaces/HealthcareElementApi.md)
 - [HealthcareProfessionalApi](interfaces/HealthcareProfessionalApi.md)
 - [MedicalDeviceApi](interfaces/MedicalDeviceApi.md)
+- [MsgGtwMessageFactory](interfaces/MsgGtwMessageFactory.md)
 - [NotificationApi](interfaces/NotificationApi.md)
 - [PatientApi](interfaces/PatientApi.md)
+- [SMSMessageFactory](interfaces/SMSMessageFactory.md)
 - [UserApi](interfaces/UserApi.md)
 
 ### Type Aliases
 
 - [AddressAddressTypeEnum](modules.md#addressaddresstypeenum)
+- [AuthenticationProcessBody](modules.md#authenticationprocessbody)
+- [EmailMessage](modules.md#emailmessage)
 - [HealthcareProfessionalGenderEnum](modules.md#healthcareprofessionalgenderenum)
 - [PartnershipStatusEnum](modules.md#partnershipstatusenum)
 - [PartnershipTypeEnum](modules.md#partnershiptypeenum)
@@ -84,6 +89,7 @@
 - [PatientPersonalStatusEnum](modules.md#patientpersonalstatusenum)
 - [PersonNameUseEnum](modules.md#personnameuseenum)
 - [PropertyTypeTypeEnum](modules.md#propertytypetypeenum)
+- [SMSMessage](modules.md#smsmessage)
 - [SharedDataType](modules.md#shareddatatype)
 - [TelecomTelecomTypeEnum](modules.md#telecomtelecomtypeenum)
 - [TypedValueObjectTypeEnum](modules.md#typedvalueobjecttypeenum)
@@ -100,9 +106,9 @@
 - [amount](modules.md#amount)
 - [b2a](modules.md#b2a)
 - [b64Url2ua](modules.md#b64url2ua)
-- [b64\_2ab](modules.md#b64_2ab)
-- [b64\_2ua](modules.md#b64_2ua)
-- [b64\_2uas](modules.md#b64_2uas)
+- [b64_2ab](modules.md#b64_2ab)
+- [b64_2ua](modules.md#b64_2ua)
+- [b64_2uas](modules.md#b64_2uas)
 - [dateDecode](modules.md#datedecode)
 - [dateEncode](modules.md#dateencode)
 - [hex2string](modules.md#hex2string)
@@ -134,143 +140,199 @@
 - [ua2string](modules.md#ua2string)
 - [ua2utf8](modules.md#ua2utf8)
 - [unit](modules.md#unit)
-- [utf8\_2ua](modules.md#utf8_2ua)
+- [utf8_2ua](modules.md#utf8_2ua)
 
 ## Type Aliases
 
 ### AddressAddressTypeEnum
 
-Ƭ **AddressAddressTypeEnum**: ``"home"`` \| ``"work"`` \| ``"vacation"`` \| ``"hospital"`` \| ``"clinic"`` \| ``"hq"`` \| ``"other"`` \| ``"temporary"`` \| ``"postal"`` \| ``"diplomatic"`` \| ``"reference"``
+Ƭ **AddressAddressTypeEnum**: `"home"` \| `"work"` \| `"vacation"` \| `"hospital"` \| `"clinic"` \| `"hq"` \| `"other"` \| `"temporary"` \| `"postal"` \| `"diplomatic"` \| `"reference"`
 
 #### Defined in
 
 [src/models/Address.ts:52](https://github.com/icure/icure-medical-device-js-sdk/blob/3aae8f0/src/models/Address.ts#L52)
 
-___
+---
+
+### AuthenticationProcessBody
+
+Ƭ **AuthenticationProcessBody**: `Object`
+
+#### Type declaration
+
+| Name                   | Type                    |
+| :--------------------- | :---------------------- |
+| `email`                | `string` \| `undefined` |
+| `firstName`            | `string`                |
+| `from`                 | `string` \| `undefined` |
+| `g-recaptcha-response` | `string`                |
+| `hcpId`                | `string` \| `undefined` |
+| `lastName`             | `string`                |
+| `mobilePhone`          | `string` \| `undefined` |
+
+#### Defined in
+
+[src/utils/msgGtwMessageFactory.ts:8](https://github.com/icure/icure-medical-device-js-sdk/blob/3aae8f0/src/utils/msgGtwMessageFactory.ts#L8)
+
+---
+
+### EmailMessage
+
+Ƭ **EmailMessage**: `Object`
+
+#### Type declaration
+
+| Name      | Type     |
+| :-------- | :------- |
+| `from`    | `string` |
+| `html`    | `string` |
+| `subject` | `string` |
+
+#### Defined in
+
+[src/utils/msgGtwMessageFactory.ts:7](https://github.com/icure/icure-medical-device-js-sdk/blob/3aae8f0/src/utils/msgGtwMessageFactory.ts#L7)
+
+---
 
 ### HealthcareProfessionalGenderEnum
 
-Ƭ **HealthcareProfessionalGenderEnum**: ``"male"`` \| ``"female"`` \| ``"indeterminate"`` \| ``"changed"`` \| ``"changedToMale"`` \| ``"changedToFemale"`` \| ``"unknown"``
+Ƭ **HealthcareProfessionalGenderEnum**: `"male"` \| `"female"` \| `"indeterminate"` \| `"changed"` \| `"changedToMale"` \| `"changedToFemale"` \| `"unknown"`
 
 #### Defined in
 
 [src/models/HealthcareProfessional.ts:125](https://github.com/icure/icure-medical-device-js-sdk/blob/3aae8f0/src/models/HealthcareProfessional.ts#L125)
 
-___
+---
 
 ### PartnershipStatusEnum
 
-Ƭ **PartnershipStatusEnum**: ``"active"`` \| ``"complicated"`` \| ``"past"``
+Ƭ **PartnershipStatusEnum**: `"active"` \| `"complicated"` \| `"past"`
 
 #### Defined in
 
 [src/models/Partnership.ts:36](https://github.com/icure/icure-medical-device-js-sdk/blob/3aae8f0/src/models/Partnership.ts#L36)
 
-___
+---
 
 ### PartnershipTypeEnum
 
-Ƭ **PartnershipTypeEnum**: ``"primary_contact"`` \| ``"primary_contact_for"`` \| ``"family"`` \| ``"friend"`` \| ``"counselor"`` \| ``"contact"`` \| ``"brother"`` \| ``"brotherinlaw"`` \| ``"child"`` \| ``"daughter"`` \| ``"employer"`` \| ``"father"`` \| ``"grandchild"`` \| ``"grandparent"`` \| ``"husband"`` \| ``"lawyer"`` \| ``"mother"`` \| ``"neighbour"`` \| ``"notary"`` \| ``"partner"`` \| ``"sister"`` \| ``"sisterinlaw"`` \| ``"son"`` \| ``"spouse"`` \| ``"stepdaughter"`` \| ``"stepfather"`` \| ``"stepmother"`` \| ``"stepson"`` \| ``"tutor"`` \| ``"next_of_kin"`` \| ``"federal_agency"`` \| ``"insurance_company"`` \| ``"state_agency"`` \| ``"unknown"`` \| ``"seealso"`` \| ``"refer"``
+Ƭ **PartnershipTypeEnum**: `"primary_contact"` \| `"primary_contact_for"` \| `"family"` \| `"friend"` \| `"counselor"` \| `"contact"` \| `"brother"` \| `"brotherinlaw"` \| `"child"` \| `"daughter"` \| `"employer"` \| `"father"` \| `"grandchild"` \| `"grandparent"` \| `"husband"` \| `"lawyer"` \| `"mother"` \| `"neighbour"` \| `"notary"` \| `"partner"` \| `"sister"` \| `"sisterinlaw"` \| `"son"` \| `"spouse"` \| `"stepdaughter"` \| `"stepfather"` \| `"stepmother"` \| `"stepson"` \| `"tutor"` \| `"next_of_kin"` \| `"federal_agency"` \| `"insurance_company"` \| `"state_agency"` \| `"unknown"` \| `"seealso"` \| `"refer"`
 
 #### Defined in
 
 [src/models/Partnership.ts:35](https://github.com/icure/icure-medical-device-js-sdk/blob/3aae8f0/src/models/Partnership.ts#L35)
 
-___
+---
 
 ### PatientBirthSexEnum
 
-Ƭ **PatientBirthSexEnum**: ``"male"`` \| ``"female"`` \| ``"indeterminate"`` \| ``"changed"`` \| ``"changedToMale"`` \| ``"changedToFemale"`` \| ``"unknown"``
+Ƭ **PatientBirthSexEnum**: `"male"` \| `"female"` \| `"indeterminate"` \| `"changed"` \| `"changedToMale"` \| `"changedToFemale"` \| `"unknown"`
 
 #### Defined in
 
 [src/models/Patient.ts:282](https://github.com/icure/icure-medical-device-js-sdk/blob/3aae8f0/src/models/Patient.ts#L282)
 
-___
+---
 
 ### PatientDeactivationReasonEnum
 
-Ƭ **PatientDeactivationReasonEnum**: ``"deceased"`` \| ``"moved"`` \| ``"other_doctor"`` \| ``"retired"`` \| ``"no_contact"`` \| ``"unknown"`` \| ``"none"``
+Ƭ **PatientDeactivationReasonEnum**: `"deceased"` \| `"moved"` \| `"other_doctor"` \| `"retired"` \| `"no_contact"` \| `"unknown"` \| `"none"`
 
 #### Defined in
 
 [src/models/Patient.ts:283](https://github.com/icure/icure-medical-device-js-sdk/blob/3aae8f0/src/models/Patient.ts#L283)
 
-___
+---
 
 ### PatientGenderEnum
 
-Ƭ **PatientGenderEnum**: ``"male"`` \| ``"female"`` \| ``"indeterminate"`` \| ``"changed"`` \| ``"changedToMale"`` \| ``"changedToFemale"`` \| ``"unknown"``
+Ƭ **PatientGenderEnum**: `"male"` \| `"female"` \| `"indeterminate"` \| `"changed"` \| `"changedToMale"` \| `"changedToFemale"` \| `"unknown"`
 
 #### Defined in
 
 [src/models/Patient.ts:281](https://github.com/icure/icure-medical-device-js-sdk/blob/3aae8f0/src/models/Patient.ts#L281)
 
-___
+---
 
 ### PatientHealthCarePartyTypeEnum
 
-Ƭ **PatientHealthCarePartyTypeEnum**: ``"doctor"`` \| ``"referral"`` \| ``"medicalhouse"`` \| ``"retirementhome"`` \| ``"hospital"`` \| ``"other"`` \| ``"referringphysician"`` \| ``"managingorganization"``
+Ƭ **PatientHealthCarePartyTypeEnum**: `"doctor"` \| `"referral"` \| `"medicalhouse"` \| `"retirementhome"` \| `"hospital"` \| `"other"` \| `"referringphysician"` \| `"managingorganization"`
 
 #### Defined in
 
 [src/models/PatientHealthCareParty.ts:33](https://github.com/icure/icure-medical-device-js-sdk/blob/3aae8f0/src/models/PatientHealthCareParty.ts#L33)
 
-___
+---
 
 ### PatientPersonalStatusEnum
 
-Ƭ **PatientPersonalStatusEnum**: ``"single"`` \| ``"in_couple"`` \| ``"married"`` \| ``"separated"`` \| ``"divorced"`` \| ``"divorcing"`` \| ``"widowed"`` \| ``"widower"`` \| ``"complicated"`` \| ``"unknown"`` \| ``"contract"`` \| ``"other"`` \| ``"annulled"`` \| ``"polygamous"``
+Ƭ **PatientPersonalStatusEnum**: `"single"` \| `"in_couple"` \| `"married"` \| `"separated"` \| `"divorced"` \| `"divorcing"` \| `"widowed"` \| `"widower"` \| `"complicated"` \| `"unknown"` \| `"contract"` \| `"other"` \| `"annulled"` \| `"polygamous"`
 
 #### Defined in
 
 [src/models/Patient.ts:284](https://github.com/icure/icure-medical-device-js-sdk/blob/3aae8f0/src/models/Patient.ts#L284)
 
-___
+---
 
 ### PersonNameUseEnum
 
-Ƭ **PersonNameUseEnum**: ``"usual"`` \| ``"official"`` \| ``"temp"`` \| ``"nickname"`` \| ``"anonymous"`` \| ``"maiden"`` \| ``"old"`` \| ``"other"``
+Ƭ **PersonNameUseEnum**: `"usual"` \| `"official"` \| `"temp"` \| `"nickname"` \| `"anonymous"` \| `"maiden"` \| `"old"` \| `"other"`
 
 #### Defined in
 
 [src/models/PersonName.ts:45](https://github.com/icure/icure-medical-device-js-sdk/blob/3aae8f0/src/models/PersonName.ts#L45)
 
-___
+---
 
 ### PropertyTypeTypeEnum
 
-Ƭ **PropertyTypeTypeEnum**: ``"BOOLEAN"`` \| ``"INTEGER"`` \| ``"DOUBLE"`` \| ``"STRING"`` \| ``"DATE"`` \| ``"CLOB"`` \| ``"JSON"``
+Ƭ **PropertyTypeTypeEnum**: `"BOOLEAN"` \| `"INTEGER"` \| `"DOUBLE"` \| `"STRING"` \| `"DATE"` \| `"CLOB"` \| `"JSON"`
 
 #### Defined in
 
 [src/models/PropertyType.ts:30](https://github.com/icure/icure-medical-device-js-sdk/blob/3aae8f0/src/models/PropertyType.ts#L30)
 
-___
+---
+
+### SMSMessage
+
+Ƭ **SMSMessage**: `Object`
+
+#### Type declaration
+
+| Name      | Type     |
+| :-------- | :------- |
+| `message` | `string` |
+
+#### Defined in
+
+[src/utils/msgGtwMessageFactory.ts:6](https://github.com/icure/icure-medical-device-js-sdk/blob/3aae8f0/src/utils/msgGtwMessageFactory.ts#L6)
+
+---
 
 ### SharedDataType
 
-Ƭ **SharedDataType**: ``"all"`` \| ``"administrativeData"`` \| ``"generalInformation"`` \| ``"financialInformation"`` \| ``"medicalInformation"`` \| ``"sensitiveInformation"`` \| ``"confidentialInformation"``
+Ƭ **SharedDataType**: `"all"` \| `"administrativeData"` \| `"generalInformation"` \| `"financialInformation"` \| `"medicalInformation"` \| `"sensitiveInformation"` \| `"confidentialInformation"`
 
 #### Defined in
 
 [src/models/User.ts:100](https://github.com/icure/icure-medical-device-js-sdk/blob/3aae8f0/src/models/User.ts#L100)
 
-___
+---
 
 ### TelecomTelecomTypeEnum
 
-Ƭ **TelecomTelecomTypeEnum**: ``"mobile"`` \| ``"phone"`` \| ``"email"`` \| ``"fax"`` \| ``"skype"`` \| ``"im"`` \| ``"medibridge"`` \| ``"ehealthbox"`` \| ``"apicrypt"`` \| ``"web"`` \| ``"print"`` \| ``"disk"`` \| ``"other"`` \| ``"pager"``
+Ƭ **TelecomTelecomTypeEnum**: `"mobile"` \| `"phone"` \| `"email"` \| `"fax"` \| `"skype"` \| `"im"` \| `"medibridge"` \| `"ehealthbox"` \| `"apicrypt"` \| `"web"` \| `"print"` \| `"disk"` \| `"other"` \| `"pager"`
 
 #### Defined in
 
 [src/models/Telecom.ts:32](https://github.com/icure/icure-medical-device-js-sdk/blob/3aae8f0/src/models/Telecom.ts#L32)
 
-___
+---
 
 ### TypedValueObjectTypeEnum
 
-Ƭ **TypedValueObjectTypeEnum**: ``"BOOLEAN"`` \| ``"INTEGER"`` \| ``"DOUBLE"`` \| ``"STRING"`` \| ``"DATE"`` \| ``"CLOB"`` \| ``"JSON"``
+Ƭ **TypedValueObjectTypeEnum**: `"BOOLEAN"` \| `"INTEGER"` \| `"DOUBLE"` \| `"STRING"` \| `"DATE"` \| `"CLOB"` \| `"JSON"`
 
 #### Defined in
 
@@ -286,7 +348,7 @@ ___
 
 node_modules/@icure/api/icc-x-api/utils/formatting-util.d.ts:4
 
-___
+---
 
 ### nihiiRegExp
 
@@ -296,7 +358,7 @@ ___
 
 node_modules/@icure/api/icc-x-api/utils/formatting-util.d.ts:2
 
-___
+---
 
 ### ssinRegExp
 
@@ -314,9 +376,9 @@ node_modules/@icure/api/icc-x-api/utils/formatting-util.d.ts:3
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `s` | `string` |
+| Name | Type     |
+| :--- | :------- |
+| `s`  | `string` |
 
 #### Returns
 
@@ -326,7 +388,7 @@ node_modules/@icure/api/icc-x-api/utils/formatting-util.d.ts:3
 
 node_modules/@icure/api/icc-api/model/ModelHelper.d.ts:9
 
-___
+---
 
 ### amount
 
@@ -336,8 +398,8 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name    | Type     |
+| :------ | :------- |
 | `value` | `number` |
 
 #### Returns
@@ -350,7 +412,7 @@ the rounded number, two after the comma
 
 node_modules/@icure/api/icc-x-api/utils/formatting-util.d.ts:58
 
-___
+---
 
 ### b2a
 
@@ -358,9 +420,9 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `a` | `string` |
+| Name | Type     |
+| :--- | :------- |
+| `a`  | `string` |
 
 #### Returns
 
@@ -370,7 +432,7 @@ ___
 
 node_modules/@icure/api/icc-api/model/ModelHelper.d.ts:8
 
-___
+---
 
 ### b64Url2ua
 
@@ -378,8 +440,8 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name | Type     |
+| :--- | :------- |
 | `ua` | `string` |
 
 #### Returns
@@ -390,17 +452,17 @@ ___
 
 node_modules/@icure/api/icc-x-api/utils/binary-utils.d.ts:20
 
-___
+---
 
-### b64\_2ab
+### b64_2ab
 
 ▸ **b64_2ab**(`s`): `ArrayBuffer`
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `s` | `string` |
+| Name | Type     |
+| :--- | :------- |
+| `s`  | `string` |
 
 #### Returns
 
@@ -410,17 +472,17 @@ ___
 
 node_modules/@icure/api/icc-api/model/ModelHelper.d.ts:5
 
-___
+---
 
-### b64\_2ua
+### b64_2ua
 
 ▸ **b64_2ua**(`s`): `Uint8Array`
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `s` | `string` |
+| Name | Type     |
+| :--- | :------- |
+| `s`  | `string` |
 
 #### Returns
 
@@ -430,17 +492,17 @@ ___
 
 node_modules/@icure/api/icc-api/model/ModelHelper.d.ts:6
 
-___
+---
 
-### b64\_2uas
+### b64_2uas
 
 ▸ **b64_2uas**(`s`): `Uint8Array`[]
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `s` | `string` |
+| Name | Type     |
+| :--- | :------- |
+| `s`  | `string` |
 
 #### Returns
 
@@ -450,7 +512,7 @@ ___
 
 node_modules/@icure/api/icc-x-api/utils/binary-utils.d.ts:18
 
-___
+---
 
 ### dateDecode
 
@@ -464,13 +526,13 @@ Error if it is impossible to create a date from the number, other if dateNumber 
 
 **`See`**
 
- - #dateEncode
- - #timeDecode
+- #dateEncode
+- #timeDecode
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
+| Name         | Type     | Description                             |
+| :----------- | :------- | :-------------------------------------- |
 | `dateNumber` | `number` | a YYYYMMDD date number from the backend |
 
 #### Returns
@@ -483,7 +545,7 @@ a Date object
 
 node_modules/@icure/api/icc-x-api/utils/formatting-util.d.ts:22
 
-___
+---
 
 ### dateEncode
 
@@ -493,13 +555,13 @@ Encodes a Date object into a backend date number (e.g., patient birth date).
 
 **`See`**
 
- - #dateDecode
- - #timeEncode
+- #dateDecode
+- #timeEncode
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
+| Name   | Type   | Description   |
+| :----- | :----- | :------------ |
 | `date` | `Date` | a Date object |
 
 #### Returns
@@ -512,7 +574,7 @@ a YYYYMMDD date number for the backend
 
 node_modules/@icure/api/icc-x-api/utils/formatting-util.d.ts:38
 
-___
+---
 
 ### hex2string
 
@@ -520,8 +582,8 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name     | Type     |
+| :------- | :------- |
 | `hexStr` | `string` |
 
 #### Returns
@@ -532,7 +594,7 @@ ___
 
 node_modules/@icure/api/icc-x-api/utils/binary-utils.d.ts:21
 
-___
+---
 
 ### hex2ua
 
@@ -540,9 +602,9 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `s` | `string` |
+| Name | Type     |
+| :--- | :------- |
+| `s`  | `string` |
 
 #### Returns
 
@@ -552,7 +614,7 @@ ___
 
 node_modules/@icure/api/icc-x-api/utils/binary-utils.d.ts:10
 
-___
+---
 
 ### ibanFormat
 
@@ -560,8 +622,8 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name   | Type     |
+| :----- | :------- |
 | `iban` | `string` |
 
 #### Returns
@@ -572,7 +634,7 @@ ___
 
 node_modules/@icure/api/icc-x-api/utils/formatting-util.d.ts:7
 
-___
+---
 
 ### ibanValidate
 
@@ -580,8 +642,8 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name   | Type     |
+| :----- | :------- |
 | `iban` | `string` |
 
 #### Returns
@@ -592,7 +654,7 @@ ___
 
 node_modules/@icure/api/icc-x-api/utils/formatting-util.d.ts:6
 
-___
+---
 
 ### isValidIBAN
 
@@ -600,8 +662,8 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name   | Type     |
+| :----- | :------- |
 | `iban` | `string` |
 
 #### Returns
@@ -612,7 +674,7 @@ ___
 
 node_modules/@icure/api/icc-x-api/utils/formatting-util.d.ts:5
 
-___
+---
 
 ### medTechApi
 
@@ -620,8 +682,8 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name   | Type                                  |
+| :----- | :------------------------------------ |
 | `api?` | [`MedTechApi`](classes/MedTechApi.md) |
 
 #### Returns
@@ -632,7 +694,7 @@ ___
 
 [src/apis/medTechApi.ts:334](https://github.com/icure/icure-medical-device-js-sdk/blob/3aae8f0/src/apis/medTechApi.ts#L334)
 
-___
+---
 
 ### money
 
@@ -643,8 +705,8 @@ Input: 2.1 ; Output: 2.10€
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name    | Type     |
+| :------ | :------- |
 | `value` | `number` |
 
 #### Returns
@@ -655,7 +717,7 @@ Input: 2.1 ; Output: 2.10€
 
 node_modules/@icure/api/icc-x-api/utils/formatting-util.d.ts:63
 
-___
+---
 
 ### nihiiFormat
 
@@ -663,8 +725,8 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name    | Type     |
+| :------ | :------- |
 | `nihii` | `string` |
 
 #### Returns
@@ -675,7 +737,7 @@ ___
 
 node_modules/@icure/api/icc-x-api/utils/formatting-util.d.ts:8
 
-___
+---
 
 ### nihiiValidate
 
@@ -683,8 +745,8 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name    | Type     |
+| :------ | :------- |
 | `nihii` | `string` |
 
 #### Returns
@@ -695,7 +757,7 @@ ___
 
 node_modules/@icure/api/icc-x-api/utils/formatting-util.d.ts:9
 
-___
+---
 
 ### personName
 
@@ -703,11 +765,11 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `person` | `Object` |
+| Name                | Type     |
+| :------------------ | :------- |
+| `person`            | `Object` |
 | `person.firstName?` | `string` |
-| `person.lastName?` | `string` |
+| `person.lastName?`  | `string` |
 
 #### Returns
 
@@ -717,7 +779,7 @@ ___
 
 node_modules/@icure/api/icc-x-api/utils/formatting-util.d.ts:71
 
-___
+---
 
 ### personNameAbbrev
 
@@ -725,11 +787,11 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `person` | `Object` |
+| Name                | Type     |
+| :------------------ | :------- |
+| `person`            | `Object` |
 | `person.firstName?` | `string` |
-| `person.lastName?` | `string` |
+| `person.lastName?`  | `string` |
 
 #### Returns
 
@@ -739,7 +801,7 @@ ___
 
 node_modules/@icure/api/icc-x-api/utils/formatting-util.d.ts:75
 
-___
+---
 
 ### phoneNumberFormat
 
@@ -747,8 +809,8 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name          | Type     |
+| :------------ | :------- |
 | `phoneNumber` | `string` |
 
 #### Returns
@@ -759,7 +821,7 @@ ___
 
 node_modules/@icure/api/icc-x-api/utils/formatting-util.d.ts:13
 
-___
+---
 
 ### phoneNumberValidate
 
@@ -767,8 +829,8 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name          | Type     |
+| :------------ | :------- |
 | `phoneNumber` | `string` |
 
 #### Returns
@@ -779,7 +841,7 @@ ___
 
 node_modules/@icure/api/icc-x-api/utils/formatting-util.d.ts:12
 
-___
+---
 
 ### ssinFormat
 
@@ -787,8 +849,8 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name   | Type     |
+| :----- | :------- |
 | `ssin` | `string` |
 
 #### Returns
@@ -799,7 +861,7 @@ ___
 
 node_modules/@icure/api/icc-x-api/utils/formatting-util.d.ts:10
 
-___
+---
 
 ### ssinValidate
 
@@ -807,8 +869,8 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name   | Type     |
+| :----- | :------- |
 | `ssin` | `string` |
 
 #### Returns
@@ -819,7 +881,7 @@ ___
 
 node_modules/@icure/api/icc-x-api/utils/formatting-util.d.ts:11
 
-___
+---
 
 ### string2ab
 
@@ -827,9 +889,9 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `s` | `string` |
+| Name | Type     |
+| :--- | :------- |
+| `s`  | `string` |
 
 #### Returns
 
@@ -839,7 +901,7 @@ ___
 
 node_modules/@icure/api/icc-api/model/ModelHelper.d.ts:3
 
-___
+---
 
 ### string2hex
 
@@ -847,8 +909,8 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name   | Type     |
+| :----- | :------- |
 | `text` | `string` |
 
 #### Returns
@@ -859,7 +921,7 @@ ___
 
 node_modules/@icure/api/icc-x-api/utils/binary-utils.d.ts:22
 
-___
+---
 
 ### string2ua
 
@@ -867,9 +929,9 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `s` | `string` |
+| Name | Type     |
+| :--- | :------- |
+| `s`  | `string` |
 
 #### Returns
 
@@ -879,7 +941,7 @@ ___
 
 node_modules/@icure/api/icc-api/model/ModelHelper.d.ts:2
 
-___
+---
 
 ### timeDecode
 
@@ -889,13 +951,13 @@ Converts a backend time number (e.g., health element openingDate) into a Date ob
 
 **`See`**
 
- - #timeEncode
- - #dateDecode
+- #timeEncode
+- #dateDecode
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
+| Name         | Type     | Description                             |
+| :----------- | :------- | :-------------------------------------- |
 | `timeNumber` | `number` | a YYYYMMDD date number from the backend |
 
 #### Returns
@@ -908,7 +970,7 @@ a Date object
 
 node_modules/@icure/api/icc-x-api/utils/formatting-util.d.ts:30
 
-___
+---
 
 ### timeEncode
 
@@ -918,13 +980,13 @@ Encodes a Date object into a backend time number (e.g., health element openingDa
 
 **`See`**
 
- - #timeDecode
- - #dateEncode
+- #timeDecode
+- #dateEncode
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
+| Name   | Type   | Description   |
+| :----- | :----- | :------------ |
 | `date` | `Date` | a Date object |
 
 #### Returns
@@ -937,27 +999,27 @@ a YYYYMMDDHHmmss date number for the backend
 
 node_modules/@icure/api/icc-x-api/utils/formatting-util.d.ts:46
 
-___
+---
 
 ### toMoment
 
-▸ **toMoment**(`epochOrLongCalendar`): `Moment` \| ``null``
+▸ **toMoment**(`epochOrLongCalendar`): `Moment` \| `null`
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name                  | Type     |
+| :-------------------- | :------- |
 | `epochOrLongCalendar` | `number` |
 
 #### Returns
 
-`Moment` \| ``null``
+`Moment` \| `null`
 
 #### Defined in
 
 node_modules/@icure/api/icc-x-api/utils/formatting-util.d.ts:79
 
-___
+---
 
 ### toUrlParams
 
@@ -968,8 +1030,8 @@ From { key1: value1, key2: value2, ... } returns key1=value1&key2=value2&...=...
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name     | Type     |
+| :------- | :------- |
 | `params` | `Object` |
 
 #### Returns
@@ -980,7 +1042,7 @@ From { key1: value1, key2: value2, ... } returns key1=value1&key2=value2&...=...
 
 node_modules/@icure/api/icc-x-api/utils/formatting-util.d.ts:68
 
-___
+---
 
 ### ua2ab
 
@@ -988,8 +1050,8 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name | Type         |
+| :--- | :----------- |
 | `ua` | `Uint8Array` |
 
 #### Returns
@@ -1000,7 +1062,7 @@ ___
 
 node_modules/@icure/api/icc-api/model/ModelHelper.d.ts:4
 
-___
+---
 
 ### ua2b64
 
@@ -1008,8 +1070,8 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name  | Type                          |
+| :---- | :---------------------------- |
 | `_ua` | `ArrayBuffer` \| `Uint8Array` |
 
 #### Returns
@@ -1020,7 +1082,7 @@ ___
 
 node_modules/@icure/api/icc-api/model/ModelHelper.d.ts:7
 
-___
+---
 
 ### ua2b64Url
 
@@ -1028,8 +1090,8 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name | Type                          |
+| :--- | :---------------------------- |
 | `ua` | `ArrayBuffer` \| `Uint8Array` |
 
 #### Returns
@@ -1040,7 +1102,7 @@ ___
 
 node_modules/@icure/api/icc-x-api/utils/binary-utils.d.ts:19
 
-___
+---
 
 ### ua2hex
 
@@ -1050,8 +1112,8 @@ Uint8Array/ArrayBuffer to hex String
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
+| Name  | Type                          | Description                 |
+| :---- | :---------------------------- | :-------------------------- |
 | `_ua` | `ArrayBuffer` \| `Uint8Array` | {Uint8Array} or ArrayBuffer |
 
 #### Returns
@@ -1064,7 +1126,7 @@ Hex String
 
 node_modules/@icure/api/icc-x-api/utils/binary-utils.d.ts:17
 
-___
+---
 
 ### ua2string
 
@@ -1072,8 +1134,8 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name  | Type                          |
+| :---- | :---------------------------- |
 | `_ua` | `ArrayBuffer` \| `Uint8Array` |
 
 #### Returns
@@ -1084,7 +1146,7 @@ ___
 
 node_modules/@icure/api/icc-api/model/ModelHelper.d.ts:1
 
-___
+---
 
 ### ua2utf8
 
@@ -1094,8 +1156,8 @@ Uint8Array/ArrayBuffer to utf-8 strring
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
+| Name  | Type                          | Description                 |
+| :---- | :---------------------------- | :-------------------------- |
 | `_ua` | `ArrayBuffer` \| `Uint8Array` | {Uint8Array} or ArrayBuffer |
 
 #### Returns
@@ -1108,7 +1170,7 @@ a UTF-8 encoded string
 
 node_modules/@icure/api/icc-x-api/utils/binary-utils.d.ts:9
 
-___
+---
 
 ### unit
 
@@ -1118,10 +1180,10 @@ Formats a value and a physical unit into text.
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `value` | `string` \| `number` | the numerical or string value to encode |
-| `unit` | ``null`` \| `string` | the unit represented as a string (an empty string is also supported) |
+| Name    | Type                 | Description                                                          |
+| :------ | :------------------- | :------------------------------------------------------------------- |
+| `value` | `string` \| `number` | the numerical or string value to encode                              |
+| `unit`  | `null` \| `string`   | the unit represented as a string (an empty string is also supported) |
 
 #### Returns
 
@@ -1131,16 +1193,16 @@ Formats a value and a physical unit into text.
 
 node_modules/@icure/api/icc-x-api/utils/formatting-util.d.ts:52
 
-___
+---
 
-### utf8\_2ua
+### utf8_2ua
 
 ▸ **utf8_2ua**(`str`): `Uint8Array`
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name  | Type     |
+| :---- | :------- |
 | `str` | `string` |
 
 #### Returns

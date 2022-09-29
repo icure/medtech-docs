@@ -1,9 +1,9 @@
 {
   "compilerOptions": {
     "esModuleInterop": true,
-    "module": "es2022",
+    "module": "esnext",
     "moduleResolution": "node",
-    "target": "es2022",
+    "target": "esnext",
     "types": ["node"],
     "lib": [
       "es2017",
