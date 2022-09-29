@@ -10,7 +10,7 @@ tags:
 # Handling DataSamples
 
 In this section, we will learn how to manage data samples. DataSamples are used to store data that is not part of the
-patient's medical record. For example, you can store a patient's blood pressure measurements in a DataSample.
+patient's medical record, such as blood pressure measurements.
 
 :::note
 
@@ -81,7 +81,7 @@ opening date.
 
 :::info
 
-Behind the scenes: the `createOrModifyDataSampleFor` method will encrypt the `DataSample` and send it to the kraken. You will only be able to get the content of this `DataSample` afterward if you have the correct key to decrypt it.
+Behind the scenes: the `createOrModifyDataSampleFor` method will encrypt the `DataSample` and send it to the iCure backend. From now on you will be able to retrieve the content of this `DataSample` only if you have the correct key to decrypt it.
 
 :::
 
@@ -146,7 +146,7 @@ In order to update a DataSample, we can use the `createOrModifyDataSampleFor` me
 
 :::info
 
-The patient's id **should** be the same as the one used to create the DataSample.
+The patient's id **must** be the same as the one used to create the DataSample.
 
 If you linked the DataSample at the wrong patient, you have to delete the first DataSample and create a new one with the correct patient's id.
 
