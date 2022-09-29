@@ -12,8 +12,8 @@ A Coding represents a code of a terminology (such as SNOMED CT or LOINC).
 
 ## When to Use a Coding?
 
-When a Data Owner wants to define the medical information of other entities, such as Data Samples or Healthcare Elements, 
-using  standards that are widely used in the medical field rather than in natural language.
+You should use a Coding when a Data Owner wants to define the medical information of other entities, such as Data 
+Samples or Healthcare Elements, using standards that are widely used in the medical field rather than in natural language.
 
 ## Examples
 

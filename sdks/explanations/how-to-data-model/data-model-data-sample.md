@@ -13,7 +13,8 @@ unstructured medical data, or both.
 
 ## When to Use a Data Sample?
 
-When a Data Owner wants to register some kind of objective or subjective data related to a Patient.
+You should use a Data Sample when a Data Owner wants to register some kind of objective or subjective medical data 
+related to a Patient.
 
 ## How a Data Sample is Related to Other Entities?
 
