@@ -8,7 +8,7 @@ tags:
 
 # Coding
 
-A Coding represents a code of a terminology (such as SNOMED CT or LOINC).
+A Coding represents a code of a [Terminology](http://localhost:3000/sdks/glossary#terminologies) (such as SNOMED CT or LOINC).
 
 ## When to Use a Coding?
 
