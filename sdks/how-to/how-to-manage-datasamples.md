@@ -288,13 +288,7 @@ const filteredDataSamples = await api.dataSampleApi.filterDataSample(
 
 To create a filter, we can use the [`DataSampleFilter`](/sdks/references/classes/DataSampleFilter#methods-1) builder methods. This builder allows us to create complex filter object.
 
-:::tip
-
-The `DataSampleFilter` builder is a fluent builder. This means that each method returns the builder itself, allowing us to chain methods.
-
-:::
-
-In the example above, we used the following code:
+In the example above, we created the filter this way:
 
 <!-- file://code-samples/how-to/datasamples/index.mts snippet:filter builder-->
 ```typescript
@@ -305,10 +299,11 @@ new DataSampleFilter()
   .build();
 ```
 
-This code will create a filter object that will:
-- filter DataSamples for the logged user's healthcare party (DataOwner)
-- filter DataSamples by tag code filter (tagCode: `IC-TEST`, tagType: `TEST`)
-- filter DataSamples for the patient
+The resulting filter object will create a filter that allows us to get all `DataSamples` that satisfy all the following requirements:
+
+- The `DataSample` is owned by the logged user's healthcare party
+- The `DataSample` has a tag with type `IC-TEST` and code `TEST`
+- The `DataSample` is linked to `patient`
 
 ## How to get a list of DataSample ids&#8239;?
 
