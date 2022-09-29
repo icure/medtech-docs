@@ -20,6 +20,7 @@ const inject = async (path: string) => {
                 }
                 ex = ex.replace(/\/\* truncate \*\/"(.+?)"/g, (_, s) => `"${s.slice(0, 10)}...${s.slice(s.length - 10)}"`)
                 ex = ex.replace(/\/\* truncate \*\/'(.+?)'/g, (_, s) => `'${s.slice(0, 10)}...${s.slice(s.length - 10)}'`)
+                ex = ex.replace(/.+\/\/skip[ \t]*\n/g, '')
                 dst += line + '\n'
                 dst += '```typescript\n'
                 dst += ex

@@ -4,6 +4,8 @@ import { webcrypto } from "crypto";
 
 const password = process.env.PASSWORD
 const host = 'https://api.icure.cloud/rest/v1'
+console.log(host) //skip
+
 
 const api = await medTechApi()
 	.withICureBasePath(host)

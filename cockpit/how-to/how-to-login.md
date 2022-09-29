@@ -1,5 +1,5 @@
 ---
-slug: how-to-register
+slug: how-to-login
 ---
 # How to login to the cockpit
 
