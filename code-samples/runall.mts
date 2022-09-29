@@ -30,7 +30,8 @@ function scanAndRunRecursively(dir: string) {
 
 [
     `quick-start`,
-    `how-to`
+    `how-to`,
+    `tutorial`
 ].forEach((module) => {
     scanAndRunRecursively(`${cwd}/${module}`)
 })
