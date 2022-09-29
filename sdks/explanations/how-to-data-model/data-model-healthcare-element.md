@@ -11,15 +11,15 @@ series of measurements.
 
 ## When to Use a Healthcare Element?
 
-You should use a Healthcare Element when a Data Owner wants to specify an underlying condition related to a Patient, to 
-a visit or to a set of measurements associated to a Patient.
+You should use a Healthcare Element when a [Data Owner](/sdks/glossary#data-owner) wants to specify an underlying 
+condition related to a Patient, to a visit or to a set of measurements associated to a Patient.
 
 ## How a Healthcare Element is Related to Other Entities?
 
 The medical information contained in the Healthcare Element can be specified using a standard terminology, such as 
 SNOMED CT, by means of a Coding.  
 A Healthcare Element can be associated to one or more Data Samples to give a context to their measurements.  
-A Healthcare Element can use a Coding to associate its medical information to the codes of a terminology.
+A Healthcare Element can use a Coding to associate its medical information to the codes of a [Terminology](http://localhost:3000/sdks/glossary#terminologies).
 
 ## Examples
 
@@ -37,5 +37,5 @@ A Doctor (Healthcare Professional) discovers that their Patient is pregnant. The
 application.
 
 ```typescript
-const promise = "I THINK THIS OVERLAPS WITH CODING";
+const promise = "I SWEAR I WILL WRITE THIS";
 ```
