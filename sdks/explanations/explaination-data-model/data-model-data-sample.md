@@ -25,9 +25,9 @@ A Data Sample is always associated to a Patient.
 
 ## Examples
 
-### A Medical Device Registering Data
+### A Medical Device Monitoring a Patient
 
-A smartwatch (Medical Device) is connected to the application and registers the heart rate of the Patient during period.
+A smartwatch (Medical Device) is connected to the application and registers the heart rate of the Patient.
 Each minute, it measures the value and stores it as a new Data Sample.
 
 ```typescript
