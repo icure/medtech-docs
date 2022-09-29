@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "module": "es2022",
+    "moduleResolution": "node",
+    "target": "es2022",
+    "types": ["node"],
+    "lib": [
+      "es2017"
+    ],
+    "baseUrl": ".",
+    "skipLibCheck": true
+  },
+  "include": [
+    "index.mts"
+  ]
+}
