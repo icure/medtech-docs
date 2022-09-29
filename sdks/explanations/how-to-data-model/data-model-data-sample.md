@@ -23,14 +23,6 @@ A Data Sample is always associated to a Patient.
 
 ## Examples
 
-:::note
-
-We assume that you have already read the [How to register a user](/sdks/how-to/register-a-user) and [How to login as a user](/sdks/how-to/login-as-a-user) guides.
-Also, for these examples, we assume that there are already some Patients, Medical Devices and Healthcare Professionals in
-your databases.
-
-:::
-
 ### A Medical Device Registering Data
 
 A smartwatch (Medical Device) is connected to the application and registers the heart rate of the Patient during period.
