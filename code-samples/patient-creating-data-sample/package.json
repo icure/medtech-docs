@@ -1,0 +1,18 @@
+{
+	"name": "patient-creating-data-sample",
+	"version": "1.0.0",
+	"main": "index.js",
+	"license": "MIT",
+	"scripts": {
+		"start": "tsc && node index.mjs"
+	},
+	"dependencies": {
+		"@icure/medical-device-sdk": "^0.5.0",
+		"@icure/api": "4.2.38",
+		"isomorphic-fetch": "^3.0.0",
+		"node-localstorage": "^2.1.6"
+	},
+	"devDependencies": {
+		"typescript": "^4.8.4"
+	}
+}
