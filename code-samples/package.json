@@ -1,26 +1,20 @@
 {
-  "name": "icure-code-samples",
-  "private": true,
-  "scripts": {
-    "build": "tsc",
-    "scan": "node watch.mjs"
-  },
-  "workspaces": [
-    "quick-start",
-    "setup",
-    "login-user-management",
-    "contact-manager",
-    "patient-manager",
-    "medtech-fhir",
-    "rsocket"
-  ],
-  "dependencies": {
-    "async-mutex": "^0.4.0",
-    "watch": "^1.0.2",
-    "yarn": "^1.22.17"
-  },
-  "devDependencies": {
-    "@types/watch": "^1.0.3",
-    "typescript": "^4.8.3"
-  }
+	"name": "introduction",
+	"version": "1.0.0",
+	"main": "index.js",
+	"license": "MIT",
+	"scripts": {
+		"build": "tsc",
+		"start": "yarn build && node runall.mjs"
+	},
+	"dependencies": {
+		"@icure/medical-device-sdk": "^0.5.0",
+		"@icure/api": "4.2.38",
+		"isomorphic-fetch": "^3.0.0",
+		"node-localstorage": "^2.2.1",
+		"node-fetch": "^2.6.1"
+	},
+	"devDependencies": {
+		"typescript": "^4.8.4"
+	}
 }

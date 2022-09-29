@@ -1,0 +1,26 @@
+{
+  "name": "icure-code-samples",
+  "private": true,
+  "scripts": {
+    "build": "tsc",
+    "scan": "yarn run build && echo 'Starting watch' && node watch.mjs"
+  },
+  "workspaces": [
+    "quick-start",
+    "setup",
+    "login-user-management",
+    "contact-manager",
+    "patient-manager",
+    "medtech-fhir",
+    "rsocket"
+  ],
+  "dependencies": {
+    "async-mutex": "^0.4.0",
+    "watch": "^1.0.2",
+    "yarn": "^1.22.17"
+  },
+  "devDependencies": {
+    "@types/watch": "^1.0.3",
+    "typescript": "^4.8.3"
+  }
+}

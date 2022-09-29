@@ -1,15 +1,16 @@
 //tech-doc: instantiate the api
 import { medTechApi } from '@icure/medical-device-sdk'
 import { webcrypto } from "crypto";
+import * as process from "process";
 
-const password = process.env.PASSWORD
-const host = 'https://api.icure.cloud/rest/v1'
+export const host = process.env.ICURE_URL ?? 'https://api.icure.cloud/rest/v1'
+export const username = process.env.ICURE_USER_NAME
+export const password = process.env.ICURE_USER_PASSWORD
 console.log(host) //skip
-
 
 const api = await medTechApi()
 	.withICureBasePath(host)
-	.withUserName('admin')
+	.withUserName(username)
 	.withPassword(password)
 	.withCrypto(webcrypto as any)
 	.build()
