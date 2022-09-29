@@ -6,8 +6,8 @@ tags:
 ---
 # Data Sample
 
-A Data Sample represents a piece of medical information related to a Patient provided by a Data Owner at a defined
-moment of time.  
+A Data Sample represents a piece of medical information related to a Patient provided by a [Data Owner](/sdks/glossary#data-owner) 
+at a defined moment of time.  
 According to the Data Owner that created it, a Data Sample can contain either biometric measurements or other type of 
 unstructured medical data, or both.  
 
@@ -19,7 +19,8 @@ related to a Patient.
 ## How a Data Sample is Related to Other Entities?
 
 A Data Sample can be linked to a Healthcare Element, that can provide a context for its measure.  
-A Coding can be used in a Data Sample to classify its content.  
+A Coding can be used in a Data Sample to associate the medical information or the measurement to the code of a
+[Terminology](http://localhost:3000/sdks/glossary#terminologies)
 A Data Sample is always associated to a Patient.  
 
 ## Examples

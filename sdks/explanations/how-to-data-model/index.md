@@ -13,7 +13,7 @@ In addition, it is compatible with other medical Data Models such as Open EHR an
 
 ## Actor Entities
 This section describes the different actors that can operate on the iCure platform.  
-Patient, Medical Device, and Healthcare Professional belong to the Data Owner category.
+Patient, Medical Device, and Healthcare Professional belong to the [Data Owner](/sdks/glossary#terminologies) category.
 
 ### Patient
 A Patient is an actor that uses the iCure platform to manage they own medical data.  
@@ -43,7 +43,7 @@ A Healthcare Element is a piece of medical information that can provide a contex
 It can be associated to Patients and Data Samples and, as such, it is encrypted.
 
 ### Coding
-A Coding represents a code of a terminology (such as SNOMED CT) or a classification (such as LOINC).  
+A Coding represents a code of a Terminology (such as SNOMED CT or LOINC).  
 It is used by Data Samples and Healthcare Elements to describe the different pieces of medical information. 
 
 ## Support Entities
