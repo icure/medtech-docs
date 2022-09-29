@@ -17,7 +17,7 @@ Our simple to use SDKs allow developers to focus on creating appealing apps whil
 
 iCure Medtech can be used in the browser or with Node.
 
-Experimental versions of the SDKs are available for React Native, Flutter and native Android/iOS development and can be requested by contacting us.
+Experimental versions of the SDKs are available for React Native, Flutter and native Android/iOS development.  You can request access to them by contacting us.
 
 ## Starting to use iCure
 
