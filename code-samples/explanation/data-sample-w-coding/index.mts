@@ -12,7 +12,7 @@ import { host, password, patientId, privKey, userName } from "../../utils/index.
 import os from "os";
 
 const tmp = os.tmpdir();
-(global as any).localStorage = new LocalStorage(tmp, 5 ** 3);
+(global as any).localStorage = new LocalStorage(tmp, 5 * 1024**3);
 (global as any).Storage = "";
 
 const api = await medTechApi()
@@ -29,7 +29,6 @@ await api.cryptoApi.loadKeyPairsAsTextInBrowserLocalStorage(
 );
 
 const patient = await api.patientApi.getPatient(patientId)
-
 
 //tech-doc: doctor can create DS and HE
 const healthcareElement = await api.healthcareElementApi.createOrModifyHealthcareElement(
