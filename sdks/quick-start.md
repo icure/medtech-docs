@@ -75,6 +75,7 @@ Now that we have credentials for a local or remote instance of the Kraken, we ca
 
 <!-- file://code-samples/quick-start/index.mts snippet:instantiate the api-->
 ```typescript
+import 'isomorphic-fetch'
 import { medTechApi } from '@icure/medical-device-sdk'
 import { webcrypto } from 'crypto'
 import * as process from 'process'

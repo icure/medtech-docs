@@ -37,7 +37,40 @@ Then, they add the diagnosis (hay fever) as associated Healthcare Element.
 Instead of using the natural language description for both, the application allows the Doctor to select the proper 
 SNOMED CT terms using Codings.
 
+<!-- file://code-samples/explanation/data-sample-w-coding/index.mts snippet:doctor can create DS and HE-->
 ```typescript
-const promise = "HERE I WILL PUT THE CODE EXAMPLE, I SWEAR";
+const healthcareElement = await api.healthcareElementApi.createOrModifyHealthcareElement(
+		new HealthcareElement({
+			description: 'My diagnosis is that the patient has Hay Fever',
+				codes: new Set([
+					new CodingReference({
+						id: 'SNOMEDCT|21719001|20020131',
+						type: 'SNOMEDCT',
+						code: '21719001',
+						version: '20020131'
+					})
+				])
+	}),
+	patient.id
+)
+
+await api.dataSampleApi.createOrModifyDataSampleFor(
+	patient.id,
+	new DataSample({
+		content: { 'en': new Content({
+				stringValue: 'The patient has fatigue'
+			})},
+		codes: new Set([
+			new CodingReference({
+				id: 'SNOMEDCT|84229001|20020131',
+				type: 'SNOMEDCT',
+				code: '84229001',
+				version: '20020131'
+			})
+		]),
+		healthcareElementIds: new Set([healthcareElement.id])
+	})
+)
 ```
+
 

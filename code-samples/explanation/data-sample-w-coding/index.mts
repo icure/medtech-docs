@@ -30,6 +30,8 @@ await api.cryptoApi.loadKeyPairsAsTextInBrowserLocalStorage(
 
 const patient = await api.patientApi.getPatient(patientId)
 
+
+//tech-doc: doctor can create DS and HE
 const healthcareElement = await api.healthcareElementApi.createOrModifyHealthcareElement(
 		new HealthcareElement({
 			description: 'My diagnosis is that the patient has Hay Fever',
@@ -63,3 +65,4 @@ await api.dataSampleApi.createOrModifyDataSampleFor(
 	})
 )
 
+//tech-doc: STOP HERE
