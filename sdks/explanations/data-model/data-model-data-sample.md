@@ -32,23 +32,23 @@ Then, she adds the information that her period started as a Healthcare Element a
 
 <!-- file://code-samples/explanation/patient-creates-data-sample/index.mts snippet:patient can create DS and HE-->
 ```typescript
-// const healthcareElement = await api.healthcareElementApi.createOrModifyHealthcareElement(
-//     new HealthcareElement({
-//         description: 'My period started'
-//     }),
-//     patient.id
-// )
-//
-// await api.dataSampleApi.createOrModifyDataSampleFor(
-//     patient.id,
-//     new DataSample({
-//         content: { 'en': new Content({
-//                 stringValue: 'I have a headache'
-//             })},
-//         healthcareElementIds: new Set([healthcareElement.id])
-//     })
-// )
-// ```
+const healthcareElement = await api.healthcareElementApi.createOrModifyHealthcareElement(
+    new HealthcareElement({
+        description: 'My period started'
+    }),
+    patient.id
+)
+
+await api.dataSampleApi.createOrModifyDataSampleFor(
+    patient.id,
+    new DataSample({
+        content: { 'en': new Content({
+                stringValue: 'I have a headache'
+            })},
+        healthcareElementIds: new Set([healthcareElement.id])
+    })
+)
+```
 
 ### A Doctor Registering a Visit
 
@@ -71,8 +71,7 @@ const healthcareElement = await api.healthcareElementApi.createOrModifyHealthcar
 	}),
 	patient.id
 )
-
-await api.dataSampleApi.createOrModifyDataSampleFor(
+const dataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
 	patient.id,
 	new DataSample({
 		content: { 'en': new Content({
@@ -90,6 +89,10 @@ await api.dataSampleApi.createOrModifyDataSampleFor(
 	})
 )
 ```
+
+
+
+
 
 
 

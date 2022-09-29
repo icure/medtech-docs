@@ -26,11 +26,23 @@ A User can be associated to a Healthcare Professional, a Patient, or a Medical D
 
 ### A User Logging In
 
-A Patients wants to log in to iCure to use its functionalities. To do so, it uses their User credentials to instiante
+A Patients wants to log in to iCure to use its functionalities. To do so, it uses their User credentials to instantiate
 the MedTech API.
 
+<!-- file://code-samples/explanation/patient-creates-data-sample/index.mts snippet:patient logs in-->
 ```typescript
-const promise = "ALMOST HERE";
+const api = await medTechApi()
+    .withICureBasePath(host)
+    .withUserName(patientUserName)
+    .withPassword(patientPassword)
+    .withCrypto(webcrypto as any)
+    .build()
+
+const user = await api.userApi.getLoggedUser()
+await api.cryptoApi.loadKeyPairsAsTextInBrowserLocalStorage(
+    user.patientId,
+    hex2ua(patientPrivKey)
+);
 ```
 
 ### A Doctor Inviting a Patient
@@ -38,6 +50,16 @@ const promise = "ALMOST HERE";
 A Doctor (Healthcare Professional) visits for the first time a Patient. After the visit, it invites them to the iCure
 platform.
 
+<!-- file://code-samples/explanation/doctor-invites-a-patient/index.mts snippet:doctor invites user-->
 ```typescript
-const promise = "SAME AS HEALTHCARE PROFESSIONAL";
+const messageFactory = new ICureRegistrationEmail(
+    hcp,
+    "test",
+    "iCure",
+    existingPatient
+)
+const createdUser = await api.userApi.createAndInviteUser(existingPatient, messageFactory);
+expect(createdUser.patientId).to.eq(createdUser.id); // skip
 ```
+
+

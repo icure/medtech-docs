@@ -29,8 +29,24 @@ A Patient can ask to access a Data Sample or a Healthcare Element by creating a 
 A Patient wants to add some symptoms she is experiencing (headache) by adding a new Data Sample.
 Then, she adds the information that her period started as a Healthcare Element associated to the Data Sample.
 
+<!-- file://code-samples/explanation/patient-creates-data-sample/index.mts snippet:patient can create DS and HE-->
 ```typescript
-const promise = "I THINK THIS OVERLAPS WITH CODING";
+const healthcareElement = await api.healthcareElementApi.createOrModifyHealthcareElement(
+    new HealthcareElement({
+        description: 'My period started'
+    }),
+    patient.id
+)
+
+await api.dataSampleApi.createOrModifyDataSampleFor(
+    patient.id,
+    new DataSample({
+        content: { 'en': new Content({
+                stringValue: 'I have a headache'
+            })},
+        healthcareElementIds: new Set([healthcareElement.id])
+    })
+)
 ```
 
 ### A Patient Asking a Doctor to Access Their Own Data
@@ -38,6 +54,18 @@ const promise = "I THINK THIS OVERLAPS WITH CODING";
 A Patient goes for a first visit to a Doctor. The Doctor registers them and, after the visit, the Patient creates a 
 Notification to ask the Doctor to access the outcome of the visit.
 
+<!-- file://code-samples/explanation/doctor-shares-data-with-patient/index.mts snippet:patient sends notification-->
 ```typescript
-const promise = "I THINK I HAVE TO WRITE SOME CODE";
+const accessNotification = await patientApi.notificationApi.createOrModifyNotification(
+    new Notification({
+        id: uuid(),
+        status: "pending",
+        author: patientUser.id,
+        responsible: patientUser.patientId,
+        type: NotificationTypeEnum.OTHER
+    }),
+    user.healthcarePartyId
+);
 ```
+
+

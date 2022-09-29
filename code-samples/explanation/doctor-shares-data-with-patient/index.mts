@@ -6,10 +6,22 @@ import {
     medTechApi,
 } from '@icure/medical-device-sdk'
 import { webcrypto } from "crypto";
-import { hex2ua} from "@icure/api";
+import {hex2ua, MaintenanceTask} from "@icure/api";
 import { LocalStorage } from 'node-localstorage';
-import { host, password, patientId, privKey, userName } from "../../utils/index.mjs";
+import {
+    host,
+    password,
+    patientId,
+    patientPassword,
+    patientPrivKey,
+    patientUserName,
+    privKey,
+    userName
+} from "../../utils/index.mjs";
 import os from "os";
+import {expect} from 'chai';
+import {Notification, NotificationTypeEnum} from "@icure/medical-device-sdk/src/models/Notification.js";
+import {v4 as uuid} from 'uuid';
 
 const tmp = os.tmpdir();
 (global as any).localStorage = new LocalStorage(tmp, 5 * 1024**3);
@@ -45,7 +57,8 @@ const healthcareElement = await api.healthcareElementApi.createOrModifyHealthcar
     }),
     patient.id
 )
-
+expect(!!healthcareElement).to.eq(true); //skip
+expect(healthcareElement.description).to.eq('My diagnosis is that the patient has Hay Fever'); //skip
 const dataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
     patient.id,
     new DataSample({
@@ -63,7 +76,46 @@ const dataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
         healthcareElementIds: new Set([healthcareElement.id])
     })
 )
-
-await api.healthcareElementApi.giveAccessTo(healthcareElement, patient.id)
-await api.dataSampleApi.giveAccessTo(dataSample, patient.id)
 //tech-doc: STOP HERE
+expect(!!dataSample).to.eq(true);
+
+const patientApi = await medTechApi()
+    .withICureBasePath(host)
+    .withUserName(patientUserName)
+    .withPassword(patientPassword)
+    .withCrypto(webcrypto as any)
+    .build()
+
+const patientUser = await patientApi.userApi.getLoggedUser()
+await patientApi.cryptoApi.loadKeyPairsAsTextInBrowserLocalStorage(
+    patientUser.healthcarePartyId ?? patientUser.patientId ?? patientUser.deviceId,
+    hex2ua(patientPrivKey)
+);
+
+//tech-doc: patient sends notification
+const accessNotification = await patientApi.notificationApi.createOrModifyNotification(
+    new Notification({
+        id: uuid(),
+        status: "pending",
+        author: patientUser.id,
+        responsible: patientUser.patientId,
+        type: NotificationTypeEnum.OTHER
+    }),
+    user.healthcarePartyId
+);
+//tech-doc: STOP HERE
+
+//tech-doc: doctor receives notification
+const newNotifications = await api.notificationApi.getPendingNotifications();
+const newPatientNotifications = newNotifications.filter( notification => notification.type === NotificationTypeEnum.OTHER && notification.responsible === patientUser.patientId);
+
+if (!!newPatientNotifications && newPatientNotifications.length > 0) {
+    await api.healthcareElementApi.giveAccessTo(healthcareElement, patient.id)
+    await api.dataSampleApi.giveAccessTo(dataSample, patient.id)
+    await api.notificationApi.updateNotificationStatus(newPatientNotifications[0], "completed")
+}
+//tech-doc: STOP HERE
+const fetchedHE = await patientApi.healthcareElementApi.getHealthcareElement(healthcareElement.id);
+expect(fetchedHE.id).to.eq(healthcareElement.id);
+const fetchedDS = await patientApi.dataSampleApi.getDataSample(dataSample.id);
+expect(fetchedDS.id).to.eq(dataSample.id);
