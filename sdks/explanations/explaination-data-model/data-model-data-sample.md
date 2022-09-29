@@ -38,6 +38,7 @@ const promise = "HERE I WILL PUT THE CODE EXAMPLE, I SWEAR";
 
 A User of the application (Patient) wants to add some symptoms she is experiencing (headache) by adding a new Data Sample.
 Then, she adds the information that her period started as a Healthcare Element associated to the Data Sample.
+
 ```typescript
 const promise = "I THINK THIS OVERLAPS WITH CODING";
 ```
@@ -46,6 +47,7 @@ const promise = "I THINK THIS OVERLAPS WITH CODING";
 
 A Gynaecologist (Healthcare Professional) wants to update the status of one of their patients. After a visit, they 
 create a new Data Sample to register the outcome of the visit in the application.
+
 ```typescript
 const promise = "HERE I WILL PUT THE CODE EXAMPLE, I SWEAR";
 ```
