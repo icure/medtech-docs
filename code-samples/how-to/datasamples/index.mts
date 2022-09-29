@@ -97,3 +97,10 @@ const deletedDataSample = await api.dataSampleApi.deleteDataSample(updatedDataSa
 //tech-doc: STOP HERE
 
 console.log("Delete: ", JSON.stringify(deletedDataSample))
+
+//tech-doc: filter builder
+new DataSampleFilter()
+  .forDataOwner(loggedUser.healthcarePartyId!)
+  .byTagCodeFilter("IC-TEST", "TEST")
+  .forPatients(api.cryptoApi, [patient])
+  .build();

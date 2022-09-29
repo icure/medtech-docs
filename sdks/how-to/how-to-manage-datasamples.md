@@ -24,7 +24,7 @@ the [How to manage patients](/sdks/how-to/how-to-manage-patients) guide.
 To create a DataSample, we can use the `createOrModifyDataSampleFor` method on the `DataSampleApi` object. This method
 takes two parameters: the patient's id and the DataSample object.
 
-<!-- file://code-samples/datasamples/index.mts snippet:create a dataSample-->
+<!-- file://code-samples/how-to/datasamples/index.mts snippet:create a dataSample-->
 ```typescript
 const createdDataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
 	patient.id!,
@@ -90,7 +90,7 @@ Behind the scenes: the `createOrModifyDataSampleFor` method will encrypt the `Da
 To retrieve a DataSample, we can use the `getDataSample` method on the `DataSampleApi`. This method takes one
 parameter: the DataSample's id.
 
-<!-- file://code-samples/datasamples/index.mts snippet:get a dataSample-->
+<!-- file://code-samples/how-to/datasamples/index.mts snippet:get a dataSample-->
 ```typescript
 const dataSample = await api.dataSampleApi.getDataSample(createdDataSample.id!)
 ```
@@ -152,7 +152,7 @@ If you linked the DataSample at the wrong patient, you have to delete the first 
 
 :::
 
-<!-- file://code-samples/datasamples/index.mts snippet:update a dataSample-->
+<!-- file://code-samples/how-to/datasamples/index.mts snippet:update a dataSample-->
 ```typescript
 const updatedDataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
 	patient.id!,
@@ -208,7 +208,7 @@ const updatedDataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
 
 To delete a DataSample, you can use the `deleteDataSample` method on the `DataSampleApi`. This method takes one parameter: the DataSample's id.
 
-<!-- file://code-samples/datasamples/index.mts snippet:delete a dataSample-->
+<!-- file://code-samples/how-to/datasamples/index.mts snippet:delete a dataSample-->
 ```typescript
 const deletedDataSample = await api.dataSampleApi.deleteDataSample(updatedDataSample.id!)
 ```
@@ -219,7 +219,7 @@ To retrieve a list of DataSamples, we can use the `filterDataSamples` method on 
 
 We can build the filter object using the `DataSampleFilter` builder.
 
-<!-- file://code-samples/datasamples/index.mts snippet:get a list of dataSamples-->
+<!-- file://code-samples/how-to/datasamples/index.mts snippet:get a list of dataSamples-->
 ```typescript
 const filter = await new DataSampleFilter()
 	.forDataOwner(loggedUser.healthcarePartyId!)
@@ -284,11 +284,37 @@ const filteredDataSamples = await api.dataSampleApi.filterDataSample(
 
 </details>
 
+### Filter builder
+
+To create a filter, we can use the [`DataSampleFilter`](/sdks/references/classes/DataSampleFilter#methods-1) builder methods. This builder allows us to create complex filter object.
+
+:::tip
+
+The `DataSampleFilter` builder is a fluent builder. This means that each method returns the builder itself, allowing us to chain methods.
+
+:::
+
+In the example above, we used the following code:
+
+<!-- file://code-samples/how-to/datasamples/index.mts snippet:filter builder-->
+```typescript
+new DataSampleFilter()
+  .forDataOwner(loggedUser.healthcarePartyId!)
+  .byTagCodeFilter("IC-TEST", "TEST")
+  .forPatients(api.cryptoApi, [patient])
+  .build();
+```
+
+This code will create a filter object that will:
+- filter DataSamples for the logged user's healthcare party (DataOwner)
+- filter DataSamples by tag code filter (tagCode: `IC-TEST`, tagType: `TEST`)
+- filter DataSamples for the patient
+
 ## How to get a list of DataSample ids&#8239;?
 
 In some circumstances, you might want to get a list of DataSample ids instead of the DataSamples themselves. To do so, you can use the `matchDataSample` method on the `DataSampleApi`. This method takes one parameter: the filter object.
 
-<!-- file://code-samples/datasamples/index.mts snippet:get a list of dataSamples ids-->
+<!-- file://code-samples/how-to/datasamples/index.mts snippet:get a list of dataSamples ids-->
 ```typescript
 const matchFilter = await new DataSampleFilter()
 	.forDataOwner(loggedUser.healthcarePartyId!)
@@ -310,6 +336,8 @@ const matchedDataSampleIds = await api.dataSampleApi.matchDataSample(
 ```
 
 </details>
+
+
 
 
 
