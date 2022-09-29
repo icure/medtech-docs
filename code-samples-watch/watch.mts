@@ -47,7 +47,7 @@ async function registerExample(path: string) {
     if (!path.endsWith('.ts') && !path.endsWith('.js') && !path.endsWith('.mts') && !path.endsWith('.mjs')) { return }
     const text = await readFile(path, 'utf8')
     const ex = text.split('//tech-doc: ').slice(1)
-    const fullPath = `${Path.join('code-samples', path)}`;
+    const fullPath = path.startsWith('../') ? path.slice(3) : `${Path.join('code-samples', path)}`;
     ex.forEach((x: string) => {
         const parts = x.split('\n');
         examples[`${fullPath}|${parts[0]}`] = parts.slice(1).join('\n')
@@ -95,7 +95,7 @@ const traverseFileSystem = async(
     }, Promise.resolve([] as string[]))
 
 
-const sampleDirectories = (await readdir('.', {withFileTypes: true})).filter((x) => x.isDirectory() && !['git','.idea','node_modules'].includes(x.name)).map((x) => x.name)
+const sampleDirectories = (await readdir('../code-samples', {withFileTypes: true})).filter((x) => x.isDirectory() && !['git','.idea','node_modules'].includes(x.name)).map((x) => x.name)
 const docDirectories = ['../sdks']
 
 await (docDirectories.reduce(async (p, dir) => {
@@ -103,13 +103,14 @@ await (docDirectories.reduce(async (p, dir) => {
 }, Promise.resolve()))
 
 await (sampleDirectories.reduce(async (p, dir) => {
-    await (await traverseFileSystem(dir)).reduce(async (p, path) => { await p; await registerExample(path); }, Promise.resolve())
+    await (await traverseFileSystem(`../code-samples/${dir}`)).reduce(async (p, path) => { await p; await registerExample(path); }, Promise.resolve())
 }, Promise.resolve()))
 
 await Promise.all([...sampleDirectories.map(async (fileName) => {
-    const watcher = watch(fileName, { recursive: true })
+    const filePath = `../code-samples/${fileName}`
+    const watcher = watch(filePath, { recursive: true })
     for await (const event of watcher) {
-        await registerExample(Path.join(fileName, event.filename));
+        await registerExample(Path.join(filePath, event.filename));
     }
 }), ...docDirectories.map(async (fileName) => {
     const watcher = watch(fileName, { recursive: true })

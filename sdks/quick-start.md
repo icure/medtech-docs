@@ -76,13 +76,15 @@ Now that we have credentials for a local or remote instance of the Kraken, we ca
 ```typescript
 import { medTechApi } from '@icure/medical-device-sdk'
 import { webcrypto } from "crypto";
+import * as process from "process";
 
-const password = process.env.PASSWORD
-const host = 'https://api.icure.cloud/rest/v1'
+export const host = process.env.ICURE_URL ?? 'https://api.icure.cloud/rest/v1'
+export const username = process.env.ICURE_USER_NAME
+export const password = process.env.ICURE_USER_PASSWORD
 
 const api = await medTechApi()
 	.withICureBasePath(host)
-	.withUserName('admin')
+	.withUserName(username)
 	.withPassword(password)
 	.withCrypto(webcrypto as any)
 	.build()
@@ -98,5 +100,6 @@ console.log(JSON.stringify(user))
 
 Congratulations, you are now ready to use the SDK to interact with the iCure API.
 You can now head to the [Tutorial](./tutorial/index.md) to learn how to use the SDK to create a simple application.
+
 
 
