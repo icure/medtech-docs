@@ -14,8 +14,8 @@ Other Data Owner can decide to share their medical information with them.
 
 ## When to Use a Healthcare Professional?
 
-You should use a Healthcare Professional when you need to create a Doctor, or another actor responsible for patients and
-medical data, in your application.
+You should use a Healthcare Professional when you need to represent a Doctor, or another actor responsible for patients,
+medical data and treatments, in your application.
 
 ## How a Healthcare Professional is Related to Other Entities?
 
