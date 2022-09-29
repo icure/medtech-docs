@@ -1,14 +1,9 @@
-import {DataSample, Patient, medTechApi, CodingReference, DataSampleFilter} from "@icure/medical-device-sdk";
-import {host, password, privKey, pubKey, userName} from "../../utils/index.mjs";
-import {webcrypto} from "crypto";
+import {DataSample, Patient, CodingReference, DataSampleFilter} from "@icure/medical-device-sdk";
+import {initLocalStorage, initMedTechApi, privKey, pubKey, userName} from "../../utils/index.mjs";
 import {expect} from "chai";
 
-const api = await medTechApi()
-    .withICureBasePath(host)
-    .withUserName(userName)
-    .withPassword(password)
-    .withCrypto(webcrypto as any)
-    .build();
+initLocalStorage()
+const api = await initMedTechApi()
 
 await api.initUserCrypto(false, { publicKey: pubKey, privateKey: privKey })
 
