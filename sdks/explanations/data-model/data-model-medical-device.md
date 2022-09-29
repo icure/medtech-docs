@@ -20,14 +20,3 @@ A Medical Device could be used both by a Patient and by a Healthcare Professiona
 
 A Medical Device can create Data Samples and Healthcare Elements.
 A Medical Device can share Data Samples with other Data Owners.
-
-## Examples
-
-### A Medical Device Monitoring a Patient
-
-A smartwatch (Medical Device) is connected to the application and registers the heart rate of the Patient.
-Each minute, it measures the value and stores it as a new Data Sample.
-
-```typescript
-const promise = "SAME AS DATA SAMPLE";
-```

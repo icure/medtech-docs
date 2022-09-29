@@ -38,12 +38,11 @@ const promise = "I WILL DO IT";
 
 ### A Doctor Registering a Visit and Sharing the Outcome with the Patient
 
-A Gynaecologist (Healthcare Professional) wants to update the status of one of their patients. After a visit, they
-create a new Data Sample to register the outcome of the visit in the application.
-After that, the doctor receives a Notification from the Patient and shares the data with her.
+After a visit, a Doctor register the symptoms the Patient is experiencing (fatigue) as a new Data Sample.  
+Then, they add the diagnosis (hay fever) as associated Healthcare Element.
+After that, the doctor and shares the data with them.
 
 ```typescript
-const promise = "SAME AS DATA SAMPLE PLUS SOMETHING";
 ```
 
 ### A Doctor Updating the Status of a Patient
