@@ -82,6 +82,7 @@ export const host = process.env.ICURE_URL ?? 'https://api.icure.cloud/rest/v1'
 export const username = process.env.ICURE_USER_NAME
 export const password = process.env.ICURE_USER_PASSWORD
 
+
 const api = await medTechApi()
 	.withICureBasePath(host)
 	.withUserName(username)
@@ -100,6 +101,8 @@ console.log(JSON.stringify(user))
 
 Congratulations, you are now ready to use the SDK to interact with the iCure API.
 You can now head to the [Tutorial](./tutorial/index.md) to learn how to use the SDK to create a simple application.
+
+
 
 
 
