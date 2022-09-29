@@ -9,7 +9,7 @@ sidebar_position: 1
 *iCure* is a secured and distributed healthcare platform that helps you create apps and share data with the healthcare community.
 
 *iCure for medtech* is tailored for medical device manufacturers and for the development teams responsible for the software of medical devices.
-Data gathered from medical devices are secured when collected and stored encrypted in our/your infrastructure.
+*iCure* allows you to secure the data gathered from medical devices upon collection, and to store it encrypted in our cloud or on your premises.
 
 Simple to use SDKs allow developers to focus on creating appealing apps while letting us handle the details of making their app secure.  
 
