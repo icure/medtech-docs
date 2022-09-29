@@ -286,7 +286,7 @@ const filteredDataSamples = await api.dataSampleApi.filterDataSample(
 
 ## How to get a list of DataSample ids&#8239;?
 
-In some circumstances, we might want to get a list of DataSample ids instead of the DataSamples themselves. To do so, you can use the `matchDataSample` method on the `DataSampleApi`. This method takes one parameter: the filter object.
+In some circumstances, you might want to get a list of DataSample ids instead of the DataSamples themselves. To do so, you can use the `matchDataSample` method on the `DataSampleApi`. This method takes one parameter: the filter object.
 
 <!-- file://code-samples/datasamples/index.mts snippet:get a list of dataSamples ids-->
 ```typescript
