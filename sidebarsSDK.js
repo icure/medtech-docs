@@ -45,9 +45,8 @@ const sidebarsSDK = {
       type: 'category',
       label: 'References',
       link: {
-        type: 'generated-index',
-        title: 'References',
-        slug: '/references/index',
+        type: 'doc',
+        id: 'references/modules',
       },
       items: [
         {
