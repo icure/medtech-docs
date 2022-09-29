@@ -32,6 +32,16 @@ await api.cryptoApi.loadKeyPairsAsTextInBrowserLocalStorage(
     hex2ua(privKey)
 );
 const hcp = await api.healthcareProfessionalApi.getHealthcareProfessional(user.healthcarePartyId);
+hcp.addresses = [new Address({
+  addressType: "home",
+  description: "London",
+  telecoms: [
+    new Telecom({
+      telecomType: "email",
+      telecomNumber: userName
+    })
+  ]
+})]
 
 const patientEmail = `${uuid().substring(0,8)}@icure.com`
 
@@ -61,5 +71,5 @@ const messageFactory = new ICureRegistrationEmail(
     existingPatient
 )
 const createdUser = await api.userApi.createAndInviteUser(existingPatient, messageFactory);
-expect(createdUser.patientId).to.eq(createdUser.id); // skip
+expect(createdUser.patientId).to.eq(existingPatient.id); // skip
 //tech-doc: STOP HERE
