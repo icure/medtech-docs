@@ -10,3 +10,6 @@ export const userName = requireDefined(process.env.ICURE_USER_NAME, 'ICURE_USER_
 export const privKey = requireDefined(process.env.ICURE_USER_PRIV_KEY, 'ICURE_USER_PRIV_KEY')
 export const pubKey = requireDefined(process.env.ICURE_USER_PUB_KEY, 'ICURE_USER_PUB_KEY')
 export const host = requireDefined(process.env.ICURE_URL, 'ICURE_URL')
+export const password2 = requireDefined(process.env.ICURE_USER2_PASSWORD, "ICURE_USER2_PASSWORD")
+export const userName2 = requireDefined(process.env.ICURE_USER2_NAME, "ICURE_USER2_NAME")
+export const privKey2 = requireDefined(process.env.ICURE_USER2_PRIV_KEY, "ICURE_USER2_PRIV_KEY")

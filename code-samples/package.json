@@ -8,8 +8,8 @@
     "lint": "eslint --ext .js,.ts,.mjs,.mts .",
     "lint-fix": "eslint --fix --ext .js,.ts,.mjs,.mts .",
     "start": "yarn build && node runall.mjs"
-  },
-  "lint-staged": {
+	},
+	"lint-staged": {
     "*.js": [
       "eslint --fix",
       "git add"
@@ -29,7 +29,7 @@
   },
   "dependencies": {
     "@icure/api": "4.2.38",
-    "@icure/medical-device-sdk": "^0.6.0",
+    "@icure/medical-device-sdk": "^0.6.1",
     "isomorphic-fetch": "^3.0.0",
     "node-fetch": "^2.6.1",
     "node-localstorage": "^2.2.1"
