@@ -7,7 +7,7 @@ import {
   medTechApi,
 } from '@icure/medical-device-sdk'
 import { webcrypto } from 'crypto'
-import { hex2ua } from '@icure/api'
+import { hex2ua , MaintenanceTask} from '@icure/api'
 import {
   host,
   initLocalStorage,
