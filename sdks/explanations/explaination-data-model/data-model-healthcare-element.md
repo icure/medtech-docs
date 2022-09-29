@@ -25,7 +25,7 @@ A Healthcare Element can use a Coding to associate its medical information to th
 
 ### A Patient Registering Their Symptoms
 
-A User of the application (Patient) wants to add some symptoms she is experiencing (headache) by adding a new Data Sample.
+A Patient wants to add some symptoms she is experiencing (headache) by adding a new Data Sample.
 Then, she adds the information that her period started as a Healthcare Element associated to the Data Sample.
 ```typescript
 const promise = "I THINK THIS OVERLAPS WITH CODING";
