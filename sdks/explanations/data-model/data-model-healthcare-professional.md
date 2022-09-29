@@ -84,7 +84,7 @@ const dataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
 )
 ```
 
-After that, the Doctor receives a notification from the Patient and shares the data with them.
+After that, the Doctor checks if there are new Notifications from the Patient and shares the data with them.
 
 <!-- file://code-samples/explanation/doctor-shares-data-with-patient/index.mts snippet:doctor receives notification-->
 ```typescript
