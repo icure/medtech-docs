@@ -16,7 +16,7 @@ terminologies such as SNOMED CT, ICD-10, and LOINC.
 This section describes the different actors that can operate on the iCure platform.  
 Patient, Medical Device, and Healthcare Professional belong to the [Data Owner](/sdks/glossary#data-owner) category.
 
-### Patient
+### [Patient](/sdks/explanations/explaination-data-model/patient)
 A Patient is an actor that uses the iCure platform to manage they own medical data.  
 Their sensible data are encrypted, and they can decide to share them with other actors, or forbid other actors to access them, at any time.
 
@@ -28,7 +28,7 @@ It can upload medical data to the iCure platform and share them.
 A Healthcare Professional is an actor that is responsible for Patients, Medical Devices as well as other Healthcare Professionals.
 They can invite them to the iCure Platform and, if allowed, manage their data.
 
-### User
+### [User](/sdks/explanations/explaination-data-model/user)
 A User is an actor that can log in to the iCure platform.  
 They can be related to a Patient, a Healthcare Professional, or a Medical Device.
 
