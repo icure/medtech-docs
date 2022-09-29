@@ -62,6 +62,7 @@
 - [AuthenticationApi](interfaces/AuthenticationApi.md)
 - [CodingApi](interfaces/CodingApi.md)
 - [Connection](interfaces/Connection.md)
+- [DataOwnerApi](interfaces/DataOwnerApi.md)
 - [DataSampleApi](interfaces/DataSampleApi.md)
 - [HealthcareElementApi](interfaces/HealthcareElementApi.md)
 - [HealthcareProfessionalApi](interfaces/HealthcareProfessionalApi.md)
@@ -143,7 +144,7 @@
 
 #### Defined in
 
-[src/models/Address.ts:52](https://github.com/icure/icure-medical-device-js-sdk/blob/e20bfa1/src/models/Address.ts#L52)
+[src/models/Address.ts:52](https://github.com/icure/icure-medical-device-js-sdk/blob/3aae8f0/src/models/Address.ts#L52)
 
 ___
 
@@ -153,7 +154,7 @@ ___
 
 #### Defined in
 
-[src/models/HealthcareProfessional.ts:125](https://github.com/icure/icure-medical-device-js-sdk/blob/e20bfa1/src/models/HealthcareProfessional.ts#L125)
+[src/models/HealthcareProfessional.ts:125](https://github.com/icure/icure-medical-device-js-sdk/blob/3aae8f0/src/models/HealthcareProfessional.ts#L125)
 
 ___
 
@@ -163,7 +164,7 @@ ___
 
 #### Defined in
 
-[src/models/Partnership.ts:36](https://github.com/icure/icure-medical-device-js-sdk/blob/e20bfa1/src/models/Partnership.ts#L36)
+[src/models/Partnership.ts:36](https://github.com/icure/icure-medical-device-js-sdk/blob/3aae8f0/src/models/Partnership.ts#L36)
 
 ___
 
@@ -173,7 +174,7 @@ ___
 
 #### Defined in
 
-[src/models/Partnership.ts:35](https://github.com/icure/icure-medical-device-js-sdk/blob/e20bfa1/src/models/Partnership.ts#L35)
+[src/models/Partnership.ts:35](https://github.com/icure/icure-medical-device-js-sdk/blob/3aae8f0/src/models/Partnership.ts#L35)
 
 ___
 
@@ -183,7 +184,7 @@ ___
 
 #### Defined in
 
-[src/models/Patient.ts:282](https://github.com/icure/icure-medical-device-js-sdk/blob/e20bfa1/src/models/Patient.ts#L282)
+[src/models/Patient.ts:282](https://github.com/icure/icure-medical-device-js-sdk/blob/3aae8f0/src/models/Patient.ts#L282)
 
 ___
 
@@ -193,7 +194,7 @@ ___
 
 #### Defined in
 
-[src/models/Patient.ts:283](https://github.com/icure/icure-medical-device-js-sdk/blob/e20bfa1/src/models/Patient.ts#L283)
+[src/models/Patient.ts:283](https://github.com/icure/icure-medical-device-js-sdk/blob/3aae8f0/src/models/Patient.ts#L283)
 
 ___
 
@@ -203,7 +204,7 @@ ___
 
 #### Defined in
 
-[src/models/Patient.ts:281](https://github.com/icure/icure-medical-device-js-sdk/blob/e20bfa1/src/models/Patient.ts#L281)
+[src/models/Patient.ts:281](https://github.com/icure/icure-medical-device-js-sdk/blob/3aae8f0/src/models/Patient.ts#L281)
 
 ___
 
@@ -213,7 +214,7 @@ ___
 
 #### Defined in
 
-[src/models/PatientHealthCareParty.ts:33](https://github.com/icure/icure-medical-device-js-sdk/blob/e20bfa1/src/models/PatientHealthCareParty.ts#L33)
+[src/models/PatientHealthCareParty.ts:33](https://github.com/icure/icure-medical-device-js-sdk/blob/3aae8f0/src/models/PatientHealthCareParty.ts#L33)
 
 ___
 
@@ -223,7 +224,7 @@ ___
 
 #### Defined in
 
-[src/models/Patient.ts:284](https://github.com/icure/icure-medical-device-js-sdk/blob/e20bfa1/src/models/Patient.ts#L284)
+[src/models/Patient.ts:284](https://github.com/icure/icure-medical-device-js-sdk/blob/3aae8f0/src/models/Patient.ts#L284)
 
 ___
 
@@ -233,7 +234,7 @@ ___
 
 #### Defined in
 
-[src/models/PersonName.ts:45](https://github.com/icure/icure-medical-device-js-sdk/blob/e20bfa1/src/models/PersonName.ts#L45)
+[src/models/PersonName.ts:45](https://github.com/icure/icure-medical-device-js-sdk/blob/3aae8f0/src/models/PersonName.ts#L45)
 
 ___
 
@@ -243,7 +244,7 @@ ___
 
 #### Defined in
 
-[src/models/PropertyType.ts:30](https://github.com/icure/icure-medical-device-js-sdk/blob/e20bfa1/src/models/PropertyType.ts#L30)
+[src/models/PropertyType.ts:30](https://github.com/icure/icure-medical-device-js-sdk/blob/3aae8f0/src/models/PropertyType.ts#L30)
 
 ___
 
@@ -253,7 +254,7 @@ ___
 
 #### Defined in
 
-[src/models/User.ts:100](https://github.com/icure/icure-medical-device-js-sdk/blob/e20bfa1/src/models/User.ts#L100)
+[src/models/User.ts:100](https://github.com/icure/icure-medical-device-js-sdk/blob/3aae8f0/src/models/User.ts#L100)
 
 ___
 
@@ -263,7 +264,7 @@ ___
 
 #### Defined in
 
-[src/models/Telecom.ts:32](https://github.com/icure/icure-medical-device-js-sdk/blob/e20bfa1/src/models/Telecom.ts#L32)
+[src/models/Telecom.ts:32](https://github.com/icure/icure-medical-device-js-sdk/blob/3aae8f0/src/models/Telecom.ts#L32)
 
 ___
 
@@ -273,7 +274,7 @@ ___
 
 #### Defined in
 
-[src/models/TypedValueObject.ts:38](https://github.com/icure/icure-medical-device-js-sdk/blob/e20bfa1/src/models/TypedValueObject.ts#L38)
+[src/models/TypedValueObject.ts:38](https://github.com/icure/icure-medical-device-js-sdk/blob/3aae8f0/src/models/TypedValueObject.ts#L38)
 
 ## Variables
 
@@ -629,7 +630,7 @@ ___
 
 #### Defined in
 
-[src/apis/medTechApi.ts:242](https://github.com/icure/icure-medical-device-js-sdk/blob/e20bfa1/src/apis/medTechApi.ts#L242)
+[src/apis/medTechApi.ts:334](https://github.com/icure/icure-medical-device-js-sdk/blob/3aae8f0/src/apis/medTechApi.ts#L334)
 
 ___
 
