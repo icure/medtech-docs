@@ -65,7 +65,7 @@ const dataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
 )
 ```
 
-Then, the Patient sends a Notification to the doctor to ask for access on the data.
+Then, the Patient sends a Notification to the doctor to ask for access to the data.
 
 <!-- file://code-samples/explanation/doctor-shares-data-with-patient/index.mts snippet:patient sends notification-->
 ```typescript
