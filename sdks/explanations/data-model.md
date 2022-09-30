@@ -18,7 +18,7 @@ Patient, Medical Device, and Healthcare Professional belong to the [Data Owner](
 
 ### [Patient](/sdks/explanations/data-model/patient)
 A Patient is an actor that uses the iCure platform to manage they own medical data.  
-Their sensible data are encrypted, and they can decide to share them with other actors, or forbid other actors to access them, at any time.
+Their sensitive data is encrypted, and they can decide to share it with other actors, or forbid other actors to access it, at any time.
 
 ### [Medical Device](/sdks/explanations/data-model/medical-device)
 A Medical Device is an actor that can represent any device used by patients or doctors to acquire data.  
