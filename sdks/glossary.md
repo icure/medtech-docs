@@ -4,7 +4,7 @@ sidebar_position: 6
 # Glossary
 
 ### Terminologies
-Most of the entities in iCure have labels and codes attributes. The codes are based on standard terminology systems used in the healthcare.
+Most of the entities in iCure have labels and codes attributes. The codes are based on standard terminology systems used in the healthcare industry.
 
 * **SNOMED** CT: Snomed CT is a terminology system that contains medical concepts and their relationships. It is used to describe medical concepts in iCure like diseases, symptoms, procedures, etc…
 
