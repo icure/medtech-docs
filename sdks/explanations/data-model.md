@@ -22,7 +22,7 @@ Their sensitive data is encrypted, and they can decide to share it with other ac
 
 ### [Medical Device](/sdks/explanations/data-model/medical-device)
 A Medical Device is an actor that can represent any device used by patients or doctors to acquire data.  
-It can upload medical data to the iCure platform and share them.
+Medical devices can upload data to the iCure platform and share it.
 
 ### [Healthcare Professional](/sdks/explanations/data-model/healthcare-professional)
 A Healthcare Professional is an actor that is responsible for Patients, Medical Devices as well as other Healthcare Professionals.
