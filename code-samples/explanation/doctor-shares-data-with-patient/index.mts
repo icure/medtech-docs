@@ -6,7 +6,7 @@ import {
     medTechApi,
 } from '@icure/medical-device-sdk'
 import { webcrypto } from "crypto";
-import {hex2ua, MaintenanceTask} from "@icure/api";
+import {hex2ua} from "@icure/api";
 import { LocalStorage } from 'node-localstorage';
 import {
     host,
@@ -18,14 +18,17 @@ import {
     privKey,
     userName
 } from "../../utils/index.mjs";
-import os from "os";
+import { tmpdir } from 'os';
 import {expect} from 'chai';
 import {Notification, NotificationTypeEnum} from "@icure/medical-device-sdk/src/models/Notification.js";
 import {v4 as uuid} from 'uuid';
+import { TextDecoder, TextEncoder } from 'util';
 
-const tmp = os.tmpdir();
-(global as any).localStorage = new LocalStorage(tmp, 5 * 1024**3);
-(global as any).Storage = "";
+(global as any).localStorage = new LocalStorage(tmpdir(), 5 * 1024 ** 3);
+(global as any).fetch = fetch;
+(global as any).Storage = '';
+(global as any).TextDecoder = TextDecoder;
+(global as any).TextEncoder = TextEncoder;
 
 const api = await medTechApi()
     .withICureBasePath(host)
