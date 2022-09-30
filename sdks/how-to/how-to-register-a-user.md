@@ -1,4 +1,4 @@
 ---
-slug: how-to-register-a-user
+slug: how-to-authenticate-a-user
 ---
 
