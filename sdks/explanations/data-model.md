@@ -30,7 +30,7 @@ They can invite them to the iCure Platform and, if allowed, manage their data.
 
 ### [User](/sdks/explanations/data-model/user)
 A User is an actor that can log in to the iCure platform.  
-They can be related to a Patient, a Healthcare Professional, or a Medical Device.
+Each user can be related to a Patient, a Healthcare Professional, or a Medical Device.
 
 ## Medical Data Entities
 This section describes the different medical data types managed by the iCure platform.
