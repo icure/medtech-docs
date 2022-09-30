@@ -9,28 +9,29 @@ tags:
 
 A Healthcare Professional is an actor that can manage and is responsible for Patients, Medical Devices and other 
 Healthcare Professionals.  
-As a [Data Owner](/sdks/glossary#data-owner) they can create medical information and share them with other Data Owners.
+As [Data Owners](/sdks/glossary#data-owner) they can create medical information and share it with other Data Owners.
 Other Data Owner can decide to share their medical information with them.
 
-## When to Use a Healthcare Professional?
+## When Should I Use a Healthcare Professional?
 
 You should use a Healthcare Professional when you need to represent a Doctor, or another actor responsible for patients,
-medical data and treatments, in your application.
+medical data, and treatments, in your application.
 
-## How a Healthcare Professional is Related to Other Entities?
+## How is a Healthcare Professional Related to Other Entities?
 
-A Healthcare Professional can create Users for other Patients, Medical Devices, and Healthcare Professionals.  
-A Healthcare Professional can manage other Users, by changing their passwords or deactivating them.  
-A Healthcare Professional can create Data Samples and Healthcare Elements for Patients.  
-A Healthcare Professional can share Data Samples and Healthcare Elements with other Data Owners.  
-A Healthcare Professional can create Notifications and can update the ones shared with them.
+A Healthcare Professional can:
+- create Users for other Patients, Medical Devices, and Healthcare Professionals.  
+- manage other Users, by changing their passwords or deactivating them.  
+- create Data Samples and Healthcare Elements for Patients.  
+- share Data Samples and Healthcare Elements with other Data Owners.  
+- create Notifications and  update the ones shared with them.
 
 ## Examples
 
 ### A Doctor Inviting a Patient
 
-A Doctor (Healthcare Professional) visits for the first time a Patient. After the visit, it invites them to the iCure
-platform.
+A Doctor (Healthcare Professional) visits for the first time a Patient. After the visit, they invite the patient
+to the iCure platform.
 
 <!-- file://code-samples/explanation/doctor-invites-a-patient/index.mts snippet:doctor invites user-->
 ```typescript
@@ -100,7 +101,7 @@ if (!!newPatientNotifications && newPatientNotifications.length > 0) {
 
 ### A Doctor Updating the Status of a Patient
 
-A Doctor (Healthcare Professional) discovers that their Patient is pregnant. Therefore, it updates her condition in the
+A Doctor (Healthcare Professional) discovers that their Patient is pregnant. Therefore, they update her condition in the
 application.
 
 <!-- file://code-samples/explanation/doctor-creates-he/index.mts snippet:doctor can create HE-->

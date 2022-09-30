@@ -20,7 +20,7 @@ A _Data sample_ can be any piece of information related to the health of a patie
 Any action performed by a _healthcare professional_ which is relevant for the healthcare element of a patient should be encoded as a _data sample_.
 
 ## Terminologies
-Most of the entities in iCure have labels and codes attributes. The codes are based on standard terminology systems used in the healthcare.
+Most of the entities in iCure have labels and codes attributes. The codes are based on standard terminology systems used in the healthcare industry.
 
 ### SNOMED CT
 Snomed CT is a terminology system that contains medical concepts and their relationships. It is used to describe medical concepts in iCure like diseases, symptoms, procedures, etc…

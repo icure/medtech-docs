@@ -11,17 +11,18 @@ at a defined moment of time.
 According to the Data Owner that created it, a Data Sample can contain either biometric measurements or other type of 
 unstructured medical data, or both.  
 
-## When to Use a Data Sample?
+## When Should I Use a Data Sample?
 
 You should use a Data Sample when a Data Owner wants to register some kind of objective or subjective medical data 
 related to a Patient.
 
-## How a Data Sample is Related to Other Entities?
+## How is a Data Sample Related to Other Entities?
 
-A Data Sample can be linked to a Healthcare Element, that can provide a context for its measure.  
-A Coding can be used in a Data Sample to associate the medical information or the measurement to the code of a
-[Terminology](http://localhost:3000/sdks/glossary#terminologies)
-A Data Sample is always associated to a Patient.  
+A Data Sample:
+- Is always associated to a Patient.
+- May be linked to oner or more Healthcare Elements, in order to provide a context for its measure.
+- May have a Coding, which associates the medical information or the measurement to the code of a
+[Terminology](http://localhost:3000/sdks/glossary#terminologies).
 
 ## Examples
 
