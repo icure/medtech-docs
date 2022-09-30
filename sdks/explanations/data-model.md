@@ -51,5 +51,5 @@ It is used by Data Samples and Healthcare Elements to describe the different pie
 This section describes all the entities used in the several data management processes of the iCure platform.
 
 ### [Notification](/sdks/explanations/data-model/notification)
-A Notification is a request by a Data Owner for a Healthcare Professional to perform a particular action, such as sharing a piece of information.  
+A Notification is a request by a Data Owner for a Healthcare Professional to perform a particular action, such as sharing a piece of information.
 The type of action and the status of the request are encoded in the Notification itself.
