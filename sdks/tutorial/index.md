@@ -2,37 +2,39 @@
 sidebar_position: 3
 ---
 # Create a Doctor-centric App with iCure
-In this tutorial, you will learn the basic steps to initialize a doctor-centric application, using iCure to store your 
-data.
+In this tutorial, you will learn to create a simple doctor-centric application which uses iCure to securely store data.
 By the end of it, you will be able to : 
-- Instantiate a MedTech API; 
-- Create a Patient; 
-- Get your newly created Patient information; 
-- Create data samples related to your patient;
-- Get your newly created Data Sample information;
-- Search for data samples satisfying some criteria;
+- Instantiate a MedTech API.
+- Create a Patient.
+- Get your newly created Patient information. 
+- Create data samples related to your patient.
+- Get your newly created Data Sample information.
+- Search for data samples satisfying some criteria.
 
 # Pre-requisites
-To begin working with the MedTech SDK, you need to have a valid iCure User. 
-Therefore, you have two possibilities : 
-- Use the free iCure version locally on your computer, where a default user will be created for you. For this, 
-check the [QuickStart](../quick-start.md)
-- Register on the iCure Cockpit to get your iCure Cloud User. For this, check 
-the [How to register on Cockpit](../../cockpit/how-to/how-to-register.md)
+To begin working with the MedTech SDK, you need to have a valid iCure User.
+You can obtain an iCure user in one of the following ways: 
+- Launch a free iCure instance locally on your computer, which will automatically create a default user for you.
+  To learn how to do this refer to the [QuickStart](../quick-start.md) guide.
+- Register on the iCure Cockpit to get your iCure Cloud User.
+  To learn how to do this refer to the [How to register on Cockpit](../../cockpit/how-to/how-to-register.md) guide.
 
 The iCure User credentials and the host URL of the following steps will depend on your choice.    
 
+# Initialize the project
+To start working with the iCure MedTech SDK, add the following dependencies to your package.json file : 
+- `@icure/medical-device-sdk`
+- `isomorphic-fetch`
+- `node-localstorage`
+
 
 # Init your MedTech API
-Once you have your user credentials, you can start using the iCure MedTech SDK
-by instantiating a MedTech API object. 
-
-This API will gather all services you can use in the SDK 
-but also manage the authentication of these.
+Once you have your user credentials, you can start using the iCure MedTech SDK.
+Create an instance of a MedTech API object using your credentials and the desired iCure host.
+This api object will automatically manage the authentication to the iCure backend and give you access to all SDK services.
 
 Provide the iCure host to use, your user credentials in this API. 
-You can also call `initUserCrypto`, which will create a new RSA keypair, assign it to your user and store it 
-in the API.  
+Call `initUserCrypto` to initialize properly the cryptography linked to your user. 
 
 <!-- file://code-samples/tutorial/doctor-centric-app/index.mts snippet:instantiate the api-->
 ```typescript
@@ -51,8 +53,8 @@ await api.initUserCrypto()
 ```
 
 
-If your user already has its RSA Keypair, you can call `initUserCrypto` providing it, which will only 
-store it in the current API. 
+If your user already has its RSA keypair, call `initUserCrypto` providing it, in order to initialize the cryptography 
+properly.  
 Here is an example on how to do it : 
 <!-- file://code-samples/tutorial/doctor-centric-app/index.mts snippet:init user crypto with existing key-->
 ```typescript
@@ -62,6 +64,12 @@ await api.initUserCrypto(false, { publicKey: iCureUserPubKey, privateKey: iCureU
 ```
 For more information about this method, go to the [References: initUserCrypto](../references/classes/MedTechApi.md#initusercrypto)
 
+:::tip
+
+If your solution is a web app, be conscious that if you store the keypair into the browser data and the user deletes them, 
+he will loose his RSA keypair. Make sure to store them in a secured place, and re-import it with this method. 
+
+:::
 
 After instantiating your API, you can now get the information of your logged user. 
 <!-- file://code-samples/tutorial/doctor-centric-app/index.mts snippet:get current user-->
@@ -88,9 +96,8 @@ const createdPatient = await api.patientApi.createOrModifyPatient(new Patient({
 console.log(`Your new patient id : ${createdPatient.id}`);
 ```
 
-When creating your patient, iCure will assign an id to it, format as an uuid.
-
-That's exactly what we'll need to retrieve the information of your patient. 
+Whenever you create a new patient (or any other type of entity) iCure will automatically generate and assign an UUID to it.
+You will need this id to retrieve the information of your patient later. 
 
 # Get your newly created Patient information
 To retrieve your patient information, you will need to call the `patientApi.getPatient` service, providing
