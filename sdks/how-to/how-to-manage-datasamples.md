@@ -7,7 +7,7 @@ tags:
 
 ---
 
-# Handling DataSamples
+# How to handle DataSamples
 
 In this section, we will learn how to manage data samples. DataSamples are used to store data that is not part of the
 patient's medical record, such as blood pressure measurements.
@@ -331,6 +331,7 @@ const matchedDataSampleIds = await api.dataSampleApi.matchDataSample(
 ```
 
 </details>
+
 
 
 

@@ -92,6 +92,8 @@ console.log(`Token created to authenticate your new user: ***\${authenticationRe
 //tech-doc: STOP HERE
 
 //tech-doc: Save credentials
+// saveSecurely does not exist : Use your own way of storing the following data securely
+// One option is to put these elements into the localStorage
 saveSecurely(userEmail, authenticationResult.token, authenticationResult.userId, authenticationResult.groupId, authenticationResult.keyPair)
 //tech-doc: STOP HERE
 
@@ -112,9 +114,13 @@ const createdPatient = await authenticatedApi.patientApi.createOrModifyPatient(n
 
 console.log('Created patient: ', JSON.stringify(createdPatient))
 
+//tech-doc: Get back credentials
+// getBackCredentials does not exist : Use your own way of storing the following data securely
+// One option is to get them back from the localStorage
+const { login, token, pubKey, privKey } = getBackCredentials()
+//tech-doc: STOP HERE
 
 //tech-doc: Instantiate back a MedTechApi
-const { login, token, pubKey, privKey } = getBackCredentials()
 const reInstantiatedApi = await new MedTechApiBuilder()
   .withICureBasePath(iCureUrl)
   .withUserName(login)
@@ -129,7 +135,7 @@ await reInstantiatedApi.initUserCrypto(false, { publicKey: pubKey, privateKey: p
 const foundPatientAfterInstantiatingApi = await reInstantiatedApi.patientApi.getPatient(createdPatient.id)
 //tech-doc: STOP HERE
 
-console.log('Found patient after reinstantiating api', JSON.stringify(foundPatientAfterInstantiatingApi))
+console.log('Found patient after re-instantiating api', JSON.stringify(foundPatientAfterInstantiatingApi))
 
 
 
@@ -156,7 +162,7 @@ const authProcessLogin = await anonymousApiForLogin.authenticationApi.startAuthe
 const validationCodeForLogin = (await getLastEmail(userEmail)).subject!
 console.log('Validation code is ', validationCodeForLogin)
 
-//tech-doc: Complete authentication process
+//tech-doc: Complete login authentication process
 const loginResult = await anonymousApiForLogin.authenticationApi.completeAuthentication(
   authProcessLogin!,
   validationCodeForLogin,
