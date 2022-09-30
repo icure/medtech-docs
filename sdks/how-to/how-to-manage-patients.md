@@ -16,27 +16,27 @@ To create a patient, we can use the `createOrModifyPatient` method on the `Patie
 <!-- file://code-samples/how-to/patients/index.mts snippet:create a patient-->
 ```typescript
 const createdPatient = await api.patientApi.createOrModifyPatient(
-	new Patient({
-		firstName: "Hubert",
-		lastName: "Farnsworth",
+  new Patient({
+    firstName: 'Hubert',
+    lastName: 'Farnsworth',
     dateOfBirth: 28410409,
-    birthSex: "male",
-    gender: "male",
-    profession: "CEO/Owner of Planet Express, Lecturer at Mars University",
+    birthSex: 'male',
+    gender: 'male',
+    profession: 'CEO/Owner of Planet Express, Lecturer at Mars University',
     names: [
       new PersonName({
-        firstNames: ["Hubert", "J"],
-        lastName: "Farnsworth",
-        use: "official"
+        firstNames: ['Hubert', 'J'],
+        lastName: 'Farnsworth',
+        use: 'official',
       }),
       new PersonName({
-        firstNames: ["Professor"],
-        use: "nickname"
-      })
+        firstNames: ['Professor'],
+        use: 'nickname',
+      }),
     ],
-    nationality: "American",
-	})
-);
+    nationality: 'American',
+  }),
+)
 ```
 
 <details>
@@ -116,15 +116,13 @@ To update a patient, we can use the `createOrModifyPatient` method on the `Patie
 
 <!-- file://code-samples/how-to/patients/index.mts snippet:update a patient-->
 ```typescript
-const updatedPatient = await api.patientApi.createOrModifyPatient(
-  {
-    ...createdPatient,
-    // highlight-start
-    modified: undefined,
-    note: "Good news everyone!",
-    // highlight-end
-  }
-);
+const updatedPatient = await api.patientApi.createOrModifyPatient({
+  ...createdPatient,
+  // highlight-start
+  modified: undefined,
+  note: 'Good news everyone!',
+  // highlight-end
+})
 ```
 
 <details>
@@ -204,7 +202,7 @@ To get a patient, we can use the `getPatient` method on the `PatientApi` object.
 
 <!-- file://code-samples/how-to/patients/index.mts snippet:get a patient-->
 ```typescript
-const patient = await api.patientApi.getPatient(updatedPatient.id!);
+const patient = await api.patientApi.getPatient(updatedPatient.id!)
 ```
 
 <details>
@@ -284,7 +282,7 @@ To delete a patient, we can use the `deletePatient` method on the `PatientApi` o
 
 <!-- file://code-samples/how-to/patients/index.mts snippet:delete a patient-->
 ```typescript
-const deletedPatient =  await api.patientApi.deletePatient(patient.id!);
+const deletedPatient = await api.patientApi.deletePatient(patient.id!)
 ```
 
 <details>
@@ -301,13 +299,9 @@ To filter patients, we can use the `filterPatients` method on the `PatientApi` o
 
 <!-- file://code-samples/how-to/patients/index.mts snippet:get a list of patient-->
 ```typescript
-const filter = await new PatientFilter()
-  .forDataOwner(loggedUser.healthcarePartyId!)
-  .byGenderEducationProfession("male")
-  .dateOfBirthBetween(28000101, 29000101)
-  .build();
+const filter = await new PatientFilter().forDataOwner(loggedUser.healthcarePartyId!).byGenderEducationProfession('male').dateOfBirthBetween(28000101, 29000101).build()
 
-const patients = await api.patientApi.filterPatients(filter);
+const patients = await api.patientApi.filterPatients(filter)
 ```
 
 <details>
@@ -325,11 +319,7 @@ In the example above, we created the filter this way:
 
 <!-- file://code-samples/how-to/patients/index.mts snippet:filter builder-->
 ```typescript
-new PatientFilter()
-  .forDataOwner(loggedUser.healthcarePartyId!)
-  .byGenderEducationProfession("male")
-  .dateOfBirthBetween(28000101, 29000101)
-  .build()
+new PatientFilter().forDataOwner(loggedUser.healthcarePartyId!).byGenderEducationProfession('male').dateOfBirthBetween(28000101, 29000101).build()
 ```
 
 The resulting filter object will create a filter that allows us to get all `Patient` that satisfy all the following requirements:
@@ -344,11 +334,7 @@ In some circumstances, you might want to get a list of `Patient` ids instead of 
 
 <!-- file://code-samples/how-to/patients/index.mts snippet:get a list of patient ids-->
 ```typescript
-const filterForMatch = await new PatientFilter()
-  .forDataOwner(loggedUser.healthcarePartyId!)
-  .byGenderEducationProfession("male")
-  .dateOfBirthBetween(28000101, 29000101)
-  .build()
+const filterForMatch = await new PatientFilter().forDataOwner(loggedUser.healthcarePartyId!).byGenderEducationProfession('male').dateOfBirthBetween(28000101, 29000101).build()
 
 const patientIds = await api.patientApi.matchPatients(filterForMatch)
 ```

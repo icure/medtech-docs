@@ -11,9 +11,7 @@ initLocalStorage()
 const api = await initMedTechApi()
 
 const loggedUser = await api.userApi.getLoggedUser()
-await api!.cryptoApi.loadKeyPairsAsTextInBrowserLocalStorage(
-  loggedUser.healthcarePartyId!,
-  hex2ua(privKey),
+await api!.cryptoApi.loadKeyPairsAsTextInBrowserLocalStorage(loggedUser.healthcarePartyId!, hex2ua(privKey),
 )
 
 //tech-doc: create a patient
@@ -70,11 +68,7 @@ expect(patient).to.equal(updatedPatient)
 
 // THIS SHOULD WORK, BUT DOESN'T (We need to merge the PR about RSocket)
 //tech-doc: get a list of patient
-const filter = await new PatientFilter()
-  .forDataOwner(loggedUser.healthcarePartyId!)
-  .byGenderEducationProfession('male')
-  .dateOfBirthBetween(28000101, 29000101)
-  .build()
+const filter = await new PatientFilter().forDataOwner(loggedUser.healthcarePartyId!).byGenderEducationProfession('male').dateOfBirthBetween(28000101, 29000101).build()
 
 const patients = await api.patientApi.filterPatients(filter)
 //tech-doc: STOP HERE
@@ -85,11 +79,7 @@ expect(patients).to.lengthOf.greaterThan(0)
 
 // THIS SHOULD WORK, BUT DOESN'T (We need to merge the PR about RSocket)
 //tech-doc: get a list of patient ids
-const filterForMatch = await new PatientFilter()
-  .forDataOwner(loggedUser.healthcarePartyId!)
-  .byGenderEducationProfession('male')
-  .dateOfBirthBetween(28000101, 29000101)
-  .build()
+const filterForMatch = await new PatientFilter().forDataOwner(loggedUser.healthcarePartyId!).byGenderEducationProfession('male').dateOfBirthBetween(28000101, 29000101).build()
 
 const patientIds = await api.patientApi.matchPatients(filterForMatch)
 //tech-doc: STOP HERE
@@ -107,8 +97,4 @@ console.log('Delete: ', JSON.stringify(deletedPatient))
 expect(deletedPatient).to.equal(patient.id)
 
 //tech-doc: filter builder
-new PatientFilter()
-  .forDataOwner(loggedUser.healthcarePartyId!)
-  .byGenderEducationProfession('male')
-  .dateOfBirthBetween(28000101, 29000101)
-  .build()
+new PatientFilter().forDataOwner(loggedUser.healthcarePartyId!).byGenderEducationProfession('male').dateOfBirthBetween(28000101, 29000101).build()
