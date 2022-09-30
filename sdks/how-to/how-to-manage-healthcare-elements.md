@@ -10,8 +10,8 @@ tags:
 
 A Healthcare Element is a piece of medical information that can be used to give more details about the context of a 
 Patient or a Data Sample.  
-Healthcare Elements can be created by Patients and Healthcare Professionals. As they contain sensitive information, it is
-possible to access them only if in possess of a delegation.
+Healthcare Elements can be created by Patients and Healthcare Professionals. The sensitive information they contain are 
+encrypted and can be accessed only if the Data Owner has a delegation.
 
 :::note
 
@@ -26,6 +26,23 @@ In the following example, a Healthcare Professional will create a Healthcare Ele
 
 <!-- file://code-samples/how-to/manage-healthcare-elements/index.mts snippet:create a HE as data owner-->
 ```typescript
+const newHE = new HealthcareElement({
+  description: 'The patient has been diagnosed Pararibulitis',
+  codes: new Set([
+    new CodingReference({
+      id: 'SNOMEDCT|617|20020131',
+      type: 'SNOMEDCT',
+      code: '617',
+      version: '20020131'
+    })
+  ]),
+  openingDate: new Date("2019-10-12").getTime()
+})
+
+const healthcareElement = await api.healthcareElementApi.createOrModifyHealthcareElement(
+  newHE,
+  patient.id
+)
 ```
 
 :::note
@@ -36,11 +53,33 @@ filled automatically by the backend.
 :::
 
 When creating a new Healthcare Element, you must specify the Patient it is associated to.  
-If the method runs successfully, the Promise will return the newly created Healthcare Element as it is on the database.
+If the method runs successfully, the Promise will return the newly created Healthcare Element as it is on the database.  
 It is also possible to create several Healthcare Elements at once.
 
 <!-- file://code-samples/how-to/manage-healthcare-elements/index.mts snippet:create multiple HEs as data owner-->
 ```typescript
+const healthcareElement1 = new HealthcareElement({
+  description: 'The patient has been diagnosed Pararibulitis',
+  codes: new Set([
+    new CodingReference({
+      id: 'SNOMEDCT|617|20020131',
+      type: 'SNOMEDCT',
+      code: '617',
+      version: '20020131'
+    })
+  ]),
+  openingDate: new Date("2019-10-12").getTime()
+})
+
+const healthcareElement2 = new HealthcareElement({
+  description: 'The patient recovered',
+  openingDate: new Date("2020-11-08").getTime()
+})
+
+const newElements = await api.healthcareElementApi.createOrModifyHealthcareElements(
+  [healthcareElement1, healthcareElement2],
+  patient.id
+)
 ```
 
 In this case, an array of Healthcare Elements is returned.
@@ -58,6 +97,7 @@ After creating the Healthcare Element, the Healthcare Professional shares it wit
 
 <!-- file://code-samples/how-to/manage-healthcare-elements/index.mts snippet:HE sharing with data owner-->
 ```typescript
+const sharedHealthcareElement = await api.healthcareElementApi.giveAccessTo(healthcareElement, patient.id)
 ```
 
 If the operation is successful, the method returns a Promise with the updated Healthcare Element.
@@ -68,6 +108,16 @@ A single Healthcare Element can be retrieved from the Backend using its id.
 
 <!-- file://code-samples/how-to/manage-healthcare-elements/index.mts snippet:retrieve a HE as data owner-->
 ```typescript
+const healthcareElementToRetrieve = new HealthcareElement({
+  description: 'To retrieve, I must create',
+})
+
+const createdHealthcareElement = await api.healthcareElementApi.createOrModifyHealthcareElement(
+  healthcareElementToRetrieve,
+  patient.id
+)
+
+const retrievedHealthcareElement = await api.healthcareElementApi.getHealthcareElement(createdHealthcareElement.id)
 ```
 
 :::caution
@@ -83,6 +133,23 @@ Some fields, like id and rev, cannot be modified.
 
 <!-- file://code-samples/how-to/manage-healthcare-elements/index.mts snippet:modify a HE as data owner-->
 ```typescript
+const yetAnotherHealthcareElement = await api.healthcareElementApi.createOrModifyHealthcareElement(
+  new HealthcareElement({
+    description: 'To modify, I must create',
+  }),
+  patient.id
+)
+
+const modifiedHealthcareElement = {
+  ...yetAnotherHealthcareElement,
+  description: 'I can change and I can add',
+  openingDate: new Date("2019-10-12").getTime()
+}
+
+const modificationResult = await api.healthcareElementApi.createOrModifyHealthcareElement(
+  modifiedHealthcareElement,
+  patient.id
+)
 ```
 
 If the operation is successful, the method returns the updated Healthcare Element as it is stored in the Backend.
@@ -101,6 +168,10 @@ In the following example, you will instantiate a filter to retrieve all the Heal
 
 <!-- file://code-samples/how-to/manage-healthcare-elements/index.mts snippet:create HE filter-->
 ```typescript
+const healthcareElementFilter = await new HealthcareElementFilter()
+  .forDataOwner(user.healthcarePartyId)
+  .forPatients(api.cryptoApi, [patient])
+  .build()
 ```
 
 :::note
@@ -113,6 +184,11 @@ After creating a filter, you can use it to retrieve the Healthcare Elements.
 
 <!-- file://code-samples/how-to/manage-healthcare-elements/index.mts snippet:use HE filter method-->
 ```typescript
+const healthcareElementsFirstPage = await api.healthcareElementApi.filterHealthcareElement(
+  healthcareElementFilter,
+  undefined,
+  10
+)
 ```
 
 Note that the Filter method will return a PaginatedList which contains a number of element up to the maximum you specify
@@ -122,6 +198,11 @@ To retrieve more Healthcare Elements, you can call the same method again, using 
 
 <!-- file://code-samples/how-to/manage-healthcare-elements/index.mts snippet:use HE filter method second page-->
 ```typescript
+const healthcareElementsSecondPage = await api.healthcareElementApi.filterHealthcareElement(
+  healthcareElementFilter,
+  healthcareElementsFirstPage.nextKeyPair.startKeyDocId,
+  10
+)
 ```
 
 If the `nextKeyPair` property of the result is `undefined`, than there are no more Healthcare Elements to retrieve.  
@@ -129,6 +210,7 @@ You can also retrieve just the id of the Healthcare Element instead of the whole
 
 <!-- file://code-samples/how-to/manage-healthcare-elements/index.mts snippet:use HE match method-->
 ```typescript
+const healthcareElementsIdList = await api.healthcareElementApi.matchHealthcareElement(healthcareElementFilter)
 ```
 
 Finally, you can also retrieve all the Healthcare Elements related to a specific patient that the current Data Owner 
@@ -136,6 +218,7 @@ can access.
 
 <!-- file://code-samples/how-to/manage-healthcare-elements/index.mts snippet:use by patient method-->
 ```typescript
+const healthcareElementsForPatient = await api.healthcareElementApi.getHealthcareElementsForPatient(existingPatient)
 ```
 
 
@@ -145,4 +228,12 @@ Finally, a Data Owner that has access to a Healthcare Element can decide to dele
 
 <!-- file://code-samples/how-to/manage-healthcare-elements/index.mts snippet:delete a HE as data owner-->
 ```typescript
+const healthcareElementToDelete = await api.healthcareElementApi.createOrModifyHealthcareElement(
+  new HealthcareElement({
+    description: 'I am doomed',
+  }),
+  patient.id
+)
+
+const deletedHealthcareElement = await api.healthcareElementApi.deleteHealthcareElement(healthcareElementToDelete.id)
 ```
