@@ -6,7 +6,6 @@ tags:
 # What is the iCure Data Model?
 
 The iCure Data Model is an abstraction of the most common concepts in the medical domain. 
-Also, it represents how data are stored in the database.  
 
 The iCure Data Model is designed to organize encrypted data while also optimizing conflict resolution. 
 In addition, it is compatible with other medical Data Models such as Open EHR and FHIR and, in its inner workings, supports 
