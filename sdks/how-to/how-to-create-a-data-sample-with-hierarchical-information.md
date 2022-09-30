@@ -107,7 +107,11 @@ contains the heart rate 1 hour mean and the second DataSample object contains th
 The `content` property allows us to add a MeasureValue object to the DataSample object. In this example the MeasureValue
 object contains the value, the unit, and the unit codes.
 
-**Nota Bene**: *These examples are in no way real values. They are only used to illustrate the concept.*
+:::caution
+
+These examples are in no way real values. They are only used to illustrate the concept.
+
+:::
 
 ## Adding some more DataSample objects nested in the DataSample object root
 
@@ -167,6 +171,12 @@ In the example above, we added a DataSample that contains a `TimeSeries` object 
 and a field named `C°`.
 
 We could also add a `TimeSeries` object with multiple fields and having a matrix of samples (array of arrays).
+
+:::caution
+
+These examples are in no way real values. They are only used to illustrate the concept.
+
+:::
 
 ## Final example
 
