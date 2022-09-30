@@ -19,19 +19,15 @@ You can learn more about the DataSample class in the [DataSample Glossary refere
 
 :::note
 
-We assume that you already know How to manage data samples. If not, please follow the [Handling DataSamples](../how-to/how-to-manage-datasamples) guide
+We assume that you already know how to manage data samples. If not, please follow the [Handling DataSamples](../how-to/how-to-manage-datasamples) guide
 
 :::
 
-
-For example, a data sample may contain another DataSample object with the blood pressure measurements, another
-DataSample object with the heart rate measurements, and so on.
-
 ## Create children DataSamples
 
-In some cases, you may want to create a DataSample with nested DataSamples. For example, you may want to create a DataSample with 1 hour mean heart rate, another DataSample with 8 hour mean heart rate measurements, and so on.
+In some cases, you may want to create a `DataSample` with nested DataSamples. For example, you may want to create a `DataSample` with 1 hour mean heart rate, another DataSample with 8 hour mean heart rate measurements, and so on.
 
-DataSample `content` attribute of type `Map<String, Content>`. The key is the language code ([ISO 639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes)) and the value is the [`Content`](/sdks/references/classes/Content) object.
+`content` is a `DataSample` attribute of type `Map<String, Content>`. The key is the language code ([ISO 639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes)) and the value is the [`Content`](/sdks/references/classes/Content) object.
 
 This `content` map allows us to store different types of data. In this example we will use `compoundValue`, `measureValue` and `timeSeries` properties
 
@@ -42,9 +38,7 @@ The first step is to create the children DataSamples. For example, we will creat
 <!-- file://code-samples/how-to/hierarchical-datasample/index.mts snippet:create children dataSample one hour mean-->
 ```typescript
 const oneHourMeanDataSample = new DataSample({
-  labels: new Set([
-    new CodingReference({type: 'LOINC', code: '41920-0', version: '2.73'}),
-  ]),
+  labels: new Set([new CodingReference({ type: 'LOINC', code: '41920-0', version: '2.73' })]),
   comment: 'Heart rate 1 hour mean',
   openingDate: 20220929083400,
   content: {
@@ -52,13 +46,11 @@ const oneHourMeanDataSample = new DataSample({
       measureValue: {
         value: 72,
         unit: '{beats}/min',
-        unitCodes: new Set([
-          new CodingReference({type: 'UCUM', code: '{beats}/min', version: '1.2'}),
-        ]),
-      }
-    }
-  }
-});
+        unitCodes: new Set([new CodingReference({ type: 'UCUM', code: '{beats}/min', version: '1.2' })]),
+      },
+    },
+  },
+})
 ```
 
 ### 2. Eight hours mean heart rate measurements.
@@ -68,9 +60,7 @@ Then, we will create a DataSample with 8 hours mean heart rate measurements.
 <!-- file://code-samples/how-to/hierarchical-datasample/index.mts snippet:create children dataSample eight hour mean-->
 ```typescript
 const eightHourMeanDataSample = new DataSample({
-  labels: new Set([
-    new CodingReference({type: 'LOINC', code: '41921-8', version: '2.73'}),
-  ]),
+  labels: new Set([new CodingReference({ type: 'LOINC', code: '41921-8', version: '2.73' })]),
   comment: 'Heart rate 8 hour mean',
   openingDate: 20220929083400,
   content: {
@@ -78,13 +68,11 @@ const eightHourMeanDataSample = new DataSample({
       measureValue: {
         value: 63,
         unit: '{beats}/min',
-        unitCodes: new Set([
-          new CodingReference({type: 'UCUM', code: '{beats}/min', version: '1.2'}),
-        ]),
-      }
-    }
-  }
-});
+        unitCodes: new Set([new CodingReference({ type: 'UCUM', code: '{beats}/min', version: '1.2' })]),
+      },
+    },
+  },
+})
 ```
 
 ### 3. Temperatures (TimeSeries)
@@ -94,25 +82,19 @@ To showcase the TimeSeries, we will create a DataSample with the temperatures.
 <!-- file://code-samples/how-to/hierarchical-datasample/index.mts snippet:create children dataSample temperatures-->
 ```typescript
 const temperaturesDataSample = new DataSample({
-  labels: new Set([
-    new CodingReference({type: 'LOINC', code: '8310-5', version: '2.73'}),
-  ]),
+  labels: new Set([new CodingReference({ type: 'LOINC', code: '8310-5', version: '2.73' })]),
   comment: 'Body temperature',
   openingDate: 20220929083400,
   content: {
     en: {
       // highlight-start
-      timeSeries: new TimeSeries(
-        {
-          samples: Array.apply(null, {length: 60}).map(Function.call, () => Array.apply(null, {length: 1}).map(Function.call, () => Math.random() + 36.2)), // Simulate 60 random values for temperature between 36.2 and 37.2
-          fields: [
-            'C°'
-          ],
-        }
-      )
+      timeSeries: new TimeSeries({
+        samples: Array.apply(null, { length: 60 }).map(Function.call, () => Array.apply(null, { length: 1 }).map(Function.call, () => Math.random() + 36.2)), // Simulate 60 random values for temperature between 36.2 and 37.2
+        fields: ['C°'],
+      }),
       // highlight-end
-    }
-  }
+    },
+  },
 })
 ```
 
@@ -130,10 +112,10 @@ Now that we have created the children DataSamples, we can create the parent Data
 ```typescript
 const meanHeartRateDataSample = new DataSample({
   labels: new Set([
-    new CodingReference({type: 'LOINC', code: '43149-4', version: '2.73'}),
+    new CodingReference({ type: 'LOINC', code: '43149-4', version: '2.73' }),
     // highlight-start
-    new CodingReference({type: 'LOINC', code: '41920-0', version: '2.73'}),
-    new CodingReference({type: 'LOINC', code: '41921-8', version: '2.73'}),
+    new CodingReference({ type: 'LOINC', code: '41920-0', version: '2.73' }),
+    new CodingReference({ type: 'LOINC', code: '41921-8', version: '2.73' }),
     // highlight-end
   ]),
   openingDate: 20220929083400,
@@ -145,15 +127,12 @@ const meanHeartRateDataSample = new DataSample({
         eightHourMeanDataSample,
         temperaturesDataSample,
         // highlight-end
-      ]
-    }
-  }
+      ],
+    },
+  },
 })
 
-const createdDataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
-  patient.id!,
-  meanHeartRateDataSample
-);
+const createdDataSample = await api.dataSampleApi.createOrModifyDataSampleFor(patient.id!, meanHeartRateDataSample)
 ```
 
 <details>
@@ -303,7 +282,3 @@ You cannot apply filter on nested DataSamples. You can only filter on the parent
 ### Deleting and updating
 
 You can update or delete nested DataSamples. But you will have to do it manually by updating the parent DataSample.
-
-
-
-
