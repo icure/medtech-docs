@@ -1,4 +1,12 @@
-import { Address, DataSampleFilter, HealthcareProfessional, HealthcareProfessionalFilter, medTechApi, Telecom, UserFilter } from '@icure/medical-device-sdk'
+import {
+  Address,
+  DataSampleFilter,
+  HealthcareProfessional,
+  HealthcareProfessionalFilter,
+  medTechApi,
+  Telecom,
+  UserFilter,
+} from '@icure/medical-device-sdk'
 import { webcrypto } from 'crypto'
 import { host, userName, password } from '../../utils/index.mjs'
 import 'isomorphic-fetch'
@@ -36,11 +44,13 @@ const healthcareProfessional: HealthcareProfessional = new HealthcareProfessiona
           telecomNumber: `jk@hospital.care`,
         }),
       ],
-    })
-    ],
+    }),
+  ],
 })
 
-const createdHcp = await api.healthcareProfessionalApi.createOrModifyHealthcareProfessional(healthcareProfessional)
+const createdHcp = await api.healthcareProfessionalApi.createOrModifyHealthcareProfessional(
+  healthcareProfessional,
+)
 
 //tech-doc: STOP HERE
 expect(createdHcp.id).to.be.a('string')
@@ -59,7 +69,8 @@ expect(loadedHcp.lastName).to.equal('Keats')
 //tech-doc: Filter healthcare professionals
 const hcps = await api.healthcareProfessionalApi.filterHealthcareProfessionalBy(
   await new HealthcareProfessionalFilter()
-    .byLabelCodeFilter(undefined, undefined, 'practicioner-specialty', 'psychiatrist').build(),
+    .byLabelCodeFilter(undefined, undefined, 'practicioner-specialty', 'psychiatrist')
+    .build(),
 )
 
 //tech-doc: STOP HERE

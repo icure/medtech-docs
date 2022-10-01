@@ -1,9 +1,15 @@
 import 'isomorphic-fetch'
 
-import {DataSample, Patient, medTechApi, CodingReference, DataSampleFilter} from "@icure/medical-device-sdk";
-import {initLocalStorage} from "../../utils/index.mjs";
-import {expect} from "chai";
-import {webcrypto} from "crypto";
+import {
+  DataSample,
+  Patient,
+  medTechApi,
+  CodingReference,
+  DataSampleFilter,
+} from '@icure/medical-device-sdk'
+import { initLocalStorage } from '../../utils/index.mjs'
+import { expect } from 'chai'
+import { webcrypto } from 'crypto'
 
 initLocalStorage()
 
@@ -13,11 +19,11 @@ const iCureUserPassword = process.env.ICURE_USER_PASSWORD!
 const iCureUserLogin = process.env.ICURE_USER_NAME!
 
 const api = await medTechApi()
-    .withICureBasePath(iCureHost)
-    .withUserName(iCureUserLogin)
-    .withPassword(iCureUserPassword)
-    .withCrypto(webcrypto as any)
-    .build()
+  .withICureBasePath(iCureHost)
+  .withUserName(iCureUserLogin)
+  .withPassword(iCureUserPassword)
+  .withCrypto(webcrypto as any)
+  .build()
 
 await api.initUserCrypto()
 //tech-doc: STOP HERE
@@ -34,13 +40,15 @@ expect(loggedUser.login).to.be.equal(iCureUserLogin)
 //tech-doc: STOP HERE
 
 //tech-doc: create your first patient
-const createdPatient = await api.patientApi.createOrModifyPatient(new Patient({
+const createdPatient = await api.patientApi.createOrModifyPatient(
+  new Patient({
     firstName: 'John',
     lastName: 'Snow',
     gender: 'male',
-    note: 'Winter is coming'
-}))
-console.log(`Your new patient id : ${createdPatient.id}`);
+    note: 'Winter is coming',
+  }),
+)
+console.log(`Your new patient id : ${createdPatient.id}`)
 //tech-doc: STOP HERE
 
 //tech-doc: get your patient information
@@ -49,27 +57,29 @@ expect(createdPatient.id).to.be.equal(johnSnow.id)
 //tech-doc: STOP HERE
 
 //tech-doc: create your patient first medical data
-const createdData = await api.dataSampleApi.createOrModifyDataSamplesFor(johnSnow.id, [new DataSample({
+const createdData = await api.dataSampleApi.createOrModifyDataSamplesFor(johnSnow.id, [
+  new DataSample({
     labels: new Set([new CodingReference({ type: 'LOINC', code: '29463-7', version: '2' })]),
     content: { en: { numberValue: 92.5 } },
     valueDate: 20220203111034,
-    comment: 'Weight'
-}),
-    new DataSample({
-        labels: new Set([new CodingReference({ type: 'LOINC', code: '8302-2', version: '2' })]),
-        content: { 'en': { numberValue: 187 } },
-        valueDate: 20220203111034,
-        comment: 'Height'
-    })
+    comment: 'Weight',
+  }),
+  new DataSample({
+    labels: new Set([new CodingReference({ type: 'LOINC', code: '8302-2', version: '2' })]),
+    content: { en: { numberValue: 187 } },
+    valueDate: 20220203111034,
+    comment: 'Height',
+  }),
 ])
 //tech-doc: STOP HERE
 
 //tech-doc: Find your patient medical data following some criteria
-const johnData = await api.dataSampleApi.filterDataSample(await new DataSampleFilter()
+const johnData = await api.dataSampleApi.filterDataSample(
+  await new DataSampleFilter()
     .forDataOwner(api.dataOwnerApi.getDataOwnerIdOf(loggedUser))
     .forPatients(api.cryptoApi, [johnSnow])
     .byTagCodeFilter('LOINC', '29463-7')
-    .build()
+    .build(),
 )
 
 expect(johnData.rows.length).to.be.equal(1)

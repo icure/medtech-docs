@@ -9,11 +9,11 @@ export const username = process.env.ICURE_USER_NAME
 export const password = process.env.ICURE_USER_PASSWORD
 console.log(host) //skip
 const api = await medTechApi()
-    .withICureBasePath(host)
-    .withUserName(username)
-    .withPassword(password)
-    .withCrypto(webcrypto)
-    .build();
+  .withICureBasePath(host)
+  .withUserName(username)
+  .withPassword(password)
+  .withCrypto(webcrypto)
+  .build()
 //tech-doc: get the currently logged user
 const user = await api.userApi.getLoggedUser()
 console.log(JSON.stringify(user))
