@@ -21,7 +21,7 @@ The _data owner_ is also responsible for encrypting the data it creates and maki
 
 * **Patient**: The _patient_ is the recipient of care. Nearly all medical information inside iCure is linked directly or indirectly to a patient. The _patient_ entity is usually created during the first contact of a patient with a healthcare party. The administrative information of the patient can be partially or totally encrypted before being saved inside the _patient_ entity.
 
-* **Healthcare** professional: A _healthcare professional_ is someone who is recognized to provide care or services for a patient. A _healthcare professional_ is either an individual _healthcare professional_ (a doctor, a nurse, a physiotherapist, etc…) or an organization (a clinic, a hospital, a government authority, etc…). A _healthcare professional_ includes anyone who is a stakeholder for the patient health and can access and manage the patient's file.
+* **Healthcare professional**: A _healthcare professional_ is someone who is recognized to provide care or services for a patient. A _healthcare professional_ is either an individual _healthcare professional_ (a doctor, a nurse, a physiotherapist, etc…) or an organization (a clinic, a hospital, a government authority, etc…). A _healthcare professional_ includes anyone who is a stakeholder for the patient health and can access and manage the patient's file.
 
 * **Device**: A _device_ is a piece of hardware that can be used to collect data. A _device_ can be a medical device (a blood pressure monitor, a glucometer, a pacemaker, etc…) or a non-medical device (a smartphone, a tablet, a computer, etc…). A _device_ can be used by a _healthcare professional_ or a _patient_.
 

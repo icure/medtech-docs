@@ -28,8 +28,8 @@
     ]
   },
   "dependencies": {
-    "@icure/api": "4.2.38",
-    "@icure/medical-device-sdk": "^0.6.0",
+    "@icure/api": "4.2.39",
+    "@icure/medical-device-sdk": "^0.6.2",
     "isomorphic-fetch": "^3.0.0",
     "node-fetch": "^2.6.1",
     "node-localstorage": "^2.2.1"
