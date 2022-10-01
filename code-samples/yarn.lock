@@ -62,10 +62,10 @@
   resolved "https://registry.yarnpkg.com/@humanwhocodes/object-schema/-/object-schema-1.2.1.tgz#b520529ec21d8e5945a1851dfd1c32e94e39ff45"
   integrity sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==
 
-"@icure/api@4.2.38":
-  version "4.2.38"
-  resolved "https://registry.yarnpkg.com/@icure/api/-/api-4.2.38.tgz#6dffe4bccb32816fd471cd2b1851dee61889563f"
-  integrity sha512-AarqVZO3VqeTjBEX82tlHTqm3d/Xydl9/kiwCYtc9T8X8oVzyPxd/49TIKfwynan08mrkwsZq6kOoOg6aEuKuw==
+"@icure/api@4.2.39":
+  version "4.2.39"
+  resolved "https://registry.yarnpkg.com/@icure/api/-/api-4.2.39.tgz#5c5b4751aa688e4e7bb0f184d7df832d4b19c7c0"
+  integrity sha512-/HHA9eCVRMsKqWDrrnzTB1CZRCvtI0oRgo1j+TQlSjiO0KTKP43X7qUgMn5UD4jbaHJ5isMj91CCwt0xiy2M9Q==
   dependencies:
     date-fns "^2.23.0"
     libphonenumber-js "^1.7.18"
@@ -75,12 +75,12 @@
     uuid "^8.3.2"
     uuid-encoder "^1.1.0"
 
-"@icure/medical-device-sdk@^0.6.1":
-  version "0.6.1"
-  resolved "https://registry.yarnpkg.com/@icure/medical-device-sdk/-/medical-device-sdk-0.6.1.tgz#bbcf7b95d74fbd753e2b29b730978f599f7d2fab"
-  integrity sha512-zBnWtqIGnpfrsn7TZrLuE6TIPzoX8A/kr9UqUVOPTJ73UWRrFm8oGaJkgRgLEGzMpizjQelya/pNSj3/WCk2LQ==
+"@icure/medical-device-sdk@^0.6.2":
+  version "0.6.2"
+  resolved "https://registry.yarnpkg.com/@icure/medical-device-sdk/-/medical-device-sdk-0.6.2.tgz#01baa93e4d160f57df2eae6db1dd5ad24394dfb3"
+  integrity sha512-1RcyW93TW6YTDYTQzpYwweWw1nqIALJadfil/hCeeYLBzzw+WdwNgvlmos95JcoE/Osu4l/l8XIZf3vlkE9tsA==
   dependencies:
-    "@icure/api" "4.2.38"
+    "@icure/api" "4.2.39"
     date-fns "^2.28.0"
     es6-promise "^4.2.4"
     node-jq "^2.3.3"
