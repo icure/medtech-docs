@@ -18,7 +18,7 @@ Therefore, you have two possibilities :
 - Use the free iCure version locally on your computer, where a default user will be created for you. For this, 
 check the [QuickStart](../quick-start.md)
 - Register on the iCure Cockpit to get your iCure Cloud User. For this, check 
-the [How to register on Cockpit](../../cockpit/how-to/how-to-register.md)
+the [How to register on Cockpit](https://docs.icure.com/cockpit/how-to/how-to-register.md)
 
 The iCure User credentials and the host URL of the following steps will depend on your choice.    
 

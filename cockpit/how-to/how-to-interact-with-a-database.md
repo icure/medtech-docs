@@ -16,11 +16,11 @@ From the [dashboard](https://cockpit.icure.cloud/dashboard) of the cockpit, chos
 
 To create new database click on 'Add database' button.
 
-![Add databases](./img/app-interactions/add-databases.png)
+![Add databases](./img/database-interactions/add-databases.png)
 
 Fill in the database name and chose the cluster from the dropwown and click on the "Add" button.
 
-![Add databases modal](./img/app-interactions/add-databases-modal.png)
+![Add databases modal](./img/database-interactions/add-databases-modal.png)
 
 ## Manage database
 

@@ -25,6 +25,6 @@ To hit the ground running, you can head to our [quick-start](./quick-start.md) o
 
 In the [how-to](./how-to/index.md) section, you will find more detailed information on how to use the SDKs to perform the most common tasks.
 
-The [explanation](./explanations/index.md) section contains more in-depth information on how iCure works and how data is organised, secured and stored.
+The [explanation](./explanations.md) section contains more in-depth information on how iCure works and how data is organised, secured and stored.
 
-The [reference](./references/index.md) section contains the full documentation of the SDKs and the API.
+The [reference](./references/modules.md) section contains the full documentation of the SDKs and the API.
