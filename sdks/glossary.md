@@ -25,8 +25,7 @@ The _data owner_ is also responsible for encrypting the data it creates and maki
 
 * **Device**: A _device_ is a piece of hardware that can be used to collect data. A _device_ can be a medical device (a blood pressure monitor, a glucometer, a pacemaker, etc…) or a non-medical device (a smartphone, a tablet, a computer, etc…). A _device_ can be used by a _healthcare professional_ or a _patient_.
 
-### Data sample
+### Data Sample
 A _Data sample_ can be any piece of information related to the health of a patient. This includes subjective information provided by the patient, such as complaints, reason for visit, feelings, etc… or objective information like bio-metric measures (blood pressure, temperature, heart beat, etc…), or physical exam description, diagnosis, prescription, integration of lab reports from another healthcare party, action plan, etc…;
 
 Any action performed by a _healthcare professional_ which is relevant for the healthcare element of a patient should be encoded as a _data sample_.
-
