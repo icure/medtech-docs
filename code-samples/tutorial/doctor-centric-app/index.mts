@@ -1,3 +1,5 @@
+import 'isomorphic-fetch'
+
 import { DataSample, Patient, CodingReference, DataSampleFilter } from '@icure/medical-device-sdk'
 import { initLocalStorage, initMedTechApi, privKey, pubKey, userName } from '../../utils/index.mjs'
 import { expect } from 'chai'
@@ -38,7 +40,11 @@ const createdData = await api.dataSampleApi.createOrModifyDataSamplesFor(johnSno
 ])
 
 const johnData = await api.dataSampleApi.filterDataSample(
-  await new DataSampleFilter().forDataOwner(api.dataOwnerApi.getDataOwnerIdOf(loggedUser)).forPatients(api.cryptoApi, [johnSnow]).byTagCodeFilter('LOINC', '29463-7').build(),
+  await new DataSampleFilter()
+    .forDataOwner(api.dataOwnerApi.getDataOwnerIdOf(loggedUser))
+    .forPatients(api.cryptoApi, [johnSnow])
+    .byTagCodeFilter('LOINC', '29463-7')
+    .build(),
 )
 
 expect(johnData.rows.length).to.be.equal(1)

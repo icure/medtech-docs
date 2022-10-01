@@ -112,3 +112,4 @@ To stop listening to events, you can call the `close` method on the `Connection`
 ```typescript
 connection.close()
 ```
+
