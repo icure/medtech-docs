@@ -3,7 +3,7 @@ sidebar_position: 3
 ---
 # Create a Doctor-centric App with iCure
 In this tutorial, you will learn to create a simple doctor-centric application which uses iCure to securely store data.
-By the end of it, you will be able to : 
+By the end of it, you will be able to: 
 - Instantiate a MedTech API.
 - Create a Patient.
 - Get your newly created Patient information. 
@@ -56,12 +56,12 @@ const loggedUser = await api.userApi.getLoggedUser()
 expect(loggedUser.login).to.be.equal(iCureUserLogin)
 ```
 
-At this point, your user can get data but is not able to encrypt/decrypt it. For this, you need to create and assign him 
+At this point, your user can get data but is not able to encrypt/decrypt it. For this, you need to create and assign them 
 an RSA keypair.  
 
 
 ## Init user cryptography
-`initUserCrypto` will create an RSA Keypair and assign it to your user. This way, (s)he will be able to encrypt/decrypt 
+`initUserCrypto` will create an RSA Keypair and assign it to your user. This way, they will be able to encrypt/decrypt 
 data.
 
 <!-- file://code-samples/tutorial/doctor-centric-app/index.mts snippet:init user crypto-->
@@ -72,10 +72,10 @@ await api.initUserCrypto()
 This works for the first time you're initializing user cryptography. However, you don't want to create an RSA keypair 
 each time your user connects. 
 
-If your user already has her/his RSA keypair, call `initUserCrypto` providing her/his existing keypair, in order to 
+If your user already has her/his RSA keypair, call `initUserCrypto` providing their existing keypair, in order to 
 initialize the cryptography properly. 
 
-Here is an example on how to do it :
+Here is an example on how to do it:
 <!-- file://code-samples/tutorial/doctor-centric-app/index.mts snippet:init user crypto with existing key-->
 ```typescript
 const iCureUserPubKey = process.env.ICURE_USER_PUB_KEY!
@@ -86,10 +86,29 @@ For more information about this method, go to the [References: initUserCrypto](.
 
 :::tip
 
-If your solution is a web app, be conscious that if you store the keypair into the browser data and the user deletes them,
-he will lose his RSA keypair. Make sure to store them in a secured place, and re-import it with this method.
-Also, if you're working with Node and would like to store user keypair in the local storage, make sure to initialize it 
-first. 
+If your solution is a web app, be conscious that if you store the keypair into the browser data and the user deletes it,
+they will lose his RSA keypair. Make sure to store the keypair in a secured place, and re-import it with this method.
+
+:::
+
+:::caution
+
+If you're working with Node and would like to store the user keypair in the local storage, you will have to initialize 
+it first.
+
+<details>
+<summary>Example</summary>
+
+```typescript
+import { LocalStorage } from 'node-localstorage'
+
+const tmp = os.tmpdir()
+console.log('Saving keys in ' + tmp)
+;(global as any).localStorage = new LocalStorage(tmp, 5 * 1024 * 1024 * 1024)
+;(global as any).Storage = ''
+```
+q
+</details>
 
 :::
 
@@ -113,12 +132,12 @@ console.log(`Your new patient id : ${createdPatient.id}`);
 
 :::info
 
-To call those services, you always have to fully [initialize your MedTechApi](#init-your-medtech-api) and init 
+To call these services, you always have to fully [initialize your MedTechApi](#init-your-medtech-api) and init 
 [your user cryptography](#init-user-cryptography)
 
 :::
 
-Whenever you create a new patient (or any other type of entity) iCure will automatically generate and assign an UUID to it.
+Whenever you create a new patient (or any other type of entity) iCure will automatically generate and assign a UUID to it.
 You will need this id to retrieve the information of your patient later. 
 
 ## Get your newly created Patient information
@@ -140,7 +159,7 @@ For example, when a patient goes to the doctor, we can use data samples to regis
 the results of measurements taken by the doctor. 
 
 You can create a new data sample with `dataSampleApi.createOrModifyDataSample`. If you want to create many data samples at once, 
-you can use `dataSampleApi.createOrModifyDataSamples`.
+you should instead use `dataSampleApi.createOrModifyDataSamples`.
 Link these data samples to the patient you created earlier through the `patientId` parameter.
 A data sample must always be linked to a patient. 
 
@@ -208,7 +227,4 @@ To know more about the Data Sample information, go check the [References](../ref
 Congratulations, you are now able to use the basic functions of the iCure MedTech SDK. 
 However, the SDK offers a lot of other services: head to the [How-To](../how-to/index.md) section to discover all of them. 
 You can also check the different [In-Depth Explanations](../explanations.md), to understand fully what's happening 
-behind each service of iCure.   
-
-
-
+behind each service of iCure.
