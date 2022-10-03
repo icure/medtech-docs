@@ -40,7 +40,7 @@ const inject = async (path: string) => {
     if (currentExample) {
         throw new Error('Unclosed code block detected')
     }
-    return dst
+    return dst.replace(/\n\n+$/,'\n')
 }
 
 async function registerExample(path: string) {

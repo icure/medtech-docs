@@ -24,7 +24,7 @@ Currently, iCure supports the following event types for the following entities:
 
 :::note
 
-We assume that you have already read the [How to register a user](./how-to-register-a-user.md) and [How to login as a user](./how-to-login-as-a-user.md) guides.
+We assume that you already know the [How to register a user](./how-to-register-a-user.md) and [How to login as a user](./how-to-login-as-a-user.md) guides.
 
 :::
 
