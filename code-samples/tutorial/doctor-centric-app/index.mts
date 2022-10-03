@@ -1,3 +1,5 @@
+import 'isomorphic-fetch'
+
 import {DataSample, Patient, medTechApi, CodingReference, DataSampleFilter} from "@icure/medical-device-sdk";
 import {initLocalStorage} from "../../utils/index.mjs";
 import {expect} from "chai";

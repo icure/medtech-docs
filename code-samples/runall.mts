@@ -18,7 +18,10 @@ function scanAndRunRecursively(dir: string) {
       if (filename !== 'node_modules') {
         if (fs.lstatSync(fullpath).isDirectory()) {
           scanAndRunRecursively(fullpath)
-        } else if ((filename === 'index.js' || filename === 'index.mjs') && fs.lstatSync(fullpath).isFile()) {
+        } else if (
+          (filename === 'index.js' || filename === 'index.mjs') &&
+          fs.lstatSync(fullpath).isFile()
+        ) {
           const relative = '.' + fullpath.slice(cwd.length)
           console.log(`Running ${relative}`)
           execSync(`node ${relative}`, { env: Process.env, stdio: 'inherit' })

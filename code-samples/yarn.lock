@@ -75,10 +75,10 @@
     uuid "^8.3.2"
     uuid-encoder "^1.1.0"
 
-"@icure/medical-device-sdk@^0.6.0":
-  version "0.6.0"
-  resolved "https://registry.yarnpkg.com/@icure/medical-device-sdk/-/medical-device-sdk-0.6.0.tgz#752fb065767d7115f80caafb6ea1f02751c32ed8"
-  integrity sha512-2uXkCsZY3GPyHMKFRnoubddG/b4FjDJ/fHTpBI8E3edYNT6pmcPhMRJpxhB7XlT7NgUMTE7BzWIK4N3KTObN0w==
+"@icure/medical-device-sdk@^0.6.1":
+  version "0.6.1"
+  resolved "https://registry.yarnpkg.com/@icure/medical-device-sdk/-/medical-device-sdk-0.6.1.tgz#bbcf7b95d74fbd753e2b29b730978f599f7d2fab"
+  integrity sha512-zBnWtqIGnpfrsn7TZrLuE6TIPzoX8A/kr9UqUVOPTJ73UWRrFm8oGaJkgRgLEGzMpizjQelya/pNSj3/WCk2LQ==
   dependencies:
     "@icure/api" "4.2.38"
     date-fns "^2.28.0"

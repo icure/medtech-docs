@@ -31,26 +31,22 @@ We assume that you already know the [How to register a user](./how-to-register-a
 As an example, we will listen to `CREATE` events for `DataSample` objects. This methodology can be applied to any other type of event and objects.
 
 <!-- file://code-samples/how-to/rsocket/index.mts snippet:can listen to dataSample events-->
-
 ```typescript
-const events: DataSample[] = [];
-const statuses: string[] = [];
+const events: DataSample[] = []
+const statuses: string[] = []
 
 const connection = (
   await api.dataSampleApi.subscribeToDataSampleEvents(
-    ["CREATE"], // Event types to listen to
-    await new DataSampleFilter()
-      .forDataOwner(loggedUser.healthcarePartyId!)
-      .byTagCodeFilter("IC-TEST", "TEST")
-      .build(),
+    ['CREATE'], // Event types to listen to
+    await new DataSampleFilter().forDataOwner(loggedUser.healthcarePartyId!).byTagCodeFilter('IC-TEST', 'TEST').build(),
     async (ds) => {
-      events.push(ds);
+      events.push(ds)
     },
-    {} // Options
+    {}, // Options
   )
 )
-  .onConnected(() => statuses.push("CONNECTED"))
-  .onClosed(() => statuses.push("CLOSED"));
+  .onConnected(() => statuses.push('CONNECTED'))
+  .onClosed(() => statuses.push('CLOSED'))
 ```
 
 The `subscribeToDataSampleEvents` method takes 4 parameters:
@@ -83,15 +79,14 @@ We assume that you already have a patient created. If not, you can add the follo
   <summary>Create a patient</summary>
 
 <!-- file://code-samples/how-to/rsocket/index.mts snippet:create a patient for rsocket-->
-
 ```typescript
 const patient = await api.patientApi.createOrModifyPatient(
   new Patient({
-    firstName: "John",
-    lastName: "Snow",
-    note: "Winter is coming",
-  })
-);
+    firstName: 'John',
+    lastName: 'Snow',
+    note: 'Winter is coming',
+  }),
+)
 ```
 
 </details>
@@ -99,15 +94,14 @@ const patient = await api.patientApi.createOrModifyPatient(
 :::
 
 <!-- file://code-samples/how-to/rsocket/index.mts snippet:create a dataSample for rsocket-->
-
 ```typescript
 await api.dataSampleApi.createOrModifyDataSampleFor(
   patient.id!,
   new DataSample({
-    labels: new Set([new CodingReference({ type: "IC-TEST", code: "TEST" })]),
-    content: { en: { stringValue: "Hello world" } },
-  })
-);
+    labels: new Set([new CodingReference({ type: 'IC-TEST', code: 'TEST' })]),
+    content: { en: { stringValue: 'Hello world' } },
+  }),
+)
 ```
 
 ## How to stop listening to events&#8239;?
@@ -115,7 +109,7 @@ await api.dataSampleApi.createOrModifyDataSampleFor(
 To stop listening to events, you can call the `close` method on the `Connection` object.
 
 <!-- file://code-samples/how-to/rsocket/index.mts snippet:close the connection-->
-
 ```typescript
-connection.close();
+connection.close()
 ```
+
