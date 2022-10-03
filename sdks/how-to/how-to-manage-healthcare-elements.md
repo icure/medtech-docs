@@ -8,10 +8,9 @@ tags:
 
 ## What is a Healthcare Element?
 
-A Healthcare Element is a piece of medical information that can be used to give more details about the context of a 
-Patient or a Data Sample.  
+A Healthcare Element is a piece of medical information that can be used to give more details about the context of  a Data Sample.  It typically describes a long lasting condition affecting a Patient.
 Healthcare Elements can be created by Patients and Healthcare Professionals. The sensitive information they contain are 
-encrypted and can be accessed only if the Data Owner has a delegation.
+encrypted and can be read only by Data Owners with an explicit access.
 
 :::note
 
@@ -21,8 +20,7 @@ To perform the following operations, we suppose you have at least a Patient and 
 
 ## Creating a Healthcare Element
 
-In the following example, a Healthcare Professional will create a Healthcare Element related to a Patient, to update its
- condition related to a disease.
+In the following example, a Healthcare Professional will create, for a Patient, a Healthcare Element describing a medical condition.
 
 <!-- file://code-samples/how-to/manage-healthcare-elements/index.mts snippet:create a HE as data owner-->
 ```typescript
@@ -122,7 +120,7 @@ const retrievedHealthcareElement = await api.healthcareElementApi.getHealthcareE
 
 :::caution
 
-Trying to retrieve a Healthcare Element you do not have access to will result in an error.
+Trying to retrieve a Healthcare Element you do not have access to will produce an error.
 
 :::
 
@@ -163,7 +161,7 @@ To update a Healthcare Element, both id and rev fields must be valid.
 ## Retrieving Healthcare Element Using Complex Search Criteria
 
 If you want to retrieve a set of Healthcare Element that satisfy complex criteria, you can use a Filter.  
-In the following example, you will instantiate a filter to retrieve all the Healthcare Element that a Healthcare Professional
+In the following example, you will instantiate a filter to retrieve all the Healthcare Element of a Patient that a Healthcare Professional
  can access
 
 <!-- file://code-samples/how-to/manage-healthcare-elements/index.mts snippet:create HE filter-->
@@ -191,7 +189,7 @@ const healthcareElementsFirstPage = await api.healthcareElementApi.filterHealthc
 )
 ```
 
-Note that the Filter method will return a PaginatedList which contains a number of element up to the maximum you specify
+The `filter` method returns a PaginatedList that contains at most the number of elements stated
  in the method's parameter. If you do not specify any number, the default value is 1000.  
 To retrieve more Healthcare Elements, you can call the same method again, using the startDocumentId provided in the previous
  request.
@@ -213,7 +211,7 @@ You can also retrieve just the id of the Healthcare Element instead of the whole
 const healthcareElementsIdList = await api.healthcareElementApi.matchHealthcareElement(healthcareElementFilter)
 ```
 
-Finally, you can also retrieve all the Healthcare Elements related to a specific patient that the current Data Owner 
+You can also retrieve all the Healthcare Elements belonging to a specific patient that the current Data Owner 
 can access.
 
 <!-- file://code-samples/how-to/manage-healthcare-elements/index.mts snippet:use by patient method-->
