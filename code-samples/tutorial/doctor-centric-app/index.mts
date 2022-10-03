@@ -16,7 +16,9 @@ const api = await medTechApi()
     .withPassword(iCureUserPassword)
     .withCrypto(webcrypto as any)
     .build()
+//tech-doc: STOP HERE
 
+//tech-doc: init user crypto
 await api.initUserCrypto()
 //tech-doc: STOP HERE
 
