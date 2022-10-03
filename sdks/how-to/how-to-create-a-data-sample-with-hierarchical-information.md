@@ -3,250 +3,136 @@ slug: how-to-create-a-data-sample-with-hierarchical-information
 description: Learn how to create a data sample with hierarchical information.
 tags:
 - DataSample
-
+- Measure
+- TimeSeries
 ---
 
 # How to create a data sample with hierarchical information
 
-In this section, we will learn how to create data samples with complex nested objects. DataSamples are used to store
-data that is not part of the patient's medical record. In some circumstances, the data sample may contain complex nested
-objects.
+In this section, we will learn how to create data samples with complex nested objects.
 
-For example, a data sample may contain another DataSample object with the blood pressure measurements, another
-DataSample object with the heart rate measurements, and so on.
+:::info
 
-:::note
-
-We assume that you already know How to manage data samples. please follow
-the [Handling DataSamples](/sdks/how-to/how-to-manage-datasamples) guide
+You can learn more about the DataSample class in the [DataSample Glossary reference](../glossary#data-sample).
 
 :::
 
-## Create a DataSample object
+:::note
 
-To create a DataSample object, you need to create a DataSample object and set the data sample's properties.
+We assume that you already know how to manage data samples. If not, please follow the [Handling DataSamples](../how-to/how-to-manage-datasamples) guide
 
-<!-- file://code-samples/how-to/hierarchical-datasample/index.mts snippet:create a dataSample-->
+:::
 
+## Create children DataSamples
+
+In some cases, you may want to create a `DataSample` with nested DataSamples. For example, you may want to create a `DataSample` with 1 hour mean heart rate, another DataSample with 8 hour mean heart rate measurements, and so on.
+
+`content` is a `DataSample` attribute of type `Map<String, Content>`. The key is the language code ([ISO 639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes)) and the value is the [`Content`](/sdks/references/classes/Content) object.
+
+This `content` map allows us to store different types of data. In this example we will use `compoundValue`, `measureValue` and `timeSeries` properties
+
+### 1. One hour mean heart rate measurements.
+
+The first step is to create the children DataSamples. For example, we will create a DataSample with 1 hour mean heart rate measurements.
+
+<!-- file://code-samples/how-to/hierarchical-datasample/index.mts snippet:create children dataSample one hour mean-->
 ```typescript
-
-new DataSample({
-    labels: new Set([
-        new CodingReference({type: "LOINC", code: "35094-2", version: '2.73'}),
-    ]),
-    openingDate: 20220929083400,
+const oneHourMeanDataSample = new DataSample({
+  labels: new Set([new CodingReference({ type: 'LOINC', code: '41920-0', version: '2.73' })]),
+  comment: 'Heart rate 1 hour mean',
+  openingDate: 20220929083400,
+  content: {
+    en: {
+      measureValue: {
+        value: 72,
+        unit: '{beats}/min',
+        unitCodes: new Set([new CodingReference({ type: 'UCUM', code: '{beats}/min', version: '1.2' })]),
+      },
+    },
+  },
 })
 ```
 
-## Adding some DataSample objects nested in the DataSample object root
+### 2. Eight hours mean heart rate measurements.
 
-To add some DataSample objects nested in the DataSample object root, we need to add some DataSample objects to
-the `content` property of the DataSample object in the `compoundValue` array.
+Then, we will create a DataSample with 8 hours mean heart rate measurements.
 
-The `content` property is a `Map` object. The key is the language code ([ISO 639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes)) and the value is the `Content` object.
-
-<!-- file://code-samples/how-to/hierarchical-datasample/index.mts snippet:add heart rate data-->
-
+<!-- file://code-samples/how-to/hierarchical-datasample/index.mts snippet:create children dataSample eight hour mean-->
 ```typescript
-
-new DataSample({
-    labels: new Set([
-        new CodingReference({type: "LOINC", code: "35094-2", version: '2.73'}),
-    ]),
-    openingDate: 20220929083400,
-    content: {
-        en: {
-            compoundValue: [
-                // highlight-start
-                new DataSample({
-                    labels: new Set([
-                        new CodingReference({type: "LOINC", code: "41920-0", version: '2.73'}),
-                    ]),
-                    comment: "Heart rate 1 hour mean",
-                    openingDate: 20220929083400,
-                    content: {
-                        en: {
-                            measureValue: {
-                                value: 72,
-                                unit: "{beats}/min",
-                                unitCodes: new Set([
-                                    new CodingReference({type: "UCUM", code: "{beats}/min", version: '1.2'}),
-                                ]),
-                            }
-                        }
-                    }
-                }),
-                new DataSample({
-                    labels: new Set([
-                        new CodingReference({type: "LOINC", code: "41921-8", version: '2.73'}),
-                    ]),
-                    comment: "Heart rate 8 hour mean",
-                    openingDate: 20220929083400,
-                    content: {
-                        en: {
-                            measureValue: {
-                                value: 63,
-                                unit: "{beats}/min",
-                                unitCodes: new Set([
-                                    new CodingReference({type: "UCUM", code: "{beats}/min", version: '1.2'}),
-                                ]),
-                            }
-                        }
-                    }
-                })
-                // highlight-end
-            ]
-        }
-    }
+const eightHourMeanDataSample = new DataSample({
+  labels: new Set([new CodingReference({ type: 'LOINC', code: '41921-8', version: '2.73' })]),
+  comment: 'Heart rate 8 hour mean',
+  openingDate: 20220929083400,
+  content: {
+    en: {
+      measureValue: {
+        value: 63,
+        unit: '{beats}/min',
+        unitCodes: new Set([new CodingReference({ type: 'UCUM', code: '{beats}/min', version: '1.2' })]),
+      },
+    },
+  },
 })
 ```
 
-In the example above, we added two DataSample objects nested in the DataSample object root. The first DataSample object
-contains the heart rate 1 hour mean and the second DataSample object contains the heart rate 8 hour mean.
+### 3. Temperatures (TimeSeries)
 
-The `content` property allows us to add a MeasureValue object to the DataSample object. In this example the MeasureValue
-object contains the value, the unit, and the unit codes.
+To showcase the TimeSeries, we will create a DataSample with the temperatures.
 
-**Nota Bene**: *These examples are in no way real values. They are only used to illustrate the concept.*
-
-## Adding some more DataSample objects nested in the DataSample object root
-
-The `content` property allows you also to add some `TimeSeries` values. `TimeSeries` allows us to add arrays
-of `samples` that can be categorized by `fields`.
-
-<!-- file://code-samples/how-to/hierarchical-datasample/index.mts snippet:add temperatures data-->
-
+<!-- file://code-samples/how-to/hierarchical-datasample/index.mts snippet:create children dataSample temperatures-->
 ```typescript
-
-new DataSample({
-    labels: new Set([
-        new CodingReference({type: "LOINC", code: "35094-2", version: '2.73'}),
-    ]),
-    openingDate: 20220929083400,
-    content: {
-        en: {
-            compoundValue: [
-                new DataSample({
-                    /**
-                     *
-                     */
-                }),
-                new DataSample({
-                    /**
-                     *
-                     */
-                }),
-                // highlight-start
-                new DataSample({
-                    labels: new Set([
-                        new CodingReference({type: "LOINC", code: "8310-5", version: '2.73'}),
-                    ]),
-                    comment: "Body temperature",
-                    openingDate: 20220929083400,
-                    content: {
-                        en: {
-                            timeSeries: new TimeSeries(
-                                {
-                                    samples: Array.apply(null, {length: 60}).map(Function.call, Math.random), // Simulate 60 random values for temperature
-                                    fields: [
-                                        "C°"
-                                    ],
-                                }
-                            )
-                        }
-                    }
-                })
-                // highlight-end
-            ]
-        }
-    }
+const temperaturesDataSample = new DataSample({
+  labels: new Set([new CodingReference({ type: 'LOINC', code: '8310-5', version: '2.73' })]),
+  comment: 'Body temperature',
+  openingDate: 20220929083400,
+  content: {
+    en: {
+      // highlight-start
+      timeSeries: new TimeSeries({
+        samples: Array.apply(null, { length: 60 }).map(Function.call, () => Array.apply(null, { length: 1 }).map(Function.call, () => Math.random() + 36.2)), // Simulate 60 random values for temperature between 36.2 and 37.2
+        fields: ['C°'],
+      }),
+      // highlight-end
+    },
+  },
 })
 ```
 
-In the example above, we added a DataSample that contains a `TimeSeries` object with 60 random values for temperature
-and a field named `C°`.
+:::caution
 
-We could also add a `TimeSeries` object with multiple fields and having a matrix of samples (array of arrays).
+These examples are in no way real values. They are only used to illustrate the concept.
 
-## Final example
+:::
 
-At the end of this process we should get something like this
+## Create the parent DataSample
 
-<!-- file://code-samples/how-to/hierarchical-datasample/index.mts snippet:final example-->
+Now that we have created the children DataSamples, we can create the parent DataSample.
 
+<!-- file://code-samples/how-to/hierarchical-datasample/index.mts snippet:create heart rate datasample-->
 ```typescript
-const dataSampleToCreate = new DataSample({
-    labels: new Set([
-        new CodingReference({type: "LOINC", code: "35094-2", version: '2.73'}),
-    ]),
-    openingDate: 20220929083400,
-    content: {
-        en: {
-            compoundValue: [
-                new DataSample({
-                    labels: new Set([
-                        new CodingReference({type: "LOINC", code: "41920-0", version: '2.73'}),
-                    ]),
-                    comment: "Heart rate 1 hour mean",
-                    openingDate: 20220929083400,
-                    content: {
-                        en: {
-                            measureValue: {
-                                value: 72,
-                                unit: "{beats}/min",
-                                unitCodes: new Set([
-                                    new CodingReference({type: "UCUM", code: "{beats}/min", version: '1.2'}),
-                                ]),
-                            }
-                        }
-                    }
-                }),
-                new DataSample({
-                    labels: new Set([
-                        new CodingReference({type: "LOINC", code: "41921-8", version: '2.73'}),
-                    ]),
-                    comment: "Heart rate 8 hour mean",
-                    openingDate: 20220929083400,
-                    content: {
-                        en: {
-                            measureValue: {
-                                value: 63,
-                                unit: "{beats}/min",
-                                unitCodes: new Set([
-                                    new CodingReference({type: "UCUM", code: "{beats}/min", version: '1.2'}),
-                                ]),
-                            }
-                        }
-                    }
-                }),
-                new DataSample({
-                    labels: new Set([
-                        new CodingReference({type: "LOINC", code: "8310-5", version: '2.73'}),
-                    ]),
-                    comment: "Body temperature",
-                    openingDate: 20220929083400,
-                    content: {
-                        en: {
-                            timeSeries: new TimeSeries(
-                                {
-                                    samples: Array.apply(null, {length: 60}).map(Function.call, Math.random), // Simulate 60 random values for temperature
-                                    fields: [
-                                        "C°"
-                                    ],
-                                }
-                            )
-                        }
-                    }
-                })
-            ]
-        }
-    }
+const meanHeartRateDataSample = new DataSample({
+  labels: new Set([
+    new CodingReference({ type: 'LOINC', code: '43149-4', version: '2.73' }),
+    // highlight-start
+    new CodingReference({ type: 'LOINC', code: '41920-0', version: '2.73' }),
+    new CodingReference({ type: 'LOINC', code: '41921-8', version: '2.73' }),
+    // highlight-end
+  ]),
+  openingDate: 20220929083400,
+  content: {
+    en: {
+      compoundValue: [
+        // highlight-start
+        oneHourMeanDataSample,
+        eightHourMeanDataSample,
+        temperaturesDataSample,
+        // highlight-end
+      ],
+    },
+  },
 })
 
-const createdDataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
-    patient.id!,
-    dataSampleToCreate
-);
+const createdDataSample = await api.dataSampleApi.createOrModifyDataSampleFor(patient.id!, meanHeartRateDataSample)
 ```
 
 <details>
@@ -254,130 +140,145 @@ const createdDataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
 
 ```json
 {
-	"id": "7f720315-4bcb-4a2a-b0b4-e8c83e55ec64",
-	"identifier": [],
-	"content": {
-		"en": {
-			"compoundValue": [
-				{
-					"id": "d3c685df-fbce-46d9-ab0d-95a038a1b7e9",
-					"identifier": [],
-					"content": {
-						"en": {
-							"timeSeries": {
-								"fields": [
-									"C°"
-								],
-								"samples": [
-									0.37281852749077204,
-									0.1658171949760887,
-									0.40147341218331234,
-									0.24165528333321884,
-									0.6451621316887608,
-									0.07379048434520308,
-									...,
-									0.10508481415316862,
-									0.05178389684758211,
-									0.46349446522249704,
-									0.42452252995935136,
-									0.811381558765208
-								]
-							}
-						}
-					},
-					"qualifiedLinks": {},
-					"codes": {},
-					"labels": {},
-					"healthcareElementIds": {},
-					"canvasesIds": {},
-					"openingDate": 20220929083400,
-					"comment": "Body temperature",
-					"systemMetaData": {
-						"secretForeignKeys": [],
-						"cryptedForeignKeys": {},
-						"delegations": {},
-						"encryptionKeys": {}
-					}
-				},
-				{
-					"id": "cb8d1729-2334-4262-a045-7a9458e88c4c",
-					"identifier": [],
-					"content": {
-						"en": {
-							"measureValue": {
-								"value": 72,
-								"unit": "{beats}/min",
-								"unitCodes": {}
-							}
-						}
-					},
-					"qualifiedLinks": {},
-					"codes": {},
-					"labels": {},
-					"healthcareElementIds": {},
-					"canvasesIds": {},
-					"openingDate": 20220929083400,
-					"comment": "Heart rate 1 hour mean",
-					"systemMetaData": {
-						"secretForeignKeys": [],
-						"cryptedForeignKeys": {},
-						"delegations": {},
-						"encryptionKeys": {}
-					}
-				},
-				{
-					"id": "4afc3b6e-0dc8-4f40-909c-8816b1959258",
-					"identifier": [],
-					"content": {
-						"en": {
-							"measureValue": {
-								"value": 63,
-								"unit": "{beats}/min",
-								"unitCodes": {}
-							}
-						}
-					},
-					"qualifiedLinks": {},
-					"codes": {},
-					"labels": {},
-					"healthcareElementIds": {},
-					"canvasesIds": {},
-					"openingDate": 20220929083400,
-					"comment": "Heart rate 8 hour mean",
-					"systemMetaData": {
-						"secretForeignKeys": [],
-						"cryptedForeignKeys": {},
-						"delegations": {},
-						"encryptionKeys": {}
-					}
-				}
-			]
-		}
-	},
-	"qualifiedLinks": {},
-	"codes": {},
-	"labels": {},
-	"batchId": "a8a916b0-d031-4184-a6ca-6bbbe6eda0a2",
-	"healthcareElementIds": {},
-	"canvasesIds": {},
-	"index": 0,
-	"valueDate": 20220929141933,
-	"openingDate": 20220929083400,
-	"created": 1664461173310,
-	"modified": 1664461173311,
-	"author": "b36fa6cb-d7a8-40f0-bcf6-af6ce0decb78",
-	"responsible": "ab623d88-baed-40b9-91b7-ab26e9a08db5",
-	"systemMetaData": {
-		"secretForeignKeys": [],
-		"cryptedForeignKeys": {},
-		"delegations": {},
-		"encryptionKeys": {}
-	}
+  "id": "7fc48e2e-3718-4388-ae0e-fc1b4cd1a19c",
+  "identifier": [],
+  "content": {
+    "en": {
+      "compoundValue": [
+        {
+          "id": "084371fd-b5ad-45e3-a21c-64158b83fdc7",
+          "identifier": [],
+          "content": {
+            "en": {
+              "timeSeries": {
+                "fields": [
+                  "C°"
+                ],
+                "samples": [
+                  [
+                    36.56299537967781
+                  ],
+                  [
+                    36.4297076828631
+                  ],
+                  [
+                    36.443597548686064
+                  ],
+                  [
+                    36.5490239818563
+                  ],
+                  [
+                    36.668913688817824
+                  ]
+                  /**
+                   * ...
+                   */
+                ]
+              }
+            }
+          },
+          "qualifiedLinks": {},
+          "codes": {},
+          "labels": {},
+          "healthcareElementIds": {},
+          "canvasesIds": {},
+          "openingDate": 20220929083400,
+          "comment": "Body temperature",
+          "systemMetaData": {
+            "secretForeignKeys": [],
+            "cryptedForeignKeys": {},
+            "delegations": {},
+            "encryptionKeys": {}
+          }
+        },
+        {
+          "id": "5a9e6237-fc65-4801-b50b-ebcc2925adcc",
+          "identifier": [],
+          "content": {
+            "en": {
+              "measureValue": {
+                "value": 63,
+                "unit": "{beats}/min",
+                "unitCodes": {}
+              }
+            }
+          },
+          "qualifiedLinks": {},
+          "codes": {},
+          "labels": {},
+          "healthcareElementIds": {},
+          "canvasesIds": {},
+          "openingDate": 20220929083400,
+          "comment": "Heart rate 8 hour mean",
+          "systemMetaData": {
+            "secretForeignKeys": [],
+            "cryptedForeignKeys": {},
+            "delegations": {},
+            "encryptionKeys": {}
+          }
+        },
+        {
+          "id": "d59906c3-ea1e-4717-bb45-92804c47ced9",
+          "identifier": [],
+          "content": {
+            "en": {
+              "measureValue": {
+                "value": 72,
+                "unit": "{beats}/min",
+                "unitCodes": {}
+              }
+            }
+          },
+          "qualifiedLinks": {},
+          "codes": {},
+          "labels": {},
+          "healthcareElementIds": {},
+          "canvasesIds": {},
+          "openingDate": 20220929083400,
+          "comment": "Heart rate 1 hour mean",
+          "systemMetaData": {
+            "secretForeignKeys": [],
+            "cryptedForeignKeys": {},
+            "delegations": {},
+            "encryptionKeys": {}
+          }
+        }
+      ]
+    }
+  },
+  "qualifiedLinks": {},
+  "codes": {},
+  "labels": {},
+  "batchId": "683f14f1-ff41-43c3-8b7a-1eb69dc6821d",
+  "healthcareElementIds": {},
+  "canvasesIds": {},
+  "index": 0,
+  "valueDate": 20220930122128,
+  "openingDate": 20220929083400,
+  "created": 1664540488422,
+  "modified": 1664540488421,
+  "author": "b36fa6cb-d7a8-40f0-bcf6-af6ce0decb78",
+  "responsible": "ab623d88-baed-40b9-91b7-ab26e9a08db5",
+  "systemMetaData": {
+    "secretForeignKeys": [],
+    "cryptedForeignKeys": {},
+    "delegations": {},
+    "encryptionKeys": {}
+  }
 }
 ```
 </details>
 
+## Additional information
 
+### Accessing the children DataSamples
 
+The children DataSamples are not directly accessible. They are only accessible through the parent DataSample.
 
+### Filtering
 
+You cannot apply filter on nested DataSamples. You can only filter on the parent DataSample. If you want to filter on nested DataSamples, you need to pass the information of the children to the parent DataSample. (e.g. `labels` of [Create the parent DataSample](#create-the-parent-datasample))
+
+### Deleting and updating
+
+You can update or delete nested DataSamples. But you will have to do it manually by updating the parent DataSample.
