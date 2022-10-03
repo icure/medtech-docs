@@ -25,11 +25,13 @@ We assume that you already know how to manage data samples. If not, please follo
 
 ## Create children DataSamples
 
-In some cases, you may want to create a `DataSample` with nested DataSamples. For example, you may want to create a `DataSample` with 1 hour mean heart rate, another DataSample with 8 hour mean heart rate measurements, and so on.
+In some cases, you may want to create a `DataSample` with nested DataSamples. 
+For example, you may want to create a single `DataSample` which groups mean heart rate measurements over
+different time intervals (1 hour mean heart rate, 8 hour mean heart, ...).
 
-`content` is a `DataSample` attribute of type `Map<String, Content>`. The key is the language code ([ISO 639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes)) and the value is the [`Content`](/sdks/references/classes/Content) object.
+As you know the `content` of a `DataSample` is a `Map<String, Content>`, where each entry associates a language code ([ISO 639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes)) to a [`Content`](/sdks/references/classes/Content) object.
 
-This `content` map allows us to store different types of data. In this example we will use `compoundValue`, `measureValue` and `timeSeries` properties
+A `Content` object allows us to store different types of data. In this example we will use the `compoundValue`, `measureValue` and `timeSeries` properties.
 
 ### 1. One hour mean heart rate measurements.
 
@@ -77,7 +79,7 @@ const eightHourMeanDataSample = new DataSample({
 
 ### 3. Temperatures (TimeSeries)
 
-To showcase the TimeSeries, we will create a DataSample with the temperatures.
+And finally, we will create a DataSample with multiple temperature measurements, using a `TimeSeries`.
 
 <!-- file://code-samples/how-to/hierarchical-datasample/index.mts snippet:create children dataSample temperatures-->
 ```typescript
@@ -277,7 +279,7 @@ The children DataSamples are not directly accessible. They are only accessible t
 
 ### Filtering
 
-You cannot apply filter on nested DataSamples. You can only filter on the parent DataSample. If you want to filter on nested DataSamples, you need to pass the information of the children to the parent DataSample. (e.g. `labels` of [Create the parent DataSample](#create-the-parent-datasample))
+Currently, you cannot apply filter on nested DataSamples. You can only filter on the parent DataSample. If you want to filter on nested DataSamples, you can replicate the information of the children on the parent DataSample. (e.g. `labels` of [Create the parent DataSample](#create-the-parent-datasample))
 
 ### Deleting and updating
 
