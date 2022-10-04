@@ -61,7 +61,7 @@ const temperaturesDataSample = new DataSample({
     en: {
       // highlight-start
       timeSeries: new TimeSeries({
-        samples: Array.apply(null, { length: 60 }).map(Function.call, () => Array.apply(null, { length: 1 }).map(Function.call, () => Math.random() + 36.2)), // Simulate 60 random values for temperature between 36.2 and 37.2
+        samples: Array.apply(null, { length: 60 }).map(Function.call, () => Array.apply(null, { length: 1 }).map(Function.call, () => Math.random() + 36.2)), // Simulate 60 random values for temperature between 36.2 and 37.2 (e.g. [[36.5], [37.0], [36.8], ...])
         fields: ['C°'],
       }),
       // highlight-end
