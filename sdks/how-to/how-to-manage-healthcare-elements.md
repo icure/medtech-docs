@@ -8,8 +8,9 @@ tags:
 
 ## What is a Healthcare Element?
 
-A Healthcare Element is a piece of medical information that can be used to give more details about the context of  a Data Sample.  It typically describes a long lasting condition affecting a Patient.
-Healthcare Elements can be created by Patients and Healthcare Professionals. The sensitive information they contain are 
+A [Healthcare Element](../references/classes/HealthcareElement) is a piece of medical information that can be used to give more details about the context of a [Data Sample](../references/classes/DataSample).  
+It typically describes a long-lasting condition affecting a Patient.
+Healthcare Elements can be created by [Patient](../references/classes/Patient) and Healthcare Professionals. The sensitive information they contain are 
 encrypted and can be read only by Data Owners with an explicit access.
 
 :::note
