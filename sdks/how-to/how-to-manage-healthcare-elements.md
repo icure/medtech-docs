@@ -52,8 +52,21 @@ filled automatically by the backend.
 :::
 
 When creating a new Healthcare Element, you must specify the Patient it is associated to.  
-If the method runs successfully, the Promise will return the newly created Healthcare Element as it is on the database.  
-It is also possible to create several Healthcare Elements at once.
+If the method runs successfully, the Promise will return the newly created Healthcare Element as it is on the database.
+It is also possible to create a series of Healthcare Elements that describe a medical history. In a medical history, 
+the healthcare elements share the same `healthcareElementId`
+
+<!-- file://code-samples/how-to/manage-healthcare-elements/index.mts snippet:create multiple related HEs as data owner-->
+```typescript
+```
+
+:::note
+
+The `healthcareElementId` is the id of the first Healthcare Element of the series.
+
+:::
+
+Several unrelated Healthcare Elements can also be created at once.
 
 <!-- file://code-samples/how-to/manage-healthcare-elements/index.mts snippet:create multiple HEs as data owner-->
 ```typescript
@@ -81,14 +94,14 @@ const newElements = await api.healthcareElementApi.createOrModifyHealthcareEleme
 )
 ```
 
-In this case, an array of Healthcare Elements is returned.
-
 :::caution
 
 Even if you associate a Healthcare Element to a Patient, the Patient does not have access to it unless you give access 
 to them.
 
 :::
+
+
 
 ## Sharing a Healthcare Element with a Patient
 

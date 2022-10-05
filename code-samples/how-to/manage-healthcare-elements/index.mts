@@ -87,7 +87,7 @@ const healthcareElement1 = new HealthcareElement({
 })
 
 const healthcareElement2 = new HealthcareElement({
-  description: 'The patient recovered',
+  description: 'The patient has also the flu',
   openingDate: new Date("2020-11-08").getTime()
 })
 
@@ -98,6 +98,38 @@ const newElements = await api.healthcareElementApi.createOrModifyHealthcareEleme
 //tech-doc: STOP HERE
 expect(!!newElements).to.eq(true);
 expect(newElements.length).to.eq(2);
+
+//tech-doc: create multiple related HEs as data owner
+const startHealthcareElement = await api.healthcareElementApi.createOrModifyHealthcareElement(
+    new HealthcareElement({
+    description: 'The patient has been diagnosed Pararibulitis',
+    codes: new Set([
+      new CodingReference({
+        id: 'SNOMEDCT|617|20020131',
+        type: 'SNOMEDCT',
+        code: '617',
+        version: '20020131'
+      })
+    ]),
+    openingDate: new Date("2019-10-12").getTime()
+  }),
+  patient.id
+)
+
+const followUpHealthcareElement = await api.healthcareElementApi.createOrModifyHealthcareElement(
+    new HealthcareElement({
+    description: 'The patient recovered',
+    openingDate: new Date("2020-11-08").getTime(),
+    healthElementId: startHealthcareElement.healthElementId
+  }),
+  patient.id
+)
+//tech-doc: STOP HERE
+expect(!!startHealthcareElement).to.eq(true);
+expect(startHealthcareElement.description).to.eq('The patient has been diagnosed Pararibulitis');
+expect(!!followUpHealthcareElement).to.eq(true);
+expect(followUpHealthcareElement.description).to.eq('The patient recovered');
+
 
 //tech-doc: HE sharing with data owner
 const sharedHealthcareElement = await api.healthcareElementApi.giveAccessTo(healthcareElement, patient.id)
