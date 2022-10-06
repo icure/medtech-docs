@@ -11,13 +11,12 @@ import { hex2ua } from '@icure/api'
 import {
   host,
   initLocalStorage,
-  password,
+  initMedTechApi,
   patientId,
   patientPassword,
   patientPrivKey,
   patientUserName,
   privKey,
-  userName,
 } from '../../utils/index.mjs'
 import { expect } from 'chai'
 import {
@@ -28,13 +27,7 @@ import { v4 as uuid } from 'uuid'
 
 initLocalStorage()
 
-const api = await medTechApi()
-  .withICureBaseUrl(host)
-  .withUserName(userName)
-  .withPassword(password)
-  .withCrypto(webcrypto as any)
-  .build()
-
+const api = await initMedTechApi()
 const user = await api.userApi.getLoggedUser()
 await api.cryptoApi.loadKeyPairsAsTextInBrowserLocalStorage(
   user.healthcarePartyId ?? user.patientId ?? user.deviceId,
@@ -96,7 +89,7 @@ await patientApi.cryptoApi.loadKeyPairsAsTextInBrowserLocalStorage(
 )
 
 //tech-doc: patient sends notification
-const accessNotification = await patientApi.notificationApi.createOrModifyNotification(
+await patientApi.notificationApi.createOrModifyNotification(
   new Notification({
     id: uuid(),
     status: 'pending',
