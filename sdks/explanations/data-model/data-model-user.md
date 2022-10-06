@@ -32,7 +32,7 @@ the MedTech API.
 <!-- file://code-samples/explanation/patient-creates-data-sample/index.mts snippet:patient logs in-->
 ```typescript
 const api = await medTechApi()
-  .withICureBaseUrl(host)
+  .withICureBasePath(host)
   .withUserName(patientUserName)
   .withPassword(patientPassword)
   .withCrypto(webcrypto as any)
