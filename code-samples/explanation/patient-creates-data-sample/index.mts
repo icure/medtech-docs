@@ -1,28 +1,17 @@
 import 'isomorphic-fetch'
-import {
-  CodingReference,
-  Content,
-  DataSample,
-  HealthcareElement,
-  medTechApi,
-} from '@icure/medical-device-sdk'
+import { Content, DataSample, HealthcareElement, medTechApi } from '@icure/medical-device-sdk'
 import { webcrypto } from 'crypto'
 import { hex2ua } from '@icure/api'
-import { LocalStorage } from 'node-localstorage'
 import {
   host,
+  initLocalStorage,
   patientId,
   patientPassword,
   patientPrivKey,
   patientUserName,
-  privKey,
 } from '../../utils/index.mjs'
-import os from 'os'
-import * as console from 'console'
 
-const tmp = os.tmpdir()
-;(global as any).localStorage = new LocalStorage(tmp, 5 * 1024 ** 3)
-;(global as any).Storage = ''
+initLocalStorage()
 
 //tech-doc: patient logs in
 const api = await medTechApi()
