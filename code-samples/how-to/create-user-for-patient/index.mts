@@ -4,12 +4,13 @@ import {
   authProcessId,
   host,
   initLocalStorage,
-  initMedTechApi,
   msgGtwUrl,
+  password,
   privKey,
-  specId, userName,
+  specId,
+  userName,
 } from '../../utils/index.mjs'
-import { hex2ua, ua2hex } from '@icure/api'
+import { hex2ua, sleep, ua2hex } from '@icure/api'
 import { assert, expect } from 'chai'
 import { v4 as uuid } from 'uuid'
 import {
@@ -18,6 +19,7 @@ import {
   CodingReference,
   DataSample,
   ICureRegistrationEmail,
+  medTechApi,
   Patient,
   Telecom,
 } from '@icure/medical-device-sdk'
@@ -36,7 +38,14 @@ async function getEmail(email: string): Promise<any> {
   return response
 }
 
-const api = await initMedTechApi()
+const api = await medTechApi()
+  .withICureBasePath(host)
+  .withUserName(userName)
+  .withPassword(password)
+  .withMsgGtwUrl(msgGtwUrl)
+  .withMsgGtwSpecId(specId)
+  .withCrypto(webcrypto as any)
+  .build()
 
 const loggedUser = await api.userApi.getLoggedUser()
 await api.cryptoApi.loadKeyPairsAsTextInBrowserLocalStorage(
@@ -104,9 +113,13 @@ const messageFactory = new ICureRegistrationEmail(
 await api.userApi.createAndInviteUser(patient, messageFactory, 3600)
 //tech-doc: STOP HERE
 
-const loginAndPassword = (await getEmail(email)).subject
-const patientUsername = loginAndPassword.split('|')[0]
-const patientToken = loginAndPassword.split('|')[1]
+const loginAndPasswordRegex = new RegExp(': ([^ &]+) & (.+)')
+const emailBody = (await getEmail(email)).html
+const loginAndPassword = loginAndPasswordRegex.exec(emailBody)
+const patientUsername = loginAndPassword[1]
+const patientToken = loginAndPassword[2]
+
+await sleep(5000)
 
 //tech-doc: user logs in
 const anonymousMedTechApi = await new AnonymousMedTechApiBuilder()
@@ -130,34 +143,40 @@ await anonymousMedTechApi.authenticationApi.authenticateAndAskAccessToItsExistin
 )
 //tech-doc: STOP HERE
 
+//tech-doc: doctor gets pending notifications
 const newNotifications = await api.notificationApi.getPendingNotifications()
 const patientNotification = newNotifications.filter(
   (notification) =>
     notification.type === NotificationTypeEnum.NEW_USER_OWN_DATA_ACCESS &&
     notification.responsible === patient.id,
 )[0]
-
+//tech-doc: STOP HERE
 expect(!!patientNotification).to.eq(true)
 
+//tech-doc: notification set ongoing
 const ongoingStatusUpdate = await api.notificationApi.updateNotificationStatus(
   patientNotification,
   'ongoing',
 )
+//tech-doc: STOP HERE
 expect(!!ongoingStatusUpdate).to.eq(true)
 expect(ongoingStatusUpdate?.status).to.eq('ongoing')
 
+//tech-doc: data sharing
 const sharedData = await api.patientApi.giveAccessToAllDataOf(patient.id)
-
+//tech-doc: STOP HERE
+console.log(sharedData)
 expect(!!sharedData).to.eq(true)
 expect(sharedData.patient?.id).to.eq(patient.id)
 expect(sharedData.statuses.dataSamples?.success).to.eq(true)
 expect(!!sharedData.statuses.dataSamples?.error).to.eq(false)
 expect(sharedData.statuses.dataSamples?.modified).to.eq(1)
 
+//tech-doc: completed status
 const completedStatusUpdate = await api.notificationApi.updateNotificationStatus(
   ongoingStatusUpdate,
-  'completed'
+  'completed',
 )
-
+//tech-doc: STOP HERE
 expect(!!completedStatusUpdate).to.eq(true)
 expect(completedStatusUpdate?.status).to.eq('completed')
