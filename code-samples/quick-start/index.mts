@@ -1,6 +1,7 @@
 import 'isomorphic-fetch'
 
 //tech-doc: instantiate the api
+import 'isomorphic-fetch'
 import { medTechApi } from '@icure/medical-device-sdk'
 import { webcrypto } from 'crypto'
 import * as process from 'process'

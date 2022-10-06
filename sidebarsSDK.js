@@ -66,6 +66,24 @@ const sidebarsSDK = {
       items: [
         {
           type: 'category',
+          label: 'What is the iCure Data Model?',
+          link: {
+            type: 'doc',
+            id: 'explanations/data-model'
+          },
+          items: [
+            'explanations/data-model/data-model-coding',
+            'explanations/data-model/data-model-data-sample',
+            'explanations/data-model/data-model-healthcare-element',
+            'explanations/data-model/data-model-healthcare-professional',
+            'explanations/data-model/data-model-medical-device',
+            'explanations/data-model/data-model-notification',
+            'explanations/data-model/data-model-patient',
+            'explanations/data-model/data-model-user'
+          ],
+        },
+        {
+          type: 'category',
           label: 'End-to-end encryption',
           link: {
             type: 'generated-index',
