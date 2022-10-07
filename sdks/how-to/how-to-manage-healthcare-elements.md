@@ -32,15 +32,15 @@ const newHE = new HealthcareElement({
       id: 'SNOMEDCT|617|20020131',
       type: 'SNOMEDCT',
       code: '617',
-      version: '20020131'
-    })
+      version: '20020131',
+    }),
   ]),
-  openingDate: new Date("2019-10-12").getTime()
+  openingDate: new Date('2019-10-12').getTime(),
 })
 
 const healthcareElement = await api.healthcareElementApi.createOrModifyHealthcareElement(
   newHE,
-  patient.id
+  patient.id,
 )
 ```
 
@@ -58,6 +58,30 @@ the healthcare elements share the same `healthcareElementId`
 
 <!-- file://code-samples/how-to/manage-healthcare-elements/index.mts snippet:create multiple related HEs as data owner-->
 ```typescript
+const startHealthcareElement = await api.healthcareElementApi.createOrModifyHealthcareElement(
+  new HealthcareElement({
+    description: 'The patient has been diagnosed Pararibulitis',
+    codes: new Set([
+      new CodingReference({
+        id: 'SNOMEDCT|617|20020131',
+        type: 'SNOMEDCT',
+        code: '617',
+        version: '20020131',
+      }),
+    ]),
+    openingDate: new Date('2019-10-12').getTime(),
+  }),
+  patient.id,
+)
+
+const followUpHealthcareElement = await api.healthcareElementApi.createOrModifyHealthcareElement(
+  new HealthcareElement({
+    description: 'The patient recovered',
+    openingDate: new Date('2020-11-08').getTime(),
+    healthcareElementId: startHealthcareElement.healthcareElementId,
+  }),
+  patient.id,
+)
 ```
 
 :::note
@@ -77,20 +101,20 @@ const healthcareElement1 = new HealthcareElement({
       id: 'SNOMEDCT|617|20020131',
       type: 'SNOMEDCT',
       code: '617',
-      version: '20020131'
-    })
+      version: '20020131',
+    }),
   ]),
-  openingDate: new Date("2019-10-12").getTime()
+  openingDate: new Date('2019-10-12').getTime(),
 })
 
 const healthcareElement2 = new HealthcareElement({
-  description: 'The patient recovered',
-  openingDate: new Date("2020-11-08").getTime()
+  description: 'The patient has also the flu',
+  openingDate: new Date('2020-11-08').getTime(),
 })
 
 const newElements = await api.healthcareElementApi.createOrModifyHealthcareElements(
   [healthcareElement1, healthcareElement2],
-  patient.id
+  patient.id,
 )
 ```
 
@@ -109,7 +133,10 @@ After creating the Healthcare Element, the Healthcare Professional shares it wit
 
 <!-- file://code-samples/how-to/manage-healthcare-elements/index.mts snippet:HE sharing with data owner-->
 ```typescript
-const sharedHealthcareElement = await api.healthcareElementApi.giveAccessTo(healthcareElement, patient.id)
+const sharedHealthcareElement = await api.healthcareElementApi.giveAccessTo(
+  healthcareElement,
+  patient.id,
+)
 ```
 
 If the operation is successful, the method returns a Promise with the updated Healthcare Element.
@@ -126,10 +153,12 @@ const healthcareElementToRetrieve = new HealthcareElement({
 
 const createdHealthcareElement = await api.healthcareElementApi.createOrModifyHealthcareElement(
   healthcareElementToRetrieve,
-  patient.id
+  patient.id,
 )
 
-const retrievedHealthcareElement = await api.healthcareElementApi.getHealthcareElement(createdHealthcareElement.id)
+const retrievedHealthcareElement = await api.healthcareElementApi.getHealthcareElement(
+  createdHealthcareElement.id,
+)
 ```
 
 :::caution
@@ -149,18 +178,18 @@ const yetAnotherHealthcareElement = await api.healthcareElementApi.createOrModif
   new HealthcareElement({
     description: 'To modify, I must create',
   }),
-  patient.id
+  patient.id,
 )
 
 const modifiedHealthcareElement = {
   ...yetAnotherHealthcareElement,
   description: 'I can change and I can add',
-  openingDate: new Date("2019-10-12").getTime()
+  openingDate: new Date('2019-10-12').getTime(),
 }
 
 const modificationResult = await api.healthcareElementApi.createOrModifyHealthcareElement(
   modifiedHealthcareElement,
-  patient.id
+  patient.id,
 )
 ```
 
@@ -199,7 +228,7 @@ After creating a filter, you can use it to retrieve the Healthcare Elements.
 const healthcareElementsFirstPage = await api.healthcareElementApi.filterHealthcareElement(
   healthcareElementFilter,
   undefined,
-  10
+  10,
 )
 ```
 
@@ -213,7 +242,7 @@ To retrieve more Healthcare Elements, you can call the same method again, using 
 const healthcareElementsSecondPage = await api.healthcareElementApi.filterHealthcareElement(
   healthcareElementFilter,
   healthcareElementsFirstPage.nextKeyPair.startKeyDocId,
-  10
+  10,
 )
 ```
 
@@ -222,7 +251,9 @@ You can also retrieve just the id of the Healthcare Element instead of the whole
 
 <!-- file://code-samples/how-to/manage-healthcare-elements/index.mts snippet:use HE match method-->
 ```typescript
-const healthcareElementsIdList = await api.healthcareElementApi.matchHealthcareElement(healthcareElementFilter)
+const healthcareElementsIdList = await api.healthcareElementApi.matchHealthcareElement(
+  healthcareElementFilter,
+)
 ```
 
 You can also retrieve all the Healthcare Elements belonging to a specific patient that the current Data Owner 
@@ -230,7 +261,9 @@ can access.
 
 <!-- file://code-samples/how-to/manage-healthcare-elements/index.mts snippet:use by patient method-->
 ```typescript
-const healthcareElementsForPatient = await api.healthcareElementApi.getHealthcareElementsForPatient(existingPatient)
+const healthcareElementsForPatient = await api.healthcareElementApi.getHealthcareElementsForPatient(
+  existingPatient,
+)
 ```
 
 
@@ -244,8 +277,10 @@ const healthcareElementToDelete = await api.healthcareElementApi.createOrModifyH
   new HealthcareElement({
     description: 'I am doomed',
   }),
-  patient.id
+  patient.id,
 )
 
-const deletedHealthcareElement = await api.healthcareElementApi.deleteHealthcareElement(healthcareElementToDelete.id)
+const deletedHealthcareElement = await api.healthcareElementApi.deleteHealthcareElement(
+  healthcareElementToDelete.id,
+)
 ```

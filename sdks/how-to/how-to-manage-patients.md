@@ -299,7 +299,11 @@ To filter patients, we can use the `filterPatients` method on the `PatientApi` o
 
 <!-- file://code-samples/how-to/patients/index.mts snippet:get a list of patient-->
 ```typescript
-const filter = await new PatientFilter().forDataOwner(loggedUser.healthcarePartyId!).byGenderEducationProfession('male').dateOfBirthBetween(28000101, 29000101).build()
+const filter = await new PatientFilter()
+  .forDataOwner(loggedUser.healthcarePartyId!)
+  .byGenderEducationProfession('male')
+  .dateOfBirthBetween(28000101, 29000101)
+  .build()
 
 const patients = await api.patientApi.filterPatients(filter)
 ```
@@ -319,7 +323,11 @@ In the example above, we created the filter this way:
 
 <!-- file://code-samples/how-to/patients/index.mts snippet:filter builder-->
 ```typescript
-new PatientFilter().forDataOwner(loggedUser.healthcarePartyId!).byGenderEducationProfession('male').dateOfBirthBetween(28000101, 29000101).build()
+new PatientFilter()
+  .forDataOwner(loggedUser.healthcarePartyId!)
+  .byGenderEducationProfession('male')
+  .dateOfBirthBetween(28000101, 29000101)
+  .build()
 ```
 
 The resulting filter object will create a filter that allows us to get all `Patient` that satisfy all the following requirements:
@@ -334,7 +342,11 @@ In some circumstances, you might want to get a list of `Patient` ids instead of 
 
 <!-- file://code-samples/how-to/patients/index.mts snippet:get a list of patient ids-->
 ```typescript
-const filterForMatch = await new PatientFilter().forDataOwner(loggedUser.healthcarePartyId!).byGenderEducationProfession('male').dateOfBirthBetween(28000101, 29000101).build()
+const filterForMatch = await new PatientFilter()
+  .forDataOwner(loggedUser.healthcarePartyId!)
+  .byGenderEducationProfession('male')
+  .dateOfBirthBetween(28000101, 29000101)
+  .build()
 
 const patientIds = await api.patientApi.matchPatients(filterForMatch)
 ```
