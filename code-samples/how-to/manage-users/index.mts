@@ -11,11 +11,11 @@ const tmp = os.tmpdir()
 ;(global as any).Storage = ''
 
 const api = await medTechApi()
-  .withICureBasePath(host)
+  .withICureBaseUrl(host)
   .withUserName(userName)
   .withPassword(password)
-  .withMsgGtwSpecId('ic')
-  .withMsgGtwUrl('https://msg-gw.icure.dev')
+  .withMsgGwSpecId('ic')
+  .withMsgGwUrl('https://msg-gw.icure.dev')
   .withCrypto(webcrypto as any)
   .build()
 

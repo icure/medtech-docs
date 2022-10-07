@@ -13,7 +13,7 @@ export const password = process.env.ICURE_USER_PASSWORD
 console.log(host) //skip
 
 const api = await medTechApi()
-  .withICureBasePath(host)
+  .withICureBaseUrl(host)
   .withUserName(username)
   .withPassword(password)
   .withCrypto(webcrypto as any)

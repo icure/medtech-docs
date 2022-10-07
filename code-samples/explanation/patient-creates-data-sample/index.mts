@@ -1,52 +1,59 @@
-import "isomorphic-fetch";
+import 'isomorphic-fetch'
 import {
-    CodingReference, Content,
-    DataSample,
-    HealthcareElement,
-    medTechApi,
+  CodingReference,
+  Content,
+  DataSample,
+  HealthcareElement,
+  medTechApi,
 } from '@icure/medical-device-sdk'
-import { webcrypto } from "crypto";
-import { hex2ua} from "@icure/api";
-import { LocalStorage } from 'node-localstorage';
-import {host, patientId, patientPassword, patientPrivKey, patientUserName, privKey} from "../../utils/index.mjs";
-import os from "os";
-import * as console from "console";
+import { webcrypto } from 'crypto'
+import { hex2ua } from '@icure/api'
+import { LocalStorage } from 'node-localstorage'
+import {
+  host,
+  patientId,
+  patientPassword,
+  patientPrivKey,
+  patientUserName,
+  privKey,
+} from '../../utils/index.mjs'
+import os from 'os'
+import * as console from 'console'
 
-const tmp = os.tmpdir();
-(global as any).localStorage = new LocalStorage(tmp, 5 * 1024**3);
-(global as any).Storage = "";
+const tmp = os.tmpdir()
+;(global as any).localStorage = new LocalStorage(tmp, 5 * 1024 ** 3)
+;(global as any).Storage = ''
 
 //tech-doc: patient logs in
 const api = await medTechApi()
-    .withICureBasePath(host)
-    .withUserName(patientUserName)
-    .withPassword(patientPassword)
-    .withCrypto(webcrypto as any)
-    .build()
+  .withICureBaseUrl(host)
+  .withUserName(patientUserName)
+  .withPassword(patientPassword)
+  .withCrypto(webcrypto as any)
+  .build()
 
 const user = await api.userApi.getLoggedUser()
-await api.cryptoApi.loadKeyPairsAsTextInBrowserLocalStorage(
-    user.patientId,
-    hex2ua(patientPrivKey)
-);
+await api.cryptoApi.loadKeyPairsAsTextInBrowserLocalStorage(user.patientId, hex2ua(patientPrivKey))
 //tech-doc: STOP HERE
 
 const patient = await api.patientApi.getPatient(patientId)
 //tech-doc: patient can create DS and HE
 const healthcareElement = await api.healthcareElementApi.createOrModifyHealthcareElement(
-    new HealthcareElement({
-        description: 'My period started'
-    }),
-    patient.id
+  new HealthcareElement({
+    description: 'My period started',
+  }),
+  patient.id,
 )
 
 await api.dataSampleApi.createOrModifyDataSampleFor(
-    patient.id,
-    new DataSample({
-        content: { 'en': new Content({
-                stringValue: 'I have a headache'
-            })},
-        healthcareElementIds: new Set([healthcareElement.id])
-    })
+  patient.id,
+  new DataSample({
+    content: {
+      en: new Content({
+        stringValue: 'I have a headache',
+      }),
+    },
+    healthcareElementIds: new Set([healthcareElement.id]),
+  }),
 )
 //tech-doc: STOP HERE
