@@ -153,20 +153,11 @@ const retrievedHE = await patientApi.healthcareElementApi.getHealthcareElement(h
 expect(retrievedHE.id).to.eq(healthcareElement.id)
 
 //tech-doc: retrieve a HE as data owner
-const healthcareElementToRetrieve = new HealthcareElement({
-  description: 'To retrieve, I must create',
-})
-
-const createdHealthcareElement = await api.healthcareElementApi.createOrModifyHealthcareElement(
-  healthcareElementToRetrieve,
-  patient.id,
-)
-
 const retrievedHealthcareElement = await api.healthcareElementApi.getHealthcareElement(
-  createdHealthcareElement.id,
+  healthcareElement.id,
 )
 //tech-doc: STOP HERE
-expect(retrievedHealthcareElement.id).to.eq(createdHealthcareElement.id)
+expect(retrievedHealthcareElement.id).to.eq(healthcareElement.id)
 
 //tech-doc: modify a HE as data owner
 const yetAnotherHealthcareElement = await api.healthcareElementApi.createOrModifyHealthcareElement(
@@ -186,6 +177,7 @@ const modificationResult = await api.healthcareElementApi.createOrModifyHealthca
   modifiedHealthcareElement,
   patient.id,
 )
+console.log(modificationResult)
 //tech-doc: STOP HERE
 expect(modificationResult.id).to.eq(yetAnotherHealthcareElement.id)
 expect(modificationResult.description).to.eq('I can change and I can add')

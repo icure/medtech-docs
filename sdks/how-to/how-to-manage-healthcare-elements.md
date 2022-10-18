@@ -163,17 +163,8 @@ A single Healthcare Element can be retrieved from the iCure Back-end using its i
 
 <!-- file://code-samples/how-to/manage-healthcare-elements/index.mts snippet:retrieve a HE as data owner-->
 ```typescript
-const healthcareElementToRetrieve = new HealthcareElement({
-  description: 'To retrieve, I must create',
-})
-
-const createdHealthcareElement = await api.healthcareElementApi.createOrModifyHealthcareElement(
-  healthcareElementToRetrieve,
-  patient.id,
-)
-
 const retrievedHealthcareElement = await api.healthcareElementApi.getHealthcareElement(
-  createdHealthcareElement.id,
+  healthcareElement.id,
 )
 ```
 
@@ -212,6 +203,7 @@ const modificationResult = await api.healthcareElementApi.createOrModifyHealthca
   modifiedHealthcareElement,
   patient.id,
 )
+console.log(modificationResult)
 ```
 
 If the operation is successful, the method returns the updated Healthcare Element.

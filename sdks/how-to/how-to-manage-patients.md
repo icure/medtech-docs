@@ -301,7 +301,6 @@ To filter patients, we can use the `filterPatients` method on the `PatientApi` o
 ```typescript
 const filter = await new PatientFilter()
   .forDataOwner(loggedUser.healthcarePartyId!)
-  .byGenderEducationProfession('male')
   .dateOfBirthBetween(28000101, 29000101)
   .build()
 
@@ -325,7 +324,6 @@ In the example above, we created the filter this way:
 ```typescript
 new PatientFilter()
   .forDataOwner(loggedUser.healthcarePartyId!)
-  .byGenderEducationProfession('male')
   .dateOfBirthBetween(28000101, 29000101)
   .build()
 ```
@@ -344,7 +342,6 @@ In some circumstances, you might want to get a list of `Patient` ids instead of 
 ```typescript
 const filterForMatch = await new PatientFilter()
   .forDataOwner(loggedUser.healthcarePartyId!)
-  .byGenderEducationProfession('male')
   .dateOfBirthBetween(28000101, 29000101)
   .build()
 

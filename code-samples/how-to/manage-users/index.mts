@@ -1,6 +1,6 @@
 import { DataSampleFilter, medTechApi, UserFilter } from '@icure/medical-device-sdk'
 import { webcrypto } from 'crypto'
-import { host, userName, password } from '../../utils/index.mjs'
+import { host, userName, password, privKey } from '../../utils/index.mjs'
 import 'isomorphic-fetch'
 import { LocalStorage } from 'node-localstorage'
 import * as os from 'os'
@@ -18,6 +18,12 @@ const api = await medTechApi()
   .withMsgGwUrl('https://msg-gw.icure.dev')
   .withCrypto(webcrypto as any)
   .build()
+
+const user = await api.userApi.getLoggedUser()
+await api.cryptoApi.loadKeyPairsAsTextInBrowserLocalStorage(
+  user.healthcarePartyId ?? user.patientId ?? user.deviceId,
+  hex2ua(privKey),
+)
 
 //tech-doc: Create a user
 import { User } from '@icure/medical-device-sdk'
@@ -42,6 +48,7 @@ expect(createdUser.passwordHash).to.not.equal('correct horse battery staple')
 
 //tech-doc: Create a patient user
 import { Patient, Address, Telecom } from '@icure/medical-device-sdk'
+import { hex2ua } from '@icure/api'
 
 const loggedUser = await api.userApi.getLoggedUser()
 const loggedHcp = await api.healthcareProfessionalApi.getHealthcareProfessional(
