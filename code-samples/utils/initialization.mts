@@ -14,7 +14,7 @@ export function initLocalStorage() {
 
 export async function initMedTechApi(): Promise<MedTechApi> {
   return await medTechApi()
-    .withICureBasePath(host)
+    .withICureBaseUrl(host)
     .withUserName(userName)
     .withPassword(password)
     .withCrypto(webcrypto as any)

@@ -32,17 +32,14 @@ the MedTech API.
 <!-- file://code-samples/explanation/patient-creates-data-sample/index.mts snippet:patient logs in-->
 ```typescript
 const api = await medTechApi()
-    .withICureBasePath(host)
-    .withUserName(patientUserName)
-    .withPassword(patientPassword)
-    .withCrypto(webcrypto as any)
-    .build()
+  .withICureBaseUrl(host)
+  .withUserName(patientUserName)
+  .withPassword(patientPassword)
+  .withCrypto(webcrypto as any)
+  .build()
 
 const user = await api.userApi.getLoggedUser()
-await api.cryptoApi.loadKeyPairsAsTextInBrowserLocalStorage(
-    user.patientId,
-    hex2ua(patientPrivKey)
-);
+await api.cryptoApi.loadKeyPairsAsTextInBrowserLocalStorage(user.patientId, hex2ua(patientPrivKey))
 ```
 
 ### A Doctor Inviting a Patient
@@ -52,14 +49,7 @@ to the iCure platform.
 
 <!-- file://code-samples/explanation/doctor-invites-a-patient/index.mts snippet:doctor invites user-->
 ```typescript
-const messageFactory = new ICureRegistrationEmail(
-    hcp,
-    "test",
-    "iCure",
-    existingPatient
-)
-const createdUser = await api.userApi.createAndInviteUser(existingPatient, messageFactory);
-expect(createdUser.patientId).to.eq(createdUser.id); // skip
+const messageFactory = new ICureRegistrationEmail(hcp, 'test', 'iCure', existingPatient)
+const createdUser = await api.userApi.createAndInviteUser(existingPatient, messageFactory)
+expect(createdUser.patientId).to.eq(existingPatient.id) // skip
 ```
-
-

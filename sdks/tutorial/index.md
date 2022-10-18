@@ -42,11 +42,11 @@ const iCureUserPassword = process.env.ICURE_USER_PASSWORD!
 const iCureUserLogin = process.env.ICURE_USER_NAME!
 
 const api = await medTechApi()
-    .withICureBasePath(iCureHost)
-    .withUserName(iCureUserLogin)
-    .withPassword(iCureUserPassword)
-    .withCrypto(webcrypto as any)
-    .build()
+  .withICureBaseUrl(iCureHost)
+  .withUserName(iCureUserLogin)
+  .withPassword(iCureUserPassword)
+  .withCrypto(webcrypto as any)
+  .build()
 ```
 
 After instantiating your API, you can now get the information of your logged user. 
@@ -121,13 +121,15 @@ In most doctor-centric applications, you will have to create patients.
 To do this, call the `api.patientApi.createOrModifyPatient` service. 
 <!-- file://code-samples/tutorial/doctor-centric-app/index.mts snippet:create your first patient-->
 ```typescript
-const createdPatient = await api.patientApi.createOrModifyPatient(new Patient({
+const createdPatient = await api.patientApi.createOrModifyPatient(
+  new Patient({
     firstName: 'John',
     lastName: 'Snow',
     gender: 'male',
-    note: 'Winter is coming'
-}))
-console.log(`Your new patient id : ${createdPatient.id}`);
+    note: 'Winter is coming',
+  }),
+)
+console.log(`Your new patient id : ${createdPatient.id}`)
 ```
 
 :::info
@@ -165,18 +167,19 @@ A data sample must always be linked to a patient.
 
 <!-- file://code-samples/tutorial/doctor-centric-app/index.mts snippet:create your patient first medical data-->
 ```typescript
-const createdData = await api.dataSampleApi.createOrModifyDataSamplesFor(johnSnow.id, [new DataSample({
+const createdData = await api.dataSampleApi.createOrModifyDataSamplesFor(johnSnow.id, [
+  new DataSample({
     labels: new Set([new CodingReference({ type: 'LOINC', code: '29463-7', version: '2' })]),
     content: { en: { numberValue: 92.5 } },
     valueDate: 20220203111034,
-    comment: 'Weight'
-}),
-    new DataSample({
-        labels: new Set([new CodingReference({ type: 'LOINC', code: '8302-2', version: '2' })]),
-        content: { 'en': { numberValue: 187 } },
-        valueDate: 20220203111034,
-        comment: 'Height'
-    })
+    comment: 'Weight',
+  }),
+  new DataSample({
+    labels: new Set([new CodingReference({ type: 'LOINC', code: '8302-2', version: '2' })]),
+    content: { en: { numberValue: 187 } },
+    valueDate: 20220203111034,
+    comment: 'Height',
+  }),
 ])
 ```
 
@@ -193,11 +196,12 @@ Let's say we would like to find back all medical data with the LOINC label corre
 
 <!-- file://code-samples/tutorial/doctor-centric-app/index.mts snippet:Find your patient medical data following some criteria-->
 ```typescript
-const johnData = await api.dataSampleApi.filterDataSample(await new DataSampleFilter()
+const johnData = await api.dataSampleApi.filterDataSample(
+  await new DataSampleFilter()
     .forDataOwner(api.dataOwnerApi.getDataOwnerIdOf(loggedUser))
     .forPatients(api.cryptoApi, [johnSnow])
-    .byTagCodeFilter('LOINC', '29463-7')
-    .build()
+    .byLabelCodeFilter('LOINC', '29463-7')
+    .build(),
 )
 
 expect(johnData.rows.length).to.be.equal(1)

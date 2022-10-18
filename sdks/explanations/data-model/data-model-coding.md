@@ -42,42 +42,36 @@ SNOMED CT terms using Codings.
 <!-- file://code-samples/explanation/data-sample-w-coding/index.mts snippet:doctor can create DS and HE-->
 ```typescript
 const healthcareElement = await api.healthcareElementApi.createOrModifyHealthcareElement(
-		new HealthcareElement({
-			description: 'My diagnosis is that the patient has Hay Fever',
-				codes: new Set([
-					new CodingReference({
-						id: 'SNOMEDCT|21719001|20020131',
-						type: 'SNOMEDCT',
-						code: '21719001',
-						version: '20020131'
-					})
-				])
-	}),
-	patient.id
+  new HealthcareElement({
+    description: 'My diagnosis is that the patient has Hay Fever',
+    codes: new Set([
+      new CodingReference({
+        id: 'SNOMEDCT|21719001|20020131',
+        type: 'SNOMEDCT',
+        code: '21719001',
+        version: '20020131',
+      }),
+    ]),
+  }),
+  patient.id,
 )
 const dataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
-	patient.id,
-	new DataSample({
-		content: { 'en': new Content({
-				stringValue: 'The patient has fatigue'
-			})},
-		codes: new Set([
-			new CodingReference({
-				id: 'SNOMEDCT|84229001|20020131',
-				type: 'SNOMEDCT',
-				code: '84229001',
-				version: '20020131'
-			})
-		]),
-		healthcareElementIds: new Set([healthcareElement.id])
-	})
+  patient.id,
+  new DataSample({
+    content: {
+      en: new Content({
+        stringValue: 'The patient has fatigue',
+      }),
+    },
+    codes: new Set([
+      new CodingReference({
+        id: 'SNOMEDCT|84229001|20020131',
+        type: 'SNOMEDCT',
+        code: '84229001',
+        version: '20020131',
+      }),
+    ]),
+    healthcareElementIds: new Set([healthcareElement.id]),
+  }),
 )
 ```
-
-
-
-
-
-
-
-

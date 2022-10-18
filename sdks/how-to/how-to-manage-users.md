@@ -41,6 +41,7 @@ You will often need to create a patient that can connect to iCure. In that case 
 <!-- file://code-samples/how-to/manage-users/index.mts snippet:Create a patient user-->
 ```typescript
 import { Patient, Address, Telecom } from '@icure/medical-device-sdk'
+import { hex2ua } from '@icure/api'
 
 const loggedUser = await api.userApi.getLoggedUser()
 const loggedHcp = await api.healthcareProfessionalApi.getHealthcareProfessional(
@@ -165,30 +166,3 @@ await api.userApi.deleteUser(createdUser.id)
 ```
 
 For the gory details of all you can do with users using the SDK, check out the [UserApi](../references/interfaces/UserApi.md) documentation.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
