@@ -34,7 +34,7 @@ const accessNotification = await patientApi.notificationApi.createOrModifyNotifi
   new Notification({
     type: NotificationTypeEnum.KEY_PAIR_UPDATE,
   }),
-  hcp.id
+  hcp.id,
 )
 ```
 
@@ -57,10 +57,12 @@ const createdNotification = await patientApi.notificationApi.createOrModifyNotif
   new Notification({
     type: NotificationTypeEnum.OTHER,
   }),
-  hcp.id
+  hcp.id,
 )
 
-const retrievedNotification = await patientApi.notificationApi.getNotification(createdNotification.id)
+const retrievedNotification = await patientApi.notificationApi.getNotification(
+  createdNotification.id,
+)
 ```
 
 ### Retrieving Notifications Using Complex Criteria
@@ -91,7 +93,7 @@ After creating the filter, is it possible to use it to retrieve the Notification
 const notificationsFirstPage = await api.notificationApi.filterNotifications(
   afterDateFilter,
   undefined,
-  10
+  10,
 )
 ```
 
@@ -105,7 +107,7 @@ If there are more Notifications to be retrieved, then the `startKeyDocId` provid
 const notificationsSecondPage = await api.notificationApi.filterNotifications(
   afterDateFilter,
   notificationsFirstPage.nextKeyPair.startKeyDocId,
-  10
+  10,
 )
 ```
 
@@ -115,7 +117,7 @@ A Healthcare Professional can also retrieve all the Notifications assigned to hi
 
 <!-- file://code-samples/how-to/manage-notifications/index.mts snippet:gets the pending notifications-->
 ```typescript
-const pendingNotifications = await api.notificationApi.getPendingNotifications();
+const pendingNotifications = await api.notificationApi.getPendingNotifications()
 ```
 
 ## Modifying a Notification
@@ -128,14 +130,14 @@ const newNotification = await api.notificationApi.createOrModifyNotification(
   new Notification({
     type: NotificationTypeEnum.KEY_PAIR_UPDATE,
   }),
-  hcp.id
+  hcp.id,
 )
 
-const notificationToModify = new Notification({...newNotification, status: "ongoing"})
+const notificationToModify = new Notification({ ...newNotification, status: 'ongoing' })
 
 const modifiedNotification = await api.notificationApi.createOrModifyNotification(
   notificationToModify,
-  hcp.id
+  hcp.id,
 )
 ```
 
@@ -154,11 +156,15 @@ The Notification API also provided a shortcut method to update the status of a N
 const notificationToUpdate = await api.notificationApi.createOrModifyNotification(
   new Notification({
     type: NotificationTypeEnum.KEY_PAIR_UPDATE,
+    status: 'pending',
   }),
-  hcp.id
+  hcp.id,
 )
 
-const updatedNotification = await api.notificationApi.updateNotificationStatus(notificationToUpdate, "ongoing")
+const updatedNotification = await api.notificationApi.updateNotificationStatus(
+  notificationToUpdate,
+  'ongoing',
+)
 ```
 
 ## Deleting a Notification
@@ -171,7 +177,7 @@ const notificationToDelete = await api.notificationApi.createOrModifyNotificatio
   new Notification({
     type: NotificationTypeEnum.KEY_PAIR_UPDATE,
   }),
-  hcp.id
+  hcp.id,
 )
 
 const deletedNotificationId = await api.notificationApi.deleteNotification(notificationToDelete.id)
