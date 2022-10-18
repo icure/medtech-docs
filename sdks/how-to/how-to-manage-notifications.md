@@ -30,6 +30,12 @@ In the following example, a Patient creates a Notification for a Healthcare Prof
 
 <!-- file://code-samples/how-to/manage-notifications/index.mts snippet:create a notification as patient-->
 ```typescript
+const accessNotification = await patientApi.notificationApi.createOrModifyNotification(
+  new Notification({
+    type: NotificationTypeEnum.KEY_PAIR_UPDATE,
+  }),
+  hcp.id
+)
 ```
 
 :::note
@@ -47,6 +53,14 @@ In the following example, a Patient creates a Notification for a Healthcare Prof
 
 <!-- file://code-samples/how-to/manage-notifications/index.mts snippet:creates a notification, then retrieves it-->
 ```typescript
+const createdNotification = await patientApi.notificationApi.createOrModifyNotification(
+  new Notification({
+    type: NotificationTypeEnum.OTHER,
+  }),
+  hcp.id
+)
+
+const retrievedNotification = await patientApi.notificationApi.getNotification(createdNotification.id)
 ```
 
 ### Retrieving Notifications Using Complex Criteria
@@ -56,6 +70,12 @@ In this example, a Healthcare Professional filters all their Notifications that 
 
 <!-- file://code-samples/how-to/manage-notifications/index.mts snippet:creates after date filter-->
 ```typescript
+const startTimestamp = new Date(2022, 8, 27).getTime()
+
+const afterDateFilter = await new NotificationFilter()
+  .forDataOwner(user.healthcarePartyId)
+  .afterDateFilter(startTimestamp)
+  .build()
 ```
 
 :::note
@@ -68,6 +88,11 @@ After creating the filter, is it possible to use it to retrieve the Notification
 
 <!-- file://code-samples/how-to/manage-notifications/index.mts snippet:gets the first page of results-->
 ```typescript
+const notificationsFirstPage = await api.notificationApi.filterNotifications(
+  afterDateFilter,
+  undefined,
+  10
+)
 ```
 
 The `filter` method returns a PaginatedList, that contains at most the number of elements stated
@@ -77,6 +102,11 @@ If there are more Notifications to be retrieved, then the `startKeyDocId` provid
 
 <!-- file://code-samples/how-to/manage-notifications/index.mts snippet:gets the second page of results-->
 ```typescript
+const notificationsSecondPage = await api.notificationApi.filterNotifications(
+  afterDateFilter,
+  notificationsFirstPage.nextKeyPair.startKeyDocId,
+  10
+)
 ```
 
 ### Retrieving all the Pending Notifications
@@ -85,6 +115,7 @@ A Healthcare Professional can also retrieve all the Notifications assigned to hi
 
 <!-- file://code-samples/how-to/manage-notifications/index.mts snippet:gets the pending notifications-->
 ```typescript
+const pendingNotifications = await api.notificationApi.getPendingNotifications();
 ```
 
 ## Modifying a Notification
@@ -93,6 +124,19 @@ A Data Owner can modify a Notification.
 
 <!-- file://code-samples/how-to/manage-notifications/index.mts snippet:modifies a notification-->
 ```typescript
+const newNotification = await api.notificationApi.createOrModifyNotification(
+  new Notification({
+    type: NotificationTypeEnum.KEY_PAIR_UPDATE,
+  }),
+  hcp.id
+)
+
+const notificationToModify = new Notification({...newNotification, status: "ongoing"})
+
+const modifiedNotification = await api.notificationApi.createOrModifyNotification(
+  notificationToModify,
+  hcp.id
+)
 ```
 
 :::caution
@@ -107,6 +151,14 @@ The Notification API also provided a shortcut method to update the status of a N
 
 <!-- file://code-samples/how-to/manage-notifications/index.mts snippet:updates notification status-->
 ```typescript
+const notificationToUpdate = await api.notificationApi.createOrModifyNotification(
+  new Notification({
+    type: NotificationTypeEnum.KEY_PAIR_UPDATE,
+  }),
+  hcp.id
+)
+
+const updatedNotification = await api.notificationApi.updateNotificationStatus(notificationToUpdate, "ongoing")
 ```
 
 ## Deleting a Notification
@@ -115,4 +167,12 @@ Finally, a Data Owner that has access to a Notification can decide to delete it.
 
 <!-- file://code-samples/how-to/manage-notifications/index.mts snippet:deletes a notification-->
 ```typescript
+const notificationToDelete = await api.notificationApi.createOrModifyNotification(
+  new Notification({
+    type: NotificationTypeEnum.KEY_PAIR_UPDATE,
+  }),
+  hcp.id
+)
+
+const deletedNotificationId = await api.notificationApi.deleteNotification(notificationToDelete.id)
 ```
