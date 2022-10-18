@@ -67,9 +67,9 @@ token that they can use to log in.
 <!-- file://code-samples/how-to/create-user-for-patient/index.mts snippet:user logs in-->
 ```typescript
 const anonymousMedTechApi = await new AnonymousMedTechApiBuilder()
-  .withICureUrlPath(host)
-  .withMsgGtwUrl(msgGtwUrl)
-  .withMsgGtwSpecId(specId)
+  .withICureBaseUrl(host)
+  .withMsgGwUrl(msgGtwUrl)
+  .withMsgGwSpecId(specId)
   .withCrypto(webcrypto as any)
   .withAuthProcessByEmailId(authProcessId)
   .withAuthProcessBySmsId(authProcessId)
@@ -82,8 +82,7 @@ const privateKeyHex = ua2hex(await anonymousMedTechApi.cryptoApi.RSA.exportKey(p
 await anonymousMedTechApi.authenticationApi.authenticateAndAskAccessToItsExistingData(
   patientUsername,
   patientToken,
-  [privateKeyHex, publicKeyHex],
-  () => undefined,
+  async () => ({ privateKey: privateKeyHex, publicKey: publicKeyHex }),
 )
 ```
 

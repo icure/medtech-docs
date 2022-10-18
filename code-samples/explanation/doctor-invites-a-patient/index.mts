@@ -23,11 +23,11 @@ import { webcrypto } from 'crypto'
 initLocalStorage()
 
 const api = await medTechApi()
-  .withICureBasePath(host)
+  .withICureBaseUrl(host)
   .withUserName(userName)
   .withPassword(password)
-  .withMsgGtwUrl(msgGtwUrl)
-  .withMsgGtwSpecId(specId)
+  .withMsgGwUrl(msgGtwUrl)
+  .withMsgGwSpecId(specId)
   .withCrypto(webcrypto as any)
   .build()
 
