@@ -46,13 +46,21 @@ const healthcareElement = await api.healthcareElementApi.createOrModifyHealthcar
 
 :::note
 
-The value of some parameters, such as the id of the Healthcare Element, its author or the responsible Data Owner will be
-filled automatically by the backend.
+If not specified, the value of the following parameters will be automatically set by the iCure Back-End:
+
+* id (to a random UUID)
+* created (to the current timestamp)
+* modified (to the current timestamp)
+* author (to the id of the user who created this Healthcare Element)
+* responsible (to the id of the Data Owner id who created this Healthcare Element)
+* healthElementId (to the id of the current Healthcare Element)
+* valueDate (to the current timestamp)
+* openingDate (to the current timestamp)
 
 :::
 
 When creating a new Healthcare Element, you must specify the Patient it is associated to.  
-If the method runs successfully, the Promise will return the newly created Healthcare Element as it is on the database.
+If the method runs successfully, the Promise will return the newly created Healthcare Element.
 It is also possible to create a series of Healthcare Elements that describe a medical history. In a medical history, 
 the healthcare elements share the same `healthcareElementId`
 
@@ -120,8 +128,8 @@ const newElements = await api.healthcareElementApi.createOrModifyHealthcareEleme
 
 :::caution
 
-Even if you associate a Healthcare Element to a Patient, the Patient does not have access to it unless you give access 
-to them.
+Even if you associate a Healthcare Element to a Patient, the Patient does not automatically have access to it. 
+You need to explicitly give access to the patient user to this created Healthcare Element by calling the service `giveAccessTo`.
 
 :::
 
@@ -129,7 +137,7 @@ to them.
 
 ## Sharing a Healthcare Element with a Patient
 
-After creating the Healthcare Element, the Healthcare Professional shares it with the Patient.
+After creating the Healthcare Element, the Healthcare Professional can share it with the Patient.
 
 <!-- file://code-samples/how-to/manage-healthcare-elements/index.mts snippet:HE sharing with data owner-->
 ```typescript
@@ -139,11 +147,19 @@ const sharedHealthcareElement = await api.healthcareElementApi.giveAccessTo(
 )
 ```
 
-If the operation is successful, the method returns a Promise with the updated Healthcare Element.
+If the operation is successful, the method returns a Promise with the updated Healthcare Element.  
+Using the same service, the Healthcare Professional can share the Healthcare Element with another Healthcare Professional.
+
+:::note
+
+Any Data Owner that has access to a Healthcare Element can share it with another Data Owner using this service.  
+A Patient could allow another Patient or HCP to access a Healthcare Element.
+
+:::
 
 ## Retrieving a Healthcare Element Using its ID
 
-A single Healthcare Element can be retrieved from the Backend using its id.
+A single Healthcare Element can be retrieved from the iCure Back-end using its id.
 
 <!-- file://code-samples/how-to/manage-healthcare-elements/index.mts snippet:retrieve a HE as data owner-->
 ```typescript
@@ -170,7 +186,12 @@ Trying to retrieve a Healthcare Element you do not have access to will produce a
 ## Modifying a Healthcare Element
 
 Given an existing Healthcare Element, it is possible to modify it.  
-Some fields, like id and rev, cannot be modified.
+
+:::note
+
+The id and rev fields cannot be modified.
+
+:::
 
 <!-- file://code-samples/how-to/manage-healthcare-elements/index.mts snippet:modify a HE as data owner-->
 ```typescript
@@ -193,11 +214,15 @@ const modificationResult = await api.healthcareElementApi.createOrModifyHealthca
 )
 ```
 
-If the operation is successful, the method returns the updated Healthcare Element as it is stored in the Backend.
+If the operation is successful, the method returns the updated Healthcare Element.
 
 :::caution
 
-To update a Healthcare Element, both id and rev fields must be valid.
+To update a Healthcare Element, both id and rev fields must be valid:
+
+* the id should be the one of an existing Healthcare Element
+* the rev is a field automatically managed by the iCure Back-End to handle conflicts. It must be equal to the one of the
+Healthcare Element stored in the backend.
 
 :::
 
@@ -217,7 +242,7 @@ const healthcareElementFilter = await new HealthcareElementFilter()
 
 :::note
 
-You can learn more about filters in the how to.
+You can learn more about filters in the [how to](../how-to/how-to-filter-data-with-advanced-search-criteria).
 
 :::
 
@@ -234,8 +259,7 @@ const healthcareElementsFirstPage = await api.healthcareElementApi.filterHealthc
 
 The `filter` method returns a PaginatedList that contains at most the number of elements stated
  in the method's parameter. If you do not specify any number, the default value is 1000.  
-To retrieve more Healthcare Elements, you can call the same method again, using the startDocumentId provided in the previous
- request.
+To retrieve more Healthcare Elements, you can call the same method again, using the startDocumentId provided in the previous PaginatedList.
 
 <!-- file://code-samples/how-to/manage-healthcare-elements/index.mts snippet:use HE filter method second page-->
 ```typescript
