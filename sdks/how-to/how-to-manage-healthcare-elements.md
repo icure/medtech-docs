@@ -213,8 +213,8 @@ If the operation is successful, the method returns the updated Healthcare Elemen
 To update a Healthcare Element, both id and rev fields must be valid:
 
 * the id should be the one of an existing Healthcare Element
-* the rev is a field automatically managed by the iCure Back-End to handle conflicts. It must be equal to the one of the
-Healthcare Element stored in the backend.
+* the rev is a field automatically managed by the iCure Back-End to handle conflicts. It must be equal to the one received
+ from the server when creating or getting the Healthcare Element you want to modify.
 
 :::
 
