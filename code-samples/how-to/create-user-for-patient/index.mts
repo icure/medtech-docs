@@ -39,11 +39,11 @@ async function getEmail(email: string): Promise<any> {
 }
 
 const api = await medTechApi()
-  .withICureBasePath(host)
+  .withICureBaseUrl(host)
   .withUserName(userName)
   .withPassword(password)
-  .withMsgGtwUrl(msgGtwUrl)
-  .withMsgGtwSpecId(specId)
+  .withMsgGwUrl(msgGtwUrl)
+  .withMsgGwSpecId(specId)
   .withCrypto(webcrypto as any)
   .build()
 
@@ -123,9 +123,9 @@ await sleep(5000)
 
 //tech-doc: user logs in
 const anonymousMedTechApi = await new AnonymousMedTechApiBuilder()
-  .withICureUrlPath(host)
-  .withMsgGtwUrl(msgGtwUrl)
-  .withMsgGtwSpecId(specId)
+  .withICureBaseUrl(host)
+  .withMsgGwUrl(msgGtwUrl)
+  .withMsgGwSpecId(specId)
   .withCrypto(webcrypto as any)
   .withAuthProcessByEmailId(authProcessId)
   .withAuthProcessBySmsId(authProcessId)
@@ -138,8 +138,7 @@ const privateKeyHex = ua2hex(await anonymousMedTechApi.cryptoApi.RSA.exportKey(p
 await anonymousMedTechApi.authenticationApi.authenticateAndAskAccessToItsExistingData(
   patientUsername,
   patientToken,
-  [privateKeyHex, publicKeyHex],
-  () => undefined,
+  async () => ({ privateKey: privateKeyHex, publicKey: publicKeyHex }),
 )
 //tech-doc: STOP HERE
 

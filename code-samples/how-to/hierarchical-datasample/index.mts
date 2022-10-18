@@ -1,7 +1,4 @@
-import { CodingReference, DataSample,
-  Patient,
-  TimeSeries,
-} from '@icure/medical-device-sdk'
+import { CodingReference, DataSample, Patient, TimeSeries } from '@icure/medical-device-sdk'
 import { hex2ua } from '@icure/api'
 import 'isomorphic-fetch'
 import * as console from 'console'
