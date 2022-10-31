@@ -49,7 +49,10 @@ async function createConfig() {
                     sidebarPath: require.resolve('./sidebarsSDK.js'),
                     editUrl:
                         `https://github.com/${GITHUB_USERNAME}/medtech-docs/edit/main/`,
-                    remarkPlugins: [mdxMermaid.default, [remarkKroki, krokiConfig]],
+                    remarkPlugins: [
+                        [mdxMermaid.default, { theme: { light: 'default', dark: 'dark' } }],
+                        [remarkKroki, krokiConfig]
+                    ],
                 },
             ],
             [
@@ -61,7 +64,10 @@ async function createConfig() {
                     sidebarPath: require.resolve('./sidebarsCockpit.js'),
                     editUrl:
                         `https://github.com/${GITHUB_USERNAME}/medtech-docs/edit/main/`,
-                    remarkPlugins: [mdxMermaid.default, [remarkKroki, krokiConfig]],
+                    remarkPlugins: [
+                        [mdxMermaid.default, { theme: { light: 'default', dark: 'dark' } }],
+                        [remarkKroki, krokiConfig]
+                    ],
                 },
             ],
             [
