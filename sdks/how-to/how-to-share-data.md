@@ -7,10 +7,10 @@ slug: how-to-share-data
 In iCure it is possible to allow multiple data owners to access specific instances of `Patient`, `DataSample` and 
 `HealthcareElement`.
 
-Initially, when a data owner creates one of these entities only whey will be able to access it. 
+By default, the data owner who creates an entity is the only one that has access to it. 
 However, it is possible for the creator to share the entity with others by using the `giveAccessTo` methods in the 
 respective apis.
-This way also the other data owners will be able to retrieve the entity and decrypt its content.
+This allows selected data owners to retrieve the entity and decrypt its content.
 
 ## Instantiate the apis for different users
 
@@ -36,20 +36,20 @@ const patient = await hcp1Api.patientApi.createOrModifyPatient(
 practitioners, patients or devices.
 
 To do this `hcp1` simply has to use `giveAccessTo` method from the `patientApi`.
-This method takes two parameters: the entity that will be shared (in the example `patient`), and the id of the data 
-owner that the entity will be shared with.
+This method takes two parameters: the entity that will be shared (in the example `patient`), and the id of the data
+owner with whom the entity will be shared.
 
 <!-- file://code-samples/how-to/sharing-data/index.mts snippet:share a patient-->
 ```typescript
 // hcp1 shares the information of `patient` with hcp2
 const updatedPatient = await hcp1Api.patientApi.giveAccessTo(
   patient,
-  hcp1Api.dataOwnerApi.getDataOwnerIdOf(hcp2),
+  hcp1Api.dataOwnerApi.getDataOwnerIdOf(hcp2User),
 )
 // hcp1 shares the information of `patient` with p (a different patient that is also a data owner)
 await hcp1Api.patientApi.giveAccessTo(
   updatedPatient,
-  hcp1Api.dataOwnerApi.getDataOwnerIdOf(p),
+  hcp1Api.dataOwnerApi.getDataOwnerIdOf(pUser),
 )
 ```
 
@@ -58,23 +58,24 @@ await hcp1Api.patientApi.giveAccessTo(
 The `giveAccessTo` method **modifies** the shared entity and will fail if the version of the input entity doesn't 
 match the latest version.
 
-In the previous example we shared the new `patient` first with `hcp2`, then with `p`. 
-Since the patient changes we can't pass again `patient` to the second invocation of `giveAccessTo`, but we have to pass 
-the `updatedPatient` we received from the first invocation, otherwise we will get an error.
+In the previous example we shared the new `patient` first with `hcp2`, then with `p`.
+Since the first call modifies the patient entity, we cannot pass again `patient` to the second invocation of 
+`giveAccessTo`, but we have to pass the `updatedPatient` we received from the first invocation. 
+Failing to do so will trigger a conflict in the database and the invocation will return an error.
 
 :::
 
 :::note
 
-A patient is treated as any other data owner, and can also be given access to data of other patients.
-This could be useful for example in situations where a patient wants to share their medical information with a close
+A patient is treated as any other data owner, and can also get access to data of other patients.
+This can be useful for example in situations where a patient wants to share their medical information with a close
 relative.
 
 :::
 
 ## Sharing data created by someone else
 
-Users are allowed to share any entity they have access to, even if they were not the original creators.
+Users are allowed to share any entity to which they have access, even if they were not the original creators.
 In this example `hcp1` creates a healthcare element and shares it with `p`.
 
 <!-- file://code-samples/how-to/sharing-data/index.mts snippet:create a healthcare element-->
@@ -99,7 +100,7 @@ const healthcareElement = await hcp1Api.healthcareElementApi.createOrModifyHealt
 // hcp1 shares `healthcareElement` with p
 await hcp1Api.healthcareElementApi.giveAccessTo(
   healthcareElement,
-  hcp1Api.dataOwnerApi.getDataOwnerIdOf(p),
+  hcp1Api.dataOwnerApi.getDataOwnerIdOf(pUser),
 )
 ```
 
@@ -110,13 +111,13 @@ Now also `p` can share the healthcare element with other data owners.
 // p retrieves `healthcareElement` and shares it with hcp2
 await pApi.healthcareElementApi.giveAccessTo(
   await pApi.healthcareElementApi.getHealthcareElement(healthcareElement.id),
-  pApi.dataOwnerApi.getDataOwnerIdOf(hcp2),
+  pApi.dataOwnerApi.getDataOwnerIdOf(hcp2User),
 )
 ```
 
 ## Sharing data as a patient
 
-Also patient data owners can create entities and share them with other data owners.
+Patient data owners can create entities and share them with other data owners.
 In this example `p` creates a data sample and shares it with `hcp1`, then `hcp1` shares it also with `hcp2`. 
 
 <!-- file://code-samples/how-to/sharing-data/index.mts snippet:create and share a data sample-->
@@ -137,12 +138,12 @@ const dataSample = await pApi.dataSampleApi.createOrModifyDataSampleFor(
 // p shares the data sample with hcp1
 await pApi.dataSampleApi.giveAccessTo(
   dataSample,
-  pApi.dataOwnerApi.getDataOwnerIdOf(hcp1),
+  pApi.dataOwnerApi.getDataOwnerIdOf(hcp1User),
 )
 // hcp1 shares the data sample with hcp2
 await hcp1Api.dataSampleApi.giveAccessTo(
   await hcp1Api.dataSampleApi.getDataSample(dataSample.id),
-  hcp1Api.dataOwnerApi.getDataOwnerIdOf(hcp2),
+  hcp1Api.dataOwnerApi.getDataOwnerIdOf(hcp2User),
 )
 ```
 
