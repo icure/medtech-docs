@@ -18,12 +18,12 @@ initLocalStorage()
 const hcp1Api = await initMedTechApi(true)
 const hcp2Api = await initMedTechApi2(true)
 const pApi = await initPatientMedTechApi(true)
-const hcp1 = await hcp1Api.userApi.getLoggedUser()
-const hcp2 = await hcp2Api.userApi.getLoggedUser()
-const p = await pApi.userApi.getLoggedUser()
-expect(hcp1.email).to.equal(userName)
-expect(hcp2.email).to.equal(userName2)
-expect(p.email).to.equal(patientUserName)
+const hcp1User = await hcp1Api.userApi.getLoggedUser()
+const hcp2User = await hcp2Api.userApi.getLoggedUser()
+const pUser = await pApi.userApi.getLoggedUser()
+expect(hcp1User.email).to.equal(userName)
+expect(hcp2User.email).to.equal(userName2)
+expect(pUser.email).to.equal(patientUserName)
 
 
 console.log("Testing patient")
@@ -41,12 +41,12 @@ expect(pApi.patientApi.getPatient(patient.id)).to.be.rejected
 // hcp1 shares the information of `patient` with hcp2
 const updatedPatient = await hcp1Api.patientApi.giveAccessTo(
   patient,
-  hcp1Api.dataOwnerApi.getDataOwnerIdOf(hcp2),
+  hcp1Api.dataOwnerApi.getDataOwnerIdOf(hcp2User),
 )
 // hcp1 shares the information of `patient` with p (a different patient that is also a data owner)
 await hcp1Api.patientApi.giveAccessTo(
   updatedPatient,
-  hcp1Api.dataOwnerApi.getDataOwnerIdOf(p),
+  hcp1Api.dataOwnerApi.getDataOwnerIdOf(pUser),
 )
 //tech-doc: end
 expect((await hcp1Api.patientApi.getPatient(patient.id)).note).to.equal(note)
@@ -79,14 +79,14 @@ expect(pApi.healthcareElementApi.getHealthcareElement(healthcareElement.id)).to.
 // hcp1 shares `healthcareElement` with p
 await hcp1Api.healthcareElementApi.giveAccessTo(
   healthcareElement,
-  hcp1Api.dataOwnerApi.getDataOwnerIdOf(p),
+  hcp1Api.dataOwnerApi.getDataOwnerIdOf(pUser),
 )
 //tech-doc: end
 //tech-doc: share a healthcare element
 // p retrieves `healthcareElement` and shares it with hcp2
 await pApi.healthcareElementApi.giveAccessTo(
   await pApi.healthcareElementApi.getHealthcareElement(healthcareElement.id),
-  pApi.dataOwnerApi.getDataOwnerIdOf(hcp2),
+  pApi.dataOwnerApi.getDataOwnerIdOf(hcp2User),
 )
 //tech-doc: end
 expect((await hcp1Api.healthcareElementApi.getHealthcareElement(healthcareElement.id)).description).to.equal(description)
@@ -115,12 +115,12 @@ expect(hcp1Api.dataSampleApi.getDataSample(dataSample.id)).to.be.rejected //skip
 // p shares the data sample with hcp1
 await pApi.dataSampleApi.giveAccessTo(
   dataSample,
-  pApi.dataOwnerApi.getDataOwnerIdOf(hcp1),
+  pApi.dataOwnerApi.getDataOwnerIdOf(hcp1User),
 )
 // hcp1 shares the data sample with hcp2
 await hcp1Api.dataSampleApi.giveAccessTo(
   await hcp1Api.dataSampleApi.getDataSample(dataSample.id),
-  hcp1Api.dataOwnerApi.getDataOwnerIdOf(hcp2),
+  hcp1Api.dataOwnerApi.getDataOwnerIdOf(hcp2User),
 )
 //tech-doc: end
 expect((await hcp1Api.dataSampleApi.getDataSample(dataSample.id)).content["en"].stringValue).to.equal(contentString)
