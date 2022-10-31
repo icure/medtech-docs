@@ -143,7 +143,9 @@ If the method runs successfully, it will return a report of all the shared objec
 
 </details>
 
-Finally, you can update the Notification status again to signal that the operation was completed successfully.
+Finally, you can update the Notification status again to signal that the operation was completed successfully. 
+Updating the status of the Notification is important, as otherwise you will risk of getting old Notifications when filtering
+ for the new pending ones.
 
 <!-- file://code-samples/how-to/create-user-for-patient/index.mts snippet:completed status-->
 ```typescript
