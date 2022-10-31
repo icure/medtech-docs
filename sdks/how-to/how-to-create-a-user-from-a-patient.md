@@ -38,9 +38,12 @@ Sample associated to them.
 
 ### The Doctor Invites the Patient
 
-The first step in inviting a User is to create an instance of a class that implements either the `EmailMessageFactory` or the 
-`SMSMessageFactory`, depending on if you want to invite User by Email or SMS.  
-Two examples are the `ICureRegistrationEmail` and `ICureRegistrationPassword` classes.
+The first step in inviting a User is to create an instance of a class that implements either the 
+[`EmailMessageFactory`](../references/interfaces/EmailMessageFactory) or the 
+[`SMSMessageFactory`](../references/interfaces/SMSMessageFactory), depending on if you want to invite User by Email or 
+SMS.  
+Two examples are the [`ICureRegistrationEmail`](../references/classes/ICureRegistrationEmail) and 
+[`ICureRegistrationSMS`](../references/classes/ICureRegistrationSMS) classes.
 
 <!-- file://code-samples/how-to/create-user-for-patient/index.mts snippet:instantiate a message factory-->
 ```typescript
