@@ -28,7 +28,7 @@ The following example shows how to automatically share all new entities which wi
 
 <!-- file://code-samples/how-to/auto-share/index.mts snippet:auto share-->
 ```typescript
-await hcp1Api.userApi.shareAllFutureDataWith("all", [hcp1Api.dataOwnerApi.getDataOwnerIdOf(hcp2)])
+await hcp1Api.userApi.shareAllFutureDataWith([hcp1Api.dataOwnerApi.getDataOwnerIdOf(hcp2User)])
 ```
 
 <details>
@@ -99,7 +99,7 @@ You can stop the automatic data share using the `stopSharingDataWith` method.
 
 <!-- file://code-samples/how-to/auto-share/index.mts snippet:stop auto share-->
 ```typescript
-await hcp1Api.userApi.stopSharingDataWith("all", [hcp1Api.dataOwnerApi.getDataOwnerIdOf(hcp2)])
+await hcp1Api.userApi.stopSharingDataWith([hcp1Api.dataOwnerApi.getDataOwnerIdOf(hcp2User)])
 ```
 
 <details>
@@ -139,8 +139,8 @@ not also with `hcp2`.
 
 <!-- file://code-samples/how-to/auto-share/index.mts snippet:share chain-->
 ```typescript
-await hcp1Api.userApi.shareAllFutureDataWith("all", [hcp1Api.dataOwnerApi.getDataOwnerIdOf(p)])
-await pApi.userApi.shareAllFutureDataWith("all", [pApi.dataOwnerApi.getDataOwnerIdOf(hcp2)])
+await hcp1Api.userApi.shareAllFutureDataWith([hcp1Api.dataOwnerApi.getDataOwnerIdOf(pUser)])
+await pApi.userApi.shareAllFutureDataWith([pApi.dataOwnerApi.getDataOwnerIdOf(hcp2User)])
 
 const contentNoChaining = "Even if hcp1 shares with p and p shares with hcp2, hcp2 won't have automatic access to the data"
 const dataSampleNoChaining = await hcp1Api.dataSampleApi.createOrModifyDataSampleFor(
