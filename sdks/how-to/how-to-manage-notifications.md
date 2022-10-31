@@ -17,13 +17,30 @@ As for now, there are three types of Notifications:
 * **NEW_USER_OWN_DATA_ACCESS**: when a Patient logs in for the first time, they can send this type of Notification to a Healthcare Professional to aks for access to their own data.
 * **OTHER**: all the other use cases.
 
+### Status of a Notification
+
+You can manage the lifecycle of a Notification by altering its status. Each Notification can have four possible states:
+
+* **pending**: the Notification was created, and it is waiting to be managed.
+* **ongoing**: the Notification was acknowledged, and the operations it prescribes are being managed.
+* **completed**: the Notification was managed, and the operations it prescribes ended.
+* **cancelled**: the Notification was cancelled without starting the operations it prescribes.
+
+```mermaid
+flowchart TD
+ 
+ PENDING --> ONGOING
+ ONGOING --> COMPLETED
+ PENDING --> CANCELED
+```
+
+## Creating a Notification
+
 :::note
 
 To perform the following operations, we suppose you have at least a Patient and a Healthcare Professional in your database.
 
 :::
-
-## Creating a Notification
 
 In the following example, a Patient creates a Notification for a Healthcare Professional communicating that they have a new
  key and need access to their data.
