@@ -97,10 +97,8 @@ const notificationsFirstPage = await api.notificationApi.filterNotifications(
 )
 ```
 
-The `filter` method returns a PaginatedList, that contains at most the number of elements stated
-in the method's parameter. If you do not specify any number, the default value is 1000.
-If there are more Notifications to be retrieved, then the `startKeyDocId` provided in the response will not be null,
- and you can use it to retrieve the following page of entities.
+The `filter` method returns a PaginatedList, which contains up to `limit` Notifications in the `rows` field, as specified by the method parameter (1000 by default).
+If  the PaginatedList has a non-null field `startKeyDocId` there are more notifications which can be retrieved with this filter: you can use this value to retrieve (part of) the remaining notifications.
 
 <!-- file://code-samples/how-to/manage-notifications/index.mts snippet:gets the second page of results-->
 ```typescript
