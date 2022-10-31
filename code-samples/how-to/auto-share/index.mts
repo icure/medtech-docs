@@ -18,15 +18,15 @@ initLocalStorage()
 const hcp1Api = await initMedTechApi(true)
 const hcp2Api = await initMedTechApi2(true)
 const pApi = await initPatientMedTechApi(true)
-const hcp1 = await hcp1Api.userApi.getLoggedUser()
-const hcp2 = await hcp2Api.userApi.getLoggedUser()
-const p = await pApi.userApi.getLoggedUser()
-expect(hcp1.email).to.equal(userName)
-expect(hcp2.email).to.equal(userName2)
-expect(p.email).to.equal(patientUserName)
+const hcp1User = await hcp1Api.userApi.getLoggedUser()
+const hcp2User = await hcp2Api.userApi.getLoggedUser()
+const pUser = await pApi.userApi.getLoggedUser()
+expect(hcp1User.email).to.equal(userName)
+expect(hcp2User.email).to.equal(userName2)
+expect(pUser.email).to.equal(patientUserName)
 
 //tech-doc: auto share
-await hcp1Api.userApi.shareAllFutureDataWith("all", [hcp1Api.dataOwnerApi.getDataOwnerIdOf(hcp2)])
+await hcp1Api.userApi.shareAllFutureDataWith([hcp1Api.dataOwnerApi.getDataOwnerIdOf(hcp2User)])
 //tech-doc: end
 //tech-doc: sample creation
 const note = 'Winter is coming'
@@ -51,7 +51,7 @@ expect((await hcp2Api.dataSampleApi.getDataSample(dataSample.id)).content["en"].
 // dataSample is already accessibly by hcp2
 //tech-doc: end
 
-await hcp1Api.userApi.stopSharingDataWith("all", [hcp1Api.dataOwnerApi.getDataOwnerIdOf(hcp2)])
+await hcp1Api.userApi.stopSharingDataWith([hcp1Api.dataOwnerApi.getDataOwnerIdOf(hcp2User)])
 const existingContent = "Existing data sample"
 const existingDataSample = await hcp1Api.dataSampleApi.createOrModifyDataSampleFor(
   patient.id,
@@ -64,7 +64,7 @@ const existingDataSample = await hcp1Api.dataSampleApi.createOrModifyDataSampleF
 )
 expect((await hcp1Api.dataSampleApi.getDataSample(existingDataSample.id)).content["en"].stringValue).to.equal(existingContent)
 expect(hcp2Api.dataSampleApi.getDataSample(existingDataSample.id)).to.be.rejected
-await hcp1Api.userApi.shareAllFutureDataWith("all", [hcp1Api.dataOwnerApi.getDataOwnerIdOf(hcp2)])
+await hcp1Api.userApi.shareAllFutureDataWith([hcp1Api.dataOwnerApi.getDataOwnerIdOf(hcp2User)])
 
 //tech-doc: not on modify
 const contentNotOnModify = "Won't automatically update who the data is shared with on modify"
@@ -95,7 +95,7 @@ expect(hcp1Api.dataSampleApi.getDataSample(dataSampleNotSharedBy2.id)).to.be.rej
 expect((await hcp2Api.dataSampleApi.getDataSample(dataSampleNotSharedBy2.id)).content["en"].stringValue).to.equal(contentNotSharedBy2)
 
 //tech-doc: stop auto share
-await hcp1Api.userApi.stopSharingDataWith("all", [hcp1Api.dataOwnerApi.getDataOwnerIdOf(hcp2)])
+await hcp1Api.userApi.stopSharingDataWith([hcp1Api.dataOwnerApi.getDataOwnerIdOf(hcp2User)])
 //tech-doc: end
 
 //tech-doc: sample no share
@@ -114,8 +114,8 @@ expect((await hcp1Api.dataSampleApi.getDataSample(dataSampleNotSharedAnymore.id)
 expect(hcp2Api.dataSampleApi.getDataSample(dataSampleNotSharedAnymore.id)).to.be.rejected
 
 //tech-doc: share chain
-await hcp1Api.userApi.shareAllFutureDataWith("all", [hcp1Api.dataOwnerApi.getDataOwnerIdOf(p)])
-await pApi.userApi.shareAllFutureDataWith("all", [pApi.dataOwnerApi.getDataOwnerIdOf(hcp2)])
+await hcp1Api.userApi.shareAllFutureDataWith([hcp1Api.dataOwnerApi.getDataOwnerIdOf(pUser)])
+await pApi.userApi.shareAllFutureDataWith([pApi.dataOwnerApi.getDataOwnerIdOf(hcp2User)])
 
 const contentNoChaining = "Even if hcp1 shares with p and p shares with hcp2, hcp2 won't have automatic access to the data"
 const dataSampleNoChaining = await hcp1Api.dataSampleApi.createOrModifyDataSampleFor(
@@ -132,5 +132,5 @@ expect((await hcp1Api.dataSampleApi.getDataSample(dataSampleNoChaining.id)).cont
 expect((await pApi.dataSampleApi.getDataSample(dataSampleNoChaining.id)).content["en"].stringValue).to.equal(contentNoChaining)
 expect(hcp2Api.dataSampleApi.getDataSample(dataSampleNoChaining.id)).to.be.rejected
 
-await hcp1Api.userApi.stopSharingDataWith("all", [hcp1Api.dataOwnerApi.getDataOwnerIdOf(p)])
-await pApi.userApi.stopSharingDataWith("all", [pApi.dataOwnerApi.getDataOwnerIdOf(hcp2)])
+await hcp1Api.userApi.stopSharingDataWith([hcp1Api.dataOwnerApi.getDataOwnerIdOf(pUser)])
+await pApi.userApi.stopSharingDataWith([pApi.dataOwnerApi.getDataOwnerIdOf(hcp2User)])
