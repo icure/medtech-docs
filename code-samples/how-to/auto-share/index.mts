@@ -35,7 +35,7 @@ const patient = await hcp1Api.patientApi.createOrModifyPatient(
 )
 expect((await hcp1Api.patientApi.getPatient(patient.id)).note).to.equal(note) //skip
 expect((await hcp2Api.patientApi.getPatient(patient.id)).note).to.equal(note) //skip
-// patient is already accessibly by hcp2
+// hcp2 can already access patient
 const contentString = "Hello world"
 const dataSample = await hcp1Api.dataSampleApi.createOrModifyDataSampleFor(
   patient.id,
@@ -48,7 +48,7 @@ const dataSample = await hcp1Api.dataSampleApi.createOrModifyDataSampleFor(
 )
 expect((await hcp1Api.dataSampleApi.getDataSample(dataSample.id)).content["en"].stringValue).to.equal(contentString) //skip
 expect((await hcp2Api.dataSampleApi.getDataSample(dataSample.id)).content["en"].stringValue).to.equal(contentString) //skip
-// dataSample is already accessibly by hcp2
+// hcp2 can already access dataSample
 //tech-doc: end
 
 await hcp1Api.userApi.stopSharingDataWith([hcp1Api.dataOwnerApi.getDataOwnerIdOf(hcp2User)])

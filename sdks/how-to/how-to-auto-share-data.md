@@ -10,7 +10,7 @@ we want to share a new entity.
 
 In some cases you may need to always share all data created by a data owner with other data-owners, for example you may
 want to always share all data created by a patient with their general practitioner. 
-In these situations it may be more convenient to use the automatic-share feature of iCure. 
+In these situations it may be more convenient to use the automatic-sharing feature of iCure. 
 
 :::note
 
@@ -40,7 +40,7 @@ const note = 'Winter is coming'
 const patient = await hcp1Api.patientApi.createOrModifyPatient(
   new Patient({ firstName: 'John', lastName: 'Snow', note }),
 )
-// patient is already accessibly by hcp2
+// hcp2 can already access patient
 const contentString = "Hello world"
 const dataSample = await hcp1Api.dataSampleApi.createOrModifyDataSampleFor(
   patient.id,
@@ -51,7 +51,7 @@ const dataSample = await hcp1Api.dataSampleApi.createOrModifyDataSampleFor(
     content: {en: {stringValue: contentString}}
   })
 )
-// dataSample is already accessibly by hcp2
+// hcp2 can already access dataSample
 ```
 </details>
 
