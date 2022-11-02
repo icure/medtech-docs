@@ -11,9 +11,8 @@ tags:
 
 :::note
 
-This how-to assumes that you have been using the iCure Medical Device SDK in your application with the open-source version
- of the iCure backend and that, after creating an application, a database, and a suer using the iCure Cockpit, you now
- want to use the cloud version of iCure.
+This how-to assumes that until now, you have been using the iCure Medical Device SDK in your application with the open-source
+ version of iCure. You now want to start using the iCure Cloud version, including all premium features.
 
 :::
 
@@ -23,7 +22,7 @@ but you will also have to make some changes in your code.
 
 ## Changes
 
-The following steps are mandatory changes that you must perform to ensure that your application will work as intended.
+To migrate properly to the Cloud version, you must apply the following changes to your code.
 
 ### iCure URL
 
@@ -40,26 +39,25 @@ const medtechApi = await medTechApi()
 
 ### Access Control
 
-Another important thing that you have to keep in mind is that the cloud version of the iCure backend applies a permission-based
- access control on its endpoints.  
-Because of this, you may experience some `403 - FORBIDDEN` errors on calls that worked on the open source version of the
- iCure backend, where all the types of user (Healthcare Professional, Patient, or Device) can access all the endpoints.
+While testing your app, you could experience some `403 - FORBIDDEN` errors on iCure Backend requests.
+ This is because the cloud version applies a permission-based access control on its endpoints, which is useless for the iCure free version.
+To resolve those issues, make sure your data owner may access the requested data. 
+ If not, give him access through the [giveAccessTo service](GIVE ACCESS TO DOC) first, or [share of all future data](AUTO DELEGATIONS DOC) with another user.
 
 ## Additional Features
 
 By subscribing to the cloud version of the iCure backend, you will have access to features not available in the open source
  version.
 
-### User Invitation
+### User Creation
 
-By using the cloud version of the iCure backend, you will be able to invite user by sending them an email or an SMS message
- containing an invitation link.  
-The process is detailed in the [How to register a user](./how-to-register-a-user.md) and
- [How to Create a User for an Existing Patient](./how-to-create-a-user-from-a-patient.md) how-tos.
+You are now able to register new users by sending them an email or an SMS message to invite them. For more information, 
+ go to [How to register a user](./how-to-register-a-user.md).
+You now also have the possibility to create users for existing patients, still by email or SMS. For this process, you can 
+ head to [How to Create a User for an Existing Patient](./how-to-create-a-user-from-a-patient.md).
 
 ### Event Subscription
 
-If you use the cloud version of the iCure backend, you will also have the possibility of subscribing to events
- concerning several types of entities. Through this mechanism, you will be able to receive a real-time notification when
- an entity is created, updated, or deleted.  
+Now, you also may use iCure WebHook, in order to subscribe to events concerning several types of entities. 
+ Through this mechanism, you will be able to receive real-time notifications when an entity is created, updated, or deleted.
 This process is detailed in the [Listening to iCure events](./listen-to-icure-events.md) how-to.
