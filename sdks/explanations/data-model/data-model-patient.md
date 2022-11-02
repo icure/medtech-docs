@@ -58,7 +58,7 @@ Notification to ask the Doctor to access the outcome of the visit.
 
 <!-- file://code-samples/explanation/doctor-shares-data-with-patient/index.mts snippet:patient sends notification-->
 ```typescript
-const accessNotification = await patientApi.notificationApi.createOrModifyNotification(
+await patientApi.notificationApi.createOrModifyNotification(
   new Notification({
     id: uuid(),
     status: 'pending',

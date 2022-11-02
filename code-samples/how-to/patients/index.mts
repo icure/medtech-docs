@@ -71,6 +71,7 @@ expect(JSON.stringify(patient)).to.equal(JSON.stringify(updatedPatient))
 //tech-doc: get a list of patient
 const filter = await new PatientFilter()
   .forDataOwner(loggedUser.healthcarePartyId!)
+
   .dateOfBirthBetween(28000101, 29000101)
   .build()
 
@@ -85,6 +86,7 @@ expect(patients.rows).to.lengthOf.greaterThan(0)
 //tech-doc: get a list of patient ids
 const filterForMatch = await new PatientFilter()
   .forDataOwner(loggedUser.healthcarePartyId!)
+
   .dateOfBirthBetween(28000101, 29000101)
   .build()
 
@@ -106,5 +108,6 @@ expect(deletedPatient).to.equal(patient.id)
 //tech-doc: filter builder
 new PatientFilter()
   .forDataOwner(loggedUser.healthcarePartyId!)
+
   .dateOfBirthBetween(28000101, 29000101)
   .build()
