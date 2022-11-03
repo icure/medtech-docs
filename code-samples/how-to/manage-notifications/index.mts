@@ -73,7 +73,7 @@ const startTimestamp = new Date(2022, 8, 27).getTime()
 
 const afterDateFilter = await new NotificationFilter()
   .forDataOwner(user.healthcarePartyId)
-  .afterDateFilter(startTimestamp)
+  .afterDate(startTimestamp)
   .build()
 //tech-doc: STOP HERE
 expect(!!afterDateFilter).to.eq(true)
@@ -105,7 +105,7 @@ notificationsSecondPage.rows.forEach((notification) => {
 })
 
 //tech-doc: gets the pending notifications
-const pendingNotifications = await api.notificationApi.getPendingNotifications()
+const pendingNotifications = await api.notificationApi.getPendingNotificationsAfter()
 //tech-doc: STOP HERE
 expect(!!pendingNotifications).to.eq(true)
 expect(pendingNotifications.length).to.gt(0)
