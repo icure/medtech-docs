@@ -7,7 +7,7 @@ tags:
 
 ---
 
-# How to handle DataSamples
+# Handling DataSamples
 
 In this section, we will learn how to manage data samples. DataSamples are used to store data that is not part of the
 patient's medical record, such as blood pressure measurements.
@@ -27,16 +27,14 @@ takes two parameters: the patient's id and the DataSample object.
 <!-- file://code-samples/how-to/datasamples/index.mts snippet:create a dataSample-->
 ```typescript
 const createdDataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
-	patient.id!,
-	new DataSample({
-		labels: new Set([
-			new CodingReference({type: "IC-TEST", code: "TEST"}),
-		]),
-		content: {en: {stringValue: "Hello world"}},
-		openingDate: 20220929083400,
-		comment: "This is a comment",
-	})
-);
+  patient.id!,
+  new DataSample({
+    labels: new Set([new CodingReference({ type: 'IC-TEST', code: 'TEST' })]),
+    content: { en: { stringValue: 'Hello world' } },
+    openingDate: 20220929083400,
+    comment: 'This is a comment',
+  }),
+)
 ```
 
 <details>
@@ -154,17 +152,14 @@ If you linked the DataSample at the wrong patient, you have to delete the first 
 
 <!-- file://code-samples/how-to/datasamples/index.mts snippet:update a dataSample-->
 ```typescript
-const updatedDataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
-	patient.id!,
-	{
-		...createdDataSample,
-		// highlight-start
-		content: {en: {stringValue: "Hello world updated"}},
-		comment: "This is a updated comment",
-		modified: undefined
-		// highlight-end
-	}
-);
+const updatedDataSample = await api.dataSampleApi.createOrModifyDataSampleFor(patient.id!, {
+  ...createdDataSample,
+  // highlight-start
+  content: { en: { stringValue: 'Hello world updated' } },
+  comment: 'This is a updated comment',
+  modified: undefined,
+  // highlight-end
+})
 ```
 
 <details>
@@ -222,14 +217,12 @@ We can build the filter object using the `DataSampleFilter` builder.
 <!-- file://code-samples/how-to/datasamples/index.mts snippet:get a list of dataSamples-->
 ```typescript
 const filter = await new DataSampleFilter()
-	.forDataOwner(loggedUser.healthcarePartyId!)
-	.byTagCodeFilter("IC-TEST", "TEST")
-	.forPatients(api.cryptoApi, [patient])
-	.build();
+  .forDataOwner(loggedUser.healthcarePartyId!)
+  .byLabelCodeFilter('IC-TEST', 'TEST')
+  .forPatients(api.cryptoApi, [patient])
+  .build()
 
-const filteredDataSamples = await api.dataSampleApi.filterDataSample(
-	filter
-);
+const filteredDataSamples = await api.dataSampleApi.filterDataSample(filter)
 ```
 
 <details>
@@ -294,9 +287,9 @@ In the example above, we created the filter this way:
 ```typescript
 new DataSampleFilter()
   .forDataOwner(loggedUser.healthcarePartyId!)
-  .byTagCodeFilter("IC-TEST", "TEST")
+  .byLabelCodeFilter('IC-TEST', 'TEST')
   .forPatients(api.cryptoApi, [patient])
-  .build();
+  .build()
 ```
 
 The resulting filter object will create a filter that allows us to get all `DataSamples` that satisfy all the following requirements:
@@ -312,13 +305,11 @@ In some circumstances, you might want to get a list of DataSample ids instead of
 <!-- file://code-samples/how-to/datasamples/index.mts snippet:get a list of dataSamples ids-->
 ```typescript
 const matchFilter = await new DataSampleFilter()
-	.forDataOwner(loggedUser.healthcarePartyId!)
-	.forPatients(api.cryptoApi, [patient])
-	.build();
+  .forDataOwner(loggedUser.healthcarePartyId!)
+  .forPatients(api.cryptoApi, [patient])
+  .build()
 
-const matchedDataSampleIds = await api.dataSampleApi.matchDataSample(
-	matchFilter
-);
+const matchedDataSampleIds = await api.dataSampleApi.matchDataSample(matchFilter)
 ```
 
 <details>
@@ -331,33 +322,3 @@ const matchedDataSampleIds = await api.dataSampleApi.matchDataSample(
 ```
 
 </details>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

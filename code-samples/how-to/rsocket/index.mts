@@ -1,4 +1,10 @@
-import { CodingReference, DataSample, DataSampleFilter, medTechApi, Patient } from '@icure/medical-device-sdk'
+import {
+  CodingReference,
+  DataSample,
+  DataSampleFilter,
+  medTechApi,
+  Patient,
+} from '@icure/medical-device-sdk'
 import { webcrypto } from 'crypto'
 import { hex2ua, sleep } from '@icure/api'
 import { host, userName, password, privKey } from '../../utils/index.mjs'
@@ -13,14 +19,17 @@ console.log('Saving keys in ' + tmp)
 ;(global as any).Storage = ''
 
 const api = await medTechApi()
-  .withICureBasePath(host)
+  .withICureBaseUrl(host)
   .withUserName(userName)
   .withPassword(password)
   .withCrypto(webcrypto as any)
   .build()
 
 const loggedUser = await api.userApi.getLoggedUser()
-await api!.cryptoApi.loadKeyPairsAsTextInBrowserLocalStorage(loggedUser.healthcarePartyId!, hex2ua(privKey))
+await api!.cryptoApi.loadKeyPairsAsTextInBrowserLocalStorage(
+  loggedUser.healthcarePartyId!,
+  hex2ua(privKey),
+)
 
 //tech-doc: can listen to dataSample events
 const events: DataSample[] = []
@@ -29,7 +38,10 @@ const statuses: string[] = []
 const connection = (
   await api.dataSampleApi.subscribeToDataSampleEvents(
     ['CREATE'], // Event types to listen to
-    await new DataSampleFilter().forDataOwner(loggedUser.healthcarePartyId!).byTagCodeFilter('IC-TEST', 'TEST').build(),
+    await new DataSampleFilter()
+      .forDataOwner(loggedUser.healthcarePartyId!)
+      .byLabelCodeFilter('IC-TEST', 'TEST')
+      .build(),
     async (ds) => {
       events.push(ds)
     },

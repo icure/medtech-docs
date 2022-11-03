@@ -1,7 +1,6 @@
 ---
 sidebar_position: 2
 ---
-
 # Quick Start
 
 ## Prerequisites and Installation
@@ -59,11 +58,11 @@ Kraken connects to the couchdb database to store its data.
 The docker compose file exposes the Kraken on port 16043. It also exposes the CouchDB instance on port 5984.
 :::
 
-To connect to the Kraken, you will need credentials. If no user has ever been created in the database, the following entry will appear in the docker logs:
+To connect to the Kraken, you will need credentials. If no user has ever been created in the database, an entry similar to the one below will appear in the docker logs:
 
-`User 'admin' has been created with password 'xxxxxxxxxxxxxx'`
+`2022-09-30 07:39:06.700  WARN 7 --- [           main] ication$$EnhancerBySpringCGLIB$$71ea0610 : Default admin user created with password d2217dd39238`
 
-Those credentials are going to be used later. Please note them down.
+The password is going to be used later. Please note them down.
 
 ### Manual installation
 
@@ -73,8 +72,13 @@ You can also install the Kraken manually without relying on docker. This involve
 
 Now that we have credentials for a local or remote instance of the Kraken, we can use the SDK to connect to it.
 
+You can either define the environment variables `ICURE_USER_NAME` and `ICURE_USER_PASSWORD` or directly modify the code below and replace the credentials loaded from the environment by the ones you noted down earlier.
+
+If you use the cloud version, this is the credentials you got from the cockpit. If you use the local installation, the credentials are `admin` and the `password`you got from the logs.
+
 <!-- file://code-samples/quick-start/index.mts snippet:instantiate the api-->
 ```typescript
+import 'isomorphic-fetch'
 import { medTechApi } from '@icure/medical-device-sdk'
 import { webcrypto } from 'crypto'
 import * as process from 'process'
@@ -85,7 +89,7 @@ export const password = process.env.ICURE_USER_PASSWORD
 
 
 const api = await medTechApi()
-  .withICureBasePath(host)
+  .withICureBaseUrl(host)
   .withUserName(username)
   .withPassword(password)
   .withCrypto(webcrypto as any)
@@ -102,4 +106,3 @@ console.log(JSON.stringify(user))
 
 Congratulations, you are now ready to use the SDK to interact with the iCure API.
 You can now head to the [Tutorial](./tutorial/index.md) to learn how to use the SDK to create a simple application.
-
