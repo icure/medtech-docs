@@ -93,7 +93,7 @@ const startTimestamp = new Date(2022, 8, 27).getTime()
 
 const afterDateFilter = await new NotificationFilter()
   .forDataOwner(user.healthcarePartyId)
-  .afterDateFilter(startTimestamp)
+  .afterDate(startTimestamp)
   .build()
 ```
 
@@ -132,7 +132,7 @@ A Healthcare Professional can also retrieve all the Notifications assigned to hi
 
 <!-- file://code-samples/how-to/manage-notifications/index.mts snippet:gets the pending notifications-->
 ```typescript
-const pendingNotifications = await api.notificationApi.getPendingNotifications()
+const pendingNotifications = await api.notificationApi.getPendingNotificationsAfter()
 ```
 
 ## Modifying a Notification

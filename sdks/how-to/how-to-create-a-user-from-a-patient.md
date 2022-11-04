@@ -100,7 +100,7 @@ the new User.
 
 <!-- file://code-samples/how-to/create-user-for-patient/index.mts snippet:doctor gets pending notifications-->
 ```typescript
-const newNotifications = await api.notificationApi.getPendingNotifications()
+const newNotifications = await api.notificationApi.getPendingNotificationsAfter()
 const patientNotification = newNotifications.filter(
   (notification) =>
     notification.type === NotificationTypeEnum.NEW_USER_OWN_DATA_ACCESS &&

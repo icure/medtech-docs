@@ -33,13 +33,15 @@ To migrate properly to the Cloud version, you must apply the following changes t
 
 First, you will have to change the URL used to instantiate the MedTech API to allow you application to contact the iCure
  Cloud Backend:
+
+<!-- file://code-samples/how-to/migrate-to-premium/index.mts snippet:instantiate the api-->
 ```typescript
 const medtechApi = await medTechApi()
-    .withICureBaseUrl("https://kraken.svc.icure.cloud")
-    .withUserName(username)
-    .withPassword(password)
-    .withCrypto(webcrypto as any)
-    .build()
+  .withICureBaseUrl(host)
+  .withUserName(userName)
+  .withPassword(password)
+  .withCrypto(webcrypto as any)
+  .build()
 ```
 
 ### Access Control
