@@ -20,7 +20,12 @@ If you were using the open source version of the iCure backend, and you now are 
 some things that you have to take into account. You will have access to additional features available only in the cloud version,
 but you will also have to make some changes in your code.
 
-## Changes
+## Create your Cloud iCure account
+
+In order to use the Cloud iCure version, you first need to create an account on the 
+ [Cockpit platform](https://cockpit.icure.cloud). For this, check the tutorial [How to register on Cockpit]
+
+## Code Changes
 
 To migrate properly to the Cloud version, you must apply the following changes to your code.
 
