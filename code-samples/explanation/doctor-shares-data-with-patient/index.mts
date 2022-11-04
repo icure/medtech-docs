@@ -102,7 +102,7 @@ await patientApi.notificationApi.createOrModifyNotification(
 //tech-doc: STOP HERE
 
 //tech-doc: doctor receives notification
-const newNotifications = await api.notificationApi.getPendingNotifications()
+const newNotifications = await api.notificationApi.getPendingNotificationsAfter()
 const newPatientNotifications = newNotifications.filter(
   (notification) =>
     notification.type === NotificationTypeEnum.OTHER &&

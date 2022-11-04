@@ -143,7 +143,7 @@ await anonymousMedTechApi.authenticationApi.authenticateAndAskAccessToItsExistin
 //tech-doc: STOP HERE
 
 //tech-doc: doctor gets pending notifications
-const newNotifications = await api.notificationApi.getPendingNotifications()
+const newNotifications = await api.notificationApi.getPendingNotificationsAfter()
 const patientNotification = newNotifications.filter(
   (notification) =>
     notification.type === NotificationTypeEnum.NEW_USER_OWN_DATA_ACCESS &&

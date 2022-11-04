@@ -2,7 +2,18 @@ import os from 'os'
 import console from 'console'
 import { LocalStorage } from 'node-localstorage'
 import { medTechApi, MedTechApi } from '@icure/medical-device-sdk'
-import { host, password, password2, patientPassword, patientPrivKey, patientUserName, privKey, privKey2, userName, userName2 } from './endpoint.mjs'
+import {
+  host,
+  password,
+  password2,
+  patientPassword,
+  patientPrivKey,
+  patientUserName,
+  privKey,
+  privKey2,
+  userName,
+  userName2,
+} from './endpoint.mjs'
 import { webcrypto } from 'crypto'
 import { hex2ua } from '@icure/api';
 
@@ -29,7 +40,7 @@ async function initAnyMedTechApi(
   username: string,
   password: string,
   privatekey: string,
-  initcrypto: boolean | undefined
+  initcrypto: boolean | undefined,
 ): Promise<MedTechApi> {
   const api = await medTechApi()
     .withICureBaseUrl(host)

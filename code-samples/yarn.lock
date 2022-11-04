@@ -62,10 +62,10 @@
   resolved "https://registry.yarnpkg.com/@humanwhocodes/object-schema/-/object-schema-1.2.1.tgz#b520529ec21d8e5945a1851dfd1c32e94e39ff45"
   integrity sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==
 
-"@icure/api@5.0.26":
-  version "5.0.26"
-  resolved "https://registry.yarnpkg.com/@icure/api/-/api-5.0.26.tgz#598b73c3f73c35077de203bce07a35fdaf3ac838"
-  integrity sha512-RWs3jDmxqa7oHPCdRCkCrqdiIe2EBlQr4/i4BnuxLB3NcmJsf9pjBekPIZCPWGHt3L96ZcqlarW7m6phvG1xoQ==
+"@icure/api@6.0.0", "@icure/api@^6.0.0":
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/@icure/api/-/api-6.0.0.tgz#a2ce308552b221baf38ab96060536ead938700af"
+  integrity sha512-T55qLjbbXBm47EJEQOrNHVyTggt0ylAQwad8K0is4CxIazsQ4Eg5KEt5D3T9PSeJxcwMS5eDYc9SKoUG3j/92w==
   dependencies:
     date-fns "^2.23.0"
     libphonenumber-js "^1.7.18"
@@ -75,25 +75,12 @@
     uuid "^8.3.2"
     uuid-encoder "^1.1.0"
 
-"@icure/api@^5.0.26":
-  version "5.0.28"
-  resolved "https://registry.yarnpkg.com/@icure/api/-/api-5.0.28.tgz#b13c5f799bf67c8c913f007b9069d88be3afa389"
-  integrity sha512-rwbaQOg2+e6/2DaVRcc5I9m61TV7OtCups+TIQAN509io6rYBgkZKF6wkA6DvDjpspNfmIHKwSHqiGimd+UCfA==
+"@icure/medical-device-sdk@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@icure/medical-device-sdk/-/medical-device-sdk-1.0.2.tgz#8814b1373e22fa76d9471e89ba0d88c36566a937"
+  integrity sha512-Y/WPGAbItlv2V1UPUWaxq6+/4NtYibh94Q7yfuUtQeE+6wA4RHqYF9zDpB/zgt3M8fbcQXr7JxSHy4dLnqo5MA==
   dependencies:
-    date-fns "^2.23.0"
-    libphonenumber-js "^1.7.18"
-    lodash "^4.17.21"
-    moment "^2.22.1"
-    text-encoding "^0.7.0"
-    uuid "^8.3.2"
-    uuid-encoder "^1.1.0"
-
-"@icure/medical-device-sdk@^0.7.0":
-  version "0.7.0"
-  resolved "https://registry.yarnpkg.com/@icure/medical-device-sdk/-/medical-device-sdk-0.7.0.tgz#6dff879e2392571138d1790d0a8031b9b79ce097"
-  integrity sha512-T/BQ4y/zn7EYFCS3LPipGpV5jDV9IQe5twECQFt9g21SsNkOK6dbOu8QcnGbbgzHCkY9SfuK/PsCQIdNEoxXXw==
-  dependencies:
-    "@icure/api" "^5.0.26"
+    "@icure/api" "^6.0.0"
     date-fns "^2.28.0"
     es6-promise "^4.2.4"
     node-jq "^2.3.3"
