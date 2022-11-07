@@ -15,7 +15,7 @@ import {
   userName2,
 } from './endpoint.mjs'
 import { webcrypto } from 'crypto'
-import { hex2ua } from '@icure/api'
+import { hex2ua } from '@icure/api';
 
 export function initLocalStorage() {
   const tmp = os.tmpdir()
@@ -52,8 +52,8 @@ async function initAnyMedTechApi(
     const loggedUser = await api.userApi.getLoggedUser()
     await api!.cryptoApi.loadKeyPairsAsTextInBrowserLocalStorage(
       api.dataOwnerApi.getDataOwnerIdOf(loggedUser),
-      hex2ua(privatekey),
-    )
+      hex2ua(privatekey)
+    );
   }
   return api
 }
