@@ -73,7 +73,7 @@ const anonymousApiForLogin = await new AnonymousMedTechApiBuilder()
 const authProcessLogin = await anonymousApiForLogin.authenticationApi.startAuthentication(
   recaptcha,
   undefined,
-  userPhoneNumber // The phone number used for user registration
+  userPhoneNumber, // The phone number used for user registration
 )
 ```
 
@@ -83,11 +83,11 @@ const loginResult = await anonymousApiForLogin.authenticationApi.completeAuthent
   authProcessLogin!,
   validationCodeForLogin,
   () => {
-    const userInfo = getBackCredentials();
+    const userInfo = getBackCredentials()
     if (userInfo.pubKey != undefined && userInfo.privKey != undefined) {
       return Promise.resolve({ privateKey: userInfo.privKey, publicKey: userInfo.pubKey })
     } else {
-      // You can't find back the user's RSA Keypair : You need to generate a new one
+      // You can't find back the user's RSA Keypair: You need to generate a new one
       return anonymousApiForLogin.generateRSAKeypair()
     }
   },

@@ -100,7 +100,7 @@ the new User.
 
 <!-- file://code-samples/how-to/create-user-for-patient/index.mts snippet:doctor gets pending notifications-->
 ```typescript
-const newNotifications = await api.notificationApi.getPendingNotifications()
+const newNotifications = await api.notificationApi.getPendingNotificationsAfter()
 const patientNotification = newNotifications.filter(
   (notification) =>
     notification.type === NotificationTypeEnum.NEW_USER_OWN_DATA_ACCESS &&
@@ -129,16 +129,15 @@ If the method runs successfully, it will return a report of all the shared objec
 <details>
     <summary>Output</summary>
 
-```typescript
+```json
 {
-  patient: "YOUR_PATIENT_OBJECT",
-  statuses: {
-    dataSamples: { success: true, error: null, modified: 1 },
-    healthcareElements: { success: true, error: null, modified: 0 },
-    patient: { success: true, error: null, modified: 0 }
-  }
+ "patient": "YOUR_PATIENT_OBJECT",
+ "statuses": {
+  "dataSamples": { "success": true, "error": null, "modified": 1 },
+  "healthcareElements": { "success": true, "error": null, "modified": 0 },
+  "patient": { "success": true, "error": null, "modified": 0 }
+ }
 }
-
 ```
 
 </details>

@@ -47,10 +47,7 @@ const updatedPatient = await hcp1Api.patientApi.giveAccessTo(
   hcp1Api.dataOwnerApi.getDataOwnerIdOf(hcp2User),
 )
 // hcp1 shares the information of `patient` with p (a different patient that is also a data owner)
-await hcp1Api.patientApi.giveAccessTo(
-  updatedPatient,
-  hcp1Api.dataOwnerApi.getDataOwnerIdOf(pUser),
-)
+await hcp1Api.patientApi.giveAccessTo(updatedPatient, hcp1Api.dataOwnerApi.getDataOwnerIdOf(pUser))
 ```
 
 :::caution
@@ -95,7 +92,7 @@ const healthcareElement = await hcp1Api.healthcareElementApi.createOrModifyHealt
     ]),
     openingDate: new Date('2019-10-12').getTime(),
   }),
-  patient.id
+  patient.id,
 )
 // hcp1 shares `healthcareElement` with p
 await hcp1Api.healthcareElementApi.giveAccessTo(
@@ -123,23 +120,18 @@ In this example `p` creates a data sample and shares it with `hcp1`, then `hcp1`
 <!-- file://code-samples/how-to/sharing-data/index.mts snippet:create and share a data sample-->
 ```typescript
 // p creates a data sample
-const contentString = "Hello world"
+const contentString = 'Hello world'
 const dataSample = await pApi.dataSampleApi.createOrModifyDataSampleFor(
   patient.id,
   new DataSample({
-    labels: new Set([
-      new CodingReference({type: "IC-TEST", code: "TEST"}),
-    ]),
-    content: {en: {stringValue: contentString}},
+    labels: new Set([new CodingReference({ type: 'IC-TEST', code: 'TEST' })]),
+    content: { en: { stringValue: contentString } },
     openingDate: 20220929083400,
-    comment: "This is a comment",
-  })
+    comment: 'This is a comment',
+  }),
 )
 // p shares the data sample with hcp1
-await pApi.dataSampleApi.giveAccessTo(
-  dataSample,
-  pApi.dataOwnerApi.getDataOwnerIdOf(hcp1User),
-)
+await pApi.dataSampleApi.giveAccessTo(dataSample, pApi.dataOwnerApi.getDataOwnerIdOf(hcp1User))
 // hcp1 shares the data sample with hcp2
 await hcp1Api.dataSampleApi.giveAccessTo(
   await hcp1Api.dataSampleApi.getDataSample(dataSample.id),

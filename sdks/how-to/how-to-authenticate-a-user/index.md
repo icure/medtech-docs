@@ -304,7 +304,7 @@ const loginResult = await anonymousApiForLogin.authenticationApi.completeAuthent
   authProcessLogin!,
   validationCodeForLogin,
   () => {
-    const userInfo = getBackCredentials();
+    const userInfo = getBackCredentials()
     if (userInfo.pubKey != undefined && userInfo.privKey != undefined) {
       return Promise.resolve({ privateKey: userInfo.privKey, publicKey: userInfo.pubKey })
     } else {
@@ -444,7 +444,7 @@ saveSecurely(
 The first thing you have to do is to retrieve Daenaerys credentials and her RSA Keypair 
 <!-- file://code-samples/how-to/authenticate-user/index.mts snippet:Get back credentials-->
 ```typescript
-// getBackCredentials does not exist : Use your own way of storing the following data securely
+// getBackCredentials does not exist: Use your own way of storing the following data securely
 // One option is to get them back from the localStorage
 const { login, token, pubKey, privKey } = getBackCredentials()
 ```

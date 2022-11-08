@@ -24,7 +24,12 @@ function saveSecurely(
   cachedInfo['privKey'] = keyPair.privateKey
 }
 
-function getBackCredentials(): { login?: string; token?: string; pubKey?: string; privKey?: string } {
+function getBackCredentials(): {
+  login?: string
+  token?: string
+  pubKey?: string
+  privKey?: string
+} {
   return {
     login: cachedInfo['login'],
     token: cachedInfo['token'],
@@ -73,7 +78,6 @@ const authProcess = await anonymousApi.authenticationApi.startAuthentication(
 const validationCode = (await getLastSMS(userPhoneNumber)).message!
 console.log('SMS Validation code is ', validationCode)
 
-
 //tech-doc: Complete authentication process
 const authenticationResult = await anonymousApi.authenticationApi.completeAuthentication(
   authProcess!,
@@ -83,7 +87,7 @@ const authenticationResult = await anonymousApi.authenticationApi.completeAuthen
 
 const authenticatedApi = authenticationResult.medTechApi
 
-// Do not forget that saveSecurely does not exist: Use your own way of storing the following data securely
+// saveSecurely does not exist: Use your own way of storing the following data securely
 // One option is to put these elements into the localStorage
 saveSecurely(
   userPhoneNumber,
@@ -98,7 +102,7 @@ const createdPatient = await authenticatedApi.patientApi.createOrModifyPatient(
     firstName: 'Robb',
     lastName: 'Stark',
     gender: 'male',
-    note: 'You must keep one\'s head',
+    note: "You must keep one's head",
   }),
 )
 //tech-doc: STOP HERE
@@ -106,7 +110,7 @@ const createdPatient = await authenticatedApi.patientApi.createOrModifyPatient(
 console.log('Created patient: ', JSON.stringify(createdPatient))
 
 //tech-doc: Instantiate back a MedTechApi
-// Do not forget that getBackCredentials does not exist: Use your own way of storing the following data securely
+// getBackCredentials does not exist: Use your own way of storing the following data securely
 // One option is to get them back from the localStorage
 const { login, token, pubKey, privKey } = getBackCredentials()
 
@@ -142,7 +146,7 @@ const anonymousApiForLogin = await new AnonymousMedTechApiBuilder()
 const authProcessLogin = await anonymousApiForLogin.authenticationApi.startAuthentication(
   recaptcha,
   undefined,
-  userPhoneNumber // The phone number used for user registration
+  userPhoneNumber, // The phone number used for user registration
 )
 //tech-doc: STOP HERE
 
@@ -154,7 +158,7 @@ const loginResult = await anonymousApiForLogin.authenticationApi.completeAuthent
   authProcessLogin!,
   validationCodeForLogin,
   () => {
-    const userInfo = getBackCredentials();
+    const userInfo = getBackCredentials()
     if (userInfo.pubKey != undefined && userInfo.privKey != undefined) {
       return Promise.resolve({ privateKey: userInfo.privKey, publicKey: userInfo.pubKey })
     } else {

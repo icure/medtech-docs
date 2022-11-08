@@ -28,7 +28,9 @@ The following example shows how to automatically share all new entities which wi
 
 <!-- file://code-samples/how-to/auto-share/index.mts snippet:auto share-->
 ```typescript
-await hcp1Api.userApi.shareAllFutureDataWith([hcp1Api.dataOwnerApi.getDataOwnerIdOf(hcp2User)])
+await hcp1Api.userApi.shareAllFutureDataWith('medicalInformation', [
+  hcp1Api.dataOwnerApi.getDataOwnerIdOf(hcp2User),
+])
 ```
 
 <details>
@@ -41,15 +43,13 @@ const patient = await hcp1Api.patientApi.createOrModifyPatient(
   new Patient({ firstName: 'John', lastName: 'Snow', note }),
 )
 // hcp2 can already access patient
-const contentString = "Hello world"
+const contentString = 'Hello world'
 const dataSample = await hcp1Api.dataSampleApi.createOrModifyDataSampleFor(
   patient.id,
   new DataSample({
-    labels: new Set([
-      new CodingReference({type: "IC-TEST", code: "TEST"}),
-    ]),
-    content: {en: {stringValue: contentString}}
-  })
+    labels: new Set([new CodingReference({ type: 'IC-TEST', code: 'TEST' })]),
+    content: { en: { stringValue: contentString } },
+  }),
 )
 // hcp2 can already access dataSample
 ```
@@ -68,8 +68,8 @@ const dataSampleNotOnModify = await hcp1Api.dataSampleApi.createOrModifyDataSamp
   patient.id,
   new DataSample({
     ...existingDataSample,
-    content: {en: {stringValue: contentNotOnModify}}
-  })
+    content: { en: { stringValue: contentNotOnModify } },
+  }),
 )
 ```
 
@@ -81,15 +81,13 @@ it.
 
 <!-- file://code-samples/how-to/auto-share/index.mts snippet:one directional-->
 ```typescript
-const contentNotSharedBy2 = "Hcp 2 is not sharing automatically with 1"
+const contentNotSharedBy2 = 'Hcp 2 is not sharing automatically with 1'
 const dataSampleNotSharedBy2 = await hcp2Api.dataSampleApi.createOrModifyDataSampleFor(
   patient.id,
   new DataSample({
-    labels: new Set([
-      new CodingReference({type: "IC-TEST", code: "TEST"}),
-    ]),
-    content: {en: {stringValue: contentNotSharedBy2}}
-  })
+    labels: new Set([new CodingReference({ type: 'IC-TEST', code: 'TEST' })]),
+    content: { en: { stringValue: contentNotSharedBy2 } },
+  }),
 )
 ```
 
@@ -99,7 +97,9 @@ You can stop the automatic data share using the `stopSharingDataWith` method.
 
 <!-- file://code-samples/how-to/auto-share/index.mts snippet:stop auto share-->
 ```typescript
-await hcp1Api.userApi.stopSharingDataWith([hcp1Api.dataOwnerApi.getDataOwnerIdOf(hcp2User)])
+await hcp1Api.userApi.stopSharingDataWith('medicalInformation', [
+  hcp1Api.dataOwnerApi.getDataOwnerIdOf(hcp2User),
+])
 ```
 
 <details>
@@ -107,15 +107,13 @@ await hcp1Api.userApi.stopSharingDataWith([hcp1Api.dataOwnerApi.getDataOwnerIdOf
 
 <!-- file://code-samples/how-to/auto-share/index.mts snippet:sample no share-->
 ```typescript
-const contentNotSharedAnymore = "Hcp 1 stopped sharing data automatically with 2"
+const contentNotSharedAnymore = 'Hcp 1 stopped sharing data automatically with 2'
 const dataSampleNotSharedAnymore = await hcp1Api.dataSampleApi.createOrModifyDataSampleFor(
   patient.id,
   new DataSample({
-    labels: new Set([
-      new CodingReference({type: "IC-TEST", code: "TEST"}),
-    ]),
-    content: {en: {stringValue: contentNotSharedAnymore}}
-  })
+    labels: new Set([new CodingReference({ type: 'IC-TEST', code: 'TEST' })]),
+    content: { en: { stringValue: contentNotSharedAnymore } },
+  }),
 )
 ```
 </details>
@@ -139,17 +137,20 @@ not also with `hcp2`.
 
 <!-- file://code-samples/how-to/auto-share/index.mts snippet:share chain-->
 ```typescript
-await hcp1Api.userApi.shareAllFutureDataWith([hcp1Api.dataOwnerApi.getDataOwnerIdOf(pUser)])
-await pApi.userApi.shareAllFutureDataWith([pApi.dataOwnerApi.getDataOwnerIdOf(hcp2User)])
+await hcp1Api.userApi.shareAllFutureDataWith('medicalInformation', [
+  hcp1Api.dataOwnerApi.getDataOwnerIdOf(pUser),
+])
+await pApi.userApi.shareAllFutureDataWith('medicalInformation', [
+  pApi.dataOwnerApi.getDataOwnerIdOf(hcp2User),
+])
 
-const contentNoChaining = "Even if hcp1 shares with p and p shares with hcp2, hcp2 won't have automatic access to the data"
+const contentNoChaining =
+  "Even if hcp1 shares with p and p shares with hcp2, hcp2 won't have automatic access to the data"
 const dataSampleNoChaining = await hcp1Api.dataSampleApi.createOrModifyDataSampleFor(
   patient.id,
   new DataSample({
-    labels: new Set([
-      new CodingReference({type: "IC-TEST", code: "TEST"}),
-    ]),
-    content: {en: {stringValue: contentNoChaining}}
-  })
+    labels: new Set([new CodingReference({ type: 'IC-TEST', code: 'TEST' })]),
+    content: { en: { stringValue: contentNoChaining } },
+  }),
 )
 ```

@@ -85,7 +85,7 @@ After that, the Doctor receives a notification from the Patient and shares the d
 
 <!-- file://code-samples/explanation/doctor-shares-data-with-patient/index.mts snippet:doctor receives notification-->
 ```typescript
-const newNotifications = await api.notificationApi.getPendingNotifications()
+const newNotifications = await api.notificationApi.getPendingNotificationsAfter()
 const newPatientNotifications = newNotifications.filter(
   (notification) =>
     notification.type === NotificationTypeEnum.OTHER &&

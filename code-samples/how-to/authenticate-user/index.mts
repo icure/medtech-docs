@@ -25,7 +25,12 @@ function saveSecurely(
   cachedInfo['privKey'] = keyPair.privateKey
 }
 
-function getBackCredentials(): { login?: string; token?: string; pubKey?: string; privKey?: string } {
+function getBackCredentials(): {
+  login?: string
+  token?: string
+  pubKey?: string
+  privKey?: string
+} {
   return {
     login: cachedInfo['login'],
     token: cachedInfo['token'],
@@ -73,7 +78,6 @@ const authProcess = await anonymousApi.authenticationApi.startAuthentication(
 
 const validationCode = (await getLastEmail(userEmail)).subject!
 console.log('Validation code is ', validationCode)
-
 
 //tech-doc: Complete authentication process
 const authenticationResult = await anonymousApi.authenticationApi.completeAuthentication(
@@ -174,7 +178,7 @@ const loginResult = await anonymousApiForLogin.authenticationApi.completeAuthent
   authProcessLogin!,
   validationCodeForLogin,
   () => {
-    const userInfo = getBackCredentials();
+    const userInfo = getBackCredentials()
     if (userInfo.pubKey != undefined && userInfo.privKey != undefined) {
       return Promise.resolve({ privateKey: userInfo.privKey, publicKey: userInfo.pubKey })
     } else {
@@ -198,4 +202,3 @@ const foundPatientAfterLogin = await loggedUserApi.patientApi.getPatient(created
 //tech-doc: STOP HERE
 
 console.log('Found Patient after login: ', JSON.stringify(foundPatientAfterLogin))
-
