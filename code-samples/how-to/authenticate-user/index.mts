@@ -211,7 +211,13 @@ const currentPatient = await loggedUserApi.patientApi.getPatient(daenaerysId)
 await loggedUserApi.patientApi.giveAccessTo(currentPatient, masterHcpId)
 await loggedUserApi.dataSampleApi.giveAccessTo(createdDataSample, masterHcpId)
 
-//tech-doc: User lost their private key
+cachedInfo['login'] = undefined
+cachedInfo['token'] = undefined
+cachedInfo['userId'] = undefined
+cachedInfo['groupId'] = undefined
+cachedInfo['pubKey'] = undefined
+cachedInfo['privKey'] = undefined
+
 // User lost his key and logs back
 const anonymousMedTechApi = await new AnonymousMedTechApiBuilder()
   .withICureBaseUrl(iCureUrl)
@@ -227,10 +233,23 @@ const loginProcess = await anonymousMedTechApi.authenticationApi.startAuthentica
   userEmail
 )
 
-const subjectCode = (await getLastEmail(userEmail)).subject!
-const loginAuthResult = await anonymousMedTechApi.authenticationApi.completeAuthentication(loginProcess!, subjectCode, () =>
-  anonymousMedTechApi.generateRSAKeypair()
+const newValidationCode = (await getLastEmail(userEmail)).subject!
+
+//tech-doc: Complete user lost key authentication
+const loginAuthResult = await anonymousMedTechApi.authenticationApi.completeAuthentication(
+  loginProcess!,
+  newValidationCode,
+  () => {
+    const userInfo = getBackCredentials()
+    if (userInfo.pubKey != undefined && userInfo.privKey != undefined) {
+      return Promise.resolve({ privateKey: userInfo.privKey, publicKey: userInfo.pubKey })
+    } else {
+      // You can't find back the user's RSA Keypair: You need to generate a new one
+      return anonymousApiForLogin.generateRSAKeypair()
+    }
+  }
 )
+//tech-doc: STOP HERE
 
 const foundUser = await loginAuthResult.medTechApi.userApi.getLoggedUser()
 
@@ -242,7 +261,7 @@ saveSecurely(
   loginAuthResult.keyPair,
 )
 
-// User can create new data
+//tech-doc: User can create new data after loosing their key
 const newlyCreatedDataSample = await loginAuthResult.medTechApi.dataSampleApi.createOrModifyDataSampleFor(
   foundUser.patientId,
   new DataSample({
@@ -252,8 +271,9 @@ const newlyCreatedDataSample = await loginAuthResult.medTechApi.dataSampleApi.cr
     comment: 'This is a comment',
   }),
 )
+//tech-doc: STOP HERE
 
-expect(newlyCreatedDataSample).to.not.be.undefined // skip
+expect(newlyCreatedDataSample).to.not.be.undefined //skip
 
 // But can't access previous ones
 try {
@@ -271,32 +291,39 @@ try {
 const hcpApi = await initMedTechApi(true)
 
 const startTimestamp = new Date().getTime() - 100000
+
+//tech-doc: Data owner gets all their pending notifications
 const hcpNotifications = await hcpApi.notificationApi.getPendingNotificationsAfter(startTimestamp)
+  .then((notifs) => notifs.filter((notif) => notif.type === NotificationTypeEnum.KEY_PAIR_UPDATE))
+//tech-doc: STOP HERE
+
 expect(hcpNotifications.length).to.not.be.undefined
 
-const hcpNotification = hcpNotifications.find(
+const daenaerysNotification = hcpNotifications.find(
   (notif) =>
     notif.type === NotificationTypeEnum.KEY_PAIR_UPDATE &&
     notif.properties?.find((prop) => prop.typedValue?.stringValue == daenaerysId) != undefined
 )
 
-expect(hcpNotification).to.not.be.undefined // skip
+expect(daenaerysNotification).to.not.be.undefined //skip
 
-const patientId = hcpNotification!.properties?.find((prop) => prop.id == 'dataOwnerConcernedId')
-expect(patientId).to.not.be.undefined // skip
-const patientPubKey = hcpNotification!.properties?.find((prop) => prop.id == 'dataOwnerConcernedPubKey')
-expect(patientPubKey).to.not.be.undefined // skip
+//tech-doc: Give access back to a user with their new key
+const daenaerysPatientId = daenaerysNotification!.properties?.find((prop) => prop.id == 'dataOwnerConcernedId')
+expect(daenaerysPatientId).to.not.be.undefined //skip
+const daenaerysPatientPubKey = daenaerysNotification!.properties?.find((prop) => prop.id == 'dataOwnerConcernedPubKey')
+expect(daenaerysPatientPubKey).to.not.be.undefined //skip
 
 const accessBack = await hcpApi.dataOwnerApi.giveAccessBackTo(
-  patientId!.typedValue!.stringValue!,
-  patientPubKey!.typedValue!.stringValue!
+  daenaerysPatientId!.typedValue!.stringValue!,
+  daenaerysPatientPubKey!.typedValue!.stringValue!
 )
-expect(accessBack).to.be.true // skip
+expect(accessBack).to.be.true //skip
+//tech-doc: STOP HERE
 
 // Then
 const updatedApi = await medTechApi(loginAuthResult.medTechApi).build()
 await updatedApi.initUserCrypto(false, loginAuthResult.keyPair)
 
 const previousDataSample = await updatedApi.dataSampleApi.getDataSample(createdDataSample.id!)
-expect(previousDataSample).to.not.be.undefined // skip
+expect(previousDataSample).to.not.be.undefined //skip
 //tech-doc: STOP HERE

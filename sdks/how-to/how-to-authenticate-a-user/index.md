@@ -188,12 +188,13 @@ Now that her authentication is completed, Daenaerys may manage data with iCure.
 
 <!-- file://code-samples/how-to/authenticate-user/index.mts snippet:Create encrypted data-->
 ```typescript
-const createdPatient = await authenticatedApi.patientApi.createOrModifyPatient(
-  new Patient({
-    firstName: 'John',
-    lastName: 'Snow',
-    gender: 'male',
-    note: 'Winter is coming',
+const createdDataSample = await authenticatedApi.dataSampleApi.createOrModifyDataSampleFor(
+  loggedUser.patientId,
+  new DataSample({
+    labels: new Set([new CodingReference({ type: 'IC-TEST', code: 'TEST' })]),
+    content: { en: { stringValue: 'Hello world' } },
+    openingDate: 20220929083400,
+    comment: 'This is a comment',
   }),
 )
 ```
@@ -353,7 +354,7 @@ And Daenaerys may manage her data again :
 ```typescript
 const loggedUserApi = loginResult.medTechApi
 
-const foundPatientAfterLogin = await loggedUserApi.patientApi.getPatient(createdPatient.id)
+const foundDataSampleAfterLogin = await loggedUserApi.dataSampleApi.getDataSample(createdDataSample.id)
 ```
 <details>
     <summary>Output</summary>
@@ -465,9 +466,7 @@ await reInstantiatedApi.initUserCrypto(false, { publicKey: pubKey, privateKey: p
 Daenaerys can finally manage her data again. 
 <!-- file://code-samples/how-to/authenticate-user/index.mts snippet:Get back encrypted data-->
 ```typescript
-const foundPatientAfterInstantiatingApi = await reInstantiatedApi.patientApi.getPatient(
-  createdPatient.id,
-)
+const foundDataSampleAfterInstantiatingApi = await reInstantiatedApi.dataSampleApi.getDataSample(createdDataSample.id)
 ```
 
 <details>
