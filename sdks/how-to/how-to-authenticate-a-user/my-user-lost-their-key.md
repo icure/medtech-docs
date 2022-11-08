@@ -102,6 +102,7 @@ const hcpNotifications = await hcpApi.notificationApi.getPendingNotificationsAft
 Once Jorah has the list of notifications, he will treat them one by one, deciding to give access back to the 
 provided user or not. 
 
+### Give access back to another data owner
 :::warning
 
 Before giving access back to a user, the data owner must ensure that the user is really who they meant to be.
@@ -123,14 +124,14 @@ const accessBack = await hcpApi.dataOwnerApi.giveAccessBackTo(
 
 After restarting her app, Daenaerys will be able to access her previous data back. 
 
-:::tip
+:::tip 
 
-Once a notification is treated, do not forget to [update its status](../how-to-manage-notifications.md#Updating the Status of a Notification)
+Once a notification is treated, do not forget to update its status. (See more in [How to manage notifications](../how-to-manage-notifications.md))
 
 :::
 
 
-## What if Daenaerys wants to authenticate on another device but didn't lose her previous key ?
+## What if the user wants to authenticate on another device but didn't lose their previous key ?
 When a new RSA keypair is generated for Daenaerys, a notification is sent to all data owners she shared data with, 
 but not only : She receives a notification as well. 
 

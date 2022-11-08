@@ -535,4 +535,4 @@ const foundDataSampleAfterInstantiatingApi = await reInstantiatedApi.dataSampleA
 Some specific use cases can bring you some questions: what happens if Daenaerys lost her RSA Keypair?
 What happens if Daenaerys would like to start your app on another device?
 
-Those questions will be answered in the [In-Depth Explanations](sdks/explanations.md)
+All those questions are answered in the children pages of this tutorial. 
