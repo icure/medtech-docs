@@ -84,10 +84,10 @@ authProcessByEmailId and `hcpAuthProcessByEmailId` as authProcessBySmsId.
 
 
 ### Starting the authentication process
-In iCure, you can authenticate either by email, either by SMS.
-Therefore, you will have to ask Daenaerys to provide at least an email or a mobile phone when authenticating.
+The registration process of iCure uses a one-time password (OTP) sent by email or [sms](my-user-authenticates-by-sms.md).
+Therefore, Daenaerys will need to provide at least an email or mobile phone number to register or login.
 
-You will also have to implement the ReCAPTCHA mechanism and provide us the corresponding to found key during the startAuthentication
+You will also have to implement the ReCAPTCHA mechanism and provide us the computed score during the startAuthentication 
 process.
 
 :::info
@@ -110,14 +110,22 @@ const authProcess = await anonymousApi.authenticationApi.startAuthentication(
 )
 ```
 
-As an output, you receive an `AuthenticationProcess object, which is important to keep for the 
-next steps of the procedure. 
 
-Calling `authenticationApi.startAuthentication` will send a validation code of 6 digits to Daenaerys, ensuring iCure
-she is who she pretends to be. 
+As an output, you receive an `AuthenticationProcess` object, which you will need for next steps of the procedure.
 
-### Getting the validation code
-The validation code is sent to the user by the iCure Message Gateway, to identify the user properly. As Daenaerys decided 
+:::info
+
+The `masterHcpId` represents the identifier of the dataOwner that will be responsible of Daenaerys user creation.
+This `masterHcpId` is optional for healthcare professionals registration but mandatory for patients. 
+
+It's good to know that after their registration, user will share all their future data with this responsible. The user may decide to stop
+sharing their data with this responsible by using the `userApi.stopSharingDataWith` service. For more information, 
+go to the [How-to: Automatically share data with other data owners](../how-to-auto-share-data.md).
+
+:::
+
+### Getting the validation code (OTP)
+The iCure Message Gateway will send the validation code to the user. Since Daenaerys decided  
 to authenticate by email, she can now check her emails to get this code.
 
 :::info
@@ -127,11 +135,11 @@ For now, these have all a default template.
 
 :::
 
-Once Daenaerys got her validation code, she can come back to your app and continue the process. 
+Once Daenaerys retrieves her validation code, she can come back to your app and continue the process. 
 
 #### Completing the authentication process
 To complete Daenaerys registration, you will have to call the `authenticationApi.completeAuthentication` service, 
-by providing three arguments : 
+by providing three arguments: 
 - The previous `AuthenticationProcess`
 - The validation code Daenaerys received by email
 - A lambda providing the RSA Keypair Daenaerys should use. For this last point, you may use the dedicated 
@@ -165,7 +173,7 @@ Make sure to save these elements to be able to authenticate Daenaerys again when
 
 <!-- file://code-samples/how-to/authenticate-user/index.mts snippet:Save credentials-->
 ```typescript
-// saveSecurely does not exist : Use your own way of storing the following data securely
+// saveSecurely does not exist: Use your own way of storing the following data securely
 // One option is to put these elements into the localStorage
 saveSecurely(
   userEmail,
@@ -175,7 +183,6 @@ saveSecurely(
   authenticationResult.keyPair,
 )
 ```
-
 
 Now that her authentication is completed, Daenaerys may manage data with iCure.  
 
@@ -252,12 +259,11 @@ const createdPatient = await authenticatedApi.patientApi.createOrModifyPatient(
 
 </details>
 
-
-But what do you have to do when Daenaerys will need to login again in a few days ?
+But what do you have to do when the authentication token of Daenaerys expires and she needs to login again?
 
 ## Login a user
-In iCure, the login flow is extremely similar to the registration.
-Once Daenaerys token is expired, she will need to identify herself again by starting a new authentication process. 
+In iCure, the login flow is similar to the registration.
+Once Daenaerys's token is expired, she will need to authenticate again to iCure by starting the login process.
 
 As Daenaerys is not authenticated anymore, you have to create a new AnonymousMedTechApi instance. 
 
@@ -302,7 +308,7 @@ const loginResult = await anonymousApiForLogin.authenticationApi.completeAuthent
     if (userInfo.pubKey != undefined && userInfo.privKey != undefined) {
       return Promise.resolve({ privateKey: userInfo.privKey, publicKey: userInfo.pubKey })
     } else {
-      // You can't find back the user's RSA Keypair : You need to generate a new one
+      // You can't find back the user's RSA Keypair: You need to generate a new one
       return anonymousApiForLogin.generateRSAKeypair()
     }
   },
@@ -318,7 +324,7 @@ console.log(`The token of your user will change: ***\${loginResult.token}***`)
 Do not forget to save these new credentials :
 <!-- file://code-samples/how-to/authenticate-user/index.mts snippet:Save credentials-->
 ```typescript
-// saveSecurely does not exist : Use your own way of storing the following data securely
+// saveSecurely does not exist: Use your own way of storing the following data securely
 // One option is to put these elements into the localStorage
 saveSecurely(
   userEmail,
@@ -418,13 +424,13 @@ with email or SMS OTP every time she opens your application.
 
 
 ## Reusing existing credentials
-Each time you complete an authentication process (Register or login), you have to save the credentials you receive
+Each time you complete the registration or login process, you can save the credentials you receive
 in a secured place.
-We symbolized it through the `saveSecurely` method.
+We symbolised it through the `saveSecurely` method.
 
 <!-- file://code-samples/how-to/authenticate-user/index.mts snippet:Save credentials-->
 ```typescript
-// saveSecurely does not exist : Use your own way of storing the following data securely
+// saveSecurely does not exist: Use your own way of storing the following data securely
 // One option is to put these elements into the localStorage
 saveSecurely(
   userEmail,
@@ -435,7 +441,7 @@ saveSecurely(
 )
 ```
 
-First thing you have to do is to retrieve Daenaerys credentials and her RSA Keypair 
+The first thing you have to do is to retrieve Daenaerys credentials and her RSA Keypair 
 <!-- file://code-samples/how-to/authenticate-user/index.mts snippet:Get back credentials-->
 ```typescript
 // getBackCredentials does not exist : Use your own way of storing the following data securely
@@ -443,7 +449,7 @@ First thing you have to do is to retrieve Daenaerys credentials and her RSA Keyp
 const { login, token, pubKey, privKey } = getBackCredentials()
 ```
 
-And then, initialize a MedTechApi, authenticating Daenaerys directly. 
+And then, initialise a MedTechApi, authenticating Daenaerys directly. 
 <!-- file://code-samples/how-to/authenticate-user/index.mts snippet:Instantiate back a MedTechApi-->
 ```typescript
 const reInstantiatedApi = await new MedTechApiBuilder()

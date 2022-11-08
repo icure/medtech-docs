@@ -83,7 +83,7 @@ const authenticationResult = await anonymousApi.authenticationApi.completeAuthen
 
 const authenticatedApi = authenticationResult.medTechApi
 
-// Do not forget that saveSecurely does not exist : Use your own way of storing the following data securely
+// Do not forget that saveSecurely does not exist: Use your own way of storing the following data securely
 // One option is to put these elements into the localStorage
 saveSecurely(
   userPhoneNumber,
@@ -106,7 +106,7 @@ const createdPatient = await authenticatedApi.patientApi.createOrModifyPatient(
 console.log('Created patient: ', JSON.stringify(createdPatient))
 
 //tech-doc: Instantiate back a MedTechApi
-// Do not forget that getBackCredentials does not exist : Use your own way of storing the following data securely
+// Do not forget that getBackCredentials does not exist: Use your own way of storing the following data securely
 // One option is to get them back from the localStorage
 const { login, token, pubKey, privKey } = getBackCredentials()
 
@@ -158,7 +158,7 @@ const loginResult = await anonymousApiForLogin.authenticationApi.completeAuthent
     if (userInfo.pubKey != undefined && userInfo.privKey != undefined) {
       return Promise.resolve({ privateKey: userInfo.privKey, publicKey: userInfo.pubKey })
     } else {
-      // You can't find back the user's RSA Keypair : You need to generate a new one
+      // You can't find back the user's RSA Keypair: You need to generate a new one
       return anonymousApiForLogin.generateRSAKeypair()
     }
   },

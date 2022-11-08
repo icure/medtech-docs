@@ -3,7 +3,7 @@ import { initLocalStorage, initMedTechApi } from '../../utils/index.mjs'
 import { Patient, AnonymousMedTechApiBuilder, MedTechApiBuilder } from '@icure/medical-device-sdk'
 import { webcrypto } from 'crypto'
 import * as process from 'process'
-import { getLastEmail, getLastSMS } from '../../utils/msgGtw.mjs'
+import { getLastEmail } from '../../utils/msgGtw.mjs'
 
 const cachedInfo = {} as { [key: string]: string }
 const uniqueId = Math.random().toString(36).substring(4)
@@ -92,7 +92,7 @@ console.log(`Token created to authenticate your new user: ***\${authenticationRe
 //tech-doc: STOP HERE
 
 //tech-doc: Save credentials
-// saveSecurely does not exist : Use your own way of storing the following data securely
+// saveSecurely does not exist: Use your own way of storing the following data securely
 // One option is to put these elements into the localStorage
 saveSecurely(
   userEmail,
@@ -123,7 +123,7 @@ const createdPatient = await authenticatedApi.patientApi.createOrModifyPatient(
 console.log('Created patient: ', JSON.stringify(createdPatient))
 
 //tech-doc: Get back credentials
-// getBackCredentials does not exist : Use your own way of storing the following data securely
+// getBackCredentials does not exist: Use your own way of storing the following data securely
 // One option is to get them back from the localStorage
 const { login, token, pubKey, privKey } = getBackCredentials()
 //tech-doc: STOP HERE
@@ -178,7 +178,7 @@ const loginResult = await anonymousApiForLogin.authenticationApi.completeAuthent
     if (userInfo.pubKey != undefined && userInfo.privKey != undefined) {
       return Promise.resolve({ privateKey: userInfo.privKey, publicKey: userInfo.pubKey })
     } else {
-      // You can't find back the user's RSA Keypair : You need to generate a new one
+      // You can't find back the user's RSA Keypair: You need to generate a new one
       return anonymousApiForLogin.generateRSAKeypair()
     }
   },
