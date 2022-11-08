@@ -129,16 +129,15 @@ If the method runs successfully, it will return a report of all the shared objec
 <details>
     <summary>Output</summary>
 
-```typescript
+```json
 {
-  patient: "YOUR_PATIENT_OBJECT",
-  statuses: {
-    dataSamples: { success: true, error: null, modified: 1 },
-    healthcareElements: { success: true, error: null, modified: 0 },
-    patient: { success: true, error: null, modified: 0 }
-  }
+ "patient": "YOUR_PATIENT_OBJECT",
+ "statuses": {
+  "dataSamples": { "success": true, "error": null, "modified": 1 },
+  "healthcareElements": { "success": true, "error": null, "modified": 0 },
+  "patient": { "success": true, "error": null, "modified": 0 }
+ }
 }
-
 ```
 
 </details>
