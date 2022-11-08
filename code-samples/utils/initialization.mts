@@ -15,7 +15,7 @@ import {
   userName2,
 } from './endpoint.mjs'
 import { webcrypto } from 'crypto'
-import { hex2ua } from '@icure/api'
+import { hex2ua, pkcs8ToJwk } from '@icure/api'
 
 export function initLocalStorage() {
   const tmp = os.tmpdir()
@@ -50,10 +50,9 @@ async function initAnyMedTechApi(
     .build()
   if (initcrypto) {
     const loggedUser = await api.userApi.getLoggedUser()
-    await api!.cryptoApi.loadKeyPairsAsTextInBrowserLocalStorage(
-      api.dataOwnerApi.getDataOwnerIdOf(loggedUser),
-      hex2ua(privatekey),
-    )
+    const loggedDataOwner = await api.cryptoApi.getDataOwner(api.dataOwnerApi.getDataOwnerIdOf(loggedUser))
+    const pubKey = api.cryptoApi.getPublicKeyFromPrivateKey(pkcs8ToJwk(hex2ua(privatekey)), loggedDataOwner.dataOwner)
+    await api.initUserCrypto(false, { publicKey: pubKey, privateKey: privatekey})
   }
   return api
 }
