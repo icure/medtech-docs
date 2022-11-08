@@ -3,11 +3,10 @@ import { initLocalStorage, initMedTechApi } from '../../utils/index.mjs'
 import { Patient, AnonymousMedTechApiBuilder, MedTechApiBuilder } from '@icure/medical-device-sdk'
 import { webcrypto } from 'crypto'
 import * as process from 'process'
-import { getLastEmail, getLastSMS } from '../../utils/msgGtw.mjs'
+import { getLastSMS } from '../../utils/msgGtw.mjs'
 
 const cachedInfo = {} as { [key: string]: string }
-const uniqueId = Math.random().toString(36).substring(4)
-const userEmail = `${uniqueId}-dt@got.com`
+const userPhoneNumber = `+32${Math.floor(Math.random() * 1000000000)}`
 
 function saveSecurely(
   userLogin: string,
@@ -60,19 +59,19 @@ const anonymousApi = await new AnonymousMedTechApiBuilder()
   .build()
 //tech-doc: STOP HERE
 
-//tech-doc: Start Authentication Process By Email
+//tech-doc: Start Authentication Process By SMS
 const authProcess = await anonymousApi.authenticationApi.startAuthentication(
   recaptcha,
-  userEmail, // Email address of the user who wants to register
   undefined,
-  'Daenerys',
-  'Targaryen',
+  userPhoneNumber, // Phone number of the user who wants to register
+  'Ned',
+  'Stark',
   masterHcpId,
 )
 //tech-doc: STOP HERE
 
-const validationCode = (await getLastEmail(userEmail)).subject!
-console.log('Validation code is ', validationCode)
+const validationCode = (await getLastSMS(userPhoneNumber)).message!
+console.log('SMS Validation code is ', validationCode)
 
 
 //tech-doc: Complete authentication process
@@ -84,51 +83,33 @@ const authenticationResult = await anonymousApi.authenticationApi.completeAuthen
 
 const authenticatedApi = authenticationResult.medTechApi
 
-console.log(`Your new user id: ${authenticationResult.userId}`)
-console.log(`Database id where new user was created: ${authenticationResult.groupId}`)
-console.log(`Your initialised MedTechAPI: ***\${authenticatedApi}***`)
-console.log(`RSA keypair of your new user: ***\${authenticationResult.keyPair}***`)
-console.log(`Token created to authenticate your new user: ***\${authenticationResult.token}***`)
-//tech-doc: STOP HERE
-
-//tech-doc: Save credentials
-// saveSecurely does not exist : Use your own way of storing the following data securely
+// Do not forget that saveSecurely does not exist : Use your own way of storing the following data securely
 // One option is to put these elements into the localStorage
 saveSecurely(
-  userEmail,
+  userPhoneNumber,
   authenticationResult.token,
   authenticationResult.userId,
   authenticationResult.groupId,
   authenticationResult.keyPair,
 )
-//tech-doc: STOP HERE
 
-//tech-doc: Get logged user info
-const loggedUser = await authenticatedApi.userApi.getLoggedUser()
-//tech-doc: STOP HERE
-
-console.log('Logged User: ', JSON.stringify(loggedUser))
-
-//tech-doc: Create encrypted data
 const createdPatient = await authenticatedApi.patientApi.createOrModifyPatient(
   new Patient({
-    firstName: 'John',
-    lastName: 'Snow',
+    firstName: 'Robb',
+    lastName: 'Stark',
     gender: 'male',
-    note: 'Winter is coming',
+    note: 'You must keep one\'s head',
   }),
 )
 //tech-doc: STOP HERE
 
 console.log('Created patient: ', JSON.stringify(createdPatient))
 
-//tech-doc: Get back credentials
-// getBackCredentials does not exist : Use your own way of storing the following data securely
+//tech-doc: Instantiate back a MedTechApi
+// Do not forget that getBackCredentials does not exist : Use your own way of storing the following data securely
 // One option is to get them back from the localStorage
 const { login, token, pubKey, privKey } = getBackCredentials()
-//tech-doc: STOP HERE
 
-//tech-doc: Instantiate back a MedTechApi
 const reInstantiatedApi = await new MedTechApiBuilder()
   .withICureBaseUrl(iCureUrl)
   .withUserName(login)
@@ -137,9 +118,7 @@ const reInstantiatedApi = await new MedTechApiBuilder()
   .build()
 
 await reInstantiatedApi.initUserCrypto(false, { publicKey: pubKey, privateKey: privKey })
-//tech-doc: STOP HERE
 
-//tech-doc: Get back encrypted data
 const foundPatientAfterInstantiatingApi = await reInstantiatedApi.patientApi.getPatient(
   createdPatient.id,
 )
@@ -150,7 +129,7 @@ console.log(
   JSON.stringify(foundPatientAfterInstantiatingApi),
 )
 
-//tech-doc: Login
+//tech-doc: Login by SMS
 const anonymousApiForLogin = await new AnonymousMedTechApiBuilder()
   .withICureBaseUrl(iCureUrl)
   .withCrypto(webcrypto as any)
@@ -162,12 +141,13 @@ const anonymousApiForLogin = await new AnonymousMedTechApiBuilder()
 
 const authProcessLogin = await anonymousApiForLogin.authenticationApi.startAuthentication(
   recaptcha,
-  userEmail, // The email address used for user registration
+  undefined,
+  userPhoneNumber // The phone number used for user registration
 )
 //tech-doc: STOP HERE
 
-const validationCodeForLogin = (await getLastEmail(userEmail)).subject!
-console.log('Validation code is ', validationCodeForLogin)
+const validationCodeForLogin = (await getLastSMS(userPhoneNumber)).message!
+console.log('SMS Validation code is ', validationCodeForLogin)
 
 //tech-doc: Complete login authentication process
 const loginResult = await anonymousApiForLogin.authenticationApi.completeAuthentication(
@@ -184,18 +164,9 @@ const loginResult = await anonymousApiForLogin.authenticationApi.completeAuthent
   },
 )
 
-console.log(`Your new user id: ${loginResult.userId}`)
-console.log(`Database id where new user was created: ${loginResult.groupId}`)
-console.log(`Your new initialised MedTechAPI: ***\${loginResult.medTechApi}***`)
-console.log(`RSA keypair of your user stays the same: ***\${loginResult.keyPair}***`)
-console.log(`The token of your user will change: ***\${loginResult.token}***`)
-//tech-doc: STOP HERE
-
-//tech-doc: Access back encrypted data
 const loggedUserApi = loginResult.medTechApi
 
 const foundPatientAfterLogin = await loggedUserApi.patientApi.getPatient(createdPatient.id)
 //tech-doc: STOP HERE
 
 console.log('Found Patient after login: ', JSON.stringify(foundPatientAfterLogin))
-

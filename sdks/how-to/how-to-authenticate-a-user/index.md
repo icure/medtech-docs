@@ -1,40 +1,47 @@
 ---
 slug: how-to-authenticate-a-user
 ---
-# How to manage user authentication
-When using your solution, your users will have to identify themselves to access their data. 
-For this, you will need to integrate the authentication of your users into your product. 
-
-When starting your app, the users may be in different situations : 
-- They start it for the first time and need to register;
-- They already registered and need to login again; 
-- They asked you to remember them and you need to authenticate them using their valid credentials; 
-
-At the end of this guide, you will be able to implement authentication for those 3 use cases using iCure 
-MedTech SDK. 
-
-# Pre-requisites 
-Make sure to have the following elements in your possession :
-- The iCure reCAPTCHA v3 SiteKey; 
-- Your msgGtwSpecId; 
-- Your patientAuthProcessByEmailId and patientAuthProcessBySmsId identifiers to authenticate your patient users;
-- Your hcpAuthProcessByEmailId and hcpAuthProcessBySmsId identifiers to authenticate your healthcare party users;
+# User authentication
 
 :::caution
 
-You will be able to get this information in a next [Cockpit](../../cockpit/intro.md) version. However for now, you can 
-ask those ids to the iCure Support Team via support@icure.com
+This tutorial only applies to the Cloud version: you can't register new users in the free version of iCure.
+
+:::
+
+When using your solution, your users will need to be authenticated to iCure in order to access their data.
+Therefore, you will need to integrate iCure's user authentication process into your product.
+
+When starting your app, the users may be in different situations: 
+- They start it for the first time and need to register
+- They already registered and need to login
+- Their latest login session is still valid and you can reuse the corresponding authentication token 
+
+At the end of this guide, you will be able to implement authentication for those 3 use cases using the iCure 
+MedTech SDK. 
+
+## Pre-requisites 
+Make sure to have the following elements in your possession:
+- The iCure reCAPTCHA v3 SiteKey
+- Your `msgGtwSpecId`
+- Your `patientAuthProcessByEmailId` and `patientAuthProcessBySmsId` identifiers to authenticate your patient users
+- Your `hcpAuthProcessByEmailId` and `hcpAuthProcessBySmsId` identifiers to authenticate your healthcare professionals users
+
+:::info
+
+Currently, you need to contact us at support@icure.com to get this information. However, you
+you will be able to retrieve it autonomously from the [Cockpit](../../../cockpit/intro)
+in a future release.
 
 :::
 
 
-
-# Register a user 
+## Register a user 
 Let's say your patient Daenaerys uses your app for the first time. You will ask her to sign up.
 During this procedure, Daenaerys is not known by iCure system yet. Therefore, you can't use the MedTechApi directly. 
 You will have to create an `AnonymousMedTechApi` instead.
 
-## Init AnonymousMedTechApi
+### Init AnonymousMedTechApi
 <!-- file://code-samples/how-to/authenticate-user/index.mts snippet:Instantiate AnonymousMedTech API-->
 ```typescript
 const iCureUrl = process.env.ICURE_URL
@@ -42,19 +49,19 @@ const msgGtwUrl = process.env.ICURE_MSG_GTW_URL
 const specId = process.env.SPEC_ID
 const authProcessByEmailId = process.env.AUTH_BY_EMAIL_PROCESS_ID
 const authProcessBySmsId = process.env.AUTH_BY_SMS_PROCESS_ID
-const recaptcha = process.env.RECAPTCHA_ID
+const recaptcha = process.env.RECAPTCHA
 
 const anonymousApi = await new AnonymousMedTechApiBuilder()
-  .withICureUrlPath(iCureUrl)
+  .withICureBaseUrl(iCureUrl)
   .withCrypto(webcrypto as any)
-  .withMsgGtwUrl(msgGtwUrl)
-  .withMsgGtwSpecId(specId)
+  .withMsgGwUrl(msgGtwUrl)
+  .withMsgGwSpecId(specId)
   .withAuthProcessByEmailId(authProcessByEmailId)
   .withAuthProcessBySmsId(authProcessBySmsId)
   .build()
 ```
 
-The [AnonymousMedTechApi](../references/classes/AnonymousMedTechApi.md) asks you to provide multiple information. Here 
+The [AnonymousMedTechApi](sdks/references/classes/AnonymousMedTechApi.md) asks you to provide multiple information. Here 
 are their details :
 
 | Argument             | Description                                                                                      |
@@ -65,18 +72,18 @@ are their details :
 | authProcessByEmailId | Identifier of the authentication by email process. See next section to know more about it        |
 | authProcessBySmsId   | Identifier of the authentication by SMS process. See next section to know more about it          |
 
-As Daenaerys needs to be identified as a patient, you will have to provide the `patientAuthProcessByEmailId` as a 
+Since Daenaerys is a patient, you will have to provide the `patientAuthProcessByEmailId` as a 
 authProcessByEmailId and `patientAuthProcessBySmsId` as a authProcessBySmsId. 
 
 :::info
 
-If Daenaerys was a doctor, you would instead provide the `hcpAuthProcessByEmailId` as a
-authProcessByEmailId and `hcpAuthProcessByEmailId` as a authProcessBySmsId.
+If Daenaerys was a doctor, you would instead provide the `hcpAuthProcessByEmailId` as
+authProcessByEmailId and `hcpAuthProcessByEmailId` as authProcessBySmsId.
 
 :::
 
 
-## Starting the authentication process
+### Starting the authentication process
 In iCure, you can authenticate either by email, either by SMS.
 Therefore, you will have to ask Daenaerys to provide at least an email or a mobile phone when authenticating.
 
@@ -94,12 +101,12 @@ Also, do not forget to contact the iCure team to get our ReCAPTCHA SiteKey that 
 <!-- file://code-samples/how-to/authenticate-user/index.mts snippet:Start Authentication Process By Email-->
 ```typescript
 const authProcess = await anonymousApi.authenticationApi.startAuthentication(
-  masterHcpId,
+  recaptcha,
+  userEmail, // Email address of the user who wants to register
+  undefined,
   'Daenerys',
   'Targaryen',
-  recaptcha,
-  false,
-  userEmail // Email address of the user who wants to register
+  masterHcpId,
 )
 ```
 
@@ -109,7 +116,7 @@ next steps of the procedure.
 Calling `authenticationApi.startAuthentication` will send a validation code of 6 digits to Daenaerys, ensuring iCure
 she is who she pretends to be. 
 
-## Getting the validation code
+### Getting the validation code
 The validation code is sent to the user by the iCure Message Gateway, to identify the user properly. As Daenaerys decided 
 to authenticate by email, she can now check her emails to get this code.
 
@@ -122,24 +129,20 @@ For now, these have all a default template.
 
 Once Daenaerys got her validation code, she can come back to your app and continue the process. 
 
-### Completing the authentication process
-First, create a RSA KeyPair for Daenaerys, to let her protect her data :
-<!-- file://code-samples/how-to/authenticate-user/index.mts snippet:Generate an RSA Keypair for the user-->
-```typescript
-const keyPair = await anonymousApi.cryptoApi.RSA.generateKeyPair()
-const userPublicKey = ua2hex(await anonymousApi.cryptoApi.RSA.exportKey(keyPair.publicKey, 'spki'))
-const userPrivateKey = ua2hex(await anonymousApi.cryptoApi.RSA.exportKey(keyPair.privateKey, 'pkcs8'))
-```
-
-Once it's done, to complete the Daenaerys authentication, call the next service providing the previous 
-`AuthenticationProcess` the validation code Daenaerys received by email and the keypair you just created : 
+#### Completing the authentication process
+To complete Daenaerys registration, you will have to call the `authenticationApi.completeAuthentication` service, 
+by providing three arguments : 
+- The previous `AuthenticationProcess`
+- The validation code Daenaerys received by email
+- A lambda providing the RSA Keypair Daenaerys should use. For this last point, you may use the dedicated 
+service `anonymousMedTechApi.generateRSAKeypair()`
+ 
 <!-- file://code-samples/how-to/authenticate-user/index.mts snippet:Complete authentication process-->
 ```typescript
 const authenticationResult = await anonymousApi.authenticationApi.completeAuthentication(
   authProcess!,
   validationCode,
-  [userPrivateKey, userPublicKey],
-  () => undefined
+  () => anonymousApi.generateRSAKeypair(), // Generate an RSA Keypair for the user
 )
 
 const authenticatedApi = authenticationResult.medTechApi
@@ -155,7 +158,7 @@ As a result, you receive :
 - The MedTechApi instance to use for Daenaerys (properly initialised);
 - The `userId`, identifying Daenaerys user uniquely;
 - The `groupId`, identifying the database in which Daenaerys was created;
-- The `keyPair`, the RSA keypair you created for Daenaerys; 
+- The `keyPair`, the RSA keypair you provided for Daenaerys through the lambda; 
 - The `token`, the time-limited token created for Daenaerys, to authenticate her; 
 
 Make sure to save these elements to be able to authenticate Daenaerys again when she'll come back on your app.
@@ -164,7 +167,13 @@ Make sure to save these elements to be able to authenticate Daenaerys again when
 ```typescript
 // saveSecurely does not exist : Use your own way of storing the following data securely
 // One option is to put these elements into the localStorage
-saveSecurely(userEmail, authenticationResult.token, authenticationResult.userId, authenticationResult.groupId, authenticationResult.keyPair)
+saveSecurely(
+  userEmail,
+  authenticationResult.token,
+  authenticationResult.userId,
+  authenticationResult.groupId,
+  authenticationResult.keyPair,
+)
 ```
 
 
@@ -172,12 +181,14 @@ Now that her authentication is completed, Daenaerys may manage data with iCure.
 
 <!-- file://code-samples/how-to/authenticate-user/index.mts snippet:Create encrypted data-->
 ```typescript
-const createdPatient = await authenticatedApi.patientApi.createOrModifyPatient(new Patient({
-  firstName: 'John',
-  lastName: 'Snow',
-  gender: 'male',
-  note: 'Winter is coming'
-}))
+const createdPatient = await authenticatedApi.patientApi.createOrModifyPatient(
+  new Patient({
+    firstName: 'John',
+    lastName: 'Snow',
+    gender: 'male',
+    note: 'Winter is coming',
+  }),
+)
 ```
 
 <details>
@@ -244,7 +255,7 @@ const createdPatient = await authenticatedApi.patientApi.createOrModifyPatient(n
 
 But what do you have to do when Daenaerys will need to login again in a few days ?
 
-# Login a user
+## Login a user
 In iCure, the login flow is extremely similar to the registration.
 Once Daenaerys token is expired, she will need to identify herself again by starting a new authentication process. 
 
@@ -253,21 +264,17 @@ As Daenaerys is not authenticated anymore, you have to create a new AnonymousMed
 <!-- file://code-samples/how-to/authenticate-user/index.mts snippet:Login-->
 ```typescript
 const anonymousApiForLogin = await new AnonymousMedTechApiBuilder()
-  .withICureUrlPath(iCureUrl)
+  .withICureBaseUrl(iCureUrl)
   .withCrypto(webcrypto as any)
-  .withMsgGtwUrl(msgGtwUrl)
-  .withMsgGtwSpecId(specId)
+  .withMsgGwUrl(msgGtwUrl)
+  .withMsgGwSpecId(specId)
   .withAuthProcessByEmailId(authProcessByEmailId)
   .withAuthProcessBySmsId(authProcessBySmsId)
   .build()
 
 const authProcessLogin = await anonymousApiForLogin.authenticationApi.startAuthentication(
-  masterHcpId,
-  'Daenerys',
-  'Targaryen',
   recaptcha,
-  false,
-  userEmail // The email address used for user registration
+  userEmail, // The email address used for user registration
 )
 ```
 
@@ -282,23 +289,30 @@ const authProcessLogin = await anonymousApiForLogin.authenticationApi.startAuthe
 
 Daenaerys then receives a new validation code by email.
 
-As you already created an RSA keypair for her, you just need to provide it into the `completeAuthentication` service, 
-getting it back from where you stored it previously. 
+Since you already created an RSA keypair for her, you just need to retrieve it from where you stored it previously
+and provide it to the `completeAuthentication` method.
 
 <!-- file://code-samples/how-to/authenticate-user/index.mts snippet:Complete login authentication process-->
 ```typescript
 const loginResult = await anonymousApiForLogin.authenticationApi.completeAuthentication(
   authProcessLogin!,
   validationCodeForLogin,
-  [userPrivateKey, userPublicKey],
-  () => undefined
+  () => {
+    const userInfo = getBackCredentials();
+    if (userInfo.pubKey != undefined && userInfo.privKey != undefined) {
+      return Promise.resolve({ privateKey: userInfo.privKey, publicKey: userInfo.pubKey })
+    } else {
+      // You can't find back the user's RSA Keypair : You need to generate a new one
+      return anonymousApiForLogin.generateRSAKeypair()
+    }
+  },
 )
 
-console.log(`Your new user id: ${authenticationResult.userId}`)
-console.log(`Database id where new user was created: ${authenticationResult.groupId}`)
+console.log(`Your new user id: ${loginResult.userId}`)
+console.log(`Database id where new user was created: ${loginResult.groupId}`)
 console.log(`Your new initialised MedTechAPI: ***\${loginResult.medTechApi}***`)
-console.log(`RSA keypair of your user stays the same: ***\${authenticationResult.keyPair}***`)
-console.log(`The token of your user will change: ***\${authenticationResult.token}***`)
+console.log(`RSA keypair of your user stays the same: ***\${loginResult.keyPair}***`)
+console.log(`The token of your user will change: ***\${loginResult.token}***`)
 ```
 
 Do not forget to save these new credentials :
@@ -306,8 +320,27 @@ Do not forget to save these new credentials :
 ```typescript
 // saveSecurely does not exist : Use your own way of storing the following data securely
 // One option is to put these elements into the localStorage
-saveSecurely(userEmail, authenticationResult.token, authenticationResult.userId, authenticationResult.groupId, authenticationResult.keyPair)
+saveSecurely(
+  userEmail,
+  authenticationResult.token,
+  authenticationResult.userId,
+  authenticationResult.groupId,
+  authenticationResult.keyPair,
+)
 ```
+
+:::danger
+
+If you are building a web app and store the private key only in your user's browser local storage, you should
+consider that if the user deletes their browser data, they will lose access to the data they created in iCure.
+After completing their registration, it might be a good idea to ask your user to store their private key
+in a safe place in their filesystem, possibly encrypting it with a password.
+
+Make sure your users understand they should never share this file with anyone.
+
+For more information check the In-Depth Explanation [What happens if my user loses his private key ?](sdks/explanations.md)  
+
+:::
 
 And Daenaerys may manage her data again :
 <!-- file://code-samples/how-to/authenticate-user/index.mts snippet:Access back encrypted data-->
@@ -377,11 +410,14 @@ const foundPatientAfterLogin = await loggedUserApi.patientApi.getPatient(created
 
 </details>
 
-Last thing you need to know is what to do when Daenaerys credentials are still valid. 
-You don't want her to go through an email / SMS process each time she uses your app. Therefore, you have to re-use her 
-existing token and RSA keypair. 
+The last thing you need to know is what to do when Daenaerys credentials are still valid: if you saved
+the result from the login (or registration) process, the token may still be valid the next time Daenaerys
+accesses your application.
+In this case, you can reuse the existing token and avoid having Daenaerys go through the login process
+with email or SMS OTP every time she opens your application.
 
-# Reusing existing credentials
+
+## Reusing existing credentials
 Each time you complete an authentication process (Register or login), you have to save the credentials you receive
 in a secured place.
 We symbolized it through the `saveSecurely` method.
@@ -390,7 +426,13 @@ We symbolized it through the `saveSecurely` method.
 ```typescript
 // saveSecurely does not exist : Use your own way of storing the following data securely
 // One option is to put these elements into the localStorage
-saveSecurely(userEmail, authenticationResult.token, authenticationResult.userId, authenticationResult.groupId, authenticationResult.keyPair)
+saveSecurely(
+  userEmail,
+  authenticationResult.token,
+  authenticationResult.userId,
+  authenticationResult.groupId,
+  authenticationResult.keyPair,
+)
 ```
 
 First thing you have to do is to retrieve Daenaerys credentials and her RSA Keypair 
@@ -405,19 +447,21 @@ And then, initialize a MedTechApi, authenticating Daenaerys directly.
 <!-- file://code-samples/how-to/authenticate-user/index.mts snippet:Instantiate back a MedTechApi-->
 ```typescript
 const reInstantiatedApi = await new MedTechApiBuilder()
-  .withICureBasePath(iCureUrl)
+  .withICureBaseUrl(iCureUrl)
   .withUserName(login)
   .withPassword(token)
   .withCrypto(webcrypto as any)
   .build()
 
-await reInstantiatedApi.initUserCrypto(false, { publicKey: pubKey, privateKey: privKey})
+await reInstantiatedApi.initUserCrypto(false, { publicKey: pubKey, privateKey: privKey })
 ```
 
 Daenaerys can finally manage her data again. 
 <!-- file://code-samples/how-to/authenticate-user/index.mts snippet:Get back encrypted data-->
 ```typescript
-const foundPatientAfterInstantiatingApi = await reInstantiatedApi.patientApi.getPatient(createdPatient.id)
+const foundPatientAfterInstantiatingApi = await reInstantiatedApi.patientApi.getPatient(
+  createdPatient.id,
+)
 ```
 
 <details>
@@ -481,8 +525,9 @@ const foundPatientAfterInstantiatingApi = await reInstantiatedApi.patientApi.get
 
 </details>
 
-# What's next ? 
-Some specific use cases can bring you some questions : What happens if Daenaerys lost her RSA Keypair ? 
-What happens if Daenaerys would like to start your app on another terminal ? 
 
-Those questions will be answered in the [In-Depth Explanations](../explanations.md), in a future version of the documentation. 
+## What's next? 
+Some specific use cases can bring you some questions: what happens if Daenaerys lost her RSA Keypair?
+What happens if Daenaerys would like to start your app on another device?
+
+Those questions will be answered in the [In-Depth Explanations](sdks/explanations.md)

@@ -24,7 +24,7 @@ Currently, iCure supports the following event types for the following entities:
 
 :::note
 
-We assume that you already know the [How to authenticate a user](./how-to-authenticate-a-user.md) guide.
+We assume that you already know the [How to authenticate a user](sdks/how-to/how-to-authenticate-a-user/index.md) guide.
 
 :::
 
