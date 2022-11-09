@@ -3,12 +3,8 @@ slug: how-to-create-a-data-sample-with-hierarchical-information
 description: Learn how to create a data sample with hierarchical information.
 tags:
 - DataSample
-<<<<<<<<< Temporary merge branch 1
-
-=========
 - Measure
 - TimeSeries
->>>>>>>>> Temporary merge branch 2
 ---
 
 # How to create a data sample with hierarchical information
