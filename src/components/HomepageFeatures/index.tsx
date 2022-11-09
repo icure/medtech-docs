@@ -10,32 +10,33 @@ type FeatureItem = {
 
 const FeatureList: FeatureItem[] = [
   {
-    title: 'Easy to Use',
-    Svg: require('@site/static/img/undraw_docusaurus_mountain.svg').default,
+    title: 'Secured by crypto',
+    Svg: require('@site/static/img/undraw_mobile_encryption.svg').default,
     description: (
       <>
-        Docusaurus was designed from the ground up to be easily installed and
-        used to get your website up and running quickly.
+          iCure implements end-to-end encryption
+          to make sure the privacy of the data is guaranteed
       </>
     ),
   },
   {
-    title: 'Focus on What Matters',
-    Svg: require('@site/static/img/undraw_docusaurus_tree.svg').default,
+    title: 'Ready to scale',
+    Svg: require('@site/static/img/undraw_building_blocks.svg').default,
     description: (
       <>
-        Docusaurus lets you focus on your docs, and we&apos;ll do the chores. Go
-        ahead and move your docs into the <code>docs</code> directory.
+          Our solutions scale elastically to accommodate millions of
+          patients and tens of thousands of healthcare providers
       </>
     ),
   },
   {
-    title: 'Powered by React',
-    Svg: require('@site/static/img/undraw_docusaurus_react.svg').default,
+    title: 'Interoperable',
+    Svg: require('@site/static/img/undraw_thought_process.svg').default,
     description: (
       <>
-        Extend or customize your website layout by reusing React. Docusaurus can
-        be extended while reusing the same header and footer.
+          Exchange information seamlessly: we speak the language
+          of healthcare so that you do not have to.
+          Fhir and IHE profiles support.
       </>
     ),
   },

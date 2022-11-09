@@ -4,7 +4,7 @@ description: Learn how to manage healthcare professionals
 tags:
 - HealthcareProfessional
 ---
-# How to manage healthcare professionals
+# Handling healthcare professionals
 
 [Healthcare professionals](../glossary.md#Data owner) are either doctors, nurses, physiotherapists, etc. They are the people who are going to use the medical device to take care of patients.
 
@@ -74,3 +74,5 @@ The deleteHealthcareProfessional method of the healthcareProfessionalApi allows 
 ```typescript
 await api.healthcareProfessionalApi.deleteHealthcareProfessional(createdHcp.id)
 ```
+
+# Handling healthcare professionals
