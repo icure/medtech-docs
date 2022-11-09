@@ -13,13 +13,13 @@ In this section, we will learn how to create data samples with complex nested ob
 
 :::info
 
-You can learn more about the DataSample class in the [DataSample Glossary reference](../glossary#data-sample).
+You can learn more about the DataSample class in the [DataSample Glossary reference](/sdks/glossary#data-sample).
 
 :::
 
 :::note
 
-We assume that you already know how to manage data samples. If not, please follow the [Handling DataSamples](sdks/how-to/how-to-manage-data-samples/index.md) guide
+We assume that you already know how to manage data samples. If not, please follow the [Handling DataSamples](/sdks/how-to/how-to-manage-data-samples/index.md) guide
 
 :::
 

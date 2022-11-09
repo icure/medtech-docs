@@ -59,12 +59,12 @@ By subscribing to the cloud version of the iCure backend, you will have access t
 ### User Creation
 
 You are now able to register new users by sending them an email or an SMS message to invite them. For more information, 
- go to [How to register a user](./how-to-register-a-user.md).
+ go to [How to register a user](/sdks/how-to/how-to-authenticate-a-user/how-to-authenticate-a-user).
 You now also have the possibility to create users for existing patients, still by email or SMS. For this process, you can 
- head to [How to Create a User for an Existing Patient](./how-to-create-a-user-from-a-patient.md).
+ head to [How to Create a User for an Existing Patient](/sdks/how-to/how-to-invite-existing-patient-as-a-user).
 
 ### Event Subscription
 
 Now, you also may use iCure WebHook, in order to subscribe to events concerning several types of entities. 
  Through this mechanism, you will be able to receive real-time notifications when an entity is created, updated, or deleted.
-This process is detailed in the [Listening to iCure events](./listen-to-icure-events.md) how-to.
+This process is detailed in the [Listening to iCure events](/sdks/how-to/how-to-subscribe-to-icure-events) how-to.

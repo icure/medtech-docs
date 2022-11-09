@@ -66,7 +66,7 @@ The password is going to be used later. Please note them down.
 
 ### Manual installation
 
-You can also install the Kraken manually without relying on docker. This involves installing and configuring a local or remote instance of CouchDB and then installing and starting the Kraken jar. The installation instructions are available in the [How to install Kraken](./how-to/how-to-install-icure-kraken-locally.md) section.
+You can also install the Kraken manually without relying on docker. This involves installing and configuring a local or remote instance of CouchDB and then installing and starting the Kraken jar.
 
 ## Using the SDK
 
