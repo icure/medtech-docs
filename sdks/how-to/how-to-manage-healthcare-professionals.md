@@ -4,3 +4,5 @@ description: Learn how to manage healthcare professionals
 tags:
 - HealthcareProfessional
 ---
+
+# Handling healthcare professionals

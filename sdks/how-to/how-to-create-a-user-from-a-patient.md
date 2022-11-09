@@ -1,11 +1,11 @@
 ---
-slug: how-to-create-a-user-from-a-patient
+slug: how-to-invite-existing-patient-as-a-user
 description: How to Create a User for an Existing Patient
 tags:
 - User creation
 - Patient
 ---
-# How to Create a User for an Existing Patient
+# Inviting an existing patient to become a user
 
 ## Use Case Description
 There may be some cases where a Doctor (Healthcare Professional) wants to invite one of his patients to the platform. 

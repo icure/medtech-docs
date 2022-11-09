@@ -1,5 +1,5 @@
 ---
-slug: share-data
+slug: how-to-share-data
 ---
 
 # Sharing data between data owners

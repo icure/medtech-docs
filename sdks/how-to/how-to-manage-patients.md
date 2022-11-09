@@ -5,7 +5,7 @@ tags:
 - Patient
 ---
 
-# Handling Patients
+# Handling patients
 
 In this section, we will learn how to manage patients. [Patient](/sdks/references/classes/Patient) is a class that represents a patient in the system. It contains all the information about the patient.
 

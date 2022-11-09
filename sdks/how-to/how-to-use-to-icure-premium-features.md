@@ -1,5 +1,5 @@
 ---
-slug: how-to-migrate-to-icure-premium-features
+slug: how-to-use-icure-premium-features
 description: How to Migrate to iCure Premium Features
 tags:
 - Open Source
@@ -7,7 +7,7 @@ tags:
 - Premium Features
 ---
 
-# How to Migrate to iCure Premium Features
+# Starting using cloud version and premium features
 
 :::note
 

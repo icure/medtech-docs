@@ -4,7 +4,7 @@ description: Learn how to manage healthcare elements
 tags:
 - HealthcareElement
 ---
-# How to Manage Healthcare Elements
+# Handling healthcare elements
 
 ## What is a Healthcare Element?
 

@@ -1,5 +1,5 @@
 ---
-slug: how-to-create-a-data-sample-with-hierarchical-information
+slug: how-to-manage-hierarchical-data-samples-structure
 description: Learn how to create a data sample with hierarchical information.
 tags:
 - DataSample
@@ -7,7 +7,7 @@ tags:
 - TimeSeries
 ---
 
-# How to create a data sample with hierarchical information
+# Handling a hierarchical data samples structure
 
 In this section, we will learn how to create data samples with complex nested objects.
 
@@ -19,7 +19,7 @@ You can learn more about the DataSample class in the [DataSample Glossary refere
 
 :::note
 
-We assume that you already know how to manage data samples. If not, please follow the [Handling DataSamples](../how-to/how-to-manage-datasamples) guide
+We assume that you already know how to manage data samples. If not, please follow the [Handling DataSamples](sdks/how-to/how-to-manage-data-samples/index.md) guide
 
 :::
 

@@ -1,5 +1,5 @@
 ---
-slug: how-to-manage-datasamples
+slug: how-to-manage-data-samples
 description: Learn how to manage data samples
 tags:
 
@@ -7,7 +7,7 @@ tags:
 
 ---
 
-# Handling DataSamples
+# Handling data samples
 
 In this section, we will learn how to manage data samples. DataSamples are used to store data that is not part of the
 patient's medical record, such as blood pressure measurements.
@@ -15,7 +15,7 @@ patient's medical record, such as blood pressure measurements.
 :::note
 
 We assume in the examples below that you have already created a patient. If not, please follow
-the [How to manage patients](/sdks/how-to/how-to-manage-patients) guide.
+the [Handling patients](/sdks/how-to/how-to-manage-patients) guide.
 
 :::
 

@@ -5,11 +5,11 @@ tags:
 - Notification
 ---
 
-# How to Manage Notifications
+# Handling notifications
 
 ## What Is a Notification?
 
-A Notification represent a request from a [Data Owner](/sdks/glossary#data-owner) to a Healthcare Professional to perform 
+A Notification represents a request from a [Data Owner](/sdks/glossary#data-owner) to a Healthcare Professional to perform 
 an operation.  
 As for now, there are three types of Notifications:
 

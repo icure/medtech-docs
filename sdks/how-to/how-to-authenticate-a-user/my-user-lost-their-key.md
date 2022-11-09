@@ -1,5 +1,5 @@
 ---
-slug: my-user-lost-their-key
+slug: how-to-manage-lost-key
 ---
 # What if my user lost their private key ?
 
@@ -12,7 +12,7 @@ authentication and data sharing services.
 
 Therefore, we assume that you're already familiar with : 
 - [The user authentication](index.md)
-- [Data sharing](../how-to-share-data.md) or [Automatically share data with other data owners](../how-to-auto-share-data.md)
+- [Data sharing](../how-to-share-data.md) or [Automatically share data with other data owners](../how-to-share-data-automatically.md)
 
 At this stage, you should : 
 - Have a patient user

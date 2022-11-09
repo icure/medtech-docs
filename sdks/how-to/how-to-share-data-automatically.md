@@ -1,8 +1,8 @@
 ---
-slug: auto-share-data
+slug: how-to-share-data-automatically
 ---
 
-# Automatically share data with other data owners
+# Sharing data automatically with other data owners
 
 iCure allows to share data between different data owners, as explained in the guide 
 [How to share data between data owners](./share-data), however this requires to perform an explicit request every time
