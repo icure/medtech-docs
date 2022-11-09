@@ -50,9 +50,14 @@ async function initAnyMedTechApi(
     .build()
   if (initcrypto) {
     const loggedUser = await api.userApi.getLoggedUser()
-    const loggedDataOwner = await api.cryptoApi.getDataOwner(api.dataOwnerApi.getDataOwnerIdOf(loggedUser))
-    const pubKey = api.cryptoApi.getPublicKeyFromPrivateKey(pkcs8ToJwk(hex2ua(privatekey)), loggedDataOwner.dataOwner)
-    await api.initUserCrypto(false, { publicKey: pubKey, privateKey: privatekey})
+    const loggedDataOwner = await api.cryptoApi.getDataOwner(
+      api.dataOwnerApi.getDataOwnerIdOf(loggedUser),
+    )
+    const pubKey = api.cryptoApi.getPublicKeyFromPrivateKey(
+      pkcs8ToJwk(hex2ua(privatekey)),
+      loggedDataOwner.dataOwner,
+    )
+    await api.initUserCrypto(false, { publicKey: pubKey, privateKey: privatekey })
   }
   return api
 }
