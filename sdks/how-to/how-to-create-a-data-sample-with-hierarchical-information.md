@@ -3,7 +3,12 @@ slug: how-to-create-a-data-sample-with-hierarchical-information
 description: Learn how to create a data sample with hierarchical information.
 tags:
 - DataSample
+<<<<<<<<< Temporary merge branch 1
 
+=========
+- Measure
+- TimeSeries
+>>>>>>>>> Temporary merge branch 2
 ---
 
 # How to create a data sample with hierarchical information
@@ -377,7 +382,16 @@ const createdDataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
 ```
 </details>
 
+## Additional information
 
+### Accessing the children DataSamples
 
+The children DataSamples are not directly accessible. They are only accessible through the parent DataSample.
 
+### Filtering
 
+You cannot apply filter on nested DataSamples. You can only filter on the parent DataSample. If you want to filter on nested DataSamples, you need to pass the information of the children to the parent DataSample. (e.g. `labels` of [Create the parent DataSample](#create-the-parent-datasample))
+
+### Deleting and updating
+
+You can update or delete nested DataSamples. But you will have to do it manually by updating the parent DataSample.
