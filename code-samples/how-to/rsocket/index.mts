@@ -19,7 +19,7 @@ console.log('Saving keys in ' + tmp)
 ;(global as any).Storage = ''
 
 const api = await medTechApi()
-  .withICureBasePath(host)
+  .withICureBaseUrl(host)
   .withUserName(userName)
   .withPassword(password)
   .withCrypto(webcrypto as any)
@@ -40,7 +40,7 @@ const connection = (
     ['CREATE'], // Event types to listen to
     await new DataSampleFilter()
       .forDataOwner(loggedUser.healthcarePartyId!)
-      .byTagCodeFilter('IC-TEST', 'TEST')
+      .byLabelCodeFilter('IC-TEST', 'TEST')
       .build(),
     async (ds) => {
       events.push(ds)

@@ -5,7 +5,7 @@ tags:
   - User
 ---
 
-# How to manage users
+# Handling users
 
 ## Creating a user
 
@@ -36,11 +36,12 @@ The `login` and `email` fields must be unique. If you try to create a user with 
 
 The user you just created will be able to connect to the application but will not be able to manage data because it is not connected to a data owner.
 
-You will often need to create a patient that can connect to iCure. In that case [createAndInviteUser](../references/interfaces/UserApi.md#createandinviteuser) can be used:
+You will often need to create a patient that can connect to iCure. In that case you can use [createAndInviteUser](../references/interfaces/UserApi.md#createandinviteuser):
 
 <!-- file://code-samples/how-to/manage-users/index.mts snippet:Create a patient user-->
 ```typescript
 import { Patient, Address, Telecom } from '@icure/medical-device-sdk'
+import { hex2ua } from '@icure/api'
 
 const loggedUser = await api.userApi.getLoggedUser()
 const loggedHcp = await api.healthcareProfessionalApi.getHealthcareProfessional(
@@ -104,7 +105,7 @@ The email will contain the username and a temporary password.
 
 :::caution
 
-Several conditions must be met for this process to succeed: 
+For this process to succeed the following conditions must be met: 
 * the healthcare professional and the patient must have an email address or a mobile phone number.
 * the email address or the phone number of the patient must not be in use by another user in the database.
 
@@ -132,7 +133,7 @@ const loadedUserByEmail = await api.userApi.getUserByEmail(createdUser.email)
 
 To filter users, you can use the `filterUsers` method on the `userApi`.
 
-Several filters are available:
+The following filters are available:
 * Filtering on a collection of ids
 * Filtering by patient id
 

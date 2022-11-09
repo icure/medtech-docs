@@ -7,19 +7,17 @@ import {
   medTechApi,
 } from '@icure/medical-device-sdk'
 import { webcrypto } from 'crypto'
-import { hex2ua, MaintenanceTask } from '@icure/api'
-import { LocalStorage } from 'node-localstorage'
+import { hex2ua } from '@icure/api'
 import {
   host,
-  password,
+  initLocalStorage,
+  initMedTechApi,
   patientId,
   patientPassword,
   patientPrivKey,
   patientUserName,
   privKey,
-  userName,
 } from '../../utils/index.mjs'
-import os from 'os'
 import { expect } from 'chai'
 import {
   Notification,
@@ -27,17 +25,9 @@ import {
 } from '@icure/medical-device-sdk/src/models/Notification.js'
 import { v4 as uuid } from 'uuid'
 
-const tmp = os.tmpdir()
-;(global as any).localStorage = new LocalStorage(tmp, 5 * 1024 ** 3)
-;(global as any).Storage = ''
+initLocalStorage()
 
-const api = await medTechApi()
-  .withICureBasePath(host)
-  .withUserName(userName)
-  .withPassword(password)
-  .withCrypto(webcrypto as any)
-  .build()
-
+const api = await initMedTechApi()
 const user = await api.userApi.getLoggedUser()
 await api.cryptoApi.loadKeyPairsAsTextInBrowserLocalStorage(
   user.healthcarePartyId ?? user.patientId ?? user.deviceId,
@@ -86,7 +76,7 @@ const dataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
 expect(!!dataSample).to.eq(true)
 
 const patientApi = await medTechApi()
-  .withICureBasePath(host)
+  .withICureBaseUrl(host)
   .withUserName(patientUserName)
   .withPassword(patientPassword)
   .withCrypto(webcrypto as any)
@@ -99,7 +89,7 @@ await patientApi.cryptoApi.loadKeyPairsAsTextInBrowserLocalStorage(
 )
 
 //tech-doc: patient sends notification
-const accessNotification = await patientApi.notificationApi.createOrModifyNotification(
+await patientApi.notificationApi.createOrModifyNotification(
   new Notification({
     id: uuid(),
     status: 'pending',
@@ -112,7 +102,7 @@ const accessNotification = await patientApi.notificationApi.createOrModifyNotifi
 //tech-doc: STOP HERE
 
 //tech-doc: doctor receives notification
-const newNotifications = await api.notificationApi.getPendingNotifications()
+const newNotifications = await api.notificationApi.getPendingNotificationsAfter()
 const newPatientNotifications = newNotifications.filter(
   (notification) =>
     notification.type === NotificationTypeEnum.OTHER &&

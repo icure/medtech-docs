@@ -1,10 +1,4 @@
-import {
-  CodingReference,
-  DataSample,
-  DataSampleFilter,
-  medTechApi,
-  Patient,
-} from '@icure/medical-device-sdk'
+import { CodingReference, DataSample, DataSampleFilter, Patient } from '@icure/medical-device-sdk'
 import { hex2ua, sleep } from '@icure/api'
 import 'isomorphic-fetch'
 import * as console from 'console'
@@ -68,7 +62,7 @@ await sleep(5000)
 //tech-doc: get a list of dataSamples
 const filter = await new DataSampleFilter()
   .forDataOwner(loggedUser.healthcarePartyId!)
-  .byTagCodeFilter('IC-TEST', 'TEST')
+  .byLabelCodeFilter('IC-TEST', 'TEST')
   .forPatients(api.cryptoApi, [patient])
   .build()
 
@@ -98,6 +92,6 @@ console.log('Delete: ', JSON.stringify(deletedDataSample))
 //tech-doc: filter builder
 new DataSampleFilter()
   .forDataOwner(loggedUser.healthcarePartyId!)
-  .byTagCodeFilter('IC-TEST', 'TEST')
+  .byLabelCodeFilter('IC-TEST', 'TEST')
   .forPatients(api.cryptoApi, [patient])
   .build()

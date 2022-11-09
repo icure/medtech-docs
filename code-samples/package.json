@@ -7,7 +7,8 @@
     "build": "tsc",
     "lint": "eslint --ext .js,.ts,.mjs,.mts .",
     "lint-fix": "eslint --fix --ext .js,.ts,.mjs,.mts .",
-    "start": "yarn run lint-fix && yarn run build && node runall.mjs"
+    "start": "yarn run lint-fix && yarn run build && node runall.mjs",
+    "start-specific": "yarn run build && node how-to/authenticate-user/index.mjs"
   },
   "lint-staged": {
     "*.js": [
@@ -28,8 +29,8 @@
     ]
   },
   "dependencies": {
-    "@icure/api": "4.2.39",
-    "@icure/medical-device-sdk": "^0.6.2",
+    "@icure/api": "6.0.0",
+    "@icure/medical-device-sdk": "^1.0.2",
     "isomorphic-fetch": "^3.0.0",
     "node-fetch": "^2.6.1",
     "node-localstorage": "^2.2.1",
@@ -37,9 +38,11 @@
   },
   "devDependencies": {
     "@types/chai": "^4.3.3",
+    "@types/chai-as-promised": "^7.1.1",
     "@typescript-eslint/eslint-plugin": "^5.38.1",
     "@typescript-eslint/parser": "^5.38.1",
     "chai": "^4.3.6",
+    "chai-as-promised": "^7.1.1",
     "eslint": "^8.13.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-flowtype": "^3.13.0",

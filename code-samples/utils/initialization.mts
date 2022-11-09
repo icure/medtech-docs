@@ -1,10 +1,21 @@
-import { medTechApi, MedTechApi } from '@icure/medical-device-sdk'
-import { host, password, password2, privKey, privKey2, userName, userName2 } from './endpoint.mjs'
-import { webcrypto } from 'crypto'
-import { hex2ua } from '@icure/api'
 import os from 'os'
 import console from 'console'
 import { LocalStorage } from 'node-localstorage'
+import { medTechApi, MedTechApi } from '@icure/medical-device-sdk'
+import {
+  host,
+  password,
+  password2,
+  patientPassword,
+  patientPrivKey,
+  patientUserName,
+  privKey,
+  privKey2,
+  userName,
+  userName2,
+} from './endpoint.mjs'
+import { webcrypto } from 'crypto'
+import { hex2ua, pkcs8ToJwk } from '@icure/api'
 
 export function initLocalStorage() {
   const tmp = os.tmpdir()
@@ -13,32 +24,35 @@ export function initLocalStorage() {
   ;(global as any).Storage = ''
 }
 
-export async function initMedTechApi(initCrypto = false) {
+export async function initMedTechApi(initCrypto?: boolean): Promise<MedTechApi> {
   return await initAnyMedTechApi(userName, password, privKey, initCrypto)
 }
 
-export async function initMedTechApi2(initCrypto = false) {
+export async function initMedTechApi2(initCrypto?: boolean): Promise<MedTechApi> {
   return await initAnyMedTechApi(userName2, password2, privKey2, initCrypto)
 }
 
+export async function initPatientMedTechApi(initCrypto?: boolean): Promise<MedTechApi> {
+  return await initAnyMedTechApi(patientUserName, patientPassword, patientPrivKey, initCrypto)
+}
+
 async function initAnyMedTechApi(
-  userName: string,
+  username: string,
   password: string,
-  privKey: string,
-  initCrypto = false,
+  privatekey: string,
+  initcrypto: boolean | undefined,
 ): Promise<MedTechApi> {
   const api = await medTechApi()
-    .withICureBasePath(host)
-    .withUserName(userName)
+    .withICureBaseUrl(host)
+    .withUserName(username)
     .withPassword(password)
     .withCrypto(webcrypto as any)
     .build()
-  if (initCrypto) {
+  if (initcrypto) {
     const loggedUser = await api.userApi.getLoggedUser()
-    await api!.cryptoApi.loadKeyPairsAsTextInBrowserLocalStorage(
-      api.dataOwnerApi.getDataOwnerIdOf(loggedUser),
-      hex2ua(privKey),
-    )
+    const loggedDataOwner = await api.cryptoApi.getDataOwner(api.dataOwnerApi.getDataOwnerIdOf(loggedUser))
+    const pubKey = api.cryptoApi.getPublicKeyFromPrivateKey(pkcs8ToJwk(hex2ua(privatekey)), loggedDataOwner.dataOwner)
+    await api.initUserCrypto(false, { publicKey: pubKey, privateKey: privatekey})
   }
   return api
 }

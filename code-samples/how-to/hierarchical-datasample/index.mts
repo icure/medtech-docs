@@ -1,12 +1,5 @@
-import {
-  CodingReference,
-  DataSample,
-  DataSampleFilter,
-  medTechApi,
-  Patient,
-  TimeSeries,
-} from '@icure/medical-device-sdk'
-import { hex2ua, sleep } from '@icure/api'
+import { CodingReference, DataSample, Patient, TimeSeries } from '@icure/medical-device-sdk'
+import { hex2ua } from '@icure/api'
 import 'isomorphic-fetch'
 import * as console from 'console'
 
@@ -32,164 +25,77 @@ const patient = await api.patientApi.createOrModifyPatient(
 )
 //tech-doc: STOP HERE
 
-//tech-doc: create a dataSample
-
-new DataSample({
-  labels: new Set([new CodingReference({ type: 'LOINC', code: '35094-2', version: '2.73' })]),
+//tech-doc: create children dataSample one hour mean
+const oneHourMeanDataSample = new DataSample({
+  labels: new Set([new CodingReference({ type: 'LOINC', code: '41920-0', version: '2.73' })]),
+  comment: 'Heart rate 1 hour mean',
   openingDate: 20220929083400,
+  content: {
+    en: {
+      measureValue: {
+        value: 72,
+        unit: '{beats}/min',
+        unitCodes: new Set([
+          new CodingReference({ type: 'UCUM', code: '{beats}/min', version: '1.2' }),
+        ]),
+      },
+    },
+  },
 })
-
-//tech-doc: add heart rate data
-
-new DataSample({
-  labels: new Set([new CodingReference({ type: 'LOINC', code: '35094-2', version: '2.73' })]),
+//tech-doc: create children dataSample eight hour mean
+const eightHourMeanDataSample = new DataSample({
+  labels: new Set([new CodingReference({ type: 'LOINC', code: '41921-8', version: '2.73' })]),
+  comment: 'Heart rate 8 hour mean',
+  openingDate: 20220929083400,
+  content: {
+    en: {
+      measureValue: {
+        value: 63,
+        unit: '{beats}/min',
+        unitCodes: new Set([
+          new CodingReference({ type: 'UCUM', code: '{beats}/min', version: '1.2' }),
+        ]),
+      },
+    },
+  },
+})
+//tech-doc: create children dataSample temperatures
+const temperaturesDataSample = new DataSample({
+  labels: new Set([new CodingReference({ type: 'LOINC', code: '8310-5', version: '2.73' })]),
+  comment: 'Body temperature',
+  openingDate: 20220929083400,
+  content: {
+    en: {
+      // highlight-start
+      timeSeries: new TimeSeries({
+        samples: new Array<number>(60).map(Function.call, () =>
+          new Array<number>(1).map(Function.call, () => Math.random() + 36.2),
+        ), // Simulate 60 random values for temperature between
+        // 36.2 and 37.2 (e.g. [[36.5], [37.0], [36.8], ...])
+        fields: ['C°'],
+      }),
+      // highlight-end
+    },
+  },
+})
+//tech-doc: create heart rate datasample
+const meanHeartRateDataSample = new DataSample({
+  labels: new Set([
+    new CodingReference({ type: 'LOINC', code: '43149-4', version: '2.73' }),
+    // highlight-start
+    new CodingReference({ type: 'LOINC', code: '41920-0', version: '2.73' }),
+    new CodingReference({ type: 'LOINC', code: '41921-8', version: '2.73' }),
+    // highlight-end
+  ]),
   openingDate: 20220929083400,
   content: {
     en: {
       compoundValue: [
         // highlight-start
-        new DataSample({
-          labels: new Set([
-            new CodingReference({ type: 'LOINC', code: '41920-0', version: '2.73' }),
-          ]),
-          comment: 'Heart rate 1 hour mean',
-          openingDate: 20220929083400,
-          content: {
-            en: {
-              measureValue: {
-                value: 72,
-                unit: '{beats}/min',
-                unitCodes: new Set([
-                  new CodingReference({ type: 'UCUM', code: '{beats}/min', version: '1.2' }),
-                ]),
-              },
-            },
-          },
-        }),
-        new DataSample({
-          labels: new Set([
-            new CodingReference({ type: 'LOINC', code: '41921-8', version: '2.73' }),
-          ]),
-          comment: 'Heart rate 8 hour mean',
-          openingDate: 20220929083400,
-          content: {
-            en: {
-              measureValue: {
-                value: 63,
-                unit: '{beats}/min',
-                unitCodes: new Set([
-                  new CodingReference({ type: 'UCUM', code: '{beats}/min', version: '1.2' }),
-                ]),
-              },
-            },
-          },
-        }),
+        oneHourMeanDataSample,
+        eightHourMeanDataSample,
+        temperaturesDataSample,
         // highlight-end
-      ],
-    },
-  },
-})
-
-//tech-doc: add temperatures data
-
-new DataSample({
-  labels: new Set([new CodingReference({ type: 'LOINC', code: '35094-2', version: '2.73' })]),
-  openingDate: 20220929083400,
-  content: {
-    en: {
-      compoundValue: [
-        new DataSample({
-          /**
-           *
-           */
-        }),
-        new DataSample({
-          /**
-           *
-           */
-        }),
-        // highlight-start
-        new DataSample({
-          labels: new Set([
-            new CodingReference({ type: 'LOINC', code: '8310-5', version: '2.73' }),
-          ]),
-          comment: 'Body temperature',
-          openingDate: 20220929083400,
-          content: {
-            en: {
-              timeSeries: new TimeSeries({
-                // Simulate 60 random values for temperature
-                samples: [...Array(60)].map(Function.call, Math.random),
-                fields: ['C°'],
-              }),
-            },
-          },
-        }),
-        // highlight-end
-      ],
-    },
-  },
-})
-
-//tech-doc: final example
-const dataSampleToCreate = new DataSample({
-  labels: new Set([new CodingReference({ type: 'LOINC', code: '35094-2', version: '2.73' })]),
-  openingDate: 20220929083400,
-  content: {
-    en: {
-      compoundValue: [
-        new DataSample({
-          labels: new Set([
-            new CodingReference({ type: 'LOINC', code: '41920-0', version: '2.73' }),
-          ]),
-          comment: 'Heart rate 1 hour mean',
-          openingDate: 20220929083400,
-          content: {
-            en: {
-              measureValue: {
-                value: 72,
-                unit: '{beats}/min',
-                unitCodes: new Set([
-                  new CodingReference({ type: 'UCUM', code: '{beats}/min', version: '1.2' }),
-                ]),
-              },
-            },
-          },
-        }),
-        new DataSample({
-          labels: new Set([
-            new CodingReference({ type: 'LOINC', code: '41921-8', version: '2.73' }),
-          ]),
-          comment: 'Heart rate 8 hour mean',
-          openingDate: 20220929083400,
-          content: {
-            en: {
-              measureValue: {
-                value: 63,
-                unit: '{beats}/min',
-                unitCodes: new Set([
-                  new CodingReference({ type: 'UCUM', code: '{beats}/min', version: '1.2' }),
-                ]),
-              },
-            },
-          },
-        }),
-        new DataSample({
-          labels: new Set([
-            new CodingReference({ type: 'LOINC', code: '8310-5', version: '2.73' }),
-          ]),
-          comment: 'Body temperature',
-          openingDate: 20220929083400,
-          content: {
-            en: {
-              timeSeries: new TimeSeries({
-                // Simulate 60 random values for temperature
-                samples: [...Array(60)].map(Function.call, Math.random),
-                fields: ['C°'],
-              }),
-            },
-          },
-        }),
       ],
     },
   },
@@ -197,7 +103,7 @@ const dataSampleToCreate = new DataSample({
 
 const createdDataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
   patient.id!,
-  dataSampleToCreate,
+  meanHeartRateDataSample,
 )
 //tech-doc: STOP HERE
 

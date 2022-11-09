@@ -1,8 +1,8 @@
 ---
-slug: listen-to-icure-events
+slug: how-to-subscribe-to-icure-events
 ---
 
-# Listening to iCure events
+# Subscribing to iCure events
 
 At some point, you may want to listen to iCure events. For example, you may want to be notified when a patient is created or modified. This is possible with the iCure Medtech SDK.
 
@@ -24,7 +24,7 @@ Currently, iCure supports the following event types for the following entities:
 
 :::note
 
-We assume that you already know the [How to register a user](./how-to-register-a-user.md) and [How to login as a user](./how-to-login-as-a-user.md) guides.
+We assume that you already know the [How to authenticate a user](sdks/how-to/how-to-authenticate-a-user/index.md) guide.
 
 :::
 
@@ -38,7 +38,10 @@ const statuses: string[] = []
 const connection = (
   await api.dataSampleApi.subscribeToDataSampleEvents(
     ['CREATE'], // Event types to listen to
-    await new DataSampleFilter().forDataOwner(loggedUser.healthcarePartyId!).byTagCodeFilter('IC-TEST', 'TEST').build(),
+    await new DataSampleFilter()
+      .forDataOwner(loggedUser.healthcarePartyId!)
+      .byLabelCodeFilter('IC-TEST', 'TEST')
+      .build(),
     async (ds) => {
       events.push(ds)
     },
@@ -112,4 +115,3 @@ To stop listening to events, you can call the `close` method on the `Connection`
 ```typescript
 connection.close()
 ```
-

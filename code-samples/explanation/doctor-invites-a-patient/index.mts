@@ -1,39 +1,33 @@
 import 'isomorphic-fetch'
 import {
-  CodingReference,
-  HealthcareElement,
   ICureRegistrationEmail,
-  medTechApi,
   Patient,
   Address,
   Telecom,
+  medTechApi,
 } from '@icure/medical-device-sdk'
-import { webcrypto } from 'crypto'
 import { hex2ua } from '@icure/api'
-import { LocalStorage } from 'node-localstorage'
 import {
   host,
+  initLocalStorage,
   msgGtwUrl,
   password,
-  patientId,
   privKey,
   specId,
   userName,
 } from '../../utils/index.mjs'
-import os from 'os'
 import { expect } from 'chai'
 import { v4 as uuid } from 'uuid'
+import { webcrypto } from 'crypto'
 
-const tmp = os.tmpdir()
-;(global as any).localStorage = new LocalStorage(tmp, 5 * 1024 ** 3)
-;(global as any).Storage = ''
+initLocalStorage()
 
 const api = await medTechApi()
-  .withICureBasePath(host)
+  .withICureBaseUrl(host)
   .withUserName(userName)
   .withPassword(password)
-  .withMsgGtwUrl(msgGtwUrl)
-  .withMsgGtwSpecId(specId)
+  .withMsgGwUrl(msgGtwUrl)
+  .withMsgGwSpecId(specId)
   .withCrypto(webcrypto as any)
   .build()
 

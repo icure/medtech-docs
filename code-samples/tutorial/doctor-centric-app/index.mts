@@ -1,5 +1,4 @@
 import 'isomorphic-fetch'
-
 import {
   DataSample,
   Patient,
@@ -19,12 +18,14 @@ const iCureUserPassword = process.env.ICURE_USER_PASSWORD!
 const iCureUserLogin = process.env.ICURE_USER_NAME!
 
 const api = await medTechApi()
-  .withICureBasePath(iCureHost)
+  .withICureBaseUrl(iCureHost)
   .withUserName(iCureUserLogin)
   .withPassword(iCureUserPassword)
   .withCrypto(webcrypto as any)
   .build()
+//tech-doc: STOP HERE
 
+//tech-doc: init user crypto
 await api.initUserCrypto()
 //tech-doc: STOP HERE
 
@@ -78,7 +79,7 @@ const johnData = await api.dataSampleApi.filterDataSample(
   await new DataSampleFilter()
     .forDataOwner(api.dataOwnerApi.getDataOwnerIdOf(loggedUser))
     .forPatients(api.cryptoApi, [johnSnow])
-    .byTagCodeFilter('LOINC', '29463-7')
+    .byLabelCodeFilter('LOINC', '29463-7')
     .build(),
 )
 
