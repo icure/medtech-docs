@@ -51,10 +51,6 @@ const dataSample = await hcp1Api.dataSampleApi.createOrModifyDataSampleFor(
     content: { en: { stringValue: contentString } },
   }),
 )
-expect(
-  (await hcp1Api.dataSampleApi.getDataSample(dataSample.id)).content['en'].stringValue,
-expect(
-  (await hcp2Api.dataSampleApi.getDataSample(dataSample.id)).content['en'].stringValue,
 // hcp2 can already access dataSample
 ```
 </details>
