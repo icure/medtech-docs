@@ -6,7 +6,8 @@ tags:
 ---
 # Handling healthcare professionals
 
-[Healthcare professionals](../glossary.md#Data owner) are either doctors, nurses, physiotherapists, etc. They are the people who are going to use the medical device to take care of patients.
+[Healthcare professionals](../glossary.md#Data owner) are either doctors, nurses, physiotherapists, etc. They are the 
+people who are going to use the medical device to take care of patients.
 
 Healthcare professionals can also in certain cases be a healthcare organization.
 
@@ -20,13 +21,12 @@ Pass the `healthcareProfessional` to the createHealthcareProfessional method of 
 <!-- file://code-samples/how-to/manage-healthcare-professionals/index.mts snippet:Create a healthcare professional-->
 ```typescript
 import { User } from '@icure/medical-device-sdk'
-import { ICureRegistrationEmail } from '@icure/medical-device-sdk'
 
 const healthcareProfessional: HealthcareProfessional = new HealthcareProfessional({
   firstName: 'John',
   lastName: 'Keats',
   speciality: 'Psychiatrist',
-  codes: new Set([{ type: 'practitioner-specialty', code: 'psychiatrist' }]),
+  codes: new Set([{ type: 'practitioner-specialty', code: healthcareProfessionalCode }]),
   addresses: [
     new Address({
       telecoms: [
@@ -35,11 +35,13 @@ const healthcareProfessional: HealthcareProfessional = new HealthcareProfessiona
           telecomNumber: `jk@hospital.care`,
         }),
       ],
-    })
-    ],
+    }),
+  ],
 })
 
-const createdHcp = await api.healthcareProfessionalApi.createOrModifyHealthcareProfessional(healthcareProfessional)
+const createdHcp = await api.healthcareProfessionalApi.createOrModifyHealthcareProfessional(
+  healthcareProfessional,
+)
 ```
 
 ## Load a healthcare professional by id
@@ -61,7 +63,8 @@ You can build filters by hand or use the DSL provided by the HealthcareProfessio
 ```typescript
 const hcps = await api.healthcareProfessionalApi.filterHealthcareProfessionalBy(
   await new HealthcareProfessionalFilter()
-    .byLabelCodeFilter(undefined, undefined, 'practicioner-specialty', 'psychiatrist').build(),
+    .byLabelCodeFilter(undefined, undefined, 'practitioner-specialty', healthcareProfessionalCode)
+    .build(),
 )
 ```
 
@@ -74,5 +77,3 @@ The deleteHealthcareProfessional method of the healthcareProfessionalApi allows 
 ```typescript
 await api.healthcareProfessionalApi.deleteHealthcareProfessional(createdHcp.id)
 ```
-
-# Handling healthcare professionals

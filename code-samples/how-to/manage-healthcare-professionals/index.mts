@@ -1,33 +1,26 @@
-import { Address, DataSampleFilter, HealthcareProfessional, HealthcareProfessionalFilter, medTechApi, Telecom, UserFilter } from '@icure/medical-device-sdk'
-import { webcrypto } from 'crypto'
-import { host, userName, password } from '../../utils/index.mjs'
+import {
+  Address,
+  HealthcareProfessional,
+  HealthcareProfessionalFilter,
+  Telecom,
+} from '@icure/medical-device-sdk'
+import { initLocalStorage, initMedTechApi } from '../../utils/index.mjs'
 import 'isomorphic-fetch'
-import { LocalStorage } from 'node-localstorage'
-import * as os from 'os'
 import { expect } from 'chai'
 
-const tmp = os.tmpdir()
-;(global as any).localStorage = new LocalStorage(tmp, 5 * 1024 * 1024 * 1024)
-;(global as any).Storage = ''
+initLocalStorage()
 
-const api = await medTechApi()
-  .withICureBasePath(host)
-  .withUserName(userName)
-  .withPassword(password)
-  .withMsgGtwSpecId('ic')
-  .withMsgGtwUrl('https://msg-gw.icure.dev')
-  .withCrypto(webcrypto as any)
-  .build()
+const api = await initMedTechApi(true)
+const healthcareProfessionalCode = Math.random().toString(36).substring(4)
 
 //tech-doc: Create a healthcare professional
 import { User } from '@icure/medical-device-sdk'
-import { ICureRegistrationEmail } from '@icure/medical-device-sdk'
 
 const healthcareProfessional: HealthcareProfessional = new HealthcareProfessional({
   firstName: 'John',
   lastName: 'Keats',
   speciality: 'Psychiatrist',
-  codes: new Set([{ type: 'practitioner-specialty', code: 'psychiatrist' }]),
+  codes: new Set([{ type: 'practitioner-specialty', code: healthcareProfessionalCode }]),
   addresses: [
     new Address({
       telecoms: [
@@ -36,11 +29,13 @@ const healthcareProfessional: HealthcareProfessional = new HealthcareProfessiona
           telecomNumber: `jk@hospital.care`,
         }),
       ],
-    })
-    ],
+    }),
+  ],
 })
 
-const createdHcp = await api.healthcareProfessionalApi.createOrModifyHealthcareProfessional(healthcareProfessional)
+const createdHcp = await api.healthcareProfessionalApi.createOrModifyHealthcareProfessional(
+  healthcareProfessional,
+)
 
 //tech-doc: STOP HERE
 expect(createdHcp.id).to.be.a('string')
@@ -59,7 +54,8 @@ expect(loadedHcp.lastName).to.equal('Keats')
 //tech-doc: Filter healthcare professionals
 const hcps = await api.healthcareProfessionalApi.filterHealthcareProfessionalBy(
   await new HealthcareProfessionalFilter()
-    .byLabelCodeFilter(undefined, undefined, 'practicioner-specialty', 'psychiatrist').build(),
+    .byLabelCodeFilter(undefined, undefined, 'practitioner-specialty', healthcareProfessionalCode)
+    .build(),
 )
 
 //tech-doc: STOP HERE
