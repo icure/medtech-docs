@@ -1,11 +1,17 @@
 import 'isomorphic-fetch'
 import { initLocalStorage, initMedTechApi } from '../../utils/index.mjs'
-import { AnonymousMedTechApiBuilder, MedTechApiBuilder, DataSample, CodingReference, medTechApi } from '@icure/medical-device-sdk'
+import {
+  AnonymousMedTechApiBuilder,
+  MedTechApiBuilder,
+  DataSample,
+  CodingReference,
+  medTechApi,
+} from '@icure/medical-device-sdk'
 import { webcrypto } from 'crypto'
 import * as process from 'process'
 import { getLastEmail } from '../../utils/msgGtw.mjs'
-import { expect } from 'chai';
-import { NotificationTypeEnum } from '@icure/medical-device-sdk/src/models/Notification.js';
+import { expect } from 'chai'
+import { NotificationTypeEnum } from '@icure/medical-device-sdk/src/models/Notification.js'
 
 const cachedInfo = {} as { [key: string]: string }
 const uniqueId = Math.random().toString(36).substring(4)
@@ -147,7 +153,9 @@ await reInstantiatedApi.initUserCrypto(false, { publicKey: pubKey, privateKey: p
 //tech-doc: STOP HERE
 
 //tech-doc: Get back encrypted data
-const foundDataSampleAfterInstantiatingApi = await reInstantiatedApi.dataSampleApi.getDataSample(createdDataSample.id)
+const foundDataSampleAfterInstantiatingApi = await reInstantiatedApi.dataSampleApi.getDataSample(
+  createdDataSample.id,
+)
 //tech-doc: STOP HERE
 
 console.log(
@@ -199,11 +207,12 @@ console.log(`The token of your user will change: ***\${loginResult.token}***`)
 //tech-doc: Access back encrypted data
 const loggedUserApi = loginResult.medTechApi
 
-const foundDataSampleAfterLogin = await loggedUserApi.dataSampleApi.getDataSample(createdDataSample.id)
+const foundDataSampleAfterLogin = await loggedUserApi.dataSampleApi.getDataSample(
+  createdDataSample.id,
+)
 //tech-doc: STOP HERE
 
 console.log('Found Data Sample after login: ', JSON.stringify(foundDataSampleAfterLogin))
-
 
 // User lost his key section
 const daenaerysId = loggedUser.patientId
@@ -230,7 +239,7 @@ const anonymousMedTechApi = await new AnonymousMedTechApiBuilder()
 
 const loginProcess = await anonymousMedTechApi.authenticationApi.startAuthentication(
   recaptcha,
-  userEmail
+  userEmail,
 )
 
 const newValidationCode = (await getLastEmail(userEmail)).subject!
@@ -247,7 +256,7 @@ const loginAuthResult = await anonymousMedTechApi.authenticationApi.completeAuth
       // You can't find back the user's RSA Keypair: You need to generate a new one
       return anonymousApiForLogin.generateRSAKeypair()
     }
-  }
+  },
 )
 //tech-doc: STOP HERE
 
@@ -262,15 +271,16 @@ saveSecurely(
 )
 
 //tech-doc: User can create new data after loosing their key
-const newlyCreatedDataSample = await loginAuthResult.medTechApi.dataSampleApi.createOrModifyDataSampleFor(
-  foundUser.patientId,
-  new DataSample({
-    labels: new Set([new CodingReference({ type: 'IC-TEST', code: 'TEST' })]),
-    content: { en: { stringValue: 'Hello world' } },
-    openingDate: 20220929083400,
-    comment: 'This is a comment',
-  }),
-)
+const newlyCreatedDataSample =
+  await loginAuthResult.medTechApi.dataSampleApi.createOrModifyDataSampleFor(
+    foundUser.patientId,
+    new DataSample({
+      labels: new Set([new CodingReference({ type: 'IC-TEST', code: 'TEST' })]),
+      content: { en: { stringValue: 'Hello world' } },
+      openingDate: 20220929083400,
+      comment: 'This is a comment',
+    }),
+  )
 //tech-doc: STOP HERE
 
 expect(newlyCreatedDataSample).to.not.be.undefined //skip
@@ -280,7 +290,7 @@ try {
   await loginAuthResult.medTechApi.dataSampleApi.getDataSample(createdDataSample.id!)
   expect(true).to.be.equal(
     false,
-    "Patient should not be able to get access to his previous data, as his new key can't decrypt corresponding AES Exchange keys"
+    "Patient should not be able to get access to his previous data, as his new key can't decrypt corresponding AES Exchange keys",
   )
 } catch (e: any) {
   expect(e.message).to.not.be.empty
@@ -293,7 +303,8 @@ const hcpApi = await initMedTechApi(true)
 const startTimestamp = new Date().getTime() - 100000
 
 //tech-doc: Data owner gets all their pending notifications
-const hcpNotifications = await hcpApi.notificationApi.getPendingNotificationsAfter(startTimestamp)
+const hcpNotifications = await hcpApi.notificationApi
+  .getPendingNotificationsAfter(startTimestamp)
   .then((notifs) => notifs.filter((notif) => notif.type === NotificationTypeEnum.KEY_PAIR_UPDATE))
 //tech-doc: STOP HERE
 
@@ -302,20 +313,24 @@ expect(hcpNotifications.length).to.not.be.undefined
 const daenaerysNotification = hcpNotifications.find(
   (notif) =>
     notif.type === NotificationTypeEnum.KEY_PAIR_UPDATE &&
-    notif.properties?.find((prop) => prop.typedValue?.stringValue == daenaerysId) != undefined
+    notif.properties?.find((prop) => prop.typedValue?.stringValue == daenaerysId) != undefined,
 )
 
 expect(daenaerysNotification).to.not.be.undefined //skip
 
 //tech-doc: Give access back to a user with their new key
-const daenaerysPatientId = daenaerysNotification!.properties?.find((prop) => prop.id == 'dataOwnerConcernedId')
+const daenaerysPatientId = daenaerysNotification!.properties?.find(
+  (prop) => prop.id == 'dataOwnerConcernedId',
+)
 expect(daenaerysPatientId).to.not.be.undefined //skip
-const daenaerysPatientPubKey = daenaerysNotification!.properties?.find((prop) => prop.id == 'dataOwnerConcernedPubKey')
+const daenaerysPatientPubKey = daenaerysNotification!.properties?.find(
+  (prop) => prop.id == 'dataOwnerConcernedPubKey',
+)
 expect(daenaerysPatientPubKey).to.not.be.undefined //skip
 
 const accessBack = await hcpApi.dataOwnerApi.giveAccessBackTo(
   daenaerysPatientId!.typedValue!.stringValue!,
-  daenaerysPatientPubKey!.typedValue!.stringValue!
+  daenaerysPatientPubKey!.typedValue!.stringValue!,
 )
 expect(accessBack).to.be.true //skip
 //tech-doc: STOP HERE

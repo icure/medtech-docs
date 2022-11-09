@@ -68,7 +68,8 @@ const healthcareElement = await hcp1Api.healthcareElementApi.createOrModifyHealt
   }),
   patient.id,
 )
-expect( //skip
+expect(
+  //skip
   (await hcp1Api.healthcareElementApi.getHealthcareElement(healthcareElement.id)).description, //skip
 ).to.equal(description) //skip
 expect((await hcp2Api.healthcareElementApi.getHealthcareElement(healthcareElement.id)).description) //skip
@@ -110,7 +111,8 @@ const dataSample = await pApi.dataSampleApi.createOrModifyDataSampleFor(
     comment: 'This is a comment',
   }),
 )
-expect((await pApi.dataSampleApi.getDataSample(dataSample.id)).content['en'].stringValue).to.equal( //skip
+expect((await pApi.dataSampleApi.getDataSample(dataSample.id)).content['en'].stringValue).to.equal(
+  //skip
   contentString, //skip
 ) //skip
 expect(hcp1Api.dataSampleApi.getDataSample(dataSample.id)).to.be.rejected //skip

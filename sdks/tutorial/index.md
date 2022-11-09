@@ -15,9 +15,9 @@ By the end of it, you will be able to:
 To begin working with the MedTech SDK, you need to have a valid iCure User.
 You can obtain an iCure user in one of the following ways: 
 - Launch a free iCure instance locally on your computer, which will automatically create a default user for you.
-  To learn how to do this refer to the [QuickStart](../quick-start.md) guide.
+  To learn how to do this refer to the [QuickStart](/sdks/quick-start.md) guide.
 - Register on the iCure Cockpit to get your iCure Cloud User.
-  To learn how to do this refer to the [How to register on Cockpit](../../cockpit/how-to/how-to-register) guide.
+  To learn how to do this refer to the [How to register on Cockpit](/cockpit/how-to/how-to-register) guide.
 
 The iCure User credentials and the host URL of the following steps will depend on your choice.    
 
@@ -82,7 +82,7 @@ const iCureUserPubKey = process.env.ICURE_USER_PUB_KEY!
 const iCureUserPrivKey = process.env.ICURE_USER_PRIV_KEY!
 await api.initUserCrypto(false, { publicKey: iCureUserPubKey, privateKey: iCureUserPrivKey })
 ```
-For more information about this method, go to the [References: initUserCrypto](../references/classes/MedTechApi.md#initusercrypto)
+For more information about this method, go to the [References: initUserCrypto](/sdks/references/classes/MedTechApi.md#initusercrypto)
 
 :::tip
 
@@ -225,10 +225,10 @@ expect(johnWeight.content['en'].numberValue).to.be.equal(92.5)
 expect(johnWeight.comment).to.be.equal('Weight')
 ```
 
-To know more about the Data Sample information, go check the [References](../references/classes/DataSample.md)
+To know more about the Data Sample information, go check the [References](/sdks/references/classes/DataSample.md)
 
 ## What's next ? 
 Congratulations, you are now able to use the basic functions of the iCure MedTech SDK. 
-However, the SDK offers a lot of other services: head to the [How-To](../how-to/index.md) section to discover all of them. 
-You can also check the different [In-Depth Explanations](../explanations.md), to understand fully what's happening 
+However, the SDK offers a lot of other services: head to the [How-To](/sdks/how-to/index) section to discover all of them. 
+You can also check the different [In-Depth Explanations](/sdks/explanations), to understand fully what's happening 
 behind each service of iCure.
