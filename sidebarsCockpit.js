@@ -15,12 +15,6 @@
 const sidebars = {
   cockpitSidebar: [
     'intro',
-    'quick-start',
-    {
-      type: 'category',
-      label: 'Tutorial',
-      items: ['tutorial/index'],
-    },
     {
       type: 'category',
       label: 'How To',
