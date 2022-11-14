@@ -6,25 +6,26 @@ slug: how-to-interact-with-a-database
 
 ## View the list of databases
 
-Each of the apps has a list of databases. Click on the 'Manage' button on the particular app card to see them.
-From the [dashboard](https://cockpit.icure.cloud/dashboard) of the cockpit, chose some app and click on the 'Manage' button. You will be able to see list of existing databases inside this app.
+Each app has a list of databases. 
+From the Cockpit [dashboard screen](https://cockpit.icure.cloud/dashboard), click on the 'Manage' button of the app 
+of your choice. You will then see all existing databases linked to this app.
 
 ![Manage app btn](./img/database-interactions/manage-app-btn.png)
 ![Databases list](./img/database-interactions/databases-list.png)
 
-## Create a databases
+## Create a database
 
-To create new database click on 'Add database' button.
+To create a new database, click on 'Add database' button on the App Details screen.
 
-![Add databases](./img/database-interactions/add-databases.png)
+![Add database](./img/database-interactions/add-databases.png)
 
-Fill in the database name and chose the cluster from the dropwown and click on the "Add" button.
+Write the name of your database, choose the cluster hosting it and click on the 'Add' button.
 
-![Add databases modal](./img/database-interactions/add-databases-modal.png)
+![Add database modal](./img/database-interactions/add-databases-modal.png)
 
 ## Manage database
 
-To see the database detailed information click on it.
+To see the detailed information of your database, click on its card.
 
 ![Database card](./img/database-interactions/database-card.png)
 
@@ -34,16 +35,16 @@ To see the database detailed information click on it.
 
 #### Add custom property
 
-At some point you may want to add custom property to the database.
-Click on the 'Add custom property' button.
+At some point, you may want to add custom properties to your database.
+For this, click on the 'Add custom property' button.
 
 ![Add custom property](./img/database-interactions/custom-property/add-custom-property.png)
 
-Fill in the identifier, value and type fild and click on the 'Add' button.
+Fill your property identifier, its value and its type field and click on the 'Add' button.
 
 ![Custom property modal](./img/database-interactions/custom-property/custom-property-modal.png)
 
-#### Edit custom property
+#### Edit a custom property
 
 Click on the pencil icon next to the property you want to change.
 
@@ -53,29 +54,33 @@ Fill the changes and click on the 'Save' button.
 
 ![Edit custom property modal](./img/database-interactions/custom-property/edit-custom-property-modal.png)
 
-#### Delete custom property
+#### Delete a custom property
 
 Click on the pencil icon next to the property you want to change.
 
 ![Custom property edit](./img/database-interactions/custom-property/edit-custom-property.png)
 
-If you are absolutely sure that you want to delete this custom property, click the "Delete" button.
+If you are absolutely sure you want to delete this custom property, click the 'Delete' button.
 
 ![Custom property delete](./img/database-interactions/custom-property/delete-custom-property-modal.png)
 
 ### Database Administrator
 
-#### Add database Administrator
+#### Add a database Administrator
 
-Here you can see who has access to this database. Also you can add database Administrator.
+In the Database details, you are able to see: 
+- who can access it
+- who are its administrators
 
-![Add administrator](./img/database-interactions/database-administrator/add-administrator.png)
-
-Fill in the form inputs and click on the 'Add' button.
+You can also add a new administrator by clicking on the 'Add an administrator' button.
+A modal will appear.
 
 ![Modal](./img/database-interactions/database-administrator/modal.png)
 
-Also you can send the invitation to the provided email, by clicking on the 'Invite' button.
+Fill in the form inputs and click on the 'Add' button.
+
+Also, you can send an invitation to the administrator by clicking on the 'Invite' button. The invitation will be sent to the 
+email provided in the form earlier.
 
 ![Invite](./img/database-interactions/database-administrator/invite.png)
 
@@ -92,22 +97,23 @@ Make changes and click on the 'Save' button.
 ![Database administrator add](./img/database-interactions/database-administrator-add.png) -->
 
 ### Edit a database
-
-Chose the 'Edit' option from the overflow menu of the databse you want to edit.
+Editing the database only permits you to update its name. To do so, choose the 'Edit' option from the overflow menu 
+of the database you want to edit.
 
 ![Edit database option](./img/database-interactions/edit-database-option.png)
 
-Fill in the new app name and click on the "Save" button.
+Fill in the new database name and click on the 'Save' button.
 
 ![Edit database modal](./img/database-interactions/edit-database-modal.png)
 
 ### Delete a database
 
-Inside the Danger zone click on the "Delete" button.
+Deleting a database is a dangerous functionality. 
+Therefore, you will find it in the Danger Zone.
+Once you delete a database, there is no going back. Once you're sure, click on the 'Delete' button.
 
 ![Delete database](./img/database-interactions/delete-database.png)
 
-Once you delete a database, there is no going back. Please be certain.
-To confirm database deliting, copy its name and paste in the input. Then click on 'Delete' button.
+To confirm database deletion, write back its name into the dedicated field. Then click on 'Delete' button.
 
 ![Delete database modal](./img/database-interactions/delete-database-modal.png)
