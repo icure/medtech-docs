@@ -22,7 +22,7 @@ A Data Sample:
 - Is always associated to a Patient.
 - May be linked to oner or more Healthcare Elements, in order to provide a context for its measure.
 - May have a Coding, which associates the medical information or the measurement to the code of a
-[Terminology](http://localhost:3000/sdks/glossary#terminologies).
+[Terminology](/sdks/glossary#terminologies).
 
 ## Examples
 
