@@ -6,7 +6,7 @@ sidebar_position: 1
 
 ## What is iCure ?
 
-*iCure* service ensures the privacy of your patient medical data thanks to [end-to-end encryption](../sdks/explanations/encryption/introduction),
+*iCure* is a trustable service ensuring the privacy of your patient medical data thanks to [end-to-end encryption](../sdks/explanations/encryption/introduction),
 meaning your users are the only ones who decide who can access their data.
 
 iCure helps you to manage the encrypted data by providing a series of easy-to-use tools :
