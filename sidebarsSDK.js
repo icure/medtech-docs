@@ -21,6 +21,7 @@ const sidebarsSDK = {
   sdkSidebar: [
     'intro',
     'quick-start',
+    'release-notes',
     {
       type: 'category',
       label: 'Tutorial',
