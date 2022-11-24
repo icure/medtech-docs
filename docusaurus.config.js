@@ -7,7 +7,6 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 const GITHUB_USERNAME = 'icure'
 
 async function createConfig() {
-    const mdxMermaid = await import('mdx-mermaid')
     const { remarkKroki } = await import('remark-kroki');
     const krokiConfig = {
         server: 'https://kroki.io/',
@@ -50,7 +49,6 @@ async function createConfig() {
                     editUrl:
                         `https://github.com/${GITHUB_USERNAME}/medtech-docs/edit/main/`,
                     remarkPlugins: [
-                        [mdxMermaid.default, { theme: { light: 'default', dark: 'dark' } }],
                         [remarkKroki, krokiConfig]
                     ],
                 },
@@ -65,7 +63,6 @@ async function createConfig() {
                     editUrl:
                         `https://github.com/${GITHUB_USERNAME}/medtech-docs/edit/main/`,
                     remarkPlugins: [
-                        [mdxMermaid.default, { theme: { light: 'default', dark: 'dark' } }],
                         [remarkKroki, krokiConfig]
                     ],
                 },
@@ -88,8 +85,13 @@ async function createConfig() {
                     customCss: require.resolve('./src/css/custom.css'),
                 },
             ],
-            '@docusaurus/theme-live-codeblock'
+            '@docusaurus/theme-live-codeblock',
+            '@docusaurus/theme-mermaid'
         ],
+
+        markdown: {
+            mermaid: true
+        },
 
         themeConfig:
         /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
