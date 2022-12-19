@@ -18,7 +18,7 @@ condition related to a Patient, to a visit or to a set of measurements associate
 
 A Healthcare Element:
 - may be associated to one or more Data Samples to give a context to their measurements.  
-- may use Codings to associate its medical information to the codes of a [Terminology](http://localhost:3000/sdks/glossary#terminologies).
+- may use Codings to associate its medical information to the codes of a [Terminology](/sdks/glossary#terminologies).
 
 ## Examples
 

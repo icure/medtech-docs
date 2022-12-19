@@ -5,7 +5,7 @@ tags:
   - User
 ---
 
-# How to manage users
+# Handling users
 
 ## Creating a user
 

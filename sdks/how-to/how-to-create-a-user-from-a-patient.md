@@ -1,11 +1,11 @@
 ---
-slug: how-to-create-a-user-from-a-patient
+slug: how-to-invite-existing-patient-as-a-user
 description: How to Create a User for an Existing Patient
 tags:
 - User creation
 - Patient
 ---
-# How to Create a User for an Existing Patient
+# Inviting an existing patient to become a user
 
 ## Use Case Description
 There may be some cases where a Doctor (Healthcare Professional) wants to invite one of his patients to the platform. 
@@ -129,16 +129,15 @@ If the method runs successfully, it will return a report of all the shared objec
 <details>
     <summary>Output</summary>
 
-```typescript
+```json
 {
-  patient: "YOUR_PATIENT_OBJECT",
-  statuses: {
-    dataSamples: { success: true, error: null, modified: 1 },
-    healthcareElements: { success: true, error: null, modified: 0 },
-    patient: { success: true, error: null, modified: 0 }
-  }
+ "patient": "YOUR_PATIENT_OBJECT",
+ "statuses": {
+  "dataSamples": { "success": true, "error": null, "modified": 1 },
+  "healthcareElements": { "success": true, "error": null, "modified": 0 },
+  "patient": { "success": true, "error": null, "modified": 0 }
+ }
 }
-
 ```
 
 </details>

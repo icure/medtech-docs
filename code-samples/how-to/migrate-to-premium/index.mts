@@ -1,5 +1,5 @@
-import { medTechApi } from '@icure/medical-device-sdk';
-import { host, password, userName } from '../../utils/index.mjs';
+import { medTechApi } from '@icure/medical-device-sdk'
+import { host, password, userName } from '../../utils/index.mjs'
 import { webcrypto } from 'crypto'
 
 //tech-doc: instantiate the api

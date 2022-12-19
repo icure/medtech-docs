@@ -47,10 +47,12 @@ const dataSample = await hcp1Api.dataSampleApi.createOrModifyDataSampleFor(
   }),
 )
 expect(
-  (await hcp1Api.dataSampleApi.getDataSample(dataSample.id)).content['en'].stringValue,
+  //skip
+  (await hcp1Api.dataSampleApi.getDataSample(dataSample.id)).content['en'].stringValue, //skip
 ).to.equal(contentString) //skip
 expect(
-  (await hcp2Api.dataSampleApi.getDataSample(dataSample.id)).content['en'].stringValue,
+  //skip
+  (await hcp2Api.dataSampleApi.getDataSample(dataSample.id)).content['en'].stringValue, //skip
 ).to.equal(contentString) //skip
 // hcp2 can already access dataSample
 //tech-doc: end
