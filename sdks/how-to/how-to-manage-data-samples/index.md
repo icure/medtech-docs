@@ -30,7 +30,7 @@ const createdDataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
   patient.id!,
   new DataSample({
     labels: new Set([new CodingReference({ type: 'IC-TEST', code: 'TEST' })]),
-    content: { en: { stringValue: 'Hello world' } },
+    content: { en: new Content({ stringValue: 'Hello world' }) },
     openingDate: 20220929083400,
     comment: 'This is a comment',
   }),
@@ -152,14 +152,17 @@ If you linked the DataSample at the wrong patient, you have to delete the first 
 
 <!-- file://code-samples/how-to/datasamples/index.mts snippet:update a dataSample-->
 ```typescript
-const updatedDataSample = await api.dataSampleApi.createOrModifyDataSampleFor(patient.id!, {
-  ...createdDataSample,
-  // highlight-start
-  content: { en: { stringValue: 'Hello world updated' } },
-  comment: 'This is a updated comment',
-  modified: undefined,
-  // highlight-end
-})
+const updatedDataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
+  patient.id!,
+  new DataSample({
+    ...createdDataSample,
+    // highlight-start
+    content: { en: new Content({ stringValue: 'Hello world updated' }) },
+    comment: 'This is a updated comment',
+    modified: undefined,
+    // highlight-end
+  }),
+)
 ```
 
 <details>

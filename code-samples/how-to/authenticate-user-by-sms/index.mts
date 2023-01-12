@@ -88,13 +88,14 @@ const authenticationResult = await anonymousApi.authenticationApi.completeAuthen
 const authenticatedApi = authenticationResult.medTechApi
 
 // saveSecurely does not exist: Use your own way of storing the following data securely
-// One option is to put these elements into the localStorage
+// One option is to put these elements into the localStorage.
+// In this example case, only the first key pair is saved.
 saveSecurely(
   userPhoneNumber,
   authenticationResult.token,
   authenticationResult.userId,
   authenticationResult.groupId,
-  authenticationResult.keyPair,
+  authenticationResult.keyPairs[0],
 )
 
 const createdPatient = await authenticatedApi.patientApi.createOrModifyPatient(
@@ -121,7 +122,7 @@ const reInstantiatedApi = await new MedTechApiBuilder()
   .withCrypto(webcrypto as any)
   .build()
 
-await reInstantiatedApi.initUserCrypto(false, { publicKey: pubKey, privateKey: privKey })
+await reInstantiatedApi.initUserCrypto({ publicKey: pubKey, privateKey: privKey })
 
 const foundPatientAfterInstantiatingApi = await reInstantiatedApi.patientApi.getPatient(
   createdPatient.id,

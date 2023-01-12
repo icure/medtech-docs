@@ -1,5 +1,6 @@
 import {
   CodingReference,
+  Content,
   DataSample,
   DataSampleFilter,
   medTechApi,
@@ -68,7 +69,7 @@ await api.dataSampleApi.createOrModifyDataSampleFor(
   patient.id!,
   new DataSample({
     labels: new Set([new CodingReference({ type: 'IC-TEST', code: 'TEST' })]),
-    content: { en: { stringValue: 'Hello world' } },
+    content: { en: new Content({ stringValue: 'Hello world' }) },
   }),
 )
 //tech-doc: STOP HERE

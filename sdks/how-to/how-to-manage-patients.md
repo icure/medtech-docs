@@ -116,13 +116,15 @@ To update a patient, we can use the `createOrModifyPatient` method on the `Patie
 
 <!-- file://code-samples/how-to/patients/index.mts snippet:update a patient-->
 ```typescript
-const updatedPatient = await api.patientApi.createOrModifyPatient({
-  ...createdPatient,
-  // highlight-start
-  modified: undefined,
-  note: 'Good news everyone!',
-  // highlight-end
-})
+const updatedPatient = await api.patientApi.createOrModifyPatient(
+  new Patient({
+    ...createdPatient,
+    // highlight-start
+    modified: undefined,
+    note: 'Good news everyone!',
+    // highlight-end
+  }),
+)
 ```
 
 <details>

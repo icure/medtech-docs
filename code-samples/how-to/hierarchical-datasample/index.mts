@@ -1,4 +1,11 @@
-import { CodingReference, DataSample, Patient, TimeSeries } from '@icure/medical-device-sdk'
+import {
+  CodingReference,
+  Content,
+  DataSample,
+  Measure,
+  Patient,
+  TimeSeries,
+} from '@icure/medical-device-sdk'
 import { hex2ua } from '@icure/api'
 import 'isomorphic-fetch'
 import * as console from 'console'
@@ -31,15 +38,15 @@ const oneHourMeanDataSample = new DataSample({
   comment: 'Heart rate 1 hour mean',
   openingDate: 20220929083400,
   content: {
-    en: {
-      measureValue: {
+    en: new Content({
+      measureValue: new Measure({
         value: 72,
         unit: '{beats}/min',
         unitCodes: new Set([
           new CodingReference({ type: 'UCUM', code: '{beats}/min', version: '1.2' }),
         ]),
-      },
-    },
+      }),
+    }),
   },
 })
 //tech-doc: create children dataSample eight hour mean
@@ -48,15 +55,15 @@ const eightHourMeanDataSample = new DataSample({
   comment: 'Heart rate 8 hour mean',
   openingDate: 20220929083400,
   content: {
-    en: {
-      measureValue: {
+    en: new Content({
+      measureValue: new Measure({
         value: 63,
         unit: '{beats}/min',
         unitCodes: new Set([
           new CodingReference({ type: 'UCUM', code: '{beats}/min', version: '1.2' }),
         ]),
-      },
-    },
+      }),
+    }),
   },
 })
 //tech-doc: create children dataSample temperatures
@@ -65,7 +72,7 @@ const temperaturesDataSample = new DataSample({
   comment: 'Body temperature',
   openingDate: 20220929083400,
   content: {
-    en: {
+    en: new Content({
       // highlight-start
       timeSeries: new TimeSeries({
         samples: new Array<number>(60).map(Function.call, () =>
@@ -75,7 +82,7 @@ const temperaturesDataSample = new DataSample({
         fields: ['C°'],
       }),
       // highlight-end
-    },
+    }),
   },
 })
 //tech-doc: create heart rate datasample
@@ -89,7 +96,7 @@ const meanHeartRateDataSample = new DataSample({
   ]),
   openingDate: 20220929083400,
   content: {
-    en: {
+    en: new Content({
       compoundValue: [
         // highlight-start
         oneHourMeanDataSample,
@@ -97,7 +104,7 @@ const meanHeartRateDataSample = new DataSample({
         temperaturesDataSample,
         // highlight-end
       ],
-    },
+    }),
   },
 })
 

@@ -82,6 +82,7 @@ import 'isomorphic-fetch'
 import { medTechApi } from '@icure/medical-device-sdk'
 import { webcrypto } from 'crypto'
 import * as process from 'process'
+import { authProcessId } from '../utils/index.mjs'
 
 export const host = process.env.ICURE_URL ?? 'https://api.icure.cloud/rest/v1'
 export const username = process.env.ICURE_USER_NAME
@@ -93,6 +94,8 @@ const api = await medTechApi()
   .withUserName(username)
   .withPassword(password)
   .withCrypto(webcrypto as any)
+  .withAuthProcessByEmailId(authProcessId)
+  .withAuthProcessBySmsId(authProcessId)
   .build()
 ```
 

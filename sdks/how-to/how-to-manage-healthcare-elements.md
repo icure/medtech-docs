@@ -193,11 +193,11 @@ const yetAnotherHealthcareElement = await api.healthcareElementApi.createOrModif
   patient.id,
 )
 
-const modifiedHealthcareElement = {
+const modifiedHealthcareElement = new HealthcareElement({
   ...yetAnotherHealthcareElement,
   description: 'I can change and I can add',
   openingDate: new Date('2019-10-12').getTime(),
-}
+})
 
 const modificationResult = await api.healthcareElementApi.createOrModifyHealthcareElement(
   modifiedHealthcareElement,

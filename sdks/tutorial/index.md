@@ -80,7 +80,7 @@ Here is an example on how to do it:
 ```typescript
 const iCureUserPubKey = process.env.ICURE_USER_PUB_KEY!
 const iCureUserPrivKey = process.env.ICURE_USER_PRIV_KEY!
-await api.initUserCrypto(false, { publicKey: iCureUserPubKey, privateKey: iCureUserPrivKey })
+await api.initUserCrypto({ publicKey: iCureUserPubKey, privateKey: iCureUserPrivKey })
 ```
 For more information about this method, go to the [References: initUserCrypto](/sdks/references/classes/MedTechApi.md#initusercrypto)
 
@@ -170,13 +170,13 @@ A data sample must always be linked to a patient.
 const createdData = await api.dataSampleApi.createOrModifyDataSamplesFor(johnSnow.id, [
   new DataSample({
     labels: new Set([new CodingReference({ type: 'LOINC', code: '29463-7', version: '2' })]),
-    content: { en: { numberValue: 92.5 } },
+    content: { en: new Content({ numberValue: 92.5 }) },
     valueDate: 20220203111034,
     comment: 'Weight',
   }),
   new DataSample({
     labels: new Set([new CodingReference({ type: 'LOINC', code: '8302-2', version: '2' })]),
-    content: { en: { numberValue: 187 } },
+    content: { en: new Content({ numberValue: 187 }) },
     valueDate: 20220203111034,
     comment: 'Height',
   }),

@@ -57,7 +57,7 @@ async function initAnyMedTechApi(
       pkcs8ToJwk(hex2ua(privatekey)),
       loggedDataOwner.dataOwner,
     )
-    await api.initUserCrypto(false, { publicKey: pubKey, privateKey: privatekey })
+    await api.initUserCrypto({ publicKey: pubKey, privateKey: privatekey })
   }
   return api
 }

@@ -78,14 +78,9 @@ const anonymousMedTechApi = await new AnonymousMedTechApiBuilder()
   .withAuthProcessBySmsId(authProcessId)
   .build()
 
-const { publicKey, privateKey } = await anonymousMedTechApi.cryptoApi.RSA.generateKeyPair()
-const publicKeyHex = ua2hex(await anonymousMedTechApi.cryptoApi.RSA.exportKey(publicKey, 'spki'))
-const privateKeyHex = ua2hex(await anonymousMedTechApi.cryptoApi.RSA.exportKey(privateKey, 'pkcs8'))
-
 await anonymousMedTechApi.authenticationApi.authenticateAndAskAccessToItsExistingData(
   patientUsername,
   patientToken,
-  async () => ({ privateKey: privateKeyHex, publicKey: publicKeyHex }),
 )
 ```
 
