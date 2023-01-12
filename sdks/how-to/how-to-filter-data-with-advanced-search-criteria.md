@@ -38,6 +38,9 @@ In the following example we will get all the Patients that a Healthcare Professi
 
 <!-- file://code-samples/how-to/use-complex-search-criteria/index.mts snippet:filter patients for hcp-->
 ```typescript
+const patientsForHcpFilter = await new PatientFilter().forDataOwner(healthcarePartyId).build()
+
+const patientsForHcp = await api.patientApi.filterPatients(patientsForHcpFilter)
 ```
 
 ### Intersection Queries
@@ -45,23 +48,61 @@ In the following example we will get all the Patients that a Healthcare Professi
 You can define more complex queries by adding more parameters. The results will be the set of entities which satisfy 
 all the constraints at the same time.
 
+<!-- file://code-samples/how-to/use-complex-search-criteria/index.mts snippet:filter patients with implicit intersection filter-->
 ```typescript
+const ageGenderImplicitFilter = await new PatientFilter()
+  .forDataOwner(user.healthcarePartyId!)
+  .ofAge(42)
+  .byGenderEducationProfession("female")
+  .build()
+
+const ageGenderImplicitPatients = await api.patientApi.filterPatients(ageGenderImplicitFilter)
 ```
 
-In this case, the method will return all the patients that the hcp with id `hcpId` can access and whose age is `42`.
+In this case, the method will return all the patients that the hcp with id `hcpId` can access, whose age is `42`, and whose gender is `female`.
 You can also explicitly intersect simple filters using the `intersection()` method:
 
+<!-- file://code-samples/how-to/use-complex-search-criteria/index.mts snippet:filter patients with explicit intersection filter-->
 ```typescript
+const filterByAge = new PatientFilter()
+  .forDataOwner(user.healthcarePartyId!)
+  .ofAge(42)
+
+const filterByGenderAndAge = await new PatientFilter()
+  .forDataOwner(user.healthcarePartyId!)
+  .byGenderEducationProfession("female")
+  .intersection([filterByAge])
+  .build()
+
+const ageGenderExplicitPatients = await api.patientApi.filterPatients(filterByGenderAndAge)
 ```
+
+:::note
+
+The Data Owner Id is a mandatory parameter in filtering patients. Therefore, it must be added to all the filters of the intersection.
+
+:::
 
 ### Union Queries
 
 To apply a filter that returns entities which satisfy at least one of multiple criteria, you can use the `union()` function.
 
+<!-- file://code-samples/how-to/use-complex-search-criteria/index.mts snippet:filter patients with union filter-->
 ```typescript
+const filterFemales = new PatientFilter()
+  .forDataOwner(user.healthcarePartyId!)
+  .byGenderEducationProfession("female")
+
+const filterFemaleOrIndeterminate = await new PatientFilter()
+  .forDataOwner(user.healthcarePartyId!)
+  .byGenderEducationProfession("indeterminate")
+  .union([filterFemales])
+  .build()
+
+const unionFilterPatients = await api.patientApi.filterPatients(filterFemaleOrIndeterminate)
 ```
 
-In this case, the method will return all the patients that the hcp with id `hcpId` can access and whose age is `42` or 
+In this case, the method will return all the patients that the hcp with id `hcpId` can access and whose gender is `indeterminate` or 
 whose gender is `female`.
 
 ## Elemental Query List

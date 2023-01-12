@@ -180,7 +180,7 @@ saveSecurely(
   authenticationResult.token,
   authenticationResult.userId,
   authenticationResult.groupId,
-  authenticationResult.keyPair,
+  authenticationResult.keyPairs[0],
 )
 ```
 
@@ -192,7 +192,7 @@ const createdDataSample = await authenticatedApi.dataSampleApi.createOrModifyDat
   loggedUser.patientId,
   new DataSample({
     labels: new Set([new CodingReference({ type: 'IC-TEST', code: 'TEST' })]),
-    content: { en: { stringValue: 'Hello world' } },
+    content: { en: new Content({ stringValue: 'Hello world' }) },
     openingDate: 20220929083400,
     comment: 'This is a comment',
   }),
@@ -332,7 +332,7 @@ saveSecurely(
   authenticationResult.token,
   authenticationResult.userId,
   authenticationResult.groupId,
-  authenticationResult.keyPair,
+  authenticationResult.keyPairs[0],
 )
 ```
 
@@ -354,7 +354,9 @@ And Daenaerys may manage her data again :
 ```typescript
 const loggedUserApi = loginResult.medTechApi
 
-const foundDataSampleAfterLogin = await loggedUserApi.dataSampleApi.getDataSample(createdDataSample.id)
+const foundDataSampleAfterLogin = await loggedUserApi.dataSampleApi.getDataSample(
+  createdDataSample.id,
+)
 ```
 <details>
     <summary>Output</summary>
@@ -438,7 +440,7 @@ saveSecurely(
   authenticationResult.token,
   authenticationResult.userId,
   authenticationResult.groupId,
-  authenticationResult.keyPair,
+  authenticationResult.keyPairs[0],
 )
 ```
 
@@ -458,15 +460,19 @@ const reInstantiatedApi = await new MedTechApiBuilder()
   .withUserName(login)
   .withPassword(token)
   .withCrypto(webcrypto as any)
+  .withAuthProcessByEmailId(authProcessByEmailId)
+  .withAuthProcessBySmsId(authProcessBySmsId)
   .build()
 
-await reInstantiatedApi.initUserCrypto(false, { publicKey: pubKey, privateKey: privKey })
+await reInstantiatedApi.initUserCrypto({ publicKey: pubKey, privateKey: privKey })
 ```
 
 Daenaerys can finally manage her data again. 
 <!-- file://code-samples/how-to/authenticate-user/index.mts snippet:Get back encrypted data-->
 ```typescript
-const foundDataSampleAfterInstantiatingApi = await reInstantiatedApi.dataSampleApi.getDataSample(createdDataSample.id)
+const foundDataSampleAfterInstantiatingApi = await reInstantiatedApi.dataSampleApi.getDataSample(
+  createdDataSample.id,
+)
 ```
 
 <details>
