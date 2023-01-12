@@ -6,6 +6,7 @@ import {
   DataSample,
   CodingReference,
   medTechApi,
+  Content,
 } from '@icure/medical-device-sdk'
 import { webcrypto } from 'crypto'
 import * as process from 'process'
@@ -83,7 +84,7 @@ const authProcess = await anonymousApi.authenticationApi.startAuthentication(
   masterHcpId,
 )
 //tech-doc: STOP HERE
-
+console.log('email is', userEmail)
 const validationCode = (await getLastEmail(userEmail)).subject!
 console.log('Validation code is ', validationCode)
 
@@ -111,7 +112,7 @@ saveSecurely(
   authenticationResult.token,
   authenticationResult.userId,
   authenticationResult.groupId,
-  authenticationResult.keyPair,
+  authenticationResult.keyPairs[0],
 )
 //tech-doc: STOP HERE
 
@@ -126,7 +127,7 @@ const createdDataSample = await authenticatedApi.dataSampleApi.createOrModifyDat
   loggedUser.patientId,
   new DataSample({
     labels: new Set([new CodingReference({ type: 'IC-TEST', code: 'TEST' })]),
-    content: { en: { stringValue: 'Hello world' } },
+    content: { en: new Content({ stringValue: 'Hello world' }) },
     openingDate: 20220929083400,
     comment: 'This is a comment',
   }),
@@ -147,9 +148,11 @@ const reInstantiatedApi = await new MedTechApiBuilder()
   .withUserName(login)
   .withPassword(token)
   .withCrypto(webcrypto as any)
+  .withAuthProcessByEmailId(authProcessByEmailId)
+  .withAuthProcessBySmsId(authProcessBySmsId)
   .build()
 
-await reInstantiatedApi.initUserCrypto(false, { publicKey: pubKey, privateKey: privKey })
+await reInstantiatedApi.initUserCrypto({ publicKey: pubKey, privateKey: privKey })
 //tech-doc: STOP HERE
 
 //tech-doc: Get back encrypted data
@@ -267,7 +270,7 @@ saveSecurely(
   loginAuthResult.token,
   loginAuthResult.userId,
   loginAuthResult.groupId,
-  loginAuthResult.keyPair,
+  loginAuthResult.keyPairs[0],
 )
 
 //tech-doc: User can create new data after loosing their key
@@ -276,7 +279,7 @@ const newlyCreatedDataSample =
     foundUser.patientId,
     new DataSample({
       labels: new Set([new CodingReference({ type: 'IC-TEST', code: 'TEST' })]),
-      content: { en: { stringValue: 'Hello world' } },
+      content: { en: new Content({ stringValue: 'Hello world' }) },
       openingDate: 20220929083400,
       comment: 'This is a comment',
     }),
@@ -337,7 +340,7 @@ expect(accessBack).to.be.true //skip
 
 // Then
 const updatedApi = await medTechApi(loginAuthResult.medTechApi).build()
-await updatedApi.initUserCrypto(false, loginAuthResult.keyPair)
+await updatedApi.initUserCrypto(loginAuthResult.keyPairs[0])
 
 const previousDataSample = await updatedApi.dataSampleApi.getDataSample(createdDataSample.id!)
 expect(previousDataSample).to.not.be.undefined //skip

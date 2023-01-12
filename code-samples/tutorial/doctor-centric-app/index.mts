@@ -5,6 +5,7 @@ import {
   medTechApi,
   CodingReference,
   DataSampleFilter,
+  Content,
 } from '@icure/medical-device-sdk'
 import { initLocalStorage } from '../../utils/index.mjs'
 import { expect } from 'chai'
@@ -32,7 +33,7 @@ await api.initUserCrypto()
 //tech-doc: init user crypto with existing key
 const iCureUserPubKey = process.env.ICURE_USER_PUB_KEY!
 const iCureUserPrivKey = process.env.ICURE_USER_PRIV_KEY!
-await api.initUserCrypto(false, { publicKey: iCureUserPubKey, privateKey: iCureUserPrivKey })
+await api.initUserCrypto({ publicKey: iCureUserPubKey, privateKey: iCureUserPrivKey })
 //tech-doc: STOP HERE
 
 //tech-doc: get current user
@@ -61,13 +62,13 @@ expect(createdPatient.id).to.be.equal(johnSnow.id)
 const createdData = await api.dataSampleApi.createOrModifyDataSamplesFor(johnSnow.id, [
   new DataSample({
     labels: new Set([new CodingReference({ type: 'LOINC', code: '29463-7', version: '2' })]),
-    content: { en: { numberValue: 92.5 } },
+    content: { en: new Content({ numberValue: 92.5 }) },
     valueDate: 20220203111034,
     comment: 'Weight',
   }),
   new DataSample({
     labels: new Set([new CodingReference({ type: 'LOINC', code: '8302-2', version: '2' })]),
-    content: { en: { numberValue: 187 } },
+    content: { en: new Content({ numberValue: 187 }) },
     valueDate: 20220203111034,
     comment: 'Height',
   }),

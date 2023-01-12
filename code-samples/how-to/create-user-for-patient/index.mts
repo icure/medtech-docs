@@ -17,6 +17,7 @@ import {
   Address,
   AnonymousMedTechApiBuilder,
   CodingReference,
+  Content,
   DataSample,
   ICureRegistrationEmail,
   medTechApi,
@@ -95,7 +96,7 @@ const dataSample = api.dataSampleApi.createOrModifyDataSampleFor(
   patient.id,
   new DataSample({
     labels: new Set([new CodingReference({ type: 'IC-TEST', code: 'TEST' })]),
-    content: { en: { stringValue: 'Hello world' } },
+    content: { en: new Content({ stringValue: 'Hello world' }) },
   }),
 )
 assert(!!dataSample)
@@ -131,14 +132,9 @@ const anonymousMedTechApi = await new AnonymousMedTechApiBuilder()
   .withAuthProcessBySmsId(authProcessId)
   .build()
 
-const { publicKey, privateKey } = await anonymousMedTechApi.cryptoApi.RSA.generateKeyPair()
-const publicKeyHex = ua2hex(await anonymousMedTechApi.cryptoApi.RSA.exportKey(publicKey, 'spki'))
-const privateKeyHex = ua2hex(await anonymousMedTechApi.cryptoApi.RSA.exportKey(privateKey, 'pkcs8'))
-
 await anonymousMedTechApi.authenticationApi.authenticateAndAskAccessToItsExistingData(
   patientUsername,
   patientToken,
-  async () => ({ privateKey: privateKeyHex, publicKey: publicKeyHex }),
 )
 //tech-doc: STOP HERE
 
