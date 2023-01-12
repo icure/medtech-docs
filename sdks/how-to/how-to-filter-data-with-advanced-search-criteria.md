@@ -105,7 +105,7 @@ const unionFilterPatients = await api.patientApi.filterPatients(filterFemaleOrIn
 In this case, the method will return all the patients that the hcp with id `hcpId` can access and whose gender is `indeterminate` or 
 whose gender is `female`.
 
-## Elemental Query List
+## Base Query Methods
 
 In the following list, you will find all the simple queries for each type of entity filter.
 
