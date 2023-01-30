@@ -13,6 +13,7 @@ If the Patient already exists in the platform, the MedTech SDK provides a method
 link it to the existing Patient and then ask all the Healthcare Professionals that manage their data to share those with 
 them.  
 The following diagrams summarizes the operations performed by the different actors.  
+
 ```mermaid
 sequenceDiagram
     participant Doctor
@@ -92,6 +93,12 @@ await anonymousMedTechApi.authenticationApi.authenticateAndAskAccessToItsExistin
 The `authenticateAndAskAccessToItsExistingData` method will set up the User private and public key, it will create a 
 long-lived authentication token, and will send a Notification to all the Healthcare Professionals that have a delegation 
 for the Patient to ask access to their data.
+
+:::tip
+
+Until the doctor gives the patient access to his own data, the patient won't be able to access any encrypted medical or administrative information. However the patient will still be able to access unencrypted administrative information in his own `Patient` entity using some special methods described [here](./how-to-manage-patients#how-to-get-and-modify-your-information-as-a-patient).
+
+:::
 
 ### The Doctor Receives the Notification and Gives Back Access
 
