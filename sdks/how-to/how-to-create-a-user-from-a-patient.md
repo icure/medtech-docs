@@ -96,7 +96,7 @@ for the Patient to ask access to their data.
 
 :::tip
 
-Until the doctor gives the patient access to his own data, the patient won't be able to access any encrypted medical or administrative information. However the patient will still be able to access unencrypted administrative information in his own `Patient` entity using some special methods described [here](./how-to-manage-patients#how-to-get-and-modify-your-information-as-a-patient).
+Until the doctor gives the patient access to his own data, the patient won't be able to access any encrypted medical or administrative information. However the patient will still be able to access unencrypted administrative information in his own `Patient` entity using some special methods described [here](/sdks/how-to/how-to-manage-patients#how-to-get-and-modify-your-information-as-a-patient).
 
 :::
 
