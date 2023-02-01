@@ -60,7 +60,7 @@ Then, it is possible to invite the User using the newly created factory object a
 
 <!-- file://code-samples/how-to/create-user-for-patient/index.mts snippet:doctor invites user-->
 ```typescript
-await api.userApi.createAndInviteUser(patient, messageFactory, 3600)
+await apiAsDoctor.userApi.createAndInviteUser(patient, messageFactory, 3600)
 ```
 
 ### The User Logs in and Asks for Access
@@ -79,35 +79,124 @@ const anonymousMedTechApi = await new AnonymousMedTechApiBuilder()
   .withAuthProcessBySmsId(authProcessId)
   .build()
 
-const { publicKey, privateKey } = await anonymousMedTechApi.cryptoApi.RSA.generateKeyPair()
-const publicKeyHex = ua2hex(await anonymousMedTechApi.cryptoApi.RSA.exportKey(publicKey, 'spki'))
-const privateKeyHex = ua2hex(await anonymousMedTechApi.cryptoApi.RSA.exportKey(privateKey, 'pkcs8'))
-
-await anonymousMedTechApi.authenticationApi.authenticateAndAskAccessToItsExistingData(
+const authenticationResult = await anonymousMedTechApi.authenticationApi.authenticateAndAskAccessToItsExistingData(
   patientUsername,
   patientToken,
-  async () => ({ privateKey: privateKeyHex, publicKey: publicKeyHex }),
 )
+const apiAsPatient = authenticationResult.medTechApi
 ```
 
 The `authenticateAndAskAccessToItsExistingData` method will set up the User private and public key, it will create a 
 long-lived authentication token, and will send a Notification to all the Healthcare Professionals that have a delegation 
 for the Patient to ask access to their data.
 
-:::tip
+### The Patient has Limited Permissions Until he is Given Access to Existing Data
 
-Until the doctor gives the patient access to his own data, the patient won't be able to access any encrypted medical or administrative information. However the patient will still be able to access unencrypted administrative information in his own `Patient` entity using some special methods described [here](/sdks/how-to/how-to-manage-patients#how-to-get-and-modify-your-information-as-a-patient).
+The patient can now start using iCure, but there are still some limitations to what he can do until the doctor gives him access to the existing data.
+
+The patient can't:
+
+- access any existing data samples and health elements
+- access encrypted data in his `Patient` entity
+
+but the patient can:
+
+- create new data samples and health elements
+- share newly created medical data with his doctor
+- access and modify non-encrypted data in his `Patient` entity
+
+Initially, the patient won't be able to decrypt his own `Patient` entity, and for this reason the method 
+`PatientApi.getPatient` will fail. Instead, the patient needs to use the method `PatientApi.getPatientAndTryDecrypt` 
+which returns a `PotentiallyEncryptedPatient` which is an interface implemented by both `Patient` and 
+`EncryptedPatient`. This method will try to decrypt the retrieved `Patient`, and if not successful instead of failing 
+the method will just return the patient without decrypting it as an `EncryptedPatient`.
+
+<!-- file://code-samples/how-to/create-user-for-patient/index.mts snippet:get patient details-->
+```typescript
+const patientUser = await apiAsPatient.userApi.getLoggedUser()
+// apiAsPatient.patientApi.getPatient would fail
+const patientDetails = await apiAsPatient.patientApi.getPatientAndTryDecrypt(patientUser.patientId!)
+```
+
+It is also possible to for the patient to modify his non-encrypted data using the 
+`PatientApi.modifyPotentiallyEncryptedPatient` method. Note however that any attempt to change data which should be 
+encrypted according to the api configuration will cause a runtime error.
+
+<!-- file://code-samples/how-to/create-user-for-patient/index.mts snippet:modify patient details-->
+```typescript
+patientDetails.companyName = 'iCure'
+// patientDetails.note = 'This would make modify fail'
+const modifiedPatientDetails = await apiAsPatient.patientApi.modifyPotentiallyEncryptedPatient(patientDetails)
+```
+
+The patient can also create and share data sample and health elements as normal:
+
+<!-- file://code-samples/how-to/create-user-for-patient/index.mts snippet:create healthcare element-->
+```typescript
+const newHEByPatient = await apiAsPatient.healthcareElementApi.createOrModifyHealthcareElement(
+  new HealthcareElement({
+    description: "I don't feel so well",
+    codes: new Set([
+      new CodingReference({
+        id: 'SNOMEDCT|617|20020131',
+        type: 'SNOMEDCT',
+        code: '617',
+        version: '20020131',
+      }),
+    ]),
+    openingDate: new Date('2019-10-12').getTime(),
+  }),
+  modifiedPatientDetails.id
+)
+await apiAsPatient.healthcareElementApi.giveAccessTo(newHEByPatient, hcp.id)
+// The doctor can now access the healthcare element
+apiAsDoctor.cryptoApi.emptyHcpCache(hcp.id)
+console.log(await apiAsDoctor.healthcareElementApi.getHealthcareElement(newHEByPatient.id!)) // HealthcareElement...
+```
+
+However, if you only share the medical data the doctor will not be able to find when using filters: this is because the
+new data is created using a new secret foreign key that only the patient knows. In order to allow the doctor to find 
+this new medical data you will have to share the secret foreign key using the 
+`PatientApi.giveAccessToPotentiallyEncrypted` method.
+
+<!-- file://code-samples/how-to/create-user-for-patient/index.mts snippet:share healthcare element sfk-->
+```typescript
+const filterForHcpWithoutAccessByPatient = await new HealthcareElementFilter()
+  .forPatients(apiAsDoctor.cryptoApi, [await apiAsDoctor.patientApi.getPatient(patient.id)])
+  .forDataOwner(hcp.id)
+  .build()
+const notFoundHEs = await apiAsDoctor.healthcareElementApi.filterHealthcareElement(filterForHcpWithoutAccessByPatient)
+console.log(notFoundHEs.rows.find((x) => x.id == newHEByPatient.id)) // undefined
+// The patient shares his secret foreign key with the doctor
+await apiAsPatient.patientApi.giveAccessToPotentiallyEncrypted(modifiedPatientDetails, hcp.id)
+// The doctor can now also find the healthcare element
+const filterForHcpWithAccessByPatient = await new HealthcareElementFilter()
+  .forPatients(apiAsDoctor.cryptoApi, [await apiAsDoctor.patientApi.getPatient(patient.id)])
+  .forDataOwner(hcp.id)
+  .build()
+const foundHEs = await apiAsDoctor.healthcareElementApi.filterHealthcareElement(filterForHcpWithAccessByPatient)
+console.log(foundHEs.rows.find((x) => x.id == newHEByPatient.id)) // HealthcareElement...
+```
+
+:::note
+
+The patient needs to share his new secret foreign key with the delegate (using 
+`PatientApi.giveAccessToPotentiallyEncrypted`) only once, and after the delegate will be able to find all new medical 
+data created by the patient as long as the medical data itself has been shared with him.
+
+Multiple calls to `PatientApi.giveAccessToPotentiallyEncrypted` from the same data owner with the same patient and
+delegate will have no effect.
 
 :::
 
-### The Doctor Receives the Notification and Gives Back Access
+### The Doctor Receives the Notification and Gives Access
 
 Once the Notification is sent, on the Doctor side you can use the MedTech SDK to filter his Notifications and get the one related to 
 the new User.
 
 <!-- file://code-samples/how-to/create-user-for-patient/index.mts snippet:doctor gets pending notifications-->
 ```typescript
-const newNotifications = await api.notificationApi.getPendingNotificationsAfter()
+const newNotifications = await apiAsDoctor.notificationApi.getPendingNotificationsAfter()
 const patientNotification = newNotifications.filter(
   (notification) =>
     notification.type === NotificationTypeEnum.NEW_USER_OWN_DATA_ACCESS &&
@@ -119,7 +208,7 @@ Then, you can change the status of the Notification to signal that the operation
 
 <!-- file://code-samples/how-to/create-user-for-patient/index.mts snippet:notification set ongoing-->
 ```typescript
-const ongoingStatusUpdate = await api.notificationApi.updateNotificationStatus(
+const ongoingStatusUpdate = await apiAsDoctor.notificationApi.updateNotificationStatus(
   patientNotification,
   'ongoing',
 )
@@ -129,7 +218,7 @@ To allow the new User to access all their own data, you can use the `giveAccessT
 
 <!-- file://code-samples/how-to/create-user-for-patient/index.mts snippet:data sharing-->
 ```typescript
-const sharedData = await api.patientApi.giveAccessToAllDataOf(patient.id)
+const sharedData = await apiAsDoctor.patientApi.giveAccessToAllDataOf(patient.id)
 ```
 
 If the method runs successfully, it will return a report of all the shared objects:
@@ -155,7 +244,7 @@ Updating the status of the Notification is important, as otherwise you will risk
 
 <!-- file://code-samples/how-to/create-user-for-patient/index.mts snippet:completed status-->
 ```typescript
-const completedStatusUpdate = await api.notificationApi.updateNotificationStatus(
+const completedStatusUpdate = await apiAsDoctor.notificationApi.updateNotificationStatus(
   ongoingStatusUpdate,
   'completed',
 )

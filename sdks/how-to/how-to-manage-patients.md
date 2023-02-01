@@ -362,14 +362,18 @@ const patientIds = await api.patientApi.matchPatients(filterForMatch)
 
 ## How to get and modify your information as a patient
 
-:::note
+If you are building a "patient application", where patients can join by invitation from an HCP you may incur in a 
+problem with the decryption of the data of the `Patient` entity for the user of the application. 
 
-The features described in this section are currently available only in the dart sdk.
+This is because when the HCP invites the patient to the application he can't share any existing data with him until the
+patient logs in for the first time and creates a public key. Therefore, the patient will not be able to decrypt any 
+data, including his administrative information stored on the patient entity, and for this reason methods like 
+`getPatient` will fail.
 
-:::
+However, you can still access and modify any unencrypted data using the methods `getPatientAndTryDecrypt` and 
+`modifyPotentiallyEncryptedPatient` of the `PatientApi`. The method `getPatientAndTryDecrypt` returns a 
+`PotentiallyEncryptedPatient`, which is either a normal `Patient` if the encrypted data could be decrypted, or an 
+`EncryptedPatient` if only the unencrypted data is available. The method `modifyEncryptedPatient` instead takes in 
+input an `EncryptedPatient` and allows you to modify any non-encrypted field of the `Patient` entity.
 
-If you are building a "patient application", where patients can join by invitation from an HCP you may incur in a problem with the decryption of the data of the `Patient` entity for the user of the application. 
-
-This is because when the HCP invites the patient to the application he can't share any existing data with him until the patient logs in for the first time and creates a public key. Therefore, the patient will not be able to decrypt any data, including his administrative information stored on the patient entity, and for this reason methods like `getPatient` will fail.
-
-However, you can still access and modify any unencrypted data using the methods `getPatientAndTryDecrypt` and `modifyEncryptedPatient` of the `PatientApi`. The method `getPatientAndTryDecrypt` returns a `PotentiallyEncryptedPatient`, which is either a normal `Patient` if the encrypted data could be decrypted, or an `EncryptedPatient` if only the unencrypted data is available. The method `modifyEncryptedPatient` instead takes in input an `EncryptedPatient` and allows you to modify any non-encrypted field of the `Patient` entity.
+You can see an example on how to use these methods in the tutorial [Inviting an existing patient to become a user](/sdks/how-to/how-to-invite-existing-patient-as-a-user).
