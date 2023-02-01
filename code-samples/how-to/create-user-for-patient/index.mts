@@ -16,8 +16,8 @@ import { v4 as uuid } from 'uuid'
 import {
   Address,
   AnonymousMedTechApiBuilder,
-  CodingReference,
-  DataSample,
+  CodingReference, Content,
+  DataSample, HealthcareElement, HealthcareElementFilter,
   ICureRegistrationEmail,
   medTechApi,
   Patient,
@@ -38,7 +38,7 @@ async function getEmail(email: string): Promise<any> {
   return response
 }
 
-const api = await medTechApi()
+const apiAsDoctor = await medTechApi()
   .withICureBaseUrl(host)
   .withUserName(userName)
   .withPassword(password)
@@ -47,13 +47,13 @@ const api = await medTechApi()
   .withCrypto(webcrypto as any)
   .build()
 
-const loggedUser = await api.userApi.getLoggedUser()
-await api.cryptoApi.loadKeyPairsAsTextInBrowserLocalStorage(
+const loggedUser = await apiAsDoctor.userApi.getLoggedUser()
+await apiAsDoctor.cryptoApi.loadKeyPairsAsTextInBrowserLocalStorage(
   loggedUser.healthcarePartyId,
   hex2ua(privKey),
 )
 
-const hcp = await api.healthcareProfessionalApi.getHealthcareProfessional(
+const hcp = await apiAsDoctor.healthcareProfessionalApi.getHealthcareProfessional(
   loggedUser.healthcarePartyId,
 )
 
@@ -71,7 +71,7 @@ hcp.addresses = [
 ]
 
 const email = `${uuid().substring(0, 8)}@icure.com`
-const patient = await api.patientApi.createOrModifyPatient(
+const patient = await apiAsDoctor.patientApi.createOrModifyPatient(
   new Patient({
     firstName: 'Marc',
     lastName: 'Specter',
@@ -91,11 +91,11 @@ const patient = await api.patientApi.createOrModifyPatient(
 )
 assert(!!patient)
 
-const dataSample = api.dataSampleApi.createOrModifyDataSampleFor(
+const dataSample = apiAsDoctor.dataSampleApi.createOrModifyDataSampleFor(
   patient.id,
   new DataSample({
     labels: new Set([new CodingReference({ type: 'IC-TEST', code: 'TEST' })]),
-    content: { en: { stringValue: 'Hello world' } },
+    content: { en: new Content({ stringValue: 'Hello world' }) },
   }),
 )
 assert(!!dataSample)
@@ -110,7 +110,7 @@ const messageFactory = new ICureRegistrationEmail(
 //tech-doc: STOP HERE
 
 //tech-doc: doctor invites user
-await api.userApi.createAndInviteUser(patient, messageFactory, 3600)
+await apiAsDoctor.userApi.createAndInviteUser(patient, messageFactory, 3600)
 //tech-doc: STOP HERE
 
 const loginAndPasswordRegex = new RegExp(': ([^ &]+) & (.+)')
@@ -131,19 +131,70 @@ const anonymousMedTechApi = await new AnonymousMedTechApiBuilder()
   .withAuthProcessBySmsId(authProcessId)
   .build()
 
-const { publicKey, privateKey } = await anonymousMedTechApi.cryptoApi.RSA.generateKeyPair()
-const publicKeyHex = ua2hex(await anonymousMedTechApi.cryptoApi.RSA.exportKey(publicKey, 'spki'))
-const privateKeyHex = ua2hex(await anonymousMedTechApi.cryptoApi.RSA.exportKey(privateKey, 'pkcs8'))
-
-await anonymousMedTechApi.authenticationApi.authenticateAndAskAccessToItsExistingData(
+const authenticationResult = await anonymousMedTechApi.authenticationApi.authenticateAndAskAccessToItsExistingData(
   patientUsername,
   patientToken,
-  async () => ({ privateKey: privateKeyHex, publicKey: publicKeyHex }),
 )
+const apiAsPatient = authenticationResult.medTechApi
 //tech-doc: STOP HERE
 
+//tech-doc: get patient details
+const patientUser = await apiAsPatient.userApi.getLoggedUser()
+// apiAsPatient.patientApi.getPatient would fail
+const patientDetails = await apiAsPatient.patientApi.getPatientAndTryDecrypt(patientUser.patientId!)
+//tech-doc: STOP HERE
+
+//tech-doc: modify patient details
+patientDetails.companyName = 'iCure'
+// patientDetails.note = 'This would make modify fail'
+const modifiedPatientDetails = await apiAsPatient.patientApi.modifyPotentiallyEncryptedPatient(patientDetails)
+//tech-doc: STOP HERE
+
+//tech-doc: create healthcare element
+const newHEByPatient = await apiAsPatient.healthcareElementApi.createOrModifyHealthcareElement(
+  new HealthcareElement({
+    description: "I don't feel so well",
+    codes: new Set([
+      new CodingReference({
+        id: 'SNOMEDCT|617|20020131',
+        type: 'SNOMEDCT',
+        code: '617',
+        version: '20020131',
+      }),
+    ]),
+    openingDate: new Date('2019-10-12').getTime(),
+  }),
+  modifiedPatientDetails.id
+)
+await apiAsPatient.healthcareElementApi.giveAccessTo(newHEByPatient, hcp.id)
+// The doctor can now access the healthcare element
+apiAsDoctor.cryptoApi.emptyHcpCache(hcp.id)
+console.log(await apiAsDoctor.healthcareElementApi.getHealthcareElement(newHEByPatient.id!)) // HealthcareElement...
+//tech-doc: STOP HERE
+
+//tech-doc: share healthcare element sfk
+const filterForHcpWithoutAccessByPatient = await new HealthcareElementFilter()
+  .forPatients(apiAsDoctor.cryptoApi, [await apiAsDoctor.patientApi.getPatient(patient.id)])
+  .forDataOwner(hcp.id)
+  .build()
+const notFoundHEs = await apiAsDoctor.healthcareElementApi.filterHealthcareElement(filterForHcpWithoutAccessByPatient)
+console.log(notFoundHEs.rows.find((x) => x.id == newHEByPatient.id)) // undefined
+expect(notFoundHEs.rows.find((x) => x.id == newHEByPatient.id)).to.be.undefined //skip
+// The patient shares his secret foreign key with the doctor
+await apiAsPatient.patientApi.giveAccessToPotentiallyEncrypted(modifiedPatientDetails, hcp.id)
+// The doctor can now also find the healthcare element
+const filterForHcpWithAccessByPatient = await new HealthcareElementFilter()
+  .forPatients(apiAsDoctor.cryptoApi, [await apiAsDoctor.patientApi.getPatient(patient.id)])
+  .forDataOwner(hcp.id)
+  .build()
+const foundHEs = await apiAsDoctor.healthcareElementApi.filterHealthcareElement(filterForHcpWithAccessByPatient)
+console.log(foundHEs.rows.find((x) => x.id == newHEByPatient.id)) // HealthcareElement...
+expect(foundHEs.rows.find((x) => x.id == newHEByPatient.id)).to.not.be.undefined //skip
+//tech-doc: STOP HERE
+
+
 //tech-doc: doctor gets pending notifications
-const newNotifications = await api.notificationApi.getPendingNotificationsAfter()
+const newNotifications = await apiAsDoctor.notificationApi.getPendingNotificationsAfter()
 const patientNotification = newNotifications.filter(
   (notification) =>
     notification.type === NotificationTypeEnum.NEW_USER_OWN_DATA_ACCESS &&
@@ -153,7 +204,7 @@ const patientNotification = newNotifications.filter(
 expect(!!patientNotification).to.eq(true)
 
 //tech-doc: notification set ongoing
-const ongoingStatusUpdate = await api.notificationApi.updateNotificationStatus(
+const ongoingStatusUpdate = await apiAsDoctor.notificationApi.updateNotificationStatus(
   patientNotification,
   'ongoing',
 )
@@ -162,7 +213,7 @@ expect(!!ongoingStatusUpdate).to.eq(true)
 expect(ongoingStatusUpdate?.status).to.eq('ongoing')
 
 //tech-doc: data sharing
-const sharedData = await api.patientApi.giveAccessToAllDataOf(patient.id)
+const sharedData = await apiAsDoctor.patientApi.giveAccessToAllDataOf(patient.id)
 //tech-doc: STOP HERE
 console.log(sharedData)
 expect(!!sharedData).to.eq(true)
@@ -172,7 +223,7 @@ expect(!!sharedData.statuses.dataSamples?.error).to.eq(false)
 expect(sharedData.statuses.dataSamples?.modified).to.eq(1)
 
 //tech-doc: completed status
-const completedStatusUpdate = await api.notificationApi.updateNotificationStatus(
+const completedStatusUpdate = await apiAsDoctor.notificationApi.updateNotificationStatus(
   ongoingStatusUpdate,
   'completed',
 )
