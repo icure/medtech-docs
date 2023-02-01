@@ -16,8 +16,11 @@ import { v4 as uuid } from 'uuid'
 import {
   Address,
   AnonymousMedTechApiBuilder,
-  CodingReference, Content,
-  DataSample, HealthcareElement, HealthcareElementFilter,
+  CodingReference,
+  Content,
+  DataSample,
+  HealthcareElement,
+  HealthcareElementFilter,
   ICureRegistrationEmail,
   medTechApi,
   Patient,
