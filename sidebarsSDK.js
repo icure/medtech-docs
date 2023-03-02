@@ -37,17 +37,24 @@ const sidebarsSDK = {
                     items: [
                         { type: 'doc', label: 'Foreword', id: 'tutorial/petra/foreword' },
                         {
-                            'Chapter 1': [
+                            'Chapter 1 - Setup': [
                                 'tutorial/petra/chapter-01/prerequisites',
                                 'tutorial/petra/chapter-01/installation',
                                 'tutorial/petra/chapter-01/icure-informations',
                             ],
                         },
                         {
-                            'Chapter 2': [
+                            'Chapter 2 - Authentication': [
                                 'tutorial/petra/chapter-02/redux-and-storage',
                                 'tutorial/petra/chapter-02/register',
                                 'tutorial/petra/chapter-02/login',
+                            ],
+                        },
+                        {
+                            'Chapter 3 - DataSample': [
+                                'tutorial/petra/chapter-03/setup',
+                                'tutorial/petra/chapter-03/datasample-api',
+                                'tutorial/petra/chapter-03/calendar',
                             ],
                         },
                     ],
