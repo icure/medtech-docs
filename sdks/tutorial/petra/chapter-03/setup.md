@@ -76,3 +76,34 @@ export const currentUser = (getState: () => unknown) => {
 ```
 
 `currentUser` is a function that will return the current user from the state.
+
+## `medTechApi`
+
+```typescript title="/services/api.ts"
+//...
+export const medTechApi = async (getState: () => unknown) => {
+  const state = getState() as {medTechApi: MedTechApiState};
+  return await getApiFromState(() => state);
+};
+//...
+```
+
+`medTechApi` is a function that will return the `MedTechApi` instance from the state.
+
+## `tagsByIds` and `tagsByIdsPaginated`
+
+Those two functions are used to transform the result of a query into a list of tags used by Redux. They are used the endpoints that we will create in the next chapter.
+
+```typescript title="/utils/tags.ts"
+export const tagsByIds =
+  <TagType extends string>(tagType: TagType, listMarker?: string) =>
+  (result: {id?: string}[] | undefined) => {
+    const listMarkerTag = listMarker ? [{type: tagType, id: listMarker}] : [];
+    return result ? result.map(({id}: {id?: string}) => ({type: tagType, id})).concat(listMarkerTag) : [];
+  };
+
+export const tagsByIdsPaginated =
+  <TagType extends string>(tagType: TagType, listMarker?: string) =>
+  (result: {rows?: {id?: string}[]}) =>
+    tagsByIds(tagType, listMarker)(result?.rows ?? []);
+```
