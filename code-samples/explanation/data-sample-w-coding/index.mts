@@ -54,5 +54,5 @@ const dataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
 )
 
 //tech-doc: STOP HERE
-output({healthcareElement, dataSample})
+output({ healthcareElement, dataSample })
 expect(!!dataSample).to.eq(true) //skip

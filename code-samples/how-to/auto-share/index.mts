@@ -6,7 +6,8 @@ import {
   initLocalStorage,
   initMedTechApi,
   initMedTechApi2,
-  initPatientMedTechApi, output,
+  initPatientMedTechApi,
+  output,
 } from '../../utils/index.mjs'
 import { expect, use as chaiUse } from 'chai'
 import { CodingReference, Content, DataSample, Patient } from '@icure/medical-device-sdk'
@@ -37,9 +38,9 @@ const note = 'Winter is coming'
 const patient = await hcp1Api.patientApi.createOrModifyPatient(
   new Patient({ firstName: 'John', lastName: 'Snow', note }),
 )
-let patient1 = await hcp1Api.patientApi.getPatient(patient.id);
+const patient1 = await hcp1Api.patientApi.getPatient(patient.id)
 expect(patient1.note).to.equal(note) //skip
-let patient2 = await hcp2Api.patientApi.getPatient(patient.id);
+const patient2 = await hcp2Api.patientApi.getPatient(patient.id)
 expect(patient2.note).to.equal(note) //skip
 // hcp2 can already access patient
 const contentString = 'Hello world'
@@ -50,12 +51,12 @@ const dataSample = await hcp1Api.dataSampleApi.createOrModifyDataSampleFor(
     content: { en: new Content({ stringValue: contentString }) },
   }),
 )
-let dataSample1 = await hcp1Api.dataSampleApi.getDataSample(dataSample.id);
+const dataSample1 = await hcp1Api.dataSampleApi.getDataSample(dataSample.id)
 expect(
   //skip
   dataSample1.content['en'].stringValue, //skip
 ).to.equal(contentString) //skip
-let dataSample2 = await hcp2Api.dataSampleApi.getDataSample(dataSample.id);
+const dataSample2 = await hcp2Api.dataSampleApi.getDataSample(dataSample.id)
 expect(
   //skip
   dataSample2.content['en'].stringValue, //skip

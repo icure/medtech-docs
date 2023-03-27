@@ -7,9 +7,9 @@ export function output(dataMap: { [key: string]: any | string | Buffer }) {
     const fullPath = path.resolve(process.env['SCRIPT_ROOT'], `${destination}.txt`)
     console.log(`Writing ${fullPath}`)
     data &&
-    fs.writeFileSync(
-      `${fullPath}`,
-      data instanceof Buffer || typeof data === 'string' ? data : JSON.stringify(data, null, 2),
-    )
+      fs.writeFileSync(
+        `${fullPath}`,
+        data instanceof Buffer || typeof data === 'string' ? data : JSON.stringify(data, null, 2),
+      )
   })
 }

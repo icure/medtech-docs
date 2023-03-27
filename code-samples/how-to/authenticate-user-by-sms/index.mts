@@ -129,7 +129,6 @@ const foundPatientAfterInstantiatingApi = await reInstantiatedApi.patientApi.get
 //tech-doc: STOP HERE
 output({ foundPatientAfterInstantiatingApi })
 
-
 //tech-doc: Login by SMS
 const anonymousApiForLogin = await new AnonymousMedTechApiBuilder()
   .withICureBaseUrl(iCureUrl)
