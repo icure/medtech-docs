@@ -60,16 +60,16 @@ const newlyCreatedDataSample =
 
 ```json
 {
-  "id": "c29925a9-0710-4c5d-98d9-2016edb1fc7a",
+  "id": "127bd5e9-48b9-4e0f-8de1-b13734a28a0f",
   "qualifiedLinks": {},
-  "batchId": "791b8fab-f672-4f58-9daa-03b1adac7ce7",
+  "batchId": "816e3e57-435e-4ec6-8b42-5e947047dcaa",
   "index": 0,
-  "valueDate": 20230327164243,
+  "valueDate": 20230327142746,
   "openingDate": 20220929083400,
-  "created": 1679928163879,
-  "modified": 1679928163879,
-  "author": "311a0b38-eb54-424c-9d61-b8a190260189",
-  "responsible": "d691c3f8-1483-4be4-b66f-2b1645a71b0f",
+  "created": 1679927266338,
+  "modified": 1679927266338,
+  "author": "ebe4c24a-a717-4a79-b1a2-982db6ce96b7",
+  "responsible": "9af2ac37-edc3-4dde-b1eb-9362892f6167",
   "comment": "This is a comment",
   "identifiers": [],
   "healthcareElementIds": {},
@@ -87,15 +87,15 @@ const newlyCreatedDataSample =
   "systemMetaData": {
     "secretForeignKeys": [],
     "cryptedForeignKeys": {
-      "d691c3f8-1483-4be4-b66f-2b1645a71b0f": {},
+      "9af2ac37-edc3-4dde-b1eb-9362892f6167": {},
       "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
     },
     "delegations": {
-      "d691c3f8-1483-4be4-b66f-2b1645a71b0f": {},
+      "9af2ac37-edc3-4dde-b1eb-9362892f6167": {},
       "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
     },
     "encryptionKeys": {
-      "d691c3f8-1483-4be4-b66f-2b1645a71b0f": {},
+      "9af2ac37-edc3-4dde-b1eb-9362892f6167": {},
       "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
     }
   }
@@ -147,12 +147,12 @@ const hcpNotifications = await hcpApi.notificationApi
 ```text
 [
   {
-    "id": "7b93be7a-d7ff-4b1a-a7b3-a2e7d47d8b96",
-    "rev": "1-c345e16cadd1dcb825377b8ee70cdc15",
-    "created": 1679928162868,
-    "modified": 1679928162868,
-    "author": "311a0b38-eb54-424c-9d61-b8a190260189",
-    "responsible": "d691c3f8-1483-4be4-b66f-2b1645a71b0f",
+    "id": "ea8112f3-bd11-44c2-bd01-337ee6687317",
+    "rev": "1-a31d8937a73fd0df4a804aeb0c050b7d",
+    "created": 1679927264812,
+    "modified": 1679927264812,
+    "author": "ebe4c24a-a717-4a79-b1a2-982db6ce96b7",
+    "responsible": "9af2ac37-edc3-4dde-b1eb-9362892f6167",
     "status": "pending",
     "identifiers": [],
     "properties": [
@@ -162,7 +162,7 @@ const hcpNotifications = await hcpApi.notificationApi
           "type": "STRING"
         },
         "typedValue": {
-          "stringValue": "d691c3f8-1483-4be4-b66f-2b1645a71b0f",
+          "stringValue": "9af2ac37-edc3-4dde-b1eb-9362892f6167",
           "type": "STRING"
         }
       },
@@ -172,7 +172,7 @@ const hcpNotifications = await hcpApi.notificationApi
           "type": "STRING"
         },
         "typedValue": {
-          "stringValue": "30820122300d06092a864886f70d01010105000382010f003082010a0282010100ce96f68068e7d7d1f68efdc47e27e9029a772782692448e9b8ee7ded88014ab7dd014ac1949b72ff0a1675339520ca7a779f946dafb4e407fbfb14526600c4b6e0320091b89afef827ad5c52bc335e54f6581659af582971a5d766fce20e48efa1db573503ec4273871eeda10edd3a26c159ebe32794c2af7d62a0a5b22b78496ad35afd0a7d2a771b6f7987d03d9c6c7ebade5995d564bc67966add45fe26345e857b0168d3b85a6ff897aee1f07521882e1e31dfac3d46786e8253250d89bfebf852c4ae5ea839fe0503ce715fe011064790390020c68ab11a4a60cd7b3a855cbc596b06d066d4a664a4ed591c061a2654cc4108de4a0f21499548bbdeabf90203010001",
+          "stringValue": "30820122300d06092a864886f70d01010105000382010f003082010a0282010100b19c234107a6bff5d98f5940a8f9af44ac7078a3ecb7c9257444f615bacb260e79ca80d94c85cac601b9e98e85238a63bc6d3983787841d74b2dc6f6cac0e6e6b3369e4cca21be9f373814527ffd789219023ea9d450adba417fb2f1687e8380c1a927b4ee5222db83e93b0bb7eb875a7616afa78ebdd3956bee7ee49edd76225d506c0780e46f98998f52409dc29b09be7e3958b2efecca2d676617a42676ae7db63131c082354e2a97a67dd0fd173db6d57d88e7602d3a46f07d0f707f224305fb568388ce49125072a2f8aa757da0a996d75641eacec8bda31f3119e5c915ddd2b94493c370aee3ea648ed27e0366a2d1f7526b8eb62a6b14a3e938a35a850203010001",
           "type": "STRING"
         }
       }
@@ -182,11 +182,56 @@ const hcpNotifications = await hcpApi.notificationApi
       "secretForeignKeys": [],
       "cryptedForeignKeys": {},
       "delegations": {
-        "d691c3f8-1483-4be4-b66f-2b1645a71b0f": {},
+        "9af2ac37-edc3-4dde-b1eb-9362892f6167": {},
         "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
       },
       "encryptionKeys": {
-        "d691c3f8-1483-4be4-b66f-2b1645a71b0f": {},
+        "9af2ac37-edc3-4dde-b1eb-9362892f6167": {},
+        "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+      }
+    }
+  },
+  {
+    "id": "bf6ee14c-857c-4c87-b914-f2d12a48ebd2",
+    "rev": "1-b1ce2fe68062c96c6c5965ce671bf084",
+    "created": 1679927178323,
+    "modified": 1679927178323,
+    "author": "18373c7b-2285-4544-84bf-aef3a324c9d8",
+    "responsible": "26e0959f-775b-4572-9b40-4c60b1fda72d",
+    "status": "pending",
+    "identifiers": [],
+    "properties": [
+      {
+        "id": "dataOwnerConcernedId",
+        "type": {
+          "type": "STRING"
+        },
+        "typedValue": {
+          "stringValue": "26e0959f-775b-4572-9b40-4c60b1fda72d",
+          "type": "STRING"
+        }
+      },
+      {
+        "id": "dataOwnerConcernedPubKey",
+        "type": {
+          "type": "STRING"
+        },
+        "typedValue": {
+          "stringValue": "30820122300d06092a864886f70d01010105000382010f003082010a0282010100d3cc6ef61bcb6becfe49090bee4b0749d89fcc886537c6092e9131fcc29a55c037642a08945748515d5b64cc86bd62772777b4d35d570d60bc56adcbcf2079a90004fbd87da29415a142ba09388d5d624456ebe0738ac907667fb413ee83ed926b1ad7bc9a728fc313b8ac56bf85748502437ad78d5beca0888c3e81f86c6f3b508feb9c2556fc25d08151d576898b0a8fe47d05311b7ac0f7123f15f1dca87e35c75a726ef2aa0ee6baa408b7b4864407b5b623f03847a42463499dfb226fdb541f80ba840c4b9ebf8d49c79de791a0cb93dfeb3d562f156c0f5c239001005843a85939f06bf09212e0ec7f70ac05568a2a35fec23cb719d49f8adca7798e410203010001",
+          "type": "STRING"
+        }
+      }
+    ],
+    "type": "KEY_PAIR_UPDATE",
+    "systemMetaData": {
+      "secretForeignKeys": [],
+      "cryptedForeignKeys": {},
+      "delegations": {
+        "26e0959f-775b-4572-9b40-4c60b1fda72d": {},
+        "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+      },
+      "encryptionKeys": {
+        "26e0959f-775b-4572-9b40-4c60b1fda72d": {},
         "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
       }
     }
@@ -232,7 +277,7 @@ const accessBack = await hcpApi.dataOwnerApi.giveAccessBackTo(
     "type": "STRING"
   },
   "typedValue": {
-    "stringValue": "d691c3f8-1483-4be4-b66f-2b1645a71b0f",
+    "stringValue": "9af2ac37-edc3-4dde-b1eb-9362892f6167",
     "type": "STRING"
   }
 }
@@ -250,7 +295,7 @@ const accessBack = await hcpApi.dataOwnerApi.giveAccessBackTo(
     "type": "STRING"
   },
   "typedValue": {
-    "stringValue": "30820122300d06092a864886f70d01010105000382010f003082010a0282010100ce96f68068e7d7d1f68efdc47e27e9029a772782692448e9b8ee7ded88014ab7dd014ac1949b72ff0a1675339520ca7a779f946dafb4e407fbfb14526600c4b6e0320091b89afef827ad5c52bc335e54f6581659af582971a5d766fce20e48efa1db573503ec4273871eeda10edd3a26c159ebe32794c2af7d62a0a5b22b78496ad35afd0a7d2a771b6f7987d03d9c6c7ebade5995d564bc67966add45fe26345e857b0168d3b85a6ff897aee1f07521882e1e31dfac3d46786e8253250d89bfebf852c4ae5ea839fe0503ce715fe011064790390020c68ab11a4a60cd7b3a855cbc596b06d066d4a664a4ed591c061a2654cc4108de4a0f21499548bbdeabf90203010001",
+    "stringValue": "30820122300d06092a864886f70d01010105000382010f003082010a0282010100b19c234107a6bff5d98f5940a8f9af44ac7078a3ecb7c9257444f615bacb260e79ca80d94c85cac601b9e98e85238a63bc6d3983787841d74b2dc6f6cac0e6e6b3369e4cca21be9f373814527ffd789219023ea9d450adba417fb2f1687e8380c1a927b4ee5222db83e93b0bb7eb875a7616afa78ebdd3956bee7ee49edd76225d506c0780e46f98998f52409dc29b09be7e3958b2efecca2d676617a42676ae7db63131c082354e2a97a67dd0fd173db6d57d88e7602d3a46f07d0f707f224305fb568388ce49125072a2f8aa757da0a996d75641eacec8bda31f3119e5c915ddd2b94493c370aee3ea648ed27e0366a2d1f7526b8eb62a6b14a3e938a35a850203010001",
     "type": "STRING"
   }
 }
