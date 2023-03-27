@@ -10,7 +10,7 @@ import {
   specId,
   userName,
 } from '../../utils/index.mjs'
-import { hex2ua, sleep, ua2hex } from '@icure/api'
+import { hex2ua, sleep } from '@icure/api'
 import { assert, expect } from 'chai'
 import { v4 as uuid } from 'uuid'
 import {
@@ -28,18 +28,9 @@ import {
 } from '@icure/medical-device-sdk'
 import { webcrypto } from 'crypto'
 import { NotificationTypeEnum } from '@icure/medical-device-sdk/src/models/Notification.js'
-import axios, { Method } from 'axios'
+import { getLastEmail } from '../../utils/msgGtw.mjs'
 
 initLocalStorage()
-
-async function getEmail(email: string): Promise<any> {
-  const emailOptions = {
-    method: 'GET' as Method,
-    url: `${msgGtwUrl}/${specId}/lastEmail/${email}`,
-  }
-  const { data: response } = await axios.request(emailOptions)
-  return response
-}
 
 const apiAsDoctor = await medTechApi()
   .withICureBaseUrl(host)
@@ -67,7 +58,7 @@ hcp.addresses = [
     telecoms: [
       new Telecom({
         telecomType: 'email',
-        telecomNumber: userName,
+        telecomNumber: 'email@example.com',
       }),
     ],
   }),
@@ -117,7 +108,7 @@ await apiAsDoctor.userApi.createAndInviteUser(patient, messageFactory, 3600)
 //tech-doc: STOP HERE
 
 const loginAndPasswordRegex = new RegExp(': ([^ &]+) & (.+)')
-const emailBody = (await getEmail(email)).html
+const emailBody = (await getLastEmail(email)).html
 const loginAndPassword = loginAndPasswordRegex.exec(emailBody)
 const patientUsername = loginAndPassword[1]
 const patientToken = loginAndPassword[2]

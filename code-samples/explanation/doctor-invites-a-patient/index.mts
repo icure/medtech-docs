@@ -44,7 +44,7 @@ hcp.addresses = [
     telecoms: [
       new Telecom({
         telecomType: 'email',
-        telecomNumber: userName,
+        telecomNumber: 'test@example.com',
       }),
     ],
   }),
