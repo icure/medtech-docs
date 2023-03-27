@@ -7,7 +7,6 @@ const cwd = process.cwd()
 if (!cwd.endsWith('/code-samples')) {
   throw Error('Please run this script from the code samples directory')
 }
-
 function scanAndRunRecursively(dir: string) {
   fs.readdir(dir, (err, files) => {
     if (err) {

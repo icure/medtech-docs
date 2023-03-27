@@ -1,3 +1,4 @@
+import 'isomorphic-fetch'
 import { medTechApi } from '@icure/medical-device-sdk'
 import { host, password, userName } from '../../utils/index.mjs'
 import { webcrypto } from 'crypto'

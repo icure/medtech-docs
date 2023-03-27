@@ -6,6 +6,9 @@ import {
   DataSample,
   CodingReference,
   medTechApi,
+  Content,
+  LocalStorageImpl,
+  KeyStorageImpl,
 } from '@icure/medical-device-sdk'
 import { webcrypto } from 'crypto'
 import * as process from 'process'
@@ -91,7 +94,6 @@ console.log('Validation code is ', validationCode)
 const authenticationResult = await anonymousApi.authenticationApi.completeAuthentication(
   authProcess!,
   validationCode,
-  () => anonymousApi.generateRSAKeypair(), // Generate an RSA Keypair for the user
 )
 
 const authenticatedApi = authenticationResult.medTechApi
@@ -111,7 +113,7 @@ saveSecurely(
   authenticationResult.token,
   authenticationResult.userId,
   authenticationResult.groupId,
-  authenticationResult.keyPair,
+  authenticationResult.keyPairs[0],
 )
 //tech-doc: STOP HERE
 
@@ -126,7 +128,7 @@ const createdDataSample = await authenticatedApi.dataSampleApi.createOrModifyDat
   loggedUser.patientId,
   new DataSample({
     labels: new Set([new CodingReference({ type: 'IC-TEST', code: 'TEST' })]),
-    content: { en: { stringValue: 'Hello world' } },
+    content: { en: new Content({ stringValue: 'Hello world' }) },
     openingDate: 20220929083400,
     comment: 'This is a comment',
   }),
@@ -149,7 +151,7 @@ const reInstantiatedApi = await new MedTechApiBuilder()
   .withCrypto(webcrypto as any)
   .build()
 
-await reInstantiatedApi.initUserCrypto(false, { publicKey: pubKey, privateKey: privKey })
+await reInstantiatedApi.initUserCrypto({ publicKey: pubKey, privateKey: privKey })
 //tech-doc: STOP HERE
 
 //tech-doc: Get back encrypted data
@@ -186,15 +188,6 @@ console.log('Validation code is ', validationCodeForLogin)
 const loginResult = await anonymousApiForLogin.authenticationApi.completeAuthentication(
   authProcessLogin!,
   validationCodeForLogin,
-  () => {
-    const userInfo = getBackCredentials()
-    if (userInfo.pubKey != undefined && userInfo.privKey != undefined) {
-      return Promise.resolve({ privateKey: userInfo.privKey, publicKey: userInfo.pubKey })
-    } else {
-      // You can't find back the user's RSA Keypair: You need to generate a new one
-      return anonymousApiForLogin.generateRSAKeypair()
-    }
-  },
 )
 
 console.log(`Your new user id: ${loginResult.userId}`)
@@ -219,6 +212,10 @@ const daenaerysId = loggedUser.patientId
 const currentPatient = await loggedUserApi.patientApi.getPatient(daenaerysId)
 await loggedUserApi.patientApi.giveAccessTo(currentPatient, masterHcpId)
 await loggedUserApi.dataSampleApi.giveAccessTo(createdDataSample, masterHcpId)
+
+localStorage.removeItem(
+  `${currentPatient.id}.${currentPatient.systemMetaData.publicKey.slice(-32)}`,
+)
 
 cachedInfo['login'] = undefined
 cachedInfo['token'] = undefined
@@ -248,15 +245,6 @@ const newValidationCode = (await getLastEmail(userEmail)).subject!
 const loginAuthResult = await anonymousMedTechApi.authenticationApi.completeAuthentication(
   loginProcess!,
   newValidationCode,
-  () => {
-    const userInfo = getBackCredentials()
-    if (userInfo.pubKey != undefined && userInfo.privKey != undefined) {
-      return Promise.resolve({ privateKey: userInfo.privKey, publicKey: userInfo.pubKey })
-    } else {
-      // You can't find back the user's RSA Keypair: You need to generate a new one
-      return anonymousApiForLogin.generateRSAKeypair()
-    }
-  },
 )
 //tech-doc: STOP HERE
 
@@ -267,7 +255,7 @@ saveSecurely(
   loginAuthResult.token,
   loginAuthResult.userId,
   loginAuthResult.groupId,
-  loginAuthResult.keyPair,
+  loginAuthResult.keyPairs[0],
 )
 
 //tech-doc: User can create new data after loosing their key
@@ -276,7 +264,7 @@ const newlyCreatedDataSample =
     foundUser.patientId,
     new DataSample({
       labels: new Set([new CodingReference({ type: 'IC-TEST', code: 'TEST' })]),
-      content: { en: { stringValue: 'Hello world' } },
+      content: { en: new Content({ stringValue: 'Hello world' }) },
       openingDate: 20220929083400,
       comment: 'This is a comment',
     }),
@@ -308,7 +296,7 @@ const hcpNotifications = await hcpApi.notificationApi
   .then((notifs) => notifs.filter((notif) => notif.type === NotificationTypeEnum.KEY_PAIR_UPDATE))
 //tech-doc: STOP HERE
 
-expect(hcpNotifications.length).to.not.be.undefined
+expect(hcpNotifications.length).to.be.greaterThan(0)
 
 const daenaerysNotification = hcpNotifications.find(
   (notif) =>
@@ -337,7 +325,7 @@ expect(accessBack).to.be.true //skip
 
 // Then
 const updatedApi = await medTechApi(loginAuthResult.medTechApi).build()
-await updatedApi.initUserCrypto(false, loginAuthResult.keyPair)
+await updatedApi.initUserCrypto(loginAuthResult.keyPairs[0])
 
 const previousDataSample = await updatedApi.dataSampleApi.getDataSample(createdDataSample.id!)
 expect(previousDataSample).to.not.be.undefined //skip

@@ -10,7 +10,7 @@ import {
   specId,
   userName,
 } from '../../utils/index.mjs'
-import { hex2ua, sleep, ua2hex } from '@icure/api'
+import { hex2ua, sleep } from '@icure/api'
 import { assert, expect } from 'chai'
 import { v4 as uuid } from 'uuid'
 import {
@@ -28,18 +28,9 @@ import {
 } from '@icure/medical-device-sdk'
 import { webcrypto } from 'crypto'
 import { NotificationTypeEnum } from '@icure/medical-device-sdk/src/models/Notification.js'
-import axios, { Method } from 'axios'
+import { getLastEmail } from '../../utils/msgGtw.mjs'
 
 initLocalStorage()
-
-async function getEmail(email: string): Promise<any> {
-  const emailOptions = {
-    method: 'GET' as Method,
-    url: `${msgGtwUrl}/${specId}/lastEmail/${email}`,
-  }
-  const { data: response } = await axios.request(emailOptions)
-  return response
-}
 
 const apiAsDoctor = await medTechApi()
   .withICureBaseUrl(host)
@@ -67,7 +58,7 @@ hcp.addresses = [
     telecoms: [
       new Telecom({
         telecomType: 'email',
-        telecomNumber: userName,
+        telecomNumber: 'email@example.com',
       }),
     ],
   }),
@@ -117,7 +108,7 @@ await apiAsDoctor.userApi.createAndInviteUser(patient, messageFactory, 3600)
 //tech-doc: STOP HERE
 
 const loginAndPasswordRegex = new RegExp(': ([^ &]+) & (.+)')
-const emailBody = (await getEmail(email)).html
+const emailBody = (await getLastEmail(email)).html
 const loginAndPassword = loginAndPasswordRegex.exec(emailBody)
 const patientUsername = loginAndPassword[1]
 const patientToken = loginAndPassword[2]
@@ -134,10 +125,11 @@ const anonymousMedTechApi = await new AnonymousMedTechApiBuilder()
   .withAuthProcessBySmsId(authProcessId)
   .build()
 
-const authenticationResult = await anonymousMedTechApi.authenticationApi.authenticateAndAskAccessToItsExistingData(
-  patientUsername,
-  patientToken,
-)
+const authenticationResult =
+  await anonymousMedTechApi.authenticationApi.authenticateAndAskAccessToItsExistingData(
+    patientUsername,
+    patientToken,
+  )
 const apiAsPatient = authenticationResult.medTechApi
 //tech-doc: STOP HERE
 
@@ -150,7 +142,9 @@ const patientDetails = await apiAsPatient.patientApi.getPatientAndTryDecrypt(pat
 //tech-doc: modify patient details
 patientDetails.companyName = 'iCure'
 // patientDetails.note = 'This would make modify fail'
-const modifiedPatientDetails = await apiAsPatient.patientApi.modifyPotentiallyEncryptedPatient(patientDetails)
+const modifiedPatientDetails = await apiAsPatient.patientApi.modifyPotentiallyEncryptedPatient(
+  patientDetails,
+)
 //tech-doc: STOP HERE
 
 //tech-doc: create healthcare element
@@ -167,7 +161,7 @@ const newHEByPatient = await apiAsPatient.healthcareElementApi.createOrModifyHea
     ]),
     openingDate: new Date('2019-10-12').getTime(),
   }),
-  modifiedPatientDetails.id
+  modifiedPatientDetails.id,
 )
 await apiAsPatient.healthcareElementApi.giveAccessTo(newHEByPatient, hcp.id)
 // The doctor can now access the healthcare element
@@ -180,7 +174,9 @@ const filterForHcpWithoutAccessByPatient = await new HealthcareElementFilter()
   .forPatients(apiAsDoctor.cryptoApi, [await apiAsDoctor.patientApi.getPatient(patient.id)])
   .forDataOwner(hcp.id)
   .build()
-const notFoundHEs = await apiAsDoctor.healthcareElementApi.filterHealthcareElement(filterForHcpWithoutAccessByPatient)
+const notFoundHEs = await apiAsDoctor.healthcareElementApi.filterHealthcareElement(
+  filterForHcpWithoutAccessByPatient,
+)
 console.log(notFoundHEs.rows.find((x) => x.id == newHEByPatient.id)) // undefined
 expect(notFoundHEs.rows.find((x) => x.id == newHEByPatient.id)).to.be.undefined //skip
 // The patient shares his secret foreign key with the doctor
@@ -190,11 +186,12 @@ const filterForHcpWithAccessByPatient = await new HealthcareElementFilter()
   .forPatients(apiAsDoctor.cryptoApi, [await apiAsDoctor.patientApi.getPatient(patient.id)])
   .forDataOwner(hcp.id)
   .build()
-const foundHEs = await apiAsDoctor.healthcareElementApi.filterHealthcareElement(filterForHcpWithAccessByPatient)
+const foundHEs = await apiAsDoctor.healthcareElementApi.filterHealthcareElement(
+  filterForHcpWithAccessByPatient,
+)
 console.log(foundHEs.rows.find((x) => x.id == newHEByPatient.id)) // HealthcareElement...
 expect(foundHEs.rows.find((x) => x.id == newHEByPatient.id)).to.not.be.undefined //skip
 //tech-doc: STOP HERE
-
 
 //tech-doc: doctor gets pending notifications
 const newNotifications = await apiAsDoctor.notificationApi.getPendingNotificationsAfter()

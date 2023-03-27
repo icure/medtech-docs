@@ -50,8 +50,8 @@ const masterHcpId = masterHcpApi.dataOwnerApi.getDataOwnerIdOf(masterUser)
 const iCureUrl = process.env.ICURE_URL
 const msgGtwUrl = process.env.ICURE_MSG_GTW_URL
 const specId = process.env.SPEC_ID
-const authProcessByEmailId = process.env.AUTH_BY_EMAIL_PROCESS_ID
-const authProcessBySmsId = process.env.AUTH_BY_SMS_PROCESS_ID
+const authProcessByEmailId = process.env.AUTH_BY_EMAIL_HCP_PROCESS_ID
+const authProcessBySmsId = process.env.AUTH_BY_SMS_HCP_PROCESS_ID
 const recaptcha = process.env.RECAPTCHA
 
 const anonymousApi = await new AnonymousMedTechApiBuilder()
@@ -76,13 +76,12 @@ const authProcess = await anonymousApi.authenticationApi.startAuthentication(
 //tech-doc: STOP HERE
 
 const validationCode = (await getLastSMS(userPhoneNumber)).message!
-console.log('SMS Validation code is ', validationCode)
+console.log('SMS Validation code for number', userPhoneNumber, ' is ', validationCode)
 
 //tech-doc: Complete authentication process
 const authenticationResult = await anonymousApi.authenticationApi.completeAuthentication(
   authProcess!,
   validationCode,
-  () => anonymousApi.generateRSAKeypair(), // Generate an RSA Keypair for the user
 )
 
 const authenticatedApi = authenticationResult.medTechApi
@@ -94,7 +93,7 @@ saveSecurely(
   authenticationResult.token,
   authenticationResult.userId,
   authenticationResult.groupId,
-  authenticationResult.keyPair,
+  authenticationResult.keyPairs[0],
 )
 
 const createdPatient = await authenticatedApi.patientApi.createOrModifyPatient(
@@ -121,7 +120,7 @@ const reInstantiatedApi = await new MedTechApiBuilder()
   .withCrypto(webcrypto as any)
   .build()
 
-await reInstantiatedApi.initUserCrypto(false, { publicKey: pubKey, privateKey: privKey })
+await reInstantiatedApi.initUserCrypto({ publicKey: pubKey, privateKey: privKey })
 
 const foundPatientAfterInstantiatingApi = await reInstantiatedApi.patientApi.getPatient(
   createdPatient.id,
@@ -157,15 +156,6 @@ console.log('SMS Validation code is ', validationCodeForLogin)
 const loginResult = await anonymousApiForLogin.authenticationApi.completeAuthentication(
   authProcessLogin!,
   validationCodeForLogin,
-  () => {
-    const userInfo = getBackCredentials()
-    if (userInfo.pubKey != undefined && userInfo.privKey != undefined) {
-      return Promise.resolve({ privateKey: userInfo.privKey, publicKey: userInfo.pubKey })
-    } else {
-      // You can't find back the user's RSA Keypair: You need to generate a new one
-      return anonymousApiForLogin.generateRSAKeypair()
-    }
-  },
 )
 
 const loggedUserApi = loginResult.medTechApi

@@ -3,54 +3,24 @@ import {
   CodingReference,
   HealthcareElement,
   HealthcareElementFilter,
-  medTechApi,
   Patient,
 } from '@icure/medical-device-sdk'
-import { webcrypto } from 'crypto'
-import { hex2ua } from '@icure/api'
-import { LocalStorage } from 'node-localstorage'
 import {
-  host,
-  password,
   patientId,
-  privKey,
-  userName,
-  patientUserName,
-  patientPassword,
-  patientPrivKey,
+  initLocalStorage,
+  initMedTechApi,
+  initPatientMedTechApi,
 } from '../../utils/index.mjs'
-import os from 'os'
 import { expect } from 'chai'
 
-const tmp = os.tmpdir()
-;(global as any).localStorage = new LocalStorage(tmp, 5 * 1024 ** 3)
-;(global as any).Storage = ''
+initLocalStorage()
 
-const patientApi = await medTechApi()
-  .withICureBaseUrl(host)
-  .withUserName(patientUserName)
-  .withPassword(patientPassword)
-  .withCrypto(webcrypto as any)
-  .build()
-
-const patientUser = await patientApi.userApi.getLoggedUser()
-await patientApi.cryptoApi.loadKeyPairsAsTextInBrowserLocalStorage(
-  patientUser.healthcarePartyId ?? patientUser.patientId ?? patientUser.deviceId,
-  hex2ua(patientPrivKey),
-)
-
-const api = await medTechApi()
-  .withICureBaseUrl(host)
-  .withUserName(userName)
-  .withPassword(password)
-  .withCrypto(webcrypto as any)
-  .build()
-
+const api = await initMedTechApi(true)
 const user = await api.userApi.getLoggedUser()
-await api.cryptoApi.loadKeyPairsAsTextInBrowserLocalStorage(
-  user.healthcarePartyId ?? user.patientId ?? user.deviceId,
-  hex2ua(privKey),
-)
+
+const patientApi = await initPatientMedTechApi(true)
+const tmpPatient = await patientApi.patientApi.getPatient(patientId)
+await patientApi.patientApi.giveAccessTo(tmpPatient, user.healthcarePartyId!)
 
 const patient = await api.patientApi.getPatient(patientId)
 
@@ -167,11 +137,11 @@ const yetAnotherHealthcareElement = await api.healthcareElementApi.createOrModif
   patient.id,
 )
 
-const modifiedHealthcareElement = {
+const modifiedHealthcareElement = new HealthcareElement({
   ...yetAnotherHealthcareElement,
   description: 'I can change and I can add',
   openingDate: new Date('2019-10-12').getTime(),
-}
+})
 
 const modificationResult = await api.healthcareElementApi.createOrModifyHealthcareElement(
   modifiedHealthcareElement,
@@ -220,18 +190,21 @@ const healthcareElementsSecondPage = await api.healthcareElementApi.filterHealth
   10,
 )
 //tech-doc: STOP HERE
+expect(healthcareElementsSecondPage).not.to.be.undefined
 
 //tech-doc: use HE match method
 const healthcareElementsIdList = await api.healthcareElementApi.matchHealthcareElement(
   healthcareElementFilter,
 )
 //tech-doc: STOP HERE
+expect(healthcareElementsIdList).not.to.be.undefined
 
 //tech-doc: use by patient method
 const healthcareElementsForPatient = await api.healthcareElementApi.getHealthcareElementsForPatient(
   existingPatient,
 )
 //tech-doc: STOP HERE
+expect(healthcareElementsForPatient).not.to.be.undefined
 
 //tech-doc: delete a HE as data owner
 const healthcareElementToDelete = await api.healthcareElementApi.createOrModifyHealthcareElement(
@@ -245,3 +218,4 @@ const deletedHealthcareElement = await api.healthcareElementApi.deleteHealthcare
   healthcareElementToDelete.id,
 )
 //tech-doc: STOP HERE
+expect(deletedHealthcareElement).not.to.be.undefined
