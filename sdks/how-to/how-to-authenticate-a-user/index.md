@@ -111,15 +111,6 @@ const authProcess = await anonymousApi.authenticationApi.startAuthentication(
 ```
 <!-- output://code-samples/how-to/authenticate-user/authProcess.txt -->
 <details>
-    <summary>authProcess</summary>
-    
-```json
-{
-  "requestId": "224e9811-334a-4d2c-aac5-0003e108a02c",
-  "login": "nlrmairr8-dt@got.com",
-  "bypassTokenCheck": false
-}
-```
 </details>
 
 As an output, you receive an `AuthenticationProcess` object, which you will need for next steps of the procedure.
@@ -161,6 +152,7 @@ service `anonymousMedTechApi.generateRSAKeypair()`
 const authenticationResult = await anonymousApi.authenticationApi.completeAuthentication(
   authProcess!,
   validationCode,
+  () => anonymousApi.generateRSAKeypair(), // Generate an RSA Keypair for the user
 )
 
 const authenticatedApi = authenticationResult.medTechApi
@@ -190,7 +182,7 @@ saveSecurely(
   authenticationResult.token,
   authenticationResult.userId,
   authenticationResult.groupId,
-  authenticationResult.keyPairs[0],
+  authenticationResult.keyPair,
 )
 ```
 
@@ -202,63 +194,73 @@ const createdDataSample = await authenticatedApi.dataSampleApi.createOrModifyDat
   loggedUser.patientId,
   new DataSample({
     labels: new Set([new CodingReference({ type: 'IC-TEST', code: 'TEST' })]),
-    content: { en: new Content({ stringValue: 'Hello world' }) },
+    content: { en: { stringValue: 'Hello world' } },
     openingDate: 20220929083400,
     comment: 'This is a comment',
   }),
 )
 ```
-<!-- output://code-samples/how-to/authenticate-user/createdDataSample.txt -->
+
 <details>
-    <summary>createdDataSample</summary>
-    
+    <summary>Output</summary>
+
 ```json
 {
-  "id": "280cc233-67d9-4a66-bce0-ef4794d89e7d",
-  "qualifiedLinks": {},
-  "batchId": "07e3ab1d-f659-4b28-9361-cc0a2e3fada7",
-  "index": 0,
-  "valueDate": 20230327112539,
-  "openingDate": 20220929083400,
-  "created": 1679916339812,
-  "modified": 1679916339811,
-  "author": "b635650e-1194-40df-a9ec-b663230f2de4",
-  "responsible": "04091e5c-f02d-46a2-8deb-347b38fe1cef",
-  "comment": "This is a comment",
+  "id": "48e571a0-ac5f-47b3-8e25-16f5e78b50c9",
   "identifiers": [],
-  "healthcareElementIds": {},
-  "canvasesIds": {},
-  "content": {
-    "en": {
-      "stringValue": "Hello world",
-      "compoundValue": [],
-      "ratio": [],
-      "range": []
-    }
-  },
-  "codes": {},
   "labels": {},
+  "codes": {},
+  "names": [
+    {
+      "firstNames": [
+        "John"
+      ],
+      "prefix": [],
+      "suffix": [],
+      "lastName": "Snow",
+      "text": "Snow John",
+      "use": "official"
+    }
+  ],
+  "languages": [],
+  "addresses": [],
+  "mergedIds": {},
+  "active": true,
+  "deactivationReason": "none",
+  "partnerships": [],
+  "patientHealthCareParties": [],
+  "patientProfessions": [],
+  "parameters": {},
+  "properties": {},
+  "rev": "1-8e3ad0d7e3179188dcd95f186f78b68d",
+  "created": 1664552695128,
+  "modified": 1664552695128,
+  "author": "3363719b-579e-4640-ac62-13e608e69395",
+  "responsible": "d6c8dbc7-eaa8-4c95-b9b3-920fb70ce59b",
+  "firstName": "John",
+  "lastName": "Snow",
+  "gender": "male",
+  "birthSex": "unknown",
+  "personalStatus": "unknown",
+  "note": "Winter is coming",
   "systemMetaData": {
-    "secretForeignKeys": [
-      "11393179-38c3-4425-a4d9-81f8898d03b4"
-    ],
-    "cryptedForeignKeys": {
-      "04091e5c-f02d-46a2-8deb-347b38fe1cef": {},
-      "669c7342-1338-4885-ae00-1841798259bf": {}
-    },
+    "hcPartyKeys": {},
+    "privateKeyShamirPartitions": {},
+    "secretForeignKeys": [],
+    "cryptedForeignKeys": {},
     "delegations": {
-      "04091e5c-f02d-46a2-8deb-347b38fe1cef": {},
-      "669c7342-1338-4885-ae00-1841798259bf": {}
+      "d6c8dbc7-eaa8-4c95-b9b3-920fb70ce59b": {}
     },
     "encryptionKeys": {
-      "04091e5c-f02d-46a2-8deb-347b38fe1cef": {},
-      "669c7342-1338-4885-ae00-1841798259bf": {}
-    }
+      "d6c8dbc7-eaa8-4c95-b9b3-920fb70ce59b": {}
+    },
+    "aesExchangeKeys": {},
+    "transferKeys": {}
   }
 }
 ```
-</details>
 
+</details>
 
 But what do you have to do when the authentication token of Daenaerys expires and she needs to login again?
 
@@ -285,6 +287,15 @@ const authProcessLogin = await anonymousApiForLogin.authenticationApi.startAuthe
 )
 ```
 
+<details>
+    <summary>Output</summary>
+
+```json
+
+```
+
+</details>
+
 Daenaerys then receives a new validation code by email.
 
 Since you already created an RSA keypair for her, you just need to retrieve it from where you stored it previously
@@ -295,6 +306,15 @@ and provide it to the `completeAuthentication` method.
 const loginResult = await anonymousApiForLogin.authenticationApi.completeAuthentication(
   authProcessLogin!,
   validationCodeForLogin,
+  () => {
+    const userInfo = getBackCredentials()
+    if (userInfo.pubKey != undefined && userInfo.privKey != undefined) {
+      return Promise.resolve({ privateKey: userInfo.privKey, publicKey: userInfo.pubKey })
+    } else {
+      // You can't find back the user's RSA Keypair: You need to generate a new one
+      return anonymousApiForLogin.generateRSAKeypair()
+    }
+  },
 )
 
 console.log(`Your new user id: ${loginResult.userId}`)
@@ -314,7 +334,7 @@ saveSecurely(
   authenticationResult.token,
   authenticationResult.userId,
   authenticationResult.groupId,
-  authenticationResult.keyPairs[0],
+  authenticationResult.keyPair,
 )
 ```
 
@@ -336,61 +356,68 @@ And Daenaerys may manage her data again :
 ```typescript
 const loggedUserApi = loginResult.medTechApi
 
-const foundDataSampleAfterLogin = await loggedUserApi.dataSampleApi.getDataSample(
-  createdDataSample.id,
-)
+const foundDataSampleAfterLogin = await loggedUserApi.dataSampleApi.getDataSample(createdDataSample.id)
 ```
-<!-- output://code-samples/how-to/authenticate-user/foundDataSampleAfterLogin.txt -->
 <details>
-    <summary>foundDataSampleAfterLogin</summary>
-    
+    <summary>Output</summary>
+
 ```json
 {
-  "id": "280cc233-67d9-4a66-bce0-ef4794d89e7d",
-  "qualifiedLinks": {},
-  "batchId": "07e3ab1d-f659-4b28-9361-cc0a2e3fada7",
-  "index": 0,
-  "valueDate": 20230327112539,
-  "openingDate": 20220929083400,
-  "created": 1679916339812,
-  "modified": 1679916339811,
-  "author": "b635650e-1194-40df-a9ec-b663230f2de4",
-  "responsible": "04091e5c-f02d-46a2-8deb-347b38fe1cef",
-  "comment": "This is a comment",
+  "id": "48e571a0-ac5f-47b3-8e25-16f5e78b50c9",
   "identifiers": [],
-  "healthcareElementIds": {},
-  "canvasesIds": {},
-  "content": {
-    "en": {
-      "stringValue": "Hello world",
-      "compoundValue": [],
-      "ratio": [],
-      "range": []
-    }
-  },
-  "codes": {},
   "labels": {},
+  "codes": {},
+  "names": [
+    {
+      "firstNames": [
+        "John"
+      ],
+      "prefix": [],
+      "suffix": [],
+      "lastName": "Snow",
+      "text": "Snow John",
+      "use": "official"
+    }
+  ],
+  "languages": [],
+  "addresses": [],
+  "mergedIds": {},
+  "active": true,
+  "deactivationReason": "none",
+  "partnerships": [],
+  "patientHealthCareParties": [],
+  "patientProfessions": [],
+  "parameters": {},
+  "properties": {},
+  "rev": "1-8e3ad0d7e3179188dcd95f186f78b68d",
+  "created": 1664552695128,
+  "modified": 1664552695128,
+  "author": "3363719b-579e-4640-ac62-13e608e69395",
+  "responsible": "d6c8dbc7-eaa8-4c95-b9b3-920fb70ce59b",
+  "firstName": "John",
+  "lastName": "Snow",
+  "gender": "male",
+  "birthSex": "unknown",
+  "personalStatus": "unknown",
+  "note": "Winter is coming",
   "systemMetaData": {
-    "secretForeignKeys": [
-      "11393179-38c3-4425-a4d9-81f8898d03b4"
-    ],
-    "cryptedForeignKeys": {
-      "04091e5c-f02d-46a2-8deb-347b38fe1cef": {},
-      "669c7342-1338-4885-ae00-1841798259bf": {}
-    },
+    "hcPartyKeys": {},
+    "privateKeyShamirPartitions": {},
+    "secretForeignKeys": [],
+    "cryptedForeignKeys": {},
     "delegations": {
-      "04091e5c-f02d-46a2-8deb-347b38fe1cef": {},
-      "669c7342-1338-4885-ae00-1841798259bf": {}
+      "d6c8dbc7-eaa8-4c95-b9b3-920fb70ce59b": {}
     },
     "encryptionKeys": {
-      "04091e5c-f02d-46a2-8deb-347b38fe1cef": {},
-      "669c7342-1338-4885-ae00-1841798259bf": {}
-    }
+      "d6c8dbc7-eaa8-4c95-b9b3-920fb70ce59b": {}
+    },
+    "aesExchangeKeys": {},
+    "transferKeys": {}
   }
 }
 ```
-</details>
 
+</details>
 
 The last thing you need to know is what to do when Daenaerys credentials are still valid: if you saved
 the result from the login (or registration) process, the token may still be valid the next time Daenaerys
@@ -413,7 +440,7 @@ saveSecurely(
   authenticationResult.token,
   authenticationResult.userId,
   authenticationResult.groupId,
-  authenticationResult.keyPairs[0],
+  authenticationResult.keyPair,
 )
 ```
 
@@ -435,68 +462,75 @@ const reInstantiatedApi = await new MedTechApiBuilder()
   .withCrypto(webcrypto as any)
   .build()
 
-await reInstantiatedApi.initUserCrypto({ publicKey: pubKey, privateKey: privKey })
+await reInstantiatedApi.initUserCrypto(false, { publicKey: pubKey, privateKey: privKey })
 ```
 
 Daenaerys can finally manage her data again. 
 <!-- file://code-samples/how-to/authenticate-user/index.mts snippet:Get back encrypted data-->
 ```typescript
-const foundDataSampleAfterInstantiatingApi = await reInstantiatedApi.dataSampleApi.getDataSample(
-  createdDataSample.id,
-)
+const foundDataSampleAfterInstantiatingApi = await reInstantiatedApi.dataSampleApi.getDataSample(createdDataSample.id)
 ```
 
-<!-- output://code-samples/how-to/authenticate-user/foundDataSampleAfterInstantiatingApi.txt -->
 <details>
-    <summary>foundDataSampleAfterInstantiatingApi</summary>
-    
+    <summary>Output</summary>
+
 ```json
 {
-  "id": "280cc233-67d9-4a66-bce0-ef4794d89e7d",
-  "qualifiedLinks": {},
-  "batchId": "07e3ab1d-f659-4b28-9361-cc0a2e3fada7",
-  "index": 0,
-  "valueDate": 20230327112539,
-  "openingDate": 20220929083400,
-  "created": 1679916339812,
-  "modified": 1679916339811,
-  "author": "b635650e-1194-40df-a9ec-b663230f2de4",
-  "responsible": "04091e5c-f02d-46a2-8deb-347b38fe1cef",
-  "comment": "This is a comment",
+  "id": "48e571a0-ac5f-47b3-8e25-16f5e78b50c9",
   "identifiers": [],
-  "healthcareElementIds": {},
-  "canvasesIds": {},
-  "content": {
-    "en": {
-      "stringValue": "Hello world",
-      "compoundValue": [],
-      "ratio": [],
-      "range": []
-    }
-  },
-  "codes": {},
   "labels": {},
+  "codes": {},
+  "names": [
+    {
+      "firstNames": [
+        "John"
+      ],
+      "prefix": [],
+      "suffix": [],
+      "lastName": "Snow",
+      "text": "Snow John",
+      "use": "official"
+    }
+  ],
+  "languages": [],
+  "addresses": [],
+  "mergedIds": {},
+  "active": true,
+  "deactivationReason": "none",
+  "partnerships": [],
+  "patientHealthCareParties": [],
+  "patientProfessions": [],
+  "parameters": {},
+  "properties": {},
+  "rev": "1-8e3ad0d7e3179188dcd95f186f78b68d",
+  "created": 1664552695128,
+  "modified": 1664552695128,
+  "author": "3363719b-579e-4640-ac62-13e608e69395",
+  "responsible": "d6c8dbc7-eaa8-4c95-b9b3-920fb70ce59b",
+  "firstName": "John",
+  "lastName": "Snow",
+  "gender": "male",
+  "birthSex": "unknown",
+  "personalStatus": "unknown",
+  "note": "Winter is coming",
   "systemMetaData": {
-    "secretForeignKeys": [
-      "11393179-38c3-4425-a4d9-81f8898d03b4"
-    ],
-    "cryptedForeignKeys": {
-      "04091e5c-f02d-46a2-8deb-347b38fe1cef": {},
-      "669c7342-1338-4885-ae00-1841798259bf": {}
-    },
+    "hcPartyKeys": {},
+    "privateKeyShamirPartitions": {},
+    "secretForeignKeys": [],
+    "cryptedForeignKeys": {},
     "delegations": {
-      "04091e5c-f02d-46a2-8deb-347b38fe1cef": {},
-      "669c7342-1338-4885-ae00-1841798259bf": {}
+      "d6c8dbc7-eaa8-4c95-b9b3-920fb70ce59b": {}
     },
     "encryptionKeys": {
-      "04091e5c-f02d-46a2-8deb-347b38fe1cef": {},
-      "669c7342-1338-4885-ae00-1841798259bf": {}
-    }
+      "d6c8dbc7-eaa8-4c95-b9b3-920fb70ce59b": {}
+    },
+    "aesExchangeKeys": {},
+    "transferKeys": {}
   }
 }
 ```
-</details>
 
+</details>
 
 
 ## What's next? 

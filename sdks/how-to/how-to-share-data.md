@@ -94,7 +94,6 @@ const healthcareElement = await hcp1Api.healthcareElementApi.createOrModifyHealt
   }),
   patient.id,
 )
-expect(
 // hcp1 shares `healthcareElement` with p
 await hcp1Api.healthcareElementApi.giveAccessTo(
   healthcareElement,
@@ -126,12 +125,11 @@ const dataSample = await pApi.dataSampleApi.createOrModifyDataSampleFor(
   patient.id,
   new DataSample({
     labels: new Set([new CodingReference({ type: 'IC-TEST', code: 'TEST' })]),
-    content: { en: new Content({ stringValue: contentString }) },
+    content: { en: { stringValue: contentString } },
     openingDate: 20220929083400,
     comment: 'This is a comment',
   }),
 )
-expect((await pApi.dataSampleApi.getDataSample(dataSample.id)).content['en'].stringValue).to.equal(
 // p shares the data sample with hcp1
 await pApi.dataSampleApi.giveAccessTo(dataSample, pApi.dataOwnerApi.getDataOwnerIdOf(hcp1User))
 // hcp1 shares the data sample with hcp2

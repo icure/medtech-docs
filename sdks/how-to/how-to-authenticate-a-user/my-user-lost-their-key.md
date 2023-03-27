@@ -36,6 +36,15 @@ a new RSA Keypair in case you can't find it back :
 const loginAuthResult = await anonymousMedTechApi.authenticationApi.completeAuthentication(
   loginProcess!,
   newValidationCode,
+  () => {
+    const userInfo = getBackCredentials()
+    if (userInfo.pubKey != undefined && userInfo.privKey != undefined) {
+      return Promise.resolve({ privateKey: userInfo.privKey, publicKey: userInfo.pubKey })
+    } else {
+      // You can't find back the user's RSA Keypair: You need to generate a new one
+      return anonymousApiForLogin.generateRSAKeypair()
+    }
+  }
 )
 ```
 
@@ -43,16 +52,15 @@ At this stage, Daenaerys will be able to create new data, using her new RSA keyp
 
 <!-- file://code-samples/how-to/authenticate-user/index.mts snippet:User can create new data after loosing their key-->
 ```typescript
-const newlyCreatedDataSample =
-  await loginAuthResult.medTechApi.dataSampleApi.createOrModifyDataSampleFor(
-    foundUser.patientId,
-    new DataSample({
-      labels: new Set([new CodingReference({ type: 'IC-TEST', code: 'TEST' })]),
-      content: { en: new Content({ stringValue: 'Hello world' }) },
-      openingDate: 20220929083400,
-      comment: 'This is a comment',
-    }),
-  )
+const newlyCreatedDataSample = await loginAuthResult.medTechApi.dataSampleApi.createOrModifyDataSampleFor(
+  foundUser.patientId,
+  new DataSample({
+    labels: new Set([new CodingReference({ type: 'IC-TEST', code: 'TEST' })]),
+    content: { en: { stringValue: 'Hello world' } },
+    openingDate: 20220929083400,
+    comment: 'This is a comment',
+  }),
+)
 ```
 
 However, she still won't be able to access the data she created with her previous key.
@@ -87,8 +95,7 @@ The ones that are interesting us here are the notifications related to updated k
 
 <!-- file://code-samples/how-to/authenticate-user/index.mts snippet:Data owner gets all their pending notifications-->
 ```typescript
-const hcpNotifications = await hcpApi.notificationApi
-  .getPendingNotificationsAfter(startTimestamp)
+const hcpNotifications = await hcpApi.notificationApi.getPendingNotificationsAfter(startTimestamp)
   .then((notifs) => notifs.filter((notif) => notif.type === NotificationTypeEnum.KEY_PAIR_UPDATE))
 ```
 
@@ -106,16 +113,12 @@ Let's say Jorah decides to give Daenaerys access back to her previous data using
 
 <!-- file://code-samples/how-to/authenticate-user/index.mts snippet:Give access back to a user with their new key-->
 ```typescript
-const daenaerysPatientId = daenaerysNotification!.properties?.find(
-  (prop) => prop.id == 'dataOwnerConcernedId',
-)
-const daenaerysPatientPubKey = daenaerysNotification!.properties?.find(
-  (prop) => prop.id == 'dataOwnerConcernedPubKey',
-)
+const daenaerysPatientId = daenaerysNotification!.properties?.find((prop) => prop.id == 'dataOwnerConcernedId')
+const daenaerysPatientPubKey = daenaerysNotification!.properties?.find((prop) => prop.id == 'dataOwnerConcernedPubKey')
 
 const accessBack = await hcpApi.dataOwnerApi.giveAccessBackTo(
   daenaerysPatientId!.typedValue!.stringValue!,
-  daenaerysPatientPubKey!.typedValue!.stringValue!,
+  daenaerysPatientPubKey!.typedValue!.stringValue!
 )
 ```
 

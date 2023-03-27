@@ -28,10 +28,9 @@ The following example shows how to automatically share all new entities which wi
 
 <!-- file://code-samples/how-to/auto-share/index.mts snippet:auto share-->
 ```typescript
-await hcp1Api.userApi.shareAllFutureDataWith(
-  [hcp1Api.dataOwnerApi.getDataOwnerIdOf(hcp2User)],
-  'medicalInformation',
-)
+await hcp1Api.userApi.shareAllFutureDataWith('medicalInformation', [
+  hcp1Api.dataOwnerApi.getDataOwnerIdOf(hcp2User),
+])
 ```
 
 <details>
@@ -49,11 +48,9 @@ const dataSample = await hcp1Api.dataSampleApi.createOrModifyDataSampleFor(
   patient.id,
   new DataSample({
     labels: new Set([new CodingReference({ type: 'IC-TEST', code: 'TEST' })]),
-    content: { en: new Content({ stringValue: contentString }) },
+    content: { en: { stringValue: contentString } },
   }),
 )
-expect(
-expect(
 // hcp2 can already access dataSample
 ```
 </details>
@@ -71,7 +68,7 @@ const dataSampleNotOnModify = await hcp1Api.dataSampleApi.createOrModifyDataSamp
   patient.id,
   new DataSample({
     ...existingDataSample,
-    content: { en: new Content({ stringValue: contentNotOnModify }) },
+    content: { en: { stringValue: contentNotOnModify } },
   }),
 )
 ```
@@ -89,7 +86,7 @@ const dataSampleNotSharedBy2 = await hcp2Api.dataSampleApi.createOrModifyDataSam
   patient.id,
   new DataSample({
     labels: new Set([new CodingReference({ type: 'IC-TEST', code: 'TEST' })]),
-    content: { en: new Content({ stringValue: contentNotSharedBy2 }) },
+    content: { en: { stringValue: contentNotSharedBy2 } },
   }),
 )
 ```
@@ -100,10 +97,9 @@ You can stop the automatic data share using the `stopSharingDataWith` method.
 
 <!-- file://code-samples/how-to/auto-share/index.mts snippet:stop auto share-->
 ```typescript
-await hcp1Api.userApi.stopSharingDataWith(
-  [hcp1Api.dataOwnerApi.getDataOwnerIdOf(hcp2User)],
-  'medicalInformation',
-)
+await hcp1Api.userApi.stopSharingDataWith('medicalInformation', [
+  hcp1Api.dataOwnerApi.getDataOwnerIdOf(hcp2User),
+])
 ```
 
 <details>
@@ -116,7 +112,7 @@ const dataSampleNotSharedAnymore = await hcp1Api.dataSampleApi.createOrModifyDat
   patient.id,
   new DataSample({
     labels: new Set([new CodingReference({ type: 'IC-TEST', code: 'TEST' })]),
-    content: { en: new Content({ stringValue: contentNotSharedAnymore }) },
+    content: { en: { stringValue: contentNotSharedAnymore } },
   }),
 )
 ```
@@ -141,14 +137,12 @@ not also with `hcp2`.
 
 <!-- file://code-samples/how-to/auto-share/index.mts snippet:share chain-->
 ```typescript
-await hcp1Api.userApi.shareAllFutureDataWith(
-  [hcp1Api.dataOwnerApi.getDataOwnerIdOf(pUser)],
-  'medicalInformation',
-)
-await pApi.userApi.shareAllFutureDataWith(
-  [pApi.dataOwnerApi.getDataOwnerIdOf(hcp2User)],
-  'medicalInformation',
-)
+await hcp1Api.userApi.shareAllFutureDataWith('medicalInformation', [
+  hcp1Api.dataOwnerApi.getDataOwnerIdOf(pUser),
+])
+await pApi.userApi.shareAllFutureDataWith('medicalInformation', [
+  pApi.dataOwnerApi.getDataOwnerIdOf(hcp2User),
+])
 
 const contentNoChaining =
   "Even if hcp1 shares with p and p shares with hcp2, hcp2 won't have automatic access to the data"
@@ -156,7 +150,7 @@ const dataSampleNoChaining = await hcp1Api.dataSampleApi.createOrModifyDataSampl
   patient.id,
   new DataSample({
     labels: new Set([new CodingReference({ type: 'IC-TEST', code: 'TEST' })]),
-    content: { en: new Content({ stringValue: contentNoChaining }) },
+    content: { en: { stringValue: contentNoChaining } },
   }),
 )
 ```

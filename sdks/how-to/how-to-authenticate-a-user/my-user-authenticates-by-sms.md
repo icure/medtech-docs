@@ -82,6 +82,15 @@ const authProcessLogin = await anonymousApiForLogin.authenticationApi.startAuthe
 const loginResult = await anonymousApiForLogin.authenticationApi.completeAuthentication(
   authProcessLogin!,
   validationCodeForLogin,
+  () => {
+    const userInfo = getBackCredentials()
+    if (userInfo.pubKey != undefined && userInfo.privKey != undefined) {
+      return Promise.resolve({ privateKey: userInfo.privKey, publicKey: userInfo.pubKey })
+    } else {
+      // You can't find back the user's RSA Keypair: You need to generate a new one
+      return anonymousApiForLogin.generateRSAKeypair()
+    }
+  },
 )
 
 const loggedUserApi = loginResult.medTechApi

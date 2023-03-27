@@ -79,11 +79,10 @@ const anonymousMedTechApi = await new AnonymousMedTechApiBuilder()
   .withAuthProcessBySmsId(authProcessId)
   .build()
 
-const authenticationResult =
-  await anonymousMedTechApi.authenticationApi.authenticateAndAskAccessToItsExistingData(
-    patientUsername,
-    patientToken,
-  )
+const authenticationResult = await anonymousMedTechApi.authenticationApi.authenticateAndAskAccessToItsExistingData(
+  patientUsername,
+  patientToken,
+)
 const apiAsPatient = authenticationResult.medTechApi
 ```
 
@@ -127,9 +126,7 @@ encrypted according to the api configuration will cause a runtime error.
 ```typescript
 patientDetails.companyName = 'iCure'
 // patientDetails.note = 'This would make modify fail'
-const modifiedPatientDetails = await apiAsPatient.patientApi.modifyPotentiallyEncryptedPatient(
-  patientDetails,
-)
+const modifiedPatientDetails = await apiAsPatient.patientApi.modifyPotentiallyEncryptedPatient(patientDetails)
 ```
 
 The patient can also create and share data sample and health elements as normal:
@@ -149,7 +146,7 @@ const newHEByPatient = await apiAsPatient.healthcareElementApi.createOrModifyHea
     ]),
     openingDate: new Date('2019-10-12').getTime(),
   }),
-  modifiedPatientDetails.id,
+  modifiedPatientDetails.id
 )
 await apiAsPatient.healthcareElementApi.giveAccessTo(newHEByPatient, hcp.id)
 // The doctor can now access the healthcare element
@@ -168,9 +165,7 @@ const filterForHcpWithoutAccessByPatient = await new HealthcareElementFilter()
   .forPatients(apiAsDoctor.cryptoApi, [await apiAsDoctor.patientApi.getPatient(patient.id)])
   .forDataOwner(hcp.id)
   .build()
-const notFoundHEs = await apiAsDoctor.healthcareElementApi.filterHealthcareElement(
-  filterForHcpWithoutAccessByPatient,
-)
+const notFoundHEs = await apiAsDoctor.healthcareElementApi.filterHealthcareElement(filterForHcpWithoutAccessByPatient)
 console.log(notFoundHEs.rows.find((x) => x.id == newHEByPatient.id)) // undefined
 // The patient shares his secret foreign key with the doctor
 await apiAsPatient.patientApi.giveAccessToPotentiallyEncrypted(modifiedPatientDetails, hcp.id)
@@ -179,9 +174,7 @@ const filterForHcpWithAccessByPatient = await new HealthcareElementFilter()
   .forPatients(apiAsDoctor.cryptoApi, [await apiAsDoctor.patientApi.getPatient(patient.id)])
   .forDataOwner(hcp.id)
   .build()
-const foundHEs = await apiAsDoctor.healthcareElementApi.filterHealthcareElement(
-  filterForHcpWithAccessByPatient,
-)
+const foundHEs = await apiAsDoctor.healthcareElementApi.filterHealthcareElement(filterForHcpWithAccessByPatient)
 console.log(foundHEs.rows.find((x) => x.id == newHEByPatient.id)) // HealthcareElement...
 ```
 
