@@ -82,7 +82,6 @@ console.log('SMS Validation code is ', validationCode)
 const authenticationResult = await anonymousApi.authenticationApi.completeAuthentication(
   authProcess!,
   validationCode,
-  () => anonymousApi.generateRSAKeypair(), // Generate an RSA Keypair for the user
 )
 
 const authenticatedApi = authenticationResult.medTechApi
@@ -94,7 +93,7 @@ saveSecurely(
   authenticationResult.token,
   authenticationResult.userId,
   authenticationResult.groupId,
-  authenticationResult.keyPair,
+  authenticationResult.keyPairs[0],
 )
 
 const createdPatient = await authenticatedApi.patientApi.createOrModifyPatient(
@@ -121,7 +120,7 @@ const reInstantiatedApi = await new MedTechApiBuilder()
   .withCrypto(webcrypto as any)
   .build()
 
-await reInstantiatedApi.initUserCrypto(false, { publicKey: pubKey, privateKey: privKey })
+await reInstantiatedApi.initUserCrypto({ publicKey: pubKey, privateKey: privKey })
 
 const foundPatientAfterInstantiatingApi = await reInstantiatedApi.patientApi.getPatient(
   createdPatient.id,
@@ -157,15 +156,6 @@ console.log('SMS Validation code is ', validationCodeForLogin)
 const loginResult = await anonymousApiForLogin.authenticationApi.completeAuthentication(
   authProcessLogin!,
   validationCodeForLogin,
-  () => {
-    const userInfo = getBackCredentials()
-    if (userInfo.pubKey != undefined && userInfo.privKey != undefined) {
-      return Promise.resolve({ privateKey: userInfo.privKey, publicKey: userInfo.pubKey })
-    } else {
-      // You can't find back the user's RSA Keypair: You need to generate a new one
-      return anonymousApiForLogin.generateRSAKeypair()
-    }
-  },
 )
 
 const loggedUserApi = loginResult.medTechApi

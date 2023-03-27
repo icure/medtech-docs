@@ -1,4 +1,10 @@
-import { CodingReference, DataSample, DataSampleFilter, Patient } from '@icure/medical-device-sdk'
+import {
+  CodingReference,
+  Content,
+  DataSample,
+  DataSampleFilter,
+  Patient,
+} from '@icure/medical-device-sdk'
 import { hex2ua, sleep } from '@icure/api'
 import 'isomorphic-fetch'
 import * as console from 'console'
@@ -30,7 +36,7 @@ const createdDataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
   patient.id!,
   new DataSample({
     labels: new Set([new CodingReference({ type: 'IC-TEST', code: 'TEST' })]),
-    content: { en: { stringValue: 'Hello world' } },
+    content: { en: new Content({ stringValue: 'Hello world' }) },
     openingDate: 20220929083400,
     comment: 'This is a comment',
   }),
@@ -46,14 +52,17 @@ const dataSample = await api.dataSampleApi.getDataSample(createdDataSample.id!)
 console.log('Get', JSON.stringify(dataSample))
 
 //tech-doc: update a dataSample
-const updatedDataSample = await api.dataSampleApi.createOrModifyDataSampleFor(patient.id!, {
-  ...createdDataSample,
-  // highlight-start
-  content: { en: { stringValue: 'Hello world updated' } },
-  comment: 'This is a updated comment',
-  modified: undefined,
-  // highlight-end
-})
+const updatedDataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
+  patient.id!,
+  new DataSample({
+    ...createdDataSample,
+    // highlight-start
+    content: { en: new Content({ stringValue: 'Hello world updated' }) },
+    comment: 'This is a updated comment',
+    modified: undefined,
+    // highlight-end
+  }),
+)
 //tech-doc: STOP HERE
 
 console.log('Update: ', JSON.stringify(updatedDataSample))
@@ -62,7 +71,7 @@ await sleep(5000)
 //tech-doc: get a list of dataSamples
 const filter = await new DataSampleFilter()
   .forDataOwner(loggedUser.healthcarePartyId!)
-  .byLabelCodeFilter('IC-TEST', 'TEST')
+  .byLabelCodeDateFilter('IC-TEST', 'TEST')
   .forPatients(api.cryptoApi, [patient])
   .build()
 
@@ -92,6 +101,6 @@ console.log('Delete: ', JSON.stringify(deletedDataSample))
 //tech-doc: filter builder
 new DataSampleFilter()
   .forDataOwner(loggedUser.healthcarePartyId!)
-  .byLabelCodeFilter('IC-TEST', 'TEST')
+  .byLabelCodeDateFilter('IC-TEST', 'TEST')
   .forPatients(api.cryptoApi, [patient])
   .build()

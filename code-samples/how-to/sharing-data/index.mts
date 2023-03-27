@@ -9,7 +9,13 @@ import {
   initPatientMedTechApi,
 } from '../../utils/index.mjs'
 import { expect, use as chaiUse } from 'chai'
-import { CodingReference, DataSample, HealthcareElement, Patient } from '@icure/medical-device-sdk'
+import {
+  CodingReference,
+  Content,
+  DataSample,
+  HealthcareElement,
+  Patient,
+} from '@icure/medical-device-sdk'
 import chaiAsPromised from 'chai-as-promised'
 chaiUse(chaiAsPromised)
 
@@ -106,7 +112,7 @@ const dataSample = await pApi.dataSampleApi.createOrModifyDataSampleFor(
   patient.id,
   new DataSample({
     labels: new Set([new CodingReference({ type: 'IC-TEST', code: 'TEST' })]),
-    content: { en: { stringValue: contentString } },
+    content: { en: new Content({ stringValue: contentString }) },
     openingDate: 20220929083400,
     comment: 'This is a comment',
   }),

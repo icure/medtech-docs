@@ -1,5 +1,6 @@
 import {
   CodingReference,
+  Content,
   DataSample,
   DataSampleFilter,
   medTechApi,
@@ -40,7 +41,7 @@ const connection = (
     ['CREATE'], // Event types to listen to
     await new DataSampleFilter()
       .forDataOwner(loggedUser.healthcarePartyId!)
-      .byLabelCodeFilter('IC-TEST', 'TEST')
+      .byLabelCodeDateFilter('IC-TEST', 'TEST')
       .build(),
     async (ds) => {
       events.push(ds)
@@ -68,7 +69,7 @@ await api.dataSampleApi.createOrModifyDataSampleFor(
   patient.id!,
   new DataSample({
     labels: new Set([new CodingReference({ type: 'IC-TEST', code: 'TEST' })]),
-    content: { en: { stringValue: 'Hello world' } },
+    content: { en: new Content({ stringValue: 'Hello world' }) },
   }),
 )
 //tech-doc: STOP HERE

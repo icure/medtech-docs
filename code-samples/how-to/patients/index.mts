@@ -44,13 +44,15 @@ const createdPatient = await api.patientApi.createOrModifyPatient(
 console.log('Create: ', JSON.stringify(createdPatient))
 
 //tech-doc: update a patient
-const updatedPatient = await api.patientApi.createOrModifyPatient({
-  ...createdPatient,
-  // highlight-start
-  modified: undefined,
-  note: 'Good news everyone!',
-  // highlight-end
-})
+const updatedPatient = await api.patientApi.createOrModifyPatient(
+  new Patient({
+    ...createdPatient,
+    // highlight-start
+    modified: undefined,
+    note: 'Good news everyone!',
+    // highlight-end
+  }),
+)
 //tech-doc: STOP HERE
 
 console.log('Update: ', JSON.stringify(updatedPatient))

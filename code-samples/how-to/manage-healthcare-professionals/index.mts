@@ -1,5 +1,6 @@
 import {
   Address,
+  CodingReference,
   HealthcareProfessional,
   HealthcareProfessionalFilter,
   Telecom,
@@ -20,7 +21,9 @@ const healthcareProfessional: HealthcareProfessional = new HealthcareProfessiona
   firstName: 'John',
   lastName: 'Keats',
   speciality: 'Psychiatrist',
-  codes: new Set([{ type: 'practitioner-specialty', code: healthcareProfessionalCode }]),
+  codes: new Set([
+    new CodingReference({ type: 'practitioner-specialty', code: healthcareProfessionalCode }),
+  ]),
   addresses: [
     new Address({
       telecoms: [

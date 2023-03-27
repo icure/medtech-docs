@@ -134,10 +134,11 @@ const anonymousMedTechApi = await new AnonymousMedTechApiBuilder()
   .withAuthProcessBySmsId(authProcessId)
   .build()
 
-const authenticationResult = await anonymousMedTechApi.authenticationApi.authenticateAndAskAccessToItsExistingData(
-  patientUsername,
-  patientToken,
-)
+const authenticationResult =
+  await anonymousMedTechApi.authenticationApi.authenticateAndAskAccessToItsExistingData(
+    patientUsername,
+    patientToken,
+  )
 const apiAsPatient = authenticationResult.medTechApi
 //tech-doc: STOP HERE
 
@@ -150,7 +151,9 @@ const patientDetails = await apiAsPatient.patientApi.getPatientAndTryDecrypt(pat
 //tech-doc: modify patient details
 patientDetails.companyName = 'iCure'
 // patientDetails.note = 'This would make modify fail'
-const modifiedPatientDetails = await apiAsPatient.patientApi.modifyPotentiallyEncryptedPatient(patientDetails)
+const modifiedPatientDetails = await apiAsPatient.patientApi.modifyPotentiallyEncryptedPatient(
+  patientDetails,
+)
 //tech-doc: STOP HERE
 
 //tech-doc: create healthcare element
@@ -167,7 +170,7 @@ const newHEByPatient = await apiAsPatient.healthcareElementApi.createOrModifyHea
     ]),
     openingDate: new Date('2019-10-12').getTime(),
   }),
-  modifiedPatientDetails.id
+  modifiedPatientDetails.id,
 )
 await apiAsPatient.healthcareElementApi.giveAccessTo(newHEByPatient, hcp.id)
 // The doctor can now access the healthcare element
@@ -180,7 +183,9 @@ const filterForHcpWithoutAccessByPatient = await new HealthcareElementFilter()
   .forPatients(apiAsDoctor.cryptoApi, [await apiAsDoctor.patientApi.getPatient(patient.id)])
   .forDataOwner(hcp.id)
   .build()
-const notFoundHEs = await apiAsDoctor.healthcareElementApi.filterHealthcareElement(filterForHcpWithoutAccessByPatient)
+const notFoundHEs = await apiAsDoctor.healthcareElementApi.filterHealthcareElement(
+  filterForHcpWithoutAccessByPatient,
+)
 console.log(notFoundHEs.rows.find((x) => x.id == newHEByPatient.id)) // undefined
 expect(notFoundHEs.rows.find((x) => x.id == newHEByPatient.id)).to.be.undefined //skip
 // The patient shares his secret foreign key with the doctor
@@ -190,11 +195,12 @@ const filterForHcpWithAccessByPatient = await new HealthcareElementFilter()
   .forPatients(apiAsDoctor.cryptoApi, [await apiAsDoctor.patientApi.getPatient(patient.id)])
   .forDataOwner(hcp.id)
   .build()
-const foundHEs = await apiAsDoctor.healthcareElementApi.filterHealthcareElement(filterForHcpWithAccessByPatient)
+const foundHEs = await apiAsDoctor.healthcareElementApi.filterHealthcareElement(
+  filterForHcpWithAccessByPatient,
+)
 console.log(foundHEs.rows.find((x) => x.id == newHEByPatient.id)) // HealthcareElement...
 expect(foundHEs.rows.find((x) => x.id == newHEByPatient.id)).to.not.be.undefined //skip
 //tech-doc: STOP HERE
-
 
 //tech-doc: doctor gets pending notifications
 const newNotifications = await apiAsDoctor.notificationApi.getPendingNotificationsAfter()
