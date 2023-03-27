@@ -54,6 +54,55 @@ const newlyCreatedDataSample =
     }),
   )
 ```
+<!-- output://code-samples/how-to/authenticate-user/newlyCreatedDataSample.txt -->
+<details>
+<summary>newlyCreatedDataSample</summary>
+
+```json
+{
+  "id": "c29925a9-0710-4c5d-98d9-2016edb1fc7a",
+  "qualifiedLinks": {},
+  "batchId": "791b8fab-f672-4f58-9daa-03b1adac7ce7",
+  "index": 0,
+  "valueDate": 20230327164243,
+  "openingDate": 20220929083400,
+  "created": 1679928163879,
+  "modified": 1679928163879,
+  "author": "311a0b38-eb54-424c-9d61-b8a190260189",
+  "responsible": "d691c3f8-1483-4be4-b66f-2b1645a71b0f",
+  "comment": "This is a comment",
+  "identifiers": [],
+  "healthcareElementIds": {},
+  "canvasesIds": {},
+  "content": {
+    "en": {
+      "stringValue": "Hello world",
+      "compoundValue": [],
+      "ratio": [],
+      "range": []
+    }
+  },
+  "codes": {},
+  "labels": {},
+  "systemMetaData": {
+    "secretForeignKeys": [],
+    "cryptedForeignKeys": {
+      "d691c3f8-1483-4be4-b66f-2b1645a71b0f": {},
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+    },
+    "delegations": {
+      "d691c3f8-1483-4be4-b66f-2b1645a71b0f": {},
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+    },
+    "encryptionKeys": {
+      "d691c3f8-1483-4be4-b66f-2b1645a71b0f": {},
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+    }
+  }
+}
+```
+</details>
+
 
 However, she still won't be able to access the data she created with her previous key.
 To get access back to it, Daenaerys will need the help of people with whom she shared those data.
@@ -91,6 +140,60 @@ const hcpNotifications = await hcpApi.notificationApi
   .getPendingNotificationsAfter(startTimestamp)
   .then((notifs) => notifs.filter((notif) => notif.type === NotificationTypeEnum.KEY_PAIR_UPDATE))
 ```
+<!-- output://code-samples/how-to/authenticate-user/hcpNotifications.txt -->
+<details>
+<summary>hcpNotifications</summary>
+
+```text
+[
+  {
+    "id": "7b93be7a-d7ff-4b1a-a7b3-a2e7d47d8b96",
+    "rev": "1-c345e16cadd1dcb825377b8ee70cdc15",
+    "created": 1679928162868,
+    "modified": 1679928162868,
+    "author": "311a0b38-eb54-424c-9d61-b8a190260189",
+    "responsible": "d691c3f8-1483-4be4-b66f-2b1645a71b0f",
+    "status": "pending",
+    "identifiers": [],
+    "properties": [
+      {
+        "id": "dataOwnerConcernedId",
+        "type": {
+          "type": "STRING"
+        },
+        "typedValue": {
+          "stringValue": "d691c3f8-1483-4be4-b66f-2b1645a71b0f",
+          "type": "STRING"
+        }
+      },
+      {
+        "id": "dataOwnerConcernedPubKey",
+        "type": {
+          "type": "STRING"
+        },
+        "typedValue": {
+          "stringValue": "30820122300d06092a864886f70d01010105000382010f003082010a0282010100ce96f68068e7d7d1f68efdc47e27e9029a772782692448e9b8ee7ded88014ab7dd014ac1949b72ff0a1675339520ca7a779f946dafb4e407fbfb14526600c4b6e0320091b89afef827ad5c52bc335e54f6581659af582971a5d766fce20e48efa1db573503ec4273871eeda10edd3a26c159ebe32794c2af7d62a0a5b22b78496ad35afd0a7d2a771b6f7987d03d9c6c7ebade5995d564bc67966add45fe26345e857b0168d3b85a6ff897aee1f07521882e1e31dfac3d46786e8253250d89bfebf852c4ae5ea839fe0503ce715fe011064790390020c68ab11a4a60cd7b3a855cbc596b06d066d4a664a4ed591c061a2654cc4108de4a0f21499548bbdeabf90203010001",
+          "type": "STRING"
+        }
+      }
+    ],
+    "type": "KEY_PAIR_UPDATE",
+    "systemMetaData": {
+      "secretForeignKeys": [],
+      "cryptedForeignKeys": {},
+      "delegations": {
+        "d691c3f8-1483-4be4-b66f-2b1645a71b0f": {},
+        "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+      },
+      "encryptionKeys": {
+        "d691c3f8-1483-4be4-b66f-2b1645a71b0f": {},
+        "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+      }
+    }
+  }
+]
+```
+</details>
 
 Once Jorah has the list of notifications, he will treat them one by one, deciding to give access back to the 
 provided user or not. 
@@ -118,6 +221,51 @@ const accessBack = await hcpApi.dataOwnerApi.giveAccessBackTo(
   daenaerysPatientPubKey!.typedValue!.stringValue!,
 )
 ```
+<!-- output://code-samples/how-to/authenticate-user/daenaerysPatientId.txt -->
+<details>
+<summary>daenaerysPatientId</summary>
+
+```json
+{
+  "id": "dataOwnerConcernedId",
+  "type": {
+    "type": "STRING"
+  },
+  "typedValue": {
+    "stringValue": "d691c3f8-1483-4be4-b66f-2b1645a71b0f",
+    "type": "STRING"
+  }
+}
+```
+</details>
+
+<!-- output://code-samples/how-to/authenticate-user/daenaerysPatientPubKey.txt -->
+<details>
+<summary>daenaerysPatientPubKey</summary>
+
+```json
+{
+  "id": "dataOwnerConcernedPubKey",
+  "type": {
+    "type": "STRING"
+  },
+  "typedValue": {
+    "stringValue": "30820122300d06092a864886f70d01010105000382010f003082010a0282010100ce96f68068e7d7d1f68efdc47e27e9029a772782692448e9b8ee7ded88014ab7dd014ac1949b72ff0a1675339520ca7a779f946dafb4e407fbfb14526600c4b6e0320091b89afef827ad5c52bc335e54f6581659af582971a5d766fce20e48efa1db573503ec4273871eeda10edd3a26c159ebe32794c2af7d62a0a5b22b78496ad35afd0a7d2a771b6f7987d03d9c6c7ebade5995d564bc67966add45fe26345e857b0168d3b85a6ff897aee1f07521882e1e31dfac3d46786e8253250d89bfebf852c4ae5ea839fe0503ce715fe011064790390020c68ab11a4a60cd7b3a855cbc596b06d066d4a664a4ed591c061a2654cc4108de4a0f21499548bbdeabf90203010001",
+    "type": "STRING"
+  }
+}
+```
+</details>
+
+<!-- output://code-samples/how-to/authenticate-user/accessBack.txt -->
+<details>
+<summary>accessBack</summary>
+
+```text
+true
+```
+</details>
+
 
 After restarting her app, Daenaerys will be able to access her previous data back. 
 
