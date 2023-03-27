@@ -269,7 +269,7 @@ const newlyCreatedDataSample =
     }),
   )
 //tech-doc: STOP HERE
-output(newlyCreatedDataSample)
+output({newlyCreatedDataSample})
 
 expect(newlyCreatedDataSample).to.not.be.undefined //skip
 
@@ -295,7 +295,7 @@ const hcpNotifications = await hcpApi.notificationApi
   .getPendingNotificationsAfter(startTimestamp)
   .then((notifs) => notifs.filter((notif) => notif.type === NotificationTypeEnum.KEY_PAIR_UPDATE))
 //tech-doc: STOP HERE
-output(hcpNotifications)
+output({hcpNotifications})
 
 expect(hcpNotifications.length).to.be.greaterThan(0)
 
