@@ -94,11 +94,15 @@ const patient = await api.patientApi.createOrModifyPatient(
 
 </details>
 
+<!-- output://code-samples/how-to/websocket/patient.txt -->
+<details>
+</details>
+
 :::
 
 <!-- file://code-samples/how-to/websocket/index.mts snippet:create a dataSample for websocket-->
 ```typescript
-await api.dataSampleApi.createOrModifyDataSampleFor(
+const dataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
   patient.id!,
   new DataSample({
     labels: new Set([new CodingReference({ type: 'IC-TEST', code: 'TEST' })]),
@@ -106,6 +110,10 @@ await api.dataSampleApi.createOrModifyDataSampleFor(
   }),
 )
 ```
+
+<!-- output://code-samples/how-to/websocket/dataSample.txt -->
+<details>
+</details>
 
 ## How to stop listening to events&#8239;?
 
@@ -115,3 +123,11 @@ To stop listening to events, you can call the `close` method on the `Connection`
 ```typescript
 connection.close()
 ```
+
+<!-- output://code-samples/how-to/websocket/events.txt -->
+<details>
+</details>
+
+<!-- output://code-samples/how-to/websocket/statuses.txt -->
+<details>
+</details>

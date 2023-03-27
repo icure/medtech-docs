@@ -33,6 +33,29 @@ const user = await hcp1Api.userApi.shareAllFutureDataWith(
   'medicalInformation',
 )
 ```
+<!-- output://code-samples/how-to/auto-share/user.txt -->
+<details>
+<summary>user</summary>
+
+```json
+{
+  "id": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
+  "rev": "51-fe8db573a38943cde0c4e76e6013eb71",
+  "created": 1679919731079,
+  "name": "Master HCP",
+  "login": "master@b16baa.icure",
+  "groupId": "ic-e2etest-medtech-docs",
+  "healthcarePartyId": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
+  "email": "master@b16baa.icure",
+  "properties": {},
+  "roles": {},
+  "sharingDataWith": {
+    "medicalInformation": {}
+  },
+  "authenticationTokens": {}
+}
+```
+</details>
 
 <details>
     <summary>Data creation example</summary>
@@ -43,8 +66,8 @@ const note = 'Winter is coming'
 const patient = await hcp1Api.patientApi.createOrModifyPatient(
   new Patient({ firstName: 'John', lastName: 'Snow', note }),
 )
-let patient1 = await hcp1Api.patientApi.getPatient(patient.id);
-let patient2 = await hcp2Api.patientApi.getPatient(patient.id);
+const patient1 = await hcp1Api.patientApi.getPatient(patient.id)
+const patient2 = await hcp2Api.patientApi.getPatient(patient.id)
 // hcp2 can already access patient
 const contentString = 'Hello world'
 const dataSample = await hcp1Api.dataSampleApi.createOrModifyDataSampleFor(
@@ -54,12 +77,30 @@ const dataSample = await hcp1Api.dataSampleApi.createOrModifyDataSampleFor(
     content: { en: new Content({ stringValue: contentString }) },
   }),
 )
-let dataSample1 = await hcp1Api.dataSampleApi.getDataSample(dataSample.id);
-expect(
-let dataSample2 = await hcp2Api.dataSampleApi.getDataSample(dataSample.id);
-expect(
+const dataSample1 = await hcp1Api.dataSampleApi.getDataSample(dataSample.id)
+const dataSample2 = await hcp2Api.dataSampleApi.getDataSample(dataSample.id)
 // hcp2 can already access dataSample
 ```
+</details>
+
+<!-- output://code-samples/how-to/auto-share/patient1.txt -->
+<details>
+</details>
+
+<!-- output://code-samples/how-to/auto-share/patient2.txt -->
+<details>
+</details>
+
+<!-- output://code-samples/how-to/auto-share/dataSample.txt -->
+<details>
+</details>
+
+<!-- output://code-samples/how-to/auto-share/dataSample1.txt -->
+<details>
+</details>
+
+<!-- output://code-samples/how-to/auto-share/dataSample2.txt -->
+<details>
 </details>
 
 ## No automatic share on modify
@@ -80,6 +121,11 @@ const dataSampleNotOnModify = await hcp1Api.dataSampleApi.createOrModifyDataSamp
 )
 ```
 
+<!-- output://code-samples/how-to/auto-share/dataSampleNotOnModify.txt -->
+<details>
+</details>
+
+
 ## Uni-directional
 
 Note that the auto-share is uni-directional: if `hcp1` is automatically sharing data with `hcp2` it does not mean that
@@ -98,6 +144,10 @@ const dataSampleNotSharedBy2 = await hcp2Api.dataSampleApi.createOrModifyDataSam
 )
 ```
 
+<!-- output://code-samples/how-to/auto-share/dataSampleNotSharedBy2.txt -->
+<details>
+</details>
+
 ## Stop sharing
 
 You can stop the automatic data share using the `stopSharingDataWith` method.
@@ -109,6 +159,10 @@ const userWithoutShare = await hcp1Api.userApi.stopSharingDataWith(
   'medicalInformation',
 )
 ```
+
+<!-- output://code-samples/how-to/auto-share/userWithoutShare.txt -->
+<details>
+</details>
 
 <details>
     <summary>Data creation example</summary>
@@ -124,6 +178,10 @@ const dataSampleNotSharedAnymore = await hcp1Api.dataSampleApi.createOrModifyDat
   }),
 )
 ```
+</details>
+
+<!-- output://code-samples/how-to/auto-share/dataSampleNotSharedAnymore.txt -->
+<details>
 </details>
 
 ## Non-retroactivity
@@ -164,3 +222,7 @@ const dataSampleNoChaining = await hcp1Api.dataSampleApi.createOrModifyDataSampl
   }),
 )
 ```
+
+<!-- output://code-samples/how-to/auto-share/dataSampleNoChaining.txt -->
+<details>
+</details>

@@ -52,17 +52,17 @@ const dataSample = await hcp1Api.dataSampleApi.createOrModifyDataSampleFor(
   }),
 )
 const dataSample1 = await hcp1Api.dataSampleApi.getDataSample(dataSample.id)
-expect(
-  //skip
-  dataSample1.content['en'].stringValue, //skip
-).to.equal(contentString) //skip
 const dataSample2 = await hcp2Api.dataSampleApi.getDataSample(dataSample.id)
-expect(
-  //skip
-  dataSample2.content['en'].stringValue, //skip
-).to.equal(contentString) //skip
 // hcp2 can already access dataSample
 //tech-doc: end
+expect(
+  dataSample1.content['en'].stringValue,
+).to.equal(contentString)
+expect(
+  //skip
+  dataSample2.content['en'].stringValue,
+).to.equal(contentString)
+
 output({ patient, dataSample, patient1, patient2, dataSample1, dataSample2 })
 
 await hcp1Api.userApi.stopSharingDataWith(

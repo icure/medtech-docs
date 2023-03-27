@@ -39,75 +39,8 @@ const createdPatient = await api.patientApi.createOrModifyPatient(
 )
 ```
 
+<!-- output://code-samples/how-to/patients/createdPatient.txt -->
 <details>
-    <summary>Output</summary>
-
-```json
-{
-	"id": "aff58060-8802-4f1a-91a6-e8bb9a343544",
-	"identifiers": [],
-	"labels": {},
-	"codes": {},
-	"names": [
-		{
-			"firstNames": [
-				"Hubert",
-				"J"
-			],
-			"prefix": [],
-			"suffix": [],
-			"lastName": "Farnsworth",
-			"use": "official"
-		},
-		{
-			"firstNames": [
-				"Professor"
-			],
-			"prefix": [],
-			"suffix": [],
-			"use": "nickname"
-		}
-	],
-	"languages": [],
-	"addresses": [],
-	"mergedIds": {},
-	"active": true,
-	"deactivationReason": "none",
-	"partnerships": [],
-	"patientHealthCareParties": [],
-	"patientProfessions": [],
-	"parameters": {},
-	"properties": {},
-	"rev": "1-26940e83585225c4a919e8dac2241e90",
-	"created": 1664530613307,
-	"modified": 1664530613307,
-	"author": "b36fa6cb-d7a8-40f0-bcf6-af6ce0decb78",
-	"responsible": "ab623d88-baed-40b9-91b7-ab26e9a08db5",
-	"firstName": "Hubert",
-	"lastName": "Farnsworth",
-	"gender": "male",
-	"birthSex": "male",
-	"personalStatus": "unknown",
-	"dateOfBirth": 28410409,
-	"profession": "CEO/Owner of Planet Express, Lecturer at Mars University",
-	"nationality": "American",
-	"systemMetaData": {
-		"hcPartyKeys": {},
-		"privateKeyShamirPartitions": {},
-		"secretForeignKeys": [],
-		"cryptedForeignKeys": {},
-		"delegations": {
-			"ab623d88-baed-40b9-91b7-ab26e9a08db5": {}
-		},
-		"encryptionKeys": {
-			"ab623d88-baed-40b9-91b7-ab26e9a08db5": {}
-		},
-		"aesExchangeKeys": {},
-		"transferKeys": {}
-	}
-}
-```
-
 </details>
 
 ## How to update a patient&#8239;?
@@ -127,76 +60,10 @@ const updatedPatient = await api.patientApi.createOrModifyPatient(
 )
 ```
 
+<!-- output://code-samples/how-to/patients/updatedPatient.txt -->
 <details>
-    <summary>Output</summary>
-
-```json
-{
-	"id": "aff58060-8802-4f1a-91a6-e8bb9a343544",
-	"identifiers": [],
-	"labels": {},
-	"codes": {},
-	"names": [
-		{
-			"firstNames": [
-				"Hubert",
-				"J"
-			],
-			"prefix": [],
-			"suffix": [],
-			"lastName": "Farnsworth",
-			"use": "official"
-		},
-		{
-			"firstNames": [
-				"Professor"
-			],
-			"prefix": [],
-			"suffix": [],
-			"use": "nickname"
-		}
-	],
-	"languages": [],
-	"addresses": [],
-	"mergedIds": {},
-	"active": true,
-	"deactivationReason": "none",
-	"partnerships": [],
-	"patientHealthCareParties": [],
-	"patientProfessions": [],
-	"parameters": {},
-	"properties": {},
-	"rev": "2-9da777d089dc3a159d76ab29fff2acd2",
-	"created": 1664530613307,
-	"modified": 1664530613678,
-	"author": "b36fa6cb-d7a8-40f0-bcf6-af6ce0decb78",
-	"responsible": "ab623d88-baed-40b9-91b7-ab26e9a08db5",
-	"firstName": "Hubert",
-	"lastName": "Farnsworth",
-	"gender": "male",
-	"birthSex": "male",
-	"personalStatus": "unknown",
-	"dateOfBirth": 28410409,
-	"profession": "CEO/Owner of Planet Express, Lecturer at Mars University",
-	"note": "Good news everyone!",
-	"nationality": "American",
-	"systemMetaData": {
-		"hcPartyKeys": {},
-		"privateKeyShamirPartitions": {},
-		"secretForeignKeys": [],
-		"cryptedForeignKeys": {},
-		"delegations": {
-			"ab623d88-baed-40b9-91b7-ab26e9a08db5": {}
-		},
-		"encryptionKeys": {
-			"ab623d88-baed-40b9-91b7-ab26e9a08db5": {}
-		},
-		"aesExchangeKeys": {},
-		"transferKeys": {}
-	}
-}
-```
 </details>
+
 
 ## How to get a patient&#8239;?
 
@@ -207,76 +74,10 @@ To get a patient, we can use the `getPatient` method on the `PatientApi` object.
 const patient = await api.patientApi.getPatient(updatedPatient.id!)
 ```
 
+<!-- output://code-samples/how-to/patients/patient.txt -->
 <details>
-    <summary>Output</summary>
-
-```json
-{
-	"id": "aff58060-8802-4f1a-91a6-e8bb9a343544",
-	"identifiers": [],
-	"labels": {},
-	"codes": {},
-	"names": [
-		{
-			"firstNames": [
-				"Hubert",
-				"J"
-			],
-			"prefix": [],
-			"suffix": [],
-			"lastName": "Farnsworth",
-			"use": "official"
-		},
-		{
-			"firstNames": [
-				"Professor"
-			],
-			"prefix": [],
-			"suffix": [],
-			"use": "nickname"
-		}
-	],
-	"languages": [],
-	"addresses": [],
-	"mergedIds": {},
-	"active": true,
-	"deactivationReason": "none",
-	"partnerships": [],
-	"patientHealthCareParties": [],
-	"patientProfessions": [],
-	"parameters": {},
-	"properties": {},
-	"rev": "2-9da777d089dc3a159d76ab29fff2acd2",
-	"created": 1664530613307,
-	"modified": 1664530613678,
-	"author": "b36fa6cb-d7a8-40f0-bcf6-af6ce0decb78",
-	"responsible": "ab623d88-baed-40b9-91b7-ab26e9a08db5",
-	"firstName": "Hubert",
-	"lastName": "Farnsworth",
-	"gender": "male",
-	"birthSex": "male",
-	"personalStatus": "unknown",
-	"dateOfBirth": 28410409,
-	"profession": "CEO/Owner of Planet Express, Lecturer at Mars University",
-	"note": "Good news everyone!",
-	"nationality": "American",
-	"systemMetaData": {
-		"hcPartyKeys": {},
-		"privateKeyShamirPartitions": {},
-		"secretForeignKeys": [],
-		"cryptedForeignKeys": {},
-		"delegations": {
-			"ab623d88-baed-40b9-91b7-ab26e9a08db5": {}
-		},
-		"encryptionKeys": {
-			"ab623d88-baed-40b9-91b7-ab26e9a08db5": {}
-		},
-		"aesExchangeKeys": {},
-		"transferKeys": {}
-	}
-}
-```
 </details>
+
 
 ## How to delete a patient&#8239;?
 
@@ -287,12 +88,8 @@ To delete a patient, we can use the `deletePatient` method on the `PatientApi` o
 const deletedPatient = await api.patientApi.deletePatient(patient.id!)
 ```
 
+<!-- output://code-samples/how-to/patients/deletedPatientId.txt -->
 <details>
-    <summary>Output</summary>
-
-```json
-// TODO Add output
-```
 </details>
 
 ## How to filter patients&#8239;?
@@ -310,12 +107,11 @@ const filter = await new PatientFilter()
 const patients = await api.patientApi.filterPatients(filter)
 ```
 
+<!-- output://code-samples/how-to/patients/patients.txt -->
 <details>
-    <summary>Output</summary>
-
-```json
-```
 </details>
+
+
 
 ### Filter builder
 
@@ -331,6 +127,11 @@ new PatientFilter()
   .dateOfBirthBetween(28000101, 29000101)
   .build()
 ```
+
+<!-- output://code-samples/how-to/patients/patientFilter.txt -->
+<details>
+</details>
+
 
 The resulting filter object will create a filter that allows us to get all `Patient` that satisfy all the following requirements:
 
@@ -353,13 +154,10 @@ const filterForMatch = await new PatientFilter()
 const patientIds = await api.patientApi.matchPatients(filterForMatch)
 ```
 
+<!-- output://code-samples/how-to/patients/patientIds.txt -->
 <details>
-    <summary>Output</summary>
-
-```json
-["aff58060-8802-4f1a-91a6-e8bb9a343544"]
-```
 </details>
+
 
 ## How to get and modify your information as a patient
 
