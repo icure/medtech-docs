@@ -3,7 +3,7 @@ import { hex2ua } from '@icure/api'
 import 'isomorphic-fetch'
 import * as console from 'console'
 
-import { initLocalStorage, initMedTechApi, privKey } from '../../utils/index.mjs'
+import { initLocalStorage, initMedTechApi, output, privKey } from '../../utils/index.mjs'
 import { expect } from 'chai'
 
 initLocalStorage()
@@ -40,18 +40,22 @@ const createdPatient = await api.patientApi.createOrModifyPatient(
   }),
 )
 //tech-doc: STOP HERE
+output({ createdPatient })
 
 console.log('Create: ', JSON.stringify(createdPatient))
 
 //tech-doc: update a patient
-const updatedPatient = await api.patientApi.createOrModifyPatient({
-  ...createdPatient,
-  // highlight-start
-  modified: undefined,
-  note: 'Good news everyone!',
-  // highlight-end
-})
+const updatedPatient = await api.patientApi.createOrModifyPatient(
+  new Patient({
+    ...createdPatient,
+    // highlight-start
+    modified: undefined,
+    note: 'Good news everyone!',
+    // highlight-end
+  }),
+)
 //tech-doc: STOP HERE
+output({ updatedPatient })
 
 console.log('Update: ', JSON.stringify(updatedPatient))
 
@@ -63,6 +67,7 @@ expect(updatedPatient.rev).to.not.equal(createdPatient.rev)
 //tech-doc: get a patient
 const patient = await api.patientApi.getPatient(updatedPatient.id!)
 //tech-doc: STOP HERE
+output({ patient })
 
 console.log('Get: ', JSON.stringify(patient))
 
@@ -77,6 +82,7 @@ const filter = await new PatientFilter()
 
 const patients = await api.patientApi.filterPatients(filter)
 //tech-doc: STOP HERE
+output({ patients })
 
 // console.log('Filter: ', JSON.stringify(patients))
 
@@ -92,22 +98,26 @@ const filterForMatch = await new PatientFilter()
 
 const patientIds = await api.patientApi.matchPatients(filterForMatch)
 //tech-doc: STOP HERE
+output({ patientIds })
 
 console.log('Match', JSON.stringify(patientIds))
 
 expect(patientIds).to.lengthOf.greaterThan(0)
 
 //tech-doc: delete a patient
-const deletedPatient = await api.patientApi.deletePatient(patient.id!)
+const deletedPatientId = await api.patientApi.deletePatient(patient.id!)
 //tech-doc: STOP HERE
+output({ deletedPatientId })
 
-console.log('Delete: ', JSON.stringify(deletedPatient))
+console.log('Delete: ', JSON.stringify(deletedPatientId))
 
-expect(deletedPatient).to.equal(patient.id)
+expect(deletedPatientId).to.equal(patient.id)
 
 //tech-doc: filter builder
-new PatientFilter()
+const patientFilter = new PatientFilter()
   .forDataOwner(loggedUser.healthcarePartyId!)
 
   .dateOfBirthBetween(28000101, 29000101)
   .build()
+//tech-doc: STOP HERE
+output({ patientFilter })

@@ -15,8 +15,8 @@ the [User Authentication - Init AnonymousMedTechApi](index.md#Init AnonymousMedT
 const iCureUrl = process.env.ICURE_URL
 const msgGtwUrl = process.env.ICURE_MSG_GTW_URL
 const specId = process.env.SPEC_ID
-const authProcessByEmailId = process.env.AUTH_BY_EMAIL_PROCESS_ID
-const authProcessBySmsId = process.env.AUTH_BY_SMS_PROCESS_ID
+const authProcessByEmailId = process.env.AUTH_BY_EMAIL_HCP_PROCESS_ID
+const authProcessBySmsId = process.env.AUTH_BY_SMS_HCP_PROCESS_ID
 const recaptcha = process.env.RECAPTCHA
 
 const anonymousApi = await new AnonymousMedTechApiBuilder()
@@ -45,6 +45,18 @@ const authProcess = await anonymousApi.authenticationApi.startAuthentication(
   masterHcpId,
 )
 ```
+<!-- output://code-samples/how-to/authenticate-user-by-sms/authProcess.txt -->
+<details>
+<summary>authProcess</summary>
+
+```json
+{
+  "requestId": "dfec4158-df74-4995-9d9c-61c1ff62b915",
+  "login": "+3237485845",
+  "bypassTokenCheck": false
+}
+```
+</details>
 
 Your user is now able to create data on their own. 
 
@@ -53,7 +65,6 @@ Your user is now able to create data on their own.
 If you choose to provide user email **AND** phone number, they will by default, receives their validation code by email.
 
 :::
-
 
 ## Login by SMS
 Use the `authenticationApi.startAuthentication` service again, by providing the user's phone number. The login process 
@@ -82,18 +93,70 @@ const authProcessLogin = await anonymousApiForLogin.authenticationApi.startAuthe
 const loginResult = await anonymousApiForLogin.authenticationApi.completeAuthentication(
   authProcessLogin!,
   validationCodeForLogin,
-  () => {
-    const userInfo = getBackCredentials()
-    if (userInfo.pubKey != undefined && userInfo.privKey != undefined) {
-      return Promise.resolve({ privateKey: userInfo.privKey, publicKey: userInfo.pubKey })
-    } else {
-      // You can't find back the user's RSA Keypair: You need to generate a new one
-      return anonymousApiForLogin.generateRSAKeypair()
-    }
-  },
 )
 
 const loggedUserApi = loginResult.medTechApi
 
 const foundPatientAfterLogin = await loggedUserApi.patientApi.getPatient(createdPatient.id)
 ```
+<!-- output://code-samples/how-to/authenticate-user-by-sms/foundPatientAfterLogin.txt -->
+<details>
+<summary>foundPatientAfterLogin</summary>
+
+```json
+{
+  "id": "3bab632d-0f86-45da-8fec-6f3be9e78144",
+  "languages": [],
+  "active": true,
+  "parameters": {},
+  "rev": "1-be3680c4ad35ac6812738438c229a1d1",
+  "created": 1679929518120,
+  "modified": 1679929518120,
+  "author": "c0fcebe5-69f8-40d9-8fee-f35152e25ff2",
+  "responsible": "a7961533-387f-4b9d-acd7-fb6993f855d1",
+  "firstName": "Robb",
+  "lastName": "Stark",
+  "note": "You must keep one's head",
+  "identifiers": [],
+  "labels": {},
+  "codes": {},
+  "names": [
+    {
+      "firstNames": [
+        "Robb"
+      ],
+      "prefix": [],
+      "suffix": [],
+      "lastName": "Stark",
+      "text": "Stark Robb",
+      "use": "official"
+    }
+  ],
+  "addresses": [],
+  "gender": "male",
+  "birthSex": "unknown",
+  "mergedIds": {},
+  "deactivationReason": "none",
+  "personalStatus": "unknown",
+  "partnerships": [],
+  "patientHealthCareParties": [],
+  "patientProfessions": [],
+  "properties": {},
+  "systemMetaData": {
+    "hcPartyKeys": {},
+    "privateKeyShamirPartitions": {},
+    "aesExchangeKeys": {},
+    "transferKeys": {},
+    "encryptedSelf": "yB57O6oz/YFdif5558hEod9X8INhtHyXOLmIn0t2BRPnDKg1kfFYP3t+LQUQkbzDxYlCOK0gC8Kshvp5frMsrA==",
+    "secretForeignKeys": [],
+    "cryptedForeignKeys": {},
+    "delegations": {
+      "a7961533-387f-4b9d-acd7-fb6993f855d1": {}
+    },
+    "encryptionKeys": {
+      "a7961533-387f-4b9d-acd7-fb6993f855d1": {}
+    }
+  }
+}
+```
+</details>

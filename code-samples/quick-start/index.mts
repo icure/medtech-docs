@@ -5,6 +5,7 @@ import 'isomorphic-fetch'
 import { medTechApi } from '@icure/medical-device-sdk'
 import { webcrypto } from 'crypto'
 import * as process from 'process'
+import { output } from '../utils/index.mjs'
 
 export const host = process.env.ICURE_URL ?? 'https://api.icure.cloud/rest/v1'
 export const username = process.env.ICURE_USER_NAME
@@ -22,3 +23,5 @@ const api = await medTechApi()
 //tech-doc: get the currently logged user
 const user = await api.userApi.getLoggedUser()
 console.log(JSON.stringify(user))
+//tech-doc: STOP HERE
+output({ user })

@@ -1,18 +1,11 @@
 import 'isomorphic-fetch'
 import { CodingReference, HealthcareElement } from '@icure/medical-device-sdk'
-import { hex2ua } from '@icure/api'
-import { initLocalStorage, initMedTechApi, patientId, privKey } from '../../utils/index.mjs'
+import { initLocalStorage, initMedTechApi, output, patientId } from '../../utils/index.mjs'
 import { expect } from 'chai'
 
 initLocalStorage()
 
-const api = await initMedTechApi()
-
-const user = await api.userApi.getLoggedUser()
-await api.cryptoApi.loadKeyPairsAsTextInBrowserLocalStorage(
-  user.healthcarePartyId ?? user.patientId ?? user.deviceId,
-  hex2ua(privKey),
-)
+const api = await initMedTechApi(true)
 
 const patient = await api.patientApi.getPatient(patientId)
 
@@ -34,5 +27,6 @@ const healthcareElement = await api.healthcareElementApi.createOrModifyHealthcar
 )
 
 //tech-doc: STOP HERE
+output({ healthcareElement, patient })
 expect(!!healthcareElement).to.eq(true) //skip
 expect(healthcareElement.description).to.eq('The patient is pregnant') //skip

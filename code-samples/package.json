@@ -8,7 +8,7 @@
     "lint": "eslint --ext .js,.ts,.mjs,.mts .",
     "lint-fix": "eslint --fix --ext .js,.ts,.mjs,.mts .",
     "start": "yarn run lint-fix && yarn run build && node runall.mjs",
-    "start-specific": "yarn run build && node how-to/manage-healthcare-professionals/index.mjs"
+    "start-specific": "yarn run build && node how-to/websocket/index.mjs"
   },
   "lint-staged": {
     "*.js": [
@@ -30,7 +30,7 @@
   },
   "dependencies": {
     "@icure/api": "6.0.0",
-    "@icure/medical-device-sdk": "^2.1.0",
+    "@icure/medical-device-sdk": "^2.2.0",
     "isomorphic-fetch": "^3.0.0",
     "node-fetch": "^2.6.1",
     "node-localstorage": "^2.2.1",

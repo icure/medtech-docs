@@ -97,6 +97,8 @@ Also, do not forget to contact the iCure team to get our ReCAPTCHA SiteKey that 
 
 :::
 
+As an alternative, you can use [FriendlyCaptcha](https://friendlycaptcha.com/). In this case, the `recaptchaType` property
+of the `startAuthentication` method should be `"friendly-captcha"`.
 
 <!-- file://code-samples/how-to/authenticate-user/index.mts snippet:Start Authentication Process By Email-->
 ```typescript
@@ -106,10 +108,21 @@ const authProcess = await anonymousApi.authenticationApi.startAuthentication(
   undefined,
   'Daenerys',
   'Targaryen',
-  masterHcpId,
+  masterHcpId
 )
 ```
+<!-- output://code-samples/how-to/authenticate-user/authProcess.txt -->
+<details>
+<summary>authProcess</summary>
 
+```json
+{
+  "requestId": "b3677b4b-5546-45f0-bd93-399206f91fd1",
+  "login": "z3r2w2ui8-dt@got.com",
+  "bypassTokenCheck": false
+}
+```
+</details>
 
 As an output, you receive an `AuthenticationProcess` object, which you will need for next steps of the procedure.
 
@@ -139,18 +152,18 @@ Once Daenaerys retrieves her validation code, she can come back to your app and 
 
 #### Completing the authentication process
 To complete Daenaerys registration, you will have to call the `authenticationApi.completeAuthentication` service, 
-by providing three arguments: 
+by providing two arguments: 
 - The previous `AuthenticationProcess`
 - The validation code Daenaerys received by email
-- A lambda providing the RSA Keypair Daenaerys should use. For this last point, you may use the dedicated 
-service `anonymousMedTechApi.generateRSAKeypair()`
+
+This method will also generate the public and private key for the user, saving them in the `keyStorage` property of the 
+newly created MedTechAPI.
  
 <!-- file://code-samples/how-to/authenticate-user/index.mts snippet:Complete authentication process-->
 ```typescript
 const authenticationResult = await anonymousApi.authenticationApi.completeAuthentication(
   authProcess!,
-  validationCode,
-  () => anonymousApi.generateRSAKeypair(), // Generate an RSA Keypair for the user
+  validationCode
 )
 
 const authenticatedApi = authenticationResult.medTechApi
@@ -180,7 +193,7 @@ saveSecurely(
   authenticationResult.token,
   authenticationResult.userId,
   authenticationResult.groupId,
-  authenticationResult.keyPair,
+  authenticationResult.keyPairs
 )
 ```
 
@@ -192,72 +205,61 @@ const createdDataSample = await authenticatedApi.dataSampleApi.createOrModifyDat
   loggedUser.patientId,
   new DataSample({
     labels: new Set([new CodingReference({ type: 'IC-TEST', code: 'TEST' })]),
-    content: { en: { stringValue: 'Hello world' } },
+    content: { en: new Content({ stringValue: 'Hello world' }) },
     openingDate: 20220929083400,
-    comment: 'This is a comment',
-  }),
+    comment: 'This is a comment'
+  })
 )
 ```
-
+<!-- output://code-samples/how-to/authenticate-user/createdDataSample.txt -->
 <details>
-    <summary>Output</summary>
+<summary>createdDataSample</summary>
 
 ```json
 {
-  "id": "48e571a0-ac5f-47b3-8e25-16f5e78b50c9",
+  "id": "5f8b7c90-38f5-4a56-a148-40640f1786cc",
+  "qualifiedLinks": {},
+  "batchId": "8dd058db-b119-4324-8031-e19e4d825aa2",
+  "index": 0,
+  "valueDate": 20230327170531,
+  "openingDate": 20220929083400,
+  "created": 1679929531627,
+  "modified": 1679929531627,
+  "author": "8f5db3f2-c6b3-4f2e-b448-4c2fc5a731f3",
+  "responsible": "348f99d7-d67e-435a-9423-829d7909bf22",
+  "comment": "This is a comment",
   "identifiers": [],
-  "labels": {},
-  "codes": {},
-  "names": [
-    {
-      "firstNames": [
-        "John"
-      ],
-      "prefix": [],
-      "suffix": [],
-      "lastName": "Snow",
-      "text": "Snow John",
-      "use": "official"
+  "healthcareElementIds": {},
+  "canvasesIds": {},
+  "content": {
+    "en": {
+      "stringValue": "Hello world",
+      "compoundValue": [],
+      "ratio": [],
+      "range": []
     }
-  ],
-  "languages": [],
-  "addresses": [],
-  "mergedIds": {},
-  "active": true,
-  "deactivationReason": "none",
-  "partnerships": [],
-  "patientHealthCareParties": [],
-  "patientProfessions": [],
-  "parameters": {},
-  "properties": {},
-  "rev": "1-8e3ad0d7e3179188dcd95f186f78b68d",
-  "created": 1664552695128,
-  "modified": 1664552695128,
-  "author": "3363719b-579e-4640-ac62-13e608e69395",
-  "responsible": "d6c8dbc7-eaa8-4c95-b9b3-920fb70ce59b",
-  "firstName": "John",
-  "lastName": "Snow",
-  "gender": "male",
-  "birthSex": "unknown",
-  "personalStatus": "unknown",
-  "note": "Winter is coming",
+  },
+  "codes": {},
+  "labels": {},
   "systemMetaData": {
-    "hcPartyKeys": {},
-    "privateKeyShamirPartitions": {},
-    "secretForeignKeys": [],
-    "cryptedForeignKeys": {},
+    "secretForeignKeys": [
+      "ab503504-dc2c-43e3-9497-3e3ea9cf8281"
+    ],
+    "cryptedForeignKeys": {
+      "348f99d7-d67e-435a-9423-829d7909bf22": {},
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+    },
     "delegations": {
-      "d6c8dbc7-eaa8-4c95-b9b3-920fb70ce59b": {}
+      "348f99d7-d67e-435a-9423-829d7909bf22": {},
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
     },
     "encryptionKeys": {
-      "d6c8dbc7-eaa8-4c95-b9b3-920fb70ce59b": {}
-    },
-    "aesExchangeKeys": {},
-    "transferKeys": {}
+      "348f99d7-d67e-435a-9423-829d7909bf22": {},
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+    }
   }
 }
 ```
-
 </details>
 
 But what do you have to do when the authentication token of Daenaerys expires and she needs to login again?
@@ -285,15 +287,6 @@ const authProcessLogin = await anonymousApiForLogin.authenticationApi.startAuthe
 )
 ```
 
-<details>
-    <summary>Output</summary>
-
-```json
-
-```
-
-</details>
-
 Daenaerys then receives a new validation code by email.
 
 Since you already created an RSA keypair for her, you just need to retrieve it from where you stored it previously
@@ -304,15 +297,6 @@ and provide it to the `completeAuthentication` method.
 const loginResult = await anonymousApiForLogin.authenticationApi.completeAuthentication(
   authProcessLogin!,
   validationCodeForLogin,
-  () => {
-    const userInfo = getBackCredentials()
-    if (userInfo.pubKey != undefined && userInfo.privKey != undefined) {
-      return Promise.resolve({ privateKey: userInfo.privKey, publicKey: userInfo.pubKey })
-    } else {
-      // You can't find back the user's RSA Keypair: You need to generate a new one
-      return anonymousApiForLogin.generateRSAKeypair()
-    }
-  },
 )
 
 console.log(`Your new user id: ${loginResult.userId}`)
@@ -332,7 +316,7 @@ saveSecurely(
   authenticationResult.token,
   authenticationResult.userId,
   authenticationResult.groupId,
-  authenticationResult.keyPair,
+  authenticationResult.keyPairs
 )
 ```
 
@@ -354,67 +338,59 @@ And Daenaerys may manage her data again :
 ```typescript
 const loggedUserApi = loginResult.medTechApi
 
-const foundDataSampleAfterLogin = await loggedUserApi.dataSampleApi.getDataSample(createdDataSample.id)
+const foundDataSampleAfterLogin = await loggedUserApi.dataSampleApi.getDataSample(
+  createdDataSample.id,
+)
 ```
+<!-- output://code-samples/how-to/authenticate-user/foundDataSampleAfterLogin.txt -->
 <details>
-    <summary>Output</summary>
+<summary>foundDataSampleAfterLogin</summary>
 
 ```json
 {
-  "id": "48e571a0-ac5f-47b3-8e25-16f5e78b50c9",
+  "id": "5f8b7c90-38f5-4a56-a148-40640f1786cc",
+  "qualifiedLinks": {},
+  "batchId": "8dd058db-b119-4324-8031-e19e4d825aa2",
+  "index": 0,
+  "valueDate": 20230327170531,
+  "openingDate": 20220929083400,
+  "created": 1679929531627,
+  "modified": 1679929531627,
+  "author": "8f5db3f2-c6b3-4f2e-b448-4c2fc5a731f3",
+  "responsible": "348f99d7-d67e-435a-9423-829d7909bf22",
+  "comment": "This is a comment",
   "identifiers": [],
-  "labels": {},
-  "codes": {},
-  "names": [
-    {
-      "firstNames": [
-        "John"
-      ],
-      "prefix": [],
-      "suffix": [],
-      "lastName": "Snow",
-      "text": "Snow John",
-      "use": "official"
+  "healthcareElementIds": {},
+  "canvasesIds": {},
+  "content": {
+    "en": {
+      "stringValue": "Hello world",
+      "compoundValue": [],
+      "ratio": [],
+      "range": []
     }
-  ],
-  "languages": [],
-  "addresses": [],
-  "mergedIds": {},
-  "active": true,
-  "deactivationReason": "none",
-  "partnerships": [],
-  "patientHealthCareParties": [],
-  "patientProfessions": [],
-  "parameters": {},
-  "properties": {},
-  "rev": "1-8e3ad0d7e3179188dcd95f186f78b68d",
-  "created": 1664552695128,
-  "modified": 1664552695128,
-  "author": "3363719b-579e-4640-ac62-13e608e69395",
-  "responsible": "d6c8dbc7-eaa8-4c95-b9b3-920fb70ce59b",
-  "firstName": "John",
-  "lastName": "Snow",
-  "gender": "male",
-  "birthSex": "unknown",
-  "personalStatus": "unknown",
-  "note": "Winter is coming",
+  },
+  "codes": {},
+  "labels": {},
   "systemMetaData": {
-    "hcPartyKeys": {},
-    "privateKeyShamirPartitions": {},
-    "secretForeignKeys": [],
-    "cryptedForeignKeys": {},
+    "secretForeignKeys": [
+      "ab503504-dc2c-43e3-9497-3e3ea9cf8281"
+    ],
+    "cryptedForeignKeys": {
+      "348f99d7-d67e-435a-9423-829d7909bf22": {},
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+    },
     "delegations": {
-      "d6c8dbc7-eaa8-4c95-b9b3-920fb70ce59b": {}
+      "348f99d7-d67e-435a-9423-829d7909bf22": {},
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
     },
     "encryptionKeys": {
-      "d6c8dbc7-eaa8-4c95-b9b3-920fb70ce59b": {}
-    },
-    "aesExchangeKeys": {},
-    "transferKeys": {}
+      "348f99d7-d67e-435a-9423-829d7909bf22": {},
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+    }
   }
 }
 ```
-
 </details>
 
 The last thing you need to know is what to do when Daenaerys credentials are still valid: if you saved
@@ -438,7 +414,7 @@ saveSecurely(
   authenticationResult.token,
   authenticationResult.userId,
   authenticationResult.groupId,
-  authenticationResult.keyPair,
+  authenticationResult.keyPairs
 )
 ```
 
@@ -460,74 +436,66 @@ const reInstantiatedApi = await new MedTechApiBuilder()
   .withCrypto(webcrypto as any)
   .build()
 
-await reInstantiatedApi.initUserCrypto(false, { publicKey: pubKey, privateKey: privKey })
+await reInstantiatedApi.initUserCrypto({ publicKey: pubKey, privateKey: privKey })
 ```
 
 Daenaerys can finally manage her data again. 
 <!-- file://code-samples/how-to/authenticate-user/index.mts snippet:Get back encrypted data-->
 ```typescript
-const foundDataSampleAfterInstantiatingApi = await reInstantiatedApi.dataSampleApi.getDataSample(createdDataSample.id)
+const foundDataSampleAfterInstantiatingApi = await reInstantiatedApi.dataSampleApi.getDataSample(
+  createdDataSample.id,
+)
 ```
 
+<!-- output://code-samples/how-to/authenticate-user/foundDataSampleAfterInstantiatingApi.txt -->
 <details>
-    <summary>Output</summary>
+<summary>foundDataSampleAfterInstantiatingApi</summary>
 
 ```json
 {
-  "id": "48e571a0-ac5f-47b3-8e25-16f5e78b50c9",
+  "id": "5f8b7c90-38f5-4a56-a148-40640f1786cc",
+  "qualifiedLinks": {},
+  "batchId": "8dd058db-b119-4324-8031-e19e4d825aa2",
+  "index": 0,
+  "valueDate": 20230327170531,
+  "openingDate": 20220929083400,
+  "created": 1679929531627,
+  "modified": 1679929531627,
+  "author": "8f5db3f2-c6b3-4f2e-b448-4c2fc5a731f3",
+  "responsible": "348f99d7-d67e-435a-9423-829d7909bf22",
+  "comment": "This is a comment",
   "identifiers": [],
-  "labels": {},
-  "codes": {},
-  "names": [
-    {
-      "firstNames": [
-        "John"
-      ],
-      "prefix": [],
-      "suffix": [],
-      "lastName": "Snow",
-      "text": "Snow John",
-      "use": "official"
+  "healthcareElementIds": {},
+  "canvasesIds": {},
+  "content": {
+    "en": {
+      "stringValue": "Hello world",
+      "compoundValue": [],
+      "ratio": [],
+      "range": []
     }
-  ],
-  "languages": [],
-  "addresses": [],
-  "mergedIds": {},
-  "active": true,
-  "deactivationReason": "none",
-  "partnerships": [],
-  "patientHealthCareParties": [],
-  "patientProfessions": [],
-  "parameters": {},
-  "properties": {},
-  "rev": "1-8e3ad0d7e3179188dcd95f186f78b68d",
-  "created": 1664552695128,
-  "modified": 1664552695128,
-  "author": "3363719b-579e-4640-ac62-13e608e69395",
-  "responsible": "d6c8dbc7-eaa8-4c95-b9b3-920fb70ce59b",
-  "firstName": "John",
-  "lastName": "Snow",
-  "gender": "male",
-  "birthSex": "unknown",
-  "personalStatus": "unknown",
-  "note": "Winter is coming",
+  },
+  "codes": {},
+  "labels": {},
   "systemMetaData": {
-    "hcPartyKeys": {},
-    "privateKeyShamirPartitions": {},
-    "secretForeignKeys": [],
-    "cryptedForeignKeys": {},
+    "secretForeignKeys": [
+      "ab503504-dc2c-43e3-9497-3e3ea9cf8281"
+    ],
+    "cryptedForeignKeys": {
+      "348f99d7-d67e-435a-9423-829d7909bf22": {},
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+    },
     "delegations": {
-      "d6c8dbc7-eaa8-4c95-b9b3-920fb70ce59b": {}
+      "348f99d7-d67e-435a-9423-829d7909bf22": {},
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
     },
     "encryptionKeys": {
-      "d6c8dbc7-eaa8-4c95-b9b3-920fb70ce59b": {}
-    },
-    "aesExchangeKeys": {},
-    "transferKeys": {}
+      "348f99d7-d67e-435a-9423-829d7909bf22": {},
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+    }
   }
 }
 ```
-
 </details>
 
 

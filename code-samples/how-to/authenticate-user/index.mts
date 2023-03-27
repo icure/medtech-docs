@@ -1,11 +1,12 @@
 import 'isomorphic-fetch'
-import { initLocalStorage, initMedTechApi } from '../../utils/index.mjs'
+import { initLocalStorage, initMedTechApi, output } from '../../utils/index.mjs'
 import {
   AnonymousMedTechApiBuilder,
   MedTechApiBuilder,
   DataSample,
   CodingReference,
   medTechApi,
+  Content
 } from '@icure/medical-device-sdk'
 import { webcrypto } from 'crypto'
 import * as process from 'process'
@@ -22,15 +23,15 @@ function saveSecurely(
   userToken: string,
   userId: string,
   groupId: string,
-  keyPair: { privateKey: string; publicKey: string },
+  keyPairs: { privateKey: string; publicKey: string }[],
 ) {
   console.log(`Saving user ${userLogin} info`)
   cachedInfo['login'] = userLogin
   cachedInfo['token'] = userToken
   cachedInfo['userId'] = userId
   cachedInfo['groupId'] = groupId
-  cachedInfo['pubKey'] = keyPair.publicKey
-  cachedInfo['privKey'] = keyPair.privateKey
+  cachedInfo['pubKey'] = keyPairs[0].publicKey
+  cachedInfo['privKey'] = keyPairs[0].privateKey
 }
 
 function getBackCredentials(): {
@@ -43,7 +44,7 @@ function getBackCredentials(): {
     login: cachedInfo['login'],
     token: cachedInfo['token'],
     pubKey: cachedInfo['pubKey'],
-    privKey: cachedInfo['privKey'],
+    privKey: cachedInfo['privKey']
   }
 }
 
@@ -54,6 +55,7 @@ const masterHcpApi = await initMedTechApi()
 const masterUser = await masterHcpApi.userApi.getLoggedUser()
 const masterHcpId = masterHcpApi.dataOwnerApi.getDataOwnerIdOf(masterUser)
 //tech-doc: STOP HERE
+output({ masterHcpId, masterUser })
 
 //tech-doc: Instantiate AnonymousMedTech API
 const iCureUrl = process.env.ICURE_URL
@@ -72,6 +74,11 @@ const anonymousApi = await new AnonymousMedTechApiBuilder()
   .withAuthProcessBySmsId(authProcessBySmsId)
   .build()
 //tech-doc: STOP HERE
+output({
+  anonymousApi:
+    'An initialized AnonymousMedTechApi instance. ' +
+    'This instance contains a authenticationApi property that can be used to start the authentication process.',
+})
 
 //tech-doc: Start Authentication Process By Email
 const authProcess = await anonymousApi.authenticationApi.startAuthentication(
@@ -80,18 +87,17 @@ const authProcess = await anonymousApi.authenticationApi.startAuthentication(
   undefined,
   'Daenerys',
   'Targaryen',
-  masterHcpId,
+  masterHcpId
 )
 //tech-doc: STOP HERE
+output({ authProcess })
 
 const validationCode = (await getLastEmail(userEmail)).subject!
-console.log('Validation code is ', validationCode)
 
 //tech-doc: Complete authentication process
 const authenticationResult = await anonymousApi.authenticationApi.completeAuthentication(
   authProcess!,
-  validationCode,
-  () => anonymousApi.generateRSAKeypair(), // Generate an RSA Keypair for the user
+  validationCode
 )
 
 const authenticatedApi = authenticationResult.medTechApi
@@ -102,6 +108,7 @@ console.log(`Your initialised MedTechAPI: ***\${authenticatedApi}***`)
 console.log(`RSA keypair of your new user: ***\${authenticationResult.keyPair}***`)
 console.log(`Token created to authenticate your new user: ***\${authenticationResult.token}***`)
 //tech-doc: STOP HERE
+output({ authenticationResult })
 
 //tech-doc: Save credentials
 // saveSecurely does not exist: Use your own way of storing the following data securely
@@ -111,29 +118,27 @@ saveSecurely(
   authenticationResult.token,
   authenticationResult.userId,
   authenticationResult.groupId,
-  authenticationResult.keyPair,
+  authenticationResult.keyPairs
 )
 //tech-doc: STOP HERE
 
 //tech-doc: Get logged user info
 const loggedUser = await authenticatedApi.userApi.getLoggedUser()
 //tech-doc: STOP HERE
-
-console.log('Logged User: ', JSON.stringify(loggedUser))
+output({ loggedUser })
 
 //tech-doc: Create encrypted data
 const createdDataSample = await authenticatedApi.dataSampleApi.createOrModifyDataSampleFor(
   loggedUser.patientId,
   new DataSample({
     labels: new Set([new CodingReference({ type: 'IC-TEST', code: 'TEST' })]),
-    content: { en: { stringValue: 'Hello world' } },
+    content: { en: new Content({ stringValue: 'Hello world' }) },
     openingDate: 20220929083400,
-    comment: 'This is a comment',
-  }),
+    comment: 'This is a comment'
+  })
 )
 //tech-doc: STOP HERE
-
-console.log('Created data sample: ', JSON.stringify(createdDataSample))
+output({ createdDataSample })
 
 //tech-doc: Get back credentials
 // getBackCredentials does not exist: Use your own way of storing the following data securely
@@ -149,7 +154,7 @@ const reInstantiatedApi = await new MedTechApiBuilder()
   .withCrypto(webcrypto as any)
   .build()
 
-await reInstantiatedApi.initUserCrypto(false, { publicKey: pubKey, privateKey: privKey })
+await reInstantiatedApi.initUserCrypto({ publicKey: pubKey, privateKey: privKey })
 //tech-doc: STOP HERE
 
 //tech-doc: Get back encrypted data
@@ -157,11 +162,7 @@ const foundDataSampleAfterInstantiatingApi = await reInstantiatedApi.dataSampleA
   createdDataSample.id,
 )
 //tech-doc: STOP HERE
-
-console.log(
-  'Found patient after re-instantiating api',
-  JSON.stringify(foundDataSampleAfterInstantiatingApi),
-)
+output({ foundDataSampleAfterInstantiatingApi })
 
 //tech-doc: Login
 const anonymousApiForLogin = await new AnonymousMedTechApiBuilder()
@@ -178,23 +179,12 @@ const authProcessLogin = await anonymousApiForLogin.authenticationApi.startAuthe
   userEmail, // The email address used for user registration
 )
 //tech-doc: STOP HERE
-
 const validationCodeForLogin = (await getLastEmail(userEmail)).subject!
-console.log('Validation code is ', validationCodeForLogin)
 
 //tech-doc: Complete login authentication process
 const loginResult = await anonymousApiForLogin.authenticationApi.completeAuthentication(
   authProcessLogin!,
   validationCodeForLogin,
-  () => {
-    const userInfo = getBackCredentials()
-    if (userInfo.pubKey != undefined && userInfo.privKey != undefined) {
-      return Promise.resolve({ privateKey: userInfo.privKey, publicKey: userInfo.pubKey })
-    } else {
-      // You can't find back the user's RSA Keypair: You need to generate a new one
-      return anonymousApiForLogin.generateRSAKeypair()
-    }
-  },
 )
 
 console.log(`Your new user id: ${loginResult.userId}`)
@@ -203,6 +193,7 @@ console.log(`Your new initialised MedTechAPI: ***\${loginResult.medTechApi}***`)
 console.log(`RSA keypair of your user stays the same: ***\${loginResult.keyPair}***`)
 console.log(`The token of your user will change: ***\${loginResult.token}***`)
 //tech-doc: STOP HERE
+output({ loginResult })
 
 //tech-doc: Access back encrypted data
 const loggedUserApi = loginResult.medTechApi
@@ -211,14 +202,17 @@ const foundDataSampleAfterLogin = await loggedUserApi.dataSampleApi.getDataSampl
   createdDataSample.id,
 )
 //tech-doc: STOP HERE
-
-console.log('Found Data Sample after login: ', JSON.stringify(foundDataSampleAfterLogin))
+output({ foundDataSampleAfterLogin })
 
 // User lost his key section
 const daenaerysId = loggedUser.patientId
 const currentPatient = await loggedUserApi.patientApi.getPatient(daenaerysId)
 await loggedUserApi.patientApi.giveAccessTo(currentPatient, masterHcpId)
 await loggedUserApi.dataSampleApi.giveAccessTo(createdDataSample, masterHcpId)
+
+localStorage.removeItem(
+  `${currentPatient.id}.${currentPatient.systemMetaData.publicKey.slice(-32)}`,
+)
 
 cachedInfo['login'] = undefined
 cachedInfo['token'] = undefined
@@ -248,15 +242,6 @@ const newValidationCode = (await getLastEmail(userEmail)).subject!
 const loginAuthResult = await anonymousMedTechApi.authenticationApi.completeAuthentication(
   loginProcess!,
   newValidationCode,
-  () => {
-    const userInfo = getBackCredentials()
-    if (userInfo.pubKey != undefined && userInfo.privKey != undefined) {
-      return Promise.resolve({ privateKey: userInfo.privKey, publicKey: userInfo.pubKey })
-    } else {
-      // You can't find back the user's RSA Keypair: You need to generate a new one
-      return anonymousApiForLogin.generateRSAKeypair()
-    }
-  },
 )
 //tech-doc: STOP HERE
 
@@ -267,7 +252,7 @@ saveSecurely(
   loginAuthResult.token,
   loginAuthResult.userId,
   loginAuthResult.groupId,
-  loginAuthResult.keyPair,
+  loginAuthResult.keyPairs,
 )
 
 //tech-doc: User can create new data after loosing their key
@@ -276,12 +261,13 @@ const newlyCreatedDataSample =
     foundUser.patientId,
     new DataSample({
       labels: new Set([new CodingReference({ type: 'IC-TEST', code: 'TEST' })]),
-      content: { en: { stringValue: 'Hello world' } },
+      content: { en: new Content({ stringValue: 'Hello world' }) },
       openingDate: 20220929083400,
       comment: 'This is a comment',
     }),
   )
 //tech-doc: STOP HERE
+output({ newlyCreatedDataSample })
 
 expect(newlyCreatedDataSample).to.not.be.undefined //skip
 
@@ -307,8 +293,9 @@ const hcpNotifications = await hcpApi.notificationApi
   .getPendingNotificationsAfter(startTimestamp)
   .then((notifs) => notifs.filter((notif) => notif.type === NotificationTypeEnum.KEY_PAIR_UPDATE))
 //tech-doc: STOP HERE
+output({ hcpNotifications })
 
-expect(hcpNotifications.length).to.not.be.undefined
+expect(hcpNotifications.length).to.be.greaterThan(0)
 
 const daenaerysNotification = hcpNotifications.find(
   (notif) =>
@@ -334,11 +321,14 @@ const accessBack = await hcpApi.dataOwnerApi.giveAccessBackTo(
 )
 expect(accessBack).to.be.true //skip
 //tech-doc: STOP HERE
+output({ daenaerysPatientId, daenaerysPatientPubKey, accessBack })
 
 // Then
 const updatedApi = await medTechApi(loginAuthResult.medTechApi).build()
-await updatedApi.initUserCrypto(false, loginAuthResult.keyPair)
+await updatedApi.initUserCrypto(loginAuthResult.keyPairs[0])
 
 const previousDataSample = await updatedApi.dataSampleApi.getDataSample(createdDataSample.id!)
 expect(previousDataSample).to.not.be.undefined //skip
 //tech-doc: STOP HERE
+
+output({ previousDataSample })

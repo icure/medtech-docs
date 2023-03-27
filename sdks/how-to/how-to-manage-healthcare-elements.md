@@ -25,7 +25,7 @@ In the following example, a Healthcare Professional will create, for a Patient, 
 
 <!-- file://code-samples/how-to/manage-healthcare-elements/index.mts snippet:create a HE as data owner-->
 ```typescript
-const newHE = new HealthcareElement({
+const newHealthcareElement = new HealthcareElement({
   description: 'The patient has been diagnosed Pararibulitis',
   codes: new Set([
     new CodingReference({
@@ -39,10 +39,62 @@ const newHE = new HealthcareElement({
 })
 
 const healthcareElement = await api.healthcareElementApi.createOrModifyHealthcareElement(
-  newHE,
+  newHealthcareElement,
   patient.id,
 )
 ```
+<!-- output://code-samples/how-to/manage-healthcare-elements/newHealthcareElement.txt -->
+<details>
+<summary>newHealthcareElement</summary>
+
+```json
+{
+  "description": "The patient has been diagnosed Pararibulitis",
+  "openingDate": 1570838400000,
+  "identifiers": [],
+  "codes": {},
+  "labels": {}
+}
+```
+</details>
+
+<!-- output://code-samples/how-to/manage-healthcare-elements/healthcareElement.txt -->
+<details>
+<summary>healthcareElement</summary>
+
+```json
+{
+  "id": "27b4a00a-2feb-4dd6-8fea-a23fb0ffe68c",
+  "rev": "1-28338fcef0fa137f60ab6082aa435908",
+  "created": 1679929562383,
+  "modified": 1679929562383,
+  "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
+  "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
+  "healthcareElementId": "27b4a00a-2feb-4dd6-8fea-a23fb0ffe68c",
+  "valueDate": 20230327170602,
+  "openingDate": 1570838400000,
+  "description": "The patient has been diagnosed Pararibulitis",
+  "identifiers": [],
+  "codes": {},
+  "labels": {},
+  "systemMetaData": {
+    "secretForeignKeys": [
+      "4742a08d-bbc1-4ed1-a758-f0a605529bf1"
+    ],
+    "cryptedForeignKeys": {
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+    },
+    "delegations": {
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+    },
+    "encryptionKeys": {
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+    },
+    "encryptedSelf": "3tplgdVJYYqEKALkdcVRcaxdObutTWxoNwDWotqUa++lXyRcaNpCCXJ5kaHxfOabgE4r2Ck/hU2PBeHH5mesjmL9QrIhRUEWqIAIYj631qY="
+  }
+}
+```
+</details>
 
 :::note
 
@@ -91,6 +143,81 @@ const followUpHealthcareElement = await api.healthcareElementApi.createOrModifyH
   patient.id,
 )
 ```
+<!-- output://code-samples/how-to/manage-healthcare-elements/startHealthcareElement.txt -->
+<details>
+<summary>startHealthcareElement</summary>
+
+```json
+{
+  "id": "15c26ab9-3591-4ba5-923e-9b10b2032643",
+  "rev": "1-a3eedcacad2f76328c04e1fc12cd7a8b",
+  "created": 1679929562983,
+  "modified": 1679929562983,
+  "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
+  "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
+  "healthcareElementId": "15c26ab9-3591-4ba5-923e-9b10b2032643",
+  "valueDate": 20230327170602,
+  "openingDate": 1570838400000,
+  "description": "The patient has been diagnosed Pararibulitis",
+  "identifiers": [],
+  "codes": {},
+  "labels": {},
+  "systemMetaData": {
+    "secretForeignKeys": [
+      "4742a08d-bbc1-4ed1-a758-f0a605529bf1"
+    ],
+    "cryptedForeignKeys": {
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+    },
+    "delegations": {
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+    },
+    "encryptionKeys": {
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+    },
+    "encryptedSelf": "VQmrZzUGzDVAQrUL21msZ82+jnavv2sEP48TRGaf2N47mxujndXr2b+PCMlBD9vMM2FGMalq/4mQTseahaF6N6XFlmNAZ7WKyyDUiahIS/c="
+  }
+}
+```
+</details>
+
+<!-- output://code-samples/how-to/manage-healthcare-elements/followUpHealthcareElement.txt -->
+<details>
+<summary>followUpHealthcareElement</summary>
+
+```json
+{
+  "id": "296d6079-a8bf-424e-8c40-17b610613230",
+  "rev": "1-67ebab0089227bd77a02f1b860e261ee",
+  "created": 1679929563087,
+  "modified": 1679929563087,
+  "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
+  "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
+  "healthcareElementId": "15c26ab9-3591-4ba5-923e-9b10b2032643",
+  "valueDate": 20230327170603,
+  "openingDate": 1604793600000,
+  "description": "The patient recovered",
+  "identifiers": [],
+  "codes": {},
+  "labels": {},
+  "systemMetaData": {
+    "secretForeignKeys": [
+      "4742a08d-bbc1-4ed1-a758-f0a605529bf1"
+    ],
+    "cryptedForeignKeys": {
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+    },
+    "delegations": {
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+    },
+    "encryptionKeys": {
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+    },
+    "encryptedSelf": "5t8xlyR4OuehqJf5iQy3vR5Q31lvJKfWBw5iTBAzoxuaZiMAavWzORUrzLTOKPfhgPMXWgyHAb/ycB9muraiyA=="
+  }
+}
+```
+</details>
 
 :::note
 
@@ -125,6 +252,95 @@ const newElements = await api.healthcareElementApi.createOrModifyHealthcareEleme
   patient.id,
 )
 ```
+<!-- output://code-samples/how-to/manage-healthcare-elements/healthcareElement1.txt -->
+<details>
+<summary>healthcareElement1</summary>
+
+```json
+{
+  "description": "The patient has been diagnosed Pararibulitis",
+  "openingDate": 1570838400000,
+  "identifiers": [],
+  "codes": {},
+  "labels": {}
+}
+```
+</details>
+
+<!-- output://code-samples/how-to/manage-healthcare-elements/healthcareElement2.txt -->
+<details>
+<summary>healthcareElement2</summary>
+
+```json
+{
+  "description": "The patient has also the flu",
+  "openingDate": 1604793600000,
+  "identifiers": [],
+  "codes": {},
+  "labels": {}
+}
+```
+</details>
+
+<!-- output://code-samples/how-to/manage-healthcare-elements/newElements.txt -->
+<details>
+<summary>newElements</summary>
+
+```text
+[
+  {
+    "id": "04a5bae9-06af-4030-b20f-1ba24c775c27",
+    "rev": "1-df2e2c1958d4762d5dda0002b55c04cf",
+    "healthcareElementId": "04a5bae9-06af-4030-b20f-1ba24c775c27",
+    "openingDate": 1570838400000,
+    "description": "The patient has been diagnosed Pararibulitis",
+    "identifiers": [],
+    "codes": {},
+    "labels": {},
+    "systemMetaData": {
+      "secretForeignKeys": [
+        "4742a08d-bbc1-4ed1-a758-f0a605529bf1"
+      ],
+      "cryptedForeignKeys": {
+        "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+      },
+      "delegations": {
+        "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+      },
+      "encryptionKeys": {
+        "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+      },
+      "encryptedSelf": "DqDyUO2ma7iV5v/5fzk7OvQRrzRVYNiLgdhjwNOCAIHhtkCARCo1X7qmZ9yHaPbPQ+F/L5O+R/yst+gCvx/YCYwIWV5YrI5E3H8P6JyP4as="
+    }
+  },
+  {
+    "id": "7acb7226-cbcc-4c1f-be53-78b86da6167d",
+    "rev": "1-d65c8a49a68c9fdc7c1d7a148f403e1e",
+    "healthcareElementId": "7acb7226-cbcc-4c1f-be53-78b86da6167d",
+    "openingDate": 1604793600000,
+    "description": "The patient has also the flu",
+    "identifiers": [],
+    "codes": {},
+    "labels": {},
+    "systemMetaData": {
+      "secretForeignKeys": [
+        "4742a08d-bbc1-4ed1-a758-f0a605529bf1"
+      ],
+      "cryptedForeignKeys": {
+        "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+      },
+      "delegations": {
+        "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+      },
+      "encryptionKeys": {
+        "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+      },
+      "encryptedSelf": "ltbIwp4KrDTfwz8OUjFlL1QWdow912+Tjsx5K/Io1GjddhIySfCykaGSwaHN8XbeFbgOZBr6DrTHcooJJreUUw=="
+    }
+  }
+]
+```
+</details>
 
 :::caution
 
@@ -132,8 +348,6 @@ Even if you associate a Healthcare Element to a Patient, the Patient does not au
 You need to explicitly give access to the patient user to this created Healthcare Element by calling the service `giveAccessTo`.
 
 :::
-
-
 
 ## Sharing a Healthcare Element with a Patient
 
@@ -146,6 +360,46 @@ const sharedHealthcareElement = await api.healthcareElementApi.giveAccessTo(
   patient.id,
 )
 ```
+<!-- output://code-samples/how-to/manage-healthcare-elements/sharedHealthcareElement.txt -->
+<details>
+<summary>sharedHealthcareElement</summary>
+
+```json
+{
+  "id": "27b4a00a-2feb-4dd6-8fea-a23fb0ffe68c",
+  "rev": "2-7983a6b64cd8f919f372bbaa9da0feda",
+  "created": 1679929562383,
+  "modified": 1679929562383,
+  "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
+  "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
+  "healthcareElementId": "27b4a00a-2feb-4dd6-8fea-a23fb0ffe68c",
+  "valueDate": 20230327170602,
+  "openingDate": 1570838400000,
+  "description": "The patient has been diagnosed Pararibulitis",
+  "identifiers": [],
+  "codes": {},
+  "labels": {},
+  "systemMetaData": {
+    "secretForeignKeys": [
+      "4742a08d-bbc1-4ed1-a758-f0a605529bf1"
+    ],
+    "cryptedForeignKeys": {
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {},
+      "3238dd4f-be09-4375-bb5b-0bf9d737ac94": {}
+    },
+    "delegations": {
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {},
+      "3238dd4f-be09-4375-bb5b-0bf9d737ac94": {}
+    },
+    "encryptionKeys": {
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {},
+      "3238dd4f-be09-4375-bb5b-0bf9d737ac94": {}
+    },
+    "encryptedSelf": "fTkKe3T3ejZD1Z6GI606uI/Kh238IGepn7mj4RKKvJAhfmz+Iv9+M28zRY1XJoS38Ci4b7TTD6qHRf+sN38DQyd0qJlaI8SGaKlnX5LdWLQ="
+  }
+}
+```
+</details>
 
 If the operation is successful, the method returns a Promise with the updated Healthcare Element.  
 Using the same service, the Healthcare Professional can share the Healthcare Element with another Healthcare Professional.
@@ -167,6 +421,46 @@ const retrievedHealthcareElement = await api.healthcareElementApi.getHealthcareE
   healthcareElement.id,
 )
 ```
+<!-- output://code-samples/how-to/manage-healthcare-elements/retrievedHealthcareElement.txt -->
+<details>
+<summary>retrievedHealthcareElement</summary>
+
+```json
+{
+  "id": "27b4a00a-2feb-4dd6-8fea-a23fb0ffe68c",
+  "rev": "2-7983a6b64cd8f919f372bbaa9da0feda",
+  "created": 1679929562383,
+  "modified": 1679929562383,
+  "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
+  "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
+  "healthcareElementId": "27b4a00a-2feb-4dd6-8fea-a23fb0ffe68c",
+  "valueDate": 20230327170602,
+  "openingDate": 1570838400000,
+  "description": "The patient has been diagnosed Pararibulitis",
+  "identifiers": [],
+  "codes": {},
+  "labels": {},
+  "systemMetaData": {
+    "secretForeignKeys": [
+      "4742a08d-bbc1-4ed1-a758-f0a605529bf1"
+    ],
+    "cryptedForeignKeys": {
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {},
+      "3238dd4f-be09-4375-bb5b-0bf9d737ac94": {}
+    },
+    "delegations": {
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {},
+      "3238dd4f-be09-4375-bb5b-0bf9d737ac94": {}
+    },
+    "encryptionKeys": {
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {},
+      "3238dd4f-be09-4375-bb5b-0bf9d737ac94": {}
+    },
+    "encryptedSelf": "fTkKe3T3ejZD1Z6GI606uI/Kh238IGepn7mj4RKKvJAhfmz+Iv9+M28zRY1XJoS38Ci4b7TTD6qHRf+sN38DQyd0qJlaI8SGaKlnX5LdWLQ="
+  }
+}
+```
+</details>
 
 :::caution
 
@@ -193,11 +487,11 @@ const yetAnotherHealthcareElement = await api.healthcareElementApi.createOrModif
   patient.id,
 )
 
-const modifiedHealthcareElement = {
+const modifiedHealthcareElement = new HealthcareElement({
   ...yetAnotherHealthcareElement,
   description: 'I can change and I can add',
   openingDate: new Date('2019-10-12').getTime(),
-}
+})
 
 const modificationResult = await api.healthcareElementApi.createOrModifyHealthcareElement(
   modifiedHealthcareElement,
@@ -205,6 +499,119 @@ const modificationResult = await api.healthcareElementApi.createOrModifyHealthca
 )
 console.log(modificationResult)
 ```
+<!-- output://code-samples/how-to/manage-healthcare-elements/yetAnotherHealthcareElement.txt -->
+<details>
+<summary>yetAnotherHealthcareElement</summary>
+
+```json
+{
+  "id": "45d9abcc-d17e-427b-a2ce-7a82b0b74588",
+  "rev": "1-707439424375208f00ec0b5d53db54c7",
+  "created": 1679929563429,
+  "modified": 1679929563429,
+  "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
+  "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
+  "healthcareElementId": "45d9abcc-d17e-427b-a2ce-7a82b0b74588",
+  "valueDate": 20230327170603,
+  "openingDate": 20230327170603,
+  "description": "To modify, I must create",
+  "identifiers": [],
+  "codes": {},
+  "labels": {},
+  "systemMetaData": {
+    "secretForeignKeys": [
+      "4742a08d-bbc1-4ed1-a758-f0a605529bf1"
+    ],
+    "cryptedForeignKeys": {
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+    },
+    "delegations": {
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+    },
+    "encryptionKeys": {
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+    },
+    "encryptedSelf": "Gb7tV75RIWr2xaz+xsvC6JWJSi+XCUsE1gz8u94AehM4UnDL6eycDwHSvZy+RcgwYQVg0J9ldD3sCqB3Gwz6fg=="
+  }
+}
+```
+</details>
+
+<!-- output://code-samples/how-to/manage-healthcare-elements/modifiedHealthcareElement.txt -->
+<details>
+<summary>modifiedHealthcareElement</summary>
+
+```json
+{
+  "id": "45d9abcc-d17e-427b-a2ce-7a82b0b74588",
+  "rev": "1-707439424375208f00ec0b5d53db54c7",
+  "created": 1679929563429,
+  "modified": 1679929563429,
+  "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
+  "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
+  "healthcareElementId": "45d9abcc-d17e-427b-a2ce-7a82b0b74588",
+  "valueDate": 20230327170603,
+  "openingDate": 1570838400000,
+  "description": "I can change and I can add",
+  "identifiers": [],
+  "codes": {},
+  "labels": {},
+  "systemMetaData": {
+    "secretForeignKeys": [
+      "4742a08d-bbc1-4ed1-a758-f0a605529bf1"
+    ],
+    "cryptedForeignKeys": {
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+    },
+    "delegations": {
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+    },
+    "encryptionKeys": {
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+    },
+    "encryptedSelf": "Gb7tV75RIWr2xaz+xsvC6JWJSi+XCUsE1gz8u94AehM4UnDL6eycDwHSvZy+RcgwYQVg0J9ldD3sCqB3Gwz6fg=="
+  }
+}
+```
+</details>
+
+<!-- output://code-samples/how-to/manage-healthcare-elements/modificationResult.txt -->
+<details>
+<summary>modificationResult</summary>
+
+```json
+{
+  "id": "45d9abcc-d17e-427b-a2ce-7a82b0b74588",
+  "rev": "2-b9db764bbd25eaae979a63ebd8b478e5",
+  "created": 1679929563429,
+  "modified": 1679929563429,
+  "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
+  "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
+  "healthcareElementId": "45d9abcc-d17e-427b-a2ce-7a82b0b74588",
+  "valueDate": 20230327170603,
+  "openingDate": 1570838400000,
+  "description": "I can change and I can add",
+  "identifiers": [],
+  "codes": {},
+  "labels": {},
+  "systemMetaData": {
+    "secretForeignKeys": [
+      "4742a08d-bbc1-4ed1-a758-f0a605529bf1"
+    ],
+    "cryptedForeignKeys": {
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+    },
+    "delegations": {
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+    },
+    "encryptionKeys": {
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+    },
+    "encryptedSelf": "YsDLuTd8cD10vi/M6q91UxM3LGtT4GueQV2ruvVwY2UY8reRZqyemKmgqu8JfoLU/AEoYP8lPGaN2kJMa91toQ=="
+  }
+}
+```
+</details>
 
 If the operation is successful, the method returns the updated Healthcare Element.
 
@@ -231,6 +638,21 @@ const healthcareElementFilter = await new HealthcareElementFilter()
   .forPatients(api.cryptoApi, [patient])
   .build()
 ```
+<!-- output://code-samples/how-to/manage-healthcare-elements/healthcareElementFilter.txt -->
+<details>
+<summary>healthcareElementFilter</summary>
+
+```json
+{
+  "healthcarePartyId": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
+  "patientSecretForeignKeys": [
+    "4742a08d-bbc1-4ed1-a758-f0a605529bf1",
+    "ce1568d1-d1d5-4c0a-b05b-18efed77163d"
+  ],
+  "$type": "HealthcareElementByHealthcarePartyPatientFilter"
+}
+```
+</details>
 
 :::note
 
@@ -248,6 +670,302 @@ const healthcareElementsFirstPage = await api.healthcareElementApi.filterHealthc
   10,
 )
 ```
+<!-- output://code-samples/how-to/manage-healthcare-elements/healthcareElementsFirstPage.txt -->
+<details>
+<summary>healthcareElementsFirstPage</summary>
+
+```json
+{
+  "pageSize": 10,
+  "totalSize": 126,
+  "rows": [
+    {
+      "id": "00a6241a-015e-4db3-923c-628bf3b1acd0",
+      "rev": "2-e3050efb2902b381c79c254f5c3dd17e",
+      "created": 1679928187710,
+      "modified": 1679928187710,
+      "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
+      "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
+      "healthcareElementId": "00a6241a-015e-4db3-923c-628bf3b1acd0",
+      "valueDate": 20230327164307,
+      "openingDate": 1570838400000,
+      "identifiers": [],
+      "codes": {},
+      "labels": {},
+      "systemMetaData": {
+        "secretForeignKeys": [
+          "4742a08d-bbc1-4ed1-a758-f0a605529bf1"
+        ],
+        "cryptedForeignKeys": {
+          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {},
+          "3238dd4f-be09-4375-bb5b-0bf9d737ac94": {}
+        },
+        "delegations": {
+          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {},
+          "3238dd4f-be09-4375-bb5b-0bf9d737ac94": {}
+        },
+        "encryptionKeys": {
+          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {},
+          "3238dd4f-be09-4375-bb5b-0bf9d737ac94": {}
+        },
+        "encryptedSelf": "bXYv24amaYqStnss+L3BRQXmboUVOuaW6ctN6wI2sQm7K2OuknuenxZbWdmMVif62E9PFRnNaOy9k1moDIRBRWQLxDysykAi4RyK2hAqiSA="
+      }
+    },
+    {
+      "id": "018bae52-1304-47c5-9612-55a1adf21530",
+      "rev": "1-903481a509a3124dcf07e1ba628dd8a5",
+      "created": 1679920190072,
+      "modified": 1679920190072,
+      "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
+      "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
+      "healthcareElementId": "018bae52-1304-47c5-9612-55a1adf21530",
+      "valueDate": 20230327142950,
+      "openingDate": 1570838400000,
+      "identifiers": [],
+      "codes": {},
+      "labels": {},
+      "systemMetaData": {
+        "secretForeignKeys": [
+          "4742a08d-bbc1-4ed1-a758-f0a605529bf1"
+        ],
+        "cryptedForeignKeys": {
+          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+        },
+        "delegations": {
+          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+        },
+        "encryptionKeys": {
+          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+        },
+        "encryptedSelf": "/3TPnhFGPx7F76afmT6FMJ3mSGxgWGO6qgB0c6gbcc0yM+7Z399lXDG9hQU3pjDqGoX2TMabRca4LQp8S/zUpnxm/P3rAoXLAEdEVHx3kqs="
+      }
+    },
+    {
+      "id": "0263ddb6-5a8d-4c12-b206-6ffa40b8d568",
+      "rev": "1-a61b6309f7f14c2c6a411db67f64698e",
+      "healthcareElementId": "0263ddb6-5a8d-4c12-b206-6ffa40b8d568",
+      "openingDate": 1604793600000,
+      "identifiers": [],
+      "codes": {},
+      "labels": {},
+      "systemMetaData": {
+        "secretForeignKeys": [
+          "4742a08d-bbc1-4ed1-a758-f0a605529bf1"
+        ],
+        "cryptedForeignKeys": {
+          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+        },
+        "delegations": {
+          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+        },
+        "encryptionKeys": {
+          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+        },
+        "encryptedSelf": "LAiccuQ032oPDA7UiK50TgKPP05kJrGe+k+NUL7CGY62YuQst1FYmYoVprv90sbbtCUAHHUu/satXfuSFmOf/A=="
+      }
+    },
+    {
+      "id": "04a5bae9-06af-4030-b20f-1ba24c775c27",
+      "rev": "1-df2e2c1958d4762d5dda0002b55c04cf",
+      "healthcareElementId": "04a5bae9-06af-4030-b20f-1ba24c775c27",
+      "openingDate": 1570838400000,
+      "identifiers": [],
+      "codes": {},
+      "labels": {},
+      "systemMetaData": {
+        "secretForeignKeys": [
+          "4742a08d-bbc1-4ed1-a758-f0a605529bf1"
+        ],
+        "cryptedForeignKeys": {
+          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+        },
+        "delegations": {
+          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+        },
+        "encryptionKeys": {
+          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+        },
+        "encryptedSelf": "DqDyUO2ma7iV5v/5fzk7OvQRrzRVYNiLgdhjwNOCAIHhtkCARCo1X7qmZ9yHaPbPQ+F/L5O+R/yst+gCvx/YCYwIWV5YrI5E3H8P6JyP4as="
+      }
+    },
+    {
+      "id": "05a887d7-7ccf-4234-a308-22fa9740f260",
+      "rev": "2-8f04260fb877a3614aa6a384c42be42a",
+      "created": 1679920256640,
+      "modified": 1679920256640,
+      "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
+      "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
+      "healthcareElementId": "05a887d7-7ccf-4234-a308-22fa9740f260",
+      "valueDate": 20230327143056,
+      "openingDate": 20230327143056,
+      "identifiers": [],
+      "codes": {},
+      "labels": {},
+      "systemMetaData": {
+        "secretForeignKeys": [
+          "4742a08d-bbc1-4ed1-a758-f0a605529bf1"
+        ],
+        "cryptedForeignKeys": {
+          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {},
+          "3238dd4f-be09-4375-bb5b-0bf9d737ac94": {}
+        },
+        "delegations": {
+          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {},
+          "3238dd4f-be09-4375-bb5b-0bf9d737ac94": {}
+        },
+        "encryptionKeys": {
+          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {},
+          "3238dd4f-be09-4375-bb5b-0bf9d737ac94": {}
+        },
+        "encryptedSelf": "XRzXlSLpjr3fPf++gP0U+qPi9QY53H4tlBYb2P0ttRtu9vfhHtS1bpZYbhBMO7BsmxwKLTn50IcG95qMwRNAhfa+keIvoGMe5tK8blr+LSY="
+      }
+    },
+    {
+      "id": "06ce559d-1547-49cb-86ac-610efb2053a1",
+      "rev": "1-24c28b69dacce7bbfac8ec7e0d43d485",
+      "healthcareElementId": "06ce559d-1547-49cb-86ac-610efb2053a1",
+      "openingDate": 1570838400000,
+      "identifiers": [],
+      "codes": {},
+      "labels": {},
+      "systemMetaData": {
+        "secretForeignKeys": [
+          "4742a08d-bbc1-4ed1-a758-f0a605529bf1"
+        ],
+        "cryptedForeignKeys": {
+          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+        },
+        "delegations": {
+          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+        },
+        "encryptionKeys": {
+          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+        },
+        "encryptedSelf": "o4BKrDuWLHQaqgijYDnpi0pXPjQ41A6DNPxw6c9uBvrd1hC3Qr5iyMyA/blLe99K4m4vB+vK4l7Ppr5v9gcRc70xAsTNRIE/o+vsJ+YgCYk="
+      }
+    },
+    {
+      "id": "07d0aefb-ee2e-4733-b07c-27f2ecb6f52b",
+      "rev": "1-e63d26fb7c01a79766a0597115f7aba9",
+      "healthcareElementId": "07d0aefb-ee2e-4733-b07c-27f2ecb6f52b",
+      "openingDate": 1570838400000,
+      "identifiers": [],
+      "codes": {},
+      "labels": {},
+      "systemMetaData": {
+        "secretForeignKeys": [
+          "4742a08d-bbc1-4ed1-a758-f0a605529bf1"
+        ],
+        "cryptedForeignKeys": {
+          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+        },
+        "delegations": {
+          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+        },
+        "encryptionKeys": {
+          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+        },
+        "encryptedSelf": "av0b+sVl+bKDktOeQX/3KQ1Mbt6j3cGuLPAqqZmVLgwPk8nzM5rD/PkL1/LahhfqERqQv5D+RytrH44DB+4N9OpFojgDbBabqOyhV+yXSAk="
+      }
+    },
+    {
+      "id": "0c3d2d4a-4ebc-486d-aacd-d264a2a18df4",
+      "rev": "2-07d8b751b9bac924c509535bd1926b00",
+      "created": 1679927905027,
+      "modified": 1679927905027,
+      "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
+      "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
+      "healthcareElementId": "0c3d2d4a-4ebc-486d-aacd-d264a2a18df4",
+      "valueDate": 20230327163825,
+      "openingDate": 1570838400000,
+      "identifiers": [],
+      "codes": {},
+      "labels": {},
+      "systemMetaData": {
+        "secretForeignKeys": [
+          "4742a08d-bbc1-4ed1-a758-f0a605529bf1"
+        ],
+        "cryptedForeignKeys": {
+          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {},
+          "3238dd4f-be09-4375-bb5b-0bf9d737ac94": {}
+        },
+        "delegations": {
+          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {},
+          "3238dd4f-be09-4375-bb5b-0bf9d737ac94": {}
+        },
+        "encryptionKeys": {
+          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {},
+          "3238dd4f-be09-4375-bb5b-0bf9d737ac94": {}
+        },
+        "encryptedSelf": "k2Rx+/mcAiiU2x0Y20kG6of8aVPc1UzpGl+ZRf8c9vFOFB9G0ZWY5TbJVLajDJmyf44M6+j3jeX6Y/MFfewx4As8Hr+RFkizywGJ76sKvkw="
+      }
+    },
+    {
+      "id": "0e0c21d0-c08b-4493-9aed-67a1f14f6ae1",
+      "rev": "1-b92291123021ab1f1f2608be4f455747",
+      "created": 1679920147470,
+      "modified": 1679920147470,
+      "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
+      "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
+      "healthcareElementId": "0e0c21d0-c08b-4493-9aed-67a1f14f6ae1",
+      "valueDate": 20230327142907,
+      "openingDate": 20230327142907,
+      "identifiers": [],
+      "codes": {},
+      "labels": {},
+      "systemMetaData": {
+        "secretForeignKeys": [
+          "4742a08d-bbc1-4ed1-a758-f0a605529bf1"
+        ],
+        "cryptedForeignKeys": {
+          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+        },
+        "delegations": {
+          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+        },
+        "encryptionKeys": {
+          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+        },
+        "encryptedSelf": "uZw4JqwRmpbpKJMRizVyqJGFSTCQo5PXMyvdgxZub48I/mJUN/GB6u8Qa37zikx0rGebmauJg6oyOHf2zpkcpDi2T6nrtO7Yv8j+llX/Jwk="
+      }
+    },
+    {
+      "id": "0ecb5315-2511-406a-91ec-fbf137584ac1",
+      "rev": "1-31eb96b07c52c7dd4ded21afc33d3029",
+      "created": 1679920190154,
+      "modified": 1679920190154,
+      "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
+      "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
+      "healthcareElementId": "018bae52-1304-47c5-9612-55a1adf21530",
+      "valueDate": 20230327142950,
+      "openingDate": 1604793600000,
+      "identifiers": [],
+      "codes": {},
+      "labels": {},
+      "systemMetaData": {
+        "secretForeignKeys": [
+          "4742a08d-bbc1-4ed1-a758-f0a605529bf1"
+        ],
+        "cryptedForeignKeys": {
+          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+        },
+        "delegations": {
+          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+        },
+        "encryptionKeys": {
+          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+        },
+        "encryptedSelf": "idhr76046wN1wJ0s5dyXzMwkkkQaCZs5ogFkuqSnxa6c2PVAFNbWSlpd7Vbx3tU/vta1r9jXEo1+Ubdqqn8WoA=="
+      }
+    }
+  ],
+  "nextKeyPair": {
+    "startKey": "11a257cc-7ba2-4051-8ced-e52d34d2b14c",
+    "startKeyDocId": "11a257cc-7ba2-4051-8ced-e52d34d2b14c"
+  }
+}
+```
+</details>
 
 The `filter` method returns a PaginatedList that contains at most the number of elements stated
  in the method's parameter. If you do not specify any number, the default value is 1000.  
@@ -261,6 +979,309 @@ const healthcareElementsSecondPage = await api.healthcareElementApi.filterHealth
   10,
 )
 ```
+<!-- output://code-samples/how-to/manage-healthcare-elements/healthcareElementsSecondPage.txt -->
+<details>
+<summary>healthcareElementsSecondPage</summary>
+
+```json
+{
+  "pageSize": 10,
+  "totalSize": 126,
+  "rows": [
+    {
+      "id": "11a257cc-7ba2-4051-8ced-e52d34d2b14c",
+      "rev": "2-84dda6e8e9f2ede361433551d964eed8",
+      "created": 1679920301243,
+      "modified": 1679920301243,
+      "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
+      "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
+      "healthcareElementId": "11a257cc-7ba2-4051-8ced-e52d34d2b14c",
+      "valueDate": 20230327143141,
+      "openingDate": 1570838400000,
+      "identifiers": [],
+      "codes": {},
+      "labels": {},
+      "systemMetaData": {
+        "secretForeignKeys": [
+          "4742a08d-bbc1-4ed1-a758-f0a605529bf1"
+        ],
+        "cryptedForeignKeys": {
+          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {},
+          "3238dd4f-be09-4375-bb5b-0bf9d737ac94": {}
+        },
+        "delegations": {
+          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {},
+          "3238dd4f-be09-4375-bb5b-0bf9d737ac94": {}
+        },
+        "encryptionKeys": {
+          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {},
+          "3238dd4f-be09-4375-bb5b-0bf9d737ac94": {}
+        },
+        "encryptedSelf": "xq4ChOklbxF8UCyo1/ewpbUIbi5cvjJ6qQRlMvxEeER4hxbtw/lB4xOILJAQSrjsyH8KmuHgrANPh99w91BVhg5mO0llafm3z6sRO4VkKkc="
+      }
+    },
+    {
+      "id": "11d90f74-6d8e-4c2d-9cee-31020532569e",
+      "rev": "1-3161492bf65f24da602a0f54c368ad65",
+      "created": 1679929448999,
+      "modified": 1679929448999,
+      "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
+      "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
+      "healthcareElementId": "11d90f74-6d8e-4c2d-9cee-31020532569e",
+      "valueDate": 20230327170408,
+      "openingDate": 1679929448916,
+      "identifiers": [],
+      "codes": {},
+      "labels": {},
+      "systemMetaData": {
+        "secretForeignKeys": [
+          "4742a08d-bbc1-4ed1-a758-f0a605529bf1"
+        ],
+        "cryptedForeignKeys": {
+          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+        },
+        "delegations": {
+          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+        },
+        "encryptionKeys": {
+          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+        },
+        "encryptedSelf": "Irgz9gFLZM96aUg9naLszcflAd3JlgquA4szClQomV2sIYnTFKhqDxnF8lUeJUwWkLSb3jZcKgWAFogZoikHtw=="
+      }
+    },
+    {
+      "id": "1249ab05-9a1a-48e5-bf78-a22807fa1191",
+      "rev": "2-9a4faf59059d047664c54bb7a484e8a1",
+      "created": 1679928188681,
+      "modified": 1679928188681,
+      "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
+      "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
+      "healthcareElementId": "1249ab05-9a1a-48e5-bf78-a22807fa1191",
+      "valueDate": 20230327164308,
+      "openingDate": 1570838400000,
+      "identifiers": [],
+      "codes": {},
+      "labels": {},
+      "systemMetaData": {
+        "secretForeignKeys": [
+          "4742a08d-bbc1-4ed1-a758-f0a605529bf1"
+        ],
+        "cryptedForeignKeys": {
+          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+        },
+        "delegations": {
+          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+        },
+        "encryptionKeys": {
+          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+        },
+        "encryptedSelf": "El87q4RBmtkqAZ4cTLfM29mnxRHSHXK83onXModaFHHb1NOhG1xF/7kcot/hBmgCqCKkc8TGjTIssjj/GY/Zmw=="
+      }
+    },
+    {
+      "id": "15c26ab9-3591-4ba5-923e-9b10b2032643",
+      "rev": "1-a3eedcacad2f76328c04e1fc12cd7a8b",
+      "created": 1679929562983,
+      "modified": 1679929562983,
+      "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
+      "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
+      "healthcareElementId": "15c26ab9-3591-4ba5-923e-9b10b2032643",
+      "valueDate": 20230327170602,
+      "openingDate": 1570838400000,
+      "identifiers": [],
+      "codes": {},
+      "labels": {},
+      "systemMetaData": {
+        "secretForeignKeys": [
+          "4742a08d-bbc1-4ed1-a758-f0a605529bf1"
+        ],
+        "cryptedForeignKeys": {
+          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+        },
+        "delegations": {
+          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+        },
+        "encryptionKeys": {
+          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+        },
+        "encryptedSelf": "VQmrZzUGzDVAQrUL21msZ82+jnavv2sEP48TRGaf2N47mxujndXr2b+PCMlBD9vMM2FGMalq/4mQTseahaF6N6XFlmNAZ7WKyyDUiahIS/c="
+      }
+    },
+    {
+      "id": "1609cffb-3f27-4011-a56f-b0de870c8de9",
+      "rev": "1-be8c317fea1bdf3cec964fc852ce54c8",
+      "healthcareElementId": "1609cffb-3f27-4011-a56f-b0de870c8de9",
+      "openingDate": 1570838400000,
+      "identifiers": [],
+      "codes": {},
+      "labels": {},
+      "systemMetaData": {
+        "secretForeignKeys": [
+          "4742a08d-bbc1-4ed1-a758-f0a605529bf1"
+        ],
+        "cryptedForeignKeys": {
+          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+        },
+        "delegations": {
+          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+        },
+        "encryptionKeys": {
+          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+        },
+        "encryptedSelf": "659+hcVdn50S9R1vkHnh+6hg+0leTlGLLZ1V+77gFrh8o0WnvAwXAz5q1hhrt2E/g1+H2Nd8kMDOtQ0C9jv+ZB7ROQkWpZzhmWaggEY8Z9w="
+      }
+    },
+    {
+      "id": "162a3124-5d18-4376-926b-bb55ee712a1d",
+      "rev": "1-5eb6f3c885113337f1863d1ffe0cc6a2",
+      "created": 1679926457319,
+      "modified": 1679926457319,
+      "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
+      "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
+      "healthcareElementId": "162a3124-5d18-4376-926b-bb55ee712a1d",
+      "valueDate": 20230327141417,
+      "openingDate": 20230327141417,
+      "identifiers": [],
+      "codes": {},
+      "labels": {},
+      "systemMetaData": {
+        "secretForeignKeys": [
+          "4742a08d-bbc1-4ed1-a758-f0a605529bf1"
+        ],
+        "cryptedForeignKeys": {
+          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+        },
+        "delegations": {
+          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+        },
+        "encryptionKeys": {
+          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+        },
+        "encryptedSelf": "2rrnliwtYvQbfMhoutOYDQlbbDCDK9wMaLBf56Gqsxf+MMM1DKV3A65Ln0V4E6vj9G6fF3+6vMgVVrzXT1AbyV0LnlJcH0jyIQ40bFOlGMo="
+      }
+    },
+    {
+      "id": "250bb146-f58b-4b4b-835d-15e97f03b611",
+      "rev": "1-dbaeb35b1306f77f05e8d748f840e714",
+      "created": 1679926396533,
+      "modified": 1679926396533,
+      "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
+      "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
+      "healthcareElementId": "250bb146-f58b-4b4b-835d-15e97f03b611",
+      "valueDate": 20230327141316,
+      "openingDate": 20230327141316,
+      "identifiers": [],
+      "codes": {},
+      "labels": {},
+      "systemMetaData": {
+        "secretForeignKeys": [
+          "4742a08d-bbc1-4ed1-a758-f0a605529bf1"
+        ],
+        "cryptedForeignKeys": {
+          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+        },
+        "delegations": {
+          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+        },
+        "encryptionKeys": {
+          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+        },
+        "encryptedSelf": "oaDiaTz53WEOZaj7zQ0qw+geij9yvZ91gVp0HA3O6UB/grIFrD85YaP3ilB8U1L4wJfeAsylnksQnSaDNeF6OGNtAZkPBiwbJ2guvE/Mpas="
+      }
+    },
+    {
+      "id": "2544c3be-662f-4c6d-b773-c692125b7ca1",
+      "rev": "1-2f58d3db136589bd97d5fcb1d246b662",
+      "healthcareElementId": "2544c3be-662f-4c6d-b773-c692125b7ca1",
+      "openingDate": 1570838400000,
+      "identifiers": [],
+      "codes": {},
+      "labels": {},
+      "systemMetaData": {
+        "secretForeignKeys": [
+          "4742a08d-bbc1-4ed1-a758-f0a605529bf1"
+        ],
+        "cryptedForeignKeys": {
+          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+        },
+        "delegations": {
+          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+        },
+        "encryptionKeys": {
+          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+        },
+        "encryptedSelf": "Pz5GMq+dUWryssgd41QrYYKQ4IrR4rMo3IbA5VYL5A22JiGHbng+2kib6z0ppQo0jZBvBj5vCAnFSu0epG1M/Co6oO3V+C/WdpvlSlyqSa8="
+      }
+    },
+    {
+      "id": "26d0b00d-06e1-447a-94dd-91bf548dff56",
+      "rev": "1-07e35bd4541f7d01319f8fd46a7d2328",
+      "created": 1679924340272,
+      "modified": 1679924340272,
+      "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
+      "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
+      "healthcareElementId": "26d0b00d-06e1-447a-94dd-91bf548dff56",
+      "valueDate": 20230327153900,
+      "openingDate": 20230327153900,
+      "identifiers": [],
+      "codes": {},
+      "labels": {},
+      "systemMetaData": {
+        "secretForeignKeys": [
+          "4742a08d-bbc1-4ed1-a758-f0a605529bf1"
+        ],
+        "cryptedForeignKeys": {
+          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+        },
+        "delegations": {
+          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+        },
+        "encryptionKeys": {
+          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+        },
+        "encryptedSelf": "I+zRrVTskFmEC0VvSAQCmqCqIMmu8rlnWNnDftWxxFkrvJ76y+r9Ws4hhAad6gXPc9f2s0oSU7euCB522HNHsD35XwXs28DHUKDg4DohUPg="
+      }
+    },
+    {
+      "id": "27b4a00a-2feb-4dd6-8fea-a23fb0ffe68c",
+      "rev": "2-7983a6b64cd8f919f372bbaa9da0feda",
+      "created": 1679929562383,
+      "modified": 1679929562383,
+      "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
+      "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
+      "healthcareElementId": "27b4a00a-2feb-4dd6-8fea-a23fb0ffe68c",
+      "valueDate": 20230327170602,
+      "openingDate": 1570838400000,
+      "identifiers": [],
+      "codes": {},
+      "labels": {},
+      "systemMetaData": {
+        "secretForeignKeys": [
+          "4742a08d-bbc1-4ed1-a758-f0a605529bf1"
+        ],
+        "cryptedForeignKeys": {
+          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {},
+          "3238dd4f-be09-4375-bb5b-0bf9d737ac94": {}
+        },
+        "delegations": {
+          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {},
+          "3238dd4f-be09-4375-bb5b-0bf9d737ac94": {}
+        },
+        "encryptionKeys": {
+          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {},
+          "3238dd4f-be09-4375-bb5b-0bf9d737ac94": {}
+        },
+        "encryptedSelf": "fTkKe3T3ejZD1Z6GI606uI/Kh238IGepn7mj4RKKvJAhfmz+Iv9+M28zRY1XJoS38Ci4b7TTD6qHRf+sN38DQyd0qJlaI8SGaKlnX5LdWLQ="
+      }
+    }
+  ],
+  "nextKeyPair": {
+    "startKey": "2956779a-240e-4d14-8229-38ee7bbe00d1",
+    "startKeyDocId": "2956779a-240e-4d14-8229-38ee7bbe00d1"
+  }
+}
+```
+</details>
 
 If the `nextKeyPair` property of the result is `undefined`, than there are no more Healthcare Elements to retrieve.  
 You can also retrieve just the id of the Healthcare Element instead of the whole documents by using the match method.
@@ -271,6 +1292,141 @@ const healthcareElementsIdList = await api.healthcareElementApi.matchHealthcareE
   healthcareElementFilter,
 )
 ```
+<!-- output://code-samples/how-to/manage-healthcare-elements/healthcareElementsIdList.txt -->
+<details>
+<summary>healthcareElementsIdList</summary>
+
+```text
+[
+  "00a6241a-015e-4db3-923c-628bf3b1acd0",
+  "018bae52-1304-47c5-9612-55a1adf21530",
+  "0263ddb6-5a8d-4c12-b206-6ffa40b8d568",
+  "04a5bae9-06af-4030-b20f-1ba24c775c27",
+  "05a887d7-7ccf-4234-a308-22fa9740f260",
+  "06ce559d-1547-49cb-86ac-610efb2053a1",
+  "07d0aefb-ee2e-4733-b07c-27f2ecb6f52b",
+  "0c3d2d4a-4ebc-486d-aacd-d264a2a18df4",
+  "0e0c21d0-c08b-4493-9aed-67a1f14f6ae1",
+  "0ecb5315-2511-406a-91ec-fbf137584ac1",
+  "11a257cc-7ba2-4051-8ced-e52d34d2b14c",
+  "11d90f74-6d8e-4c2d-9cee-31020532569e",
+  "1249ab05-9a1a-48e5-bf78-a22807fa1191",
+  "15c26ab9-3591-4ba5-923e-9b10b2032643",
+  "1609cffb-3f27-4011-a56f-b0de870c8de9",
+  "162a3124-5d18-4376-926b-bb55ee712a1d",
+  "250bb146-f58b-4b4b-835d-15e97f03b611",
+  "2544c3be-662f-4c6d-b773-c692125b7ca1",
+  "26d0b00d-06e1-447a-94dd-91bf548dff56",
+  "27b4a00a-2feb-4dd6-8fea-a23fb0ffe68c",
+  "2956779a-240e-4d14-8229-38ee7bbe00d1",
+  "296d6079-a8bf-424e-8c40-17b610613230",
+  "2a74d815-734d-4658-95d1-1944a65a4cfd",
+  "2ba7c970-5432-452d-939f-c155a5111487",
+  "2d998b7f-ea7a-4c33-b0bb-291edd385473",
+  "3159d705-0fa6-4b0f-9998-054d47eb3b52",
+  "32fa8e3d-aa6f-4cd4-b83a-2b55cb657de3",
+  "3581880d-fcc1-4803-a4e4-64e585e863ef",
+  "3f5e9daa-122d-4dcf-a7c3-b6b12c69ae4d",
+  "43d77a42-cc42-40b5-b707-1cef789b4d70",
+  "442c2628-d9cc-4c95-9c21-6cc3ffead2d5",
+  "45d9abcc-d17e-427b-a2ce-7a82b0b74588",
+  "4db6be85-da39-4bd8-8906-4cf9df26fac0",
+  "4e3a98ce-c3db-4097-8783-7cfab1a74cd2",
+  "538ceecd-bf6f-4145-969a-84ff671ac573",
+  "539d8fed-30c7-46b5-93dc-6383124468be",
+  "53c6e17c-afda-414b-b33a-8b79df2428ca",
+  "548f54b1-eeb0-4b41-bde5-36549a273bb8",
+  "54a48393-dcd8-4d9b-8ee5-eb2d4810c7a2",
+  "561cd236-55a6-48f5-9213-44f236899f2a",
+  "57245ebb-39f5-4860-a93a-42f54009bee9",
+  "572b0640-3bdd-4ef4-b9fd-70eea2ada2a8",
+  "58054161-0505-43f5-b7b0-3c745c145318",
+  "58b5cde4-d2b3-4352-868d-3c7bd0586211",
+  "5b0ce445-cf45-4224-861d-19f924e61bde",
+  "5c20018b-36cc-4a76-bdb6-dfc71c66a57b",
+  "5dba54c5-942c-48c1-9cfd-4acfcb249b19",
+  "5dca19aa-8a16-4ed5-af68-254bd94b8d6f",
+  "5e60035a-7996-48b2-bd94-37efab32ab71",
+  "60280f87-93bb-40d1-8089-347b88554b1c",
+  "61c74c60-42f0-4ad5-b119-d8b25e3fda0e",
+  "638e134c-0c91-4a25-9c4a-32aaa3bdc6a1",
+  "67704b42-6aba-497d-935f-62a54a41d0f3",
+  "6b309b42-3b6e-4ed5-a7b0-7e6e24114710",
+  "6bd8c3ca-5c9c-4ce9-a778-48b7097d64f3",
+  "6cad6fa0-e5b8-4707-bbc9-29e0a1da367c",
+  "6df51f69-64cf-43fa-b5fc-183268bebd59",
+  "6e151c27-f17c-4023-9713-1bc84644368d",
+  "70708065-166a-475d-ac89-3f4947f37582",
+  "716ea02a-0058-455e-9aef-81980b0c0d4b",
+  "7364ea52-7586-4592-b5a9-8f681e6e9925",
+  "73bfee8e-9e7b-48de-b7b6-7b781a0d2603",
+  "74679ab7-69d2-4288-b065-688429e8096a",
+  "752fbc60-3ee9-4648-b694-d9f488843311",
+  "7a48c343-691c-4895-8464-e080f9c46ae7",
+  "7acb7226-cbcc-4c1f-be53-78b86da6167d",
+  "7d967b50-b49c-49b4-984a-f8c568833aa8",
+  "80c9c84a-1376-4995-8247-0e0f7554c5e6",
+  "812a330e-27ee-4360-a8cf-0eb549b95af8",
+  "83f4c43f-07d1-4689-8b27-6be038be777d",
+  "843ef730-a644-45e6-ace4-5678cf3835ca",
+  "84c0573a-7901-4f29-a648-f3b56bc9c06e",
+  "85d75e4a-0868-43d8-a95c-88725d291db9",
+  "86d9a0b1-0e7d-4498-b0e5-052b9eac3b7b",
+  "8920bd76-7879-4f44-912e-3bbf34343551",
+  "893335b7-661c-40b6-8f3d-2482c6ce790e",
+  "9246add6-374e-4ba5-b0df-fe4a698af748",
+  "92864247-24e8-454b-bd9c-46cdffa95768",
+  "94df5c18-95f2-466c-8a9b-ce46c83fd85c",
+  "952e4666-7aef-4556-848e-6fd4cae72a3b",
+  "9aa6b89f-47c0-43ab-a39f-3d288174cd45",
+  "9d65c82d-af20-4019-bab7-5aeb3c507e4a",
+  "9dbd065e-a219-49b7-86de-2edadc8e7573",
+  "9e92765f-7d5a-41d5-9357-1b82f6f022f1",
+  "a13ced82-5090-4199-b93b-f955e73458a6",
+  "a4950397-bf9b-4d7c-96c4-ff130f0f76b8",
+  "abf689b3-e9ff-42d3-a6cb-288f84d513fa",
+  "b0c77c02-5408-4d5f-b2f1-bceeb45971c8",
+  "b1945529-5297-4268-b766-2e54c23fd9cd",
+  "b2c05187-f8e7-4c13-9fb6-49808659d271",
+  "b39658db-c8b7-453f-a8d0-eeb2addf4802",
+  "b60d7298-147c-4c7b-890d-d8a41ac8dcea",
+  "b6348f01-523f-40ea-a29f-80dba72d8c55",
+  "b6721071-2b7f-435a-8523-1e62bdc4c9ca",
+  "b6fcb433-0628-4bf9-8c80-ee22af0e68d3",
+  "b8d200ad-c2ab-4914-8a5c-5c48b456a894",
+  "ba5dce37-59f2-4c34-bb70-9096ecafb01d",
+  "bcf8e2bd-c205-488b-82b0-4d628d13910e",
+  "bdd30325-0aeb-4a4d-9bd3-13d02ab296f6",
+  "bdfda04c-8e72-4690-bb5f-2af1bdc453a4",
+  "bfdcdb8c-803a-4fd4-a1ee-6625c7ef7315",
+  "c271f3f1-0a3a-42ad-9dd5-8055919ec4b2",
+  "c2c41d3e-b002-46b7-b500-b1a7b1dcd3e3",
+  "c4d49c8e-0b8b-4087-bcc5-c004d2021535",
+  "c8965679-b88c-4138-ba1a-c32678886b5b",
+  "ca3c4a58-2c1c-4472-8ccd-901341604966",
+  "cbacf43a-91d5-471d-932b-d0dae5e67403",
+  "cbd88c2b-4dfd-4d92-863e-6f402bd597f3",
+  "cc08f9e3-db2a-44ae-8bb5-b80f0a62710e",
+  "ce9b7e2f-37ef-4ef7-8fd5-295d36201f80",
+  "ceeda6a0-4cdb-407c-b092-b757d593f3d9",
+  "cf048447-a91d-4ed2-8801-2be3e201fe64",
+  "cf4d2b5e-8191-4997-9e2f-69f2e5b11d17",
+  "d79ed178-c3ca-47a6-b0b9-ea52bd57a07d",
+  "d89aa316-b4af-406f-8b2b-848aad75a769",
+  "db13490a-a5f0-4dc4-bb57-8319b28e029e",
+  "df498876-bad8-463d-99dd-198c62d6051b",
+  "e1b992ee-61e1-4123-853b-a62396f3bb6c",
+  "e3be5de1-3d73-486a-8c90-a61d5bda1bfb",
+  "eddce246-d4ca-4cc8-ad41-6365a1004c1d",
+  "efe79fdf-3fd9-4aa3-bd47-30417f2ba828",
+  "f066171b-4ea2-4d77-8eae-2573f2bd89b0",
+  "f099bdcc-cd09-48e6-a16e-dfe928236ff0",
+  "f5b238b3-9441-4abc-9ba7-7bddc73fda11",
+  "f666d19d-c6bd-456b-b92c-50d6f7087ec8",
+  "f97401aa-22b7-42fd-8f0b-fe5b5f42ef5d"
+]
+```
+</details>
 
 You can also retrieve all the Healthcare Elements belonging to a specific patient that the current Data Owner 
 can access.
@@ -281,7 +1437,44 @@ const healthcareElementsForPatient = await api.healthcareElementApi.getHealthcar
   existingPatient,
 )
 ```
+<!-- output://code-samples/how-to/manage-healthcare-elements/healthcareElementsForPatient.txt -->
+<details>
+<summary>healthcareElementsForPatient</summary>
 
+```text
+[
+  {
+    "id": "699b97c0-023c-42c3-9104-fe73da456573",
+    "rev": "1-82cf4b98283b375c9bda2189b5472be9",
+    "created": 1679929563636,
+    "modified": 1679929563636,
+    "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
+    "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
+    "healthcareElementId": "699b97c0-023c-42c3-9104-fe73da456573",
+    "valueDate": 20230327170603,
+    "openingDate": 20230327170603,
+    "identifiers": [],
+    "codes": {},
+    "labels": {},
+    "systemMetaData": {
+      "secretForeignKeys": [
+        "22204eb5-e3d1-4d5b-97a1-7a3c31cff428"
+      ],
+      "cryptedForeignKeys": {
+        "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+      },
+      "delegations": {
+        "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+      },
+      "encryptionKeys": {
+        "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+      },
+      "encryptedSelf": "p5HOuQGx3P3KHgkZtcFlAxw8+f4nC9wT1SSaqcsg9cXH9yk7FBYZSXaOucltV4xDNLwtVRH9ZHYCDe4qHOkj0Q=="
+    }
+  }
+]
+```
+</details>
 
 ## Deleting a Healthcare Element
 
@@ -300,3 +1493,49 @@ const deletedHealthcareElement = await api.healthcareElementApi.deleteHealthcare
   healthcareElementToDelete.id,
 )
 ```
+<!-- output://code-samples/how-to/manage-healthcare-elements/healthcareElementToDelete.txt -->
+<details>
+<summary>healthcareElementToDelete</summary>
+
+```json
+{
+  "id": "a3ce4f1c-a1dc-4ad2-b1bc-37db85e03910",
+  "rev": "1-07038b4a8e3118f116d766224a977299",
+  "created": 1679929564267,
+  "modified": 1679929564267,
+  "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
+  "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
+  "healthcareElementId": "a3ce4f1c-a1dc-4ad2-b1bc-37db85e03910",
+  "valueDate": 20230327170604,
+  "openingDate": 20230327170604,
+  "description": "I am doomed",
+  "identifiers": [],
+  "codes": {},
+  "labels": {},
+  "systemMetaData": {
+    "secretForeignKeys": [
+      "4742a08d-bbc1-4ed1-a758-f0a605529bf1"
+    ],
+    "cryptedForeignKeys": {
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+    },
+    "delegations": {
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+    },
+    "encryptionKeys": {
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+    },
+    "encryptedSelf": "Py1AEXQEt6EOEQqIj0jpgMahE8dQNbKC33dUMkdOCTQqNUkOJb/zmtFQRcYp5PXA"
+  }
+}
+```
+</details>
+
+<!-- output://code-samples/how-to/manage-healthcare-elements/deletedHealthcareElement.txt -->
+<details>
+<summary>deletedHealthcareElement</summary>
+
+```text
+2-4bce6e557927fb280d5c77b0589e80b3
+```
+</details>

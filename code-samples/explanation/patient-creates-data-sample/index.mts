@@ -5,6 +5,7 @@ import { hex2ua } from '@icure/api'
 import {
   host,
   initLocalStorage,
+  output,
   patientId,
   patientPassword,
   patientPrivKey,
@@ -34,7 +35,7 @@ const healthcareElement = await api.healthcareElementApi.createOrModifyHealthcar
   patient.id,
 )
 
-await api.dataSampleApi.createOrModifyDataSampleFor(
+const dataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
   patient.id,
   new DataSample({
     content: {
@@ -46,3 +47,4 @@ await api.dataSampleApi.createOrModifyDataSampleFor(
   }),
 )
 //tech-doc: STOP HERE
+output({ healthcareElement, dataSample })

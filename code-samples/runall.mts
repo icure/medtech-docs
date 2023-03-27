@@ -7,7 +7,6 @@ const cwd = process.cwd()
 if (!cwd.endsWith('/code-samples')) {
   throw Error('Please run this script from the code samples directory')
 }
-
 function scanAndRunRecursively(dir: string) {
   fs.readdir(dir, (err, files) => {
     if (err) {
@@ -24,7 +23,10 @@ function scanAndRunRecursively(dir: string) {
         ) {
           const relative = '.' + fullpath.slice(cwd.length)
           console.log(`Running ${relative}`)
-          execSync(`node ${relative}`, { env: Process.env, stdio: 'inherit' })
+          execSync(`node ${relative}`, {
+            env: { ...Process.env, SCRIPT_ROOT: fullpath.replace(/(.+)\/.+/, '$1') },
+            stdio: 'inherit',
+          })
         }
       }
     })

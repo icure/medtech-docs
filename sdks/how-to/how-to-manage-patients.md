@@ -39,75 +39,76 @@ const createdPatient = await api.patientApi.createOrModifyPatient(
 )
 ```
 
+<!-- output://code-samples/how-to/patients/createdPatient.txt -->
 <details>
-    <summary>Output</summary>
+<summary>createdPatient</summary>
 
 ```json
 {
-	"id": "aff58060-8802-4f1a-91a6-e8bb9a343544",
-	"identifiers": [],
-	"labels": {},
-	"codes": {},
-	"names": [
-		{
-			"firstNames": [
-				"Hubert",
-				"J"
-			],
-			"prefix": [],
-			"suffix": [],
-			"lastName": "Farnsworth",
-			"use": "official"
-		},
-		{
-			"firstNames": [
-				"Professor"
-			],
-			"prefix": [],
-			"suffix": [],
-			"use": "nickname"
-		}
-	],
-	"languages": [],
-	"addresses": [],
-	"mergedIds": {},
-	"active": true,
-	"deactivationReason": "none",
-	"partnerships": [],
-	"patientHealthCareParties": [],
-	"patientProfessions": [],
-	"parameters": {},
-	"properties": {},
-	"rev": "1-26940e83585225c4a919e8dac2241e90",
-	"created": 1664530613307,
-	"modified": 1664530613307,
-	"author": "b36fa6cb-d7a8-40f0-bcf6-af6ce0decb78",
-	"responsible": "ab623d88-baed-40b9-91b7-ab26e9a08db5",
-	"firstName": "Hubert",
-	"lastName": "Farnsworth",
-	"gender": "male",
-	"birthSex": "male",
-	"personalStatus": "unknown",
-	"dateOfBirth": 28410409,
-	"profession": "CEO/Owner of Planet Express, Lecturer at Mars University",
-	"nationality": "American",
-	"systemMetaData": {
-		"hcPartyKeys": {},
-		"privateKeyShamirPartitions": {},
-		"secretForeignKeys": [],
-		"cryptedForeignKeys": {},
-		"delegations": {
-			"ab623d88-baed-40b9-91b7-ab26e9a08db5": {}
-		},
-		"encryptionKeys": {
-			"ab623d88-baed-40b9-91b7-ab26e9a08db5": {}
-		},
-		"aesExchangeKeys": {},
-		"transferKeys": {}
-	}
+  "id": "2ede7bc3-0d5c-43a2-8ebf-9582eb738201",
+  "languages": [],
+  "active": true,
+  "parameters": {},
+  "rev": "1-c0950cac9d68cfe2b7bb4579db48466a",
+  "created": 1679929572654,
+  "modified": 1679929572654,
+  "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
+  "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
+  "firstName": "Hubert",
+  "lastName": "Farnsworth",
+  "dateOfBirth": 28410409,
+  "profession": "CEO/Owner of Planet Express, Lecturer at Mars University",
+  "nationality": "American",
+  "identifiers": [],
+  "labels": {},
+  "codes": {},
+  "names": [
+    {
+      "firstNames": [
+        "Hubert",
+        "J"
+      ],
+      "prefix": [],
+      "suffix": [],
+      "lastName": "Farnsworth",
+      "use": "official"
+    },
+    {
+      "firstNames": [
+        "Professor"
+      ],
+      "prefix": [],
+      "suffix": [],
+      "use": "nickname"
+    }
+  ],
+  "addresses": [],
+  "gender": "male",
+  "birthSex": "male",
+  "mergedIds": {},
+  "deactivationReason": "none",
+  "personalStatus": "unknown",
+  "partnerships": [],
+  "patientHealthCareParties": [],
+  "patientProfessions": [],
+  "properties": {},
+  "systemMetaData": {
+    "hcPartyKeys": {},
+    "privateKeyShamirPartitions": {},
+    "aesExchangeKeys": {},
+    "transferKeys": {},
+    "encryptedSelf": "bn2dmoqPNq7VndwlRHCO2UZTM+NxMFPS9wiDJOlP+fg=",
+    "secretForeignKeys": [],
+    "cryptedForeignKeys": {},
+    "delegations": {
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+    },
+    "encryptionKeys": {
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+    }
+  }
 }
 ```
-
 </details>
 
 ## How to update a patient&#8239;?
@@ -116,85 +117,90 @@ To update a patient, we can use the `createOrModifyPatient` method on the `Patie
 
 <!-- file://code-samples/how-to/patients/index.mts snippet:update a patient-->
 ```typescript
-const updatedPatient = await api.patientApi.createOrModifyPatient({
-  ...createdPatient,
-  // highlight-start
-  modified: undefined,
-  note: 'Good news everyone!',
-  // highlight-end
-})
+const updatedPatient = await api.patientApi.createOrModifyPatient(
+  new Patient({
+    ...createdPatient,
+    // highlight-start
+    modified: undefined,
+    note: 'Good news everyone!',
+    // highlight-end
+  }),
+)
 ```
 
+<!-- output://code-samples/how-to/patients/updatedPatient.txt -->
 <details>
-    <summary>Output</summary>
+<summary>updatedPatient</summary>
 
 ```json
 {
-	"id": "aff58060-8802-4f1a-91a6-e8bb9a343544",
-	"identifiers": [],
-	"labels": {},
-	"codes": {},
-	"names": [
-		{
-			"firstNames": [
-				"Hubert",
-				"J"
-			],
-			"prefix": [],
-			"suffix": [],
-			"lastName": "Farnsworth",
-			"use": "official"
-		},
-		{
-			"firstNames": [
-				"Professor"
-			],
-			"prefix": [],
-			"suffix": [],
-			"use": "nickname"
-		}
-	],
-	"languages": [],
-	"addresses": [],
-	"mergedIds": {},
-	"active": true,
-	"deactivationReason": "none",
-	"partnerships": [],
-	"patientHealthCareParties": [],
-	"patientProfessions": [],
-	"parameters": {},
-	"properties": {},
-	"rev": "2-9da777d089dc3a159d76ab29fff2acd2",
-	"created": 1664530613307,
-	"modified": 1664530613678,
-	"author": "b36fa6cb-d7a8-40f0-bcf6-af6ce0decb78",
-	"responsible": "ab623d88-baed-40b9-91b7-ab26e9a08db5",
-	"firstName": "Hubert",
-	"lastName": "Farnsworth",
-	"gender": "male",
-	"birthSex": "male",
-	"personalStatus": "unknown",
-	"dateOfBirth": 28410409,
-	"profession": "CEO/Owner of Planet Express, Lecturer at Mars University",
-	"note": "Good news everyone!",
-	"nationality": "American",
-	"systemMetaData": {
-		"hcPartyKeys": {},
-		"privateKeyShamirPartitions": {},
-		"secretForeignKeys": [],
-		"cryptedForeignKeys": {},
-		"delegations": {
-			"ab623d88-baed-40b9-91b7-ab26e9a08db5": {}
-		},
-		"encryptionKeys": {
-			"ab623d88-baed-40b9-91b7-ab26e9a08db5": {}
-		},
-		"aesExchangeKeys": {},
-		"transferKeys": {}
-	}
+  "id": "2ede7bc3-0d5c-43a2-8ebf-9582eb738201",
+  "languages": [],
+  "active": true,
+  "parameters": {},
+  "rev": "2-ac99e07c82fd6fa68b52d3647e8e2246",
+  "created": 1679929572654,
+  "modified": 1679929572710,
+  "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
+  "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
+  "firstName": "Hubert",
+  "lastName": "Farnsworth",
+  "dateOfBirth": 28410409,
+  "profession": "CEO/Owner of Planet Express, Lecturer at Mars University",
+  "note": "Good news everyone!",
+  "nationality": "American",
+  "identifiers": [],
+  "labels": {},
+  "codes": {},
+  "names": [
+    {
+      "firstNames": [
+        "Hubert",
+        "J"
+      ],
+      "prefix": [],
+      "suffix": [],
+      "lastName": "Farnsworth",
+      "use": "official"
+    },
+    {
+      "firstNames": [
+        "Professor"
+      ],
+      "prefix": [],
+      "suffix": [],
+      "use": "nickname"
+    }
+  ],
+  "addresses": [],
+  "gender": "male",
+  "birthSex": "male",
+  "mergedIds": {},
+  "deactivationReason": "none",
+  "personalStatus": "unknown",
+  "partnerships": [],
+  "patientHealthCareParties": [],
+  "patientProfessions": [],
+  "properties": {},
+  "systemMetaData": {
+    "hcPartyKeys": {},
+    "privateKeyShamirPartitions": {},
+    "aesExchangeKeys": {},
+    "transferKeys": {},
+    "encryptedSelf": "2zjG9XnKuDxNSN4pYmyKO+7PXpeqMh7Pj0GW06+FTpE7PseyYLZZZ6IAuoED7SXQ",
+    "secretForeignKeys": [],
+    "cryptedForeignKeys": {},
+    "delegations": {
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+    },
+    "encryptionKeys": {
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+    }
+  }
 }
 ```
 </details>
+
 
 ## How to get a patient&#8239;?
 
@@ -205,76 +211,79 @@ To get a patient, we can use the `getPatient` method on the `PatientApi` object.
 const patient = await api.patientApi.getPatient(updatedPatient.id!)
 ```
 
+<!-- output://code-samples/how-to/patients/patient.txt -->
 <details>
-    <summary>Output</summary>
+<summary>patient</summary>
 
 ```json
 {
-	"id": "aff58060-8802-4f1a-91a6-e8bb9a343544",
-	"identifiers": [],
-	"labels": {},
-	"codes": {},
-	"names": [
-		{
-			"firstNames": [
-				"Hubert",
-				"J"
-			],
-			"prefix": [],
-			"suffix": [],
-			"lastName": "Farnsworth",
-			"use": "official"
-		},
-		{
-			"firstNames": [
-				"Professor"
-			],
-			"prefix": [],
-			"suffix": [],
-			"use": "nickname"
-		}
-	],
-	"languages": [],
-	"addresses": [],
-	"mergedIds": {},
-	"active": true,
-	"deactivationReason": "none",
-	"partnerships": [],
-	"patientHealthCareParties": [],
-	"patientProfessions": [],
-	"parameters": {},
-	"properties": {},
-	"rev": "2-9da777d089dc3a159d76ab29fff2acd2",
-	"created": 1664530613307,
-	"modified": 1664530613678,
-	"author": "b36fa6cb-d7a8-40f0-bcf6-af6ce0decb78",
-	"responsible": "ab623d88-baed-40b9-91b7-ab26e9a08db5",
-	"firstName": "Hubert",
-	"lastName": "Farnsworth",
-	"gender": "male",
-	"birthSex": "male",
-	"personalStatus": "unknown",
-	"dateOfBirth": 28410409,
-	"profession": "CEO/Owner of Planet Express, Lecturer at Mars University",
-	"note": "Good news everyone!",
-	"nationality": "American",
-	"systemMetaData": {
-		"hcPartyKeys": {},
-		"privateKeyShamirPartitions": {},
-		"secretForeignKeys": [],
-		"cryptedForeignKeys": {},
-		"delegations": {
-			"ab623d88-baed-40b9-91b7-ab26e9a08db5": {}
-		},
-		"encryptionKeys": {
-			"ab623d88-baed-40b9-91b7-ab26e9a08db5": {}
-		},
-		"aesExchangeKeys": {},
-		"transferKeys": {}
-	}
+  "id": "2ede7bc3-0d5c-43a2-8ebf-9582eb738201",
+  "languages": [],
+  "active": true,
+  "parameters": {},
+  "rev": "2-ac99e07c82fd6fa68b52d3647e8e2246",
+  "created": 1679929572654,
+  "modified": 1679929572710,
+  "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
+  "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
+  "firstName": "Hubert",
+  "lastName": "Farnsworth",
+  "dateOfBirth": 28410409,
+  "profession": "CEO/Owner of Planet Express, Lecturer at Mars University",
+  "note": "Good news everyone!",
+  "nationality": "American",
+  "identifiers": [],
+  "labels": {},
+  "codes": {},
+  "names": [
+    {
+      "firstNames": [
+        "Hubert",
+        "J"
+      ],
+      "prefix": [],
+      "suffix": [],
+      "lastName": "Farnsworth",
+      "use": "official"
+    },
+    {
+      "firstNames": [
+        "Professor"
+      ],
+      "prefix": [],
+      "suffix": [],
+      "use": "nickname"
+    }
+  ],
+  "addresses": [],
+  "gender": "male",
+  "birthSex": "male",
+  "mergedIds": {},
+  "deactivationReason": "none",
+  "personalStatus": "unknown",
+  "partnerships": [],
+  "patientHealthCareParties": [],
+  "patientProfessions": [],
+  "properties": {},
+  "systemMetaData": {
+    "hcPartyKeys": {},
+    "privateKeyShamirPartitions": {},
+    "aesExchangeKeys": {},
+    "transferKeys": {},
+    "encryptedSelf": "2zjG9XnKuDxNSN4pYmyKO+7PXpeqMh7Pj0GW06+FTpE7PseyYLZZZ6IAuoED7SXQ",
+    "secretForeignKeys": [],
+    "cryptedForeignKeys": {},
+    "delegations": {
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+    },
+    "encryptionKeys": {
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+    }
+  }
 }
 ```
 </details>
+
 
 ## How to delete a patient&#8239;?
 
@@ -282,14 +291,15 @@ To delete a patient, we can use the `deletePatient` method on the `PatientApi` o
 
 <!-- file://code-samples/how-to/patients/index.mts snippet:delete a patient-->
 ```typescript
-const deletedPatient = await api.patientApi.deletePatient(patient.id!)
+const deletedPatientId = await api.patientApi.deletePatient(patient.id!)
 ```
 
+<!-- output://code-samples/how-to/patients/deletedPatientId.txt -->
 <details>
-    <summary>Output</summary>
+<summary>deletedPatientId</summary>
 
-```json
-// TODO Add output
+```text
+2ede7bc3-0d5c-43a2-8ebf-9582eb738201
 ```
 </details>
 
@@ -308,12 +318,86 @@ const filter = await new PatientFilter()
 const patients = await api.patientApi.filterPatients(filter)
 ```
 
+<!-- output://code-samples/how-to/patients/patients.txt -->
 <details>
-    <summary>Output</summary>
+<summary>patients</summary>
 
 ```json
+{
+  "pageSize": 1000,
+  "totalSize": 1,
+  "rows": [
+    {
+      "id": "2ede7bc3-0d5c-43a2-8ebf-9582eb738201",
+      "languages": [],
+      "active": true,
+      "parameters": {},
+      "rev": "2-ac99e07c82fd6fa68b52d3647e8e2246",
+      "created": 1679929572654,
+      "modified": 1679929572710,
+      "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
+      "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
+      "firstName": "Hubert",
+      "lastName": "Farnsworth",
+      "dateOfBirth": 28410409,
+      "profession": "CEO/Owner of Planet Express, Lecturer at Mars University",
+      "nationality": "American",
+      "identifiers": [],
+      "labels": {},
+      "codes": {},
+      "names": [
+        {
+          "firstNames": [
+            "Hubert",
+            "J"
+          ],
+          "prefix": [],
+          "suffix": [],
+          "lastName": "Farnsworth",
+          "use": "official"
+        },
+        {
+          "firstNames": [
+            "Professor"
+          ],
+          "prefix": [],
+          "suffix": [],
+          "use": "nickname"
+        }
+      ],
+      "addresses": [],
+      "gender": "male",
+      "birthSex": "male",
+      "mergedIds": {},
+      "deactivationReason": "none",
+      "personalStatus": "unknown",
+      "partnerships": [],
+      "patientHealthCareParties": [],
+      "patientProfessions": [],
+      "properties": {},
+      "systemMetaData": {
+        "hcPartyKeys": {},
+        "privateKeyShamirPartitions": {},
+        "aesExchangeKeys": {},
+        "transferKeys": {},
+        "encryptedSelf": "2zjG9XnKuDxNSN4pYmyKO+7PXpeqMh7Pj0GW06+FTpE7PseyYLZZZ6IAuoED7SXQ",
+        "secretForeignKeys": [],
+        "cryptedForeignKeys": {},
+        "delegations": {
+          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+        },
+        "encryptionKeys": {
+          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+        }
+      }
+    }
+  ],
+  "nextKeyPair": {}
+}
 ```
 </details>
+
+
 
 ### Filter builder
 
@@ -323,12 +407,22 @@ In the example above, we created the filter this way:
 
 <!-- file://code-samples/how-to/patients/index.mts snippet:filter builder-->
 ```typescript
-new PatientFilter()
+const patientFilter = new PatientFilter()
   .forDataOwner(loggedUser.healthcarePartyId!)
 
   .dateOfBirthBetween(28000101, 29000101)
   .build()
 ```
+
+<!-- output://code-samples/how-to/patients/patientFilter.txt -->
+<details>
+<summary>patientFilter</summary>
+
+```json
+{}
+```
+</details>
+
 
 The resulting filter object will create a filter that allows us to get all `Patient` that satisfy all the following requirements:
 
@@ -341,7 +435,6 @@ The resulting filter object will create a filter that allows us to get all `Pati
 In some circumstances, you might want to get a list of `Patient` ids instead of the `Patient` entities themselves. To do so, you can use the `matchPatients` method on the `PatientApi`. This method takes one parameter: the filter object.
 
 <!-- file://code-samples/how-to/patients/index.mts snippet:get a list of patient ids-->
-
 ```typescript
 const filterForMatch = await new PatientFilter()
   .forDataOwner(loggedUser.healthcarePartyId!)
@@ -352,13 +445,17 @@ const filterForMatch = await new PatientFilter()
 const patientIds = await api.patientApi.matchPatients(filterForMatch)
 ```
 
+<!-- output://code-samples/how-to/patients/patientIds.txt -->
 <details>
-    <summary>Output</summary>
+<summary>patientIds</summary>
 
-```json
-["aff58060-8802-4f1a-91a6-e8bb9a343544"]
+```text
+[
+  "2ede7bc3-0d5c-43a2-8ebf-9582eb738201"
+]
 ```
 </details>
+
 
 ## How to get and modify your information as a patient
 
