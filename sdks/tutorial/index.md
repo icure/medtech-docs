@@ -56,6 +56,10 @@ const loggedUser = await api.userApi.getLoggedUser()
 expect(loggedUser.login).to.be.equal(iCureUserLogin)
 ```
 
+<!-- output://code-samples/tutorial/doctor-centric-app/loggedUser.txt -->
+<details>
+</details>
+
 At this point, your user can get data but is not able to encrypt/decrypt it. For this, you need to create and assign them 
 an RSA keypair.  
 
@@ -132,6 +136,10 @@ const createdPatient = await api.patientApi.createOrModifyPatient(
 console.log(`Your new patient id : ${createdPatient.id}`)
 ```
 
+<!-- output://code-samples/tutorial/doctor-centric-app/createdPatient.txt -->
+<details>
+</details>
+
 :::info
 
 To call these services, you always have to fully [initialize your MedTechApi](#init-your-medtech-api) and init 
@@ -150,6 +158,10 @@ You can retrieve patient information using `patientApi.getPatient` with the id o
 const johnSnow = await api.patientApi.getPatient(createdPatient.id)
 expect(createdPatient.id).to.be.equal(johnSnow.id)
 ```
+
+<!-- output://code-samples/tutorial/doctor-centric-app/johnSnow.txt -->
+<details>
+</details>
 
 If you would like to know more about the information contained in Patient, go check the [References](../references/classes/Patient.md)
 
@@ -183,6 +195,11 @@ const createdData = await api.dataSampleApi.createOrModifyDataSamplesFor(johnSno
 ])
 ```
 
+<!-- output://code-samples/tutorial/doctor-centric-app/createdData.txt -->
+<details>
+</details>
+
+
 When creating your data samples, iCure will automatically assign an id to each of them, similarly to what happens for patients.
 
 But what happens if you don't know these ids? How can you find back your data?
@@ -210,6 +227,11 @@ expect(johnData.rows[0].content['en'].numberValue).to.be.equal(92.5)
 expect(johnData.rows[0].comment).to.be.equal('Weight')
 ```
 
+<!-- output://code-samples/tutorial/doctor-centric-app/johnData.txt -->
+<details>
+</details>
+
+
 Filters offer you a lot of possibilities. Go have a look at 
 the [How To search data in iCure using complex filters](../how-to/how-to-filter-data-with-advanced-search-criteria.md) 
 guide to know more about them. 
@@ -224,6 +246,10 @@ expect(johnData.rows[0].id).to.be.equal(johnWeight.id)
 expect(johnWeight.content['en'].numberValue).to.be.equal(92.5)
 expect(johnWeight.comment).to.be.equal('Weight')
 ```
+
+<!-- output://code-samples/tutorial/doctor-centric-app/johnWeight.txt -->
+<details>
+</details>
 
 To know more about the Data Sample information, go check the [References](/sdks/references/classes/DataSample.md)
 

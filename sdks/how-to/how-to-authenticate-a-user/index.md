@@ -111,15 +111,6 @@ const authProcess = await anonymousApi.authenticationApi.startAuthentication(
 ```
 <!-- output://code-samples/how-to/authenticate-user/authProcess.txt -->
 <details>
-<summary>authProcess</summary>
-
-```json
-{
-  "requestId": "b681ddcf-80d2-4480-81f4-e6c4cb74a362",
-  "login": "mra0rqcq9-dt@got.com",
-  "bypassTokenCheck": false
-}
-```
 </details>
 
 As an output, you receive an `AuthenticationProcess` object, which you will need for next steps of the procedure.
