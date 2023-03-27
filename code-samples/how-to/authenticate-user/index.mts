@@ -7,6 +7,8 @@ import {
   CodingReference,
   medTechApi,
   Content,
+  LocalStorageImpl,
+  KeyStorageImpl,
 } from '@icure/medical-device-sdk'
 import { webcrypto } from 'crypto'
 import * as process from 'process'
@@ -211,6 +213,8 @@ const currentPatient = await loggedUserApi.patientApi.getPatient(daenaerysId)
 await loggedUserApi.patientApi.giveAccessTo(currentPatient, masterHcpId)
 await loggedUserApi.dataSampleApi.giveAccessTo(createdDataSample, masterHcpId)
 
+localStorage.removeItem(`${currentPatient.id}.${currentPatient.systemMetaData.publicKey.slice(-32)}`)
+
 cachedInfo['login'] = undefined
 cachedInfo['token'] = undefined
 cachedInfo['userId'] = undefined
@@ -290,7 +294,7 @@ const hcpNotifications = await hcpApi.notificationApi
   .then((notifs) => notifs.filter((notif) => notif.type === NotificationTypeEnum.KEY_PAIR_UPDATE))
 //tech-doc: STOP HERE
 
-expect(hcpNotifications.length).to.not.be.undefined
+expect(hcpNotifications.length).to.be.greaterThan(0)
 
 const daenaerysNotification = hcpNotifications.find(
   (notif) =>
