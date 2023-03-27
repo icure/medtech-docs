@@ -289,7 +289,7 @@ In the example above, we created the filter this way:
 
 <!-- file://code-samples/how-to/datasamples/index.mts snippet:filter builder-->
 ```typescript
-new DataSampleFilter()
+const dataSampleFilter = new DataSampleFilter()
   .forDataOwner(loggedUser.healthcarePartyId!)
   .byLabelCodeDateFilter('IC-TEST', 'TEST')
   .forPatients(api.cryptoApi, [patient])
