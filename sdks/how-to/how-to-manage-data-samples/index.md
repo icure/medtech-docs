@@ -30,48 +30,58 @@ const createdDataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
   patient.id!,
   new DataSample({
     labels: new Set([new CodingReference({ type: 'IC-TEST', code: 'TEST' })]),
-    content: { en: { stringValue: 'Hello world' } },
+    content: { en: new Content({ stringValue: 'Hello world' }) },
     openingDate: 20220929083400,
     comment: 'This is a comment',
   }),
 )
 ```
-
+<!-- output://code-samples/how-to/datasamples/createdDataSample.txt -->
 <details>
-    <summary>Output</summary>
+<summary>createdDataSample</summary>
 
 ```json
 {
-  "id": "1a9b7f64-2dc1-4436-af21-087167f700e3",
-  "identifier": [],
-  "content": {
-    "en": {
-      "stringValue": "Hello world"
-    }
-  },
+  "id": "ee831bdb-ea10-4173-915f-9ac3dc17dcac",
   "qualifiedLinks": {},
-  "codes": {},
-  "labels": {},
-  "batchId": "3d1fa254-eaf6-4515-a719-7c5c0a63efae",
+  "batchId": "546789c0-3feb-41fd-be5f-a02da91400db",
+  "index": 0,
+  "valueDate": 20230327170552,
+  "openingDate": 20220929083400,
+  "created": 1679929552775,
+  "modified": 1679929552775,
+  "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
+  "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
+  "comment": "This is a comment",
+  "identifiers": [],
   "healthcareElementIds": {},
   "canvasesIds": {},
-  "index": 0,
-  "valueDate": 20220929115108,
-  "openingDate": 20220929083400,
-  "created": 1664452268208,
-  "modified": 1664452268208,
-  "author": "b36fa6cb-d7a8-40f0-bcf6-af6ce0decb78",
-  "responsible": "ab623d88-baed-40b9-91b7-ab26e9a08db5",
-  "comment": "This is a comment",
+  "content": {
+    "en": {
+      "stringValue": "Hello world",
+      "compoundValue": [],
+      "ratio": [],
+      "range": []
+    }
+  },
+  "codes": {},
+  "labels": {},
   "systemMetaData": {
-    "secretForeignKeys": [],
-    "cryptedForeignKeys": {},
-    "delegations": {},
-    "encryptionKeys": {}
+    "secretForeignKeys": [
+      "fcfed241-acaa-46e6-ad40-d03fa0473588"
+    ],
+    "cryptedForeignKeys": {
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+    },
+    "delegations": {
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+    },
+    "encryptionKeys": {
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+    }
   }
 }
 ```
-
 </details>
 
 In this example, we created a DataSample with the `IC-TEST` tag code and `TEST` tag type. We also added a comment and an
@@ -92,50 +102,52 @@ parameter: the DataSample's id.
 ```typescript
 const dataSample = await api.dataSampleApi.getDataSample(createdDataSample.id!)
 ```
-
+<!-- output://code-samples/how-to/datasamples/dataSample.txt -->
 <details>
-	<summary>Output:</summary>
+<summary>dataSample</summary>
 
 ```json
 {
-  "id": "1a9b7f64-2dc1-4436-af21-087167f700e3",
-  "identifier": [],
-  "content": {
-    "en": {
-      "stringValue": "Hello world"
-    }
-  },
+  "id": "ee831bdb-ea10-4173-915f-9ac3dc17dcac",
   "qualifiedLinks": {},
-  "codes": {},
-  "labels": {},
-  "batchId": "3d1fa254-eaf6-4515-a719-7c5c0a63efae",
+  "batchId": "546789c0-3feb-41fd-be5f-a02da91400db",
+  "index": 0,
+  "valueDate": 20230327170552,
+  "openingDate": 20220929083400,
+  "created": 1679929552775,
+  "modified": 1679929552775,
+  "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
+  "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
+  "comment": "This is a comment",
+  "identifiers": [],
   "healthcareElementIds": {},
   "canvasesIds": {},
-  "index": 0,
-  "valueDate": 20220929115108,
-  "openingDate": 20220929083400,
-  "created": 1664452268208,
-  "modified": 1664452268208,
-  "author": "b36fa6cb-d7a8-40f0-bcf6-af6ce0decb78",
-  "responsible": "ab623d88-baed-40b9-91b7-ab26e9a08db5",
-  "comment": "This is a comment",
+  "content": {
+    "en": {
+      "stringValue": "Hello world",
+      "compoundValue": [],
+      "ratio": [],
+      "range": []
+    }
+  },
+  "codes": {},
+  "labels": {},
   "systemMetaData": {
     "secretForeignKeys": [
-      "694592d4-7af1-4295-bf52-de8d5c8d5a73"
+      "fcfed241-acaa-46e6-ad40-d03fa0473588"
     ],
     "cryptedForeignKeys": {
-      "ab623d88-baed-40b9-91b7-ab26e9a08db5": {}
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
     },
     "delegations": {
-      "ab623d88-baed-40b9-91b7-ab26e9a08db5": {}
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
     },
     "encryptionKeys": {
-      "ab623d88-baed-40b9-91b7-ab26e9a08db5": {}
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
     }
   }
 }
 ```
-
 </details>
 
 ## How to update a DataSample&#8239;?
@@ -152,51 +164,64 @@ If you linked the DataSample at the wrong patient, you have to delete the first 
 
 <!-- file://code-samples/how-to/datasamples/index.mts snippet:update a dataSample-->
 ```typescript
-const updatedDataSample = await api.dataSampleApi.createOrModifyDataSampleFor(patient.id!, {
-  ...createdDataSample,
-  // highlight-start
-  content: { en: { stringValue: 'Hello world updated' } },
-  comment: 'This is a updated comment',
-  modified: undefined,
-  // highlight-end
-})
+const updatedDataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
+  patient.id!,
+  new DataSample({
+    ...createdDataSample,
+    // highlight-start
+    content: { en: new Content({ stringValue: 'Hello world updated' }) },
+    comment: 'This is a updated comment',
+    modified: undefined,
+    // highlight-end
+  }),
+)
 ```
-
+<!-- output://code-samples/how-to/datasamples/updatedDataSample.txt -->
 <details>
-    <summary>Output:</summary>
+<summary>updatedDataSample</summary>
 
 ```json
 {
-  "id": "1a9b7f64-2dc1-4436-af21-087167f700e3",
-  "identifier": [],
-  "content": {
-    "en": {
-      "stringValue": "Hello world updated"
-    }
-  },
+  "id": "ee831bdb-ea10-4173-915f-9ac3dc17dcac",
   "qualifiedLinks": {},
-  "codes": {},
-  "labels": {},
-  "batchId": "3d1fa254-eaf6-4515-a719-7c5c0a63efae",
+  "batchId": "546789c0-3feb-41fd-be5f-a02da91400db",
+  "index": 0,
+  "valueDate": 20230327170552,
+  "openingDate": 20220929083400,
+  "created": 1679929552775,
+  "modified": 1679929553509,
+  "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
+  "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
+  "comment": "This is a updated comment",
+  "identifiers": [],
   "healthcareElementIds": {},
   "canvasesIds": {},
-  "index": 0,
-  "valueDate": 20220929115108,
-  "openingDate": 20220929083400,
-  "created": 1664452268208,
-  "modified": 1664452269234,
-  "author": "b36fa6cb-d7a8-40f0-bcf6-af6ce0decb78",
-  "responsible": "ab623d88-baed-40b9-91b7-ab26e9a08db5",
-  "comment": "This is a updated comment",
+  "content": {
+    "en": {
+      "stringValue": "Hello world updated",
+      "compoundValue": [],
+      "ratio": [],
+      "range": []
+    }
+  },
+  "codes": {},
+  "labels": {},
   "systemMetaData": {
-    "secretForeignKeys": [],
-    "cryptedForeignKeys": {},
-    "delegations": {},
-    "encryptionKeys": {}
+    "secretForeignKeys": [
+      "fcfed241-acaa-46e6-ad40-d03fa0473588"
+    ],
+    "cryptedForeignKeys": {
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+    },
+    "delegations": {
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+    },
+    "encryptionKeys": {
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+    }
   }
 }
 ```
-
 </details>
 
 ## How to delete a DataSample&#8239;?
@@ -207,6 +232,14 @@ To delete a DataSample, you can use the `deleteDataSample` method on the `DataSa
 ```typescript
 const deletedDataSample = await api.dataSampleApi.deleteDataSample(updatedDataSample.id!)
 ```
+<!-- output://code-samples/how-to/datasamples/deletedDataSample.txt -->
+<details>
+<summary>deletedDataSample</summary>
+
+```text
+ee831bdb-ea10-4173-915f-9ac3dc17dcac
+```
+</details>
 
 ## How to filter DataSamples&#8239;?
 
@@ -218,15 +251,15 @@ We can build the filter object using the `DataSampleFilter` builder.
 ```typescript
 const filter = await new DataSampleFilter()
   .forDataOwner(loggedUser.healthcarePartyId!)
-  .byLabelCodeFilter('IC-TEST', 'TEST')
+  .byLabelCodeDateFilter('IC-TEST', 'TEST')
   .forPatients(api.cryptoApi, [patient])
   .build()
 
 const filteredDataSamples = await api.dataSampleApi.filterDataSample(filter)
 ```
-
+<!-- output://code-samples/how-to/datasamples/filteredDataSamples.txt -->
 <details>
-    <summary>Output</summary>
+<summary>filteredDataSamples</summary>
 
 ```json
 {
@@ -234,39 +267,42 @@ const filteredDataSamples = await api.dataSampleApi.filterDataSample(filter)
   "totalSize": 1,
   "rows": [
     {
-      "id": "1a9b7f64-2dc1-4436-af21-087167f700e3",
-      "identifier": [],
-      "content": {
-        "en": {
-          "stringValue": "Hello world updated"
-        }
-      },
+      "id": "ee831bdb-ea10-4173-915f-9ac3dc17dcac",
       "qualifiedLinks": {},
-      "codes": {},
-      "labels": {},
-      "batchId": "3d1fa254-eaf6-4515-a719-7c5c0a63efae",
+      "batchId": "546789c0-3feb-41fd-be5f-a02da91400db",
+      "index": 0,
+      "valueDate": 20230327170552,
+      "openingDate": 20220929083400,
+      "created": 1679929552775,
+      "modified": 1679929553509,
+      "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
+      "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
+      "comment": "This is a updated comment",
+      "identifiers": [],
       "healthcareElementIds": {},
       "canvasesIds": {},
-      "index": 0,
-      "valueDate": 20220929115108,
-      "openingDate": 20220929083400,
-      "created": 1664452268208,
-      "modified": 1664452269234,
-      "author": "b36fa6cb-d7a8-40f0-bcf6-af6ce0decb78",
-      "responsible": "ab623d88-baed-40b9-91b7-ab26e9a08db5",
-      "comment": "This is a updated comment",
+      "content": {
+        "en": {
+          "stringValue": "Hello world updated",
+          "compoundValue": [],
+          "ratio": [],
+          "range": []
+        }
+      },
+      "codes": {},
+      "labels": {},
       "systemMetaData": {
         "secretForeignKeys": [
-          "694592d4-7af1-4295-bf52-de8d5c8d5a73"
+          "fcfed241-acaa-46e6-ad40-d03fa0473588"
         ],
         "cryptedForeignKeys": {
-          "ab623d88-baed-40b9-91b7-ab26e9a08db5": {}
+          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
         },
         "delegations": {
-          "ab623d88-baed-40b9-91b7-ab26e9a08db5": {}
+          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
         },
         "encryptionKeys": {
-          "ab623d88-baed-40b9-91b7-ab26e9a08db5": {}
+          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
         }
       }
     }
@@ -274,7 +310,6 @@ const filteredDataSamples = await api.dataSampleApi.filterDataSample(filter)
   "nextKeyPair": {}
 }
 ```
-
 </details>
 
 ### Filter builder
@@ -285,12 +320,20 @@ In the example above, we created the filter this way:
 
 <!-- file://code-samples/how-to/datasamples/index.mts snippet:filter builder-->
 ```typescript
-new DataSampleFilter()
+const dataSampleFilter = new DataSampleFilter()
   .forDataOwner(loggedUser.healthcarePartyId!)
-  .byLabelCodeFilter('IC-TEST', 'TEST')
+  .byLabelCodeDateFilter('IC-TEST', 'TEST')
   .forPatients(api.cryptoApi, [patient])
   .build()
 ```
+<!-- output://code-samples/how-to/datasamples/dataSampleFilter.txt -->
+<details>
+<summary>dataSampleFilter</summary>
+
+```json
+{}
+```
+</details>
 
 The resulting filter object will create a filter that allows us to get all `DataSamples` that satisfy all the following requirements:
 
@@ -311,14 +354,13 @@ const matchFilter = await new DataSampleFilter()
 
 const matchedDataSampleIds = await api.dataSampleApi.matchDataSample(matchFilter)
 ```
-
+<!-- output://code-samples/how-to/datasamples/matchedDataSampleIds.txt -->
 <details>
-    <summary>Output</summary>
+<summary>matchedDataSampleIds</summary>
 
-```json
+```text
 [
-  "1a9b7f64-2dc1-4436-af21-087167f700e3"
+  "ee831bdb-ea10-4173-915f-9ac3dc17dcac"
 ]
 ```
-
 </details>

@@ -8,7 +8,7 @@ import {
 } from '@icure/medical-device-sdk'
 import { webcrypto } from 'crypto'
 import { hex2ua, sleep } from '@icure/api'
-import { host, userName, password, privKey, initLocalStorage } from '../../utils/index.mjs'
+import { host, userName, password, privKey, initLocalStorage, output } from '../../utils/index.mjs'
 import 'isomorphic-fetch'
 
 initLocalStorage()
@@ -48,7 +48,7 @@ const connection = (
 
 //tech-doc: STOP HERE
 
-//tech-doc: create a patient for rsocket
+//tech-doc: create a patient for websocket
 const patient = await api.patientApi.createOrModifyPatient(
   new Patient({
     firstName: 'John',
@@ -57,9 +57,10 @@ const patient = await api.patientApi.createOrModifyPatient(
   }),
 )
 //tech-doc: STOP HERE
+output({ patient })
 
-//tech-doc: create a dataSample for rsocket
-await api.dataSampleApi.createOrModifyDataSampleFor(
+//tech-doc: create a dataSample for websocket
+const dataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
   patient.id!,
   new DataSample({
     labels: new Set([new CodingReference({ type: 'IC-TEST', code: 'TEST' })]),
@@ -67,9 +68,11 @@ await api.dataSampleApi.createOrModifyDataSampleFor(
   }),
 )
 //tech-doc: STOP HERE
+output({ dataSample })
 
 await sleep(2000)
 //tech-doc: close the connection
 connection.close()
 //tech-doc: STOP HERE
 await sleep(5000)
+output({ statuses, events })

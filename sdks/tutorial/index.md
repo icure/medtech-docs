@@ -56,6 +56,30 @@ const loggedUser = await api.userApi.getLoggedUser()
 expect(loggedUser.login).to.be.equal(iCureUserLogin)
 ```
 
+<!-- output://code-samples/tutorial/doctor-centric-app/loggedUser.txt -->
+<details>
+<summary>loggedUser</summary>
+
+```json
+{
+  "id": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
+  "rev": "80-a44fa468d77e5403b84614a3cb062b56",
+  "created": 1679919731079,
+  "name": "Master HCP",
+  "login": "master@b16baa.icure",
+  "groupId": "ic-e2etest-medtech-docs",
+  "healthcarePartyId": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
+  "email": "master@b16baa.icure",
+  "properties": {},
+  "roles": {},
+  "sharingDataWith": {
+    "medicalInformation": {}
+  },
+  "authenticationTokens": {}
+}
+```
+</details>
+
 At this point, your user can get data but is not able to encrypt/decrypt it. For this, you need to create and assign them 
 an RSA keypair.  
 
@@ -80,7 +104,7 @@ Here is an example on how to do it:
 ```typescript
 const iCureUserPubKey = process.env.ICURE_USER_PUB_KEY!
 const iCureUserPrivKey = process.env.ICURE_USER_PRIV_KEY!
-await api.initUserCrypto(false, { publicKey: iCureUserPubKey, privateKey: iCureUserPrivKey })
+await api.initUserCrypto({ publicKey: iCureUserPubKey, privateKey: iCureUserPrivKey })
 ```
 For more information about this method, go to the [References: initUserCrypto](/sdks/references/classes/MedTechApi.md#initusercrypto)
 
@@ -132,6 +156,68 @@ const createdPatient = await api.patientApi.createOrModifyPatient(
 console.log(`Your new patient id : ${createdPatient.id}`)
 ```
 
+<!-- output://code-samples/tutorial/doctor-centric-app/createdPatient.txt -->
+<details>
+<summary>createdPatient</summary>
+
+```json
+{
+  "id": "446e9df2-9da3-4f80-aa6d-2ccdc2bd0e2e",
+  "languages": [],
+  "active": true,
+  "parameters": {},
+  "rev": "1-7791eaa3dbc6a8b151327aa73878f16e",
+  "created": 1679929609363,
+  "modified": 1679929609363,
+  "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
+  "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
+  "firstName": "John",
+  "lastName": "Snow",
+  "note": "Winter is coming",
+  "identifiers": [],
+  "labels": {},
+  "codes": {},
+  "names": [
+    {
+      "firstNames": [
+        "John"
+      ],
+      "prefix": [],
+      "suffix": [],
+      "lastName": "Snow",
+      "text": "Snow John",
+      "use": "official"
+    }
+  ],
+  "addresses": [],
+  "gender": "male",
+  "birthSex": "unknown",
+  "mergedIds": {},
+  "deactivationReason": "none",
+  "personalStatus": "unknown",
+  "partnerships": [],
+  "patientHealthCareParties": [],
+  "patientProfessions": [],
+  "properties": {},
+  "systemMetaData": {
+    "hcPartyKeys": {},
+    "privateKeyShamirPartitions": {},
+    "aesExchangeKeys": {},
+    "transferKeys": {},
+    "encryptedSelf": "h6xTzw47+j6vy9Gy68ySb0E1W5k/D6VhCRIccghjZNd/d+C1u9bbFNoWAB5fcuj+",
+    "secretForeignKeys": [],
+    "cryptedForeignKeys": {},
+    "delegations": {
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+    },
+    "encryptionKeys": {
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+    }
+  }
+}
+```
+</details>
+
 :::info
 
 To call these services, you always have to fully [initialize your MedTechApi](#init-your-medtech-api) and init 
@@ -150,6 +236,68 @@ You can retrieve patient information using `patientApi.getPatient` with the id o
 const johnSnow = await api.patientApi.getPatient(createdPatient.id)
 expect(createdPatient.id).to.be.equal(johnSnow.id)
 ```
+
+<!-- output://code-samples/tutorial/doctor-centric-app/johnSnow.txt -->
+<details>
+<summary>johnSnow</summary>
+
+```json
+{
+  "id": "446e9df2-9da3-4f80-aa6d-2ccdc2bd0e2e",
+  "languages": [],
+  "active": true,
+  "parameters": {},
+  "rev": "1-7791eaa3dbc6a8b151327aa73878f16e",
+  "created": 1679929609363,
+  "modified": 1679929609363,
+  "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
+  "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
+  "firstName": "John",
+  "lastName": "Snow",
+  "note": "Winter is coming",
+  "identifiers": [],
+  "labels": {},
+  "codes": {},
+  "names": [
+    {
+      "firstNames": [
+        "John"
+      ],
+      "prefix": [],
+      "suffix": [],
+      "lastName": "Snow",
+      "text": "Snow John",
+      "use": "official"
+    }
+  ],
+  "addresses": [],
+  "gender": "male",
+  "birthSex": "unknown",
+  "mergedIds": {},
+  "deactivationReason": "none",
+  "personalStatus": "unknown",
+  "partnerships": [],
+  "patientHealthCareParties": [],
+  "patientProfessions": [],
+  "properties": {},
+  "systemMetaData": {
+    "hcPartyKeys": {},
+    "privateKeyShamirPartitions": {},
+    "aesExchangeKeys": {},
+    "transferKeys": {},
+    "encryptedSelf": "h6xTzw47+j6vy9Gy68ySb0E1W5k/D6VhCRIccghjZNd/d+C1u9bbFNoWAB5fcuj+",
+    "secretForeignKeys": [],
+    "cryptedForeignKeys": {},
+    "delegations": {
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+    },
+    "encryptionKeys": {
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+    }
+  }
+}
+```
+</details>
 
 If you would like to know more about the information contained in Patient, go check the [References](../references/classes/Patient.md)
 
@@ -170,18 +318,109 @@ A data sample must always be linked to a patient.
 const createdData = await api.dataSampleApi.createOrModifyDataSamplesFor(johnSnow.id, [
   new DataSample({
     labels: new Set([new CodingReference({ type: 'LOINC', code: '29463-7', version: '2' })]),
-    content: { en: { numberValue: 92.5 } },
+    content: { en: new Content({ numberValue: 92.5 }) },
     valueDate: 20220203111034,
     comment: 'Weight',
   }),
   new DataSample({
     labels: new Set([new CodingReference({ type: 'LOINC', code: '8302-2', version: '2' })]),
-    content: { en: { numberValue: 187 } },
+    content: { en: new Content({ numberValue: 187 }) },
     valueDate: 20220203111034,
     comment: 'Height',
   }),
 ])
 ```
+
+<!-- output://code-samples/tutorial/doctor-centric-app/createdData.txt -->
+<details>
+<summary>createdData</summary>
+
+```text
+[
+  {
+    "id": "195d7cce-501d-447d-9582-a88daddc41d5",
+    "qualifiedLinks": {},
+    "batchId": "90e97103-84d9-490c-b433-584dc6354955",
+    "index": 0,
+    "valueDate": 20220203111034,
+    "openingDate": 20230327170649,
+    "created": 1679929609672,
+    "modified": 1679929609672,
+    "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
+    "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
+    "comment": "Weight",
+    "identifiers": [],
+    "healthcareElementIds": {},
+    "canvasesIds": {},
+    "content": {
+      "en": {
+        "numberValue": 92.5,
+        "compoundValue": [],
+        "ratio": [],
+        "range": []
+      }
+    },
+    "codes": {},
+    "labels": {},
+    "systemMetaData": {
+      "secretForeignKeys": [
+        "6fc88ca6-5ceb-4416-bf62-1aa5ec3b9388"
+      ],
+      "cryptedForeignKeys": {
+        "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+      },
+      "delegations": {
+        "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+      },
+      "encryptionKeys": {
+        "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+      }
+    }
+  },
+  {
+    "id": "cded18dc-416f-43cf-beaa-537680166977",
+    "qualifiedLinks": {},
+    "batchId": "90e97103-84d9-490c-b433-584dc6354955",
+    "index": 1,
+    "valueDate": 20220203111034,
+    "openingDate": 20230327170649,
+    "created": 1679929609672,
+    "modified": 1679929609672,
+    "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
+    "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
+    "comment": "Height",
+    "identifiers": [],
+    "healthcareElementIds": {},
+    "canvasesIds": {},
+    "content": {
+      "en": {
+        "numberValue": 187,
+        "compoundValue": [],
+        "ratio": [],
+        "range": []
+      }
+    },
+    "codes": {},
+    "labels": {},
+    "systemMetaData": {
+      "secretForeignKeys": [
+        "6fc88ca6-5ceb-4416-bf62-1aa5ec3b9388"
+      ],
+      "cryptedForeignKeys": {
+        "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+      },
+      "delegations": {
+        "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+      },
+      "encryptionKeys": {
+        "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+      }
+    }
+  }
+]
+```
+</details>
+
 
 When creating your data samples, iCure will automatically assign an id to each of them, similarly to what happens for patients.
 
@@ -200,7 +439,7 @@ const johnData = await api.dataSampleApi.filterDataSample(
   await new DataSampleFilter()
     .forDataOwner(api.dataOwnerApi.getDataOwnerIdOf(loggedUser))
     .forPatients(api.cryptoApi, [johnSnow])
-    .byLabelCodeFilter('LOINC', '29463-7')
+    .byLabelCodeDateFilter('LOINC', '29463-7')
     .build(),
 )
 
@@ -209,6 +448,62 @@ expect(johnData.pageSize).to.be.equal(1)
 expect(johnData.rows[0].content['en'].numberValue).to.be.equal(92.5)
 expect(johnData.rows[0].comment).to.be.equal('Weight')
 ```
+
+<!-- output://code-samples/tutorial/doctor-centric-app/johnData.txt -->
+<details>
+<summary>johnData</summary>
+
+```json
+{
+  "pageSize": 1,
+  "totalSize": 1,
+  "rows": [
+    {
+      "id": "195d7cce-501d-447d-9582-a88daddc41d5",
+      "qualifiedLinks": {},
+      "batchId": "90e97103-84d9-490c-b433-584dc6354955",
+      "index": 0,
+      "valueDate": 20220203111034,
+      "openingDate": 20230327170649,
+      "created": 1679929609672,
+      "modified": 1679929609672,
+      "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
+      "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
+      "comment": "Weight",
+      "identifiers": [],
+      "healthcareElementIds": {},
+      "canvasesIds": {},
+      "content": {
+        "en": {
+          "numberValue": 92.5,
+          "compoundValue": [],
+          "ratio": [],
+          "range": []
+        }
+      },
+      "codes": {},
+      "labels": {},
+      "systemMetaData": {
+        "secretForeignKeys": [
+          "6fc88ca6-5ceb-4416-bf62-1aa5ec3b9388"
+        ],
+        "cryptedForeignKeys": {
+          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+        },
+        "delegations": {
+          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+        },
+        "encryptionKeys": {
+          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+        }
+      }
+    }
+  ],
+  "nextKeyPair": {}
+}
+```
+</details>
+
 
 Filters offer you a lot of possibilities. Go have a look at 
 the [How To search data in iCure using complex filters](../how-to/how-to-filter-data-with-advanced-search-criteria.md) 
@@ -224,6 +519,54 @@ expect(johnData.rows[0].id).to.be.equal(johnWeight.id)
 expect(johnWeight.content['en'].numberValue).to.be.equal(92.5)
 expect(johnWeight.comment).to.be.equal('Weight')
 ```
+
+<!-- output://code-samples/tutorial/doctor-centric-app/johnWeight.txt -->
+<details>
+<summary>johnWeight</summary>
+
+```json
+{
+  "id": "195d7cce-501d-447d-9582-a88daddc41d5",
+  "qualifiedLinks": {},
+  "batchId": "90e97103-84d9-490c-b433-584dc6354955",
+  "index": 0,
+  "valueDate": 20220203111034,
+  "openingDate": 20230327170649,
+  "created": 1679929609672,
+  "modified": 1679929609672,
+  "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
+  "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
+  "comment": "Weight",
+  "identifiers": [],
+  "healthcareElementIds": {},
+  "canvasesIds": {},
+  "content": {
+    "en": {
+      "numberValue": 92.5,
+      "compoundValue": [],
+      "ratio": [],
+      "range": []
+    }
+  },
+  "codes": {},
+  "labels": {},
+  "systemMetaData": {
+    "secretForeignKeys": [
+      "6fc88ca6-5ceb-4416-bf62-1aa5ec3b9388"
+    ],
+    "cryptedForeignKeys": {
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+    },
+    "delegations": {
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+    },
+    "encryptionKeys": {
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+    }
+  }
+}
+```
+</details>
 
 To know more about the Data Sample information, go check the [References](/sdks/references/classes/DataSample.md)
 

@@ -1,7 +1,7 @@
 import 'isomorphic-fetch'
 import { CodingReference, Content, DataSample, HealthcareElement } from '@icure/medical-device-sdk'
 import { hex2ua } from '@icure/api'
-import { initLocalStorage, initMedTechApi, patientId, privKey } from '../../utils/index.mjs'
+import { initLocalStorage, initMedTechApi, output, patientId, privKey } from '../../utils/index.mjs'
 import { expect } from 'chai'
 
 initLocalStorage()
@@ -54,4 +54,5 @@ const dataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
 )
 
 //tech-doc: STOP HERE
+output({ healthcareElement, dataSample })
 expect(!!dataSample).to.eq(true) //skip

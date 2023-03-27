@@ -5,6 +5,7 @@ import {
   host,
   initLocalStorage,
   msgGtwUrl,
+  output,
   password,
   privKey,
   specId,
@@ -138,7 +139,7 @@ const patientUser = await apiAsPatient.userApi.getLoggedUser()
 // apiAsPatient.patientApi.getPatient would fail
 const patientDetails = await apiAsPatient.patientApi.getPatientAndTryDecrypt(patientUser.patientId!)
 //tech-doc: STOP HERE
-
+output({ patientDetails })
 //tech-doc: modify patient details
 patientDetails.companyName = 'iCure'
 // patientDetails.note = 'This would make modify fail'
@@ -146,28 +147,34 @@ const modifiedPatientDetails = await apiAsPatient.patientApi.modifyPotentiallyEn
   patientDetails,
 )
 //tech-doc: STOP HERE
+output({ modifiedPatientDetails })
 
 //tech-doc: create healthcare element
-const newHEByPatient = await apiAsPatient.healthcareElementApi.createOrModifyHealthcareElement(
-  new HealthcareElement({
-    description: "I don't feel so well",
-    codes: new Set([
-      new CodingReference({
-        id: 'SNOMEDCT|617|20020131',
-        type: 'SNOMEDCT',
-        code: '617',
-        version: '20020131',
-      }),
-    ]),
-    openingDate: new Date('2019-10-12').getTime(),
-  }),
-  modifiedPatientDetails.id,
+const newHealthcareElement =
+  await apiAsPatient.healthcareElementApi.createOrModifyHealthcareElement(
+    new HealthcareElement({
+      description: "I don't feel so well",
+      codes: new Set([
+        new CodingReference({
+          id: 'SNOMEDCT|617|20020131',
+          type: 'SNOMEDCT',
+          code: '617',
+          version: '20020131',
+        }),
+      ]),
+      openingDate: new Date('2019-10-12').getTime(),
+    }),
+    modifiedPatientDetails.id,
+  )
+const sharedHealthcareElement = await apiAsPatient.healthcareElementApi.giveAccessTo(
+  newHealthcareElement,
+  hcp.id,
 )
-await apiAsPatient.healthcareElementApi.giveAccessTo(newHEByPatient, hcp.id)
 // The doctor can now access the healthcare element
 apiAsDoctor.cryptoApi.emptyHcpCache(hcp.id)
-console.log(await apiAsDoctor.healthcareElementApi.getHealthcareElement(newHEByPatient.id!)) // HealthcareElement...
+console.log(await apiAsDoctor.healthcareElementApi.getHealthcareElement(newHealthcareElement.id!)) // HealthcareElement...
 //tech-doc: STOP HERE
+output({ newHealthcareElement, sharedHealthcareElement })
 
 //tech-doc: share healthcare element sfk
 const filterForHcpWithoutAccessByPatient = await new HealthcareElementFilter()
@@ -177,8 +184,8 @@ const filterForHcpWithoutAccessByPatient = await new HealthcareElementFilter()
 const notFoundHEs = await apiAsDoctor.healthcareElementApi.filterHealthcareElement(
   filterForHcpWithoutAccessByPatient,
 )
-console.log(notFoundHEs.rows.find((x) => x.id == newHEByPatient.id)) // undefined
-expect(notFoundHEs.rows.find((x) => x.id == newHEByPatient.id)).to.be.undefined //skip
+console.log(notFoundHEs.rows.find((x) => x.id == newHealthcareElement.id)) // undefined
+expect(notFoundHEs.rows.find((x) => x.id == newHealthcareElement.id)).to.be.undefined //skip
 // The patient shares his secret foreign key with the doctor
 await apiAsPatient.patientApi.giveAccessToPotentiallyEncrypted(modifiedPatientDetails, hcp.id)
 // The doctor can now also find the healthcare element
@@ -189,9 +196,10 @@ const filterForHcpWithAccessByPatient = await new HealthcareElementFilter()
 const foundHEs = await apiAsDoctor.healthcareElementApi.filterHealthcareElement(
   filterForHcpWithAccessByPatient,
 )
-console.log(foundHEs.rows.find((x) => x.id == newHEByPatient.id)) // HealthcareElement...
-expect(foundHEs.rows.find((x) => x.id == newHEByPatient.id)).to.not.be.undefined //skip
+console.log(foundHEs.rows.find((x) => x.id == newHealthcareElement.id)) // HealthcareElement...
+expect(foundHEs.rows.find((x) => x.id == newHealthcareElement.id)).to.not.be.undefined //skip
 //tech-doc: STOP HERE
+output({ notFoundHEs, foundHEs })
 
 //tech-doc: doctor gets pending notifications
 const newNotifications = await apiAsDoctor.notificationApi.getPendingNotificationsAfter()
@@ -201,6 +209,7 @@ const patientNotification = newNotifications.filter(
     notification.responsible === patient.id,
 )[0]
 //tech-doc: STOP HERE
+output({ newNotifications, patientNotification })
 expect(!!patientNotification).to.eq(true)
 
 //tech-doc: notification set ongoing
@@ -209,13 +218,15 @@ const ongoingStatusUpdate = await apiAsDoctor.notificationApi.updateNotification
   'ongoing',
 )
 //tech-doc: STOP HERE
+output({ ongoingStatusUpdate })
+
 expect(!!ongoingStatusUpdate).to.eq(true)
 expect(ongoingStatusUpdate?.status).to.eq('ongoing')
 
 //tech-doc: data sharing
 const sharedData = await apiAsDoctor.patientApi.giveAccessToAllDataOf(patient.id)
 //tech-doc: STOP HERE
-console.log(sharedData)
+output({ sharedData })
 expect(!!sharedData).to.eq(true)
 expect(sharedData.patient?.id).to.eq(patient.id)
 expect(sharedData.statuses.dataSamples?.success).to.eq(true)
@@ -228,5 +239,7 @@ const completedStatusUpdate = await apiAsDoctor.notificationApi.updateNotificati
   'completed',
 )
 //tech-doc: STOP HERE
+output({ completedStatusUpdate })
+
 expect(!!completedStatusUpdate).to.eq(true)
 expect(completedStatusUpdate?.status).to.eq('completed')
