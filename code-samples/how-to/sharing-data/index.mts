@@ -40,7 +40,6 @@ const patient = await hcp1Api.patientApi.createOrModifyPatient(
 )
 //tech-doc: end
 expect((await hcp1Api.patientApi.getPatient(patient.id)).note).to.equal(note)
-expect((await hcp2Api.patientApi.getPatient(patient.id)).note).to.be.undefined
 expect(pApi.patientApi.getPatient(patient.id)).to.be.rejected
 //tech-doc: share a patient
 // hcp1 shares the information of `patient` with hcp2

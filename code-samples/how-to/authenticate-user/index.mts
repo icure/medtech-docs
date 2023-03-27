@@ -213,7 +213,9 @@ const currentPatient = await loggedUserApi.patientApi.getPatient(daenaerysId)
 await loggedUserApi.patientApi.giveAccessTo(currentPatient, masterHcpId)
 await loggedUserApi.dataSampleApi.giveAccessTo(createdDataSample, masterHcpId)
 
-localStorage.removeItem(`${currentPatient.id}.${currentPatient.systemMetaData.publicKey.slice(-32)}`)
+localStorage.removeItem(
+  `${currentPatient.id}.${currentPatient.systemMetaData.publicKey.slice(-32)}`,
+)
 
 cachedInfo['login'] = undefined
 cachedInfo['token'] = undefined
