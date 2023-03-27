@@ -162,7 +162,7 @@ To delete a user, you call the `deleteUser` method on the `userApi` and pass the
 
 <!-- file://code-samples/how-to/manage-users/index.mts snippet:Delete a user-->
 ```typescript
-await api.userApi.deleteUser(createdUser.id)
+const deletedUserId = await api.userApi.deleteUser(createdUser.id)
 ```
 
 For the gory details of all you can do with users using the SDK, check out the [UserApi](../references/interfaces/UserApi.md) documentation.

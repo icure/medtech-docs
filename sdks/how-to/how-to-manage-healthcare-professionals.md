@@ -77,5 +77,5 @@ The deleteHealthcareProfessional method of the healthcareProfessionalApi allows 
 
 <!-- file://code-samples/how-to/manage-healthcare-professionals/index.mts snippet:Delete a healthcare professional-->
 ```typescript
-await api.healthcareProfessionalApi.deleteHealthcareProfessional(createdHcp.id)
+const deletedHcp = await api.healthcareProfessionalApi.deleteHealthcareProfessional(createdHcp.id)
 ```

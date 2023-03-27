@@ -10,7 +10,7 @@ import { hex2ua } from '@icure/api'
 import {
   host,
   initLocalStorage,
-  msgGtwUrl,
+  msgGtwUrl, output,
   password,
   privKey,
   specId,
@@ -77,3 +77,4 @@ const messageFactory = new ICureRegistrationEmail(hcp, 'test', 'iCure', existing
 const createdUser = await api.userApi.createAndInviteUser(existingPatient, messageFactory)
 expect(createdUser.patientId).to.eq(existingPatient.id) // skip
 //tech-doc: STOP HERE
+output({ createdUser })

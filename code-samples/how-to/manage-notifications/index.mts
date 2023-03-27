@@ -9,7 +9,8 @@ import {
   patientPassword,
   patientPrivKey,
   initLocalStorage,
-  initMedTechApi, output,
+  initMedTechApi,
+  output,
 } from '../../utils/index.mjs'
 import { assert, expect } from 'chai'
 import {

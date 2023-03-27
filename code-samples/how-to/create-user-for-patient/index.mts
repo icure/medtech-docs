@@ -4,7 +4,8 @@ import {
   authProcessId,
   host,
   initLocalStorage,
-  msgGtwUrl, output,
+  msgGtwUrl,
+  output,
   password,
   privKey,
   specId,
@@ -149,22 +150,26 @@ const modifiedPatientDetails = await apiAsPatient.patientApi.modifyPotentiallyEn
 output({ modifiedPatientDetails })
 
 //tech-doc: create healthcare element
-const newHealthcareElement = await apiAsPatient.healthcareElementApi.createOrModifyHealthcareElement(
-  new HealthcareElement({
-    description: "I don't feel so well",
-    codes: new Set([
-      new CodingReference({
-        id: 'SNOMEDCT|617|20020131',
-        type: 'SNOMEDCT',
-        code: '617',
-        version: '20020131',
-      }),
-    ]),
-    openingDate: new Date('2019-10-12').getTime(),
-  }),
-  modifiedPatientDetails.id,
+const newHealthcareElement =
+  await apiAsPatient.healthcareElementApi.createOrModifyHealthcareElement(
+    new HealthcareElement({
+      description: "I don't feel so well",
+      codes: new Set([
+        new CodingReference({
+          id: 'SNOMEDCT|617|20020131',
+          type: 'SNOMEDCT',
+          code: '617',
+          version: '20020131',
+        }),
+      ]),
+      openingDate: new Date('2019-10-12').getTime(),
+    }),
+    modifiedPatientDetails.id,
+  )
+const sharedHealthcareElement = await apiAsPatient.healthcareElementApi.giveAccessTo(
+  newHealthcareElement,
+  hcp.id,
 )
-const sharedHealthcareElement = await apiAsPatient.healthcareElementApi.giveAccessTo(newHealthcareElement, hcp.id)
 // The doctor can now access the healthcare element
 apiAsDoctor.cryptoApi.emptyHcpCache(hcp.id)
 console.log(await apiAsDoctor.healthcareElementApi.getHealthcareElement(newHealthcareElement.id!)) // HealthcareElement...
@@ -194,7 +199,7 @@ const foundHEs = await apiAsDoctor.healthcareElementApi.filterHealthcareElement(
 console.log(foundHEs.rows.find((x) => x.id == newHealthcareElement.id)) // HealthcareElement...
 expect(foundHEs.rows.find((x) => x.id == newHealthcareElement.id)).to.not.be.undefined //skip
 //tech-doc: STOP HERE
-output({ notFoundHEs ,foundHEs })
+output({ notFoundHEs, foundHEs })
 
 //tech-doc: doctor gets pending notifications
 const newNotifications = await apiAsDoctor.notificationApi.getPendingNotificationsAfter()

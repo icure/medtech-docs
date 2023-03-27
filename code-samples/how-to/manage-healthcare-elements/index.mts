@@ -9,7 +9,8 @@ import {
   patientId,
   initLocalStorage,
   initMedTechApi,
-  initPatientMedTechApi, output,
+  initPatientMedTechApi,
+  output,
 } from '../../utils/index.mjs'
 import { expect } from 'chai'
 
