@@ -52,8 +52,8 @@ const inject = async (path: string) => {
 
                 dst += line + '\n'
                 dst += '<details>\n'
-                dst += `    <summary>${title}</summary>\n`
-                dst += '    \n'
+                dst += `<summary>${title}</summary>\n`
+                dst += '\n'
                 if (output.startsWith("{")) {
                     dst += '```json\n'
                     dst += output + '\n'
