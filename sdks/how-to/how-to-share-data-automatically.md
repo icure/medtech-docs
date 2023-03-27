@@ -28,7 +28,7 @@ The following example shows how to automatically share all new entities which wi
 
 <!-- file://code-samples/how-to/auto-share/index.mts snippet:auto share-->
 ```typescript
-await hcp1Api.userApi.shareAllFutureDataWith(
+const user = await hcp1Api.userApi.shareAllFutureDataWith(
   [hcp1Api.dataOwnerApi.getDataOwnerIdOf(hcp2User)],
   'medicalInformation',
 )
@@ -43,6 +43,8 @@ const note = 'Winter is coming'
 const patient = await hcp1Api.patientApi.createOrModifyPatient(
   new Patient({ firstName: 'John', lastName: 'Snow', note }),
 )
+let patient1 = await hcp1Api.patientApi.getPatient(patient.id);
+let patient2 = await hcp2Api.patientApi.getPatient(patient.id);
 // hcp2 can already access patient
 const contentString = 'Hello world'
 const dataSample = await hcp1Api.dataSampleApi.createOrModifyDataSampleFor(
@@ -52,7 +54,9 @@ const dataSample = await hcp1Api.dataSampleApi.createOrModifyDataSampleFor(
     content: { en: new Content({ stringValue: contentString }) },
   }),
 )
+let dataSample1 = await hcp1Api.dataSampleApi.getDataSample(dataSample.id);
 expect(
+let dataSample2 = await hcp2Api.dataSampleApi.getDataSample(dataSample.id);
 expect(
 // hcp2 can already access dataSample
 ```
@@ -100,7 +104,7 @@ You can stop the automatic data share using the `stopSharingDataWith` method.
 
 <!-- file://code-samples/how-to/auto-share/index.mts snippet:stop auto share-->
 ```typescript
-await hcp1Api.userApi.stopSharingDataWith(
+const userWithoutShare = await hcp1Api.userApi.stopSharingDataWith(
   [hcp1Api.dataOwnerApi.getDataOwnerIdOf(hcp2User)],
   'medicalInformation',
 )
