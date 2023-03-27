@@ -1,23 +1,15 @@
 import 'isomorphic-fetch'
-import {
-  CodingReference,
-  Content,
-  DataSample,
-  HealthcareElement,
-  medTechApi,
-} from '@icure/medical-device-sdk'
-import { webcrypto } from 'crypto'
-import { hex2ua } from '@icure/api'
+import { CodingReference, Content, DataSample, HealthcareElement } from '@icure/medical-device-sdk'
 import {
   host,
   initLocalStorage,
   initMedTechApi,
+  initPatientMedTechApi,
+  msgGtwUrl,
   output,
   patientId,
-  patientPassword,
-  patientPrivKey,
-  patientUserName,
-  privKey,
+  signUpUserUsingEmail,
+  specId,
 } from '../../utils/index.mjs'
 import { expect } from 'chai'
 import {
@@ -25,17 +17,26 @@ import {
   NotificationTypeEnum,
 } from '@icure/medical-device-sdk/src/models/Notification.js'
 import { v4 as uuid } from 'uuid'
+import process from 'process'
 
 initLocalStorage()
 
-const api = await initMedTechApi()
-const user = await api.userApi.getLoggedUser()
-await api.cryptoApi.loadKeyPairsAsTextInBrowserLocalStorage(
-  user.healthcarePartyId ?? user.patientId ?? user.deviceId,
-  hex2ua(privKey),
-)
+const masterApi = await initMedTechApi(true)
+const masterUser = await masterApi.userApi.getLoggedUser()
 
-const patient = await api.patientApi.getPatient(patientId)
+const { api } = await signUpUserUsingEmail(
+  host,
+  msgGtwUrl,
+  specId,
+  process.env.AUTH_BY_EMAIL_HCP_PROCESS_ID,
+  masterUser.healthcarePartyId!,
+)
+const user = await api.userApi.getLoggedUser()
+
+const patientApi = await initPatientMedTechApi(true)
+const patient = await patientApi.patientApi.getPatient(patientId)
+const patientUser = await patientApi.userApi.getLoggedUser()
+await patientApi.patientApi.giveAccessTo(patient, user.healthcarePartyId!)
 
 //tech-doc: doctor shares medical data
 const healthcareElement = await api.healthcareElementApi.createOrModifyHealthcareElement(
@@ -75,22 +76,10 @@ const dataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
 )
 //tech-doc: STOP HERE
 expect(!!dataSample).to.eq(true)
-
-const patientApi = await medTechApi()
-  .withICureBaseUrl(host)
-  .withUserName(patientUserName)
-  .withPassword(patientPassword)
-  .withCrypto(webcrypto as any)
-  .build()
-
-const patientUser = await patientApi.userApi.getLoggedUser()
-await patientApi.cryptoApi.loadKeyPairsAsTextInBrowserLocalStorage(
-  patientUser.healthcarePartyId ?? patientUser.patientId ?? patientUser.deviceId,
-  hex2ua(patientPrivKey),
-)
+output({ healthcareElement, dataSample })
 
 //tech-doc: patient sends notification
-await patientApi.notificationApi.createOrModifyNotification(
+const notification = await patientApi.notificationApi.createOrModifyNotification(
   new Notification({
     id: uuid(),
     status: 'pending',
@@ -101,6 +90,7 @@ await patientApi.notificationApi.createOrModifyNotification(
   user.healthcarePartyId,
 )
 //tech-doc: STOP HERE
+output({ notification })
 
 //tech-doc: doctor receives notification
 const newNotifications = await api.notificationApi.getPendingNotificationsAfter()

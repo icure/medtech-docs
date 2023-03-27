@@ -38,6 +38,7 @@ In the following example we will get all the Patients that a Healthcare Professi
 <!-- file://code-samples/how-to/use-complex-search-criteria/index.mts snippet:filter patients for hcp-->
 ```typescript
 const patientsForHcpFilter = await new PatientFilter().forDataOwner(healthcarePartyId).build()
+
 const patientsForHcp = await api.patientApi.filterPatients(patientsForHcpFilter)
 ```
 
@@ -51,8 +52,9 @@ all the constraints at the same time.
 const ageGenderImplicitFilter = await new PatientFilter()
   .forDataOwner(user.healthcarePartyId!)
   .ofAge(42)
-  .byGenderEducationProfession("female")
+  .byGenderEducationProfession('female')
   .build()
+
 const ageGenderImplicitPatients = await api.patientApi.filterPatients(ageGenderImplicitFilter)
 ```
 
@@ -61,14 +63,14 @@ You can also explicitly intersect simple filters using the `intersection()` meth
 
 <!-- file://code-samples/how-to/use-complex-search-criteria/index.mts snippet:filter patients with explicit intersection filter-->
 ```typescript
-const filterByAge = new PatientFilter()
-  .forDataOwner(user.healthcarePartyId!)
-  .ofAge(42)
+const filterByAge = new PatientFilter().forDataOwner(user.healthcarePartyId!).ofAge(42)
+
 const filterByGenderAndAge = await new PatientFilter()
   .forDataOwner(user.healthcarePartyId!)
-  .byGenderEducationProfession("female")
+  .byGenderEducationProfession('female')
   .intersection([filterByAge])
   .build()
+
 const ageGenderExplicitPatients = await api.patientApi.filterPatients(filterByGenderAndAge)
 ```
 
@@ -86,12 +88,14 @@ To apply a filter that returns entities which satisfy at least one of multiple c
 ```typescript
 const filterFemales = new PatientFilter()
   .forDataOwner(user.healthcarePartyId!)
-  .byGenderEducationProfession("female")
+  .byGenderEducationProfession('female')
+
 const filterFemaleOrIndeterminate = await new PatientFilter()
   .forDataOwner(user.healthcarePartyId!)
-  .byGenderEducationProfession("indeterminate")
+  .byGenderEducationProfession('indeterminate')
   .union([filterFemales])
   .build()
+
 const unionFilterPatients = await api.patientApi.filterPatients(filterFemaleOrIndeterminate)
 ```
 

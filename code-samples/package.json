@@ -8,7 +8,7 @@
     "lint": "eslint --ext .js,.ts,.mjs,.mts .",
     "lint-fix": "eslint --fix --ext .js,.ts,.mjs,.mts .",
     "start": "yarn run lint-fix && yarn run build && node runall.mjs",
-    "start-specific": "yarn run build && node how-to/authenticate-user/index.mjs"
+    "start-specific": "yarn run build && node explanation/doctor-shares-data-with-patient/index.mjs"
   },
   "lint-staged": {
     "*.js": [

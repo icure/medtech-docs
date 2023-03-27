@@ -75,3 +75,87 @@ const dataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
   }),
 )
 ```
+<!-- output://code-samples/explanation/data-sample-w-coding/healthcareElement.txt -->
+<details>
+<summary>healthcareElement</summary>
+
+```json
+{
+  "id": "a4950397-bf9b-4d7c-96c4-ff130f0f76b8",
+  "rev": "1-d8276d870024bf532ace170255d0ebfc",
+  "created": 1679927932639,
+  "modified": 1679927932639,
+  "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
+  "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
+  "healthcareElementId": "a4950397-bf9b-4d7c-96c4-ff130f0f76b8",
+  "valueDate": 20230327163852,
+  "openingDate": 20230327163852,
+  "description": "My diagnosis is that the patient has Hay Fever",
+  "identifiers": [],
+  "codes": {},
+  "labels": {},
+  "systemMetaData": {
+    "secretForeignKeys": [
+      "4742a08d-bbc1-4ed1-a758-f0a605529bf1"
+    ],
+    "cryptedForeignKeys": {
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+    },
+    "delegations": {
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+    },
+    "encryptionKeys": {
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+    },
+    "encryptedSelf": "bZ3eRM7fQSG/vOt+1nCrk2F1Pjejr1Fn5yL0XAWhOoNjrgiSyYZPDopSoV+70clEYXeEDDWgVmzj/1R9EvAxRX0cWdxIBn55GrKStv941J8="
+  }
+}
+```
+</details>
+
+<!-- output://code-samples/explanation/data-sample-w-coding/dataSample.txt -->
+<details>
+<summary>dataSample</summary>
+
+```json
+{
+  "id": "b3d2d0c0-0d0e-414e-bb36-3f4fca19582a",
+  "qualifiedLinks": {},
+  "batchId": "40b561ca-b6d2-4443-baf6-3b39199eac0a",
+  "index": 0,
+  "valueDate": 20230327163852,
+  "openingDate": 20230327163852,
+  "created": 1679927932751,
+  "modified": 1679927932751,
+  "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
+  "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
+  "identifiers": [],
+  "healthcareElementIds": {},
+  "canvasesIds": {},
+  "content": {
+    "en": {
+      "stringValue": "The patient has fatigue",
+      "compoundValue": [],
+      "ratio": [],
+      "range": []
+    }
+  },
+  "codes": {},
+  "labels": {},
+  "systemMetaData": {
+    "secretForeignKeys": [
+      "4742a08d-bbc1-4ed1-a758-f0a605529bf1"
+    ],
+    "cryptedForeignKeys": {
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+    },
+    "delegations": {
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+    },
+    "encryptionKeys": {
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+    }
+  }
+}
+```
+</details>
