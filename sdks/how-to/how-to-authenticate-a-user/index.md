@@ -109,7 +109,9 @@ const authProcess = await anonymousApi.authenticationApi.startAuthentication(
   masterHcpId,
 )
 ```
-
+<!-- output://code-samples/how-to/authenticate-user/authProcess.txt -->
+<details>
+</details>
 
 As an output, you receive an `AuthenticationProcess` object, which you will need for next steps of the procedure.
 
