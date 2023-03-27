@@ -56,6 +56,34 @@ const oneHourMeanDataSample = new DataSample({
   },
 })
 ```
+<!-- output://code-samples/how-to/hierarchical-datasample/oneHourMeanDataSample.txt -->
+<details>
+<summary>oneHourMeanDataSample</summary>
+
+```json
+{
+  "comment": "Heart rate 1 hour mean",
+  "openingDate": 20220929083400,
+  "identifiers": [],
+  "healthcareElementIds": {},
+  "canvasesIds": {},
+  "content": {
+    "en": {
+      "measureValue": {
+        "value": 72,
+        "unit": "{beats}/min",
+        "unitCodes": {}
+      },
+      "compoundValue": [],
+      "ratio": [],
+      "range": []
+    }
+  },
+  "codes": {},
+  "labels": {}
+}
+```
+</details>
 
 ### 2. Eight hours mean heart rate measurements.
 
@@ -80,6 +108,34 @@ const eightHourMeanDataSample = new DataSample({
   },
 })
 ```
+<!-- output://code-samples/how-to/hierarchical-datasample/eightHourMeanDataSample.txt -->
+<details>
+<summary>eightHourMeanDataSample</summary>
+
+```json
+{
+  "comment": "Heart rate 8 hour mean",
+  "openingDate": 20220929083400,
+  "identifiers": [],
+  "healthcareElementIds": {},
+  "canvasesIds": {},
+  "content": {
+    "en": {
+      "measureValue": {
+        "value": 63,
+        "unit": "{beats}/min",
+        "unitCodes": {}
+      },
+      "compoundValue": [],
+      "ratio": [],
+      "range": []
+    }
+  },
+  "codes": {},
+  "labels": {}
+}
+```
+</details>
 
 ### 3. Temperatures (TimeSeries)
 
@@ -106,6 +162,96 @@ const temperaturesDataSample = new DataSample({
   },
 })
 ```
+<!-- output://code-samples/how-to/hierarchical-datasample/temperaturesDataSample.txt -->
+<details>
+<summary>temperaturesDataSample</summary>
+
+```json
+{
+  "comment": "Body temperature",
+  "openingDate": 20220929083400,
+  "identifiers": [],
+  "healthcareElementIds": {},
+  "canvasesIds": {},
+  "content": {
+    "en": {
+      "timeSeries": {
+        "samples": [
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "fields": [
+          "C°"
+        ]
+      },
+      "compoundValue": [],
+      "ratio": [],
+      "range": []
+    }
+  },
+  "codes": {},
+  "labels": {}
+}
+```
+</details>
 
 :::caution
 
@@ -146,20 +292,243 @@ const createdDataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
   meanHeartRateDataSample,
 )
 ```
-
+<!-- output://code-samples/how-to/hierarchical-datasample/meanHeartRateDataSample.txt -->
 <details>
-    <summary>Output</summary>
+<summary>meanHeartRateDataSample</summary>
 
 ```json
 {
-  "id": "7fc48e2e-3718-4388-ae0e-fc1b4cd1a19c",
-  "identifier": [],
+  "openingDate": 20220929083400,
+  "identifiers": [],
+  "healthcareElementIds": {},
+  "canvasesIds": {},
   "content": {
     "en": {
       "compoundValue": [
         {
-          "id": "084371fd-b5ad-45e3-a21c-64158b83fdc7",
-          "identifier": [],
+          "comment": "Heart rate 1 hour mean",
+          "openingDate": 20220929083400,
+          "identifiers": [],
+          "healthcareElementIds": {},
+          "canvasesIds": {},
+          "content": {
+            "en": {
+              "measureValue": {
+                "value": 72,
+                "unit": "{beats}/min",
+                "unitCodes": {}
+              },
+              "compoundValue": [],
+              "ratio": [],
+              "range": []
+            }
+          },
+          "codes": {},
+          "labels": {}
+        },
+        {
+          "comment": "Heart rate 8 hour mean",
+          "openingDate": 20220929083400,
+          "identifiers": [],
+          "healthcareElementIds": {},
+          "canvasesIds": {},
+          "content": {
+            "en": {
+              "measureValue": {
+                "value": 63,
+                "unit": "{beats}/min",
+                "unitCodes": {}
+              },
+              "compoundValue": [],
+              "ratio": [],
+              "range": []
+            }
+          },
+          "codes": {},
+          "labels": {}
+        },
+        {
+          "comment": "Body temperature",
+          "openingDate": 20220929083400,
+          "identifiers": [],
+          "healthcareElementIds": {},
+          "canvasesIds": {},
+          "content": {
+            "en": {
+              "timeSeries": {
+                "samples": [
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null
+                ],
+                "fields": [
+                  "C°"
+                ]
+              },
+              "compoundValue": [],
+              "ratio": [],
+              "range": []
+            }
+          },
+          "codes": {},
+          "labels": {}
+        }
+      ],
+      "ratio": [],
+      "range": []
+    }
+  },
+  "codes": {},
+  "labels": {}
+}
+```
+</details>
+
+<!-- output://code-samples/how-to/hierarchical-datasample/createdDataSample.txt -->
+<details>
+<summary>createdDataSample</summary>
+
+```json
+{
+  "id": "8357e2f4-6a74-4fb2-8065-3e26a641b731",
+  "qualifiedLinks": {},
+  "batchId": "96438e76-8803-4b01-8540-feb347d82616",
+  "index": 0,
+  "valueDate": 20230327164305,
+  "openingDate": 20220929083400,
+  "created": 1679928185547,
+  "modified": 1679928185547,
+  "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
+  "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
+  "identifiers": [],
+  "healthcareElementIds": {},
+  "canvasesIds": {},
+  "content": {
+    "en": {
+      "compoundValue": [
+        {
+          "id": "5fc82a52-9b18-46cb-a0b3-c4398860e9fa",
+          "qualifiedLinks": {},
+          "openingDate": 20220929083400,
+          "comment": "Heart rate 1 hour mean",
+          "identifiers": [],
+          "healthcareElementIds": {},
+          "canvasesIds": {},
+          "content": {
+            "en": {
+              "measureValue": {
+                "value": 72,
+                "unit": "{beats}/min",
+                "unitCodes": {}
+              },
+              "compoundValue": [],
+              "ratio": [],
+              "range": []
+            }
+          },
+          "codes": {},
+          "labels": {},
+          "systemMetaData": {
+            "secretForeignKeys": [],
+            "cryptedForeignKeys": {},
+            "delegations": {},
+            "encryptionKeys": {}
+          }
+        },
+        {
+          "id": "cbe45c01-8640-40c6-96ad-fc40889fed69",
+          "qualifiedLinks": {},
+          "openingDate": 20220929083400,
+          "comment": "Heart rate 8 hour mean",
+          "identifiers": [],
+          "healthcareElementIds": {},
+          "canvasesIds": {},
+          "content": {
+            "en": {
+              "measureValue": {
+                "value": 63,
+                "unit": "{beats}/min",
+                "unitCodes": {}
+              },
+              "compoundValue": [],
+              "ratio": [],
+              "range": []
+            }
+          },
+          "codes": {},
+          "labels": {},
+          "systemMetaData": {
+            "secretForeignKeys": [],
+            "cryptedForeignKeys": {},
+            "delegations": {},
+            "encryptionKeys": {}
+          }
+        },
+        {
+          "id": "013b0c0a-c97d-48ed-8bf4-f9b45621f896",
+          "qualifiedLinks": {},
+          "openingDate": 20220929083400,
+          "comment": "Body temperature",
+          "identifiers": [],
+          "healthcareElementIds": {},
+          "canvasesIds": {},
           "content": {
             "en": {
               "timeSeries": {
@@ -167,87 +536,80 @@ const createdDataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
                   "C°"
                 ],
                 "samples": [
-                  [
-                    36.56299537967781
-                  ],
-                  [
-                    36.4297076828631
-                  ],
-                  [
-                    36.443597548686064
-                  ],
-                  [
-                    36.5490239818563
-                  ],
-                  [
-                    36.668913688817824
-                  ]
-                  /**
-                   * ...
-                   */
-                ]
-              }
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null
+                ],
+                "min": [],
+                "max": [],
+                "mean": [],
+                "median": [],
+                "variance": []
+              },
+              "compoundValue": [],
+              "ratio": [],
+              "range": []
             }
           },
-          "qualifiedLinks": {},
           "codes": {},
           "labels": {},
-          "healthcareElementIds": {},
-          "canvasesIds": {},
-          "openingDate": 20220929083400,
-          "comment": "Body temperature",
-          "systemMetaData": {
-            "secretForeignKeys": [],
-            "cryptedForeignKeys": {},
-            "delegations": {},
-            "encryptionKeys": {}
-          }
-        },
-        {
-          "id": "5a9e6237-fc65-4801-b50b-ebcc2925adcc",
-          "identifier": [],
-          "content": {
-            "en": {
-              "measureValue": {
-                "value": 63,
-                "unit": "{beats}/min",
-                "unitCodes": {}
-              }
-            }
-          },
-          "qualifiedLinks": {},
-          "codes": {},
-          "labels": {},
-          "healthcareElementIds": {},
-          "canvasesIds": {},
-          "openingDate": 20220929083400,
-          "comment": "Heart rate 8 hour mean",
-          "systemMetaData": {
-            "secretForeignKeys": [],
-            "cryptedForeignKeys": {},
-            "delegations": {},
-            "encryptionKeys": {}
-          }
-        },
-        {
-          "id": "d59906c3-ea1e-4717-bb45-92804c47ced9",
-          "identifier": [],
-          "content": {
-            "en": {
-              "measureValue": {
-                "value": 72,
-                "unit": "{beats}/min",
-                "unitCodes": {}
-              }
-            }
-          },
-          "qualifiedLinks": {},
-          "codes": {},
-          "labels": {},
-          "healthcareElementIds": {},
-          "canvasesIds": {},
-          "openingDate": 20220929083400,
-          "comment": "Heart rate 1 hour mean",
           "systemMetaData": {
             "secretForeignKeys": [],
             "cryptedForeignKeys": {},
@@ -255,27 +617,26 @@ const createdDataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
             "encryptionKeys": {}
           }
         }
-      ]
+      ],
+      "ratio": [],
+      "range": []
     }
   },
-  "qualifiedLinks": {},
   "codes": {},
   "labels": {},
-  "batchId": "683f14f1-ff41-43c3-8b7a-1eb69dc6821d",
-  "healthcareElementIds": {},
-  "canvasesIds": {},
-  "index": 0,
-  "valueDate": 20220930122128,
-  "openingDate": 20220929083400,
-  "created": 1664540488422,
-  "modified": 1664540488421,
-  "author": "b36fa6cb-d7a8-40f0-bcf6-af6ce0decb78",
-  "responsible": "ab623d88-baed-40b9-91b7-ab26e9a08db5",
   "systemMetaData": {
-    "secretForeignKeys": [],
-    "cryptedForeignKeys": {},
-    "delegations": {},
-    "encryptionKeys": {}
+    "secretForeignKeys": [
+      "6e03746b-69cb-46e5-bab7-42f1fc4b84c3"
+    ],
+    "cryptedForeignKeys": {
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+    },
+    "delegations": {
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+    },
+    "encryptionKeys": {
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+    }
   }
 }
 ```
