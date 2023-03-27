@@ -41,6 +41,7 @@ const createdDataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
     comment: 'This is a comment',
   }),
 )
+//tech-doc-save: createdDataSample
 //tech-doc: STOP HERE
 
 console.log('Create: ', JSON.stringify(createdDataSample))

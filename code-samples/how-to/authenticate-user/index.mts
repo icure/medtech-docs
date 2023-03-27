@@ -1,5 +1,5 @@
 import 'isomorphic-fetch'
-import { initLocalStorage, initMedTechApi } from '../../utils/index.mjs'
+import { initLocalStorage, initMedTechApi, output } from '../../utils/index.mjs'
 import {
   AnonymousMedTechApiBuilder,
   MedTechApiBuilder,
@@ -55,6 +55,8 @@ const masterHcpApi = await initMedTechApi()
 const masterUser = await masterHcpApi.userApi.getLoggedUser()
 const masterHcpId = masterHcpApi.dataOwnerApi.getDataOwnerIdOf(masterUser)
 //tech-doc: STOP HERE
+output('masterHcpId', masterHcpId)
+output('masterUser', masterUser)
 
 //tech-doc: Instantiate AnonymousMedTech API
 const iCureUrl = process.env.ICURE_URL
@@ -73,6 +75,11 @@ const anonymousApi = await new AnonymousMedTechApiBuilder()
   .withAuthProcessBySmsId(authProcessBySmsId)
   .build()
 //tech-doc: STOP HERE
+output(
+  'anonymousApi',
+  'An initialized AnonymousMedTechApi instance. ' +
+    'This instance contains a authenticationApi property that can be used to start the authentication process.',
+)
 
 //tech-doc: Start Authentication Process By Email
 const authProcess = await anonymousApi.authenticationApi.startAuthentication(
@@ -84,6 +91,7 @@ const authProcess = await anonymousApi.authenticationApi.startAuthentication(
   masterHcpId,
 )
 //tech-doc: STOP HERE
+output('authProcess', authProcess)
 
 const validationCode = (await getLastEmail(userEmail)).subject!
 console.log('Validation code is ', validationCode)
@@ -102,6 +110,7 @@ console.log(`Your initialised MedTechAPI: ***\${authenticatedApi}***`)
 console.log(`RSA keypair of your new user: ***\${authenticationResult.keyPair}***`)
 console.log(`Token created to authenticate your new user: ***\${authenticationResult.token}***`)
 //tech-doc: STOP HERE
+output('authenticationResult', authenticationResult)
 
 //tech-doc: Save credentials
 // saveSecurely does not exist: Use your own way of storing the following data securely
@@ -118,6 +127,7 @@ saveSecurely(
 //tech-doc: Get logged user info
 const loggedUser = await authenticatedApi.userApi.getLoggedUser()
 //tech-doc: STOP HERE
+output('loggedUser', loggedUser)
 
 console.log('Logged User: ', JSON.stringify(loggedUser))
 
@@ -132,6 +142,7 @@ const createdDataSample = await authenticatedApi.dataSampleApi.createOrModifyDat
   }),
 )
 //tech-doc: STOP HERE
+output('createdDataSample', createdDataSample)
 
 console.log('Created data sample: ', JSON.stringify(createdDataSample))
 
@@ -157,6 +168,7 @@ const foundDataSampleAfterInstantiatingApi = await reInstantiatedApi.dataSampleA
   createdDataSample.id,
 )
 //tech-doc: STOP HERE
+output('foundDataSampleAfterInstantiatingApi', foundDataSampleAfterInstantiatingApi)
 
 console.log(
   'Found patient after re-instantiating api',
@@ -178,7 +190,6 @@ const authProcessLogin = await anonymousApiForLogin.authenticationApi.startAuthe
   userEmail, // The email address used for user registration
 )
 //tech-doc: STOP HERE
-
 const validationCodeForLogin = (await getLastEmail(userEmail)).subject!
 console.log('Validation code is ', validationCodeForLogin)
 
@@ -194,6 +205,7 @@ console.log(`Your new initialised MedTechAPI: ***\${loginResult.medTechApi}***`)
 console.log(`RSA keypair of your user stays the same: ***\${loginResult.keyPair}***`)
 console.log(`The token of your user will change: ***\${loginResult.token}***`)
 //tech-doc: STOP HERE
+output('loginResult', loginResult)
 
 //tech-doc: Access back encrypted data
 const loggedUserApi = loginResult.medTechApi
@@ -202,6 +214,7 @@ const foundDataSampleAfterLogin = await loggedUserApi.dataSampleApi.getDataSampl
   createdDataSample.id,
 )
 //tech-doc: STOP HERE
+output('foundDataSampleAfterLogin', foundDataSampleAfterLogin)
 
 console.log('Found Data Sample after login: ', JSON.stringify(foundDataSampleAfterLogin))
 
@@ -264,6 +277,7 @@ const newlyCreatedDataSample =
     }),
   )
 //tech-doc: STOP HERE
+output('newlyCreatedDataSample', newlyCreatedDataSample)
 
 expect(newlyCreatedDataSample).to.not.be.undefined //skip
 
@@ -289,6 +303,7 @@ const hcpNotifications = await hcpApi.notificationApi
   .getPendingNotificationsAfter(startTimestamp)
   .then((notifs) => notifs.filter((notif) => notif.type === NotificationTypeEnum.KEY_PAIR_UPDATE))
 //tech-doc: STOP HERE
+output('hcpNotifications', hcpNotifications)
 
 expect(hcpNotifications.length).to.not.be.undefined
 
@@ -316,6 +331,9 @@ const accessBack = await hcpApi.dataOwnerApi.giveAccessBackTo(
 )
 expect(accessBack).to.be.true //skip
 //tech-doc: STOP HERE
+output('daenaerysPatientId', daenaerysPatientId)
+output('daenaerysPatientPubKey', daenaerysPatientPubKey)
+output('accessBack', accessBack)
 
 // Then
 const updatedApi = await medTechApi(loginAuthResult.medTechApi).build()
@@ -324,3 +342,5 @@ await updatedApi.initUserCrypto(loginAuthResult.keyPairs[0])
 const previousDataSample = await updatedApi.dataSampleApi.getDataSample(createdDataSample.id!)
 expect(previousDataSample).to.not.be.undefined //skip
 //tech-doc: STOP HERE
+
+output('previousDataSample', previousDataSample)

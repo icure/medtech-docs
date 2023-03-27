@@ -1,6 +1,7 @@
 import {readdir, readFile, watch, writeFile} from 'node:fs/promises'
 import {Mutex} from 'async-mutex'
 import * as Path from "path";
+import * as console from "console";
 
 const receivers: {[key: string]: string[]} = {} //Paths that subscribe to changes for file://aFile|snippet
 const examples: {[key: string]: string} = {}
@@ -9,9 +10,12 @@ const mutexes = {}
 const inject = async (path: string) => {
     const text = await readFile(path, 'utf8')
     let dst = ''
-    let currentExample = false
-    text.split(/\n/).forEach(line => {
+    let currentCodeSample = false
+    let currentOutput = false
+    text.split(/\n/).reduce(async (p,line) => {
+        await p
         const [_, injector, snippet] = [...(line.match('<\!-- *file://(.+?) *snippet:(.+?)-->') ?? [])]
+        const [__, path, title] = [...(line.match('<\!-- *output://(.+/(.+)\.txt) *-->') ?? [])]
         if (injector && snippet) {
             let ex = examples[`${injector}|${snippet}`]
             if (ex) {
@@ -25,21 +29,60 @@ const inject = async (path: string) => {
                 dst += '```typescript\n'
                 dst += ex
                 dst += '```\n'
-                currentExample = true
+                currentCodeSample = true
             } else {
                 dst += line + '\n'
             }
-        } else if (currentExample) {
+        } else if (currentCodeSample) {
             if (line.match(/```[ \t]*$/)) {
-                currentExample = false
+                currentCodeSample = false
+            }
+        } else if (path && title) {
+            const fullPath = `${Path.join('..', path)}`;
+            let output
+            try {
+            output = await readFile(fullPath, 'utf8')
+            } catch (e) {
+                console.error(`Error reading file ${fullPath}`)
+            }
+            if (output) {
+                while (output.lastIndexOf('\n\n') == output.length - 2) {
+                    output = output.slice(0, output.length - 1)
+                }
+
+                dst += line + '\n'
+                dst += '<details>\n'
+                dst += `    <summary>${title}</summary>\n`
+                dst += '    \n'
+                if (output.startsWith("{")) {
+                    dst += '    ```json\n'
+                    dst += output
+                    dst += '    ```\n'
+                } else {
+                    dst += '    ```text\n'
+                    dst += output
+                    dst += '    ```\n'
+                }
+                dst += '</details>\n'
+                currentOutput = true
+            } else {
+                dst += line + '\n'
+            }
+        } else if (currentOutput) {
+            if (line.match(/[ \t]*<\/details>[ \t]*$/)) {
+                currentOutput = false
             }
         } else {
             dst += line + '\n'
         }
-    })
-    if (currentExample) {
+    }, Promise.resolve())
+    if (currentCodeSample) {
         throw new Error('Unclosed code block detected')
     }
+    if (currentOutput) {
+        throw new Error('Unclosed output block detected')
+    }
+
     return dst.replace(/\n\n+$/,'\n')
 }
 

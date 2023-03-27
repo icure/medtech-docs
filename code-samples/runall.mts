@@ -24,7 +24,10 @@ function scanAndRunRecursively(dir: string) {
         ) {
           const relative = '.' + fullpath.slice(cwd.length)
           console.log(`Running ${relative}`)
-          execSync(`node ${relative}`, { env: Process.env, stdio: 'inherit' })
+          execSync(`node ${relative}`, {
+            env: { ...Process.env, SCRIPT_ROOT: fullpath.replace(/(.+)\/.+/, '$1') },
+            stdio: 'inherit',
+          })
         }
       }
     })
