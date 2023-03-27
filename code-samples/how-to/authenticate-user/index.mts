@@ -57,7 +57,7 @@ const masterHcpApi = await initMedTechApi()
 const masterUser = await masterHcpApi.userApi.getLoggedUser()
 const masterHcpId = masterHcpApi.dataOwnerApi.getDataOwnerIdOf(masterUser)
 //tech-doc: STOP HERE
-output({masterHcpId, masterUser})
+output({ masterHcpId, masterUser })
 
 //tech-doc: Instantiate AnonymousMedTech API
 const iCureUrl = process.env.ICURE_URL
@@ -76,13 +76,11 @@ const anonymousApi = await new AnonymousMedTechApiBuilder()
   .withAuthProcessBySmsId(authProcessBySmsId)
   .build()
 //tech-doc: STOP HERE
-output(
-  {
-    anonymousApi:
-      'An initialized AnonymousMedTechApi instance. ' +
-      'This instance contains a authenticationApi property that can be used to start the authentication process.',
-  }
-)
+output({
+  anonymousApi:
+    'An initialized AnonymousMedTechApi instance. ' +
+    'This instance contains a authenticationApi property that can be used to start the authentication process.',
+})
 
 //tech-doc: Start Authentication Process By Email
 const authProcess = await anonymousApi.authenticationApi.startAuthentication(
@@ -94,7 +92,7 @@ const authProcess = await anonymousApi.authenticationApi.startAuthentication(
   masterHcpId,
 )
 //tech-doc: STOP HERE
-output({authProcess})
+output({ authProcess })
 
 const validationCode = (await getLastEmail(userEmail)).subject!
 
@@ -112,7 +110,7 @@ console.log(`Your initialised MedTechAPI: ***\${authenticatedApi}***`)
 console.log(`RSA keypair of your new user: ***\${authenticationResult.keyPair}***`)
 console.log(`Token created to authenticate your new user: ***\${authenticationResult.token}***`)
 //tech-doc: STOP HERE
-output({authenticationResult})
+output({ authenticationResult })
 
 //tech-doc: Save credentials
 // saveSecurely does not exist: Use your own way of storing the following data securely
@@ -129,7 +127,7 @@ saveSecurely(
 //tech-doc: Get logged user info
 const loggedUser = await authenticatedApi.userApi.getLoggedUser()
 //tech-doc: STOP HERE
-output({loggedUser})
+output({ loggedUser })
 
 //tech-doc: Create encrypted data
 const createdDataSample = await authenticatedApi.dataSampleApi.createOrModifyDataSampleFor(
@@ -142,7 +140,7 @@ const createdDataSample = await authenticatedApi.dataSampleApi.createOrModifyDat
   }),
 )
 //tech-doc: STOP HERE
-output({createdDataSample})
+output({ createdDataSample })
 
 //tech-doc: Get back credentials
 // getBackCredentials does not exist: Use your own way of storing the following data securely
@@ -166,7 +164,7 @@ const foundDataSampleAfterInstantiatingApi = await reInstantiatedApi.dataSampleA
   createdDataSample.id,
 )
 //tech-doc: STOP HERE
-output({foundDataSampleAfterInstantiatingApi})
+output({ foundDataSampleAfterInstantiatingApi })
 
 //tech-doc: Login
 const anonymousApiForLogin = await new AnonymousMedTechApiBuilder()
@@ -197,7 +195,7 @@ console.log(`Your new initialised MedTechAPI: ***\${loginResult.medTechApi}***`)
 console.log(`RSA keypair of your user stays the same: ***\${loginResult.keyPair}***`)
 console.log(`The token of your user will change: ***\${loginResult.token}***`)
 //tech-doc: STOP HERE
-output({loginResult})
+output({ loginResult })
 
 //tech-doc: Access back encrypted data
 const loggedUserApi = loginResult.medTechApi
@@ -206,7 +204,7 @@ const foundDataSampleAfterLogin = await loggedUserApi.dataSampleApi.getDataSampl
   createdDataSample.id,
 )
 //tech-doc: STOP HERE
-output({foundDataSampleAfterLogin})
+output({ foundDataSampleAfterLogin })
 
 // User lost his key section
 const daenaerysId = loggedUser.patientId
@@ -325,7 +323,7 @@ const accessBack = await hcpApi.dataOwnerApi.giveAccessBackTo(
 )
 expect(accessBack).to.be.true //skip
 //tech-doc: STOP HERE
-output({daenaerysPatientId, daenaerysPatientPubKey, accessBack})
+output({ daenaerysPatientId, daenaerysPatientPubKey, accessBack })
 
 // Then
 const updatedApi = await medTechApi(loginAuthResult.medTechApi).build()
@@ -335,4 +333,4 @@ const previousDataSample = await updatedApi.dataSampleApi.getDataSample(createdD
 expect(previousDataSample).to.not.be.undefined //skip
 //tech-doc: STOP HERE
 
-output({previousDataSample})
+output({ previousDataSample })

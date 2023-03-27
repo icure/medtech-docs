@@ -4,7 +4,8 @@ import { webcrypto } from 'crypto'
 import { hex2ua } from '@icure/api'
 import {
   host,
-  initLocalStorage, output,
+  initLocalStorage,
+  output,
   patientId,
   patientPassword,
   patientPrivKey,

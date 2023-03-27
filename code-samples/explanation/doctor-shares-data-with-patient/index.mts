@@ -11,7 +11,8 @@ import { hex2ua } from '@icure/api'
 import {
   host,
   initLocalStorage,
-  initMedTechApi, output,
+  initMedTechApi,
+  output,
   patientId,
   patientPassword,
   patientPrivKey,
@@ -115,7 +116,7 @@ if (!!newPatientNotifications && newPatientNotifications.length > 0) {
   await api.notificationApi.updateNotificationStatus(newPatientNotifications[0], 'completed')
 }
 //tech-doc: STOP HERE
-output({newPatientNotifications})
+output({ newPatientNotifications })
 const fetchedHE = await patientApi.healthcareElementApi.getHealthcareElement(healthcareElement.id)
 expect(fetchedHE.id).to.eq(healthcareElement.id)
 const fetchedDS = await patientApi.dataSampleApi.getDataSample(dataSample.id)
