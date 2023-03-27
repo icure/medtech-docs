@@ -48,6 +48,50 @@ const createdHcp = await api.healthcareProfessionalApi.createOrModifyHealthcareP
 
 <!-- output://code-samples/how-to/manage-healthcare-professionals/createdHcp.txt -->
 <details>
+<summary>createdHcp</summary>
+
+```json
+{
+  "id": "e2b1eb24-eaab-4834-b279-685a4c6f7c84",
+  "languages": [],
+  "rev": "1-967cf90e155ced991b1098ccda1c9b62",
+  "name": "Keats John",
+  "lastName": "Keats",
+  "firstName": "John",
+  "speciality": "Psychiatrist",
+  "labels": {},
+  "codes": {},
+  "names": [
+    {
+      "firstNames": [
+        "John"
+      ],
+      "prefix": [],
+      "suffix": [],
+      "lastName": "Keats",
+      "text": "Keats John",
+      "use": "official"
+    }
+  ],
+  "addresses": [
+    {
+      "telecoms": [
+        {
+          "telecomNumber": "jk@hospital.care",
+          "telecomType": "email"
+        }
+      ]
+    }
+  ],
+  "properties": {},
+  "systemMetaData": {
+    "hcPartyKeys": {},
+    "privateKeyShamirPartitions": {},
+    "aesExchangeKeys": {},
+    "transferKeys": {}
+  }
+}
+```
 </details>
 
 ## Load a healthcare professional by id
@@ -61,6 +105,50 @@ const loadedHcp = await api.healthcareProfessionalApi.getHealthcareProfessional(
 
 <!-- output://code-samples/how-to/manage-healthcare-professionals/loadedHcp.txt -->
 <details>
+<summary>loadedHcp</summary>
+
+```json
+{
+  "id": "e2b1eb24-eaab-4834-b279-685a4c6f7c84",
+  "languages": [],
+  "rev": "1-967cf90e155ced991b1098ccda1c9b62",
+  "name": "Keats John",
+  "lastName": "Keats",
+  "firstName": "John",
+  "speciality": "Psychiatrist",
+  "labels": {},
+  "codes": {},
+  "names": [
+    {
+      "firstNames": [
+        "John"
+      ],
+      "prefix": [],
+      "suffix": [],
+      "lastName": "Keats",
+      "text": "Keats John",
+      "use": "official"
+    }
+  ],
+  "addresses": [
+    {
+      "telecoms": [
+        {
+          "telecomNumber": "jk@hospital.care",
+          "telecomType": "email"
+        }
+      ]
+    }
+  ],
+  "properties": {},
+  "systemMetaData": {
+    "hcPartyKeys": {},
+    "privateKeyShamirPartitions": {},
+    "aesExchangeKeys": {},
+    "transferKeys": {}
+  }
+}
+```
 </details>
 
 ## Filter healthcare professionals
@@ -80,6 +168,57 @@ const hcps = await api.healthcareProfessionalApi.filterHealthcareProfessionalBy(
 
 <!-- output://code-samples/how-to/manage-healthcare-professionals/hcps.txt -->
 <details>
+<summary>hcps</summary>
+
+```json
+{
+  "pageSize": 1000,
+  "totalSize": 346,
+  "rows": [
+    {
+      "id": "e2b1eb24-eaab-4834-b279-685a4c6f7c84",
+      "languages": [],
+      "rev": "1-967cf90e155ced991b1098ccda1c9b62",
+      "name": "Keats John",
+      "lastName": "Keats",
+      "firstName": "John",
+      "speciality": "Psychiatrist",
+      "labels": {},
+      "codes": {},
+      "names": [
+        {
+          "firstNames": [
+            "John"
+          ],
+          "prefix": [],
+          "suffix": [],
+          "lastName": "Keats",
+          "text": "Keats John",
+          "use": "official"
+        }
+      ],
+      "addresses": [
+        {
+          "telecoms": [
+            {
+              "telecomNumber": "jk@hospital.care",
+              "telecomType": "email"
+            }
+          ]
+        }
+      ],
+      "properties": {},
+      "systemMetaData": {
+        "hcPartyKeys": {},
+        "privateKeyShamirPartitions": {},
+        "aesExchangeKeys": {},
+        "transferKeys": {}
+      }
+    }
+  ],
+  "nextKeyPair": {}
+}
+```
 </details>
 
 ## Delete a healthcare professional
@@ -93,4 +232,9 @@ const deletedHcp = await api.healthcareProfessionalApi.deleteHealthcareProfessio
 
 <!-- output://code-samples/how-to/manage-healthcare-professionals/deletedHcp.txt -->
 <details>
+<summary>deletedHcp</summary>
+
+```text
+3-6713b217305166ddda2eb738f240b009
+```
 </details>
