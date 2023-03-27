@@ -30,7 +30,7 @@ We assume that you already know the [How to authenticate a user](sdks/how-to/how
 
 As an example, we will listen to `CREATE` events for `DataSample` objects. This methodology can be applied to any other type of event and objects.
 
-<!-- file://code-samples/how-to/rsocket/index.mts snippet:can listen to dataSample events-->
+<!-- file://code-samples/how-to/websocket/index.mts snippet:can listen to dataSample events-->
 ```typescript
 const events: DataSample[] = []
 const statuses: string[] = []
@@ -81,7 +81,7 @@ We assume that you already have a patient created. If not, you can add the follo
 <details>
   <summary>Create a patient</summary>
 
-<!-- file://code-samples/how-to/rsocket/index.mts snippet:create a patient for rsocket-->
+<!-- file://code-samples/how-to/websocket/index.mts snippet:create a patient for websocket-->
 ```typescript
 const patient = await api.patientApi.createOrModifyPatient(
   new Patient({
@@ -96,7 +96,7 @@ const patient = await api.patientApi.createOrModifyPatient(
 
 :::
 
-<!-- file://code-samples/how-to/rsocket/index.mts snippet:create a dataSample for rsocket-->
+<!-- file://code-samples/how-to/websocket/index.mts snippet:create a dataSample for websocket-->
 ```typescript
 await api.dataSampleApi.createOrModifyDataSampleFor(
   patient.id!,
@@ -111,7 +111,7 @@ await api.dataSampleApi.createOrModifyDataSampleFor(
 
 To stop listening to events, you can call the `close` method on the `Connection` object.
 
-<!-- file://code-samples/how-to/rsocket/index.mts snippet:close the connection-->
+<!-- file://code-samples/how-to/websocket/index.mts snippet:close the connection-->
 ```typescript
 connection.close()
 ```

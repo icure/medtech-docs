@@ -48,7 +48,7 @@ const connection = (
 
 //tech-doc: STOP HERE
 
-//tech-doc: create a patient for rsocket
+//tech-doc: create a patient for websocket
 const patient = await api.patientApi.createOrModifyPatient(
   new Patient({
     firstName: 'John',
@@ -58,7 +58,7 @@ const patient = await api.patientApi.createOrModifyPatient(
 )
 //tech-doc: STOP HERE
 
-//tech-doc: create a dataSample for rsocket
+//tech-doc: create a dataSample for websocket
 await api.dataSampleApi.createOrModifyDataSampleFor(
   patient.id!,
   new DataSample({

@@ -1,6 +1,6 @@
 import { DataSampleFilter, medTechApi, UserFilter } from '@icure/medical-device-sdk'
 import { webcrypto } from 'crypto'
-import { host, userName, password, privKey } from '../../utils/index.mjs'
+import { host, userName, password, privKey, output } from '../../utils/index.mjs'
 import 'isomorphic-fetch'
 import { LocalStorage } from 'node-localstorage'
 import * as os from 'os'
@@ -41,6 +41,8 @@ const userToCreate = new User({
 const createdUser = await api.userApi.createOrModifyUser(userToCreate)
 
 //tech-doc: STOP HERE
+output({ createdUser })
+
 expect(createdUser.id).to.be.a('string')
 expect(createdUser.login).to.equal(`john+${uniqueId}`)
 expect(createdUser.email).to.equal(`john+${uniqueId}@hospital.care`)
@@ -103,6 +105,8 @@ const createdPatientUser = await api.userApi.createAndInviteUser(
 )
 
 //tech-doc: STOP HERE
+output({ createdPatient, createdPatientUser })
+
 expect(createdPatientUser.id).to.be.a('string')
 expect(createdPatientUser.patientId).to.be.equal(createdPatient.id)
 expect(createdPatientUser.login).to.equal(`argan+${uniqueId}@moliere.fr`)
@@ -112,6 +116,8 @@ expect(createdPatientUser.email).to.equal(`argan+${uniqueId}@moliere.fr`)
 const loadedUser = await api.userApi.getUser(createdUser.id)
 
 //tech-doc: STOP HERE
+output({ loadedUser })
+
 expect(loadedUser.id).to.be.equal(createdUser.id)
 expect(loadedUser.login).to.equal(`john+${uniqueId}`)
 expect(loadedUser.email).to.equal(`john+${uniqueId}@hospital.care`)
@@ -120,6 +126,8 @@ expect(loadedUser.email).to.equal(`john+${uniqueId}@hospital.care`)
 const loadedUserByEmail = await api.userApi.getUserByEmail(createdUser.email)
 
 //tech-doc: STOP HERE
+output({ loadedUserByEmail })
+
 expect(loadedUserByEmail.id).to.be.equal(createdUser.id)
 expect(loadedUserByEmail.login).to.equal(`john+${uniqueId}`)
 expect(loadedUserByEmail.email).to.equal(`john+${uniqueId}@hospital.care`)
@@ -130,6 +138,8 @@ const users = await api.userApi.filterUsers(
 )
 
 //tech-doc: STOP HERE
+output({ users })
+
 expect(users.rows.length).to.be.equal(1)
 expect(users.rows[0].id).to.be.equal(createdPatientUser.id)
 
@@ -140,11 +150,15 @@ const modifiedUser = await api.userApi.createOrModifyUser(
 )
 
 //tech-doc: STOP HERE
+output({ modifiedUser })
+
 expect(modifiedUser.id).to.be.equal(createdUser.id)
 expect(modifiedUser.login).to.equal(`john+${uniqueId}`)
 expect(modifiedUser.passwordHash).to.not.equal('wrong horse battery staple')
 
 //tech-doc: Delete a user
-await api.userApi.deleteUser(createdUser.id)
+const deletedUserId = await api.userApi.deleteUser(createdUser.id)
 
 //tech-doc: STOP HERE
+output({ deletedUserId })
+

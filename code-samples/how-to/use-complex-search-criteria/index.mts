@@ -1,5 +1,5 @@
 import 'isomorphic-fetch'
-import { initLocalStorage, initMedTechApi } from '../../utils/index.mjs'
+import { initLocalStorage, initMedTechApi, output } from '../../utils/index.mjs'
 import { Patient, PatientFilter } from '@icure/medical-device-sdk'
 import { expect } from 'chai'
 
@@ -44,9 +44,10 @@ await api.patientApi.createOrModifyPatient(
 
 //tech-doc: filter patients for hcp
 const patientsForHcpFilter = await new PatientFilter().forDataOwner(healthcarePartyId).build()
-
 const patientsForHcp = await api.patientApi.filterPatients(patientsForHcpFilter)
 //tech-doc: end
+output({ patientsForHcpFilter, patientsForHcp })
+
 expect(patientsForHcp.rows.length).to.be.greaterThan(0)
 patientsForHcp.rows.forEach((p) => {
   expect(Object.keys(p.systemMetaData?.delegations ?? {})).to.contain(healthcarePartyId)
@@ -61,6 +62,8 @@ const ageGenderImplicitFilter = await new PatientFilter()
 
 const ageGenderImplicitPatients = await api.patientApi.filterPatients(ageGenderImplicitFilter)
 //tech-doc: end
+output({ ageGenderImplicitFilter, ageGenderImplicitPatients })
+
 expect(ageGenderImplicitPatients.rows.length).to.be.greaterThan(0)
 ageGenderImplicitPatients.rows.forEach((p) => {
   expect(p.gender).to.be.eq('female')
@@ -79,6 +82,8 @@ const filterByGenderAndAge = await new PatientFilter()
 
 const ageGenderExplicitPatients = await api.patientApi.filterPatients(filterByGenderAndAge)
 //tech-doc: end
+output({ filterByGenderAndAge, ageGenderExplicitPatients })
+
 expect(ageGenderExplicitPatients.rows.length).to.be.greaterThan(0)
 ageGenderExplicitPatients.rows.forEach((p) => {
   expect(p.gender).to.be.eq('female')
@@ -99,6 +104,8 @@ const filterFemaleOrIndeterminate = await new PatientFilter()
 
 const unionFilterPatients = await api.patientApi.filterPatients(filterFemaleOrIndeterminate)
 //tech-doc: end
+output({ filterFemaleOrIndeterminate, unionFilterPatients })
+
 expect(unionFilterPatients.rows.length).to.be.greaterThan(0)
 unionFilterPatients.rows.forEach((p) => {
   expect(p.gender).to.be.oneOf(['female', 'indeterminate'])
