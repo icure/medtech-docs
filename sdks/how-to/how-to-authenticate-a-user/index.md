@@ -97,6 +97,8 @@ Also, do not forget to contact the iCure team to get our ReCAPTCHA SiteKey that 
 
 :::
 
+As an alternative, you can use [FriendlyCaptcha](https://friendlycaptcha.com/). In this case, the `recaptchaType` property
+of the `startAuthentication` method should be `"friendly-captcha"`.
 
 <!-- file://code-samples/how-to/authenticate-user/index.mts snippet:Start Authentication Process By Email-->
 ```typescript
@@ -106,7 +108,7 @@ const authProcess = await anonymousApi.authenticationApi.startAuthentication(
   undefined,
   'Daenerys',
   'Targaryen',
-  masterHcpId,
+  masterHcpId
 )
 ```
 <!-- output://code-samples/how-to/authenticate-user/authProcess.txt -->
@@ -150,17 +152,18 @@ Once Daenaerys retrieves her validation code, she can come back to your app and 
 
 #### Completing the authentication process
 To complete Daenaerys registration, you will have to call the `authenticationApi.completeAuthentication` service, 
-by providing three arguments: 
+by providing two arguments: 
 - The previous `AuthenticationProcess`
 - The validation code Daenaerys received by email
-- A lambda providing the RSA Keypair Daenaerys should use. For this last point, you may use the dedicated 
-service `anonymousMedTechApi.generateRSAKeypair()`
+
+This method will also generate the public and private key for the user, saving them in the `keyStorage` property of the 
+newly created MedTechAPI.
  
 <!-- file://code-samples/how-to/authenticate-user/index.mts snippet:Complete authentication process-->
 ```typescript
 const authenticationResult = await anonymousApi.authenticationApi.completeAuthentication(
   authProcess!,
-  validationCode,
+  validationCode
 )
 
 const authenticatedApi = authenticationResult.medTechApi
@@ -190,7 +193,7 @@ saveSecurely(
   authenticationResult.token,
   authenticationResult.userId,
   authenticationResult.groupId,
-  authenticationResult.keyPairs[0],
+  authenticationResult.keyPairs
 )
 ```
 
@@ -204,8 +207,8 @@ const createdDataSample = await authenticatedApi.dataSampleApi.createOrModifyDat
     labels: new Set([new CodingReference({ type: 'IC-TEST', code: 'TEST' })]),
     content: { en: new Content({ stringValue: 'Hello world' }) },
     openingDate: 20220929083400,
-    comment: 'This is a comment',
-  }),
+    comment: 'This is a comment'
+  })
 )
 ```
 <!-- output://code-samples/how-to/authenticate-user/createdDataSample.txt -->
@@ -313,7 +316,7 @@ saveSecurely(
   authenticationResult.token,
   authenticationResult.userId,
   authenticationResult.groupId,
-  authenticationResult.keyPairs[0],
+  authenticationResult.keyPairs
 )
 ```
 
@@ -411,7 +414,7 @@ saveSecurely(
   authenticationResult.token,
   authenticationResult.userId,
   authenticationResult.groupId,
-  authenticationResult.keyPairs[0],
+  authenticationResult.keyPairs
 )
 ```
 

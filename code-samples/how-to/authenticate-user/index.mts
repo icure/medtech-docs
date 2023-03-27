@@ -6,9 +6,7 @@ import {
   DataSample,
   CodingReference,
   medTechApi,
-  Content,
-  LocalStorageImpl,
-  KeyStorageImpl,
+  Content
 } from '@icure/medical-device-sdk'
 import { webcrypto } from 'crypto'
 import * as process from 'process'
@@ -25,15 +23,15 @@ function saveSecurely(
   userToken: string,
   userId: string,
   groupId: string,
-  keyPair: { privateKey: string; publicKey: string },
+  keyPairs: { privateKey: string; publicKey: string }[],
 ) {
   console.log(`Saving user ${userLogin} info`)
   cachedInfo['login'] = userLogin
   cachedInfo['token'] = userToken
   cachedInfo['userId'] = userId
   cachedInfo['groupId'] = groupId
-  cachedInfo['pubKey'] = keyPair.publicKey
-  cachedInfo['privKey'] = keyPair.privateKey
+  cachedInfo['pubKey'] = keyPairs[0].publicKey
+  cachedInfo['privKey'] = keyPairs[0].privateKey
 }
 
 function getBackCredentials(): {
@@ -46,7 +44,7 @@ function getBackCredentials(): {
     login: cachedInfo['login'],
     token: cachedInfo['token'],
     pubKey: cachedInfo['pubKey'],
-    privKey: cachedInfo['privKey'],
+    privKey: cachedInfo['privKey']
   }
 }
 
@@ -89,7 +87,7 @@ const authProcess = await anonymousApi.authenticationApi.startAuthentication(
   undefined,
   'Daenerys',
   'Targaryen',
-  masterHcpId,
+  masterHcpId
 )
 //tech-doc: STOP HERE
 output({ authProcess })
@@ -99,7 +97,7 @@ const validationCode = (await getLastEmail(userEmail)).subject!
 //tech-doc: Complete authentication process
 const authenticationResult = await anonymousApi.authenticationApi.completeAuthentication(
   authProcess!,
-  validationCode,
+  validationCode
 )
 
 const authenticatedApi = authenticationResult.medTechApi
@@ -120,7 +118,7 @@ saveSecurely(
   authenticationResult.token,
   authenticationResult.userId,
   authenticationResult.groupId,
-  authenticationResult.keyPairs[0],
+  authenticationResult.keyPairs
 )
 //tech-doc: STOP HERE
 
@@ -136,8 +134,8 @@ const createdDataSample = await authenticatedApi.dataSampleApi.createOrModifyDat
     labels: new Set([new CodingReference({ type: 'IC-TEST', code: 'TEST' })]),
     content: { en: new Content({ stringValue: 'Hello world' }) },
     openingDate: 20220929083400,
-    comment: 'This is a comment',
-  }),
+    comment: 'This is a comment'
+  })
 )
 //tech-doc: STOP HERE
 output({ createdDataSample })
@@ -254,7 +252,7 @@ saveSecurely(
   loginAuthResult.token,
   loginAuthResult.userId,
   loginAuthResult.groupId,
-  loginAuthResult.keyPairs[0],
+  loginAuthResult.keyPairs,
 )
 
 //tech-doc: User can create new data after loosing their key
