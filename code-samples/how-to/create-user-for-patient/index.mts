@@ -226,7 +226,7 @@ expect(ongoingStatusUpdate?.status).to.eq('ongoing')
 //tech-doc: data sharing
 const sharedData = await apiAsDoctor.patientApi.giveAccessToAllDataOf(patient.id)
 //tech-doc: STOP HERE
-console.log(sharedData)
+output({ sharedData })
 expect(!!sharedData).to.eq(true)
 expect(sharedData.patient?.id).to.eq(patient.id)
 expect(sharedData.statuses.dataSamples?.success).to.eq(true)

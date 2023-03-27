@@ -100,15 +100,15 @@ const dataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
 
 ```json
 {
-  "id": "74679ab7-69d2-4288-b065-688429e8096a",
-  "rev": "1-dfbe20cf52427ab41925d1038c7a7f2c",
-  "created": 1679928223813,
-  "modified": 1679928223813,
+  "id": "9e763ba6-3c0c-4cef-a427-ea43071aca17",
+  "rev": "1-983a54fa06a7a3dd2c77872d74d729f9",
+  "created": 1679929587447,
+  "modified": 1679929587447,
   "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
   "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
-  "healthcareElementId": "74679ab7-69d2-4288-b065-688429e8096a",
-  "valueDate": 20230327164343,
-  "openingDate": 20230327164343,
+  "healthcareElementId": "9e763ba6-3c0c-4cef-a427-ea43071aca17",
+  "valueDate": 20230327170627,
+  "openingDate": 20230327170627,
   "description": "My diagnosis is that the patient has Hay Fever",
   "identifiers": [],
   "codes": {},
@@ -126,7 +126,7 @@ const dataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
     "encryptionKeys": {
       "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
     },
-    "encryptedSelf": "Q3wbLUw760q0oUP0CUBGTLDvAe1cniuJJypjzpt1KWdrmNra4n9VM1bDtZCxPH+tjJMnrL/xij16BvhkYD8IJr0AIu6zN/mkBxa5yEaj7nY="
+    "encryptedSelf": "a9juQafYm6NjH78m66PBM1npm6oTGPhNFvJf5bhSR2wijlqigPVY/iPyWC1eNy6Fz96X57B3usRGypTSaKXRbA4TSwbC95w2WusBYbdW81M="
   }
 }
 ```
@@ -138,14 +138,14 @@ const dataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
 
 ```json
 {
-  "id": "c3be37dd-739c-4614-9f60-5d79b822abfd",
+  "id": "f510bd7d-5953-4711-a40a-49d6392260d1",
   "qualifiedLinks": {},
-  "batchId": "cb6ec94f-d921-4d22-95ec-069bea6b6da4",
+  "batchId": "607fc68f-d245-43fb-ac5a-fe32a7a0fd02",
   "index": 0,
-  "valueDate": 20230327164344,
-  "openingDate": 20230327164344,
-  "created": 1679928224038,
-  "modified": 1679928224038,
+  "valueDate": 20230327170627,
+  "openingDate": 20230327170627,
+  "created": 1679929587565,
+  "modified": 1679929587565,
   "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
   "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
   "identifiers": [],

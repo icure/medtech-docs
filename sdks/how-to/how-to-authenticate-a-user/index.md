@@ -115,8 +115,8 @@ const authProcess = await anonymousApi.authenticationApi.startAuthentication(
 
 ```json
 {
-  "requestId": "f4a0a556-855b-464f-a0d0-e331af162986",
-  "login": "9y6rnrt4g-dt@got.com",
+  "requestId": "b3677b4b-5546-45f0-bd93-399206f91fd1",
+  "login": "z3r2w2ui8-dt@got.com",
   "bypassTokenCheck": false
 }
 ```
@@ -214,16 +214,16 @@ const createdDataSample = await authenticatedApi.dataSampleApi.createOrModifyDat
 
 ```json
 {
-  "id": "2921e960-a10b-4f4b-81af-948ea95fe692",
+  "id": "5f8b7c90-38f5-4a56-a148-40640f1786cc",
   "qualifiedLinks": {},
-  "batchId": "5fa150b1-e130-4e00-aa91-d8d52360d103",
+  "batchId": "8dd058db-b119-4324-8031-e19e4d825aa2",
   "index": 0,
-  "valueDate": 20230327142737,
+  "valueDate": 20230327170531,
   "openingDate": 20220929083400,
-  "created": 1679927257229,
-  "modified": 1679927257229,
-  "author": "ebe4c24a-a717-4a79-b1a2-982db6ce96b7",
-  "responsible": "9af2ac37-edc3-4dde-b1eb-9362892f6167",
+  "created": 1679929531627,
+  "modified": 1679929531627,
+  "author": "8f5db3f2-c6b3-4f2e-b448-4c2fc5a731f3",
+  "responsible": "348f99d7-d67e-435a-9423-829d7909bf22",
   "comment": "This is a comment",
   "identifiers": [],
   "healthcareElementIds": {},
@@ -240,18 +240,18 @@ const createdDataSample = await authenticatedApi.dataSampleApi.createOrModifyDat
   "labels": {},
   "systemMetaData": {
     "secretForeignKeys": [
-      "434c8b87-5053-48aa-8324-6d8eacc86880"
+      "ab503504-dc2c-43e3-9497-3e3ea9cf8281"
     ],
     "cryptedForeignKeys": {
-      "9af2ac37-edc3-4dde-b1eb-9362892f6167": {},
+      "348f99d7-d67e-435a-9423-829d7909bf22": {},
       "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
     },
     "delegations": {
-      "9af2ac37-edc3-4dde-b1eb-9362892f6167": {},
+      "348f99d7-d67e-435a-9423-829d7909bf22": {},
       "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
     },
     "encryptionKeys": {
-      "9af2ac37-edc3-4dde-b1eb-9362892f6167": {},
+      "348f99d7-d67e-435a-9423-829d7909bf22": {},
       "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
     }
   }
@@ -345,16 +345,16 @@ const foundDataSampleAfterLogin = await loggedUserApi.dataSampleApi.getDataSampl
 
 ```json
 {
-  "id": "2921e960-a10b-4f4b-81af-948ea95fe692",
+  "id": "5f8b7c90-38f5-4a56-a148-40640f1786cc",
   "qualifiedLinks": {},
-  "batchId": "5fa150b1-e130-4e00-aa91-d8d52360d103",
+  "batchId": "8dd058db-b119-4324-8031-e19e4d825aa2",
   "index": 0,
-  "valueDate": 20230327142737,
+  "valueDate": 20230327170531,
   "openingDate": 20220929083400,
-  "created": 1679927257229,
-  "modified": 1679927257229,
-  "author": "ebe4c24a-a717-4a79-b1a2-982db6ce96b7",
-  "responsible": "9af2ac37-edc3-4dde-b1eb-9362892f6167",
+  "created": 1679929531627,
+  "modified": 1679929531627,
+  "author": "8f5db3f2-c6b3-4f2e-b448-4c2fc5a731f3",
+  "responsible": "348f99d7-d67e-435a-9423-829d7909bf22",
   "comment": "This is a comment",
   "identifiers": [],
   "healthcareElementIds": {},
@@ -371,18 +371,18 @@ const foundDataSampleAfterLogin = await loggedUserApi.dataSampleApi.getDataSampl
   "labels": {},
   "systemMetaData": {
     "secretForeignKeys": [
-      "434c8b87-5053-48aa-8324-6d8eacc86880"
+      "ab503504-dc2c-43e3-9497-3e3ea9cf8281"
     ],
     "cryptedForeignKeys": {
-      "9af2ac37-edc3-4dde-b1eb-9362892f6167": {},
+      "348f99d7-d67e-435a-9423-829d7909bf22": {},
       "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
     },
     "delegations": {
-      "9af2ac37-edc3-4dde-b1eb-9362892f6167": {},
+      "348f99d7-d67e-435a-9423-829d7909bf22": {},
       "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
     },
     "encryptionKeys": {
-      "9af2ac37-edc3-4dde-b1eb-9362892f6167": {},
+      "348f99d7-d67e-435a-9423-829d7909bf22": {},
       "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
     }
   }
@@ -450,16 +450,16 @@ const foundDataSampleAfterInstantiatingApi = await reInstantiatedApi.dataSampleA
 
 ```json
 {
-  "id": "2921e960-a10b-4f4b-81af-948ea95fe692",
+  "id": "5f8b7c90-38f5-4a56-a148-40640f1786cc",
   "qualifiedLinks": {},
-  "batchId": "5fa150b1-e130-4e00-aa91-d8d52360d103",
+  "batchId": "8dd058db-b119-4324-8031-e19e4d825aa2",
   "index": 0,
-  "valueDate": 20230327142737,
+  "valueDate": 20230327170531,
   "openingDate": 20220929083400,
-  "created": 1679927257229,
-  "modified": 1679927257229,
-  "author": "ebe4c24a-a717-4a79-b1a2-982db6ce96b7",
-  "responsible": "9af2ac37-edc3-4dde-b1eb-9362892f6167",
+  "created": 1679929531627,
+  "modified": 1679929531627,
+  "author": "8f5db3f2-c6b3-4f2e-b448-4c2fc5a731f3",
+  "responsible": "348f99d7-d67e-435a-9423-829d7909bf22",
   "comment": "This is a comment",
   "identifiers": [],
   "healthcareElementIds": {},
@@ -476,18 +476,18 @@ const foundDataSampleAfterInstantiatingApi = await reInstantiatedApi.dataSampleA
   "labels": {},
   "systemMetaData": {
     "secretForeignKeys": [
-      "434c8b87-5053-48aa-8324-6d8eacc86880"
+      "ab503504-dc2c-43e3-9497-3e3ea9cf8281"
     ],
     "cryptedForeignKeys": {
-      "9af2ac37-edc3-4dde-b1eb-9362892f6167": {},
+      "348f99d7-d67e-435a-9423-829d7909bf22": {},
       "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
     },
     "delegations": {
-      "9af2ac37-edc3-4dde-b1eb-9362892f6167": {},
+      "348f99d7-d67e-435a-9423-829d7909bf22": {},
       "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
     },
     "encryptionKeys": {
-      "9af2ac37-edc3-4dde-b1eb-9362892f6167": {},
+      "348f99d7-d67e-435a-9423-829d7909bf22": {},
       "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
     }
   }

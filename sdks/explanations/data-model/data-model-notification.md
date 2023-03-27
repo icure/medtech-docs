@@ -70,15 +70,15 @@ const dataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
 
 ```json
 {
-  "id": "34496762-f4e8-4e16-9b80-20d236e86ab8",
-  "rev": "1-3028f1e20e7adcb19ebbb85fa5a0572f",
-  "created": 1679928233357,
-  "modified": 1679928233357,
-  "author": "a090565b-28b5-41aa-9033-508d43a3fa3e",
-  "responsible": "d7d5efb0-010e-4f95-9d6d-6e3b9fe4fcfd",
-  "healthcareElementId": "34496762-f4e8-4e16-9b80-20d236e86ab8",
-  "valueDate": 20230327164353,
-  "openingDate": 20230327164353,
+  "id": "1dc92085-dd5f-4996-afca-62c56876763e",
+  "rev": "1-aa056e11f364d429a45aaaa5d7f3423e",
+  "created": 1679929606205,
+  "modified": 1679929606205,
+  "author": "85c430de-6108-4135-b0c8-946722a9b5cd",
+  "responsible": "d8bf246b-9bc4-4d64-84e3-b58fc8980572",
+  "healthcareElementId": "1dc92085-dd5f-4996-afca-62c56876763e",
+  "valueDate": 20230327170646,
+  "openingDate": 20230327170646,
   "description": "My diagnosis is that the patient has Hay Fever",
   "identifiers": [],
   "codes": {},
@@ -88,15 +88,15 @@ const dataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
       "ce1568d1-d1d5-4c0a-b05b-18efed77163d"
     ],
     "cryptedForeignKeys": {
-      "d7d5efb0-010e-4f95-9d6d-6e3b9fe4fcfd": {}
+      "d8bf246b-9bc4-4d64-84e3-b58fc8980572": {}
     },
     "delegations": {
-      "d7d5efb0-010e-4f95-9d6d-6e3b9fe4fcfd": {}
+      "d8bf246b-9bc4-4d64-84e3-b58fc8980572": {}
     },
     "encryptionKeys": {
-      "d7d5efb0-010e-4f95-9d6d-6e3b9fe4fcfd": {}
+      "d8bf246b-9bc4-4d64-84e3-b58fc8980572": {}
     },
-    "encryptedSelf": "eRHSQgOBy65DlcIeZkZVLx7g2ZjfnRavV1dEU4UezRHPvnIa4MOGLYHm0RGSlYaWsaZyfWD0NNJ9tEkeJOwqRRYW1HuJ54q4vugVPdSclUw="
+    "encryptedSelf": "s650Oe0163V5Xlh+4UrCuClJl+GDBOUzts9AAmZ6GG310m8m8FSqGkwWxciA7vkbebvdH0eCbHQjAwtr9WSnddSwkdOo8111Ex7h681Mre0="
   }
 }
 ```
@@ -108,16 +108,16 @@ const dataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
 
 ```json
 {
-  "id": "c5bb9aa6-deb9-4c28-b6f5-fec97669e0a7",
+  "id": "0a5a88b5-32ad-4649-83ad-53986b9fe142",
   "qualifiedLinks": {},
-  "batchId": "0610b2a6-78f4-4054-bbfb-10f9b93ca755",
+  "batchId": "d17ef103-a561-4e76-99fb-a3e24a57ccb9",
   "index": 0,
-  "valueDate": 20230327164353,
-  "openingDate": 20230327164353,
-  "created": 1679928233539,
-  "modified": 1679928233539,
-  "author": "a090565b-28b5-41aa-9033-508d43a3fa3e",
-  "responsible": "d7d5efb0-010e-4f95-9d6d-6e3b9fe4fcfd",
+  "valueDate": 20230327170646,
+  "openingDate": 20230327170646,
+  "created": 1679929606376,
+  "modified": 1679929606376,
+  "author": "85c430de-6108-4135-b0c8-946722a9b5cd",
+  "responsible": "d8bf246b-9bc4-4d64-84e3-b58fc8980572",
   "identifiers": [],
   "healthcareElementIds": {},
   "canvasesIds": {},
@@ -136,13 +136,13 @@ const dataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
       "ce1568d1-d1d5-4c0a-b05b-18efed77163d"
     ],
     "cryptedForeignKeys": {
-      "d7d5efb0-010e-4f95-9d6d-6e3b9fe4fcfd": {}
+      "d8bf246b-9bc4-4d64-84e3-b58fc8980572": {}
     },
     "delegations": {
-      "d7d5efb0-010e-4f95-9d6d-6e3b9fe4fcfd": {}
+      "d8bf246b-9bc4-4d64-84e3-b58fc8980572": {}
     },
     "encryptionKeys": {
-      "d7d5efb0-010e-4f95-9d6d-6e3b9fe4fcfd": {}
+      "d8bf246b-9bc4-4d64-84e3-b58fc8980572": {}
     }
   }
 }
@@ -170,10 +170,10 @@ const notification = await patientApi.notificationApi.createOrModifyNotification
 
 ```json
 {
-  "id": "33a27dd4-6b82-48b6-bb4d-1bbfd910daa0",
-  "rev": "1-95e6bc0938aa8cf9c792e400f9f00518",
-  "created": 1679928233816,
-  "modified": 1679928233816,
+  "id": "59fdfb2b-a1d1-4edf-9bfc-38e38b50550a",
+  "rev": "1-4f64c768fed6e8e74bd3280ae6c0a63c",
+  "created": 1679929606518,
+  "modified": 1679929606518,
   "author": "68a4f7d3-aa5d-43ff-95a1-ba14675397ca",
   "responsible": "3238dd4f-be09-4375-bb5b-0bf9d737ac94",
   "status": "pending",
@@ -185,11 +185,11 @@ const notification = await patientApi.notificationApi.createOrModifyNotification
     "cryptedForeignKeys": {},
     "delegations": {
       "3238dd4f-be09-4375-bb5b-0bf9d737ac94": {},
-      "d7d5efb0-010e-4f95-9d6d-6e3b9fe4fcfd": {}
+      "d8bf246b-9bc4-4d64-84e3-b58fc8980572": {}
     },
     "encryptionKeys": {
       "3238dd4f-be09-4375-bb5b-0bf9d737ac94": {},
-      "d7d5efb0-010e-4f95-9d6d-6e3b9fe4fcfd": {}
+      "d8bf246b-9bc4-4d64-84e3-b58fc8980572": {}
     }
   }
 }
@@ -220,10 +220,10 @@ if (!!newPatientNotifications && newPatientNotifications.length > 0) {
 ```text
 [
   {
-    "id": "33a27dd4-6b82-48b6-bb4d-1bbfd910daa0",
-    "rev": "1-95e6bc0938aa8cf9c792e400f9f00518",
-    "created": 1679928233816,
-    "modified": 1679928233816,
+    "id": "59fdfb2b-a1d1-4edf-9bfc-38e38b50550a",
+    "rev": "1-4f64c768fed6e8e74bd3280ae6c0a63c",
+    "created": 1679929606518,
+    "modified": 1679929606518,
     "author": "68a4f7d3-aa5d-43ff-95a1-ba14675397ca",
     "responsible": "3238dd4f-be09-4375-bb5b-0bf9d737ac94",
     "status": "completed",
@@ -235,11 +235,11 @@ if (!!newPatientNotifications && newPatientNotifications.length > 0) {
       "cryptedForeignKeys": {},
       "delegations": {
         "3238dd4f-be09-4375-bb5b-0bf9d737ac94": {},
-        "d7d5efb0-010e-4f95-9d6d-6e3b9fe4fcfd": {}
+        "d8bf246b-9bc4-4d64-84e3-b58fc8980572": {}
       },
       "encryptionKeys": {
         "3238dd4f-be09-4375-bb5b-0bf9d737ac94": {},
-        "d7d5efb0-010e-4f95-9d6d-6e3b9fe4fcfd": {}
+        "d8bf246b-9bc4-4d64-84e3-b58fc8980572": {}
       }
     }
   }

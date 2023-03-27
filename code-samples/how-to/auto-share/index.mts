@@ -55,9 +55,7 @@ const dataSample1 = await hcp1Api.dataSampleApi.getDataSample(dataSample.id)
 const dataSample2 = await hcp2Api.dataSampleApi.getDataSample(dataSample.id)
 // hcp2 can already access dataSample
 //tech-doc: end
-expect(
-  dataSample1.content['en'].stringValue,
-).to.equal(contentString)
+expect(dataSample1.content['en'].stringValue).to.equal(contentString)
 expect(
   //skip
   dataSample2.content['en'].stringValue,

@@ -1,4 +1,4 @@
-import { DataSampleFilter, medTechApi, UserFilter } from '@icure/medical-device-sdk'
+import { medTechApi, UserFilter } from '@icure/medical-device-sdk'
 import { webcrypto } from 'crypto'
 import { host, userName, password, privKey, output } from '../../utils/index.mjs'
 import 'isomorphic-fetch'
@@ -41,7 +41,7 @@ const userToCreate = new User({
 const createdUser = await api.userApi.createOrModifyUser(userToCreate)
 
 //tech-doc: STOP HERE
-output({ createdUser })
+output({ createdUser, userToCreate })
 
 expect(createdUser.id).to.be.a('string')
 expect(createdUser.login).to.equal(`john+${uniqueId}`)

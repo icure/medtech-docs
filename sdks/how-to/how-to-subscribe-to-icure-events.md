@@ -96,6 +96,64 @@ const patient = await api.patientApi.createOrModifyPatient(
 
 <!-- output://code-samples/how-to/websocket/patient.txt -->
 <details>
+<summary>patient</summary>
+
+```json
+{
+  "id": "5448c371-8efc-4a27-b20e-8baf3464d93c",
+  "languages": [],
+  "active": true,
+  "parameters": {},
+  "rev": "1-c388aff28b5f053aac9ee09d8779fcae",
+  "created": 1679929588138,
+  "modified": 1679929588138,
+  "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
+  "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
+  "firstName": "John",
+  "lastName": "Snow",
+  "note": "Winter is coming",
+  "identifiers": [],
+  "labels": {},
+  "codes": {},
+  "names": [
+    {
+      "firstNames": [
+        "John"
+      ],
+      "prefix": [],
+      "suffix": [],
+      "lastName": "Snow",
+      "text": "Snow John",
+      "use": "official"
+    }
+  ],
+  "addresses": [],
+  "gender": "unknown",
+  "birthSex": "unknown",
+  "mergedIds": {},
+  "deactivationReason": "none",
+  "personalStatus": "unknown",
+  "partnerships": [],
+  "patientHealthCareParties": [],
+  "patientProfessions": [],
+  "properties": {},
+  "systemMetaData": {
+    "hcPartyKeys": {},
+    "privateKeyShamirPartitions": {},
+    "aesExchangeKeys": {},
+    "transferKeys": {},
+    "encryptedSelf": "Z1XE9kKEteRsWkGYTxhDi8TcnWk9UI0F5DPtvf6YIuMFSNg3EpyXLNiA8lA773Jk",
+    "secretForeignKeys": [],
+    "cryptedForeignKeys": {},
+    "delegations": {
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+    },
+    "encryptionKeys": {
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+    }
+  }
+}
+```
 </details>
 
 :::
@@ -113,6 +171,49 @@ const dataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
 
 <!-- output://code-samples/how-to/websocket/dataSample.txt -->
 <details>
+<summary>dataSample</summary>
+
+```json
+{
+  "id": "2eb24742-3ce3-4ad9-8ef8-43e02a69cb0d",
+  "qualifiedLinks": {},
+  "batchId": "afc7fc95-71b9-470a-af80-cbe6a2b7b6ba",
+  "index": 0,
+  "valueDate": 20230327170628,
+  "openingDate": 20230327170628,
+  "created": 1679929588223,
+  "modified": 1679929588223,
+  "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
+  "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
+  "identifiers": [],
+  "healthcareElementIds": {},
+  "canvasesIds": {},
+  "content": {
+    "en": {
+      "stringValue": "Hello world",
+      "compoundValue": [],
+      "ratio": [],
+      "range": []
+    }
+  },
+  "codes": {},
+  "labels": {},
+  "systemMetaData": {
+    "secretForeignKeys": [
+      "c29a33d0-f336-4e3c-b71b-f744d4898cb4"
+    ],
+    "cryptedForeignKeys": {
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+    },
+    "delegations": {
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+    },
+    "encryptionKeys": {
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+    }
+  }
+}
+```
 </details>
 
 ## How to stop listening to events&#8239;?
@@ -126,8 +227,61 @@ connection.close()
 
 <!-- output://code-samples/how-to/websocket/events.txt -->
 <details>
+<summary>events</summary>
+
+```text
+[
+  {
+    "id": "2eb24742-3ce3-4ad9-8ef8-43e02a69cb0d",
+    "qualifiedLinks": {},
+    "batchId": "afc7fc95-71b9-470a-af80-cbe6a2b7b6ba",
+    "index": 0,
+    "valueDate": 20230327170628,
+    "openingDate": 20230327170628,
+    "created": 1679929588223,
+    "modified": 1679929588223,
+    "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
+    "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
+    "identifiers": [],
+    "healthcareElementIds": {},
+    "canvasesIds": {},
+    "content": {
+      "en": {
+        "stringValue": "Hello world",
+        "compoundValue": [],
+        "ratio": [],
+        "range": []
+      }
+    },
+    "codes": {},
+    "labels": {},
+    "systemMetaData": {
+      "secretForeignKeys": [
+        "c29a33d0-f336-4e3c-b71b-f744d4898cb4"
+      ],
+      "cryptedForeignKeys": {
+        "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+      },
+      "delegations": {
+        "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+      },
+      "encryptionKeys": {
+        "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+      }
+    }
+  }
+]
+```
 </details>
 
 <!-- output://code-samples/how-to/websocket/statuses.txt -->
 <details>
+<summary>statuses</summary>
+
+```text
+[
+  "CONNECTED",
+  "CLOSED"
+]
+```
 </details>

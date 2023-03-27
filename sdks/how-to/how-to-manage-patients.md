@@ -41,6 +41,74 @@ const createdPatient = await api.patientApi.createOrModifyPatient(
 
 <!-- output://code-samples/how-to/patients/createdPatient.txt -->
 <details>
+<summary>createdPatient</summary>
+
+```json
+{
+  "id": "2ede7bc3-0d5c-43a2-8ebf-9582eb738201",
+  "languages": [],
+  "active": true,
+  "parameters": {},
+  "rev": "1-c0950cac9d68cfe2b7bb4579db48466a",
+  "created": 1679929572654,
+  "modified": 1679929572654,
+  "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
+  "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
+  "firstName": "Hubert",
+  "lastName": "Farnsworth",
+  "dateOfBirth": 28410409,
+  "profession": "CEO/Owner of Planet Express, Lecturer at Mars University",
+  "nationality": "American",
+  "identifiers": [],
+  "labels": {},
+  "codes": {},
+  "names": [
+    {
+      "firstNames": [
+        "Hubert",
+        "J"
+      ],
+      "prefix": [],
+      "suffix": [],
+      "lastName": "Farnsworth",
+      "use": "official"
+    },
+    {
+      "firstNames": [
+        "Professor"
+      ],
+      "prefix": [],
+      "suffix": [],
+      "use": "nickname"
+    }
+  ],
+  "addresses": [],
+  "gender": "male",
+  "birthSex": "male",
+  "mergedIds": {},
+  "deactivationReason": "none",
+  "personalStatus": "unknown",
+  "partnerships": [],
+  "patientHealthCareParties": [],
+  "patientProfessions": [],
+  "properties": {},
+  "systemMetaData": {
+    "hcPartyKeys": {},
+    "privateKeyShamirPartitions": {},
+    "aesExchangeKeys": {},
+    "transferKeys": {},
+    "encryptedSelf": "bn2dmoqPNq7VndwlRHCO2UZTM+NxMFPS9wiDJOlP+fg=",
+    "secretForeignKeys": [],
+    "cryptedForeignKeys": {},
+    "delegations": {
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+    },
+    "encryptionKeys": {
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+    }
+  }
+}
+```
 </details>
 
 ## How to update a patient&#8239;?
@@ -62,6 +130,75 @@ const updatedPatient = await api.patientApi.createOrModifyPatient(
 
 <!-- output://code-samples/how-to/patients/updatedPatient.txt -->
 <details>
+<summary>updatedPatient</summary>
+
+```json
+{
+  "id": "2ede7bc3-0d5c-43a2-8ebf-9582eb738201",
+  "languages": [],
+  "active": true,
+  "parameters": {},
+  "rev": "2-ac99e07c82fd6fa68b52d3647e8e2246",
+  "created": 1679929572654,
+  "modified": 1679929572710,
+  "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
+  "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
+  "firstName": "Hubert",
+  "lastName": "Farnsworth",
+  "dateOfBirth": 28410409,
+  "profession": "CEO/Owner of Planet Express, Lecturer at Mars University",
+  "note": "Good news everyone!",
+  "nationality": "American",
+  "identifiers": [],
+  "labels": {},
+  "codes": {},
+  "names": [
+    {
+      "firstNames": [
+        "Hubert",
+        "J"
+      ],
+      "prefix": [],
+      "suffix": [],
+      "lastName": "Farnsworth",
+      "use": "official"
+    },
+    {
+      "firstNames": [
+        "Professor"
+      ],
+      "prefix": [],
+      "suffix": [],
+      "use": "nickname"
+    }
+  ],
+  "addresses": [],
+  "gender": "male",
+  "birthSex": "male",
+  "mergedIds": {},
+  "deactivationReason": "none",
+  "personalStatus": "unknown",
+  "partnerships": [],
+  "patientHealthCareParties": [],
+  "patientProfessions": [],
+  "properties": {},
+  "systemMetaData": {
+    "hcPartyKeys": {},
+    "privateKeyShamirPartitions": {},
+    "aesExchangeKeys": {},
+    "transferKeys": {},
+    "encryptedSelf": "2zjG9XnKuDxNSN4pYmyKO+7PXpeqMh7Pj0GW06+FTpE7PseyYLZZZ6IAuoED7SXQ",
+    "secretForeignKeys": [],
+    "cryptedForeignKeys": {},
+    "delegations": {
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+    },
+    "encryptionKeys": {
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+    }
+  }
+}
+```
 </details>
 
 
@@ -76,6 +213,75 @@ const patient = await api.patientApi.getPatient(updatedPatient.id!)
 
 <!-- output://code-samples/how-to/patients/patient.txt -->
 <details>
+<summary>patient</summary>
+
+```json
+{
+  "id": "2ede7bc3-0d5c-43a2-8ebf-9582eb738201",
+  "languages": [],
+  "active": true,
+  "parameters": {},
+  "rev": "2-ac99e07c82fd6fa68b52d3647e8e2246",
+  "created": 1679929572654,
+  "modified": 1679929572710,
+  "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
+  "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
+  "firstName": "Hubert",
+  "lastName": "Farnsworth",
+  "dateOfBirth": 28410409,
+  "profession": "CEO/Owner of Planet Express, Lecturer at Mars University",
+  "note": "Good news everyone!",
+  "nationality": "American",
+  "identifiers": [],
+  "labels": {},
+  "codes": {},
+  "names": [
+    {
+      "firstNames": [
+        "Hubert",
+        "J"
+      ],
+      "prefix": [],
+      "suffix": [],
+      "lastName": "Farnsworth",
+      "use": "official"
+    },
+    {
+      "firstNames": [
+        "Professor"
+      ],
+      "prefix": [],
+      "suffix": [],
+      "use": "nickname"
+    }
+  ],
+  "addresses": [],
+  "gender": "male",
+  "birthSex": "male",
+  "mergedIds": {},
+  "deactivationReason": "none",
+  "personalStatus": "unknown",
+  "partnerships": [],
+  "patientHealthCareParties": [],
+  "patientProfessions": [],
+  "properties": {},
+  "systemMetaData": {
+    "hcPartyKeys": {},
+    "privateKeyShamirPartitions": {},
+    "aesExchangeKeys": {},
+    "transferKeys": {},
+    "encryptedSelf": "2zjG9XnKuDxNSN4pYmyKO+7PXpeqMh7Pj0GW06+FTpE7PseyYLZZZ6IAuoED7SXQ",
+    "secretForeignKeys": [],
+    "cryptedForeignKeys": {},
+    "delegations": {
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+    },
+    "encryptionKeys": {
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+    }
+  }
+}
+```
 </details>
 
 
@@ -90,6 +296,11 @@ const deletedPatientId = await api.patientApi.deletePatient(patient.id!)
 
 <!-- output://code-samples/how-to/patients/deletedPatientId.txt -->
 <details>
+<summary>deletedPatientId</summary>
+
+```text
+2ede7bc3-0d5c-43a2-8ebf-9582eb738201
+```
 </details>
 
 ## How to filter patients&#8239;?
@@ -109,6 +320,81 @@ const patients = await api.patientApi.filterPatients(filter)
 
 <!-- output://code-samples/how-to/patients/patients.txt -->
 <details>
+<summary>patients</summary>
+
+```json
+{
+  "pageSize": 1000,
+  "totalSize": 1,
+  "rows": [
+    {
+      "id": "2ede7bc3-0d5c-43a2-8ebf-9582eb738201",
+      "languages": [],
+      "active": true,
+      "parameters": {},
+      "rev": "2-ac99e07c82fd6fa68b52d3647e8e2246",
+      "created": 1679929572654,
+      "modified": 1679929572710,
+      "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
+      "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
+      "firstName": "Hubert",
+      "lastName": "Farnsworth",
+      "dateOfBirth": 28410409,
+      "profession": "CEO/Owner of Planet Express, Lecturer at Mars University",
+      "nationality": "American",
+      "identifiers": [],
+      "labels": {},
+      "codes": {},
+      "names": [
+        {
+          "firstNames": [
+            "Hubert",
+            "J"
+          ],
+          "prefix": [],
+          "suffix": [],
+          "lastName": "Farnsworth",
+          "use": "official"
+        },
+        {
+          "firstNames": [
+            "Professor"
+          ],
+          "prefix": [],
+          "suffix": [],
+          "use": "nickname"
+        }
+      ],
+      "addresses": [],
+      "gender": "male",
+      "birthSex": "male",
+      "mergedIds": {},
+      "deactivationReason": "none",
+      "personalStatus": "unknown",
+      "partnerships": [],
+      "patientHealthCareParties": [],
+      "patientProfessions": [],
+      "properties": {},
+      "systemMetaData": {
+        "hcPartyKeys": {},
+        "privateKeyShamirPartitions": {},
+        "aesExchangeKeys": {},
+        "transferKeys": {},
+        "encryptedSelf": "2zjG9XnKuDxNSN4pYmyKO+7PXpeqMh7Pj0GW06+FTpE7PseyYLZZZ6IAuoED7SXQ",
+        "secretForeignKeys": [],
+        "cryptedForeignKeys": {},
+        "delegations": {
+          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+        },
+        "encryptionKeys": {
+          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+        }
+      }
+    }
+  ],
+  "nextKeyPair": {}
+}
+```
 </details>
 
 
@@ -130,6 +416,11 @@ const patientFilter = new PatientFilter()
 
 <!-- output://code-samples/how-to/patients/patientFilter.txt -->
 <details>
+<summary>patientFilter</summary>
+
+```json
+{}
+```
 </details>
 
 
@@ -156,6 +447,13 @@ const patientIds = await api.patientApi.matchPatients(filterForMatch)
 
 <!-- output://code-samples/how-to/patients/patientIds.txt -->
 <details>
+<summary>patientIds</summary>
+
+```text
+[
+  "2ede7bc3-0d5c-43a2-8ebf-9582eb738201"
+]
+```
 </details>
 
 

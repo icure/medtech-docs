@@ -30,6 +30,19 @@ const createdUser = await api.userApi.createOrModifyUser(userToCreate)
 
 <!-- output://code-samples/how-to/manage-users/userToCreate.txt -->
 <details>
+<summary>userToCreate</summary>
+
+```json
+{
+  "login": "john+f8ibmiwk",
+  "email": "john+f8ibmiwk@hospital.care",
+  "passwordHash": "correct horse battery staple",
+  "properties": {},
+  "roles": {},
+  "sharingDataWith": {},
+  "authenticationTokens": {}
+}
+```
 </details>
 
 
@@ -103,10 +116,97 @@ const createdPatientUser = await api.userApi.createAndInviteUser(
 
 <!-- output://code-samples/how-to/manage-users/createdPatient.txt -->
 <details>
+<summary>createdPatient</summary>
+
+```json
+{
+  "id": "c08ce316-1897-4325-9c56-486e4f677adf",
+  "languages": [],
+  "active": true,
+  "parameters": {},
+  "rev": "1-5ac2ccdc0c1f97b515f95bb1e2ec8cd8",
+  "created": 1679929568488,
+  "modified": 1679929568488,
+  "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
+  "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
+  "firstName": "Argan",
+  "lastName": "Poquelin",
+  "ssin": "1973021014722",
+  "dateOfBirth": 19730210,
+  "identifiers": [],
+  "labels": {},
+  "codes": {},
+  "names": [
+    {
+      "firstNames": [
+        "Argan"
+      ],
+      "prefix": [],
+      "suffix": [],
+      "lastName": "Poquelin",
+      "text": "Poquelin Argan",
+      "use": "official"
+    }
+  ],
+  "addresses": [
+    {
+      "addressType": "home",
+      "telecoms": [
+        {
+          "telecomNumber": "argan+f8ibmiwk@moliere.fr",
+          "telecomType": "email"
+        }
+      ]
+    }
+  ],
+  "gender": "unknown",
+  "birthSex": "unknown",
+  "mergedIds": {},
+  "deactivationReason": "none",
+  "personalStatus": "unknown",
+  "partnerships": [],
+  "patientHealthCareParties": [],
+  "patientProfessions": [],
+  "properties": {},
+  "systemMetaData": {
+    "hcPartyKeys": {},
+    "privateKeyShamirPartitions": {},
+    "aesExchangeKeys": {},
+    "transferKeys": {},
+    "encryptedSelf": "SRaN22j/V1z+I1wBJ5GqinNUYzasj4zdz37SHl/mMYM=",
+    "secretForeignKeys": [],
+    "cryptedForeignKeys": {},
+    "delegations": {
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+    },
+    "encryptionKeys": {
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+    }
+  }
+}
+```
 </details>
 
 <!-- output://code-samples/how-to/manage-users/createdPatientUser.txt -->
 <details>
+<summary>createdPatientUser</summary>
+
+```json
+{
+  "id": "e5fda4a9-f051-4713-9ba7-c51bf8425673",
+  "rev": "1-aaa849b056e0bf893b727125ee971ee3",
+  "created": 1679929568996,
+  "name": "argan+f8ibmiwk@moliere.fr",
+  "login": "argan+f8ibmiwk@moliere.fr",
+  "groupId": "ic-e2etest-medtech-docs",
+  "patientId": "c08ce316-1897-4325-9c56-486e4f677adf",
+  "email": "argan+f8ibmiwk@moliere.fr",
+  "properties": {},
+  "roles": {},
+  "sharingDataWith": {},
+  "authenticationTokens": {}
+}
+```
 </details>
 
 
@@ -136,6 +236,23 @@ const loadedUser = await api.userApi.getUser(createdUser.id)
 
 <!-- output://code-samples/how-to/manage-users/loadedUser.txt -->
 <details>
+<summary>loadedUser</summary>
+
+```json
+{
+  "id": "ac920580-b0fb-4091-9410-ec854be72871",
+  "rev": "1-ed13b89f9ce9940eaa03680d9f727c87",
+  "created": 1679929567619,
+  "login": "john+f8ibmiwk",
+  "passwordHash": "*",
+  "groupId": "ic-e2etest-medtech-docs",
+  "email": "john+f8ibmiwk@hospital.care",
+  "properties": {},
+  "roles": {},
+  "sharingDataWith": {},
+  "authenticationTokens": {}
+}
+```
 </details>
 
 ## Loading a user by email
@@ -149,6 +266,23 @@ const loadedUserByEmail = await api.userApi.getUserByEmail(createdUser.email)
 
 <!-- output://code-samples/how-to/manage-users/loadedUserByEmail.txt -->
 <details>
+<summary>loadedUserByEmail</summary>
+
+```json
+{
+  "id": "ac920580-b0fb-4091-9410-ec854be72871",
+  "rev": "1-ed13b89f9ce9940eaa03680d9f727c87",
+  "created": 1679929567619,
+  "login": "john+f8ibmiwk",
+  "passwordHash": "*",
+  "groupId": "ic-e2etest-medtech-docs",
+  "email": "john+f8ibmiwk@hospital.care",
+  "properties": {},
+  "roles": {},
+  "sharingDataWith": {},
+  "authenticationTokens": {}
+}
+```
 </details>
 
 ## Filtering users
@@ -168,6 +302,31 @@ const users = await api.userApi.filterUsers(
 
 <!-- output://code-samples/how-to/manage-users/users.txt -->
 <details>
+<summary>users</summary>
+
+```json
+{
+  "pageSize": 1000,
+  "totalSize": 353,
+  "rows": [
+    {
+      "id": "e5fda4a9-f051-4713-9ba7-c51bf8425673",
+      "rev": "2-80f37883bcd4a59581f23af5ea8a954d",
+      "created": 1679929568996,
+      "name": "argan+f8ibmiwk@moliere.fr",
+      "login": "argan+f8ibmiwk@moliere.fr",
+      "groupId": "ic-e2etest-medtech-docs",
+      "patientId": "c08ce316-1897-4325-9c56-486e4f677adf",
+      "email": "argan+f8ibmiwk@moliere.fr",
+      "properties": {},
+      "roles": {},
+      "sharingDataWith": {},
+      "authenticationTokens": {}
+    }
+  ],
+  "nextKeyPair": {}
+}
+```
 </details>
 
 ## Update a user
@@ -184,6 +343,23 @@ const modifiedUser = await api.userApi.createOrModifyUser(
 
 <!-- output://code-samples/how-to/manage-users/modifiedUser.txt -->
 <details>
+<summary>modifiedUser</summary>
+
+```json
+{
+  "id": "ac920580-b0fb-4091-9410-ec854be72871",
+  "rev": "2-c12e947a08b841d207c99d5571f7e833",
+  "created": 1679929567619,
+  "login": "john+f8ibmiwk",
+  "passwordHash": "*",
+  "groupId": "ic-e2etest-medtech-docs",
+  "email": "john+f8ibmiwk@hospital.care",
+  "properties": {},
+  "roles": {},
+  "sharingDataWith": {},
+  "authenticationTokens": {}
+}
+```
 </details>
 
 ## Delete a user
@@ -197,6 +373,11 @@ const deletedUserId = await api.userApi.deleteUser(createdUser.id)
 
 <!-- output://code-samples/how-to/manage-users/deletedUserId.txt -->
 <details>
+<summary>deletedUserId</summary>
+
+```text
+3-4312cc7f8b63af9b6ae41fe30a96646d
+```
 </details>
 
 For the gory details of all you can do with users using the SDK, check out the [UserApi](../references/interfaces/UserApi.md) documentation.
