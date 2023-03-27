@@ -10,7 +10,7 @@ import { hex2ua } from '@icure/api'
 import 'isomorphic-fetch'
 import * as console from 'console'
 
-import { initLocalStorage, initMedTechApi, privKey } from '../../utils/index.mjs'
+import { initLocalStorage, initMedTechApi, output, privKey } from '../../utils/index.mjs'
 
 initLocalStorage()
 
@@ -31,6 +31,7 @@ const patient = await api.patientApi.createOrModifyPatient(
   }),
 )
 //tech-doc: STOP HERE
+output({ patient })
 
 //tech-doc: create children dataSample one hour mean
 const oneHourMeanDataSample = new DataSample({
@@ -66,6 +67,9 @@ const eightHourMeanDataSample = new DataSample({
     }),
   },
 })
+//tech-doc: STOP HERE
+output({ oneHourMeanDataSample, eightHourMeanDataSample })
+
 //tech-doc: create children dataSample temperatures
 const temperaturesDataSample = new DataSample({
   labels: new Set([new CodingReference({ type: 'LOINC', code: '8310-5', version: '2.73' })]),
@@ -85,6 +89,9 @@ const temperaturesDataSample = new DataSample({
     }),
   },
 })
+//tech-doc: STOP HERE
+output({ temperaturesDataSample })
+
 //tech-doc: create heart rate datasample
 const meanHeartRateDataSample = new DataSample({
   labels: new Set([
@@ -113,5 +120,6 @@ const createdDataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
   meanHeartRateDataSample,
 )
 //tech-doc: STOP HERE
+output({ meanHeartRateDataSample, createdDataSample })
 
 console.log(JSON.stringify(createdDataSample))

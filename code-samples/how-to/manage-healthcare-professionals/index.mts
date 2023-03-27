@@ -5,7 +5,7 @@ import {
   HealthcareProfessionalFilter,
   Telecom,
 } from '@icure/medical-device-sdk'
-import { initLocalStorage, initMedTechApi } from '../../utils/index.mjs'
+import { initLocalStorage, initMedTechApi, output } from '../../utils/index.mjs'
 import 'isomorphic-fetch'
 import { expect } from 'chai'
 
@@ -41,6 +41,8 @@ const createdHcp = await api.healthcareProfessionalApi.createOrModifyHealthcareP
 )
 
 //tech-doc: STOP HERE
+output({ createdHcp, healthcareProfessional })
+
 expect(createdHcp.id).to.be.a('string')
 expect(createdHcp.firstName).to.equal('John')
 expect(createdHcp.lastName).to.equal('Keats')
@@ -48,8 +50,9 @@ expect(createdHcp.addresses[0].telecoms[0].telecomNumber).to.equal('jk@hospital.
 
 //tech-doc: Load a healthcare professional by id
 const loadedHcp = await api.healthcareProfessionalApi.getHealthcareProfessional(createdHcp.id)
-
 //tech-doc: STOP HERE
+output({ loadedHcp })
+
 expect(loadedHcp.id).to.be.equal(createdHcp.id)
 expect(loadedHcp.firstName).to.equal('John')
 expect(loadedHcp.lastName).to.equal('Keats')
@@ -60,8 +63,9 @@ const hcps = await api.healthcareProfessionalApi.filterHealthcareProfessionalBy(
     .byLabelCodeFilter(undefined, undefined, 'practitioner-specialty', healthcareProfessionalCode)
     .build(),
 )
-
 //tech-doc: STOP HERE
+output({ hcps })
+
 expect(hcps.rows.length).to.be.equal(1)
 expect(hcps.rows[0].id).to.be.equal(createdHcp.id)
 
@@ -70,12 +74,13 @@ const hcpToModify = await api.healthcareProfessionalApi.getHealthcareProfessiona
 const modifiedHcp = await api.healthcareProfessionalApi.createOrModifyHealthcareProfessional(
   new HealthcareProfessional({ ...hcpToModify, civility: 'Dr.' }),
 )
-
 //tech-doc: STOP HERE
+output({ modifiedHcp })
+
 expect(modifiedHcp.id).to.be.equal(createdHcp.id)
 expect(modifiedHcp.civility).to.equal('Dr.')
 
 //tech-doc: Delete a healthcare professional
-await api.healthcareProfessionalApi.deleteHealthcareProfessional(createdHcp.id)
-
+const deletedHcp = await api.healthcareProfessionalApi.deleteHealthcareProfessional(createdHcp.id)
 //tech-doc: STOP HERE
+output({ deletedHcp })

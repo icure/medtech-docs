@@ -25,7 +25,7 @@ In the following example, a Healthcare Professional will create, for a Patient, 
 
 <!-- file://code-samples/how-to/manage-healthcare-elements/index.mts snippet:create a HE as data owner-->
 ```typescript
-const newHE = new HealthcareElement({
+const newHealthcareElement = new HealthcareElement({
   description: 'The patient has been diagnosed Pararibulitis',
   codes: new Set([
     new CodingReference({
@@ -39,7 +39,7 @@ const newHE = new HealthcareElement({
 })
 
 const healthcareElement = await api.healthcareElementApi.createOrModifyHealthcareElement(
-  newHE,
+  newHealthcareElement,
   patient.id,
 )
 ```
