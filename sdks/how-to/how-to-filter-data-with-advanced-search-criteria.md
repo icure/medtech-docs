@@ -38,7 +38,6 @@ In the following example we will get all the Patients that a Healthcare Professi
 <!-- file://code-samples/how-to/use-complex-search-criteria/index.mts snippet:filter patients for hcp-->
 ```typescript
 const patientsForHcpFilter = await new PatientFilter().forDataOwner(healthcarePartyId).build()
-
 const patientsForHcp = await api.patientApi.filterPatients(patientsForHcpFilter)
 ```
 

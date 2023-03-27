@@ -58,6 +58,26 @@ expect(loggedUser.login).to.be.equal(iCureUserLogin)
 
 <!-- output://code-samples/tutorial/doctor-centric-app/loggedUser.txt -->
 <details>
+<summary>loggedUser</summary>
+
+```json
+{
+  "id": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
+  "rev": "68-170d718bb0558cf1c7da31c27aff8f71",
+  "created": 1679919731079,
+  "name": "Master HCP",
+  "login": "master@b16baa.icure",
+  "groupId": "ic-e2etest-medtech-docs",
+  "healthcarePartyId": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
+  "email": "master@b16baa.icure",
+  "properties": {},
+  "roles": {},
+  "sharingDataWith": {
+    "medicalInformation": {}
+  },
+  "authenticationTokens": {}
+}
+```
 </details>
 
 At this point, your user can get data but is not able to encrypt/decrypt it. For this, you need to create and assign them 
@@ -138,6 +158,64 @@ console.log(`Your new patient id : ${createdPatient.id}`)
 
 <!-- output://code-samples/tutorial/doctor-centric-app/createdPatient.txt -->
 <details>
+<summary>createdPatient</summary>
+
+```json
+{
+  "id": "4300e125-a76a-42c1-8b95-93f5d157a52a",
+  "languages": [],
+  "active": true,
+  "parameters": {},
+  "rev": "1-ca8cf454fccf3a101e8fe000a1cd56c0",
+  "created": 1679928236831,
+  "modified": 1679928236831,
+  "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
+  "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
+  "firstName": "John",
+  "lastName": "Snow",
+  "note": "Winter is coming",
+  "identifiers": [],
+  "labels": {},
+  "codes": {},
+  "names": [
+    {
+      "firstNames": [
+        "John"
+      ],
+      "prefix": [],
+      "suffix": [],
+      "lastName": "Snow",
+      "text": "Snow John",
+      "use": "official"
+    }
+  ],
+  "addresses": [],
+  "gender": "male",
+  "birthSex": "unknown",
+  "mergedIds": {},
+  "deactivationReason": "none",
+  "personalStatus": "unknown",
+  "partnerships": [],
+  "patientHealthCareParties": [],
+  "patientProfessions": [],
+  "properties": {},
+  "systemMetaData": {
+    "hcPartyKeys": {},
+    "privateKeyShamirPartitions": {},
+    "aesExchangeKeys": {},
+    "transferKeys": {},
+    "encryptedSelf": "4AiNdhIpwm4rdTM1QPit+wQKAqc0GUVNfad4Jvb7N4MGSrJRIJKOfzEeBE9wkvj8",
+    "secretForeignKeys": [],
+    "cryptedForeignKeys": {},
+    "delegations": {
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+    },
+    "encryptionKeys": {
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+    }
+  }
+}
+```
 </details>
 
 :::info
@@ -161,6 +239,64 @@ expect(createdPatient.id).to.be.equal(johnSnow.id)
 
 <!-- output://code-samples/tutorial/doctor-centric-app/johnSnow.txt -->
 <details>
+<summary>johnSnow</summary>
+
+```json
+{
+  "id": "4300e125-a76a-42c1-8b95-93f5d157a52a",
+  "languages": [],
+  "active": true,
+  "parameters": {},
+  "rev": "1-ca8cf454fccf3a101e8fe000a1cd56c0",
+  "created": 1679928236831,
+  "modified": 1679928236831,
+  "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
+  "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
+  "firstName": "John",
+  "lastName": "Snow",
+  "note": "Winter is coming",
+  "identifiers": [],
+  "labels": {},
+  "codes": {},
+  "names": [
+    {
+      "firstNames": [
+        "John"
+      ],
+      "prefix": [],
+      "suffix": [],
+      "lastName": "Snow",
+      "text": "Snow John",
+      "use": "official"
+    }
+  ],
+  "addresses": [],
+  "gender": "male",
+  "birthSex": "unknown",
+  "mergedIds": {},
+  "deactivationReason": "none",
+  "personalStatus": "unknown",
+  "partnerships": [],
+  "patientHealthCareParties": [],
+  "patientProfessions": [],
+  "properties": {},
+  "systemMetaData": {
+    "hcPartyKeys": {},
+    "privateKeyShamirPartitions": {},
+    "aesExchangeKeys": {},
+    "transferKeys": {},
+    "encryptedSelf": "4AiNdhIpwm4rdTM1QPit+wQKAqc0GUVNfad4Jvb7N4MGSrJRIJKOfzEeBE9wkvj8",
+    "secretForeignKeys": [],
+    "cryptedForeignKeys": {},
+    "delegations": {
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+    },
+    "encryptionKeys": {
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+    }
+  }
+}
+```
 </details>
 
 If you would like to know more about the information contained in Patient, go check the [References](../references/classes/Patient.md)
@@ -197,6 +333,92 @@ const createdData = await api.dataSampleApi.createOrModifyDataSamplesFor(johnSno
 
 <!-- output://code-samples/tutorial/doctor-centric-app/createdData.txt -->
 <details>
+<summary>createdData</summary>
+
+```text
+[
+  {
+    "id": "8e9d03ac-08a9-4226-b337-4e8f2d7c1fa3",
+    "qualifiedLinks": {},
+    "batchId": "ce1b173c-3220-4c1c-9286-560ee36ffacb",
+    "index": 0,
+    "valueDate": 20220203111034,
+    "openingDate": 20230327164356,
+    "created": 1679928236955,
+    "modified": 1679928236955,
+    "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
+    "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
+    "comment": "Height",
+    "identifiers": [],
+    "healthcareElementIds": {},
+    "canvasesIds": {},
+    "content": {
+      "en": {
+        "numberValue": 187,
+        "compoundValue": [],
+        "ratio": [],
+        "range": []
+      }
+    },
+    "codes": {},
+    "labels": {},
+    "systemMetaData": {
+      "secretForeignKeys": [
+        "b5b904e8-008f-46d3-8e3b-5d12d5d76b49"
+      ],
+      "cryptedForeignKeys": {
+        "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+      },
+      "delegations": {
+        "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+      },
+      "encryptionKeys": {
+        "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+      }
+    }
+  },
+  {
+    "id": "8f3f28d5-27a9-4b37-bd6a-ca937e6cb862",
+    "qualifiedLinks": {},
+    "batchId": "ce1b173c-3220-4c1c-9286-560ee36ffacb",
+    "index": 1,
+    "valueDate": 20220203111034,
+    "openingDate": 20230327164356,
+    "created": 1679928236955,
+    "modified": 1679928236955,
+    "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
+    "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
+    "comment": "Weight",
+    "identifiers": [],
+    "healthcareElementIds": {},
+    "canvasesIds": {},
+    "content": {
+      "en": {
+        "numberValue": 92.5,
+        "compoundValue": [],
+        "ratio": [],
+        "range": []
+      }
+    },
+    "codes": {},
+    "labels": {},
+    "systemMetaData": {
+      "secretForeignKeys": [
+        "b5b904e8-008f-46d3-8e3b-5d12d5d76b49"
+      ],
+      "cryptedForeignKeys": {
+        "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+      },
+      "delegations": {
+        "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+      },
+      "encryptionKeys": {
+        "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+      }
+    }
+  }
+]
+```
 </details>
 
 
@@ -229,6 +451,57 @@ expect(johnData.rows[0].comment).to.be.equal('Weight')
 
 <!-- output://code-samples/tutorial/doctor-centric-app/johnData.txt -->
 <details>
+<summary>johnData</summary>
+
+```json
+{
+  "pageSize": 1,
+  "totalSize": 1,
+  "rows": [
+    {
+      "id": "8f3f28d5-27a9-4b37-bd6a-ca937e6cb862",
+      "qualifiedLinks": {},
+      "batchId": "ce1b173c-3220-4c1c-9286-560ee36ffacb",
+      "index": 1,
+      "valueDate": 20220203111034,
+      "openingDate": 20230327164356,
+      "created": 1679928236955,
+      "modified": 1679928236955,
+      "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
+      "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
+      "comment": "Weight",
+      "identifiers": [],
+      "healthcareElementIds": {},
+      "canvasesIds": {},
+      "content": {
+        "en": {
+          "numberValue": 92.5,
+          "compoundValue": [],
+          "ratio": [],
+          "range": []
+        }
+      },
+      "codes": {},
+      "labels": {},
+      "systemMetaData": {
+        "secretForeignKeys": [
+          "b5b904e8-008f-46d3-8e3b-5d12d5d76b49"
+        ],
+        "cryptedForeignKeys": {
+          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+        },
+        "delegations": {
+          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+        },
+        "encryptionKeys": {
+          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+        }
+      }
+    }
+  ],
+  "nextKeyPair": {}
+}
+```
 </details>
 
 
@@ -249,6 +522,50 @@ expect(johnWeight.comment).to.be.equal('Weight')
 
 <!-- output://code-samples/tutorial/doctor-centric-app/johnWeight.txt -->
 <details>
+<summary>johnWeight</summary>
+
+```json
+{
+  "id": "8f3f28d5-27a9-4b37-bd6a-ca937e6cb862",
+  "qualifiedLinks": {},
+  "batchId": "ce1b173c-3220-4c1c-9286-560ee36ffacb",
+  "index": 1,
+  "valueDate": 20220203111034,
+  "openingDate": 20230327164356,
+  "created": 1679928236955,
+  "modified": 1679928236955,
+  "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
+  "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
+  "comment": "Weight",
+  "identifiers": [],
+  "healthcareElementIds": {},
+  "canvasesIds": {},
+  "content": {
+    "en": {
+      "numberValue": 92.5,
+      "compoundValue": [],
+      "ratio": [],
+      "range": []
+    }
+  },
+  "codes": {},
+  "labels": {},
+  "systemMetaData": {
+    "secretForeignKeys": [
+      "b5b904e8-008f-46d3-8e3b-5d12d5d76b49"
+    ],
+    "cryptedForeignKeys": {
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+    },
+    "delegations": {
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+    },
+    "encryptionKeys": {
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+    }
+  }
+}
+```
 </details>
 
 To know more about the Data Sample information, go check the [References](/sdks/references/classes/DataSample.md)

@@ -56,15 +56,15 @@ const dataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
 
 ```json
 {
-  "id": "9517348e-5e51-4499-af39-4d0209a3984f",
-  "rev": "1-307d08f4dadb0a19c7f7e6fe9306d2a0",
-  "created": 1679927943814,
-  "modified": 1679927943814,
+  "id": "632e4772-e3de-4083-9899-6544ac9c0f5b",
+  "rev": "1-66608e8153ee886c75b0eaed399d3de4",
+  "created": 1679928236084,
+  "modified": 1679928236084,
   "author": "68a4f7d3-aa5d-43ff-95a1-ba14675397ca",
   "responsible": "3238dd4f-be09-4375-bb5b-0bf9d737ac94",
-  "healthcareElementId": "9517348e-5e51-4499-af39-4d0209a3984f",
-  "valueDate": 20230327163903,
-  "openingDate": 20230327163903,
+  "healthcareElementId": "632e4772-e3de-4083-9899-6544ac9c0f5b",
+  "valueDate": 20230327164356,
+  "openingDate": 20230327164356,
   "description": "My period started",
   "identifiers": [],
   "codes": {},
@@ -82,7 +82,7 @@ const dataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
     "encryptionKeys": {
       "3238dd4f-be09-4375-bb5b-0bf9d737ac94": {}
     },
-    "encryptedSelf": "5jlcS84p8cUlCWR3G/34GvvVwiVfa70qOOc4YiuAVyIVHJy4vaQENPEsUw61/MpL"
+    "encryptedSelf": "IQbeMoHGMsSmqRvW8rQvwhyDlPy3YVSsohyG8wjtBOYkKw9TCuHhaqpcb8wYQmbr"
   }
 }
 ```
@@ -94,14 +94,14 @@ const dataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
 
 ```json
 {
-  "id": "2e6c3a54-845b-4622-b145-cc61c81e48f5",
+  "id": "76c4d5fa-f78d-4178-b595-27f87e9d2f4c",
   "qualifiedLinks": {},
-  "batchId": "05b3b27c-ecbb-496e-8998-0e474eea2092",
+  "batchId": "18f67338-e3dc-43cd-8c27-007f31eaa139",
   "index": 0,
-  "valueDate": 20230327163904,
-  "openingDate": 20230327163904,
-  "created": 1679927944027,
-  "modified": 1679927944027,
+  "valueDate": 20230327164356,
+  "openingDate": 20230327164356,
+  "created": 1679928236208,
+  "modified": 1679928236208,
   "author": "68a4f7d3-aa5d-43ff-95a1-ba14675397ca",
   "responsible": "3238dd4f-be09-4375-bb5b-0bf9d737ac94",
   "identifiers": [],
@@ -159,10 +159,10 @@ const notification = await patientApi.notificationApi.createOrModifyNotification
 
 ```json
 {
-  "id": "a310b11b-4ac1-472f-b268-eea3fe4c7988",
-  "rev": "1-29e1a36b99ced9375312f442c48bc3fd",
-  "created": 1679927938401,
-  "modified": 1679927938401,
+  "id": "33a27dd4-6b82-48b6-bb4d-1bbfd910daa0",
+  "rev": "1-95e6bc0938aa8cf9c792e400f9f00518",
+  "created": 1679928233816,
+  "modified": 1679928233816,
   "author": "68a4f7d3-aa5d-43ff-95a1-ba14675397ca",
   "responsible": "3238dd4f-be09-4375-bb5b-0bf9d737ac94",
   "status": "pending",
@@ -174,11 +174,11 @@ const notification = await patientApi.notificationApi.createOrModifyNotification
     "cryptedForeignKeys": {},
     "delegations": {
       "3238dd4f-be09-4375-bb5b-0bf9d737ac94": {},
-      "94dee587-c7ba-4f53-86ab-280a44525c0a": {}
+      "d7d5efb0-010e-4f95-9d6d-6e3b9fe4fcfd": {}
     },
     "encryptionKeys": {
       "3238dd4f-be09-4375-bb5b-0bf9d737ac94": {},
-      "94dee587-c7ba-4f53-86ab-280a44525c0a": {}
+      "d7d5efb0-010e-4f95-9d6d-6e3b9fe4fcfd": {}
     }
   }
 }

@@ -54,15 +54,15 @@ const dataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
 
 ```json
 {
-  "id": "9517348e-5e51-4499-af39-4d0209a3984f",
-  "rev": "1-307d08f4dadb0a19c7f7e6fe9306d2a0",
-  "created": 1679927943814,
-  "modified": 1679927943814,
+  "id": "632e4772-e3de-4083-9899-6544ac9c0f5b",
+  "rev": "1-66608e8153ee886c75b0eaed399d3de4",
+  "created": 1679928236084,
+  "modified": 1679928236084,
   "author": "68a4f7d3-aa5d-43ff-95a1-ba14675397ca",
   "responsible": "3238dd4f-be09-4375-bb5b-0bf9d737ac94",
-  "healthcareElementId": "9517348e-5e51-4499-af39-4d0209a3984f",
-  "valueDate": 20230327163903,
-  "openingDate": 20230327163903,
+  "healthcareElementId": "632e4772-e3de-4083-9899-6544ac9c0f5b",
+  "valueDate": 20230327164356,
+  "openingDate": 20230327164356,
   "description": "My period started",
   "identifiers": [],
   "codes": {},
@@ -80,7 +80,7 @@ const dataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
     "encryptionKeys": {
       "3238dd4f-be09-4375-bb5b-0bf9d737ac94": {}
     },
-    "encryptedSelf": "5jlcS84p8cUlCWR3G/34GvvVwiVfa70qOOc4YiuAVyIVHJy4vaQENPEsUw61/MpL"
+    "encryptedSelf": "IQbeMoHGMsSmqRvW8rQvwhyDlPy3YVSsohyG8wjtBOYkKw9TCuHhaqpcb8wYQmbr"
   }
 }
 ```
@@ -92,14 +92,14 @@ const dataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
 
 ```json
 {
-  "id": "2e6c3a54-845b-4622-b145-cc61c81e48f5",
+  "id": "76c4d5fa-f78d-4178-b595-27f87e9d2f4c",
   "qualifiedLinks": {},
-  "batchId": "05b3b27c-ecbb-496e-8998-0e474eea2092",
+  "batchId": "18f67338-e3dc-43cd-8c27-007f31eaa139",
   "index": 0,
-  "valueDate": 20230327163904,
-  "openingDate": 20230327163904,
-  "created": 1679927944027,
-  "modified": 1679927944027,
+  "valueDate": 20230327164356,
+  "openingDate": 20230327164356,
+  "created": 1679928236208,
+  "modified": 1679928236208,
   "author": "68a4f7d3-aa5d-43ff-95a1-ba14675397ca",
   "responsible": "3238dd4f-be09-4375-bb5b-0bf9d737ac94",
   "identifiers": [],
@@ -161,15 +161,15 @@ const healthcareElement = await api.healthcareElementApi.createOrModifyHealthcar
 
 ```json
 {
-  "id": "bcf8e2bd-c205-488b-82b0-4d628d13910e",
-  "rev": "1-6cecbbd9ad1e1936f309aa0f2237a8b8",
-  "created": 1679927933402,
-  "modified": 1679927933402,
+  "id": "ceeda6a0-4cdb-407c-b092-b757d593f3d9",
+  "rev": "1-672f016a873eef7b071855892409b1c4",
+  "created": 1679928224753,
+  "modified": 1679928224753,
   "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
   "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
-  "healthcareElementId": "bcf8e2bd-c205-488b-82b0-4d628d13910e",
-  "valueDate": 20230327163853,
-  "openingDate": 1679927933353,
+  "healthcareElementId": "ceeda6a0-4cdb-407c-b092-b757d593f3d9",
+  "valueDate": 20230327164344,
+  "openingDate": 1679928224698,
   "description": "The patient is pregnant",
   "identifiers": [],
   "codes": {},
@@ -187,7 +187,7 @@ const healthcareElement = await api.healthcareElementApi.createOrModifyHealthcar
     "encryptionKeys": {
       "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
     },
-    "encryptedSelf": "2Sew0lYQyJcGEEU57YRPZvzbj8j9WTX8GnSoUz+DrRyVu9Is2cY38gHeWsL/KZvhXh6ejE/Fd1Z4wMo1aSFC0g=="
+    "encryptedSelf": "2R5OeezfFxcB4v/mLDZIL0o/7+SGE9Ct3EG1tbRGuNZesmdfyA6h2q30JgctoFFcjAqE+W4YpECF6hkrlpejuw=="
   }
 }
 ```
