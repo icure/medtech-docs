@@ -46,6 +46,10 @@ const createdHcp = await api.healthcareProfessionalApi.createOrModifyHealthcareP
 )
 ```
 
+<!-- output://code-samples/how-to/manage-healthcare-professionals/createdHcp.txt -->
+<details>
+</details>
+
 ## Load a healthcare professional by id
 
 The getHealthcareProfessional method of the healthcareProfessionalApi allows you to load a [Healthcare professional](../references/classes/HealthcareProfessional.md) by id.
@@ -54,6 +58,10 @@ The getHealthcareProfessional method of the healthcareProfessionalApi allows you
 ```typescript
 const loadedHcp = await api.healthcareProfessionalApi.getHealthcareProfessional(createdHcp.id)
 ```
+
+<!-- output://code-samples/how-to/manage-healthcare-professionals/loadedHcp.txt -->
+<details>
+</details>
 
 ## Filter healthcare professionals
 
@@ -70,6 +78,9 @@ const hcps = await api.healthcareProfessionalApi.filterHealthcareProfessionalBy(
 )
 ```
 
+<!-- output://code-samples/how-to/manage-healthcare-professionals/hcps.txt -->
+<details>
+</details>
 
 ## Delete a healthcare professional
 
@@ -79,3 +90,7 @@ The deleteHealthcareProfessional method of the healthcareProfessionalApi allows 
 ```typescript
 const deletedHcp = await api.healthcareProfessionalApi.deleteHealthcareProfessional(createdHcp.id)
 ```
+
+<!-- output://code-samples/how-to/manage-healthcare-professionals/deletedHcp.txt -->
+<details>
+</details>

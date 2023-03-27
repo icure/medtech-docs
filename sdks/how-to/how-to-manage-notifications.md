@@ -55,6 +55,10 @@ const accessNotification = await patientApi.notificationApi.createOrModifyNotifi
 )
 ```
 
+<!-- output://code-samples/how-to/manage-notifications/accessNotification.txt -->
+<details>
+</details>
+
 :::note
 
 The default status of a Notification is `pending`
@@ -82,6 +86,14 @@ const retrievedNotification = await patientApi.notificationApi.getNotification(
 )
 ```
 
+<!-- output://code-samples/how-to/manage-notifications/createdNotification.txt -->
+<details>
+</details>
+
+<!-- output://code-samples/how-to/manage-notifications/retrievedNotification.txt -->
+<details>
+</details>
+
 ### Retrieving Notifications Using Complex Criteria
 
 If you want to retrieve a set of Notifications that satisfy complex criteria, you can use a Filter.  
@@ -96,6 +108,10 @@ const afterDateFilter = await new NotificationFilter()
   .afterDate(startTimestamp)
   .build()
 ```
+
+<!-- output://code-samples/how-to/manage-notifications/afterDateFilter.txt -->
+<details>
+</details>
 
 :::note
 
@@ -114,6 +130,12 @@ const notificationsFirstPage = await api.notificationApi.filterNotifications(
 )
 ```
 
+<!-- output://code-samples/how-to/manage-notifications/notificationsFirstPage.txt -->
+<details>
+</details>
+
+
+
 The `filter` method returns a PaginatedList, which contains up to `limit` Notifications in the `rows` field, as specified by the method parameter (1000 by default).
 If  the PaginatedList has a non-null field `startKeyDocId` there are more notifications which can be retrieved with this filter: you can use this value to retrieve (part of) the remaining notifications.
 
@@ -126,6 +148,11 @@ const notificationsSecondPage = await api.notificationApi.filterNotifications(
 )
 ```
 
+<!-- output://code-samples/how-to/manage-notifications/notificationsSecondPage.txt -->
+<details>
+</details>
+
+
 ### Retrieving all the Pending Notifications
 
 A Healthcare Professional can also retrieve all the Notifications assigned to him that have a `pending` status.
@@ -134,6 +161,11 @@ A Healthcare Professional can also retrieve all the Notifications assigned to hi
 ```typescript
 const pendingNotifications = await api.notificationApi.getPendingNotificationsAfter()
 ```
+
+<!-- output://code-samples/how-to/manage-notifications/pendingNotifications.txt -->
+<details>
+</details>
+
 
 ## Modifying a Notification
 
@@ -155,6 +187,11 @@ const modifiedNotification = await api.notificationApi.createOrModifyNotificatio
   hcp.id,
 )
 ```
+
+<!-- output://code-samples/how-to/manage-notifications/modifiedNotification.txt -->
+<details>
+</details>
+
 
 :::caution
 
@@ -182,6 +219,11 @@ const updatedNotification = await api.notificationApi.updateNotificationStatus(
 )
 ```
 
+<!-- output://code-samples/how-to/manage-notifications/updatedNotification.txt -->
+<details>
+</details>
+
+
 ## Deleting a Notification
 
 Finally, a Data Owner that has access to a Notification can decide to delete it.
@@ -197,3 +239,8 @@ const notificationToDelete = await api.notificationApi.createOrModifyNotificatio
 
 const deletedNotificationId = await api.notificationApi.deleteNotification(notificationToDelete.id)
 ```
+
+<!-- output://code-samples/how-to/manage-notifications/deletedNotificationId.txt -->
+<details>
+</details>
+
