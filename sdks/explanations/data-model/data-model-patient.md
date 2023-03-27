@@ -50,6 +50,90 @@ const dataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
   }),
 )
 ```
+<!-- output://code-samples/explanation/patient-creates-data-sample/healthcareElement.txt -->
+<details>
+<summary>healthcareElement</summary>
+
+```json
+{
+  "id": "632e4772-e3de-4083-9899-6544ac9c0f5b",
+  "rev": "1-66608e8153ee886c75b0eaed399d3de4",
+  "created": 1679928236084,
+  "modified": 1679928236084,
+  "author": "68a4f7d3-aa5d-43ff-95a1-ba14675397ca",
+  "responsible": "3238dd4f-be09-4375-bb5b-0bf9d737ac94",
+  "healthcareElementId": "632e4772-e3de-4083-9899-6544ac9c0f5b",
+  "valueDate": 20230327164356,
+  "openingDate": 20230327164356,
+  "description": "My period started",
+  "identifiers": [],
+  "codes": {},
+  "labels": {},
+  "systemMetaData": {
+    "secretForeignKeys": [
+      "ce1568d1-d1d5-4c0a-b05b-18efed77163d"
+    ],
+    "cryptedForeignKeys": {
+      "3238dd4f-be09-4375-bb5b-0bf9d737ac94": {}
+    },
+    "delegations": {
+      "3238dd4f-be09-4375-bb5b-0bf9d737ac94": {}
+    },
+    "encryptionKeys": {
+      "3238dd4f-be09-4375-bb5b-0bf9d737ac94": {}
+    },
+    "encryptedSelf": "IQbeMoHGMsSmqRvW8rQvwhyDlPy3YVSsohyG8wjtBOYkKw9TCuHhaqpcb8wYQmbr"
+  }
+}
+```
+</details>
+
+<!-- output://code-samples/explanation/patient-creates-data-sample/dataSample.txt -->
+<details>
+<summary>dataSample</summary>
+
+```json
+{
+  "id": "76c4d5fa-f78d-4178-b595-27f87e9d2f4c",
+  "qualifiedLinks": {},
+  "batchId": "18f67338-e3dc-43cd-8c27-007f31eaa139",
+  "index": 0,
+  "valueDate": 20230327164356,
+  "openingDate": 20230327164356,
+  "created": 1679928236208,
+  "modified": 1679928236208,
+  "author": "68a4f7d3-aa5d-43ff-95a1-ba14675397ca",
+  "responsible": "3238dd4f-be09-4375-bb5b-0bf9d737ac94",
+  "identifiers": [],
+  "healthcareElementIds": {},
+  "canvasesIds": {},
+  "content": {
+    "en": {
+      "stringValue": "I have a headache",
+      "compoundValue": [],
+      "ratio": [],
+      "range": []
+    }
+  },
+  "codes": {},
+  "labels": {},
+  "systemMetaData": {
+    "secretForeignKeys": [
+      "ce1568d1-d1d5-4c0a-b05b-18efed77163d"
+    ],
+    "cryptedForeignKeys": {
+      "3238dd4f-be09-4375-bb5b-0bf9d737ac94": {}
+    },
+    "delegations": {
+      "3238dd4f-be09-4375-bb5b-0bf9d737ac94": {}
+    },
+    "encryptionKeys": {
+      "3238dd4f-be09-4375-bb5b-0bf9d737ac94": {}
+    }
+  }
+}
+```
+</details>
 
 ### A Patient Asking a Doctor to Access Their Own Data
 
@@ -58,7 +142,7 @@ Notification to ask the Doctor to access the outcome of the visit.
 
 <!-- file://code-samples/explanation/doctor-shares-data-with-patient/index.mts snippet:patient sends notification-->
 ```typescript
-await patientApi.notificationApi.createOrModifyNotification(
+const notification = await patientApi.notificationApi.createOrModifyNotification(
   new Notification({
     id: uuid(),
     status: 'pending',
@@ -69,3 +153,34 @@ await patientApi.notificationApi.createOrModifyNotification(
   user.healthcarePartyId,
 )
 ```
+<!-- output://code-samples/explanation/doctor-shares-data-with-patient/notification.txt -->
+<details>
+<summary>notification</summary>
+
+```json
+{
+  "id": "33a27dd4-6b82-48b6-bb4d-1bbfd910daa0",
+  "rev": "1-95e6bc0938aa8cf9c792e400f9f00518",
+  "created": 1679928233816,
+  "modified": 1679928233816,
+  "author": "68a4f7d3-aa5d-43ff-95a1-ba14675397ca",
+  "responsible": "3238dd4f-be09-4375-bb5b-0bf9d737ac94",
+  "status": "pending",
+  "identifiers": [],
+  "properties": [],
+  "type": "OTHER",
+  "systemMetaData": {
+    "secretForeignKeys": [],
+    "cryptedForeignKeys": {},
+    "delegations": {
+      "3238dd4f-be09-4375-bb5b-0bf9d737ac94": {},
+      "d7d5efb0-010e-4f95-9d6d-6e3b9fe4fcfd": {}
+    },
+    "encryptionKeys": {
+      "3238dd4f-be09-4375-bb5b-0bf9d737ac94": {},
+      "d7d5efb0-010e-4f95-9d6d-6e3b9fe4fcfd": {}
+    }
+  }
+}
+```
+</details>

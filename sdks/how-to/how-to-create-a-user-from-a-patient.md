@@ -136,25 +136,29 @@ The patient can also create and share data sample and health elements as normal:
 
 <!-- file://code-samples/how-to/create-user-for-patient/index.mts snippet:create healthcare element-->
 ```typescript
-const newHEByPatient = await apiAsPatient.healthcareElementApi.createOrModifyHealthcareElement(
-  new HealthcareElement({
-    description: "I don't feel so well",
-    codes: new Set([
-      new CodingReference({
-        id: 'SNOMEDCT|617|20020131',
-        type: 'SNOMEDCT',
-        code: '617',
-        version: '20020131',
-      }),
-    ]),
-    openingDate: new Date('2019-10-12').getTime(),
-  }),
-  modifiedPatientDetails.id,
+const newHealthcareElement =
+  await apiAsPatient.healthcareElementApi.createOrModifyHealthcareElement(
+    new HealthcareElement({
+      description: "I don't feel so well",
+      codes: new Set([
+        new CodingReference({
+          id: 'SNOMEDCT|617|20020131',
+          type: 'SNOMEDCT',
+          code: '617',
+          version: '20020131',
+        }),
+      ]),
+      openingDate: new Date('2019-10-12').getTime(),
+    }),
+    modifiedPatientDetails.id,
+  )
+const sharedHealthcareElement = await apiAsPatient.healthcareElementApi.giveAccessTo(
+  newHealthcareElement,
+  hcp.id,
 )
-await apiAsPatient.healthcareElementApi.giveAccessTo(newHEByPatient, hcp.id)
 // The doctor can now access the healthcare element
 apiAsDoctor.cryptoApi.emptyHcpCache(hcp.id)
-console.log(await apiAsDoctor.healthcareElementApi.getHealthcareElement(newHEByPatient.id!)) // HealthcareElement...
+console.log(await apiAsDoctor.healthcareElementApi.getHealthcareElement(newHealthcareElement.id!)) // HealthcareElement...
 ```
 
 However, if you only share the medical data the doctor will not be able to find when using filters: this is because the
@@ -171,7 +175,7 @@ const filterForHcpWithoutAccessByPatient = await new HealthcareElementFilter()
 const notFoundHEs = await apiAsDoctor.healthcareElementApi.filterHealthcareElement(
   filterForHcpWithoutAccessByPatient,
 )
-console.log(notFoundHEs.rows.find((x) => x.id == newHEByPatient.id)) // undefined
+console.log(notFoundHEs.rows.find((x) => x.id == newHealthcareElement.id)) // undefined
 // The patient shares his secret foreign key with the doctor
 await apiAsPatient.patientApi.giveAccessToPotentiallyEncrypted(modifiedPatientDetails, hcp.id)
 // The doctor can now also find the healthcare element
@@ -182,7 +186,7 @@ const filterForHcpWithAccessByPatient = await new HealthcareElementFilter()
 const foundHEs = await apiAsDoctor.healthcareElementApi.filterHealthcareElement(
   filterForHcpWithAccessByPatient,
 )
-console.log(foundHEs.rows.find((x) => x.id == newHEByPatient.id)) // HealthcareElement...
+console.log(foundHEs.rows.find((x) => x.id == newHealthcareElement.id)) // HealthcareElement...
 ```
 
 :::note

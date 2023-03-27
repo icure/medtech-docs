@@ -85,7 +85,7 @@ To delete a patient, we can use the `deletePatient` method on the `PatientApi` o
 
 <!-- file://code-samples/how-to/patients/index.mts snippet:delete a patient-->
 ```typescript
-const deletedPatient = await api.patientApi.deletePatient(patient.id!)
+const deletedPatientId = await api.patientApi.deletePatient(patient.id!)
 ```
 
 <!-- output://code-samples/how-to/patients/deletedPatientId.txt -->
@@ -121,7 +121,7 @@ In the example above, we created the filter this way:
 
 <!-- file://code-samples/how-to/patients/index.mts snippet:filter builder-->
 ```typescript
-new PatientFilter()
+const patientFilter = new PatientFilter()
   .forDataOwner(loggedUser.healthcarePartyId!)
 
   .dateOfBirthBetween(28000101, 29000101)

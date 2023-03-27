@@ -51,5 +51,4 @@ to the iCure platform.
 ```typescript
 const messageFactory = new ICureRegistrationEmail(hcp, 'test', 'iCure', existingPatient)
 const createdUser = await api.userApi.createAndInviteUser(existingPatient, messageFactory)
-expect(createdUser.patientId).to.eq(existingPatient.id) // skip
 ```
