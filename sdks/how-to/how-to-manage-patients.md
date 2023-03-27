@@ -116,13 +116,15 @@ To update a patient, we can use the `createOrModifyPatient` method on the `Patie
 
 <!-- file://code-samples/how-to/patients/index.mts snippet:update a patient-->
 ```typescript
-const updatedPatient = await api.patientApi.createOrModifyPatient({
-  ...createdPatient,
-  // highlight-start
-  modified: undefined,
-  note: 'Good news everyone!',
-  // highlight-end
-})
+const updatedPatient = await api.patientApi.createOrModifyPatient(
+  new Patient({
+    ...createdPatient,
+    // highlight-start
+    modified: undefined,
+    note: 'Good news everyone!',
+    // highlight-end
+  }),
+)
 ```
 
 <details>
@@ -341,7 +343,6 @@ The resulting filter object will create a filter that allows us to get all `Pati
 In some circumstances, you might want to get a list of `Patient` ids instead of the `Patient` entities themselves. To do so, you can use the `matchPatients` method on the `PatientApi`. This method takes one parameter: the filter object.
 
 <!-- file://code-samples/how-to/patients/index.mts snippet:get a list of patient ids-->
-
 ```typescript
 const filterForMatch = await new PatientFilter()
   .forDataOwner(loggedUser.healthcarePartyId!)

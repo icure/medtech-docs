@@ -12,7 +12,7 @@ const inject = async (path: string) => {
     let dst = ''
     let currentCodeSample = false
     let currentOutput = false
-    text.split(/\n/).reduce(async (p,line) => {
+    await text.split(/\n/).reduce(async (p,line) => {
         await p
         const [_, injector, snippet] = [...(line.match('<\!-- *file://(.+?) *snippet:(.+?)-->') ?? [])]
         const [__, path, title] = [...(line.match('<\!-- *output://(.+/(.+)\.txt) *-->') ?? [])]
@@ -55,13 +55,13 @@ const inject = async (path: string) => {
                 dst += `    <summary>${title}</summary>\n`
                 dst += '    \n'
                 if (output.startsWith("{")) {
-                    dst += '    ```json\n'
-                    dst += output
-                    dst += '    ```\n'
+                    dst += '```json\n'
+                    dst += output + '\n'
+                    dst += '```\n'
                 } else {
-                    dst += '    ```text\n'
-                    dst += output
-                    dst += '    ```\n'
+                    dst += '```text\n'
+                    dst += output + '\n'
+                    dst += '```\n'
                 }
                 dst += '</details>\n'
                 currentOutput = true
