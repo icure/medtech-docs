@@ -1,5 +1,5 @@
 import 'isomorphic-fetch'
-import { initLocalStorage, initMedTechApi } from '../../utils/index.mjs'
+import { initLocalStorage, initMedTechApi, output } from '../../utils/index.mjs'
 import { Patient, AnonymousMedTechApiBuilder, MedTechApiBuilder } from '@icure/medical-device-sdk'
 import { webcrypto } from 'crypto'
 import * as process from 'process'
@@ -45,6 +45,7 @@ const masterHcpApi = await initMedTechApi()
 const masterUser = await masterHcpApi.userApi.getLoggedUser()
 const masterHcpId = masterHcpApi.dataOwnerApi.getDataOwnerIdOf(masterUser)
 //tech-doc: STOP HERE
+output({ masterUser, masterHcpId })
 
 //tech-doc: Instantiate AnonymousMedTech API
 const iCureUrl = process.env.ICURE_URL
@@ -74,6 +75,7 @@ const authProcess = await anonymousApi.authenticationApi.startAuthentication(
   masterHcpId,
 )
 //tech-doc: STOP HERE
+output({ authProcess })
 
 const validationCode = (await getLastSMS(userPhoneNumber)).message!
 console.log('SMS Validation code for number', userPhoneNumber, ' is ', validationCode)
@@ -105,8 +107,7 @@ const createdPatient = await authenticatedApi.patientApi.createOrModifyPatient(
   }),
 )
 //tech-doc: STOP HERE
-
-console.log('Created patient: ', JSON.stringify(createdPatient))
+output({ createdPatient })
 
 //tech-doc: Instantiate back a MedTechApi
 // getBackCredentials does not exist: Use your own way of storing the following data securely
@@ -126,11 +127,8 @@ const foundPatientAfterInstantiatingApi = await reInstantiatedApi.patientApi.get
   createdPatient.id,
 )
 //tech-doc: STOP HERE
+output({ foundPatientAfterInstantiatingApi })
 
-console.log(
-  'Found patient after re-instantiating api',
-  JSON.stringify(foundPatientAfterInstantiatingApi),
-)
 
 //tech-doc: Login by SMS
 const anonymousApiForLogin = await new AnonymousMedTechApiBuilder()
@@ -162,5 +160,4 @@ const loggedUserApi = loginResult.medTechApi
 
 const foundPatientAfterLogin = await loggedUserApi.patientApi.getPatient(createdPatient.id)
 //tech-doc: STOP HERE
-
-console.log('Found Patient after login: ', JSON.stringify(foundPatientAfterLogin))
+output({ foundPatientAfterLogin })

@@ -36,7 +36,7 @@ const healthcareElement = await api.healthcareElementApi.createOrModifyHealthcar
   patient.id,
 )
 
-await api.dataSampleApi.createOrModifyDataSampleFor(
+const dataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
   patient.id,
   new DataSample({
     content: {

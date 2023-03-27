@@ -15,8 +15,8 @@ the [User Authentication - Init AnonymousMedTechApi](index.md#Init AnonymousMedT
 const iCureUrl = process.env.ICURE_URL
 const msgGtwUrl = process.env.ICURE_MSG_GTW_URL
 const specId = process.env.SPEC_ID
-const authProcessByEmailId = process.env.AUTH_BY_EMAIL_PROCESS_ID
-const authProcessBySmsId = process.env.AUTH_BY_SMS_PROCESS_ID
+const authProcessByEmailId = process.env.AUTH_BY_EMAIL_HCP_PROCESS_ID
+const authProcessBySmsId = process.env.AUTH_BY_SMS_HCP_PROCESS_ID
 const recaptcha = process.env.RECAPTCHA
 
 const anonymousApi = await new AnonymousMedTechApiBuilder()

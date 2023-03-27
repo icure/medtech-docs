@@ -6,7 +6,7 @@ import {
   initLocalStorage,
   initMedTechApi,
   initMedTechApi2,
-  initPatientMedTechApi,
+  initPatientMedTechApi, output,
 } from '../../utils/index.mjs'
 import { expect, use as chaiUse } from 'chai'
 import { CodingReference, Content, DataSample, Patient } from '@icure/medical-device-sdk'
@@ -26,18 +26,21 @@ expect(hcp2User.email).to.equal(userName2)
 expect(pUser.email).to.equal(patientUserName)
 
 //tech-doc: auto share
-await hcp1Api.userApi.shareAllFutureDataWith(
+const user = await hcp1Api.userApi.shareAllFutureDataWith(
   [hcp1Api.dataOwnerApi.getDataOwnerIdOf(hcp2User)],
   'medicalInformation',
 )
 //tech-doc: end
+output({ user })
 //tech-doc: sample creation
 const note = 'Winter is coming'
 const patient = await hcp1Api.patientApi.createOrModifyPatient(
   new Patient({ firstName: 'John', lastName: 'Snow', note }),
 )
-expect((await hcp1Api.patientApi.getPatient(patient.id)).note).to.equal(note) //skip
-expect((await hcp2Api.patientApi.getPatient(patient.id)).note).to.equal(note) //skip
+let patient1 = await hcp1Api.patientApi.getPatient(patient.id);
+expect(patient1.note).to.equal(note) //skip
+let patient2 = await hcp2Api.patientApi.getPatient(patient.id);
+expect(patient2.note).to.equal(note) //skip
 // hcp2 can already access patient
 const contentString = 'Hello world'
 const dataSample = await hcp1Api.dataSampleApi.createOrModifyDataSampleFor(
@@ -47,16 +50,19 @@ const dataSample = await hcp1Api.dataSampleApi.createOrModifyDataSampleFor(
     content: { en: new Content({ stringValue: contentString }) },
   }),
 )
+let dataSample1 = await hcp1Api.dataSampleApi.getDataSample(dataSample.id);
 expect(
   //skip
-  (await hcp1Api.dataSampleApi.getDataSample(dataSample.id)).content['en'].stringValue, //skip
+  dataSample1.content['en'].stringValue, //skip
 ).to.equal(contentString) //skip
+let dataSample2 = await hcp2Api.dataSampleApi.getDataSample(dataSample.id);
 expect(
   //skip
-  (await hcp2Api.dataSampleApi.getDataSample(dataSample.id)).content['en'].stringValue, //skip
+  dataSample2.content['en'].stringValue, //skip
 ).to.equal(contentString) //skip
 // hcp2 can already access dataSample
 //tech-doc: end
+output({ patient, dataSample, patient1, patient2, dataSample1, dataSample2 })
 
 await hcp1Api.userApi.stopSharingDataWith(
   [hcp1Api.dataOwnerApi.getDataOwnerIdOf(hcp2User)],
@@ -89,6 +95,7 @@ const dataSampleNotOnModify = await hcp1Api.dataSampleApi.createOrModifyDataSamp
   }),
 )
 //tech-doc: end
+output({ dataSampleNotOnModify })
 expect(
   (await hcp1Api.dataSampleApi.getDataSample(dataSampleNotOnModify.id)).content['en'].stringValue,
 ).to.equal(contentNotOnModify)
@@ -104,17 +111,20 @@ const dataSampleNotSharedBy2 = await hcp2Api.dataSampleApi.createOrModifyDataSam
   }),
 )
 //tech-doc: end
+output({ dataSampleNotSharedBy2 })
+
 expect(hcp1Api.dataSampleApi.getDataSample(dataSampleNotSharedBy2.id)).to.be.rejected
 expect(
   (await hcp2Api.dataSampleApi.getDataSample(dataSampleNotSharedBy2.id)).content['en'].stringValue,
 ).to.equal(contentNotSharedBy2)
 
 //tech-doc: stop auto share
-await hcp1Api.userApi.stopSharingDataWith(
+const userWithoutShare = await hcp1Api.userApi.stopSharingDataWith(
   [hcp1Api.dataOwnerApi.getDataOwnerIdOf(hcp2User)],
   'medicalInformation',
 )
 //tech-doc: end
+output({ userWithoutShare })
 
 //tech-doc: sample no share
 const contentNotSharedAnymore = 'Hcp 1 stopped sharing data automatically with 2'
@@ -126,6 +136,8 @@ const dataSampleNotSharedAnymore = await hcp1Api.dataSampleApi.createOrModifyDat
   }),
 )
 //tech-doc: end
+output({ dataSampleNotSharedAnymore })
+
 expect(
   (await hcp1Api.dataSampleApi.getDataSample(dataSampleNotSharedAnymore.id)).content['en']
     .stringValue,
@@ -152,6 +164,8 @@ const dataSampleNoChaining = await hcp1Api.dataSampleApi.createOrModifyDataSampl
   }),
 )
 //tech-doc: end
+output({ dataSampleNoChaining })
+
 expect(
   (await hcp1Api.dataSampleApi.getDataSample(dataSampleNoChaining.id)).content['en'].stringValue,
 ).to.equal(contentNoChaining)

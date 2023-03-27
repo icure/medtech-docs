@@ -1,6 +1,6 @@
 import 'isomorphic-fetch'
 import { CodingReference, HealthcareElement } from '@icure/medical-device-sdk'
-import { initLocalStorage, initMedTechApi, patientId } from '../../utils/index.mjs'
+import { initLocalStorage, initMedTechApi, output, patientId } from '../../utils/index.mjs'
 import { expect } from 'chai'
 
 initLocalStorage()
@@ -27,5 +27,6 @@ const healthcareElement = await api.healthcareElementApi.createOrModifyHealthcar
 )
 
 //tech-doc: STOP HERE
+output({ healthcareElement, patient })
 expect(!!healthcareElement).to.eq(true) //skip
 expect(healthcareElement.description).to.eq('The patient is pregnant') //skip
