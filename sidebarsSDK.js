@@ -127,6 +127,7 @@ const sidebarsSDK = {
          */
       ],
     },
+    'troubleshooting',
     'glossary'
   ],
 };

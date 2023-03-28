@@ -23,7 +23,7 @@ but you will also have to make some changes in your code.
 ## Create your Cloud iCure account
 
 In order to use the Cloud iCure version, you first need to create an account on the 
- [Cockpit platform](https://cockpit.icure.cloud). For this, check the tutorial [How to register on Cockpit]
+ [Cockpit platform](https://cockpit.icure.cloud). For this, check the tutorial [How to register on Cockpit](/cockpit/how-to/how-to-register)
 
 ## Code Changes
 

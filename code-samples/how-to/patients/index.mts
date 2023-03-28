@@ -1,20 +1,14 @@
 import { Patient, PatientFilter, PersonName } from '@icure/medical-device-sdk'
-import { hex2ua } from '@icure/api'
 import 'isomorphic-fetch'
 import * as console from 'console'
 
-import { initLocalStorage, initMedTechApi, output, privKey } from '../../utils/index.mjs'
+import { initLocalStorage, initMedTechApi, initMedTechApi2, output } from '../../utils/index.mjs'
 import { expect } from 'chai'
 
 initLocalStorage()
 
 const api = await initMedTechApi()
-
 const loggedUser = await api.userApi.getLoggedUser()
-await api!.cryptoApi.loadKeyPairsAsTextInBrowserLocalStorage(
-  loggedUser.healthcarePartyId!,
-  hex2ua(privKey),
-)
 
 //tech-doc: create a patient
 const createdPatient = await api.patientApi.createOrModifyPatient(
