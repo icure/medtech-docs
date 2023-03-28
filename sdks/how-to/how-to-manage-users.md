@@ -34,8 +34,8 @@ const createdUser = await api.userApi.createOrModifyUser(userToCreate)
 
 ```json
 {
-  "login": "john+f8ibmiwk",
-  "email": "john+f8ibmiwk@hospital.care",
+  "login": "john+1uk3u23rj",
+  "email": "john+1uk3u23rj@hospital.care",
   "passwordHash": "correct horse battery staple",
   "properties": {},
   "roles": {},
@@ -120,13 +120,13 @@ const createdPatientUser = await api.userApi.createAndInviteUser(
 
 ```json
 {
-  "id": "c08ce316-1897-4325-9c56-486e4f677adf",
+  "id": "065599b9-8f3f-4077-84d3-b541ca7018e9",
   "languages": [],
   "active": true,
   "parameters": {},
-  "rev": "1-5ac2ccdc0c1f97b515f95bb1e2ec8cd8",
-  "created": 1679929568488,
-  "modified": 1679929568488,
+  "rev": "1-aa8465011948f573a1ccfe07d82ae0dc",
+  "created": 1679991716238,
+  "modified": 1679991716238,
   "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
   "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
   "firstName": "Argan",
@@ -153,7 +153,7 @@ const createdPatientUser = await api.userApi.createAndInviteUser(
       "addressType": "home",
       "telecoms": [
         {
-          "telecomNumber": "argan+f8ibmiwk@moliere.fr",
+          "telecomNumber": "argan+1uk3u23rj@moliere.fr",
           "telecomType": "email"
         }
       ]
@@ -173,7 +173,7 @@ const createdPatientUser = await api.userApi.createAndInviteUser(
     "privateKeyShamirPartitions": {},
     "aesExchangeKeys": {},
     "transferKeys": {},
-    "encryptedSelf": "SRaN22j/V1z+I1wBJ5GqinNUYzasj4zdz37SHl/mMYM=",
+    "encryptedSelf": "RTdXEa7o+d6YOUwhgkHOyolKohrxsyCZZNwTIZnTNhA=",
     "secretForeignKeys": [],
     "cryptedForeignKeys": {},
     "delegations": {
@@ -193,14 +193,14 @@ const createdPatientUser = await api.userApi.createAndInviteUser(
 
 ```json
 {
-  "id": "e5fda4a9-f051-4713-9ba7-c51bf8425673",
-  "rev": "1-aaa849b056e0bf893b727125ee971ee3",
-  "created": 1679929568996,
-  "name": "argan+f8ibmiwk@moliere.fr",
-  "login": "argan+f8ibmiwk@moliere.fr",
+  "id": "df470582-d367-460e-b9e7-ea1a125202a5",
+  "rev": "1-4b963686842a52a1a1d959a2e90ff635",
+  "created": 1679991716550,
+  "name": "argan+1uk3u23rj@moliere.fr",
+  "login": "argan+1uk3u23rj@moliere.fr",
   "groupId": "ic-e2etest-medtech-docs",
-  "patientId": "c08ce316-1897-4325-9c56-486e4f677adf",
-  "email": "argan+f8ibmiwk@moliere.fr",
+  "patientId": "065599b9-8f3f-4077-84d3-b541ca7018e9",
+  "email": "argan+1uk3u23rj@moliere.fr",
   "properties": {},
   "roles": {},
   "sharingDataWith": {},
@@ -240,13 +240,13 @@ const loadedUser = await api.userApi.getUser(createdUser.id)
 
 ```json
 {
-  "id": "ac920580-b0fb-4091-9410-ec854be72871",
-  "rev": "1-ed13b89f9ce9940eaa03680d9f727c87",
-  "created": 1679929567619,
-  "login": "john+f8ibmiwk",
+  "id": "5a3ae547-0e38-496d-9a4a-a162f5b6e27b",
+  "rev": "1-ce01ff53943f7ab2771c24ca45db5ac0",
+  "created": 1679991715041,
+  "login": "john+1uk3u23rj",
   "passwordHash": "*",
   "groupId": "ic-e2etest-medtech-docs",
-  "email": "john+f8ibmiwk@hospital.care",
+  "email": "john+1uk3u23rj@hospital.care",
   "properties": {},
   "roles": {},
   "sharingDataWith": {},
@@ -270,13 +270,13 @@ const loadedUserByEmail = await api.userApi.getUserByEmail(createdUser.email)
 
 ```json
 {
-  "id": "ac920580-b0fb-4091-9410-ec854be72871",
-  "rev": "1-ed13b89f9ce9940eaa03680d9f727c87",
-  "created": 1679929567619,
-  "login": "john+f8ibmiwk",
+  "id": "5a3ae547-0e38-496d-9a4a-a162f5b6e27b",
+  "rev": "1-ce01ff53943f7ab2771c24ca45db5ac0",
+  "created": 1679991715041,
+  "login": "john+1uk3u23rj",
   "passwordHash": "*",
   "groupId": "ic-e2etest-medtech-docs",
-  "email": "john+f8ibmiwk@hospital.care",
+  "email": "john+1uk3u23rj@hospital.care",
   "properties": {},
   "roles": {},
   "sharingDataWith": {},
@@ -307,17 +307,17 @@ const users = await api.userApi.filterUsers(
 ```json
 {
   "pageSize": 1000,
-  "totalSize": 353,
+  "totalSize": 371,
   "rows": [
     {
-      "id": "e5fda4a9-f051-4713-9ba7-c51bf8425673",
-      "rev": "2-80f37883bcd4a59581f23af5ea8a954d",
-      "created": 1679929568996,
-      "name": "argan+f8ibmiwk@moliere.fr",
-      "login": "argan+f8ibmiwk@moliere.fr",
+      "id": "df470582-d367-460e-b9e7-ea1a125202a5",
+      "rev": "2-70bad760dcf97c961af1a4b1218ecb36",
+      "created": 1679991716550,
+      "name": "argan+1uk3u23rj@moliere.fr",
+      "login": "argan+1uk3u23rj@moliere.fr",
       "groupId": "ic-e2etest-medtech-docs",
-      "patientId": "c08ce316-1897-4325-9c56-486e4f677adf",
-      "email": "argan+f8ibmiwk@moliere.fr",
+      "patientId": "065599b9-8f3f-4077-84d3-b541ca7018e9",
+      "email": "argan+1uk3u23rj@moliere.fr",
       "properties": {},
       "roles": {},
       "sharingDataWith": {},
@@ -347,13 +347,13 @@ const modifiedUser = await api.userApi.createOrModifyUser(
 
 ```json
 {
-  "id": "ac920580-b0fb-4091-9410-ec854be72871",
-  "rev": "2-c12e947a08b841d207c99d5571f7e833",
-  "created": 1679929567619,
-  "login": "john+f8ibmiwk",
+  "id": "5a3ae547-0e38-496d-9a4a-a162f5b6e27b",
+  "rev": "2-f63b544996ad801b788ff796ca0ac2a5",
+  "created": 1679991715041,
+  "login": "john+1uk3u23rj",
   "passwordHash": "*",
   "groupId": "ic-e2etest-medtech-docs",
-  "email": "john+f8ibmiwk@hospital.care",
+  "email": "john+1uk3u23rj@hospital.care",
   "properties": {},
   "roles": {},
   "sharingDataWith": {},
@@ -376,7 +376,7 @@ const deletedUserId = await api.userApi.deleteUser(createdUser.id)
 <summary>deletedUserId</summary>
 
 ```text
-3-4312cc7f8b63af9b6ae41fe30a96646d
+3-fd3c5f051add5273c689576e19ff401b
 ```
 </details>
 

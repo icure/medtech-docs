@@ -1,11 +1,29 @@
 import 'isomorphic-fetch'
-import { initLocalStorage, initMedTechApi, output } from '../../utils/index.mjs'
+import {
+  host,
+  initLocalStorage,
+  initMedTechApi,
+  msgGtwUrl,
+  output,
+  signUpUserUsingEmail,
+  specId,
+} from '../../utils/index.mjs'
 import { Patient, PatientFilter } from '@icure/medical-device-sdk'
 import { expect } from 'chai'
+import process from 'process'
 
 initLocalStorage()
 
-const api = await initMedTechApi(true)
+const masterApi = await initMedTechApi(true)
+const masterUser = await masterApi.userApi.getLoggedUser()
+
+const { api } = await signUpUserUsingEmail(
+  host,
+  msgGtwUrl,
+  specId,
+  process.env.AUTH_BY_EMAIL_HCP_PROCESS_ID,
+  masterUser.healthcarePartyId!,
+)
 const user = await api.userApi.getLoggedUser()
 const healthcarePartyId = user.healthcarePartyId!
 
