@@ -56,6 +56,7 @@ const sidebarsSDK = {
                                 'tutorial/petra/chapter-03/datasample-api',
                                 'tutorial/petra/chapter-03/calendar',
                                 'tutorial/petra/chapter-03/datasample-modal',
+                                'tutorial/petra/chapter-03/history',
                             ],
                         },
                     ],
