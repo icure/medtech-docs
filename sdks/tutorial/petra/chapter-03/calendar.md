@@ -10,18 +10,13 @@ First step is to uncomment the TSX code in the `AdvancedCalendar` component.
 Make sure however to comment this line, since we will not use it for now.
 
 ```typescript title="/components/AdvancedCalendar.tsx"
-    <DayOfTheMonth
+<DayOfTheMonth
     dayData = {date}
-state = {state}
-flowLevel = {getTodayFlowLevelData(new Date(date.dateString)
-)?.
-content.en.measureValue.value
-}
-hasComplaint = {!!
-getTodayComplaintDatas(new Date(date.dateString))?.length || !!getTodayNotesData(new Date(date.dateString))?.content.en.stringValue
-}
-// highlight-next-line
-// isPredictedPeriod={isTodayPredictedPeriodDay(new Date(date.dateString))}
+    state = {state}
+    flowLevel = {getTodayFlowLevelData(new Date(date.dateString))?.content.en.measureValue.value}
+    hasComplaint = {!!getTodayComplaintDatas(new Date(date.dateString))?.length || !!getTodayNotesData(new Date(date.dateString))?.content.en.stringValue}
+    // highlight-next-line
+    // isPredictedPeriod={isTodayPredictedPeriodDay(new Date(date.dateString))}
 />
 ```
 
@@ -36,40 +31,42 @@ Since we will create different DataSamples for each kind of data, we will fetch 
 We will use the hooks we created in the previous section to fetch the DataSamples.
 
 ```typescript title="/components/AdvancedCalendar/index.tsx"
-  const {
-    data: flowLevelDataSampleBetween2Dates,
-    isLoading: flowLevelDataSampleBetween2DatesIsLoading
-} = useGetDataSampleBetween2DatesQuery({
-    tagType: 'LOINC',
-    tagCode: '49033-4',
+  const {data: flowLevelComplaintsAndNotesDataSamplesBetween2Dates, isLoading: flowLevelComplaintsAndNotesDataSamplesBetween2DatesIsLoading} = useGetDataSampleBetween2DatesQuery({
+    tagCodes: [
+        {tagType: 'LOINC', tagCode: '49033-4'},
+        {tagType: 'LOINC', tagCode: '75322-8'},
+        {tagType: 'LOINC', tagCode: '34109-9'},
+    ],
     startDate: currentMonthFirstDate,
     endDate: nextMonthFirstDate,
-});
+})
+```
 
-const {
-    data: complaintDataSampleBetween2Dates,
-    isLoading: complaintDataSampleBetween2DatesIsLoading
-} = useGetDataSampleBetween2DatesQuery({
-    tagType: 'LOINC',
-    tagCode: '75322-8',
-    startDate: currentMonthFirstDate,
-    endDate: nextMonthFirstDate,
-});
+Since we have done a single request to fetch all the DataSamples, we will need to filter them to get the DataSamples per category.
 
-const {
-    data: noteDataSampleBetween2Dates,
-    isLoading: noteDataSampleBetween2DatesIsLoading
-} = useGetDataSampleBetween2DatesQuery({
-    tagType: 'LOINC',
-    tagCode: '34109-9',
-    startDate: currentMonthFirstDate,
-    endDate: nextMonthFirstDate,
-});
+```typescript title="/components/AdvancedCalendar/index.tsx"
+const [dataSamples, setDataSamples] = useState<{ flowLevel: DataSample[], complaints: DataSample[], notes: DataSample[] }>(undefined)
 
+useEffect(() => {
+    if (!!flowLevelComplaintsAndNotesDataSamplesBetween2Dates) {
+        const dataSamplesToProcess = flowLevelComplaintsAndNotesDataSamplesBetween2Dates!.rows
+
+        const flowLevelDataSample = dataSamplesToProcess
+            .filter(ds => [...ds.labels].some(it => it.type === 'LOINC' && it.code === '49033-4'));
+
+        const complainsDataSample = dataSamplesToProcess
+            .filter(ds => [...ds.labels].some(it => it.type === 'LOINC' && it.code === '75322-8'));
+
+        const notesDataSample = dataSamplesToProcess
+            .filter(ds => [...ds.labels].some(it => it.type === 'LOINC' && it.code === '34109-9'));
+
+        setDataSamples({ flowLevel: flowLevelDataSample, complaints: complainsDataSample, notes: notesDataSample })
+    }
+}, [flowLevelComplaintsAndNotesDataSamplesBetween2Dates])
 ```
 
 We will go much in the details of the tagType and tagCode in the next section. But as you can see, we are fetching the
-DataSamples for the FlowLevel, the Complaints and the Notes and we are not using *magic* values for that. We use proper
+DataSamples for the FlowLevel, the Complaints and the Notes. We are not using *magic* values for that. We use proper
 LOINC Codes to tag the DataSamples. Which allows us to fetch them easily.
 
 ## `getTodayFlowLevelData`
@@ -79,8 +76,8 @@ date.
 
 ```typescript title="/components/AdvancedCalendar/index.tsx"
 const getTodayFlowLevelData = (currentDay: Date) => {
-    if (!flowLevelDataSampleBetween2DatesIsLoading) {
-        return flowLevelDataSampleBetween2Dates?.rows.find(item => item.valueDate === getDayInNumberFormat(currentDay));
+    if (!!dataSamples) {
+        return dataSamples.flowLevel.find(item => item.valueDate === getDayInNumberFormat(currentDay));
     }
 };
 ```
@@ -92,8 +89,8 @@ given date.
 
 ```typescript title="/components/AdvancedCalendar/index.tsx"
 const getTodayComplaintDatas = (currentDay: Date) => {
-    if (!complaintDataSampleBetween2DatesIsLoading) {
-        return complaintDataSampleBetween2Dates?.rows.filter(item => item.valueDate === getDayInNumberFormat(currentDay));
+    if (!!dataSamples) {
+        return dataSamples.complaints.filter(item => item.valueDate === getDayInNumberFormat(currentDay));
     }
 };
 ```
@@ -104,8 +101,8 @@ We will now create the `getTodayNotesData` function. This function will return t
 
 ```typescript title="/components/AdvancedCalendar/index.tsx"
 const getTodayNotesData = (currentDay: Date) => {
-    if (!noteDataSampleBetween2DatesIsLoading) {
-        return noteDataSampleBetween2Dates?.rows.find(item => item.valueDate === getDayInNumberFormat(currentDay));
+    if (!!dataSamples) {
+        return dataSamples.notes.find(item => item.valueDate === getDayInNumberFormat(currentDay));
     }
 };
 ```

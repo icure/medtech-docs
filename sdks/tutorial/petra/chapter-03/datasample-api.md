@@ -125,29 +125,40 @@ We will also create a `useDeleteDataSamplesMutation` hook that will be used to c
 
 ## Get DataSamples between dates
 
-We will now create a `getDataSampleBetween2Dates` endpoint. This endpoint will take a `tagType`, a `tagCode`, a `startDate` and an `endDate` and return a paginated list of `DataSample` objects that match the given criteria.
+We will now create a `getDataSampleBetween2Dates` endpoint. This endpoint will take as parameters:
+* An array of `tagCodes` which each item may contain a `tagType`, a `tagCode`, `codeType` or `codeCode`
+* A `startDate` 
+* An `endDate`
+
+And return a paginated list of `DataSample` objects that match the given criteria.
 
 ```typescript title="/services/dataSampleApi.ts"
 getDataSampleBetween2Dates: builder.query<
-  PaginatedListDataSample,
-  {tagType: string; tagCode: string; startDate: number; endDate: number; nextDataSampleId?: string; limit?: number}
+    PaginatedListDataSample,
+    {tagCodes:{tagType?: string, tagCode?: string, codeType?: string, codeCode?: string}[], startDate: number, endDate: number, nextDataSampleId?: string, limit?: number}
 >({
-  async queryFn({tagType, tagCode, startDate, endDate, nextDataSampleId = undefined, limit = 1000}, {getState}) {
-    const {dataSampleApi, dataOwnerApi} = await medTechApi(getState);
-    const user = currentUser(getState);
-    return guard([dataSampleApi, dataOwnerApi], async () => {
-      const dataOwner = dataOwnerApi.getDataOwnerIdOf(user);
-      return await dataSampleApi.filterDataSample(
-        await new DataSampleFilter().forDataOwner(dataOwner).byLabelCodeFilter(tagType, tagCode, undefined, undefined, startDate, endDate).build(),
-        nextDataSampleId,
-        limit,
-      );
-    });
-  },
-  providesTags: tagsByIdsPaginated('DataSample', 'all'),
+    async queryFn({tagCodes, startDate, endDate, nextDataSampleId = undefined, limit = 1000}, {getState}) {
+        const {dataSampleApi, dataOwnerApi} = await medTechApi(getState);
+        const user = currentUser(getState);
+        return guard([dataSampleApi, dataOwnerApi], async () => {
+            const dataOwner = dataOwnerApi.getDataOwnerIdOf(user);
+            const tagCodesFilters = await Promise.all(tagCodes.map(async ({tagType, tagCode, codeType, codeCode}) => new DataSampleFilter().forDataOwner(dataOwner).byLabelCodeDateFilter(tagType, tagCode, codeType, codeCode, startDate, endDate)))
+            return await dataSampleApi.filterDataSample(
+                await new DataSampleFilter().forDataOwner(dataOwner).union(tagCodesFilters).build(),
+                nextDataSampleId,
+                limit,
+            );
+        });
+    },
+    providesTags: tagsByIdsPaginated('DataSample', 'all'),
 }),
 ```
 
+:::tip
+
+In this endpoint we use a Union filter. This filter will return all the `DataSample` objects that match at least one of the given filters. Which allows us to get all the `DataSample` needed in only one API call.
+
+:::
 We will also create a `useGetDataSampleBetween2DatesQuery` hook that will be used to call the `getDataSampleBetween2Dates` endpoint.
 
 ## Get DataSamples by label code and label type
