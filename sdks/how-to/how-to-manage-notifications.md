@@ -61,10 +61,10 @@ const accessNotification = await patientApi.notificationApi.createOrModifyNotifi
 
 ```json
 {
-  "id": "f9a52dbf-a19e-4589-bcd2-599a7256c22f",
-  "rev": "1-68ff65bb93d7e9c9e31e9c63230491ef",
-  "created": 1679929565617,
-  "modified": 1679929565617,
+  "id": "f9eddd73-03eb-44ea-8487-97cef757ac98",
+  "rev": "1-35ea0e607f642e17f7ca33814bd34d76",
+  "created": 1679991712162,
+  "modified": 1679991712162,
   "author": "68a4f7d3-aa5d-43ff-95a1-ba14675397ca",
   "responsible": "3238dd4f-be09-4375-bb5b-0bf9d737ac94",
   "status": "pending",
@@ -120,10 +120,10 @@ const retrievedNotification = await patientApi.notificationApi.getNotification(
 
 ```json
 {
-  "id": "0f3b9f89-3d6e-49f0-8ce3-af7abff75102",
-  "rev": "1-706d91cf61ed2e24fd39e56caa9121b6",
-  "created": 1679929565678,
-  "modified": 1679929565678,
+  "id": "519a4da0-e7b4-4421-be63-6a99904078a2",
+  "rev": "1-59504d554510f06b3dac0b21a5387a37",
+  "created": 1679991712230,
+  "modified": 1679991712230,
   "author": "68a4f7d3-aa5d-43ff-95a1-ba14675397ca",
   "responsible": "3238dd4f-be09-4375-bb5b-0bf9d737ac94",
   "status": "pending",
@@ -152,10 +152,10 @@ const retrievedNotification = await patientApi.notificationApi.getNotification(
 
 ```json
 {
-  "id": "0f3b9f89-3d6e-49f0-8ce3-af7abff75102",
-  "rev": "1-706d91cf61ed2e24fd39e56caa9121b6",
-  "created": 1679929565678,
-  "modified": 1679929565678,
+  "id": "519a4da0-e7b4-4421-be63-6a99904078a2",
+  "rev": "1-59504d554510f06b3dac0b21a5387a37",
+  "created": 1679991712230,
+  "modified": 1679991712230,
   "author": "68a4f7d3-aa5d-43ff-95a1-ba14675397ca",
   "responsible": "3238dd4f-be09-4375-bb5b-0bf9d737ac94",
   "status": "pending",
@@ -232,6 +232,167 @@ const notificationsFirstPage = await api.notificationApi.filterNotifications(
   "pageSize": 10,
   "totalSize": 0,
   "rows": [
+    {
+      "id": "519a4da0-e7b4-4421-be63-6a99904078a2",
+      "rev": "1-59504d554510f06b3dac0b21a5387a37",
+      "created": 1679991712230,
+      "modified": 1679991712230,
+      "author": "68a4f7d3-aa5d-43ff-95a1-ba14675397ca",
+      "responsible": "3238dd4f-be09-4375-bb5b-0bf9d737ac94",
+      "status": "pending",
+      "identifiers": [],
+      "properties": [],
+      "type": "OTHER",
+      "systemMetaData": {
+        "secretForeignKeys": [],
+        "cryptedForeignKeys": {},
+        "delegations": {
+          "3238dd4f-be09-4375-bb5b-0bf9d737ac94": {},
+          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+        },
+        "encryptionKeys": {
+          "3238dd4f-be09-4375-bb5b-0bf9d737ac94": {},
+          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+        }
+      }
+    },
+    {
+      "id": "f9eddd73-03eb-44ea-8487-97cef757ac98",
+      "rev": "1-35ea0e607f642e17f7ca33814bd34d76",
+      "created": 1679991712162,
+      "modified": 1679991712162,
+      "author": "68a4f7d3-aa5d-43ff-95a1-ba14675397ca",
+      "responsible": "3238dd4f-be09-4375-bb5b-0bf9d737ac94",
+      "status": "pending",
+      "identifiers": [],
+      "properties": [],
+      "type": "KEY_PAIR_UPDATE",
+      "systemMetaData": {
+        "secretForeignKeys": [],
+        "cryptedForeignKeys": {},
+        "delegations": {
+          "3238dd4f-be09-4375-bb5b-0bf9d737ac94": {},
+          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+        },
+        "encryptionKeys": {
+          "3238dd4f-be09-4375-bb5b-0bf9d737ac94": {},
+          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+        }
+      }
+    },
+    {
+      "id": "907ef780-7a6e-488b-a5db-68d9d0472c8c",
+      "rev": "3-6ef0ecf738461ca2eedf7237a446507b",
+      "created": 1679991686085,
+      "modified": 1679991686085,
+      "author": "ac9c1e8c-7062-4d7d-aacb-daa363337c0c",
+      "responsible": "e3807753-8d67-4c71-8d1b-4395f418ba61",
+      "status": "completed",
+      "identifiers": [],
+      "properties": [],
+      "type": "NEW_USER_OWN_DATA_ACCESS",
+      "systemMetaData": {
+        "secretForeignKeys": [],
+        "cryptedForeignKeys": {},
+        "delegations": {
+          "e3807753-8d67-4c71-8d1b-4395f418ba61": {},
+          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+        },
+        "encryptionKeys": {
+          "e3807753-8d67-4c71-8d1b-4395f418ba61": {},
+          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+        }
+      }
+    },
+    {
+      "id": "b4736bbf-5446-4cbe-af23-d160d0fdde5e",
+      "rev": "1-68010e8eeccd11a91e494611b06771da",
+      "created": 1679991673518,
+      "modified": 1679991673518,
+      "author": "892602a1-5198-45f8-a3a5-cb19f0eb789c",
+      "responsible": "d2a81781-edfe-4886-bc99-b9cc336ffc17",
+      "status": "pending",
+      "identifiers": [],
+      "properties": [
+        {
+          "id": "dataOwnerConcernedId",
+          "type": {
+            "type": "STRING"
+          },
+          "typedValue": {
+            "stringValue": "d2a81781-edfe-4886-bc99-b9cc336ffc17",
+            "type": "STRING"
+          }
+        },
+        {
+          "id": "dataOwnerConcernedPubKey",
+          "type": {
+            "type": "STRING"
+          },
+          "typedValue": {
+            "stringValue": "30820122300d06092a864886f70d01010105000382010f003082010a0282010100eaf4133d607b1afe286ac71b7481039c99f24756de62ea2c4340353e3538a125ed391e000e1cc2c02feec4a2f9ee1b963b4eaa9c4527193b8983cc42fac09be857e668e20f051bf1839dd3d3d8f9a51fed07993723371aaadf8c4736059fe248f003c45677f43682af38c3006188048e913aa9e84ddcdaab50fa4b314f8fa6701d9503f09bff67b86fdc7764029beb9279cf6f37cbea748bd018ad2a21ee109878fac512f20fdd360396eebcf0c91d5067ddb2e1a19d26c384804f4014cadd2c551d79e82877f65104febc63391cd3d0f7f9162be4373ec01f7f4b7c43360712ef49ce02a43cfade6fa4d6dfc104f81b56b3bd67b359b5f8cf8b8a9fbe7560fb0203010001",
+            "type": "STRING"
+          }
+        }
+      ],
+      "type": "KEY_PAIR_UPDATE",
+      "systemMetaData": {
+        "secretForeignKeys": [],
+        "cryptedForeignKeys": {},
+        "delegations": {
+          "d2a81781-edfe-4886-bc99-b9cc336ffc17": {},
+          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+        },
+        "encryptionKeys": {
+          "d2a81781-edfe-4886-bc99-b9cc336ffc17": {},
+          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+        }
+      }
+    },
+    {
+      "id": "cdc2b59b-e133-4444-92fc-b884fe01953c",
+      "rev": "2-7ed9cbbc63194bbe8f34c9e181306f34",
+      "created": 1679929566465,
+      "modified": 1679929566465,
+      "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
+      "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
+      "status": "ongoing",
+      "identifiers": [],
+      "properties": [],
+      "type": "KEY_PAIR_UPDATE",
+      "systemMetaData": {
+        "secretForeignKeys": [],
+        "cryptedForeignKeys": {},
+        "delegations": {
+          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+        },
+        "encryptionKeys": {
+          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+        }
+      }
+    },
+    {
+      "id": "5e19d94a-05f2-45b3-9f6b-d4157204d51a",
+      "rev": "2-6eaf9285f0238c646e984c607e7f11d2",
+      "created": 1679929566340,
+      "modified": 1679929566340,
+      "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
+      "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
+      "status": "ongoing",
+      "identifiers": [],
+      "properties": [],
+      "type": "KEY_PAIR_UPDATE",
+      "systemMetaData": {
+        "secretForeignKeys": [],
+        "cryptedForeignKeys": {},
+        "delegations": {
+          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+        },
+        "encryptionKeys": {
+          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+        }
+      }
+    },
     {
       "id": "0f3b9f89-3d6e-49f0-8ce3-af7abff75102",
       "rev": "1-706d91cf61ed2e24fd39e56caa9121b6",
@@ -348,7 +509,39 @@ const notificationsFirstPage = await api.notificationApi.filterNotifications(
           "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
         }
       }
-    },
+    }
+  ],
+  "nextKeyPair": {
+    "startKey": "b5dd254b-bb9a-4c30-bc23-50d0846e7427",
+    "startKeyDocId": "b5dd254b-bb9a-4c30-bc23-50d0846e7427"
+  }
+}
+```
+</details>
+
+
+
+The `filter` method returns a PaginatedList, which contains up to `limit` Notifications in the `rows` field, as specified by the method parameter (1000 by default).
+If  the PaginatedList has a non-null field `startKeyDocId` there are more notifications which can be retrieved with this filter: you can use this value to retrieve (part of) the remaining notifications.
+
+<!-- file://code-samples/how-to/manage-notifications/index.mts snippet:gets the second page of results-->
+```typescript
+const notificationsSecondPage = await api.notificationApi.filterNotifications(
+  afterDateFilter,
+  notificationsFirstPage.nextKeyPair.startKeyDocId,
+  10,
+)
+```
+
+<!-- output://code-samples/how-to/manage-notifications/notificationsSecondPage.txt -->
+<details>
+<summary>notificationsSecondPage</summary>
+
+```json
+{
+  "pageSize": 10,
+  "totalSize": 0,
+  "rows": [
     {
       "id": "b5dd254b-bb9a-4c30-bc23-50d0846e7427",
       "rev": "2-8245b5678984ca5d1691c2d527e7ecba",
@@ -509,39 +702,7 @@ const notificationsFirstPage = await api.notificationApi.filterNotifications(
           "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
         }
       }
-    }
-  ],
-  "nextKeyPair": {
-    "startKey": "a4cad346-5010-4f92-8e3a-88e4b7bb1fb6",
-    "startKeyDocId": "a4cad346-5010-4f92-8e3a-88e4b7bb1fb6"
-  }
-}
-```
-</details>
-
-
-
-The `filter` method returns a PaginatedList, which contains up to `limit` Notifications in the `rows` field, as specified by the method parameter (1000 by default).
-If  the PaginatedList has a non-null field `startKeyDocId` there are more notifications which can be retrieved with this filter: you can use this value to retrieve (part of) the remaining notifications.
-
-<!-- file://code-samples/how-to/manage-notifications/index.mts snippet:gets the second page of results-->
-```typescript
-const notificationsSecondPage = await api.notificationApi.filterNotifications(
-  afterDateFilter,
-  notificationsFirstPage.nextKeyPair.startKeyDocId,
-  10,
-)
-```
-
-<!-- output://code-samples/how-to/manage-notifications/notificationsSecondPage.txt -->
-<details>
-<summary>notificationsSecondPage</summary>
-
-```json
-{
-  "pageSize": 10,
-  "totalSize": 0,
-  "rows": [
+    },
     {
       "id": "a4cad346-5010-4f92-8e3a-88e4b7bb1fb6",
       "rev": "2-106af43649cb1764948b87c2f1684c39",
@@ -633,172 +794,11 @@ const notificationsSecondPage = await api.notificationApi.filterNotifications(
           "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
         }
       }
-    },
-    {
-      "id": "70e216b2-0b55-466b-994f-3048bd9d07a1",
-      "rev": "3-f4062f99901455d7607af4781aa924c7",
-      "created": 1679928173874,
-      "modified": 1679928173874,
-      "author": "62d17c86-49a1-4d30-8d50-735f95fa7dbd",
-      "responsible": "27bb93a1-f9f2-4932-bc89-fc78b0c52e3d",
-      "status": "completed",
-      "identifiers": [],
-      "properties": [],
-      "type": "NEW_USER_OWN_DATA_ACCESS",
-      "systemMetaData": {
-        "secretForeignKeys": [],
-        "cryptedForeignKeys": {},
-        "delegations": {
-          "27bb93a1-f9f2-4932-bc89-fc78b0c52e3d": {},
-          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
-        },
-        "encryptionKeys": {
-          "27bb93a1-f9f2-4932-bc89-fc78b0c52e3d": {},
-          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
-        }
-      }
-    },
-    {
-      "id": "7b93be7a-d7ff-4b1a-a7b3-a2e7d47d8b96",
-      "rev": "1-c345e16cadd1dcb825377b8ee70cdc15",
-      "created": 1679928162868,
-      "modified": 1679928162868,
-      "author": "311a0b38-eb54-424c-9d61-b8a190260189",
-      "responsible": "d691c3f8-1483-4be4-b66f-2b1645a71b0f",
-      "status": "pending",
-      "identifiers": [],
-      "properties": [
-        {
-          "id": "dataOwnerConcernedId",
-          "type": {
-            "type": "STRING"
-          },
-          "typedValue": {
-            "stringValue": "d691c3f8-1483-4be4-b66f-2b1645a71b0f",
-            "type": "STRING"
-          }
-        },
-        {
-          "id": "dataOwnerConcernedPubKey",
-          "type": {
-            "type": "STRING"
-          },
-          "typedValue": {
-            "stringValue": "30820122300d06092a864886f70d01010105000382010f003082010a0282010100ce96f68068e7d7d1f68efdc47e27e9029a772782692448e9b8ee7ded88014ab7dd014ac1949b72ff0a1675339520ca7a779f946dafb4e407fbfb14526600c4b6e0320091b89afef827ad5c52bc335e54f6581659af582971a5d766fce20e48efa1db573503ec4273871eeda10edd3a26c159ebe32794c2af7d62a0a5b22b78496ad35afd0a7d2a771b6f7987d03d9c6c7ebade5995d564bc67966add45fe26345e857b0168d3b85a6ff897aee1f07521882e1e31dfac3d46786e8253250d89bfebf852c4ae5ea839fe0503ce715fe011064790390020c68ab11a4a60cd7b3a855cbc596b06d066d4a664a4ed591c061a2654cc4108de4a0f21499548bbdeabf90203010001",
-            "type": "STRING"
-          }
-        }
-      ],
-      "type": "KEY_PAIR_UPDATE",
-      "systemMetaData": {
-        "secretForeignKeys": [],
-        "cryptedForeignKeys": {},
-        "delegations": {
-          "d691c3f8-1483-4be4-b66f-2b1645a71b0f": {},
-          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
-        },
-        "encryptionKeys": {
-          "d691c3f8-1483-4be4-b66f-2b1645a71b0f": {},
-          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
-        }
-      }
-    },
-    {
-      "id": "38ca54f6-a233-47ec-9cfb-493d7384c76a",
-      "rev": "2-73389de6b0b10772de68dae6b65cb0a0",
-      "created": 1679927909109,
-      "modified": 1679927909109,
-      "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
-      "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
-      "status": "ongoing",
-      "identifiers": [],
-      "properties": [],
-      "type": "KEY_PAIR_UPDATE",
-      "systemMetaData": {
-        "secretForeignKeys": [],
-        "cryptedForeignKeys": {},
-        "delegations": {
-          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
-        },
-        "encryptionKeys": {
-          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
-        }
-      }
-    },
-    {
-      "id": "925068f8-9075-4ad1-aeba-b9e57b4b2bb9",
-      "rev": "2-d5a747067a79182b192c6b3ad3f8925c",
-      "created": 1679927908990,
-      "modified": 1679927908990,
-      "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
-      "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
-      "status": "ongoing",
-      "identifiers": [],
-      "properties": [],
-      "type": "KEY_PAIR_UPDATE",
-      "systemMetaData": {
-        "secretForeignKeys": [],
-        "cryptedForeignKeys": {},
-        "delegations": {
-          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
-        },
-        "encryptionKeys": {
-          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
-        }
-      }
-    },
-    {
-      "id": "135e9ce3-8051-4d69-ad22-7ef7dd19ee3b",
-      "rev": "1-9bfab2d269458b37d678eb0056321e2c",
-      "created": 1679927908384,
-      "modified": 1679927908384,
-      "author": "68a4f7d3-aa5d-43ff-95a1-ba14675397ca",
-      "responsible": "3238dd4f-be09-4375-bb5b-0bf9d737ac94",
-      "status": "pending",
-      "identifiers": [],
-      "properties": [],
-      "type": "OTHER",
-      "systemMetaData": {
-        "secretForeignKeys": [],
-        "cryptedForeignKeys": {},
-        "delegations": {
-          "3238dd4f-be09-4375-bb5b-0bf9d737ac94": {},
-          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
-        },
-        "encryptionKeys": {
-          "3238dd4f-be09-4375-bb5b-0bf9d737ac94": {},
-          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
-        }
-      }
-    },
-    {
-      "id": "8461fd5c-0774-4eab-8b2c-c4fd3a62f769",
-      "rev": "1-e5a10c72fca305d9371612980b34bda2",
-      "created": 1679927908328,
-      "modified": 1679927908328,
-      "author": "68a4f7d3-aa5d-43ff-95a1-ba14675397ca",
-      "responsible": "3238dd4f-be09-4375-bb5b-0bf9d737ac94",
-      "status": "pending",
-      "identifiers": [],
-      "properties": [],
-      "type": "KEY_PAIR_UPDATE",
-      "systemMetaData": {
-        "secretForeignKeys": [],
-        "cryptedForeignKeys": {},
-        "delegations": {
-          "3238dd4f-be09-4375-bb5b-0bf9d737ac94": {},
-          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
-        },
-        "encryptionKeys": {
-          "3238dd4f-be09-4375-bb5b-0bf9d737ac94": {},
-          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
-        }
-      }
     }
   ],
   "nextKeyPair": {
-    "startKey": "080c9545-4d3f-4f0b-aa55-caf634b7351c",
-    "startKeyDocId": "080c9545-4d3f-4f0b-aa55-caf634b7351c"
+    "startKey": "70e216b2-0b55-466b-994f-3048bd9d07a1",
+    "startKeyDocId": "70e216b2-0b55-466b-994f-3048bd9d07a1"
   }
 }
 ```
@@ -820,6 +820,99 @@ const pendingNotifications = await api.notificationApi.getPendingNotificationsAf
 
 ```text
 [
+  {
+    "id": "519a4da0-e7b4-4421-be63-6a99904078a2",
+    "rev": "1-59504d554510f06b3dac0b21a5387a37",
+    "created": 1679991712230,
+    "modified": 1679991712230,
+    "author": "68a4f7d3-aa5d-43ff-95a1-ba14675397ca",
+    "responsible": "3238dd4f-be09-4375-bb5b-0bf9d737ac94",
+    "status": "pending",
+    "identifiers": [],
+    "properties": [],
+    "type": "OTHER",
+    "systemMetaData": {
+      "secretForeignKeys": [],
+      "cryptedForeignKeys": {},
+      "delegations": {
+        "3238dd4f-be09-4375-bb5b-0bf9d737ac94": {},
+        "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+      },
+      "encryptionKeys": {
+        "3238dd4f-be09-4375-bb5b-0bf9d737ac94": {},
+        "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+      }
+    }
+  },
+  {
+    "id": "f9eddd73-03eb-44ea-8487-97cef757ac98",
+    "rev": "1-35ea0e607f642e17f7ca33814bd34d76",
+    "created": 1679991712162,
+    "modified": 1679991712162,
+    "author": "68a4f7d3-aa5d-43ff-95a1-ba14675397ca",
+    "responsible": "3238dd4f-be09-4375-bb5b-0bf9d737ac94",
+    "status": "pending",
+    "identifiers": [],
+    "properties": [],
+    "type": "KEY_PAIR_UPDATE",
+    "systemMetaData": {
+      "secretForeignKeys": [],
+      "cryptedForeignKeys": {},
+      "delegations": {
+        "3238dd4f-be09-4375-bb5b-0bf9d737ac94": {},
+        "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+      },
+      "encryptionKeys": {
+        "3238dd4f-be09-4375-bb5b-0bf9d737ac94": {},
+        "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+      }
+    }
+  },
+  {
+    "id": "b4736bbf-5446-4cbe-af23-d160d0fdde5e",
+    "rev": "1-68010e8eeccd11a91e494611b06771da",
+    "created": 1679991673518,
+    "modified": 1679991673518,
+    "author": "892602a1-5198-45f8-a3a5-cb19f0eb789c",
+    "responsible": "d2a81781-edfe-4886-bc99-b9cc336ffc17",
+    "status": "pending",
+    "identifiers": [],
+    "properties": [
+      {
+        "id": "dataOwnerConcernedId",
+        "type": {
+          "type": "STRING"
+        },
+        "typedValue": {
+          "stringValue": "d2a81781-edfe-4886-bc99-b9cc336ffc17",
+          "type": "STRING"
+        }
+      },
+      {
+        "id": "dataOwnerConcernedPubKey",
+        "type": {
+          "type": "STRING"
+        },
+        "typedValue": {
+          "stringValue": "30820122300d06092a864886f70d01010105000382010f003082010a0282010100eaf4133d607b1afe286ac71b7481039c99f24756de62ea2c4340353e3538a125ed391e000e1cc2c02feec4a2f9ee1b963b4eaa9c4527193b8983cc42fac09be857e668e20f051bf1839dd3d3d8f9a51fed07993723371aaadf8c4736059fe248f003c45677f43682af38c3006188048e913aa9e84ddcdaab50fa4b314f8fa6701d9503f09bff67b86fdc7764029beb9279cf6f37cbea748bd018ad2a21ee109878fac512f20fdd360396eebcf0c91d5067ddb2e1a19d26c384804f4014cadd2c551d79e82877f65104febc63391cd3d0f7f9162be4373ec01f7f4b7c43360712ef49ce02a43cfade6fa4d6dfc104f81b56b3bd67b359b5f8cf8b8a9fbe7560fb0203010001",
+          "type": "STRING"
+        }
+      }
+    ],
+    "type": "KEY_PAIR_UPDATE",
+    "systemMetaData": {
+      "secretForeignKeys": [],
+      "cryptedForeignKeys": {},
+      "delegations": {
+        "d2a81781-edfe-4886-bc99-b9cc336ffc17": {},
+        "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+      },
+      "encryptionKeys": {
+        "d2a81781-edfe-4886-bc99-b9cc336ffc17": {},
+        "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+      }
+    }
+  },
   {
     "id": "0f3b9f89-3d6e-49f0-8ce3-af7abff75102",
     "rev": "1-706d91cf61ed2e24fd39e56caa9121b6",
@@ -2241,10 +2334,10 @@ const modifiedNotification = await api.notificationApi.createOrModifyNotificatio
 
 ```json
 {
-  "id": "5e19d94a-05f2-45b3-9f6b-d4157204d51a",
-  "rev": "2-6eaf9285f0238c646e984c607e7f11d2",
-  "created": 1679929566340,
-  "modified": 1679929566340,
+  "id": "410e15aa-c60e-48a2-b722-817a92cd4ba4",
+  "rev": "2-39181d31f83e35e7131bb3fbda858019",
+  "created": 1679991713483,
+  "modified": 1679991713483,
   "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
   "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
   "status": "ongoing",
@@ -2298,10 +2391,10 @@ const updatedNotification = await api.notificationApi.updateNotificationStatus(
 
 ```json
 {
-  "id": "cdc2b59b-e133-4444-92fc-b884fe01953c",
-  "rev": "2-7ed9cbbc63194bbe8f34c9e181306f34",
-  "created": 1679929566465,
-  "modified": 1679929566465,
+  "id": "1ac366ba-a984-4506-bd59-e798cfc6f6fd",
+  "rev": "2-9f4c293d7fed7db129745a0465b39f17",
+  "created": 1679991713726,
+  "modified": 1679991713726,
   "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
   "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
   "status": "ongoing",
@@ -2344,6 +2437,6 @@ const deletedNotificationId = await api.notificationApi.deleteNotification(notif
 <summary>deletedNotificationId</summary>
 
 ```text
-0a048f54-c38a-4b7a-92f1-b1a775283985
+dcc4317e-2c19-46be-aa3f-4d853ddde320
 ```
 </details>

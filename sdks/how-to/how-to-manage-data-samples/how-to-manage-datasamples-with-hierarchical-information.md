@@ -447,14 +447,14 @@ const createdDataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
 
 ```json
 {
-  "id": "13f9946d-b011-45fb-a1a6-818169d66a11",
+  "id": "0c0711b3-3edc-403c-b0e1-2934a0826381",
   "qualifiedLinks": {},
-  "batchId": "2c412b10-594e-4d06-8002-d694f143c94e",
+  "batchId": "0a1d3d09-ddf5-4061-92ca-474a1947d1c1",
   "index": 0,
-  "valueDate": 20230327170559,
+  "valueDate": 20230328102141,
   "openingDate": 20220929083400,
-  "created": 1679929559717,
-  "modified": 1679929559717,
+  "created": 1679991701091,
+  "modified": 1679991701091,
   "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
   "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
   "identifiers": [],
@@ -464,7 +464,7 @@ const createdDataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
     "en": {
       "compoundValue": [
         {
-          "id": "0d14e94a-86d8-4569-8724-78d019563be6",
+          "id": "b45c0729-f574-4972-bcbc-e75a2c894ee3",
           "qualifiedLinks": {},
           "openingDate": 20220929083400,
           "comment": "Heart rate 1 hour mean",
@@ -493,7 +493,7 @@ const createdDataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
           }
         },
         {
-          "id": "926f525a-0e7e-4399-8258-6283a5d0dd3d",
+          "id": "d671cb14-89b3-4d4f-af5a-63130950f8ce",
           "qualifiedLinks": {},
           "openingDate": 20220929083400,
           "comment": "Heart rate 8 hour mean",
@@ -522,7 +522,7 @@ const createdDataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
           }
         },
         {
-          "id": "28d5297d-9cfe-44f6-b7ae-32e493a57bc5",
+          "id": "5a8353eb-be0c-46a2-9891-9c3df248040c",
           "qualifiedLinks": {},
           "openingDate": 20220929083400,
           "comment": "Body temperature",
@@ -626,7 +626,7 @@ const createdDataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
   "labels": {},
   "systemMetaData": {
     "secretForeignKeys": [
-      "541b7ec6-843b-4d66-b283-532335337d72"
+      "9c65385b-746a-4cdb-bb98-a04f935abb80"
     ],
     "cryptedForeignKeys": {
       "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}

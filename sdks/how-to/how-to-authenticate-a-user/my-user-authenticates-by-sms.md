@@ -51,8 +51,8 @@ const authProcess = await anonymousApi.authenticationApi.startAuthentication(
 
 ```json
 {
-  "requestId": "dfec4158-df74-4995-9d9c-61c1ff62b915",
-  "login": "+3237485845",
+  "requestId": "35d29c72-2e7b-4f68-a5b5-a8a4467af288",
+  "login": "+32534070382",
   "bypassTokenCheck": false
 }
 ```
@@ -105,15 +105,15 @@ const foundPatientAfterLogin = await loggedUserApi.patientApi.getPatient(created
 
 ```json
 {
-  "id": "3bab632d-0f86-45da-8fec-6f3be9e78144",
+  "id": "e7a69060-66a9-4c6b-b883-edbad01dab8c",
   "languages": [],
   "active": true,
   "parameters": {},
-  "rev": "1-be3680c4ad35ac6812738438c229a1d1",
-  "created": 1679929518120,
-  "modified": 1679929518120,
-  "author": "c0fcebe5-69f8-40d9-8fee-f35152e25ff2",
-  "responsible": "a7961533-387f-4b9d-acd7-fb6993f855d1",
+  "rev": "1-f7c0ad214785f7238daf20410d80e549",
+  "created": 1679991649180,
+  "modified": 1679991649180,
+  "author": "9b1208a7-8c1d-4ae3-85e7-5f2108670fa8",
+  "responsible": "7c8e29d6-bc78-47c6-81e3-fe9644fd35b8",
   "firstName": "Robb",
   "lastName": "Stark",
   "note": "You must keep one's head",
@@ -147,14 +147,14 @@ const foundPatientAfterLogin = await loggedUserApi.patientApi.getPatient(created
     "privateKeyShamirPartitions": {},
     "aesExchangeKeys": {},
     "transferKeys": {},
-    "encryptedSelf": "yB57O6oz/YFdif5558hEod9X8INhtHyXOLmIn0t2BRPnDKg1kfFYP3t+LQUQkbzDxYlCOK0gC8Kshvp5frMsrA==",
+    "encryptedSelf": "+mEgm/nN932qfHRMfrIt4/96tW3de068XfjdKzjrH8U6gIh6ycZJ82ngLm41kEQ7I5yBTvSL4T9jM0/WOCESlQ==",
     "secretForeignKeys": [],
     "cryptedForeignKeys": {},
     "delegations": {
-      "a7961533-387f-4b9d-acd7-fb6993f855d1": {}
+      "7c8e29d6-bc78-47c6-81e3-fe9644fd35b8": {}
     },
     "encryptionKeys": {
-      "a7961533-387f-4b9d-acd7-fb6993f855d1": {}
+      "7c8e29d6-bc78-47c6-81e3-fe9644fd35b8": {}
     }
   }
 }

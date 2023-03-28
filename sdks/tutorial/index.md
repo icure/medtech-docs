@@ -63,7 +63,7 @@ expect(loggedUser.login).to.be.equal(iCureUserLogin)
 ```json
 {
   "id": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
-  "rev": "80-a44fa468d77e5403b84614a3cb062b56",
+  "rev": "86-1fba3882618770a9fb28f85d94c77254",
   "created": 1679919731079,
   "name": "Master HCP",
   "login": "master@b16baa.icure",
@@ -162,13 +162,13 @@ console.log(`Your new patient id : ${createdPatient.id}`)
 
 ```json
 {
-  "id": "446e9df2-9da3-4f80-aa6d-2ccdc2bd0e2e",
+  "id": "997304be-c311-4dc6-9fc4-cc5593f12352",
   "languages": [],
   "active": true,
   "parameters": {},
-  "rev": "1-7791eaa3dbc6a8b151327aa73878f16e",
-  "created": 1679929609363,
-  "modified": 1679929609363,
+  "rev": "1-b7f45f7b3f23d58ca449e48839ff2352",
+  "created": 1679991754554,
+  "modified": 1679991754554,
   "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
   "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
   "firstName": "John",
@@ -204,7 +204,7 @@ console.log(`Your new patient id : ${createdPatient.id}`)
     "privateKeyShamirPartitions": {},
     "aesExchangeKeys": {},
     "transferKeys": {},
-    "encryptedSelf": "h6xTzw47+j6vy9Gy68ySb0E1W5k/D6VhCRIccghjZNd/d+C1u9bbFNoWAB5fcuj+",
+    "encryptedSelf": "04P6Zca0D12X3KTKBnsgAgO5TcvEPFnI+YlBHPh4B6ME9DoPs5nUXxOcIiux04re",
     "secretForeignKeys": [],
     "cryptedForeignKeys": {},
     "delegations": {
@@ -243,13 +243,13 @@ expect(createdPatient.id).to.be.equal(johnSnow.id)
 
 ```json
 {
-  "id": "446e9df2-9da3-4f80-aa6d-2ccdc2bd0e2e",
+  "id": "997304be-c311-4dc6-9fc4-cc5593f12352",
   "languages": [],
   "active": true,
   "parameters": {},
-  "rev": "1-7791eaa3dbc6a8b151327aa73878f16e",
-  "created": 1679929609363,
-  "modified": 1679929609363,
+  "rev": "1-b7f45f7b3f23d58ca449e48839ff2352",
+  "created": 1679991754554,
+  "modified": 1679991754554,
   "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
   "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
   "firstName": "John",
@@ -285,7 +285,7 @@ expect(createdPatient.id).to.be.equal(johnSnow.id)
     "privateKeyShamirPartitions": {},
     "aesExchangeKeys": {},
     "transferKeys": {},
-    "encryptedSelf": "h6xTzw47+j6vy9Gy68ySb0E1W5k/D6VhCRIccghjZNd/d+C1u9bbFNoWAB5fcuj+",
+    "encryptedSelf": "04P6Zca0D12X3KTKBnsgAgO5TcvEPFnI+YlBHPh4B6ME9DoPs5nUXxOcIiux04re",
     "secretForeignKeys": [],
     "cryptedForeignKeys": {},
     "delegations": {
@@ -338,54 +338,14 @@ const createdData = await api.dataSampleApi.createOrModifyDataSamplesFor(johnSno
 ```text
 [
   {
-    "id": "195d7cce-501d-447d-9582-a88daddc41d5",
+    "id": "505497c2-e579-4745-b0fb-40d9b3c45f4d",
     "qualifiedLinks": {},
-    "batchId": "90e97103-84d9-490c-b433-584dc6354955",
+    "batchId": "bd86c9f0-f7c0-4ac5-9d43-d8589354bd9f",
     "index": 0,
     "valueDate": 20220203111034,
-    "openingDate": 20230327170649,
-    "created": 1679929609672,
-    "modified": 1679929609672,
-    "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
-    "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
-    "comment": "Weight",
-    "identifiers": [],
-    "healthcareElementIds": {},
-    "canvasesIds": {},
-    "content": {
-      "en": {
-        "numberValue": 92.5,
-        "compoundValue": [],
-        "ratio": [],
-        "range": []
-      }
-    },
-    "codes": {},
-    "labels": {},
-    "systemMetaData": {
-      "secretForeignKeys": [
-        "6fc88ca6-5ceb-4416-bf62-1aa5ec3b9388"
-      ],
-      "cryptedForeignKeys": {
-        "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
-      },
-      "delegations": {
-        "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
-      },
-      "encryptionKeys": {
-        "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
-      }
-    }
-  },
-  {
-    "id": "cded18dc-416f-43cf-beaa-537680166977",
-    "qualifiedLinks": {},
-    "batchId": "90e97103-84d9-490c-b433-584dc6354955",
-    "index": 1,
-    "valueDate": 20220203111034,
-    "openingDate": 20230327170649,
-    "created": 1679929609672,
-    "modified": 1679929609672,
+    "openingDate": 20230328102234,
+    "created": 1679991754726,
+    "modified": 1679991754725,
     "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
     "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
     "comment": "Height",
@@ -404,7 +364,47 @@ const createdData = await api.dataSampleApi.createOrModifyDataSamplesFor(johnSno
     "labels": {},
     "systemMetaData": {
       "secretForeignKeys": [
-        "6fc88ca6-5ceb-4416-bf62-1aa5ec3b9388"
+        "d3a742ed-0650-42d9-9b25-7375ac950089"
+      ],
+      "cryptedForeignKeys": {
+        "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+      },
+      "delegations": {
+        "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+      },
+      "encryptionKeys": {
+        "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+      }
+    }
+  },
+  {
+    "id": "b6866b62-385a-4967-9542-b6372d966983",
+    "qualifiedLinks": {},
+    "batchId": "bd86c9f0-f7c0-4ac5-9d43-d8589354bd9f",
+    "index": 1,
+    "valueDate": 20220203111034,
+    "openingDate": 20230328102234,
+    "created": 1679991754726,
+    "modified": 1679991754726,
+    "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
+    "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
+    "comment": "Weight",
+    "identifiers": [],
+    "healthcareElementIds": {},
+    "canvasesIds": {},
+    "content": {
+      "en": {
+        "numberValue": 92.5,
+        "compoundValue": [],
+        "ratio": [],
+        "range": []
+      }
+    },
+    "codes": {},
+    "labels": {},
+    "systemMetaData": {
+      "secretForeignKeys": [
+        "d3a742ed-0650-42d9-9b25-7375ac950089"
       ],
       "cryptedForeignKeys": {
         "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
@@ -459,14 +459,14 @@ expect(johnData.rows[0].comment).to.be.equal('Weight')
   "totalSize": 1,
   "rows": [
     {
-      "id": "195d7cce-501d-447d-9582-a88daddc41d5",
+      "id": "b6866b62-385a-4967-9542-b6372d966983",
       "qualifiedLinks": {},
-      "batchId": "90e97103-84d9-490c-b433-584dc6354955",
-      "index": 0,
+      "batchId": "bd86c9f0-f7c0-4ac5-9d43-d8589354bd9f",
+      "index": 1,
       "valueDate": 20220203111034,
-      "openingDate": 20230327170649,
-      "created": 1679929609672,
-      "modified": 1679929609672,
+      "openingDate": 20230328102234,
+      "created": 1679991754726,
+      "modified": 1679991754726,
       "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
       "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
       "comment": "Weight",
@@ -485,7 +485,7 @@ expect(johnData.rows[0].comment).to.be.equal('Weight')
       "labels": {},
       "systemMetaData": {
         "secretForeignKeys": [
-          "6fc88ca6-5ceb-4416-bf62-1aa5ec3b9388"
+          "d3a742ed-0650-42d9-9b25-7375ac950089"
         ],
         "cryptedForeignKeys": {
           "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
@@ -526,14 +526,14 @@ expect(johnWeight.comment).to.be.equal('Weight')
 
 ```json
 {
-  "id": "195d7cce-501d-447d-9582-a88daddc41d5",
+  "id": "b6866b62-385a-4967-9542-b6372d966983",
   "qualifiedLinks": {},
-  "batchId": "90e97103-84d9-490c-b433-584dc6354955",
-  "index": 0,
+  "batchId": "bd86c9f0-f7c0-4ac5-9d43-d8589354bd9f",
+  "index": 1,
   "valueDate": 20220203111034,
-  "openingDate": 20230327170649,
-  "created": 1679929609672,
-  "modified": 1679929609672,
+  "openingDate": 20230328102234,
+  "created": 1679991754726,
+  "modified": 1679991754726,
   "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
   "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
   "comment": "Weight",
@@ -552,7 +552,7 @@ expect(johnWeight.comment).to.be.equal('Weight')
   "labels": {},
   "systemMetaData": {
     "secretForeignKeys": [
-      "6fc88ca6-5ceb-4416-bf62-1aa5ec3b9388"
+      "d3a742ed-0650-42d9-9b25-7375ac950089"
     ],
     "cryptedForeignKeys": {
       "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}

@@ -6,7 +6,7 @@ import {
   DataSample,
   CodingReference,
   medTechApi,
-  Content
+  Content,
 } from '@icure/medical-device-sdk'
 import { webcrypto } from 'crypto'
 import * as process from 'process'
@@ -44,7 +44,7 @@ function getBackCredentials(): {
     login: cachedInfo['login'],
     token: cachedInfo['token'],
     pubKey: cachedInfo['pubKey'],
-    privKey: cachedInfo['privKey']
+    privKey: cachedInfo['privKey'],
   }
 }
 
@@ -87,7 +87,7 @@ const authProcess = await anonymousApi.authenticationApi.startAuthentication(
   undefined,
   'Daenerys',
   'Targaryen',
-  masterHcpId
+  masterHcpId,
 )
 //tech-doc: STOP HERE
 output({ authProcess })
@@ -97,7 +97,7 @@ const validationCode = (await getLastEmail(userEmail)).subject!
 //tech-doc: Complete authentication process
 const authenticationResult = await anonymousApi.authenticationApi.completeAuthentication(
   authProcess!,
-  validationCode
+  validationCode,
 )
 
 const authenticatedApi = authenticationResult.medTechApi
@@ -118,7 +118,7 @@ saveSecurely(
   authenticationResult.token,
   authenticationResult.userId,
   authenticationResult.groupId,
-  authenticationResult.keyPairs
+  authenticationResult.keyPairs,
 )
 //tech-doc: STOP HERE
 
@@ -134,8 +134,8 @@ const createdDataSample = await authenticatedApi.dataSampleApi.createOrModifyDat
     labels: new Set([new CodingReference({ type: 'IC-TEST', code: 'TEST' })]),
     content: { en: new Content({ stringValue: 'Hello world' }) },
     openingDate: 20220929083400,
-    comment: 'This is a comment'
-  })
+    comment: 'This is a comment',
+  }),
 )
 //tech-doc: STOP HERE
 output({ createdDataSample })
