@@ -28,13 +28,14 @@ from medical devices or provided by the patient himself, and store it encrypted 
 
 ## Supported development platforms
 
-iCure Medtech can be used in the browser or with Node.
+For now, iCure MedTech can be used with Node, React and React Native.
 
-Experimental versions of the SDKs are available for React Native, Flutter and native Android/iOS development.  You can request access to them by contacting us.
+Experimental versions of the SDKs are available for Flutter and native Android/iOS development. You can request access 
+to them by contacting us through our [support portal](https://icure.atlassian.net/servicedesk/customer/portal/3).
 
 ## Starting to use iCure
 
-To hit the ground running, you can head to our [quick-start](./quick-start.md) or our [tutorial](./tutorial/index.md) section.
+To hit the ground running, you can head to our [quick-start](./quick-start.md) or our [tutorials](./tutorial/index.md) section.
 
 In the [how-to](/sdks/how-to/index) section, you will find more detailed information on how to use the SDKs to perform the most common tasks.
 
