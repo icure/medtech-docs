@@ -59,6 +59,15 @@ const sidebarsSDK = {
                                 'tutorial/petra/chapter-03/history',
                             ],
                         },
+                        {
+                            'Chapter 4 - Patient': [
+                                'tutorial/petra/chapter-04/patient-api',
+                                'tutorial/petra/chapter-04/header',
+                                'tutorial/petra/chapter-04/user-api',
+                                'tutorial/petra/chapter-04/modify-user',
+                                'tutorial/petra/chapter-04/sharing',
+                            ],
+                        },
                     ],
                 },
                 'tutorial/index'
