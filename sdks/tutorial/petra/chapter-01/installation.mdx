@@ -36,9 +36,11 @@ During the writing of this tutorial, we encountered an issue with pod installati
 
 #### Ruby version issue
 
-During the installation of XCode, it is possible that you installed a version of Ruby that is not compatible with the version required by ReactNative. In this case, we suggest using [RVM](https://rvm.io/) or [rbenv](https://github.com/rbenv/rbenv) to install a version of Ruby required by the project.
+If you installed XCode on your machine, it is possible that it installed as well a version of Ruby which is not compatible with the version required by ReactNative. If that's the case, the following error will output when executing the pod-install yarn command: `Your Ruby version is X.X.X, but your Gemfile specified X.X.X`. 
 
-Often, once the Ruby version is installed, we had to execute this command to be able to install the pods:
+In this case, we suggest using [RVM](https://rvm.io/) or [rbenv](https://github.com/rbenv/rbenv) to install a version of Ruby required by the project.
+
+Once the Ruby version is installed, you will have to install the pods by using this additional command: 
 
 ```bash
 cd ios && bundle install && cd ..
