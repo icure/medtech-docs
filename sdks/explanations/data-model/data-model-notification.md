@@ -28,7 +28,7 @@ A Healthcare Professional can modify a Notification shared with them.
 After a visit, a Doctor register the symptoms the Patient is experiencing (fatigue) as a new Data Sample.  
 Then, they add the diagnosis (hay fever) as associated Healthcare Element.
 
-<!-- file://code-samples/explanation/doctor-shares-data-with-patient/index.mts snippet:doctor shares medical data-->
+<!-- file://code-samples/explanation/notification/index.mts snippet:doctor shares medical data-->
 ```typescript
 const healthcareElement = await api.healthcareElementApi.createOrModifyHealthcareElement(
   new HealthcareElement({
@@ -64,7 +64,7 @@ const dataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
   }),
 )
 ```
-<!-- output://code-samples/explanation/doctor-shares-data-with-patient/healthcareElement.txt -->
+<!-- output://code-samples/explanation/notification/healthcareElement.txt -->
 <details>
 <summary>healthcareElement</summary>
 
@@ -102,7 +102,7 @@ const dataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
 ```
 </details>
 
-<!-- output://code-samples/explanation/doctor-shares-data-with-patient/dataSample.txt -->
+<!-- output://code-samples/explanation/notification/dataSample.txt -->
 <details>
 <summary>dataSample</summary>
 
@@ -151,7 +151,7 @@ const dataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
 
 Then, the Patient sends a Notification to the doctor to ask for access to the data.
 
-<!-- file://code-samples/explanation/doctor-shares-data-with-patient/index.mts snippet:patient sends notification-->
+<!-- file://code-samples/explanation/notification/index.mts snippet:patient sends notification-->
 ```typescript
 const notification = await patientApi.notificationApi.createOrModifyNotification(
   new Notification({
@@ -164,7 +164,7 @@ const notification = await patientApi.notificationApi.createOrModifyNotification
   user.healthcarePartyId,
 )
 ```
-<!-- output://code-samples/explanation/doctor-shares-data-with-patient/notification.txt -->
+<!-- output://code-samples/explanation/notification/notification.txt -->
 <details>
 <summary>notification</summary>
 
@@ -198,7 +198,7 @@ const notification = await patientApi.notificationApi.createOrModifyNotification
 
 After that, the Doctor receives a notification from the Patient and shares the data with them.
 
-<!-- file://code-samples/explanation/doctor-shares-data-with-patient/index.mts snippet:doctor receives notification-->
+<!-- file://code-samples/explanation/notification/index.mts snippet:doctor receives notification-->
 ```typescript
 const newNotifications = await api.notificationApi.getPendingNotificationsAfter()
 const newPatientNotifications = newNotifications.filter(
@@ -213,17 +213,17 @@ if (!!newPatientNotifications && newPatientNotifications.length > 0) {
   await api.notificationApi.updateNotificationStatus(newPatientNotifications[0], 'completed')
 }
 ```
-<!-- output://code-samples/explanation/doctor-shares-data-with-patient/newPatientNotifications.txt -->
+<!-- output://code-samples/explanation/notification/newPatientNotifications.txt -->
 <details>
 <summary>newPatientNotifications</summary>
 
 ```text
 [
   {
-    "id": "d8720091-3834-4d31-a17a-576a57beb284",
-    "rev": "1-0a2ec12dfd86257b2e255ba510fb1ea3",
-    "created": 1679991767695,
-    "modified": 1679991767695,
+    "id": "08b629a0-486e-4746-9ee2-13b07a425223",
+    "rev": "1-d9e4db4677deac384eabf14d077b06b9",
+    "created": 1679926465677,
+    "modified": 1679926465677,
     "author": "68a4f7d3-aa5d-43ff-95a1-ba14675397ca",
     "responsible": "3238dd4f-be09-4375-bb5b-0bf9d737ac94",
     "status": "completed",
@@ -235,11 +235,203 @@ if (!!newPatientNotifications && newPatientNotifications.length > 0) {
       "cryptedForeignKeys": {},
       "delegations": {
         "3238dd4f-be09-4375-bb5b-0bf9d737ac94": {},
-        "442da163-0338-4459-915a-e7a5270dcc88": {}
+        "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
       },
       "encryptionKeys": {
         "3238dd4f-be09-4375-bb5b-0bf9d737ac94": {},
-        "442da163-0338-4459-915a-e7a5270dcc88": {}
+        "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+      }
+    }
+  },
+  {
+    "id": "867f2933-aeab-4c72-86d0-19d210d9b970",
+    "rev": "1-5958f8cd45dbdb67c970cc7313fe47eb",
+    "created": 1679926244077,
+    "modified": 1679926244077,
+    "author": "68a4f7d3-aa5d-43ff-95a1-ba14675397ca",
+    "responsible": "3238dd4f-be09-4375-bb5b-0bf9d737ac94",
+    "status": "pending",
+    "identifiers": [],
+    "properties": [],
+    "type": "OTHER",
+    "systemMetaData": {
+      "secretForeignKeys": [],
+      "cryptedForeignKeys": {},
+      "delegations": {
+        "3238dd4f-be09-4375-bb5b-0bf9d737ac94": {},
+        "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+      },
+      "encryptionKeys": {
+        "3238dd4f-be09-4375-bb5b-0bf9d737ac94": {},
+        "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+      }
+    }
+  },
+  {
+    "id": "a65d7657-3391-431b-9872-941cc3c7d489",
+    "rev": "1-bfde6894ac0c0cb56e75927a1c523fd2",
+    "created": 1679925849955,
+    "modified": 1679925849955,
+    "author": "68a4f7d3-aa5d-43ff-95a1-ba14675397ca",
+    "responsible": "3238dd4f-be09-4375-bb5b-0bf9d737ac94",
+    "status": "pending",
+    "identifiers": [],
+    "properties": [],
+    "type": "OTHER",
+    "systemMetaData": {
+      "secretForeignKeys": [],
+      "cryptedForeignKeys": {},
+      "delegations": {
+        "3238dd4f-be09-4375-bb5b-0bf9d737ac94": {},
+        "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+      },
+      "encryptionKeys": {
+        "3238dd4f-be09-4375-bb5b-0bf9d737ac94": {},
+        "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+      }
+    }
+  },
+  {
+    "id": "e1de0bdb-210c-4714-ace2-f754a9d710ae",
+    "rev": "1-5e25b2aa812122e2c68185dbff9d7ce6",
+    "created": 1679924658464,
+    "modified": 1679924658464,
+    "author": "68a4f7d3-aa5d-43ff-95a1-ba14675397ca",
+    "responsible": "3238dd4f-be09-4375-bb5b-0bf9d737ac94",
+    "status": "pending",
+    "identifiers": [],
+    "properties": [],
+    "type": "OTHER",
+    "systemMetaData": {
+      "secretForeignKeys": [],
+      "cryptedForeignKeys": {},
+      "delegations": {
+        "3238dd4f-be09-4375-bb5b-0bf9d737ac94": {},
+        "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+      },
+      "encryptionKeys": {
+        "3238dd4f-be09-4375-bb5b-0bf9d737ac94": {},
+        "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+      }
+    }
+  },
+  {
+    "id": "f39ecbc2-08fd-43a8-b9fe-44815661bef1",
+    "rev": "1-04738d5e98c1c2f7c3de713e2a778351",
+    "created": 1679924397742,
+    "modified": 1679924397742,
+    "author": "68a4f7d3-aa5d-43ff-95a1-ba14675397ca",
+    "responsible": "3238dd4f-be09-4375-bb5b-0bf9d737ac94",
+    "status": "pending",
+    "identifiers": [],
+    "properties": [],
+    "type": "OTHER",
+    "systemMetaData": {
+      "secretForeignKeys": [],
+      "cryptedForeignKeys": {},
+      "delegations": {
+        "3238dd4f-be09-4375-bb5b-0bf9d737ac94": {},
+        "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+      },
+      "encryptionKeys": {
+        "3238dd4f-be09-4375-bb5b-0bf9d737ac94": {},
+        "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+      }
+    }
+  },
+  {
+    "id": "3f686d41-6bf0-40b7-b3c7-d2505c318b29",
+    "rev": "1-44a0d898b07a30b72d16cb6f4e2cb564",
+    "created": 1679923798190,
+    "modified": 1679923798190,
+    "author": "68a4f7d3-aa5d-43ff-95a1-ba14675397ca",
+    "responsible": "3238dd4f-be09-4375-bb5b-0bf9d737ac94",
+    "status": "pending",
+    "identifiers": [],
+    "properties": [],
+    "type": "OTHER",
+    "systemMetaData": {
+      "secretForeignKeys": [],
+      "cryptedForeignKeys": {},
+      "delegations": {
+        "3238dd4f-be09-4375-bb5b-0bf9d737ac94": {},
+        "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+      },
+      "encryptionKeys": {
+        "3238dd4f-be09-4375-bb5b-0bf9d737ac94": {},
+        "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+      }
+    }
+  },
+  {
+    "id": "25f99cd0-fc8b-4f05-accc-d74b99cd6e5e",
+    "rev": "1-f84a220f33cea4bcea8b9cfe374b5ae9",
+    "created": 1679920642531,
+    "modified": 1679920642531,
+    "author": "68a4f7d3-aa5d-43ff-95a1-ba14675397ca",
+    "responsible": "3238dd4f-be09-4375-bb5b-0bf9d737ac94",
+    "status": "pending",
+    "identifiers": [],
+    "properties": [],
+    "type": "OTHER",
+    "systemMetaData": {
+      "secretForeignKeys": [],
+      "cryptedForeignKeys": {},
+      "delegations": {
+        "3238dd4f-be09-4375-bb5b-0bf9d737ac94": {},
+        "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+      },
+      "encryptionKeys": {
+        "3238dd4f-be09-4375-bb5b-0bf9d737ac94": {},
+        "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+      }
+    }
+  },
+  {
+    "id": "6abae71b-c44b-45db-909d-ef3715b36a80",
+    "rev": "1-511cf5b3a9de410f5295cd41ee47b3eb",
+    "created": 1679920308705,
+    "modified": 1679920308705,
+    "author": "68a4f7d3-aa5d-43ff-95a1-ba14675397ca",
+    "responsible": "3238dd4f-be09-4375-bb5b-0bf9d737ac94",
+    "status": "pending",
+    "identifiers": [],
+    "properties": [],
+    "type": "OTHER",
+    "systemMetaData": {
+      "secretForeignKeys": [],
+      "cryptedForeignKeys": {},
+      "delegations": {
+        "3238dd4f-be09-4375-bb5b-0bf9d737ac94": {},
+        "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+      },
+      "encryptionKeys": {
+        "3238dd4f-be09-4375-bb5b-0bf9d737ac94": {},
+        "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+      }
+    }
+  },
+  {
+    "id": "43192bf9-4f72-454e-ae4a-692249e7af3c",
+    "rev": "1-2b145be29a7773bb5e3f86b2b8aeb963",
+    "created": 1679920182773,
+    "modified": 1679920182773,
+    "author": "68a4f7d3-aa5d-43ff-95a1-ba14675397ca",
+    "responsible": "3238dd4f-be09-4375-bb5b-0bf9d737ac94",
+    "status": "pending",
+    "identifiers": [],
+    "properties": [],
+    "type": "OTHER",
+    "systemMetaData": {
+      "secretForeignKeys": [],
+      "cryptedForeignKeys": {},
+      "delegations": {
+        "3238dd4f-be09-4375-bb5b-0bf9d737ac94": {},
+        "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+      },
+      "encryptionKeys": {
+        "3238dd4f-be09-4375-bb5b-0bf9d737ac94": {},
+        "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
       }
     }
   }

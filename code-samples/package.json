@@ -8,7 +8,8 @@
     "lint": "eslint --ext .js,.ts,.mjs,.mts .",
     "lint-fix": "eslint --fix --ext .js,.ts,.mjs,.mts .",
     "start": "yarn run lint-fix && yarn run build && node runall.mjs",
-    "start-specific": "yarn run build && node how-to/websocket/index.mjs"
+    "start-specific": "yarn run build && node how-to/websocket/index.mjs",
+    "start-how-to-use-with-redux": "yarn run build && node how-to/how-to-use-with-redux/index.mjs"
   },
   "lint-staged": {
     "*.js": [
