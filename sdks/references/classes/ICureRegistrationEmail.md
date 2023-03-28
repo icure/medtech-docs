@@ -32,22 +32,22 @@
 
 #### Parameters
 
-| Name           | Type                                                                             |
-| :------------- | :------------------------------------------------------------------------------- |
-| `dataOwner`    | [`Patient`](Patient.md) \| [`HealthcareProfessional`](HealthcareProfessional.md) |
-| `link`         | `string`                                                                         |
-| `solutionName` | `string`                                                                         |
-| `patient`      | [`Patient`](Patient.md)                                                          |
+| Name | Type |
+| :------ | :------ |
+| `dataOwner` | [`HealthcareProfessional`](HealthcareProfessional.md) \| [`Patient`](Patient.md) |
+| `link` | `string` |
+| `solutionName` | `string` |
+| `patient` | [`Patient`](Patient.md) |
 
 #### Defined in
 
-[src/utils/msgGtwMessageFactory.ts:37](https://github.com/icure/icure-medical-device-js-sdk/blob/3aae8f0/src/utils/msgGtwMessageFactory.ts#L37)
+[src/utils/msgGtwMessageFactory.ts:38](https://github.com/icure/icure-medical-device-js-sdk/blob/4df0728/src/utils/msgGtwMessageFactory.ts#L38)
 
 ## Properties
 
 ### dataOwner
 
-• **dataOwner**: [`Patient`](Patient.md) \| [`HealthcareProfessional`](HealthcareProfessional.md)
+• **dataOwner**: [`HealthcareProfessional`](HealthcareProfessional.md) \| [`Patient`](Patient.md)
 
 #### Implementation of
 
@@ -55,9 +55,9 @@
 
 #### Defined in
 
-[src/utils/msgGtwMessageFactory.ts:31](https://github.com/icure/icure-medical-device-js-sdk/blob/3aae8f0/src/utils/msgGtwMessageFactory.ts#L31)
+[src/utils/msgGtwMessageFactory.ts:32](https://github.com/icure/icure-medical-device-js-sdk/blob/4df0728/src/utils/msgGtwMessageFactory.ts#L32)
 
----
+___
 
 ### hcpEmail
 
@@ -65,9 +65,9 @@
 
 #### Defined in
 
-[src/utils/msgGtwMessageFactory.ts:32](https://github.com/icure/icure-medical-device-js-sdk/blob/3aae8f0/src/utils/msgGtwMessageFactory.ts#L32)
+[src/utils/msgGtwMessageFactory.ts:33](https://github.com/icure/icure-medical-device-js-sdk/blob/4df0728/src/utils/msgGtwMessageFactory.ts#L33)
 
----
+___
 
 ### link
 
@@ -79,9 +79,9 @@
 
 #### Defined in
 
-[src/utils/msgGtwMessageFactory.ts:33](https://github.com/icure/icure-medical-device-js-sdk/blob/3aae8f0/src/utils/msgGtwMessageFactory.ts#L33)
+[src/utils/msgGtwMessageFactory.ts:34](https://github.com/icure/icure-medical-device-js-sdk/blob/4df0728/src/utils/msgGtwMessageFactory.ts#L34)
 
----
+___
 
 ### patient
 
@@ -93,9 +93,9 @@
 
 #### Defined in
 
-[src/utils/msgGtwMessageFactory.ts:35](https://github.com/icure/icure-medical-device-js-sdk/blob/3aae8f0/src/utils/msgGtwMessageFactory.ts#L35)
+[src/utils/msgGtwMessageFactory.ts:36](https://github.com/icure/icure-medical-device-js-sdk/blob/4df0728/src/utils/msgGtwMessageFactory.ts#L36)
 
----
+___
 
 ### solutionName
 
@@ -103,7 +103,7 @@
 
 #### Defined in
 
-[src/utils/msgGtwMessageFactory.ts:34](https://github.com/icure/icure-medical-device-js-sdk/blob/3aae8f0/src/utils/msgGtwMessageFactory.ts#L34)
+[src/utils/msgGtwMessageFactory.ts:35](https://github.com/icure/icure-medical-device-js-sdk/blob/4df0728/src/utils/msgGtwMessageFactory.ts#L35)
 
 ## Methods
 
@@ -113,10 +113,10 @@
 
 #### Parameters
 
-| Name                | Type              |
-| :------------------ | :---------------- |
-| `recipient`         | [`User`](User.md) |
-| `recipientPassword` | `string`          |
+| Name | Type |
+| :------ | :------ |
+| `recipient` | [`User`](User.md) |
+| `recipientPassword` | `string` |
 
 #### Returns
 
@@ -128,4 +128,4 @@
 
 #### Defined in
 
-[src/utils/msgGtwMessageFactory.ts:53](https://github.com/icure/icure-medical-device-js-sdk/blob/3aae8f0/src/utils/msgGtwMessageFactory.ts#L53)
+[src/utils/msgGtwMessageFactory.ts:48](https://github.com/icure/icure-medical-device-js-sdk/blob/4df0728/src/utils/msgGtwMessageFactory.ts#L48)

@@ -4,9 +4,9 @@
 
 ## Type parameters
 
-| Name | Type                                                                                             |
-| :--- | :----------------------------------------------------------------------------------------------- |
-| `T`  | extends [`SMSMessage`](../modules.md#smsmessage) \| [`EmailMessage`](../modules.md#emailmessage) |
+| Name | Type |
+| :------ | :------ |
+| `T` | extends [`SMSMessage`](../modules.md#smsmessage) \| [`EmailMessage`](../modules.md#emailmessage) |
 
 ## Hierarchy
 
@@ -32,13 +32,13 @@
 
 ### dataOwner
 
-• **dataOwner**: [`Patient`](../classes/Patient.md) \| [`HealthcareProfessional`](../classes/HealthcareProfessional.md)
+• **dataOwner**: [`HealthcareProfessional`](../classes/HealthcareProfessional.md) \| [`Patient`](../classes/Patient.md)
 
 #### Defined in
 
-[src/utils/msgGtwMessageFactory.ts:19](https://github.com/icure/icure-medical-device-js-sdk/blob/3aae8f0/src/utils/msgGtwMessageFactory.ts#L19)
+[src/utils/msgGtwMessageFactory.ts:20](https://github.com/icure/icure-medical-device-js-sdk/blob/4df0728/src/utils/msgGtwMessageFactory.ts#L20)
 
----
+___
 
 ### link
 
@@ -46,9 +46,9 @@
 
 #### Defined in
 
-[src/utils/msgGtwMessageFactory.ts:20](https://github.com/icure/icure-medical-device-js-sdk/blob/3aae8f0/src/utils/msgGtwMessageFactory.ts#L20)
+[src/utils/msgGtwMessageFactory.ts:21](https://github.com/icure/icure-medical-device-js-sdk/blob/4df0728/src/utils/msgGtwMessageFactory.ts#L21)
 
----
+___
 
 ### patient
 
@@ -56,7 +56,7 @@
 
 #### Defined in
 
-[src/utils/msgGtwMessageFactory.ts:21](https://github.com/icure/icure-medical-device-js-sdk/blob/3aae8f0/src/utils/msgGtwMessageFactory.ts#L21)
+[src/utils/msgGtwMessageFactory.ts:22](https://github.com/icure/icure-medical-device-js-sdk/blob/4df0728/src/utils/msgGtwMessageFactory.ts#L22)
 
 ## Methods
 
@@ -66,10 +66,10 @@
 
 #### Parameters
 
-| Name                | Type                         |
-| :------------------ | :--------------------------- |
-| `recipient`         | [`User`](../classes/User.md) |
-| `recipientPassword` | `string`                     |
+| Name | Type |
+| :------ | :------ |
+| `recipient` | [`User`](../classes/User.md) |
+| `recipientPassword` | `string` |
 
 #### Returns
 
@@ -77,4 +77,4 @@
 
 #### Defined in
 
-[src/utils/msgGtwMessageFactory.ts:23](https://github.com/icure/icure-medical-device-js-sdk/blob/3aae8f0/src/utils/msgGtwMessageFactory.ts#L23)
+[src/utils/msgGtwMessageFactory.ts:24](https://github.com/icure/icure-medical-device-js-sdk/blob/4df0728/src/utils/msgGtwMessageFactory.ts#L24)
