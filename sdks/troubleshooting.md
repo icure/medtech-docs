@@ -25,3 +25,7 @@ The private key of the user is not stored anywhere in the iCure solution. So, if
 to recover it. However, it is possible to create a new key for the user and give them access back to their data. The whole
  procedure is explained in the [What if my user lost their private key?](/sdks/how-to/how-to-authenticate-a-user/my-user-lost-their-key.md)
  page.
+
+## Useful links
+You did not find the solution to your problem? You can open an issue on our [GitHub repository](https://github.com/icure/icure-medical-device-js-sdk)
+or open a ticket on our [CSM](https://icure.atlassian.net/servicedesk/customer/portal/3).
