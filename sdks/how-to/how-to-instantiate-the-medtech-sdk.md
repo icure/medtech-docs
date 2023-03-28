@@ -6,8 +6,8 @@ tags:
 - SDK
 ---
 # Instantiate the MedTech SDK using the asynchronous DSL
-You can obtain an instance of the MedTech SDK by either using the [MedTechApiBuilder](sdks/references/classes/MedTechApiBuilder.md) or the 
-[AnonymousMedTechApiBuilder](sdks/references/classes/AnonymousMedTechApiBuilder.md). You should use the former when you have
+You can obtain an instance of the MedTech SDK by either using the [MedTechApiBuilder](sdks/references/entrypoints/MedTechApi.md) or the 
+[AnonymousMedTechApiBuilder](sdks/references/entrypoints/AnonymousMedTechApi.md). You should use the former when you have
 the username and the password of the user you want to authenticate and the latter when you want to register a new user 
 or generate a temporary authentication token for an existing user. All these procedures are described more in details in 
 the [user authentication how to](sdks/how-to/how-to-authenticate-a-user/index.md).
@@ -26,8 +26,8 @@ available options.
 * `.withCrypto(webcrypto as any)`: an instance of the [Crypto API](https://developer.mozilla.org/en-US/docs/Web/API/Crypto).
 * `.withAuthProcessByEmailId(authProcessEmailId)`: your iCure Message Gateway identifier used to register new user by their email.
 * `.withAuthProcessBySmsId(authProcessSMSId)`: your iCure Message Gateway identifier used to register new user by their phone number.
-* `.withStorage(storage)`: an object that implements the StorageFacade interface. Will be used to store locally the private key of the user through the key storage. By default, it will use an implementation based on the browser local storage, so you must implement a custom version if your app is based on NodeJS or React Native.
-* `.withKeyStorage(keyStorage)`: an object that implements the KeyStorage Facade interface. Will be used to store locally the private key of the user. By default, it will use an implementation based on the default local storage.
+* `.withStorage(storage)`: an object that implements the [StorageFacade](sdks/references/entrypoints/MedTechApi.md) interface. Will be used to store locally the private key of the user through the key storage. By default, it will use an implementation based on the browser local storage, so you must implement a custom version if your app is based on NodeJS or React Native.
+* `.withKeyStorage(keyStorage)`: an object that implements the [KeyStorageFacade](sdks/references/interfaces/KeyStorageFacade.md) interface. Will be used to store locally the private key of the user. By default, it will use an implementation based on the default local storage.
 * `.preventCookieUsage()`: if set, all the API calls will rely on cookieless authentication methods.
 
 ## Instantiate the SDK using the AnonymousMedTechApiBuilder
@@ -42,8 +42,8 @@ available options.
 * `.withCrypto(webcrypto as any)`: an instance of the [Crypto API](https://developer.mozilla.org/en-US/docs/Web/API/Crypto).
 * `.withAuthProcessByEmailId(authProcessEmailId)`: your iCure Message Gateway identifier used to register new user by their email. **This parameter is mandatory**.
 * `.withAuthProcessBySmsId(authProcessSMSId)`: your iCure Message Gateway identifier used to register new user by their phone number. **This parameter is mandatory**.
-* `.withStorage(storage)`: an object that implements the StorageFacade interface. Will be used to store locally the private key of the user through the key storage. By default, it will use an implementation based on the browser local storage, so you must implement a custom version if your app is based on NodeJS or React Native.
-* `.withKeyStorage(keyStorage)`: an object that implements the KeyStorage Facade interface. Will be used to store locally the private key of the user. By default, it will use an implementation based on the default local storage.
+* `.withStorage(storage)`: an object that implements the [StorageFacade](sdks/references/entrypoints/MedTechApi.md) interface. Will be used to store locally the private key of the user through the key storage. By default, it will use an implementation based on the browser local storage, so you must implement a custom version if your app is based on NodeJS or React Native.
+* `.withKeyStorage(keyStorage)`: an object that implements the [KeyStorageFacade](sdks/references/interfaces/KeyStorageFacade.md) interface. Will be used to store locally the private key of the user. By default, it will use an implementation based on the default local storage.
 * `.preventCookieUsage()`: if set, all the API calls will rely on cookieless authentication methods.
 
 An API instantiated in this way can only be used to sign up or log in a user. To do so, you will first need to call the 

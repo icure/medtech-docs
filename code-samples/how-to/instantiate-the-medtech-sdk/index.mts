@@ -1,11 +1,16 @@
-import { AnonymousMedTechApiBuilder, KeyStorageImpl, LocalStorageImpl, medTechApi } from '@icure/medical-device-sdk';
-import { host, msgGtwUrl, password, specId, userName } from '../../utils/index.mjs';
-import { webcrypto } from 'crypto';
+import {
+  AnonymousMedTechApiBuilder,
+  KeyStorageImpl,
+  LocalStorageImpl,
+  medTechApi,
+} from '@icure/medical-device-sdk'
+import { host, msgGtwUrl, password, specId, userName } from '../../utils/index.mjs'
+import { webcrypto } from 'crypto'
 
 const storage = new LocalStorageImpl()
 const keyStorage = new KeyStorageImpl(storage)
-const authProcessEmailId = "AUTH_PROCESS_EMAIL_ID"
-const authProcessSMSId = "AUTH_PROCESS_SMS_ID"
+const authProcessEmailId = 'AUTH_PROCESS_EMAIL_ID'
+const authProcessSMSId = 'AUTH_PROCESS_SMS_ID'
 
 //tech-doc: MedTechApi
 const api = await medTechApi()
