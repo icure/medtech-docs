@@ -2,28 +2,28 @@
 
 Welcome to iCure! If you haven't had the chance to read the [Introduction](../../intro.md) yet, we invite you to do so before continuing to learn more about what iCure is and specifically what iCure MedTech is.
 
-In this tutorial, we will show you how to create a medical application with iCureMedTech for patients. Specifically, we will create a menstrual cycle tracking application. This application will allow patients to add menstrual cycle tracking data, view it, and optionally share it with their doctor.
+In this tutorial, we will show you how to create a patient-oriented medical application, using iCure MedTech SDK. Specifically, we will create a menstrual cycle tracking application. This app will allow patients to manage their menstrual cycle tracking data (CRUD operations) and optionally, share them with their doctor(s).
 
-Given the nature of this tutorial, we will only focus on the features of the application and not on its design. A Github repository is available with all the frontend code as well as the different visuals you will need during this tutorial.
+This tutorial will only focus on the features of the application and not on its design. To do so, we provide you a [dedicated template repository](https://github.com/icure/icure-medical-device-react-native-app-tutorial-template), containing all the frontend code as well as all the different visuals you will need during this tutorial.
 
 ## Callouts
 
-You will encounter callouts throughout this tutorial to draw your attention to different important points:
+Throughout this tutorial, you will encounter a few different callouts to draw your attention:
 
 :::tip
-These callouts are here to help you understand what you are doing and why you are doing it. So, they should be read carefully.
+Tips are here to give you some suggestions about the current topic and help you understand what you are doing and why you are doing it.
 :::
 
 :::caution
-These callouts are here to warn you of certain important points. So, they should be read carefully.
+Cautions provide you about potentially sensitive information about the current topic. Those need to be read carefully, in order to know about potential inconveniences. 
 :::
 
 :::danger
-These callouts are here to warn you of certain important points. So, they should be read carefully.
+These callouts notify you about potentially dangerous information about the current topic. You need to read them carefully in order to avoid any issue during this tutorial.
 :::
 
 :::info
-These callouts are here to provide you with additional information. So, they should be read carefully.
+These callouts provide you additional information to strengthen your understanding of the solution.
 :::
 
 That being said, let's get started!
