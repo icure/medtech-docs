@@ -33,7 +33,7 @@ const unmarshalledUser = new User(marshalledUser)
 ```json
 {
   "id": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
-  "rev": "86-1fba3882618770a9fb28f85d94c77254",
+  "rev": "105-f0830a300c1283d86887a87ab828e211",
   "created": 1679919731079,
   "name": "Master HCP",
   "login": "master@b16baa.icure",
@@ -57,7 +57,7 @@ const unmarshalledUser = new User(marshalledUser)
 ```json
 {
   "id": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
-  "rev": "86-1fba3882618770a9fb28f85d94c77254",
+  "rev": "105-f0830a300c1283d86887a87ab828e211",
   "created": 1679919731079,
   "name": "Master HCP",
   "login": "master@b16baa.icure",
@@ -81,7 +81,7 @@ const unmarshalledUser = new User(marshalledUser)
 ```json
 {
   "id": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
-  "rev": "86-1fba3882618770a9fb28f85d94c77254",
+  "rev": "105-f0830a300c1283d86887a87ab828e211",
   "created": 1679919731079,
   "name": "Master HCP",
   "login": "master@b16baa.icure",

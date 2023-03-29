@@ -124,13 +124,13 @@ const patientDetails = await apiAsPatient.patientApi.getPatientAndTryDecrypt(pat
 
 ```json
 {
-  "id": "e3807753-8d67-4c71-8d1b-4395f418ba61",
+  "id": "1e674fa4-f59e-4f8e-888a-df78f1cb572a",
   "languages": [],
   "active": true,
   "parameters": {},
-  "rev": "5-66f50357e3cca4d702da560ef965248f",
-  "created": 1679991678124,
-  "modified": 1679991678124,
+  "rev": "5-e842f177a522db5f8e5d8ec0710f7067",
+  "created": 1680075073795,
+  "modified": 1680075073795,
   "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
   "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
   "firstName": "Marc",
@@ -156,7 +156,7 @@ const patientDetails = await apiAsPatient.patientApi.getPatientAndTryDecrypt(pat
       "addressType": "home",
       "telecoms": [
         {
-          "telecomNumber": "b25d977b@icure.com",
+          "telecomNumber": "dbe85ef2@icure.com",
           "telecomType": "email"
         }
       ]
@@ -172,36 +172,36 @@ const patientDetails = await apiAsPatient.patientApi.getPatientAndTryDecrypt(pat
   "patientProfessions": [],
   "properties": {},
   "systemMetaData": {
-    "publicKey": "30820122300d06092a864886f70d01010105000382010f003082010a0282010100ee52f89a85233c67faa8a92e765afa6d5bfca339977e4b1809664f999faedac9e060174f12d1cad1a8885dd6c399d7f7495966c1289e5acdc56ac6e4b3e1cad4fd2b0a5414c8de1c4c722d987ce76af8a786281d2a1b465886c4a3f6b97472c7dd2a0ab93fc8e62a307cd111f5e495f26336173d54d4cd632197bd1f706eb9f02253ccd5449b14f122d4fd32b7e4de524f56bf229200a46c2a53aaa79774c790d54f990d3b74dc9ce48bdd8a3f95216b1d634b7414e4befb20c30c7cdd327834bb366a2e2c10c7cd6d34e64913901351dbc6d3ec4498de23ba47af95bfe737fa558dbc29839af6c5e29ca3a8d6731e88e142ec4ba4c7090df3da48d3205cd0cb0203010001",
+    "publicKey": "30820122300d06092a864886f70d01010105000382010f003082010a0282010100bf946943b9e5705acd6466a2b3731f23625f2d347c7502b874d7857a2edd8aa233b134d4eb6fcff5c9d7db633fbc2c2c3b1c7ad6038647f336e42c8e3225d12b03d4847f385558bdb9a250d23612e63bb6b788d413c6dd12a287849a64bccd89254083e5095fdfd5b629bca5340f566f4e6efd5f71b12e351818a33b7bbfb73e952a8bbf868b5322d19fb70c084c00b42fb675f3306e776652746354781eb9b3c8f92ce091ec48a16def61b2e81a95b32ae6e7dd7a1f3ecf7b4b75c9e246477333d06fe13af77bf1e287ca5500dddfad3c61b3a78afed122ad91579c5dac2531ed1f108e3aac158a690aedf6bbea912f14beff5529f7106002f018436d588e050203010001",
     "hcPartyKeys": {
-      "e3807753-8d67-4c71-8d1b-4395f418ba61": [
-        "56e4a46353b293b9b6867cbedb60eb9384f40bb9ce898ded3adff5162951c7438d5202ca48ffb6a6eb958eccb92f67594dd1dda348734ce65bffeaa2a98451de5e89e0c3f9ce04523aeff2571da237f7e15020a96bd88610d58da0f63bca049b92a3c9a154eb0a54cdbf45da13362f4bd64af574722ab73df898cbc5ff04ee33b788a4c68491963a43c3a7cacb634699a409f4a305d23e304a49b1236ebc4b870e4b8bd0b8cf4dbd763f2ba58a39ae37843df6b0b764583de236c6951e5c13876f94ab086593f104f66e2ed989e4f490c6ece6d3576ec551abad06f5e2db304d4e1385705af00d6cded9404fecf3a380532878a139171d5489ffb143d8b2f321",
-        "56e4a46353b293b9b6867cbedb60eb9384f40bb9ce898ded3adff5162951c7438d5202ca48ffb6a6eb958eccb92f67594dd1dda348734ce65bffeaa2a98451de5e89e0c3f9ce04523aeff2571da237f7e15020a96bd88610d58da0f63bca049b92a3c9a154eb0a54cdbf45da13362f4bd64af574722ab73df898cbc5ff04ee33b788a4c68491963a43c3a7cacb634699a409f4a305d23e304a49b1236ebc4b870e4b8bd0b8cf4dbd763f2ba58a39ae37843df6b0b764583de236c6951e5c13876f94ab086593f104f66e2ed989e4f490c6ece6d3576ec551abad06f5e2db304d4e1385705af00d6cded9404fecf3a380532878a139171d5489ffb143d8b2f321"
+      "1e674fa4-f59e-4f8e-888a-df78f1cb572a": [
+        "b7f7eff5b018d584444ce3df2486c7b78b8ef2203d4ffadee4c4f73681c8f69df4599ab24179d5dfaac6609bc4e175da870035df8c3367cc9483769f575c92082d90d9be95b7a76571b00e61bdd4100fe8f8409e63680138b07d60704f3fc688db14047ea078c2953016d4392875194df66d949f3b89bd7c1840b0846d7fb1e61e0f93e425d220db1af292ddfced4c79357d88744e8567e8fe9ef8f81bebdf9801490c39e633465d63fe1617da225826533aa0a3955a931dbbc4711667f8806305cb6f7f6904c3c8d194c5bd08e726dafbfc9e0baba0bec5a3520aa2a3cb34d9b6afababea7dfccd51e7fe675aad77386855f05056dd2e126910d74f61992717",
+        "b7f7eff5b018d584444ce3df2486c7b78b8ef2203d4ffadee4c4f73681c8f69df4599ab24179d5dfaac6609bc4e175da870035df8c3367cc9483769f575c92082d90d9be95b7a76571b00e61bdd4100fe8f8409e63680138b07d60704f3fc688db14047ea078c2953016d4392875194df66d949f3b89bd7c1840b0846d7fb1e61e0f93e425d220db1af292ddfced4c79357d88744e8567e8fe9ef8f81bebdf9801490c39e633465d63fe1617da225826533aa0a3955a931dbbc4711667f8806305cb6f7f6904c3c8d194c5bd08e726dafbfc9e0baba0bec5a3520aa2a3cb34d9b6afababea7dfccd51e7fe675aad77386855f05056dd2e126910d74f61992717"
       ],
       "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": [
-        "84529f6fc4e6167a7fc81251ab21282e7fe6762d1a6655f494c07c4c0bb034ee7c687716541ed1f69f686932a46930707bc5767d47011f638d441cfa0a482bd4f686b571e62772ca2a7f145f7661037c51135ed32b05e4f0a359a418cf17cf2ec79528e9610f040cb5442f37cd587d9ac9c40cfcfa50536e68867007435a48cf07e477d5b3ede2d3ac32de2b3b6a96dabca486baef90806da82186fe5f34b1e7e88ed36b791d3e9ed2097c60a5abfb2af6863f0260cf03fef70ad91d36542577d2af3f3ca126183bb41a08c958be637997d188b665d8049966a01a11a08dfa775de24db95a05b9308d18e9121d6641d5fa77921accf64319717ca0324c013637",
-        "427f813af1e28dfe9276ce816c95e007836c9cf6f1b7c14d7697705c05467de2cc7342d485947736400718ef33e9f98766a9d4863cca8317400a485e922b4edd8f20d6d5f01ddbc73979a240db9ac33b216eac2a070c6d29d3d92d2464ff7f308dc45dd94b98819156e42aad5dd0d93805c95281fc57bffd6d833556cc54360f3e36414297ab30c94756cd3b0f30c9583cd52a6bed52aa9239ca9cde70318cb6cfb187ccbb5408a3bc600b57655d90e47608231dc172deca5798877a70825d02acb566a1622151654ad16e4ee0a5c86038773a2854856c32147ed320e497b57703a32925b9d7cb31982b28d589a53fd7a2260f64bfce6f19d00446c0e733fd9c"
+        "91f3c24d3e4e087b5012ebb94e0f7b7db0c9e419f1e7a3af930e5ea0e6900cb49e7a3e1b3f01de5a29258ebe974cae9cbfe869f44dc90634e30f9bebe560f872120ac86661f1097fe4352fd2382adbd80de2e786c5bc53619d4b0760910efafbd533b93388eadc2ebc46f2512d52b43966762b2269b80712ca33ea2319341d4394bdec47ddf2a3ce7c4a7992b7fff5e518c1b96f28f86071163b783778d67fb51da0e61058e7cd2bf5ab961b286779fd3c657735a8c4a4b346961372fceef394207a591ce5070d1e2bebb832c2607d06ac18c492c188a47eba7dbda0ec915050f2ba5e5e4dd2a9d4c737c1c4c24739c25ac7839eeb242b4f945c6eb62ead7976",
+        "bf75e07a99bc7047c66512e5515bbd5e0f35896ccd354964c65339a200e1a695cee90fa9e138e23b734df5674a286dcd4d6b1d487f32f9805a5430fd399cd1f304ef6c09c673181fc3e102a2b769269f936f157d48ff81ee05de7e228a268b411ef3d74384ab6f72e1ba7a72c18a819193ce8b509284a7c44199a81b448e101cc35a09ccea61eb62cda79d4121e4543c0061224f1eeaa9e332cb80e21242d45ea5f917938a6786310e49112d66867bcdeb14cba9d13814f81e807e327f387d604c179df09189269a6d7ce88e00e523042a88516568eb678dfa230d8dfa574538d97ef2dc0b001898c56dc503260ebd885293141ca0fa3736c649b9c1f681fd2c"
       ]
     },
     "privateKeyShamirPartitions": {},
     "aesExchangeKeys": {
-      "30820122300d06092a864886f70d01010105000382010f003082010a0282010100ee52f89a85233c67faa8a92e765afa6d5bfca339977e4b1809664f999faedac9e060174f12d1cad1a8885dd6c399d7f7495966c1289e5acdc56ac6e4b3e1cad4fd2b0a5414c8de1c4c722d987ce76af8a786281d2a1b465886c4a3f6b97472c7dd2a0ab93fc8e62a307cd111f5e495f26336173d54d4cd632197bd1f706eb9f02253ccd5449b14f122d4fd32b7e4de524f56bf229200a46c2a53aaa79774c790d54f990d3b74dc9ce48bdd8a3f95216b1d634b7414e4befb20c30c7cdd327834bb366a2e2c10c7cd6d34e64913901351dbc6d3ec4498de23ba47af95bfe737fa558dbc29839af6c5e29ca3a8d6731e88e142ec4ba4c7090df3da48d3205cd0cb0203010001": {
-        "e3807753-8d67-4c71-8d1b-4395f418ba61": {
-          "c7090df3da48d3205cd0cb0203010001": "56e4a46353b293b9b6867cbedb60eb9384f40bb9ce898ded3adff5162951c7438d5202ca48ffb6a6eb958eccb92f67594dd1dda348734ce65bffeaa2a98451de5e89e0c3f9ce04523aeff2571da237f7e15020a96bd88610d58da0f63bca049b92a3c9a154eb0a54cdbf45da13362f4bd64af574722ab73df898cbc5ff04ee33b788a4c68491963a43c3a7cacb634699a409f4a305d23e304a49b1236ebc4b870e4b8bd0b8cf4dbd763f2ba58a39ae37843df6b0b764583de236c6951e5c13876f94ab086593f104f66e2ed989e4f490c6ece6d3576ec551abad06f5e2db304d4e1385705af00d6cded9404fecf3a380532878a139171d5489ffb143d8b2f321"
+      "30820122300d06092a864886f70d01010105000382010f003082010a0282010100bf946943b9e5705acd6466a2b3731f23625f2d347c7502b874d7857a2edd8aa233b134d4eb6fcff5c9d7db633fbc2c2c3b1c7ad6038647f336e42c8e3225d12b03d4847f385558bdb9a250d23612e63bb6b788d413c6dd12a287849a64bccd89254083e5095fdfd5b629bca5340f566f4e6efd5f71b12e351818a33b7bbfb73e952a8bbf868b5322d19fb70c084c00b42fb675f3306e776652746354781eb9b3c8f92ce091ec48a16def61b2e81a95b32ae6e7dd7a1f3ecf7b4b75c9e246477333d06fe13af77bf1e287ca5500dddfad3c61b3a78afed122ad91579c5dac2531ed1f108e3aac158a690aedf6bbea912f14beff5529f7106002f018436d588e050203010001": {
+        "1e674fa4-f59e-4f8e-888a-df78f1cb572a": {
+          "f7106002f018436d588e050203010001": "b7f7eff5b018d584444ce3df2486c7b78b8ef2203d4ffadee4c4f73681c8f69df4599ab24179d5dfaac6609bc4e175da870035df8c3367cc9483769f575c92082d90d9be95b7a76571b00e61bdd4100fe8f8409e63680138b07d60704f3fc688db14047ea078c2953016d4392875194df66d949f3b89bd7c1840b0846d7fb1e61e0f93e425d220db1af292ddfced4c79357d88744e8567e8fe9ef8f81bebdf9801490c39e633465d63fe1617da225826533aa0a3955a931dbbc4711667f8806305cb6f7f6904c3c8d194c5bd08e726dafbfc9e0baba0bec5a3520aa2a3cb34d9b6afababea7dfccd51e7fe675aad77386855f05056dd2e126910d74f61992717"
         },
         "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {
-          "c7090df3da48d3205cd0cb0203010001": "84529f6fc4e6167a7fc81251ab21282e7fe6762d1a6655f494c07c4c0bb034ee7c687716541ed1f69f686932a46930707bc5767d47011f638d441cfa0a482bd4f686b571e62772ca2a7f145f7661037c51135ed32b05e4f0a359a418cf17cf2ec79528e9610f040cb5442f37cd587d9ac9c40cfcfa50536e68867007435a48cf07e477d5b3ede2d3ac32de2b3b6a96dabca486baef90806da82186fe5f34b1e7e88ed36b791d3e9ed2097c60a5abfb2af6863f0260cf03fef70ad91d36542577d2af3f3ca126183bb41a08c958be637997d188b665d8049966a01a11a08dfa775de24db95a05b9308d18e9121d6641d5fa77921accf64319717ca0324c013637",
-          "223f55731820b91ccd18010203010001": "427f813af1e28dfe9276ce816c95e007836c9cf6f1b7c14d7697705c05467de2cc7342d485947736400718ef33e9f98766a9d4863cca8317400a485e922b4edd8f20d6d5f01ddbc73979a240db9ac33b216eac2a070c6d29d3d92d2464ff7f308dc45dd94b98819156e42aad5dd0d93805c95281fc57bffd6d833556cc54360f3e36414297ab30c94756cd3b0f30c9583cd52a6bed52aa9239ca9cde70318cb6cfb187ccbb5408a3bc600b57655d90e47608231dc172deca5798877a70825d02acb566a1622151654ad16e4ee0a5c86038773a2854856c32147ed320e497b57703a32925b9d7cb31982b28d589a53fd7a2260f64bfce6f19d00446c0e733fd9c"
+          "f7106002f018436d588e050203010001": "91f3c24d3e4e087b5012ebb94e0f7b7db0c9e419f1e7a3af930e5ea0e6900cb49e7a3e1b3f01de5a29258ebe974cae9cbfe869f44dc90634e30f9bebe560f872120ac86661f1097fe4352fd2382adbd80de2e786c5bc53619d4b0760910efafbd533b93388eadc2ebc46f2512d52b43966762b2269b80712ca33ea2319341d4394bdec47ddf2a3ce7c4a7992b7fff5e518c1b96f28f86071163b783778d67fb51da0e61058e7cd2bf5ab961b286779fd3c657735a8c4a4b346961372fceef394207a591ce5070d1e2bebb832c2607d06ac18c492c188a47eba7dbda0ec915050f2ba5e5e4dd2a9d4c737c1c4c24739c25ac7839eeb242b4f945c6eb62ead7976",
+          "223f55731820b91ccd18010203010001": "bf75e07a99bc7047c66512e5515bbd5e0f35896ccd354964c65339a200e1a695cee90fa9e138e23b734df5674a286dcd4d6b1d487f32f9805a5430fd399cd1f304ef6c09c673181fc3e102a2b769269f936f157d48ff81ee05de7e228a268b411ef3d74384ab6f72e1ba7a72c18a819193ce8b509284a7c44199a81b448e101cc35a09ccea61eb62cda79d4121e4543c0061224f1eeaa9e332cb80e21242d45ea5f917938a6786310e49112d66867bcdeb14cba9d13814f81e807e327f387d604c179df09189269a6d7ce88e00e523042a88516568eb678dfa230d8dfa574538d97ef2dc0b001898c56dc503260ebd885293141ca0fa3736c649b9c1f681fd2c"
         }
       }
     },
     "transferKeys": {},
-    "encryptedSelf": "NO6uHqoci/U1Css6ry/9xRjBf3aldqYqkK5EvLupYw0=",
+    "encryptedSelf": "K/pI0fic1d62rp0WcVfmsrHgwgUWtw+S8Q6xvLXqKbQ=",
     "secretForeignKeys": [],
     "cryptedForeignKeys": {},
     "delegations": {
       "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {},
-      "e3807753-8d67-4c71-8d1b-4395f418ba61": {}
+      "1e674fa4-f59e-4f8e-888a-df78f1cb572a": {}
     },
     "encryptionKeys": {
       "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
@@ -229,13 +229,13 @@ const modifiedPatientDetails = await apiAsPatient.patientApi.modifyPotentiallyEn
 
 ```json
 {
-  "id": "e3807753-8d67-4c71-8d1b-4395f418ba61",
+  "id": "1e674fa4-f59e-4f8e-888a-df78f1cb572a",
   "languages": [],
   "active": true,
   "parameters": {},
-  "rev": "6-aa12adb075453931f2d1086712f57bf6",
-  "created": 1679991678124,
-  "modified": 1679991678124,
+  "rev": "6-acd4eb454f09f68383b9b9f569b123e9",
+  "created": 1680075073795,
+  "modified": 1680075073795,
   "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
   "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
   "firstName": "Marc",
@@ -262,7 +262,7 @@ const modifiedPatientDetails = await apiAsPatient.patientApi.modifyPotentiallyEn
       "addressType": "home",
       "telecoms": [
         {
-          "telecomNumber": "b25d977b@icure.com",
+          "telecomNumber": "dbe85ef2@icure.com",
           "telecomType": "email"
         }
       ]
@@ -278,36 +278,36 @@ const modifiedPatientDetails = await apiAsPatient.patientApi.modifyPotentiallyEn
   "patientProfessions": [],
   "properties": {},
   "systemMetaData": {
-    "publicKey": "30820122300d06092a864886f70d01010105000382010f003082010a0282010100ee52f89a85233c67faa8a92e765afa6d5bfca339977e4b1809664f999faedac9e060174f12d1cad1a8885dd6c399d7f7495966c1289e5acdc56ac6e4b3e1cad4fd2b0a5414c8de1c4c722d987ce76af8a786281d2a1b465886c4a3f6b97472c7dd2a0ab93fc8e62a307cd111f5e495f26336173d54d4cd632197bd1f706eb9f02253ccd5449b14f122d4fd32b7e4de524f56bf229200a46c2a53aaa79774c790d54f990d3b74dc9ce48bdd8a3f95216b1d634b7414e4befb20c30c7cdd327834bb366a2e2c10c7cd6d34e64913901351dbc6d3ec4498de23ba47af95bfe737fa558dbc29839af6c5e29ca3a8d6731e88e142ec4ba4c7090df3da48d3205cd0cb0203010001",
+    "publicKey": "30820122300d06092a864886f70d01010105000382010f003082010a0282010100bf946943b9e5705acd6466a2b3731f23625f2d347c7502b874d7857a2edd8aa233b134d4eb6fcff5c9d7db633fbc2c2c3b1c7ad6038647f336e42c8e3225d12b03d4847f385558bdb9a250d23612e63bb6b788d413c6dd12a287849a64bccd89254083e5095fdfd5b629bca5340f566f4e6efd5f71b12e351818a33b7bbfb73e952a8bbf868b5322d19fb70c084c00b42fb675f3306e776652746354781eb9b3c8f92ce091ec48a16def61b2e81a95b32ae6e7dd7a1f3ecf7b4b75c9e246477333d06fe13af77bf1e287ca5500dddfad3c61b3a78afed122ad91579c5dac2531ed1f108e3aac158a690aedf6bbea912f14beff5529f7106002f018436d588e050203010001",
     "hcPartyKeys": {
-      "e3807753-8d67-4c71-8d1b-4395f418ba61": [
-        "56e4a46353b293b9b6867cbedb60eb9384f40bb9ce898ded3adff5162951c7438d5202ca48ffb6a6eb958eccb92f67594dd1dda348734ce65bffeaa2a98451de5e89e0c3f9ce04523aeff2571da237f7e15020a96bd88610d58da0f63bca049b92a3c9a154eb0a54cdbf45da13362f4bd64af574722ab73df898cbc5ff04ee33b788a4c68491963a43c3a7cacb634699a409f4a305d23e304a49b1236ebc4b870e4b8bd0b8cf4dbd763f2ba58a39ae37843df6b0b764583de236c6951e5c13876f94ab086593f104f66e2ed989e4f490c6ece6d3576ec551abad06f5e2db304d4e1385705af00d6cded9404fecf3a380532878a139171d5489ffb143d8b2f321",
-        "56e4a46353b293b9b6867cbedb60eb9384f40bb9ce898ded3adff5162951c7438d5202ca48ffb6a6eb958eccb92f67594dd1dda348734ce65bffeaa2a98451de5e89e0c3f9ce04523aeff2571da237f7e15020a96bd88610d58da0f63bca049b92a3c9a154eb0a54cdbf45da13362f4bd64af574722ab73df898cbc5ff04ee33b788a4c68491963a43c3a7cacb634699a409f4a305d23e304a49b1236ebc4b870e4b8bd0b8cf4dbd763f2ba58a39ae37843df6b0b764583de236c6951e5c13876f94ab086593f104f66e2ed989e4f490c6ece6d3576ec551abad06f5e2db304d4e1385705af00d6cded9404fecf3a380532878a139171d5489ffb143d8b2f321"
+      "1e674fa4-f59e-4f8e-888a-df78f1cb572a": [
+        "b7f7eff5b018d584444ce3df2486c7b78b8ef2203d4ffadee4c4f73681c8f69df4599ab24179d5dfaac6609bc4e175da870035df8c3367cc9483769f575c92082d90d9be95b7a76571b00e61bdd4100fe8f8409e63680138b07d60704f3fc688db14047ea078c2953016d4392875194df66d949f3b89bd7c1840b0846d7fb1e61e0f93e425d220db1af292ddfced4c79357d88744e8567e8fe9ef8f81bebdf9801490c39e633465d63fe1617da225826533aa0a3955a931dbbc4711667f8806305cb6f7f6904c3c8d194c5bd08e726dafbfc9e0baba0bec5a3520aa2a3cb34d9b6afababea7dfccd51e7fe675aad77386855f05056dd2e126910d74f61992717",
+        "b7f7eff5b018d584444ce3df2486c7b78b8ef2203d4ffadee4c4f73681c8f69df4599ab24179d5dfaac6609bc4e175da870035df8c3367cc9483769f575c92082d90d9be95b7a76571b00e61bdd4100fe8f8409e63680138b07d60704f3fc688db14047ea078c2953016d4392875194df66d949f3b89bd7c1840b0846d7fb1e61e0f93e425d220db1af292ddfced4c79357d88744e8567e8fe9ef8f81bebdf9801490c39e633465d63fe1617da225826533aa0a3955a931dbbc4711667f8806305cb6f7f6904c3c8d194c5bd08e726dafbfc9e0baba0bec5a3520aa2a3cb34d9b6afababea7dfccd51e7fe675aad77386855f05056dd2e126910d74f61992717"
       ],
       "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": [
-        "84529f6fc4e6167a7fc81251ab21282e7fe6762d1a6655f494c07c4c0bb034ee7c687716541ed1f69f686932a46930707bc5767d47011f638d441cfa0a482bd4f686b571e62772ca2a7f145f7661037c51135ed32b05e4f0a359a418cf17cf2ec79528e9610f040cb5442f37cd587d9ac9c40cfcfa50536e68867007435a48cf07e477d5b3ede2d3ac32de2b3b6a96dabca486baef90806da82186fe5f34b1e7e88ed36b791d3e9ed2097c60a5abfb2af6863f0260cf03fef70ad91d36542577d2af3f3ca126183bb41a08c958be637997d188b665d8049966a01a11a08dfa775de24db95a05b9308d18e9121d6641d5fa77921accf64319717ca0324c013637",
-        "427f813af1e28dfe9276ce816c95e007836c9cf6f1b7c14d7697705c05467de2cc7342d485947736400718ef33e9f98766a9d4863cca8317400a485e922b4edd8f20d6d5f01ddbc73979a240db9ac33b216eac2a070c6d29d3d92d2464ff7f308dc45dd94b98819156e42aad5dd0d93805c95281fc57bffd6d833556cc54360f3e36414297ab30c94756cd3b0f30c9583cd52a6bed52aa9239ca9cde70318cb6cfb187ccbb5408a3bc600b57655d90e47608231dc172deca5798877a70825d02acb566a1622151654ad16e4ee0a5c86038773a2854856c32147ed320e497b57703a32925b9d7cb31982b28d589a53fd7a2260f64bfce6f19d00446c0e733fd9c"
+        "91f3c24d3e4e087b5012ebb94e0f7b7db0c9e419f1e7a3af930e5ea0e6900cb49e7a3e1b3f01de5a29258ebe974cae9cbfe869f44dc90634e30f9bebe560f872120ac86661f1097fe4352fd2382adbd80de2e786c5bc53619d4b0760910efafbd533b93388eadc2ebc46f2512d52b43966762b2269b80712ca33ea2319341d4394bdec47ddf2a3ce7c4a7992b7fff5e518c1b96f28f86071163b783778d67fb51da0e61058e7cd2bf5ab961b286779fd3c657735a8c4a4b346961372fceef394207a591ce5070d1e2bebb832c2607d06ac18c492c188a47eba7dbda0ec915050f2ba5e5e4dd2a9d4c737c1c4c24739c25ac7839eeb242b4f945c6eb62ead7976",
+        "bf75e07a99bc7047c66512e5515bbd5e0f35896ccd354964c65339a200e1a695cee90fa9e138e23b734df5674a286dcd4d6b1d487f32f9805a5430fd399cd1f304ef6c09c673181fc3e102a2b769269f936f157d48ff81ee05de7e228a268b411ef3d74384ab6f72e1ba7a72c18a819193ce8b509284a7c44199a81b448e101cc35a09ccea61eb62cda79d4121e4543c0061224f1eeaa9e332cb80e21242d45ea5f917938a6786310e49112d66867bcdeb14cba9d13814f81e807e327f387d604c179df09189269a6d7ce88e00e523042a88516568eb678dfa230d8dfa574538d97ef2dc0b001898c56dc503260ebd885293141ca0fa3736c649b9c1f681fd2c"
       ]
     },
     "privateKeyShamirPartitions": {},
     "aesExchangeKeys": {
-      "30820122300d06092a864886f70d01010105000382010f003082010a0282010100ee52f89a85233c67faa8a92e765afa6d5bfca339977e4b1809664f999faedac9e060174f12d1cad1a8885dd6c399d7f7495966c1289e5acdc56ac6e4b3e1cad4fd2b0a5414c8de1c4c722d987ce76af8a786281d2a1b465886c4a3f6b97472c7dd2a0ab93fc8e62a307cd111f5e495f26336173d54d4cd632197bd1f706eb9f02253ccd5449b14f122d4fd32b7e4de524f56bf229200a46c2a53aaa79774c790d54f990d3b74dc9ce48bdd8a3f95216b1d634b7414e4befb20c30c7cdd327834bb366a2e2c10c7cd6d34e64913901351dbc6d3ec4498de23ba47af95bfe737fa558dbc29839af6c5e29ca3a8d6731e88e142ec4ba4c7090df3da48d3205cd0cb0203010001": {
-        "e3807753-8d67-4c71-8d1b-4395f418ba61": {
-          "c7090df3da48d3205cd0cb0203010001": "56e4a46353b293b9b6867cbedb60eb9384f40bb9ce898ded3adff5162951c7438d5202ca48ffb6a6eb958eccb92f67594dd1dda348734ce65bffeaa2a98451de5e89e0c3f9ce04523aeff2571da237f7e15020a96bd88610d58da0f63bca049b92a3c9a154eb0a54cdbf45da13362f4bd64af574722ab73df898cbc5ff04ee33b788a4c68491963a43c3a7cacb634699a409f4a305d23e304a49b1236ebc4b870e4b8bd0b8cf4dbd763f2ba58a39ae37843df6b0b764583de236c6951e5c13876f94ab086593f104f66e2ed989e4f490c6ece6d3576ec551abad06f5e2db304d4e1385705af00d6cded9404fecf3a380532878a139171d5489ffb143d8b2f321"
+      "30820122300d06092a864886f70d01010105000382010f003082010a0282010100bf946943b9e5705acd6466a2b3731f23625f2d347c7502b874d7857a2edd8aa233b134d4eb6fcff5c9d7db633fbc2c2c3b1c7ad6038647f336e42c8e3225d12b03d4847f385558bdb9a250d23612e63bb6b788d413c6dd12a287849a64bccd89254083e5095fdfd5b629bca5340f566f4e6efd5f71b12e351818a33b7bbfb73e952a8bbf868b5322d19fb70c084c00b42fb675f3306e776652746354781eb9b3c8f92ce091ec48a16def61b2e81a95b32ae6e7dd7a1f3ecf7b4b75c9e246477333d06fe13af77bf1e287ca5500dddfad3c61b3a78afed122ad91579c5dac2531ed1f108e3aac158a690aedf6bbea912f14beff5529f7106002f018436d588e050203010001": {
+        "1e674fa4-f59e-4f8e-888a-df78f1cb572a": {
+          "f7106002f018436d588e050203010001": "b7f7eff5b018d584444ce3df2486c7b78b8ef2203d4ffadee4c4f73681c8f69df4599ab24179d5dfaac6609bc4e175da870035df8c3367cc9483769f575c92082d90d9be95b7a76571b00e61bdd4100fe8f8409e63680138b07d60704f3fc688db14047ea078c2953016d4392875194df66d949f3b89bd7c1840b0846d7fb1e61e0f93e425d220db1af292ddfced4c79357d88744e8567e8fe9ef8f81bebdf9801490c39e633465d63fe1617da225826533aa0a3955a931dbbc4711667f8806305cb6f7f6904c3c8d194c5bd08e726dafbfc9e0baba0bec5a3520aa2a3cb34d9b6afababea7dfccd51e7fe675aad77386855f05056dd2e126910d74f61992717"
         },
         "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {
-          "c7090df3da48d3205cd0cb0203010001": "84529f6fc4e6167a7fc81251ab21282e7fe6762d1a6655f494c07c4c0bb034ee7c687716541ed1f69f686932a46930707bc5767d47011f638d441cfa0a482bd4f686b571e62772ca2a7f145f7661037c51135ed32b05e4f0a359a418cf17cf2ec79528e9610f040cb5442f37cd587d9ac9c40cfcfa50536e68867007435a48cf07e477d5b3ede2d3ac32de2b3b6a96dabca486baef90806da82186fe5f34b1e7e88ed36b791d3e9ed2097c60a5abfb2af6863f0260cf03fef70ad91d36542577d2af3f3ca126183bb41a08c958be637997d188b665d8049966a01a11a08dfa775de24db95a05b9308d18e9121d6641d5fa77921accf64319717ca0324c013637",
-          "223f55731820b91ccd18010203010001": "427f813af1e28dfe9276ce816c95e007836c9cf6f1b7c14d7697705c05467de2cc7342d485947736400718ef33e9f98766a9d4863cca8317400a485e922b4edd8f20d6d5f01ddbc73979a240db9ac33b216eac2a070c6d29d3d92d2464ff7f308dc45dd94b98819156e42aad5dd0d93805c95281fc57bffd6d833556cc54360f3e36414297ab30c94756cd3b0f30c9583cd52a6bed52aa9239ca9cde70318cb6cfb187ccbb5408a3bc600b57655d90e47608231dc172deca5798877a70825d02acb566a1622151654ad16e4ee0a5c86038773a2854856c32147ed320e497b57703a32925b9d7cb31982b28d589a53fd7a2260f64bfce6f19d00446c0e733fd9c"
+          "f7106002f018436d588e050203010001": "91f3c24d3e4e087b5012ebb94e0f7b7db0c9e419f1e7a3af930e5ea0e6900cb49e7a3e1b3f01de5a29258ebe974cae9cbfe869f44dc90634e30f9bebe560f872120ac86661f1097fe4352fd2382adbd80de2e786c5bc53619d4b0760910efafbd533b93388eadc2ebc46f2512d52b43966762b2269b80712ca33ea2319341d4394bdec47ddf2a3ce7c4a7992b7fff5e518c1b96f28f86071163b783778d67fb51da0e61058e7cd2bf5ab961b286779fd3c657735a8c4a4b346961372fceef394207a591ce5070d1e2bebb832c2607d06ac18c492c188a47eba7dbda0ec915050f2ba5e5e4dd2a9d4c737c1c4c24739c25ac7839eeb242b4f945c6eb62ead7976",
+          "223f55731820b91ccd18010203010001": "bf75e07a99bc7047c66512e5515bbd5e0f35896ccd354964c65339a200e1a695cee90fa9e138e23b734df5674a286dcd4d6b1d487f32f9805a5430fd399cd1f304ef6c09c673181fc3e102a2b769269f936f157d48ff81ee05de7e228a268b411ef3d74384ab6f72e1ba7a72c18a819193ce8b509284a7c44199a81b448e101cc35a09ccea61eb62cda79d4121e4543c0061224f1eeaa9e332cb80e21242d45ea5f917938a6786310e49112d66867bcdeb14cba9d13814f81e807e327f387d604c179df09189269a6d7ce88e00e523042a88516568eb678dfa230d8dfa574538d97ef2dc0b001898c56dc503260ebd885293141ca0fa3736c649b9c1f681fd2c"
         }
       }
     },
     "transferKeys": {},
-    "encryptedSelf": "NO6uHqoci/U1Css6ry/9xRjBf3aldqYqkK5EvLupYw0=",
+    "encryptedSelf": "K/pI0fic1d62rp0WcVfmsrHgwgUWtw+S8Q6xvLXqKbQ=",
     "secretForeignKeys": [],
     "cryptedForeignKeys": {},
     "delegations": {
       "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {},
-      "e3807753-8d67-4c71-8d1b-4395f418ba61": {}
+      "1e674fa4-f59e-4f8e-888a-df78f1cb572a": {}
     },
     "encryptionKeys": {
       "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
@@ -351,14 +351,14 @@ console.log(await apiAsDoctor.healthcareElementApi.getHealthcareElement(newHealt
 
 ```json
 {
-  "id": "9ddfc230-5587-4e25-90f1-b60503741cde",
-  "rev": "1-6c5715491b9c1c1b5553005f88308475",
-  "created": 1679991687201,
-  "modified": 1679991687201,
-  "author": "ac9c1e8c-7062-4d7d-aacb-daa363337c0c",
-  "responsible": "e3807753-8d67-4c71-8d1b-4395f418ba61",
-  "healthcareElementId": "9ddfc230-5587-4e25-90f1-b60503741cde",
-  "valueDate": 20230328102127,
+  "id": "caaaa8c6-3484-4505-9eff-48d2b3757707",
+  "rev": "1-826aaa208f96817a4752344e1b9e8b76",
+  "created": 1680075084385,
+  "modified": 1680075084385,
+  "author": "be11123f-7dcd-4731-b856-9b55b1bb357b",
+  "responsible": "1e674fa4-f59e-4f8e-888a-df78f1cb572a",
+  "healthcareElementId": "caaaa8c6-3484-4505-9eff-48d2b3757707",
+  "valueDate": 20230329073124,
   "openingDate": 1570838400000,
   "description": "I don't feel so well",
   "identifiers": [],
@@ -366,18 +366,18 @@ console.log(await apiAsDoctor.healthcareElementApi.getHealthcareElement(newHealt
   "labels": {},
   "systemMetaData": {
     "secretForeignKeys": [
-      "df1c3291-d4a4-48d1-a14c-5a615c3dd0d9"
+      "9a6b39be-ad59-4b8a-8e9f-5d687ea988b3"
     ],
     "cryptedForeignKeys": {
-      "e3807753-8d67-4c71-8d1b-4395f418ba61": {}
+      "1e674fa4-f59e-4f8e-888a-df78f1cb572a": {}
     },
     "delegations": {
-      "e3807753-8d67-4c71-8d1b-4395f418ba61": {}
+      "1e674fa4-f59e-4f8e-888a-df78f1cb572a": {}
     },
     "encryptionKeys": {
-      "e3807753-8d67-4c71-8d1b-4395f418ba61": {}
+      "1e674fa4-f59e-4f8e-888a-df78f1cb572a": {}
     },
-    "encryptedSelf": "aKjKOQo1FFPn0lL6Phzh9AHUMjP9MhK0Xzn3x7wfJrQ8q511KUq8irU/uOG/1z29Ib+P9wjqvhri84Kwu0fn5w=="
+    "encryptedSelf": "UlWRwprRI3DCIcFwCS/DyKgV9aKWK45E51YLnu6fLV+qNG1DiPBFpJYaBwpC5by1PxNVBtMpig6Nhyw4ciYr5Q=="
   }
 }
 ```
@@ -389,14 +389,14 @@ console.log(await apiAsDoctor.healthcareElementApi.getHealthcareElement(newHealt
 
 ```json
 {
-  "id": "9ddfc230-5587-4e25-90f1-b60503741cde",
-  "rev": "2-8b8d70d0b5ebfb8674c1c937f8bb6399",
-  "created": 1679991687201,
-  "modified": 1679991687201,
-  "author": "ac9c1e8c-7062-4d7d-aacb-daa363337c0c",
-  "responsible": "e3807753-8d67-4c71-8d1b-4395f418ba61",
-  "healthcareElementId": "9ddfc230-5587-4e25-90f1-b60503741cde",
-  "valueDate": 20230328102127,
+  "id": "caaaa8c6-3484-4505-9eff-48d2b3757707",
+  "rev": "2-cc7e4261b69a962326f2a755fba22681",
+  "created": 1680075084385,
+  "modified": 1680075084385,
+  "author": "be11123f-7dcd-4731-b856-9b55b1bb357b",
+  "responsible": "1e674fa4-f59e-4f8e-888a-df78f1cb572a",
+  "healthcareElementId": "caaaa8c6-3484-4505-9eff-48d2b3757707",
+  "valueDate": 20230329073124,
   "openingDate": 1570838400000,
   "description": "I don't feel so well",
   "identifiers": [],
@@ -404,21 +404,21 @@ console.log(await apiAsDoctor.healthcareElementApi.getHealthcareElement(newHealt
   "labels": {},
   "systemMetaData": {
     "secretForeignKeys": [
-      "df1c3291-d4a4-48d1-a14c-5a615c3dd0d9"
+      "9a6b39be-ad59-4b8a-8e9f-5d687ea988b3"
     ],
     "cryptedForeignKeys": {
-      "e3807753-8d67-4c71-8d1b-4395f418ba61": {},
+      "1e674fa4-f59e-4f8e-888a-df78f1cb572a": {},
       "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
     },
     "delegations": {
-      "e3807753-8d67-4c71-8d1b-4395f418ba61": {},
+      "1e674fa4-f59e-4f8e-888a-df78f1cb572a": {},
       "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
     },
     "encryptionKeys": {
-      "e3807753-8d67-4c71-8d1b-4395f418ba61": {},
+      "1e674fa4-f59e-4f8e-888a-df78f1cb572a": {},
       "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
     },
-    "encryptedSelf": "962vLc9+sRq5+hDKccEpkDR6GeRKFiXT1Y7gVkHUqCXbhZXNYuaKuEHvHd0RaWlpNcfXxGsmhUfjAxgxDiF4eg=="
+    "encryptedSelf": "tubYH+HNnaKZCGZBq3H9+SzI+ckhfsQ2xXfZ5bWcwO4uSYkK5yfSNSXfNZDPPL2LHD1rdtPUU0gPwMubeggX3A=="
   }
 }
 ```
@@ -475,35 +475,35 @@ console.log(foundHEs.rows.find((x) => x.id == newHealthcareElement.id)) // Healt
   "totalSize": 1,
   "rows": [
     {
-      "id": "9ddfc230-5587-4e25-90f1-b60503741cde",
-      "rev": "2-8b8d70d0b5ebfb8674c1c937f8bb6399",
-      "created": 1679991687201,
-      "modified": 1679991687201,
-      "author": "ac9c1e8c-7062-4d7d-aacb-daa363337c0c",
-      "responsible": "e3807753-8d67-4c71-8d1b-4395f418ba61",
-      "healthcareElementId": "9ddfc230-5587-4e25-90f1-b60503741cde",
-      "valueDate": 20230328102127,
+      "id": "caaaa8c6-3484-4505-9eff-48d2b3757707",
+      "rev": "2-cc7e4261b69a962326f2a755fba22681",
+      "created": 1680075084385,
+      "modified": 1680075084385,
+      "author": "be11123f-7dcd-4731-b856-9b55b1bb357b",
+      "responsible": "1e674fa4-f59e-4f8e-888a-df78f1cb572a",
+      "healthcareElementId": "caaaa8c6-3484-4505-9eff-48d2b3757707",
+      "valueDate": 20230329073124,
       "openingDate": 1570838400000,
       "identifiers": [],
       "codes": {},
       "labels": {},
       "systemMetaData": {
         "secretForeignKeys": [
-          "df1c3291-d4a4-48d1-a14c-5a615c3dd0d9"
+          "9a6b39be-ad59-4b8a-8e9f-5d687ea988b3"
         ],
         "cryptedForeignKeys": {
-          "e3807753-8d67-4c71-8d1b-4395f418ba61": {},
+          "1e674fa4-f59e-4f8e-888a-df78f1cb572a": {},
           "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
         },
         "delegations": {
-          "e3807753-8d67-4c71-8d1b-4395f418ba61": {},
+          "1e674fa4-f59e-4f8e-888a-df78f1cb572a": {},
           "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
         },
         "encryptionKeys": {
-          "e3807753-8d67-4c71-8d1b-4395f418ba61": {},
+          "1e674fa4-f59e-4f8e-888a-df78f1cb572a": {},
           "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
         },
-        "encryptedSelf": "962vLc9+sRq5+hDKccEpkDR6GeRKFiXT1Y7gVkHUqCXbhZXNYuaKuEHvHd0RaWlpNcfXxGsmhUfjAxgxDiF4eg=="
+        "encryptedSelf": "tubYH+HNnaKZCGZBq3H9+SzI+ckhfsQ2xXfZ5bWcwO4uSYkK5yfSNSXfNZDPPL2LHD1rdtPUU0gPwMubeggX3A=="
       }
     }
   ],
@@ -544,12 +544,12 @@ const patientNotification = newNotifications.filter(
 ```text
 [
   {
-    "id": "907ef780-7a6e-488b-a5db-68d9d0472c8c",
-    "rev": "1-84a4b5198ec5a99827b1d135aee46e29",
-    "created": 1679991686085,
-    "modified": 1679991686085,
-    "author": "ac9c1e8c-7062-4d7d-aacb-daa363337c0c",
-    "responsible": "e3807753-8d67-4c71-8d1b-4395f418ba61",
+    "id": "360f26c2-1e7b-40b1-a20b-48f114644d39",
+    "rev": "1-5d6df8849dc3b953f970def2b2127aca",
+    "created": 1680075082621,
+    "modified": 1680075082621,
+    "author": "be11123f-7dcd-4731-b856-9b55b1bb357b",
+    "responsible": "1e674fa4-f59e-4f8e-888a-df78f1cb572a",
     "status": "pending",
     "identifiers": [],
     "properties": [],
@@ -558,11 +558,332 @@ const patientNotification = newNotifications.filter(
       "secretForeignKeys": [],
       "cryptedForeignKeys": {},
       "delegations": {
-        "e3807753-8d67-4c71-8d1b-4395f418ba61": {},
+        "1e674fa4-f59e-4f8e-888a-df78f1cb572a": {},
         "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
       },
       "encryptionKeys": {
-        "e3807753-8d67-4c71-8d1b-4395f418ba61": {},
+        "1e674fa4-f59e-4f8e-888a-df78f1cb572a": {},
+        "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+      }
+    }
+  },
+  {
+    "id": "84440ac1-4d17-4f80-a27b-859e0cf81af2",
+    "rev": "1-3a55504f4fe5efe2642b6ada57077058",
+    "created": 1680075052724,
+    "modified": 1680075052724,
+    "author": "f4c7dd4e-e7c9-4419-8dc1-eb6217654134",
+    "responsible": "59b5a1d8-46a6-429f-9b41-005925c8afd5",
+    "status": "pending",
+    "identifiers": [],
+    "properties": [
+      {
+        "id": "dataOwnerConcernedId",
+        "type": {
+          "type": "STRING"
+        },
+        "typedValue": {
+          "stringValue": "59b5a1d8-46a6-429f-9b41-005925c8afd5",
+          "type": "STRING"
+        }
+      },
+      {
+        "id": "dataOwnerConcernedPubKey",
+        "type": {
+          "type": "STRING"
+        },
+        "typedValue": {
+          "stringValue": "30820122300d06092a864886f70d01010105000382010f003082010a0282010100d0921d7b18d8341444130f89d215d83800db65373d21a036c3f3c840f824b4fc4723024599438105f38106d2ffd7173b8291478c02334cab84e213a9fd9d24f7508e2468b18bdf3db59df9f2fd908082ce6e1aea60bee23fde6efeb500d7911f38bf451e38f4084ed3c8bb794b7b1c768d3756a353822a372029b1959527fa47d951c6c64231d050b3480443b6c82389e12fcc34d844401e06932479a32db49618ef18a1dd63a29cd321a2c4deb62170eb74bf9d243a766de5b0b97e57bae84b0cc4f55bacb6d6245912409703f37fb2a45af5d63d888c233698307ae2234e872e4b425042957ede9a1f5b0ad543c685775a35328a0468691cd0a0c136a9edbb0203010001",
+          "type": "STRING"
+        }
+      }
+    ],
+    "type": "KEY_PAIR_UPDATE",
+    "systemMetaData": {
+      "secretForeignKeys": [],
+      "cryptedForeignKeys": {},
+      "delegations": {
+        "59b5a1d8-46a6-429f-9b41-005925c8afd5": {},
+        "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+      },
+      "encryptionKeys": {
+        "59b5a1d8-46a6-429f-9b41-005925c8afd5": {},
+        "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+      }
+    }
+  },
+  {
+    "id": "68c22afb-3e6f-40e8-a6c6-a78c982fd7e1",
+    "rev": "1-1ce5678e6867b66daf8bfcd2874bdf84",
+    "created": 1680074915461,
+    "modified": 1680074915461,
+    "author": "68a4f7d3-aa5d-43ff-95a1-ba14675397ca",
+    "responsible": "3238dd4f-be09-4375-bb5b-0bf9d737ac94",
+    "status": "pending",
+    "identifiers": [],
+    "properties": [],
+    "type": "OTHER",
+    "systemMetaData": {
+      "secretForeignKeys": [],
+      "cryptedForeignKeys": {},
+      "delegations": {
+        "3238dd4f-be09-4375-bb5b-0bf9d737ac94": {},
+        "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+      },
+      "encryptionKeys": {
+        "3238dd4f-be09-4375-bb5b-0bf9d737ac94": {},
+        "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+      }
+    }
+  },
+  {
+    "id": "b1ebe730-dfb6-4730-83ff-972ae2e4b9de",
+    "rev": "1-c324b14cdcbeb33cf0a8f6722f785329",
+    "created": 1680074915217,
+    "modified": 1680074915217,
+    "author": "68a4f7d3-aa5d-43ff-95a1-ba14675397ca",
+    "responsible": "3238dd4f-be09-4375-bb5b-0bf9d737ac94",
+    "status": "pending",
+    "identifiers": [],
+    "properties": [],
+    "type": "KEY_PAIR_UPDATE",
+    "systemMetaData": {
+      "secretForeignKeys": [],
+      "cryptedForeignKeys": {},
+      "delegations": {
+        "3238dd4f-be09-4375-bb5b-0bf9d737ac94": {},
+        "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+      },
+      "encryptionKeys": {
+        "3238dd4f-be09-4375-bb5b-0bf9d737ac94": {},
+        "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+      }
+    }
+  },
+  {
+    "id": "a82b655a-6cc5-4727-b15a-375ee28003c2",
+    "rev": "1-414c3eb13ff9f787cb2b84ba4746fe58",
+    "created": 1680074852281,
+    "modified": 1680074852281,
+    "author": "14d6bd45-7a28-4d38-9255-16323a2eed92",
+    "responsible": "aeda80a9-193d-4f8b-ab4e-1510ab77ccbb",
+    "status": "pending",
+    "identifiers": [],
+    "properties": [
+      {
+        "id": "dataOwnerConcernedId",
+        "type": {
+          "type": "STRING"
+        },
+        "typedValue": {
+          "stringValue": "aeda80a9-193d-4f8b-ab4e-1510ab77ccbb",
+          "type": "STRING"
+        }
+      },
+      {
+        "id": "dataOwnerConcernedPubKey",
+        "type": {
+          "type": "STRING"
+        },
+        "typedValue": {
+          "stringValue": "30820122300d06092a864886f70d01010105000382010f003082010a0282010100d51cdfd81437e260e49d00636160e930f55c0fd6ad45a055c93496e9e4ce1db5617174433afb5bfba3fddffb4e4e3ce12c2b6e72575a8f347bcc5047325f4883a47cc4bb1009313764973131bb62c93c3176bef9c28176a179b7b2cbbfef3eb6789d11fd5197bf105725eb6ffccfca887e327c009f0b29befeee566cd228b37519aeb0e4be2b72ab25c608b1f304b6416f3d44ea5d111177f39d81f1e2f1d42aa2180555e942653d047681a69116b3b6cfc56005676edcd0d1ce3628eac5a2f567f67c3a9fbc19f6a4388a8010b27e41d8154ca5ab02ff556c0ee8dec88365d49a2f862f6fd55be1906cf076c5424a9b933d128dd2ae3324920e3d36c24ed04f0203010001",
+          "type": "STRING"
+        }
+      }
+    ],
+    "type": "KEY_PAIR_UPDATE",
+    "systemMetaData": {
+      "secretForeignKeys": [],
+      "cryptedForeignKeys": {},
+      "delegations": {
+        "aeda80a9-193d-4f8b-ab4e-1510ab77ccbb": {},
+        "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+      },
+      "encryptionKeys": {
+        "aeda80a9-193d-4f8b-ab4e-1510ab77ccbb": {},
+        "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+      }
+    }
+  },
+  {
+    "id": "168d0fb1-ab1f-4372-990b-27566df70c1f",
+    "rev": "1-07f3fb5766649aa9c05d9c0ddb9cd7bb",
+    "created": 1680074568833,
+    "modified": 1680074568833,
+    "author": "b4269bb4-cf98-491b-b5a6-696895acede2",
+    "responsible": "cba719b5-f8df-4e63-b34a-df5378648a29",
+    "status": "pending",
+    "identifiers": [],
+    "properties": [
+      {
+        "id": "dataOwnerConcernedId",
+        "type": {
+          "type": "STRING"
+        },
+        "typedValue": {
+          "stringValue": "cba719b5-f8df-4e63-b34a-df5378648a29",
+          "type": "STRING"
+        }
+      },
+      {
+        "id": "dataOwnerConcernedPubKey",
+        "type": {
+          "type": "STRING"
+        },
+        "typedValue": {
+          "stringValue": "30820122300d06092a864886f70d01010105000382010f003082010a0282010100c3a5d089bcbe24d444359d1539877032c2ef1c73dbb90261f1ada053db52c70f47cf302b177187f486900a815873f9972a9a1c5b09aa26148b7a5ef6472f832e7b436fc81b676d7b3865de8981969a4c9db148de492667605500e32daefb4ab1ef883658c045137c17a3cd22e47c33dba20af3183febccfd9f63c55537c0511313a5b3f9a3c9a7c157826ee19bc317dacac2aacb661663086a6fb2002b13ae47f6d8b2ba51b4182bee58e41e858d9fe17d512efa3be30d07d0648de82d46158f5744b95a9784db0008b1a1674a52d59e96702ad8ea878400c0f347a5b0ed7b7117bdea1c8b14e7e2376627aa408e6a96bdb7b596af0e467432ce730e230b4a7f0203010001",
+          "type": "STRING"
+        }
+      }
+    ],
+    "type": "KEY_PAIR_UPDATE",
+    "systemMetaData": {
+      "secretForeignKeys": [],
+      "cryptedForeignKeys": {},
+      "delegations": {
+        "cba719b5-f8df-4e63-b34a-df5378648a29": {},
+        "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+      },
+      "encryptionKeys": {
+        "cba719b5-f8df-4e63-b34a-df5378648a29": {},
+        "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+      }
+    }
+  },
+  {
+    "id": "e41382a3-c508-44ed-b204-211c14e3ce89",
+    "rev": "1-986a6a5caa1b3c90f53b3f0f5824dae5",
+    "created": 1679997681218,
+    "modified": 1679997681218,
+    "author": "d4ed8d59-bf6a-42cb-9d25-25f861b56f28",
+    "responsible": "df18183f-fabf-4f13-b204-0650dc68c7c6",
+    "status": "pending",
+    "identifiers": [],
+    "properties": [
+      {
+        "id": "dataOwnerConcernedId",
+        "type": {
+          "type": "STRING"
+        },
+        "typedValue": {
+          "stringValue": "df18183f-fabf-4f13-b204-0650dc68c7c6",
+          "type": "STRING"
+        }
+      },
+      {
+        "id": "dataOwnerConcernedPubKey",
+        "type": {
+          "type": "STRING"
+        },
+        "typedValue": {
+          "stringValue": "30820122300d06092a864886f70d01010105000382010f003082010a0282010100db36eb19d1d91fb09f892a9c6246768053d0307eb361f5c48f2ff63e7c5a5a0860ebcfd996ae4c432215fc7263b64251445f488c3ac22d55b7a661fce523832c775292d39420b72b855d8acb3c2226de7e021618f92c61bd97cd4c5c1c3f0a82fcf309bce96db112b69ae116d479c98d23b86a78d192dd7575a2bdeb9c689135b5cc1d8b2b082a59e4b04db056a9b4af81b2585e31492c8e353a81232efbb9a8c4f500478a3b8084d9d44c50c1cd67ab67fc4e482a0d54c62ce0232ef0db65275bf369a9df570560cc9c87e4d67dc46a68d96c44178e9c5643acb2af6a6d38b00591b1b949257abd45882af9955157b48a2743623aa18e9caadf3c9a2749f84f0203010001",
+          "type": "STRING"
+        }
+      }
+    ],
+    "type": "KEY_PAIR_UPDATE",
+    "systemMetaData": {
+      "secretForeignKeys": [],
+      "cryptedForeignKeys": {},
+      "delegations": {
+        "df18183f-fabf-4f13-b204-0650dc68c7c6": {},
+        "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+      },
+      "encryptionKeys": {
+        "df18183f-fabf-4f13-b204-0650dc68c7c6": {},
+        "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+      }
+    }
+  },
+  {
+    "id": "51615526-e486-4512-b8c6-4ff481748888",
+    "rev": "1-08d166edecc920acb98e53d3996a5ed3",
+    "created": 1679997198745,
+    "modified": 1679997198745,
+    "author": "c533e90d-fd79-43e6-923f-26bf4cd2ec80",
+    "responsible": "f7e4ab5d-965b-468e-bef4-a9cabe7f446f",
+    "status": "pending",
+    "identifiers": [],
+    "properties": [
+      {
+        "id": "dataOwnerConcernedId",
+        "type": {
+          "type": "STRING"
+        },
+        "typedValue": {
+          "stringValue": "f7e4ab5d-965b-468e-bef4-a9cabe7f446f",
+          "type": "STRING"
+        }
+      },
+      {
+        "id": "dataOwnerConcernedPubKey",
+        "type": {
+          "type": "STRING"
+        },
+        "typedValue": {
+          "stringValue": "30820122300d06092a864886f70d01010105000382010f003082010a0282010100b68ac0a763ecef81fd284f720e917cb2057a6a0286b049146501d638d47e2cb4ba60d6a4a5eeb5f742300bb1a785b3185fd5e1c77b26323a936cdb13b30dc6ac1c4389996db2b7ca6126fd6055b082c80116ded3b431b443773b24b648f37929b27f3ff7c3cd4d94c1e7e06f75a23958b88aa8eee7d01be1ad1db12f33d51ab60323c965922cf4bf6970afcf52decde111be5f5bab8a6f17698f04955ad1118f4fface96a779f29ac5b7a455a0d0a7d3a641a263b8d882c55c83c67e1e552593ce6324bd6fef885a15048b7d61644a27691c5591d077d257a089ff240f9fb109fe23b9ee32960ae7f8068e06ee2a8e0fc2b838c8d23eb68076c5c8f3b49d1ba50203010001",
+          "type": "STRING"
+        }
+      }
+    ],
+    "type": "KEY_PAIR_UPDATE",
+    "systemMetaData": {
+      "secretForeignKeys": [],
+      "cryptedForeignKeys": {},
+      "delegations": {
+        "f7e4ab5d-965b-468e-bef4-a9cabe7f446f": {},
+        "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+      },
+      "encryptionKeys": {
+        "f7e4ab5d-965b-468e-bef4-a9cabe7f446f": {},
+        "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+      }
+    }
+  },
+  {
+    "id": "519a4da0-e7b4-4421-be63-6a99904078a2",
+    "rev": "1-59504d554510f06b3dac0b21a5387a37",
+    "created": 1679991712230,
+    "modified": 1679991712230,
+    "author": "68a4f7d3-aa5d-43ff-95a1-ba14675397ca",
+    "responsible": "3238dd4f-be09-4375-bb5b-0bf9d737ac94",
+    "status": "pending",
+    "identifiers": [],
+    "properties": [],
+    "type": "OTHER",
+    "systemMetaData": {
+      "secretForeignKeys": [],
+      "cryptedForeignKeys": {},
+      "delegations": {
+        "3238dd4f-be09-4375-bb5b-0bf9d737ac94": {},
+        "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+      },
+      "encryptionKeys": {
+        "3238dd4f-be09-4375-bb5b-0bf9d737ac94": {},
+        "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+      }
+    }
+  },
+  {
+    "id": "f9eddd73-03eb-44ea-8487-97cef757ac98",
+    "rev": "1-35ea0e607f642e17f7ca33814bd34d76",
+    "created": 1679991712162,
+    "modified": 1679991712162,
+    "author": "68a4f7d3-aa5d-43ff-95a1-ba14675397ca",
+    "responsible": "3238dd4f-be09-4375-bb5b-0bf9d737ac94",
+    "status": "pending",
+    "identifiers": [],
+    "properties": [],
+    "type": "KEY_PAIR_UPDATE",
+    "systemMetaData": {
+      "secretForeignKeys": [],
+      "cryptedForeignKeys": {},
+      "delegations": {
+        "3238dd4f-be09-4375-bb5b-0bf9d737ac94": {},
+        "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+      },
+      "encryptionKeys": {
+        "3238dd4f-be09-4375-bb5b-0bf9d737ac94": {},
         "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
       }
     }
@@ -2020,12 +2341,12 @@ const ongoingStatusUpdate = await apiAsDoctor.notificationApi.updateNotification
 
 ```json
 {
-  "id": "907ef780-7a6e-488b-a5db-68d9d0472c8c",
-  "rev": "2-6a408d72970148ed83f2165ad289d1ff",
-  "created": 1679991686085,
-  "modified": 1679991686085,
-  "author": "ac9c1e8c-7062-4d7d-aacb-daa363337c0c",
-  "responsible": "e3807753-8d67-4c71-8d1b-4395f418ba61",
+  "id": "360f26c2-1e7b-40b1-a20b-48f114644d39",
+  "rev": "2-94356484f8338845fa20862bdbe432fb",
+  "created": 1680075082621,
+  "modified": 1680075082621,
+  "author": "be11123f-7dcd-4731-b856-9b55b1bb357b",
+  "responsible": "1e674fa4-f59e-4f8e-888a-df78f1cb572a",
   "status": "ongoing",
   "identifiers": [],
   "properties": [],
@@ -2034,11 +2355,11 @@ const ongoingStatusUpdate = await apiAsDoctor.notificationApi.updateNotification
     "secretForeignKeys": [],
     "cryptedForeignKeys": {},
     "delegations": {
-      "e3807753-8d67-4c71-8d1b-4395f418ba61": {},
+      "1e674fa4-f59e-4f8e-888a-df78f1cb572a": {},
       "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
     },
     "encryptionKeys": {
-      "e3807753-8d67-4c71-8d1b-4395f418ba61": {},
+      "1e674fa4-f59e-4f8e-888a-df78f1cb572a": {},
       "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
     }
   }
@@ -2059,13 +2380,13 @@ const sharedData = await apiAsDoctor.patientApi.giveAccessToAllDataOf(patient.id
 ```json
 {
   "patient": {
-    "id": "e3807753-8d67-4c71-8d1b-4395f418ba61",
+    "id": "1e674fa4-f59e-4f8e-888a-df78f1cb572a",
     "languages": [],
     "active": true,
     "parameters": {},
-    "rev": "8-c5a4a750371213fd79d00744a36bc887",
-    "created": 1679991678124,
-    "modified": 1679991678124,
+    "rev": "8-0c8242c029ba8bf89ff2a08909f89dad",
+    "created": 1680075073795,
+    "modified": 1680075073795,
     "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
     "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
     "firstName": "Marc",
@@ -2092,7 +2413,7 @@ const sharedData = await apiAsDoctor.patientApi.giveAccessToAllDataOf(patient.id
         "addressType": "home",
         "telecoms": [
           {
-            "telecomNumber": "b25d977b@icure.com",
+            "telecomNumber": "dbe85ef2@icure.com",
             "telecomType": "email"
           }
         ]
@@ -2108,40 +2429,40 @@ const sharedData = await apiAsDoctor.patientApi.giveAccessToAllDataOf(patient.id
     "patientProfessions": [],
     "properties": {},
     "systemMetaData": {
-      "publicKey": "30820122300d06092a864886f70d01010105000382010f003082010a0282010100ee52f89a85233c67faa8a92e765afa6d5bfca339977e4b1809664f999faedac9e060174f12d1cad1a8885dd6c399d7f7495966c1289e5acdc56ac6e4b3e1cad4fd2b0a5414c8de1c4c722d987ce76af8a786281d2a1b465886c4a3f6b97472c7dd2a0ab93fc8e62a307cd111f5e495f26336173d54d4cd632197bd1f706eb9f02253ccd5449b14f122d4fd32b7e4de524f56bf229200a46c2a53aaa79774c790d54f990d3b74dc9ce48bdd8a3f95216b1d634b7414e4befb20c30c7cdd327834bb366a2e2c10c7cd6d34e64913901351dbc6d3ec4498de23ba47af95bfe737fa558dbc29839af6c5e29ca3a8d6731e88e142ec4ba4c7090df3da48d3205cd0cb0203010001",
+      "publicKey": "30820122300d06092a864886f70d01010105000382010f003082010a0282010100bf946943b9e5705acd6466a2b3731f23625f2d347c7502b874d7857a2edd8aa233b134d4eb6fcff5c9d7db633fbc2c2c3b1c7ad6038647f336e42c8e3225d12b03d4847f385558bdb9a250d23612e63bb6b788d413c6dd12a287849a64bccd89254083e5095fdfd5b629bca5340f566f4e6efd5f71b12e351818a33b7bbfb73e952a8bbf868b5322d19fb70c084c00b42fb675f3306e776652746354781eb9b3c8f92ce091ec48a16def61b2e81a95b32ae6e7dd7a1f3ecf7b4b75c9e246477333d06fe13af77bf1e287ca5500dddfad3c61b3a78afed122ad91579c5dac2531ed1f108e3aac158a690aedf6bbea912f14beff5529f7106002f018436d588e050203010001",
       "hcPartyKeys": {
-        "e3807753-8d67-4c71-8d1b-4395f418ba61": [
-          "56e4a46353b293b9b6867cbedb60eb9384f40bb9ce898ded3adff5162951c7438d5202ca48ffb6a6eb958eccb92f67594dd1dda348734ce65bffeaa2a98451de5e89e0c3f9ce04523aeff2571da237f7e15020a96bd88610d58da0f63bca049b92a3c9a154eb0a54cdbf45da13362f4bd64af574722ab73df898cbc5ff04ee33b788a4c68491963a43c3a7cacb634699a409f4a305d23e304a49b1236ebc4b870e4b8bd0b8cf4dbd763f2ba58a39ae37843df6b0b764583de236c6951e5c13876f94ab086593f104f66e2ed989e4f490c6ece6d3576ec551abad06f5e2db304d4e1385705af00d6cded9404fecf3a380532878a139171d5489ffb143d8b2f321",
-          "56e4a46353b293b9b6867cbedb60eb9384f40bb9ce898ded3adff5162951c7438d5202ca48ffb6a6eb958eccb92f67594dd1dda348734ce65bffeaa2a98451de5e89e0c3f9ce04523aeff2571da237f7e15020a96bd88610d58da0f63bca049b92a3c9a154eb0a54cdbf45da13362f4bd64af574722ab73df898cbc5ff04ee33b788a4c68491963a43c3a7cacb634699a409f4a305d23e304a49b1236ebc4b870e4b8bd0b8cf4dbd763f2ba58a39ae37843df6b0b764583de236c6951e5c13876f94ab086593f104f66e2ed989e4f490c6ece6d3576ec551abad06f5e2db304d4e1385705af00d6cded9404fecf3a380532878a139171d5489ffb143d8b2f321"
+        "1e674fa4-f59e-4f8e-888a-df78f1cb572a": [
+          "b7f7eff5b018d584444ce3df2486c7b78b8ef2203d4ffadee4c4f73681c8f69df4599ab24179d5dfaac6609bc4e175da870035df8c3367cc9483769f575c92082d90d9be95b7a76571b00e61bdd4100fe8f8409e63680138b07d60704f3fc688db14047ea078c2953016d4392875194df66d949f3b89bd7c1840b0846d7fb1e61e0f93e425d220db1af292ddfced4c79357d88744e8567e8fe9ef8f81bebdf9801490c39e633465d63fe1617da225826533aa0a3955a931dbbc4711667f8806305cb6f7f6904c3c8d194c5bd08e726dafbfc9e0baba0bec5a3520aa2a3cb34d9b6afababea7dfccd51e7fe675aad77386855f05056dd2e126910d74f61992717",
+          "b7f7eff5b018d584444ce3df2486c7b78b8ef2203d4ffadee4c4f73681c8f69df4599ab24179d5dfaac6609bc4e175da870035df8c3367cc9483769f575c92082d90d9be95b7a76571b00e61bdd4100fe8f8409e63680138b07d60704f3fc688db14047ea078c2953016d4392875194df66d949f3b89bd7c1840b0846d7fb1e61e0f93e425d220db1af292ddfced4c79357d88744e8567e8fe9ef8f81bebdf9801490c39e633465d63fe1617da225826533aa0a3955a931dbbc4711667f8806305cb6f7f6904c3c8d194c5bd08e726dafbfc9e0baba0bec5a3520aa2a3cb34d9b6afababea7dfccd51e7fe675aad77386855f05056dd2e126910d74f61992717"
         ],
         "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": [
-          "84529f6fc4e6167a7fc81251ab21282e7fe6762d1a6655f494c07c4c0bb034ee7c687716541ed1f69f686932a46930707bc5767d47011f638d441cfa0a482bd4f686b571e62772ca2a7f145f7661037c51135ed32b05e4f0a359a418cf17cf2ec79528e9610f040cb5442f37cd587d9ac9c40cfcfa50536e68867007435a48cf07e477d5b3ede2d3ac32de2b3b6a96dabca486baef90806da82186fe5f34b1e7e88ed36b791d3e9ed2097c60a5abfb2af6863f0260cf03fef70ad91d36542577d2af3f3ca126183bb41a08c958be637997d188b665d8049966a01a11a08dfa775de24db95a05b9308d18e9121d6641d5fa77921accf64319717ca0324c013637",
-          "427f813af1e28dfe9276ce816c95e007836c9cf6f1b7c14d7697705c05467de2cc7342d485947736400718ef33e9f98766a9d4863cca8317400a485e922b4edd8f20d6d5f01ddbc73979a240db9ac33b216eac2a070c6d29d3d92d2464ff7f308dc45dd94b98819156e42aad5dd0d93805c95281fc57bffd6d833556cc54360f3e36414297ab30c94756cd3b0f30c9583cd52a6bed52aa9239ca9cde70318cb6cfb187ccbb5408a3bc600b57655d90e47608231dc172deca5798877a70825d02acb566a1622151654ad16e4ee0a5c86038773a2854856c32147ed320e497b57703a32925b9d7cb31982b28d589a53fd7a2260f64bfce6f19d00446c0e733fd9c"
+          "91f3c24d3e4e087b5012ebb94e0f7b7db0c9e419f1e7a3af930e5ea0e6900cb49e7a3e1b3f01de5a29258ebe974cae9cbfe869f44dc90634e30f9bebe560f872120ac86661f1097fe4352fd2382adbd80de2e786c5bc53619d4b0760910efafbd533b93388eadc2ebc46f2512d52b43966762b2269b80712ca33ea2319341d4394bdec47ddf2a3ce7c4a7992b7fff5e518c1b96f28f86071163b783778d67fb51da0e61058e7cd2bf5ab961b286779fd3c657735a8c4a4b346961372fceef394207a591ce5070d1e2bebb832c2607d06ac18c492c188a47eba7dbda0ec915050f2ba5e5e4dd2a9d4c737c1c4c24739c25ac7839eeb242b4f945c6eb62ead7976",
+          "bf75e07a99bc7047c66512e5515bbd5e0f35896ccd354964c65339a200e1a695cee90fa9e138e23b734df5674a286dcd4d6b1d487f32f9805a5430fd399cd1f304ef6c09c673181fc3e102a2b769269f936f157d48ff81ee05de7e228a268b411ef3d74384ab6f72e1ba7a72c18a819193ce8b509284a7c44199a81b448e101cc35a09ccea61eb62cda79d4121e4543c0061224f1eeaa9e332cb80e21242d45ea5f917938a6786310e49112d66867bcdeb14cba9d13814f81e807e327f387d604c179df09189269a6d7ce88e00e523042a88516568eb678dfa230d8dfa574538d97ef2dc0b001898c56dc503260ebd885293141ca0fa3736c649b9c1f681fd2c"
         ]
       },
       "privateKeyShamirPartitions": {},
       "aesExchangeKeys": {
-        "30820122300d06092a864886f70d01010105000382010f003082010a0282010100ee52f89a85233c67faa8a92e765afa6d5bfca339977e4b1809664f999faedac9e060174f12d1cad1a8885dd6c399d7f7495966c1289e5acdc56ac6e4b3e1cad4fd2b0a5414c8de1c4c722d987ce76af8a786281d2a1b465886c4a3f6b97472c7dd2a0ab93fc8e62a307cd111f5e495f26336173d54d4cd632197bd1f706eb9f02253ccd5449b14f122d4fd32b7e4de524f56bf229200a46c2a53aaa79774c790d54f990d3b74dc9ce48bdd8a3f95216b1d634b7414e4befb20c30c7cdd327834bb366a2e2c10c7cd6d34e64913901351dbc6d3ec4498de23ba47af95bfe737fa558dbc29839af6c5e29ca3a8d6731e88e142ec4ba4c7090df3da48d3205cd0cb0203010001": {
-          "e3807753-8d67-4c71-8d1b-4395f418ba61": {
-            "c7090df3da48d3205cd0cb0203010001": "56e4a46353b293b9b6867cbedb60eb9384f40bb9ce898ded3adff5162951c7438d5202ca48ffb6a6eb958eccb92f67594dd1dda348734ce65bffeaa2a98451de5e89e0c3f9ce04523aeff2571da237f7e15020a96bd88610d58da0f63bca049b92a3c9a154eb0a54cdbf45da13362f4bd64af574722ab73df898cbc5ff04ee33b788a4c68491963a43c3a7cacb634699a409f4a305d23e304a49b1236ebc4b870e4b8bd0b8cf4dbd763f2ba58a39ae37843df6b0b764583de236c6951e5c13876f94ab086593f104f66e2ed989e4f490c6ece6d3576ec551abad06f5e2db304d4e1385705af00d6cded9404fecf3a380532878a139171d5489ffb143d8b2f321"
+        "30820122300d06092a864886f70d01010105000382010f003082010a0282010100bf946943b9e5705acd6466a2b3731f23625f2d347c7502b874d7857a2edd8aa233b134d4eb6fcff5c9d7db633fbc2c2c3b1c7ad6038647f336e42c8e3225d12b03d4847f385558bdb9a250d23612e63bb6b788d413c6dd12a287849a64bccd89254083e5095fdfd5b629bca5340f566f4e6efd5f71b12e351818a33b7bbfb73e952a8bbf868b5322d19fb70c084c00b42fb675f3306e776652746354781eb9b3c8f92ce091ec48a16def61b2e81a95b32ae6e7dd7a1f3ecf7b4b75c9e246477333d06fe13af77bf1e287ca5500dddfad3c61b3a78afed122ad91579c5dac2531ed1f108e3aac158a690aedf6bbea912f14beff5529f7106002f018436d588e050203010001": {
+          "1e674fa4-f59e-4f8e-888a-df78f1cb572a": {
+            "f7106002f018436d588e050203010001": "b7f7eff5b018d584444ce3df2486c7b78b8ef2203d4ffadee4c4f73681c8f69df4599ab24179d5dfaac6609bc4e175da870035df8c3367cc9483769f575c92082d90d9be95b7a76571b00e61bdd4100fe8f8409e63680138b07d60704f3fc688db14047ea078c2953016d4392875194df66d949f3b89bd7c1840b0846d7fb1e61e0f93e425d220db1af292ddfced4c79357d88744e8567e8fe9ef8f81bebdf9801490c39e633465d63fe1617da225826533aa0a3955a931dbbc4711667f8806305cb6f7f6904c3c8d194c5bd08e726dafbfc9e0baba0bec5a3520aa2a3cb34d9b6afababea7dfccd51e7fe675aad77386855f05056dd2e126910d74f61992717"
           },
           "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {
-            "c7090df3da48d3205cd0cb0203010001": "84529f6fc4e6167a7fc81251ab21282e7fe6762d1a6655f494c07c4c0bb034ee7c687716541ed1f69f686932a46930707bc5767d47011f638d441cfa0a482bd4f686b571e62772ca2a7f145f7661037c51135ed32b05e4f0a359a418cf17cf2ec79528e9610f040cb5442f37cd587d9ac9c40cfcfa50536e68867007435a48cf07e477d5b3ede2d3ac32de2b3b6a96dabca486baef90806da82186fe5f34b1e7e88ed36b791d3e9ed2097c60a5abfb2af6863f0260cf03fef70ad91d36542577d2af3f3ca126183bb41a08c958be637997d188b665d8049966a01a11a08dfa775de24db95a05b9308d18e9121d6641d5fa77921accf64319717ca0324c013637",
-            "223f55731820b91ccd18010203010001": "427f813af1e28dfe9276ce816c95e007836c9cf6f1b7c14d7697705c05467de2cc7342d485947736400718ef33e9f98766a9d4863cca8317400a485e922b4edd8f20d6d5f01ddbc73979a240db9ac33b216eac2a070c6d29d3d92d2464ff7f308dc45dd94b98819156e42aad5dd0d93805c95281fc57bffd6d833556cc54360f3e36414297ab30c94756cd3b0f30c9583cd52a6bed52aa9239ca9cde70318cb6cfb187ccbb5408a3bc600b57655d90e47608231dc172deca5798877a70825d02acb566a1622151654ad16e4ee0a5c86038773a2854856c32147ed320e497b57703a32925b9d7cb31982b28d589a53fd7a2260f64bfce6f19d00446c0e733fd9c"
+            "f7106002f018436d588e050203010001": "91f3c24d3e4e087b5012ebb94e0f7b7db0c9e419f1e7a3af930e5ea0e6900cb49e7a3e1b3f01de5a29258ebe974cae9cbfe869f44dc90634e30f9bebe560f872120ac86661f1097fe4352fd2382adbd80de2e786c5bc53619d4b0760910efafbd533b93388eadc2ebc46f2512d52b43966762b2269b80712ca33ea2319341d4394bdec47ddf2a3ce7c4a7992b7fff5e518c1b96f28f86071163b783778d67fb51da0e61058e7cd2bf5ab961b286779fd3c657735a8c4a4b346961372fceef394207a591ce5070d1e2bebb832c2607d06ac18c492c188a47eba7dbda0ec915050f2ba5e5e4dd2a9d4c737c1c4c24739c25ac7839eeb242b4f945c6eb62ead7976",
+            "223f55731820b91ccd18010203010001": "bf75e07a99bc7047c66512e5515bbd5e0f35896ccd354964c65339a200e1a695cee90fa9e138e23b734df5674a286dcd4d6b1d487f32f9805a5430fd399cd1f304ef6c09c673181fc3e102a2b769269f936f157d48ff81ee05de7e228a268b411ef3d74384ab6f72e1ba7a72c18a819193ce8b509284a7c44199a81b448e101cc35a09ccea61eb62cda79d4121e4543c0061224f1eeaa9e332cb80e21242d45ea5f917938a6786310e49112d66867bcdeb14cba9d13814f81e807e327f387d604c179df09189269a6d7ce88e00e523042a88516568eb678dfa230d8dfa574538d97ef2dc0b001898c56dc503260ebd885293141ca0fa3736c649b9c1f681fd2c"
           }
         }
       },
       "transferKeys": {},
-      "encryptedSelf": "SApqvzJ5XaMcqrXZ117ChdR/Dm6E8PnQwxa861Lwt+c=",
+      "encryptedSelf": "NIy7jNBhU9ab9PUOZl0BSQpfUR11PIRjYRvVWSGTaF0=",
       "secretForeignKeys": [],
       "cryptedForeignKeys": {},
       "delegations": {
         "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {},
-        "e3807753-8d67-4c71-8d1b-4395f418ba61": {}
+        "1e674fa4-f59e-4f8e-888a-df78f1cb572a": {}
       },
       "encryptionKeys": {
         "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {},
-        "e3807753-8d67-4c71-8d1b-4395f418ba61": {}
+        "1e674fa4-f59e-4f8e-888a-df78f1cb572a": {}
       }
     }
   },
@@ -2186,12 +2507,12 @@ const completedStatusUpdate = await apiAsDoctor.notificationApi.updateNotificati
 
 ```json
 {
-  "id": "907ef780-7a6e-488b-a5db-68d9d0472c8c",
-  "rev": "3-6ef0ecf738461ca2eedf7237a446507b",
-  "created": 1679991686085,
-  "modified": 1679991686085,
-  "author": "ac9c1e8c-7062-4d7d-aacb-daa363337c0c",
-  "responsible": "e3807753-8d67-4c71-8d1b-4395f418ba61",
+  "id": "360f26c2-1e7b-40b1-a20b-48f114644d39",
+  "rev": "3-b5a72d5fb8f2f1770574054e2b6052ff",
+  "created": 1680075082621,
+  "modified": 1680075082621,
+  "author": "be11123f-7dcd-4731-b856-9b55b1bb357b",
+  "responsible": "1e674fa4-f59e-4f8e-888a-df78f1cb572a",
   "status": "completed",
   "identifiers": [],
   "properties": [],
@@ -2200,11 +2521,11 @@ const completedStatusUpdate = await apiAsDoctor.notificationApi.updateNotificati
     "secretForeignKeys": [],
     "cryptedForeignKeys": {},
     "delegations": {
-      "e3807753-8d67-4c71-8d1b-4395f418ba61": {},
+      "1e674fa4-f59e-4f8e-888a-df78f1cb572a": {},
       "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
     },
     "encryptionKeys": {
-      "e3807753-8d67-4c71-8d1b-4395f418ba61": {},
+      "1e674fa4-f59e-4f8e-888a-df78f1cb572a": {},
       "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
     }
   }

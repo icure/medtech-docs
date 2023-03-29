@@ -16,7 +16,22 @@ the [user authentication how to](sdks/how-to/how-to-authenticate-a-user/index.md
 The following code snippet shows an example of the MedTech SDK instantiation using the `MedTechApiBuilder` with all the 
 available options.
 
-<!-- file://code-samples/how-to/instantiate-the-medtech-sdk/index.mts snippet:MedTechApi-->
+<!-- file://code-samples/how-to/instantiate-the-medtech-sdk/index.mts snippet:doctor can create api-->
+```typescript
+const api = await medTechApi()
+  .withICureBaseUrl(host)
+  .withUserName(userName)
+  .withPassword(password)
+  .withMsgGwUrl(msgGtwUrl)
+  .withMsgGwSpecId(specId)
+  .withCrypto(webcrypto as any)
+  .withAuthProcessByEmailId(authProcessEmailId)
+  .withAuthProcessBySmsId(authProcessSMSId)
+  .withStorage(storage)
+  .withKeyStorage(keyStorage)
+  .preventCookieUsage()
+  .build()
+```
 
 * `.withICureBaseUrl(host)`: sets the url of the local or cloud instance of iCure the SDK will connect to. By default, https://kraken.icure.cloud is used.
 * `.withUserName(userName)`: sets the username, email, phone number, or id of the user to log in. **This parameter is mandatory**.
@@ -34,7 +49,20 @@ available options.
 The following code snippet shows an example of the MedTech SDK instantiation using the `AnonymousMedTechApiBuilder` with all the
 available options.
 
-<!-- file://code-samples/how-to/instantiate-the-medtech-sdk/index.mts snippet:Anonymous API-->
+<!-- file://code-samples/how-to/instantiate-the-medtech-sdk/index.mts snippet:doctor can create anonymous api-->
+```typescript
+const anonymousApi = await new AnonymousMedTechApiBuilder()
+  .withICureBaseUrl(host)
+  .withMsgGwUrl(msgGtwUrl)
+  .withMsgGwSpecId(specId)
+  .withCrypto(webcrypto as any)
+  .withAuthProcessByEmailId(authProcessEmailId)
+  .withAuthProcessBySmsId(authProcessSMSId)
+  .withStorage(storage)
+  .withKeyStorage(keyStorage)
+  .preventCookieUsage()
+  .build()
+```
 
 * `.withICureBaseUrl(host)`: sets the url of the local or cloud instance of iCure the SDK will connect to. By default, https://kraken.icure.cloud is used.
 * `.withMsgGwUrl(msgGtwUrl)`: sets the url of the Message Gateway instance that will be used to send email and SMS messages to the users. By default, https://msg-gw.icure.cloud. **Only needed in Cloud version**

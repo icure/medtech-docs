@@ -60,16 +60,16 @@ const newlyCreatedDataSample =
 
 ```json
 {
-  "id": "48e38404-ccc0-46b3-868c-70f1b5db7a72",
+  "id": "37e3525b-2269-42f5-9c11-2bab170673ff",
   "qualifiedLinks": {},
-  "batchId": "02809edd-395e-44ff-a339-d67c3644a23d",
+  "batchId": "5f9ee3bd-d375-4b1b-9e86-92f5bf64e832",
   "index": 0,
-  "valueDate": 20230328102114,
+  "valueDate": 20230329073056,
   "openingDate": 20220929083400,
-  "created": 1679991674817,
-  "modified": 1679991674817,
-  "author": "892602a1-5198-45f8-a3a5-cb19f0eb789c",
-  "responsible": "d2a81781-edfe-4886-bc99-b9cc336ffc17",
+  "created": 1680075056249,
+  "modified": 1680075056249,
+  "author": "f4c7dd4e-e7c9-4419-8dc1-eb6217654134",
+  "responsible": "59b5a1d8-46a6-429f-9b41-005925c8afd5",
   "comment": "This is a comment",
   "identifiers": [],
   "healthcareElementIds": {},
@@ -87,15 +87,15 @@ const newlyCreatedDataSample =
   "systemMetaData": {
     "secretForeignKeys": [],
     "cryptedForeignKeys": {
-      "d2a81781-edfe-4886-bc99-b9cc336ffc17": {},
+      "59b5a1d8-46a6-429f-9b41-005925c8afd5": {},
       "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
     },
     "delegations": {
-      "d2a81781-edfe-4886-bc99-b9cc336ffc17": {},
+      "59b5a1d8-46a6-429f-9b41-005925c8afd5": {},
       "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
     },
     "encryptionKeys": {
-      "d2a81781-edfe-4886-bc99-b9cc336ffc17": {},
+      "59b5a1d8-46a6-429f-9b41-005925c8afd5": {},
       "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
     }
   }
@@ -147,12 +147,12 @@ const hcpNotifications = await hcpApi.notificationApi
 ```text
 [
   {
-    "id": "b4736bbf-5446-4cbe-af23-d160d0fdde5e",
-    "rev": "1-68010e8eeccd11a91e494611b06771da",
-    "created": 1679991673518,
-    "modified": 1679991673518,
-    "author": "892602a1-5198-45f8-a3a5-cb19f0eb789c",
-    "responsible": "d2a81781-edfe-4886-bc99-b9cc336ffc17",
+    "id": "84440ac1-4d17-4f80-a27b-859e0cf81af2",
+    "rev": "1-3a55504f4fe5efe2642b6ada57077058",
+    "created": 1680075052724,
+    "modified": 1680075052724,
+    "author": "f4c7dd4e-e7c9-4419-8dc1-eb6217654134",
+    "responsible": "59b5a1d8-46a6-429f-9b41-005925c8afd5",
     "status": "pending",
     "identifiers": [],
     "properties": [
@@ -162,7 +162,7 @@ const hcpNotifications = await hcpApi.notificationApi
           "type": "STRING"
         },
         "typedValue": {
-          "stringValue": "d2a81781-edfe-4886-bc99-b9cc336ffc17",
+          "stringValue": "59b5a1d8-46a6-429f-9b41-005925c8afd5",
           "type": "STRING"
         }
       },
@@ -172,7 +172,7 @@ const hcpNotifications = await hcpApi.notificationApi
           "type": "STRING"
         },
         "typedValue": {
-          "stringValue": "30820122300d06092a864886f70d01010105000382010f003082010a0282010100eaf4133d607b1afe286ac71b7481039c99f24756de62ea2c4340353e3538a125ed391e000e1cc2c02feec4a2f9ee1b963b4eaa9c4527193b8983cc42fac09be857e668e20f051bf1839dd3d3d8f9a51fed07993723371aaadf8c4736059fe248f003c45677f43682af38c3006188048e913aa9e84ddcdaab50fa4b314f8fa6701d9503f09bff67b86fdc7764029beb9279cf6f37cbea748bd018ad2a21ee109878fac512f20fdd360396eebcf0c91d5067ddb2e1a19d26c384804f4014cadd2c551d79e82877f65104febc63391cd3d0f7f9162be4373ec01f7f4b7c43360712ef49ce02a43cfade6fa4d6dfc104f81b56b3bd67b359b5f8cf8b8a9fbe7560fb0203010001",
+          "stringValue": "30820122300d06092a864886f70d01010105000382010f003082010a0282010100d0921d7b18d8341444130f89d215d83800db65373d21a036c3f3c840f824b4fc4723024599438105f38106d2ffd7173b8291478c02334cab84e213a9fd9d24f7508e2468b18bdf3db59df9f2fd908082ce6e1aea60bee23fde6efeb500d7911f38bf451e38f4084ed3c8bb794b7b1c768d3756a353822a372029b1959527fa47d951c6c64231d050b3480443b6c82389e12fcc34d844401e06932479a32db49618ef18a1dd63a29cd321a2c4deb62170eb74bf9d243a766de5b0b97e57bae84b0cc4f55bacb6d6245912409703f37fb2a45af5d63d888c233698307ae2234e872e4b425042957ede9a1f5b0ad543c685775a35328a0468691cd0a0c136a9edbb0203010001",
           "type": "STRING"
         }
       }
@@ -182,11 +182,11 @@ const hcpNotifications = await hcpApi.notificationApi
       "secretForeignKeys": [],
       "cryptedForeignKeys": {},
       "delegations": {
-        "d2a81781-edfe-4886-bc99-b9cc336ffc17": {},
+        "59b5a1d8-46a6-429f-9b41-005925c8afd5": {},
         "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
       },
       "encryptionKeys": {
-        "d2a81781-edfe-4886-bc99-b9cc336ffc17": {},
+        "59b5a1d8-46a6-429f-9b41-005925c8afd5": {},
         "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
       }
     }
@@ -232,7 +232,7 @@ const accessBack = await hcpApi.dataOwnerApi.giveAccessBackTo(
     "type": "STRING"
   },
   "typedValue": {
-    "stringValue": "d2a81781-edfe-4886-bc99-b9cc336ffc17",
+    "stringValue": "59b5a1d8-46a6-429f-9b41-005925c8afd5",
     "type": "STRING"
   }
 }
@@ -250,7 +250,7 @@ const accessBack = await hcpApi.dataOwnerApi.giveAccessBackTo(
     "type": "STRING"
   },
   "typedValue": {
-    "stringValue": "30820122300d06092a864886f70d01010105000382010f003082010a0282010100eaf4133d607b1afe286ac71b7481039c99f24756de62ea2c4340353e3538a125ed391e000e1cc2c02feec4a2f9ee1b963b4eaa9c4527193b8983cc42fac09be857e668e20f051bf1839dd3d3d8f9a51fed07993723371aaadf8c4736059fe248f003c45677f43682af38c3006188048e913aa9e84ddcdaab50fa4b314f8fa6701d9503f09bff67b86fdc7764029beb9279cf6f37cbea748bd018ad2a21ee109878fac512f20fdd360396eebcf0c91d5067ddb2e1a19d26c384804f4014cadd2c551d79e82877f65104febc63391cd3d0f7f9162be4373ec01f7f4b7c43360712ef49ce02a43cfade6fa4d6dfc104f81b56b3bd67b359b5f8cf8b8a9fbe7560fb0203010001",
+    "stringValue": "30820122300d06092a864886f70d01010105000382010f003082010a0282010100d0921d7b18d8341444130f89d215d83800db65373d21a036c3f3c840f824b4fc4723024599438105f38106d2ffd7173b8291478c02334cab84e213a9fd9d24f7508e2468b18bdf3db59df9f2fd908082ce6e1aea60bee23fde6efeb500d7911f38bf451e38f4084ed3c8bb794b7b1c768d3756a353822a372029b1959527fa47d951c6c64231d050b3480443b6c82389e12fcc34d844401e06932479a32db49618ef18a1dd63a29cd321a2c4deb62170eb74bf9d243a766de5b0b97e57bae84b0cc4f55bacb6d6245912409703f37fb2a45af5d63d888c233698307ae2234e872e4b425042957ede9a1f5b0ad543c685775a35328a0468691cd0a0c136a9edbb0203010001",
     "type": "STRING"
   }
 }
