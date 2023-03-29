@@ -17,19 +17,6 @@ export const userApiRtk = createApi({
         baseUrl: '/rest/v1/user',
     }),
     endpoints: builder => ({
-        createOrModifyUser: builder.mutation<User, User>({
-            async queryFn(user, {getState, dispatch}) {
-                const {userApi} = await medTechApi(getState);
-                return guard([userApi], async () => {
-                    const updatedUser = await userApi.createOrModifyUser(user);
-                    if (user.id === currentUser(getState)?.id) {
-                        dispatch(setUser({user: updatedUser.marshal() as User}));
-                    }
-                    return updatedUser;
-                });
-            },
-            invalidatesTags: [{type: 'User', id: 'all'}],
-        }),
         shareDataWith: builder.mutation<User, { ids: string[] }>({
             async queryFn({ids}, {getState, dispatch}) {
                 const {userApi} = await medTechApi(getState);
@@ -58,37 +45,7 @@ export const userApiRtk = createApi({
 export const {useCreateOrModifyUserMutation, useShareDataWithMutation, useStopSharingWithMutation} = userApiRtk;
 ```
 
-Let's take a look at the `createOrModifyUser` endpoint. This endpoint will allow us to update the current user. We will
-use the `UserApi` to update the user and then we will update the current user in the store.
-
-```typescript title="src/services/userApi.ts"
-
-export const userApiRtk = createApi({
-    reducerPath: 'userApi',
-    tagTypes: ['User'],
-    baseQuery: fetchBaseQuery({
-        baseUrl: '/rest/v1/user',
-    }),
-    endpoints: builder => ({
-        createOrModifyUser: builder.mutation<User, User>({
-            async queryFn(user, {getState, dispatch}) {
-                const {userApi} = await medTechApi(getState);
-                return guard([userApi], async () => {
-                    const updatedUser = await userApi.createOrModifyUser(user);
-                    if (user.id === currentUser(getState)?.id) {
-                        dispatch(setUser({user: updatedUser.marshal() as User}));
-                    }
-                    return updatedUser;
-                });
-            },
-            invalidatesTags: [{type: 'User', id: 'all'}],
-        }),
-        // ...
-    }),
-});
-```
-
-The `shareDataWith` endpoint will allow us to share the data of the current user with other users. We will use
+Let's take a look at the `shareDataWith` endpoint will allow us to share the data of the current user with other users. We will use
 the `UserApi` to share the data and then we will update the current user in the store.
 
 :::warning
@@ -108,7 +65,6 @@ export const userApiRtk = createApi({
         baseUrl: '/rest/v1/user',
     }),
     endpoints: builder => ({
-        // ...
         shareDataWith: builder.mutation<User, { ids: string[] }>({
             async queryFn({ids}, {getState, dispatch}) {
                 const {userApi} = await medTechApi(getState);
