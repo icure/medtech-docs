@@ -86,7 +86,8 @@ async function createConfig() {
                 },
             ],
             '@docusaurus/theme-live-codeblock',
-            '@docusaurus/theme-mermaid'
+            '@docusaurus/theme-mermaid',
+            '@docusaurus/theme-search-algolia'
         ],
 
         markdown: {
@@ -175,6 +176,16 @@ async function createConfig() {
                 prism: {
                     theme: lightCodeTheme,
                     darkTheme: darkCodeTheme,
+                },
+                algolia: {
+                    // The application ID provided by Algolia
+                    appId: 'BYJ2KXMHNU',
+                    // Public API key: it is safe to commit it
+                    apiKey: '12d8dbe268fc8f0d7186480441051663',
+                    indexName: 'icure',
+                    contextualSearch: true,
+                    searchParameters: {},
+                    searchPagePath: 'search',
                 },
             }),
     }
