@@ -1,25 +1,31 @@
-# ReactJS Boilerplate
+# iCure MedTechReactJS Template
 
-To make it easier for you to take the first steps in integrating iCure, we have prepared a boilerplate app for you to quickly start your project.
+## What includes this template ?
+- All dependencies needed to use the [iCure MedTech Typescript SDK](https://github.com/icure/icure-medical-device-js-sdk) in a React Native App
+- First implementation of the authentication flow (Registration / Login)
+- [ReactJS](https://react.dev/)
+- [localForage](https://github.com/localForage/localForage)
+- [Redux Toolkit](https://redux-toolkit.js.org/)
 
-This project includes the following technologies:
+## Requirements
+The following tools need to be installed on your machine:
+- [NodeJS](https://nodejs.org/en)
+- [Yarn](https://yarnpkg.com/getting-started/install)
 
-* [ReactJS](https://react.dev/)
-* [localForage](https://github.com/localForage/localForage)
-* [Redux Toolkit](https://redux-toolkit.js.org/)
-* iCure MedTech SDK
-
-The boilerplate app is a simple application that has already the registration and login flows implemented.
-
-## Getting started
-
-To start developing your application, you will need to execute these commands:
-
+## Clone the template
+To create your React Native App using the iCure MedTech template, execute the following command:
 ```bash
-git clone git@github.com:icure/icure-medical-device-react-js-boilerplate-app-template.git icure-reactjs-template
+git clone git@github.com:icure/icure-medical-device-react-js-boilerplate-app-template.git my-icure-app
 cd icure-reactjs-template && yarn
 ```
 
-The first step is to define the environment variables, you can copy the ones present in the .env.default file
+At the end of the process, you should have something similar to this:
 
-***Insert procedure to obtain values***
+## Start app
+Go to your new app directory `cd my-icure-app` and start the app on a web browser by running the command `yarn run start`.
+
+Once it finishes, you should be able to see the Login Page with the logo of iCure. But before completing an authentication, you will have to :
+Complete the values of `.env` file (Provide tutorial doc for that)
+
+
+And that's it !
