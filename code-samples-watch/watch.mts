@@ -77,10 +77,10 @@ const inject = async (path: string) => {
         }
     }, Promise.resolve())
     if (currentCodeSample) {
-        throw new Error('Unclosed code block detected')
+        throw new Error(`Unclosed code block detected in ${path}`)
     }
     if (currentOutput) {
-        throw new Error('Unclosed output block detected')
+        throw new Error(`Unclosed output block detected in ${path}`)
     }
 
     return dst.replace(/\n\n+$/,'\n')

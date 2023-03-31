@@ -63,7 +63,7 @@ expect(loggedUser.login).to.be.equal(iCureUserLogin)
 ```json
 {
   "id": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
-  "rev": "86-1fba3882618770a9fb28f85d94c77254",
+  "rev": "105-f0830a300c1283d86887a87ab828e211",
   "created": 1679919731079,
   "name": "Master HCP",
   "login": "master@b16baa.icure",
@@ -162,13 +162,13 @@ console.log(`Your new patient id : ${createdPatient.id}`)
 
 ```json
 {
-  "id": "997304be-c311-4dc6-9fc4-cc5593f12352",
+  "id": "87ebc656-0a27-41aa-a064-caf82eb86a3c",
   "languages": [],
   "active": true,
   "parameters": {},
-  "rev": "1-b7f45f7b3f23d58ca449e48839ff2352",
-  "created": 1679991754554,
-  "modified": 1679991754554,
+  "rev": "1-e2307a95a4d946b6051f9ca120ffbebb",
+  "created": 1680075167269,
+  "modified": 1680075167269,
   "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
   "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
   "firstName": "John",
@@ -204,7 +204,7 @@ console.log(`Your new patient id : ${createdPatient.id}`)
     "privateKeyShamirPartitions": {},
     "aesExchangeKeys": {},
     "transferKeys": {},
-    "encryptedSelf": "04P6Zca0D12X3KTKBnsgAgO5TcvEPFnI+YlBHPh4B6ME9DoPs5nUXxOcIiux04re",
+    "encryptedSelf": "fEGczTHhzxJFgmGYVR0rY2uaPF7mu8wjx1Dx4Jx5xDOuN4QEhxTUJAhaY4etPt/O",
     "secretForeignKeys": [],
     "cryptedForeignKeys": {},
     "delegations": {
@@ -243,13 +243,13 @@ expect(createdPatient.id).to.be.equal(johnSnow.id)
 
 ```json
 {
-  "id": "997304be-c311-4dc6-9fc4-cc5593f12352",
+  "id": "87ebc656-0a27-41aa-a064-caf82eb86a3c",
   "languages": [],
   "active": true,
   "parameters": {},
-  "rev": "1-b7f45f7b3f23d58ca449e48839ff2352",
-  "created": 1679991754554,
-  "modified": 1679991754554,
+  "rev": "1-e2307a95a4d946b6051f9ca120ffbebb",
+  "created": 1680075167269,
+  "modified": 1680075167269,
   "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
   "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
   "firstName": "John",
@@ -285,7 +285,7 @@ expect(createdPatient.id).to.be.equal(johnSnow.id)
     "privateKeyShamirPartitions": {},
     "aesExchangeKeys": {},
     "transferKeys": {},
-    "encryptedSelf": "04P6Zca0D12X3KTKBnsgAgO5TcvEPFnI+YlBHPh4B6ME9DoPs5nUXxOcIiux04re",
+    "encryptedSelf": "fEGczTHhzxJFgmGYVR0rY2uaPF7mu8wjx1Dx4Jx5xDOuN4QEhxTUJAhaY4etPt/O",
     "secretForeignKeys": [],
     "cryptedForeignKeys": {},
     "delegations": {
@@ -338,14 +338,14 @@ const createdData = await api.dataSampleApi.createOrModifyDataSamplesFor(johnSno
 ```text
 [
   {
-    "id": "505497c2-e579-4745-b0fb-40d9b3c45f4d",
+    "id": "3b0347a1-a83a-4de9-a718-9a65401b5448",
     "qualifiedLinks": {},
-    "batchId": "bd86c9f0-f7c0-4ac5-9d43-d8589354bd9f",
+    "batchId": "13f221fc-b7d2-4b98-980c-7d41707d3da8",
     "index": 0,
     "valueDate": 20220203111034,
-    "openingDate": 20230328102234,
-    "created": 1679991754726,
-    "modified": 1679991754725,
+    "openingDate": 20230329073247,
+    "created": 1680075167887,
+    "modified": 1680075167887,
     "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
     "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
     "comment": "Height",
@@ -364,7 +364,7 @@ const createdData = await api.dataSampleApi.createOrModifyDataSamplesFor(johnSno
     "labels": {},
     "systemMetaData": {
       "secretForeignKeys": [
-        "d3a742ed-0650-42d9-9b25-7375ac950089"
+        "bc700ed6-3a10-440a-bbfa-ab16364c56f6"
       ],
       "cryptedForeignKeys": {
         "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
@@ -378,14 +378,14 @@ const createdData = await api.dataSampleApi.createOrModifyDataSamplesFor(johnSno
     }
   },
   {
-    "id": "b6866b62-385a-4967-9542-b6372d966983",
+    "id": "58c517fe-d389-4b23-8972-afb2f34e6149",
     "qualifiedLinks": {},
-    "batchId": "bd86c9f0-f7c0-4ac5-9d43-d8589354bd9f",
+    "batchId": "13f221fc-b7d2-4b98-980c-7d41707d3da8",
     "index": 1,
     "valueDate": 20220203111034,
-    "openingDate": 20230328102234,
-    "created": 1679991754726,
-    "modified": 1679991754726,
+    "openingDate": 20230329073247,
+    "created": 1680075167887,
+    "modified": 1680075167887,
     "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
     "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
     "comment": "Weight",
@@ -404,7 +404,7 @@ const createdData = await api.dataSampleApi.createOrModifyDataSamplesFor(johnSno
     "labels": {},
     "systemMetaData": {
       "secretForeignKeys": [
-        "d3a742ed-0650-42d9-9b25-7375ac950089"
+        "bc700ed6-3a10-440a-bbfa-ab16364c56f6"
       ],
       "cryptedForeignKeys": {
         "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
@@ -459,14 +459,14 @@ expect(johnData.rows[0].comment).to.be.equal('Weight')
   "totalSize": 1,
   "rows": [
     {
-      "id": "b6866b62-385a-4967-9542-b6372d966983",
+      "id": "58c517fe-d389-4b23-8972-afb2f34e6149",
       "qualifiedLinks": {},
-      "batchId": "bd86c9f0-f7c0-4ac5-9d43-d8589354bd9f",
+      "batchId": "13f221fc-b7d2-4b98-980c-7d41707d3da8",
       "index": 1,
       "valueDate": 20220203111034,
-      "openingDate": 20230328102234,
-      "created": 1679991754726,
-      "modified": 1679991754726,
+      "openingDate": 20230329073247,
+      "created": 1680075167887,
+      "modified": 1680075167887,
       "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
       "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
       "comment": "Weight",
@@ -485,7 +485,7 @@ expect(johnData.rows[0].comment).to.be.equal('Weight')
       "labels": {},
       "systemMetaData": {
         "secretForeignKeys": [
-          "d3a742ed-0650-42d9-9b25-7375ac950089"
+          "bc700ed6-3a10-440a-bbfa-ab16364c56f6"
         ],
         "cryptedForeignKeys": {
           "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
@@ -526,14 +526,14 @@ expect(johnWeight.comment).to.be.equal('Weight')
 
 ```json
 {
-  "id": "b6866b62-385a-4967-9542-b6372d966983",
+  "id": "58c517fe-d389-4b23-8972-afb2f34e6149",
   "qualifiedLinks": {},
-  "batchId": "bd86c9f0-f7c0-4ac5-9d43-d8589354bd9f",
+  "batchId": "13f221fc-b7d2-4b98-980c-7d41707d3da8",
   "index": 1,
   "valueDate": 20220203111034,
-  "openingDate": 20230328102234,
-  "created": 1679991754726,
-  "modified": 1679991754726,
+  "openingDate": 20230329073247,
+  "created": 1680075167887,
+  "modified": 1680075167887,
   "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
   "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
   "comment": "Weight",
@@ -552,7 +552,7 @@ expect(johnWeight.comment).to.be.equal('Weight')
   "labels": {},
   "systemMetaData": {
     "secretForeignKeys": [
-      "d3a742ed-0650-42d9-9b25-7375ac950089"
+      "bc700ed6-3a10-440a-bbfa-ab16364c56f6"
     ],
     "cryptedForeignKeys": {
       "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}

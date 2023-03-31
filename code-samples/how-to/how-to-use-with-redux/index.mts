@@ -1,5 +1,3 @@
-import 'isomorphic-fetch'
-
 //tech-doc: instantiate the api
 import 'isomorphic-fetch'
 import { medTechApi, User } from '@icure/medical-device-sdk'

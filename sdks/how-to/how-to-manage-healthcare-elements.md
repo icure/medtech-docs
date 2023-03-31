@@ -64,14 +64,14 @@ const healthcareElement = await api.healthcareElementApi.createOrModifyHealthcar
 
 ```json
 {
-  "id": "09c8f062-be13-441f-9403-50f040ad3511",
-  "rev": "1-17e59559f4b9ab7f2f5da182df44dd95",
-  "created": 1679991706452,
-  "modified": 1679991706452,
+  "id": "5cce7f64-edba-41b9-bf7f-d902f453f129",
+  "rev": "1-8b37e4b6db62be08767aa02d570c637b",
+  "created": 1680075107823,
+  "modified": 1680075107823,
   "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
   "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
-  "healthcareElementId": "09c8f062-be13-441f-9403-50f040ad3511",
-  "valueDate": 20230328102146,
+  "healthcareElementId": "5cce7f64-edba-41b9-bf7f-d902f453f129",
+  "valueDate": 20230329073147,
   "openingDate": 1570838400000,
   "description": "The patient has been diagnosed Pararibulitis",
   "identifiers": [],
@@ -90,7 +90,7 @@ const healthcareElement = await api.healthcareElementApi.createOrModifyHealthcar
     "encryptionKeys": {
       "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
     },
-    "encryptedSelf": "0OohLQFtpqfGrWrtbBdkDRVKK9vou1tIdiQ9oKANwt/DWx/rAzh0PRk7CgDO6sEzTKa1hFh4kgjuLdwI29K9hbZY95a97XmGsQ5u6aZWaPE="
+    "encryptedSelf": "zi5vx+vPpDJicUw02p19zo3RTBhUpsJuBCtw5SDB6I1nlzWZVYJwZkrv7HJrfY9EHwIzCUX3GZ+Xzi/1yYZhl4NhXiuP1gytZpX+hrsquZk="
   }
 }
 ```
@@ -149,14 +149,14 @@ const followUpHealthcareElement = await api.healthcareElementApi.createOrModifyH
 
 ```json
 {
-  "id": "c2176548-0496-4ff2-91f0-5f67b7b0079a",
-  "rev": "1-9f6105a4782e2f3089197c46025204e7",
-  "created": 1679991707123,
-  "modified": 1679991707123,
+  "id": "4fa1574c-59cf-41bb-ba0d-853fa6a223ce",
+  "rev": "1-1d112e26485b5b3633dae157930ae472",
+  "created": 1680075109075,
+  "modified": 1680075109075,
   "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
   "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
-  "healthcareElementId": "c2176548-0496-4ff2-91f0-5f67b7b0079a",
-  "valueDate": 20230328102147,
+  "healthcareElementId": "4fa1574c-59cf-41bb-ba0d-853fa6a223ce",
+  "valueDate": 20230329073149,
   "openingDate": 1570838400000,
   "description": "The patient has been diagnosed Pararibulitis",
   "identifiers": [],
@@ -175,7 +175,7 @@ const followUpHealthcareElement = await api.healthcareElementApi.createOrModifyH
     "encryptionKeys": {
       "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
     },
-    "encryptedSelf": "fFJw4TBMtFztT5auSHw1YhAgs+E+QTo6pKpLRYlS5s7IV4eSOlnpyWCsIyhcQziQJ8toNKHhijkP6PFMexdKSsD0aKHhn1cJZXS/7i5Ve6g="
+    "encryptedSelf": "TkAvEe6JK1SZc/0b2PaakUS9fPbriAkUvWCBswKT46vflJ68m1m6z6dY5Ey2xyIVKncG/2x8kezMqHJVfkRZ9g5wrYrHGlK5VjpyfDwUCD4="
   }
 }
 ```
@@ -187,14 +187,14 @@ const followUpHealthcareElement = await api.healthcareElementApi.createOrModifyH
 
 ```json
 {
-  "id": "46c5dabf-0116-4ad4-bc7d-75701e54d0e8",
-  "rev": "1-6fe2c4d76ff103614a3b332aa3374190",
-  "created": 1679991707431,
-  "modified": 1679991707431,
+  "id": "214a2aa7-4c82-435d-89af-c903e04f4ff9",
+  "rev": "1-034c6555bce1b5bf5fc4e673d201fe5e",
+  "created": 1680075109468,
+  "modified": 1680075109468,
   "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
   "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
-  "healthcareElementId": "c2176548-0496-4ff2-91f0-5f67b7b0079a",
-  "valueDate": 20230328102147,
+  "healthcareElementId": "4fa1574c-59cf-41bb-ba0d-853fa6a223ce",
+  "valueDate": 20230329073149,
   "openingDate": 1604793600000,
   "description": "The patient recovered",
   "identifiers": [],
@@ -213,7 +213,7 @@ const followUpHealthcareElement = await api.healthcareElementApi.createOrModifyH
     "encryptionKeys": {
       "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
     },
-    "encryptedSelf": "R9Z5SU2Ku9i+TG6T1PTkbq2V2cR0+/sEo1CD0DuAmxzQritCJPcjz8sHz1QXllTbzKKTHV/VpcLwT5rIeRJ1vA=="
+    "encryptedSelf": "ToNk845ud6xmh5YUT+LXw+Ehrbt5bMhO5H2HWnXCyVM3cLDkp+VrMI9D7JKm0i96FT3/9vRb00pC3LYy+2ROWw=="
   }
 }
 ```
@@ -289,9 +289,9 @@ const newElements = await api.healthcareElementApi.createOrModifyHealthcareEleme
 ```text
 [
   {
-    "id": "9f4f7bc3-d659-4582-acc3-8cbf216051b3",
-    "rev": "1-0526ce730da88bd2056ef3bfaf3abfa1",
-    "healthcareElementId": "9f4f7bc3-d659-4582-acc3-8cbf216051b3",
+    "id": "a012496a-3779-4fe0-9111-324e92c5d0e1",
+    "rev": "1-b0262bfe94d443668dd2a80f6a934e96",
+    "healthcareElementId": "a012496a-3779-4fe0-9111-324e92c5d0e1",
     "openingDate": 1570838400000,
     "description": "The patient has been diagnosed Pararibulitis",
     "identifiers": [],
@@ -310,13 +310,13 @@ const newElements = await api.healthcareElementApi.createOrModifyHealthcareEleme
       "encryptionKeys": {
         "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
       },
-      "encryptedSelf": "ulpcrw9B5VUUw0ocjtteBu24cDgJ7QWuI9BzQxPSM+FU4yvQxgWl2ZUbCGUHv2DCZ+WZuJj6KaDFWcPGkKnp5cugIRY02XSez8AxPhhY7TU="
+      "encryptedSelf": "Qu9io7OWqB7nlgZ8XCXTNLWaAO1Tt2QS1MX2FoC5pNZ9rUUTNMuaw77184n0KHc0JcYPK9wVfdwqKU43xhJgRJNT/fhy/HGA6KmtogmSdfI="
     }
   },
   {
-    "id": "02ff28de-9130-4dee-bfff-ac7b9c42b078",
-    "rev": "1-023eaa3fb2b175b44f563b7abdc52947",
-    "healthcareElementId": "02ff28de-9130-4dee-bfff-ac7b9c42b078",
+    "id": "6423b921-033c-43b1-ab51-7473ec86243b",
+    "rev": "1-8e96cc985e2ad468b9d6431ee1d62949",
+    "healthcareElementId": "6423b921-033c-43b1-ab51-7473ec86243b",
     "openingDate": 1604793600000,
     "description": "The patient has also the flu",
     "identifiers": [],
@@ -335,7 +335,7 @@ const newElements = await api.healthcareElementApi.createOrModifyHealthcareEleme
       "encryptionKeys": {
         "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
       },
-      "encryptedSelf": "enSJgwD3+Wm70Ysq0alyF/r1HxYPQqk8wzHDOiVZlC5KVcnmEPAvsvq1YEU4tmJLIcTzbkqNZbl3golJ72tgqg=="
+      "encryptedSelf": "5d7SP6U33n3vbHmPVD8JPxsDtT7CafpED9av/4INLUeT+Ts/HtCHjfCgo/hrhQrqQsxSIgZZurPnZovXADfVsg=="
     }
   }
 ]
@@ -366,14 +366,14 @@ const sharedHealthcareElement = await api.healthcareElementApi.giveAccessTo(
 
 ```json
 {
-  "id": "09c8f062-be13-441f-9403-50f040ad3511",
-  "rev": "2-3b5d69918bb096651e1ff85f439daeaa",
-  "created": 1679991706452,
-  "modified": 1679991706452,
+  "id": "5cce7f64-edba-41b9-bf7f-d902f453f129",
+  "rev": "2-eaa4b5385272e39112066fdfb68b256d",
+  "created": 1680075107823,
+  "modified": 1680075107823,
   "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
   "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
-  "healthcareElementId": "09c8f062-be13-441f-9403-50f040ad3511",
-  "valueDate": 20230328102146,
+  "healthcareElementId": "5cce7f64-edba-41b9-bf7f-d902f453f129",
+  "valueDate": 20230329073147,
   "openingDate": 1570838400000,
   "description": "The patient has been diagnosed Pararibulitis",
   "identifiers": [],
@@ -395,7 +395,7 @@ const sharedHealthcareElement = await api.healthcareElementApi.giveAccessTo(
       "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {},
       "3238dd4f-be09-4375-bb5b-0bf9d737ac94": {}
     },
-    "encryptedSelf": "RSyvLJNIUjYXFzkFLo9S6ZK5ROCaoVRSq76E9+9NINbkw+aNCougAJjnVPyY56iAcN5pClraX1S/IS3j7Q3MOVl/YE2sf/uillh5bnXVMRY="
+    "encryptedSelf": "BKfZvmn5D30MHVKTJdtNLeC1YViqGgDcUmPk8BbwrOOfySdicj6QoKOaCNuUIk89Jt0BHqGaNrsoUpeXhmqf1hVS1e6V+wl8f9DWWfr8Zc8="
   }
 }
 ```
@@ -427,14 +427,14 @@ const retrievedHealthcareElement = await api.healthcareElementApi.getHealthcareE
 
 ```json
 {
-  "id": "09c8f062-be13-441f-9403-50f040ad3511",
-  "rev": "2-3b5d69918bb096651e1ff85f439daeaa",
-  "created": 1679991706452,
-  "modified": 1679991706452,
+  "id": "5cce7f64-edba-41b9-bf7f-d902f453f129",
+  "rev": "2-eaa4b5385272e39112066fdfb68b256d",
+  "created": 1680075107823,
+  "modified": 1680075107823,
   "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
   "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
-  "healthcareElementId": "09c8f062-be13-441f-9403-50f040ad3511",
-  "valueDate": 20230328102146,
+  "healthcareElementId": "5cce7f64-edba-41b9-bf7f-d902f453f129",
+  "valueDate": 20230329073147,
   "openingDate": 1570838400000,
   "description": "The patient has been diagnosed Pararibulitis",
   "identifiers": [],
@@ -456,7 +456,7 @@ const retrievedHealthcareElement = await api.healthcareElementApi.getHealthcareE
       "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {},
       "3238dd4f-be09-4375-bb5b-0bf9d737ac94": {}
     },
-    "encryptedSelf": "RSyvLJNIUjYXFzkFLo9S6ZK5ROCaoVRSq76E9+9NINbkw+aNCougAJjnVPyY56iAcN5pClraX1S/IS3j7Q3MOVl/YE2sf/uillh5bnXVMRY="
+    "encryptedSelf": "BKfZvmn5D30MHVKTJdtNLeC1YViqGgDcUmPk8BbwrOOfySdicj6QoKOaCNuUIk89Jt0BHqGaNrsoUpeXhmqf1hVS1e6V+wl8f9DWWfr8Zc8="
   }
 }
 ```
@@ -505,15 +505,15 @@ console.log(modificationResult)
 
 ```json
 {
-  "id": "9a5e1fc3-2156-4480-a4a9-7168a0056867",
-  "rev": "1-5abeaf44c3053c3a23b08f62b18ec62c",
-  "created": 1679991708610,
-  "modified": 1679991708610,
+  "id": "7fdabc38-fa93-47db-abe4-287ac7777abe",
+  "rev": "1-85508f2184f804ba5eebcb3647c08447",
+  "created": 1680075110897,
+  "modified": 1680075110897,
   "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
   "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
-  "healthcareElementId": "9a5e1fc3-2156-4480-a4a9-7168a0056867",
-  "valueDate": 20230328102148,
-  "openingDate": 20230328102148,
+  "healthcareElementId": "7fdabc38-fa93-47db-abe4-287ac7777abe",
+  "valueDate": 20230329073150,
+  "openingDate": 20230329073150,
   "description": "To modify, I must create",
   "identifiers": [],
   "codes": {},
@@ -531,7 +531,7 @@ console.log(modificationResult)
     "encryptionKeys": {
       "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
     },
-    "encryptedSelf": "ytM0s8TJ8rlGAUsDWemPLEBFHWFM+9fa2+7QP1ZUKCh7ytMmsIlYX146Q75IH1eTn6tCeU+jPCZCCra9mNZsSQ=="
+    "encryptedSelf": "saJ+FRCmIKdDUAk8S2OzEY0pHYaQB8GQ6ogr9XZarjZJ4ChoupLEQMstd15vaRn+ofn8mtQxFt4nVmCMp6b+ew=="
   }
 }
 ```
@@ -543,14 +543,14 @@ console.log(modificationResult)
 
 ```json
 {
-  "id": "9a5e1fc3-2156-4480-a4a9-7168a0056867",
-  "rev": "1-5abeaf44c3053c3a23b08f62b18ec62c",
-  "created": 1679991708610,
-  "modified": 1679991708610,
+  "id": "7fdabc38-fa93-47db-abe4-287ac7777abe",
+  "rev": "1-85508f2184f804ba5eebcb3647c08447",
+  "created": 1680075110897,
+  "modified": 1680075110897,
   "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
   "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
-  "healthcareElementId": "9a5e1fc3-2156-4480-a4a9-7168a0056867",
-  "valueDate": 20230328102148,
+  "healthcareElementId": "7fdabc38-fa93-47db-abe4-287ac7777abe",
+  "valueDate": 20230329073150,
   "openingDate": 1570838400000,
   "description": "I can change and I can add",
   "identifiers": [],
@@ -569,7 +569,7 @@ console.log(modificationResult)
     "encryptionKeys": {
       "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
     },
-    "encryptedSelf": "ytM0s8TJ8rlGAUsDWemPLEBFHWFM+9fa2+7QP1ZUKCh7ytMmsIlYX146Q75IH1eTn6tCeU+jPCZCCra9mNZsSQ=="
+    "encryptedSelf": "saJ+FRCmIKdDUAk8S2OzEY0pHYaQB8GQ6ogr9XZarjZJ4ChoupLEQMstd15vaRn+ofn8mtQxFt4nVmCMp6b+ew=="
   }
 }
 ```
@@ -581,14 +581,14 @@ console.log(modificationResult)
 
 ```json
 {
-  "id": "9a5e1fc3-2156-4480-a4a9-7168a0056867",
-  "rev": "2-94348d79e1dc4bc66bc13c51e615411f",
-  "created": 1679991708610,
-  "modified": 1679991708610,
+  "id": "7fdabc38-fa93-47db-abe4-287ac7777abe",
+  "rev": "2-761b733107664ad1c9eead73b8372136",
+  "created": 1680075110897,
+  "modified": 1680075110897,
   "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
   "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
-  "healthcareElementId": "9a5e1fc3-2156-4480-a4a9-7168a0056867",
-  "valueDate": 20230328102148,
+  "healthcareElementId": "7fdabc38-fa93-47db-abe4-287ac7777abe",
+  "valueDate": 20230329073150,
   "openingDate": 1570838400000,
   "description": "I can change and I can add",
   "identifiers": [],
@@ -607,7 +607,7 @@ console.log(modificationResult)
     "encryptionKeys": {
       "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
     },
-    "encryptedSelf": "Sz2gmzmecJJKbpMexjzpIXNJTlvNIkE9uHGcAAlZ710bKQabz0giL44snd+KzqZYkuXdybDpQ44/XIqOy9H9gw=="
+    "encryptedSelf": "SJ3S+Ly5LWTifSslDpoXTidiO4DD3JGlF+wXSOb3Vaaye+Y7bUsihH7SpWn9tuO7mKXUOFIcEQglkCTvpZ15EA=="
   }
 }
 ```
@@ -677,7 +677,7 @@ const healthcareElementsFirstPage = await api.healthcareElementApi.filterHealthc
 ```json
 {
   "pageSize": 10,
-  "totalSize": 134,
+  "totalSize": 152,
   "rows": [
     {
       "id": "00577c6a-512d-4b8c-8a25-09bae8a22b69",
@@ -981,7 +981,7 @@ const healthcareElementsSecondPage = await api.healthcareElementApi.filterHealth
 ```json
 {
   "pageSize": 10,
-  "totalSize": 134,
+  "totalSize": 152,
   "rows": [
     {
       "id": "0c3d2d4a-4ebc-486d-aacd-d264a2a18df4",
@@ -1071,6 +1071,38 @@ const healthcareElementsSecondPage = await api.healthcareElementApi.filterHealth
           "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
         },
         "encryptedSelf": "idhr76046wN1wJ0s5dyXzMwkkkQaCZs5ogFkuqSnxa6c2PVAFNbWSlpd7Vbx3tU/vta1r9jXEo1+Ubdqqn8WoA=="
+      }
+    },
+    {
+      "id": "11467e98-e552-4bd4-b5b7-a20c2ebc78a3",
+      "rev": "2-91a0792e89b7e71b355d104a34295ea6",
+      "created": 1680074908455,
+      "modified": 1680074908455,
+      "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
+      "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
+      "healthcareElementId": "11467e98-e552-4bd4-b5b7-a20c2ebc78a3",
+      "valueDate": 20230329072828,
+      "openingDate": 1570838400000,
+      "identifiers": [],
+      "codes": {},
+      "labels": {},
+      "systemMetaData": {
+        "secretForeignKeys": [
+          "4742a08d-bbc1-4ed1-a758-f0a605529bf1"
+        ],
+        "cryptedForeignKeys": {
+          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {},
+          "3238dd4f-be09-4375-bb5b-0bf9d737ac94": {}
+        },
+        "delegations": {
+          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {},
+          "3238dd4f-be09-4375-bb5b-0bf9d737ac94": {}
+        },
+        "encryptionKeys": {
+          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {},
+          "3238dd4f-be09-4375-bb5b-0bf9d737ac94": {}
+        },
+        "encryptedSelf": "oljJgmFEEZOc++XH1kCFjqhxp6e2odmne/qp2IT7k8wwkp9cbvIShb0pvJWHEdhaAYeh/X5hKq/DR+AyXsPmEJW3+ymh6lN4xcT/Xef5LX8="
       }
     },
     {
@@ -1244,40 +1276,11 @@ const healthcareElementsSecondPage = await api.healthcareElementApi.filterHealth
         },
         "encryptedSelf": "2rrnliwtYvQbfMhoutOYDQlbbDCDK9wMaLBf56Gqsxf+MMM1DKV3A65Ln0V4E6vj9G6fF3+6vMgVVrzXT1AbyV0LnlJcH0jyIQ40bFOlGMo="
       }
-    },
-    {
-      "id": "250bb146-f58b-4b4b-835d-15e97f03b611",
-      "rev": "1-dbaeb35b1306f77f05e8d748f840e714",
-      "created": 1679926396533,
-      "modified": 1679926396533,
-      "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
-      "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
-      "healthcareElementId": "250bb146-f58b-4b4b-835d-15e97f03b611",
-      "valueDate": 20230327141316,
-      "openingDate": 20230327141316,
-      "identifiers": [],
-      "codes": {},
-      "labels": {},
-      "systemMetaData": {
-        "secretForeignKeys": [
-          "4742a08d-bbc1-4ed1-a758-f0a605529bf1"
-        ],
-        "cryptedForeignKeys": {
-          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
-        },
-        "delegations": {
-          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
-        },
-        "encryptionKeys": {
-          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
-        },
-        "encryptedSelf": "oaDiaTz53WEOZaj7zQ0qw+geij9yvZ91gVp0HA3O6UB/grIFrD85YaP3ilB8U1L4wJfeAsylnksQnSaDNeF6OGNtAZkPBiwbJ2guvE/Mpas="
-      }
     }
   ],
   "nextKeyPair": {
-    "startKey": "2544c3be-662f-4c6d-b773-c692125b7ca1",
-    "startKeyDocId": "2544c3be-662f-4c6d-b773-c692125b7ca1"
+    "startKey": "214a2aa7-4c82-435d-89af-c903e04f4ff9",
+    "startKeyDocId": "214a2aa7-4c82-435d-89af-c903e04f4ff9"
   }
 }
 ```
@@ -1311,12 +1314,14 @@ const healthcareElementsIdList = await api.healthcareElementApi.matchHealthcareE
   "0c3d2d4a-4ebc-486d-aacd-d264a2a18df4",
   "0e0c21d0-c08b-4493-9aed-67a1f14f6ae1",
   "0ecb5315-2511-406a-91ec-fbf137584ac1",
+  "11467e98-e552-4bd4-b5b7-a20c2ebc78a3",
   "11a257cc-7ba2-4051-8ced-e52d34d2b14c",
   "11d90f74-6d8e-4c2d-9cee-31020532569e",
   "1249ab05-9a1a-48e5-bf78-a22807fa1191",
   "15c26ab9-3591-4ba5-923e-9b10b2032643",
   "1609cffb-3f27-4011-a56f-b0de870c8de9",
   "162a3124-5d18-4376-926b-bb55ee712a1d",
+  "214a2aa7-4c82-435d-89af-c903e04f4ff9",
   "250bb146-f58b-4b4b-835d-15e97f03b611",
   "2544c3be-662f-4c6d-b773-c692125b7ca1",
   "26d0b00d-06e1-447a-94dd-91bf548dff56",
@@ -1329,13 +1334,17 @@ const healthcareElementsIdList = await api.healthcareElementApi.matchHealthcareE
   "3159d705-0fa6-4b0f-9998-054d47eb3b52",
   "32fa8e3d-aa6f-4cd4-b83a-2b55cb657de3",
   "3581880d-fcc1-4803-a4e4-64e585e863ef",
+  "3d62e848-1973-4f91-9a5f-7e7ba06365bc",
   "3f5e9daa-122d-4dcf-a7c3-b6b12c69ae4d",
   "43d77a42-cc42-40b5-b707-1cef789b4d70",
   "442c2628-d9cc-4c95-9c21-6cc3ffead2d5",
   "45d9abcc-d17e-427b-a2ce-7a82b0b74588",
+  "4622c11e-69fe-42e2-a64e-55b4e79f2f91",
   "46c5dabf-0116-4ad4-bc7d-75701e54d0e8",
+  "4a7e0cd8-eba5-4dd9-9d05-ce77efde7d56",
   "4db6be85-da39-4bd8-8906-4cf9df26fac0",
   "4e3a98ce-c3db-4097-8783-7cfab1a74cd2",
+  "4fa1574c-59cf-41bb-ba0d-853fa6a223ce",
   "538ceecd-bf6f-4145-969a-84ff671ac573",
   "539d8fed-30c7-46b5-93dc-6383124468be",
   "53c6e17c-afda-414b-b33a-8b79df2428ca",
@@ -1347,13 +1356,17 @@ const healthcareElementsIdList = await api.healthcareElementApi.matchHealthcareE
   "58054161-0505-43f5-b7b0-3c745c145318",
   "58b5cde4-d2b3-4352-868d-3c7bd0586211",
   "5b0ce445-cf45-4224-861d-19f924e61bde",
+  "5b8a3a7f-0d50-453f-b36f-617ab4d2c908",
   "5c20018b-36cc-4a76-bdb6-dfc71c66a57b",
+  "5cce7f64-edba-41b9-bf7f-d902f453f129",
   "5dba54c5-942c-48c1-9cfd-4acfcb249b19",
   "5dca19aa-8a16-4ed5-af68-254bd94b8d6f",
   "5e60035a-7996-48b2-bd94-37efab32ab71",
+  "5f2a0cf8-6242-405c-bbaa-6731d3637a50",
   "60280f87-93bb-40d1-8089-347b88554b1c",
   "61c74c60-42f0-4ad5-b119-d8b25e3fda0e",
   "638e134c-0c91-4a25-9c4a-32aaa3bdc6a1",
+  "6423b921-033c-43b1-ab51-7473ec86243b",
   "67704b42-6aba-497d-935f-62a54a41d0f3",
   "6b309b42-3b6e-4ed5-a7b0-7e6e24114710",
   "6bd8c3ca-5c9c-4ce9-a778-48b7097d64f3",
@@ -1369,6 +1382,8 @@ const healthcareElementsIdList = await api.healthcareElementApi.matchHealthcareE
   "7a48c343-691c-4895-8464-e080f9c46ae7",
   "7acb7226-cbcc-4c1f-be53-78b86da6167d",
   "7d967b50-b49c-49b4-984a-f8c568833aa8",
+  "7eb81d0e-b11a-4886-b5cc-fcc64d482d7b",
+  "7fdabc38-fa93-47db-abe4-287ac7777abe",
   "80c9c84a-1376-4995-8247-0e0f7554c5e6",
   "812a330e-27ee-4360-a8cf-0eb549b95af8",
   "83f4c43f-07d1-4689-8b27-6be038be777d",
@@ -1382,13 +1397,16 @@ const healthcareElementsIdList = await api.healthcareElementApi.matchHealthcareE
   "92864247-24e8-454b-bd9c-46cdffa95768",
   "94df5c18-95f2-466c-8a9b-ce46c83fd85c",
   "952e4666-7aef-4556-848e-6fd4cae72a3b",
+  "95b4c161-6089-464a-b0f6-5f618ee4852e",
   "9a5e1fc3-2156-4480-a4a9-7168a0056867",
   "9aa6b89f-47c0-43ab-a39f-3d288174cd45",
+  "9af1af1d-57fa-4ea5-9280-ca8cdef06b97",
   "9d65c82d-af20-4019-bab7-5aeb3c507e4a",
   "9dbd065e-a219-49b7-86de-2edadc8e7573",
   "9e763ba6-3c0c-4cef-a427-ea43071aca17",
   "9e92765f-7d5a-41d5-9357-1b82f6f022f1",
   "9f4f7bc3-d659-4582-acc3-8cbf216051b3",
+  "a012496a-3779-4fe0-9111-324e92c5d0e1",
   "a13ced82-5090-4199-b93b-f955e73458a6",
   "a4950397-bf9b-4d7c-96c4-ff130f0f76b8",
   "abf689b3-e9ff-42d3-a6cb-288f84d513fa",
@@ -1402,6 +1420,8 @@ const healthcareElementsIdList = await api.healthcareElementApi.matchHealthcareE
   "b6fcb433-0628-4bf9-8c80-ee22af0e68d3",
   "b8d200ad-c2ab-4914-8a5c-5c48b456a894",
   "ba5dce37-59f2-4c34-bb70-9096ecafb01d",
+  "bb22d4a6-dd4d-48af-ab3b-cfde60d7a458",
+  "bbf3494d-9fcc-4bb9-b867-aa8f435b086c",
   "bcf8e2bd-c205-488b-82b0-4d628d13910e",
   "bdd30325-0aeb-4a4d-9bd3-13d02ab296f6",
   "bdfda04c-8e72-4690-bb5f-2af1bdc453a4",
@@ -1422,6 +1442,7 @@ const healthcareElementsIdList = await api.healthcareElementApi.matchHealthcareE
   "d79ed178-c3ca-47a6-b0b9-ea52bd57a07d",
   "d89aa316-b4af-406f-8b2b-848aad75a769",
   "db13490a-a5f0-4dc4-bb57-8319b28e029e",
+  "dcecd029-a957-47be-b950-5493dc66b886",
   "df498876-bad8-463d-99dd-198c62d6051b",
   "e1b992ee-61e1-4123-853b-a62396f3bb6c",
   "e3be5de1-3d73-486a-8c90-a61d5bda1bfb",
@@ -1452,21 +1473,21 @@ const healthcareElementsForPatient = await api.healthcareElementApi.getHealthcar
 ```text
 [
   {
-    "id": "513d77e6-54f8-495f-a21b-218faca1a432",
-    "rev": "1-7be00031045b61f2a398a22953c7f9f4",
-    "created": 1679991709026,
-    "modified": 1679991709026,
+    "id": "88534168-56ae-488c-8838-e36df913a7ab",
+    "rev": "1-5443778f5f72263be8b745894688a2dc",
+    "created": 1680075111977,
+    "modified": 1680075111977,
     "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
     "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
-    "healthcareElementId": "513d77e6-54f8-495f-a21b-218faca1a432",
-    "valueDate": 20230328102149,
-    "openingDate": 20230328102149,
+    "healthcareElementId": "88534168-56ae-488c-8838-e36df913a7ab",
+    "valueDate": 20230329073151,
+    "openingDate": 20230329073151,
     "identifiers": [],
     "codes": {},
     "labels": {},
     "systemMetaData": {
       "secretForeignKeys": [
-        "b53cebb4-16c7-4095-b293-e483a0dda18e"
+        "481d31fb-2c4e-40a7-be29-d1a771cc1845"
       ],
       "cryptedForeignKeys": {
         "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
@@ -1477,7 +1498,7 @@ const healthcareElementsForPatient = await api.healthcareElementApi.getHealthcar
       "encryptionKeys": {
         "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
       },
-      "encryptedSelf": "UwCDME4bfl5Svwq2aCV7GuKQjHBbzsbP8qzP7wTASum5EibmcbB/6u/Whkexn9hP+A7ei05RGR+BN2uRqP1Bjw=="
+      "encryptedSelf": "3w5u0nUMBdRnY1go2nUMwgJs6Y2ItqTO9qvoRLhtqbZKqhSxxlzdsO/mYJhdzN1cNBRtOWtMXArtO0k9Bw2ZBg=="
     }
   }
 ]
@@ -1507,15 +1528,15 @@ const deletedHealthcareElement = await api.healthcareElementApi.deleteHealthcare
 
 ```json
 {
-  "id": "325a2952-7b28-4800-9434-18129acebb9a",
-  "rev": "1-916d0d158be8880fadb522e98f821599",
-  "created": 1679991710471,
-  "modified": 1679991710471,
+  "id": "f6b9abc1-9ddb-45c7-bec6-4a69921835bc",
+  "rev": "1-90f32d082ca68e97ffa91c341a081391",
+  "created": 1680075113681,
+  "modified": 1680075113681,
   "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
   "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
-  "healthcareElementId": "325a2952-7b28-4800-9434-18129acebb9a",
-  "valueDate": 20230328102150,
-  "openingDate": 20230328102150,
+  "healthcareElementId": "f6b9abc1-9ddb-45c7-bec6-4a69921835bc",
+  "valueDate": 20230329073153,
+  "openingDate": 20230329073153,
   "description": "I am doomed",
   "identifiers": [],
   "codes": {},
@@ -1533,7 +1554,7 @@ const deletedHealthcareElement = await api.healthcareElementApi.deleteHealthcare
     "encryptionKeys": {
       "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
     },
-    "encryptedSelf": "Whytb7S3NSH5yH/EBxCKjVy4Ds27U1ZZqVpOgHf/CMUh25Om54x0O7jhhnVbNq1S"
+    "encryptedSelf": "eCZAsTNomQdTPMNyOU808a468UjjvaMFoTJDPeUE0kYrvCZSnwFxuOo0+cYLQ0Dq"
   }
 }
 ```
@@ -1544,6 +1565,6 @@ const deletedHealthcareElement = await api.healthcareElementApi.deleteHealthcare
 <summary>deletedHealthcareElement</summary>
 
 ```text
-2-1eff76323fcd84b983316f7713b15c7d
+2-7942b04a6c27ff95e2e0b24d1be0fb7d
 ```
 </details>

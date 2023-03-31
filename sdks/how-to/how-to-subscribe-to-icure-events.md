@@ -100,13 +100,13 @@ const patient = await api.patientApi.createOrModifyPatient(
 
 ```json
 {
-  "id": "25eb9986-286d-4829-984e-abc589b4a4ae",
+  "id": "1d3432f2-409e-466d-a276-34167b95cf4e",
   "languages": [],
   "active": true,
   "parameters": {},
-  "rev": "1-7806bda417e9319c9d638edebae99570",
-  "created": 1679991745845,
-  "modified": 1679991745845,
+  "rev": "1-4fd44d5cbed4afea9e6bded2d9936588",
+  "created": 1680075158207,
+  "modified": 1680075158207,
   "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
   "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
   "firstName": "John",
@@ -142,7 +142,7 @@ const patient = await api.patientApi.createOrModifyPatient(
     "privateKeyShamirPartitions": {},
     "aesExchangeKeys": {},
     "transferKeys": {},
-    "encryptedSelf": "pjFMTFN/RYN7zBSjAYhLDHli0cm3M/o9HL4ntlGgyJKwOKQqa633V6QHQYzanHr4",
+    "encryptedSelf": "5sEzMKpWsrqELk2XjLty90NxBczvtVRko3j6UDl+S721AKD0ZqRCUc1m61mJd+W1",
     "secretForeignKeys": [],
     "cryptedForeignKeys": {},
     "delegations": {
@@ -175,14 +175,14 @@ const dataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
 
 ```json
 {
-  "id": "83a867f4-6b6a-4900-8b46-c3a1c032c2ad",
+  "id": "5dba543c-9f34-4538-b6af-1ce90e64cf63",
   "qualifiedLinks": {},
-  "batchId": "73dce8f6-2801-4afc-b644-2539c149af52",
+  "batchId": "be67e3cf-381d-4f8d-a601-4acc4c7d1024",
   "index": 0,
-  "valueDate": 20230328102225,
-  "openingDate": 20230328102225,
-  "created": 1679991745928,
-  "modified": 1679991745928,
+  "valueDate": 20230329073238,
+  "openingDate": 20230329073238,
+  "created": 1680075158591,
+  "modified": 1680075158591,
   "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
   "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
   "identifiers": [],
@@ -200,7 +200,7 @@ const dataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
   "labels": {},
   "systemMetaData": {
     "secretForeignKeys": [
-      "c9017745-53ed-4296-a649-763fbc0ef4bc"
+      "7a04d8c9-5b95-41c8-8ce4-5e112a9a328e"
     ],
     "cryptedForeignKeys": {
       "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
@@ -232,14 +232,14 @@ connection.close()
 ```text
 [
   {
-    "id": "83a867f4-6b6a-4900-8b46-c3a1c032c2ad",
+    "id": "5dba543c-9f34-4538-b6af-1ce90e64cf63",
     "qualifiedLinks": {},
-    "batchId": "73dce8f6-2801-4afc-b644-2539c149af52",
+    "batchId": "be67e3cf-381d-4f8d-a601-4acc4c7d1024",
     "index": 0,
-    "valueDate": 20230328102225,
-    "openingDate": 20230328102225,
-    "created": 1679991745928,
-    "modified": 1679991745928,
+    "valueDate": 20230329073238,
+    "openingDate": 20230329073238,
+    "created": 1680075158591,
+    "modified": 1680075158591,
     "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
     "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
     "identifiers": [],
@@ -257,7 +257,7 @@ connection.close()
     "labels": {},
     "systemMetaData": {
       "secretForeignKeys": [
-        "c9017745-53ed-4296-a649-763fbc0ef4bc"
+        "7a04d8c9-5b95-41c8-8ce4-5e112a9a328e"
       ],
       "cryptedForeignKeys": {
         "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
