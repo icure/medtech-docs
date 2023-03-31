@@ -12,12 +12,14 @@ However, it is possible for the creator to share the entity with others by using
 respective apis.
 This allows selected data owners to retrieve the entity and decrypt its content.
 
-## Instantiate the apis for different users
+:::note
 
 In the following examples we will use three different instances of `MedTechApi`s, to perform the requests as different
 users.
 The api we use are `hcp1Api` and `hcp2Api` to act as two different healthcare practitioners data owners (`hcp1` and 
 `hcp2`, respectively) and `pApi` to act as a patient data owner (`p`).
+
+:::
 
 ## Sharing data other users
 
