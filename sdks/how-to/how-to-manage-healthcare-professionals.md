@@ -6,11 +6,9 @@ tags:
 ---
 # Handling healthcare professionals
 
-[Healthcare professionals](../glossary.md#Data owner) are either doctors, nurses, physiotherapists, etc. They are the 
-people who are going to use the medical device to take care of patients.
-
-Healthcare professionals can also in certain cases be a healthcare organization.
-
+[Healthcare professionals](/sdks/glossary#data-owner) are doctors, nurses, physiotherapists, etc. They are the 
+people who are going to use the medical device to take care of patients.  
+Healthcare professionals can also in certain cases be a healthcare organizations.  
 The healthcareProfessionalApi allows you to manage [Healthcare professionals](../references/classes/HealthcareProfessional.md).
 
 ## Create a healthcare professional

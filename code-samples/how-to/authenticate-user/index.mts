@@ -105,7 +105,7 @@ const authenticatedApi = authenticationResult.medTechApi
 console.log(`Your new user id: ${authenticationResult.userId}`)
 console.log(`Database id where new user was created: ${authenticationResult.groupId}`)
 console.log(`Your initialised MedTechAPI: ***\${authenticatedApi}***`)
-console.log(`RSA keypair of your new user: ***\${authenticationResult.keyPair}***`)
+console.log(`RSA key pairs of your new user: ***\${authenticationResult.keyPairs}***`)
 console.log(`Token created to authenticate your new user: ***\${authenticationResult.token}***`)
 //tech-doc: STOP HERE
 output({ authenticationResult })
@@ -190,7 +190,7 @@ const loginResult = await anonymousApiForLogin.authenticationApi.completeAuthent
 console.log(`Your new user id: ${loginResult.userId}`)
 console.log(`Database id where new user was created: ${loginResult.groupId}`)
 console.log(`Your new initialised MedTechAPI: ***\${loginResult.medTechApi}***`)
-console.log(`RSA keypair of your user stays the same: ***\${loginResult.keyPair}***`)
+console.log(`RSA key pairs of your user stays the same: ***\${loginResult.keyPairs}***`)
 console.log(`The token of your user will change: ***\${loginResult.token}***`)
 //tech-doc: STOP HERE
 output({ loginResult })
