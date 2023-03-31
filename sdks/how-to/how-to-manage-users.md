@@ -89,7 +89,7 @@ but only Admins and Healthcare Professionals from create authentication tokens f
 
 The user you just created will be able to connect to the application but will not be able to manage data because it is not connected to a data owner.
 
-You will often need to create a patient that can connect to iCure. In that case you can use [createAndInviteUser](/sdks/references/apis/UserApi.md#createandinviteuser):
+You will often need to create a patient that can connect to iCure. In that case you can use [createAndInviteUser](/sdks/references/apis/UserApi#createandinviteuser):
 
 <!-- file://code-samples/how-to/manage-users/index.mts snippet:Create a patient user-->
 ```typescript
@@ -415,4 +415,4 @@ const deletedUserId = await api.userApi.deleteUser(createdUser.id)
 ```
 </details>
 
-For the gory details of all you can do with users using the SDK, check out the [UserApi](/sdks/references/apis/UserApi.md) documentation.
+For the gory details of all you can do with users using the SDK, check out the [UserApi](/sdks/references/apis/UserApi) documentation.
