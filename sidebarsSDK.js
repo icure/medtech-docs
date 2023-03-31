@@ -25,7 +25,7 @@ const sidebarsSDK = {
     {
       type: 'category',
       label: 'Tutorial',
-      items: ['tutorial/index'],
+      items: ['tutorial/index', 'tutorial/boilerplate-reactjs'],
     },
     {
       type: 'category',
