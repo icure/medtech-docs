@@ -5,7 +5,7 @@ slug: how-to-manage-your-apps
 # Handling your apps
 In iCure, you have the possibility to organise your databases according to the specifications of your own products. 
 For example, you may want to have two completely separate environments for two products you are developing.
-Another need could be the one of having a dedicated to the medical data of your users and one
+Another need could be of having one environment dedicated to the medical data of your users and one
 dedicated to the invoicing, which should never need the medical data of your patients. 
 
 The choice is yours in the organisation of your environment. 
