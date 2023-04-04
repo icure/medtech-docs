@@ -40,7 +40,7 @@
 
 #### Defined in
 
-[src/utils/msgGtwMessageFactory.ts:63](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/utils/msgGtwMessageFactory.ts#L63)
+[src/utils/msgGtwMessageFactory.ts:63](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/utils/msgGtwMessageFactory.ts#L63)
 
 ## Properties
 
@@ -54,7 +54,7 @@
 
 #### Defined in
 
-[src/utils/msgGtwMessageFactory.ts:58](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/utils/msgGtwMessageFactory.ts#L58)
+[src/utils/msgGtwMessageFactory.ts:58](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/utils/msgGtwMessageFactory.ts#L58)
 
 ___
 
@@ -68,7 +68,7 @@ ___
 
 #### Defined in
 
-[src/utils/msgGtwMessageFactory.ts:59](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/utils/msgGtwMessageFactory.ts#L59)
+[src/utils/msgGtwMessageFactory.ts:59](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/utils/msgGtwMessageFactory.ts#L59)
 
 ___
 
@@ -82,7 +82,7 @@ ___
 
 #### Defined in
 
-[src/utils/msgGtwMessageFactory.ts:61](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/utils/msgGtwMessageFactory.ts#L61)
+[src/utils/msgGtwMessageFactory.ts:61](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/utils/msgGtwMessageFactory.ts#L61)
 
 ___
 
@@ -92,7 +92,7 @@ ___
 
 #### Defined in
 
-[src/utils/msgGtwMessageFactory.ts:60](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/utils/msgGtwMessageFactory.ts#L60)
+[src/utils/msgGtwMessageFactory.ts:60](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/utils/msgGtwMessageFactory.ts#L60)
 
 ## Methods
 
@@ -117,4 +117,4 @@ ___
 
 #### Defined in
 
-[src/utils/msgGtwMessageFactory.ts:70](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/utils/msgGtwMessageFactory.ts#L70)
+[src/utils/msgGtwMessageFactory.ts:70](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/utils/msgGtwMessageFactory.ts#L70)

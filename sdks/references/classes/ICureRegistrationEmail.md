@@ -41,7 +41,7 @@
 
 #### Defined in
 
-[src/utils/msgGtwMessageFactory.ts:38](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/utils/msgGtwMessageFactory.ts#L38)
+[src/utils/msgGtwMessageFactory.ts:38](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/utils/msgGtwMessageFactory.ts#L38)
 
 ## Properties
 
@@ -55,7 +55,7 @@
 
 #### Defined in
 
-[src/utils/msgGtwMessageFactory.ts:32](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/utils/msgGtwMessageFactory.ts#L32)
+[src/utils/msgGtwMessageFactory.ts:32](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/utils/msgGtwMessageFactory.ts#L32)
 
 ___
 
@@ -65,7 +65,7 @@ ___
 
 #### Defined in
 
-[src/utils/msgGtwMessageFactory.ts:33](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/utils/msgGtwMessageFactory.ts#L33)
+[src/utils/msgGtwMessageFactory.ts:33](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/utils/msgGtwMessageFactory.ts#L33)
 
 ___
 
@@ -79,7 +79,7 @@ ___
 
 #### Defined in
 
-[src/utils/msgGtwMessageFactory.ts:34](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/utils/msgGtwMessageFactory.ts#L34)
+[src/utils/msgGtwMessageFactory.ts:34](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/utils/msgGtwMessageFactory.ts#L34)
 
 ___
 
@@ -93,7 +93,7 @@ ___
 
 #### Defined in
 
-[src/utils/msgGtwMessageFactory.ts:36](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/utils/msgGtwMessageFactory.ts#L36)
+[src/utils/msgGtwMessageFactory.ts:36](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/utils/msgGtwMessageFactory.ts#L36)
 
 ___
 
@@ -103,7 +103,7 @@ ___
 
 #### Defined in
 
-[src/utils/msgGtwMessageFactory.ts:35](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/utils/msgGtwMessageFactory.ts#L35)
+[src/utils/msgGtwMessageFactory.ts:35](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/utils/msgGtwMessageFactory.ts#L35)
 
 ## Methods
 
@@ -128,4 +128,4 @@ ___
 
 #### Defined in
 
-[src/utils/msgGtwMessageFactory.ts:48](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/utils/msgGtwMessageFactory.ts#L48)
+[src/utils/msgGtwMessageFactory.ts:48](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/utils/msgGtwMessageFactory.ts#L48)

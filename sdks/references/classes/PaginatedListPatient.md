@@ -33,7 +33,7 @@
 
 #### Defined in
 
-[src/models/PaginatedListPatient.ts:17](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/PaginatedListPatient.ts#L17)
+[src/models/PaginatedListPatient.ts:17](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/PaginatedListPatient.ts#L17)
 
 ## Properties
 
@@ -43,7 +43,7 @@
 
 #### Defined in
 
-[src/models/PaginatedListPatient.ts:29](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/PaginatedListPatient.ts#L29)
+[src/models/PaginatedListPatient.ts:29](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/PaginatedListPatient.ts#L29)
 
 ___
 
@@ -53,7 +53,7 @@ ___
 
 #### Defined in
 
-[src/models/PaginatedListPatient.ts:26](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/PaginatedListPatient.ts#L26)
+[src/models/PaginatedListPatient.ts:26](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/PaginatedListPatient.ts#L26)
 
 ___
 
@@ -63,7 +63,7 @@ ___
 
 #### Defined in
 
-[src/models/PaginatedListPatient.ts:28](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/PaginatedListPatient.ts#L28)
+[src/models/PaginatedListPatient.ts:28](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/PaginatedListPatient.ts#L28)
 
 ___
 
@@ -73,7 +73,7 @@ ___
 
 #### Defined in
 
-[src/models/PaginatedListPatient.ts:27](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/PaginatedListPatient.ts#L27)
+[src/models/PaginatedListPatient.ts:27](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/PaginatedListPatient.ts#L27)
 
 ## Methods
 
@@ -87,4 +87,4 @@ ___
 
 #### Defined in
 
-[src/models/PaginatedListPatient.ts:31](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/PaginatedListPatient.ts#L31)
+[src/models/PaginatedListPatient.ts:31](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/PaginatedListPatient.ts#L31)

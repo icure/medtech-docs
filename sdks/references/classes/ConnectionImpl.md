@@ -38,7 +38,7 @@
 
 #### Defined in
 
-[src/models/Connection.ts:14](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/Connection.ts#L14)
+[src/models/Connection.ts:14](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/Connection.ts#L14)
 
 ## Properties
 
@@ -48,7 +48,7 @@
 
 #### Defined in
 
-[src/models/Connection.ts:12](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/Connection.ts#L12)
+[src/models/Connection.ts:12](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/Connection.ts#L12)
 
 ___
 
@@ -58,7 +58,7 @@ ___
 
 #### Defined in
 
-[src/models/Connection.ts:11](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/Connection.ts#L11)
+[src/models/Connection.ts:11](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/Connection.ts#L11)
 
 ## Methods
 
@@ -76,7 +76,7 @@ ___
 
 #### Defined in
 
-[src/models/Connection.ts:19](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/Connection.ts#L19)
+[src/models/Connection.ts:19](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/Connection.ts#L19)
 
 ___
 
@@ -100,7 +100,7 @@ ___
 
 #### Defined in
 
-[src/models/Connection.ts:31](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/Connection.ts#L31)
+[src/models/Connection.ts:31](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/Connection.ts#L31)
 
 ___
 
@@ -124,7 +124,7 @@ ___
 
 #### Defined in
 
-[src/models/Connection.ts:23](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/Connection.ts#L23)
+[src/models/Connection.ts:23](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/Connection.ts#L23)
 
 ___
 
@@ -148,4 +148,4 @@ ___
 
 #### Defined in
 
-[src/models/Connection.ts:39](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/Connection.ts#L39)
+[src/models/Connection.ts:39](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/Connection.ts#L39)

@@ -33,7 +33,7 @@
 
 #### Defined in
 
-[src/models/PaginatedListMedicalDevice.ts:17](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/PaginatedListMedicalDevice.ts#L17)
+[src/models/PaginatedListMedicalDevice.ts:17](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/PaginatedListMedicalDevice.ts#L17)
 
 ## Properties
 
@@ -43,7 +43,7 @@
 
 #### Defined in
 
-[src/models/PaginatedListMedicalDevice.ts:29](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/PaginatedListMedicalDevice.ts#L29)
+[src/models/PaginatedListMedicalDevice.ts:29](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/PaginatedListMedicalDevice.ts#L29)
 
 ___
 
@@ -53,7 +53,7 @@ ___
 
 #### Defined in
 
-[src/models/PaginatedListMedicalDevice.ts:26](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/PaginatedListMedicalDevice.ts#L26)
+[src/models/PaginatedListMedicalDevice.ts:26](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/PaginatedListMedicalDevice.ts#L26)
 
 ___
 
@@ -63,7 +63,7 @@ ___
 
 #### Defined in
 
-[src/models/PaginatedListMedicalDevice.ts:28](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/PaginatedListMedicalDevice.ts#L28)
+[src/models/PaginatedListMedicalDevice.ts:28](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/PaginatedListMedicalDevice.ts#L28)
 
 ___
 
@@ -73,7 +73,7 @@ ___
 
 #### Defined in
 
-[src/models/PaginatedListMedicalDevice.ts:27](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/PaginatedListMedicalDevice.ts#L27)
+[src/models/PaginatedListMedicalDevice.ts:27](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/PaginatedListMedicalDevice.ts#L27)
 
 ## Methods
 
@@ -87,4 +87,4 @@ ___
 
 #### Defined in
 
-[src/models/PaginatedListMedicalDevice.ts:31](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/PaginatedListMedicalDevice.ts#L31)
+[src/models/PaginatedListMedicalDevice.ts:31](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/PaginatedListMedicalDevice.ts#L31)

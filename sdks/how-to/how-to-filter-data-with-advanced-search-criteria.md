@@ -13,11 +13,11 @@ criteria to get entities and id of entities, respectively.
 We can take as example the two method defined in the `PatientAPI`:
 
 ```typescript
-filterPatients(filter: Filter<Patient>, nextPatientId?: string, limit?: number): Promise<PaginatedListPatient>
-matchPatients(filter: Filter<Patient>): Promise<Array<string>>
+function filterPatients(filter: Filter<Patient>, nextPatientId?: string, limit?: number): Promise<PaginatedListPatient> { /*...*/ }
+function matchPatients(filter: Filter<Patient>): Promise<Array<string>> { /*...*/ }
 ```
 
-you can learn more about these methods, their parameter and their return type in the [reference](../references/interfaces/PatientApi.md).
+you can learn more about these methods, their parameter and their return type in the [reference](/sdks/references/apis/PatientApi).
 As for now, let us focus on the `filter` parameter.
 
 ## The Filter DSL

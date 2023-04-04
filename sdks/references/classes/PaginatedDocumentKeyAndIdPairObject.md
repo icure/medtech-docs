@@ -40,7 +40,7 @@ Do not edit the class manually.
 
 #### Defined in
 
-[src/models/PaginatedDocumentKeyAndIdPairObject.ts:15](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/PaginatedDocumentKeyAndIdPairObject.ts#L15)
+[src/models/PaginatedDocumentKeyAndIdPairObject.ts:15](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/PaginatedDocumentKeyAndIdPairObject.ts#L15)
 
 ## Properties
 
@@ -50,7 +50,7 @@ Do not edit the class manually.
 
 #### Defined in
 
-[src/models/PaginatedDocumentKeyAndIdPairObject.ts:19](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/PaginatedDocumentKeyAndIdPairObject.ts#L19)
+[src/models/PaginatedDocumentKeyAndIdPairObject.ts:19](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/PaginatedDocumentKeyAndIdPairObject.ts#L19)
 
 ___
 
@@ -60,7 +60,7 @@ ___
 
 #### Defined in
 
-[src/models/PaginatedDocumentKeyAndIdPairObject.ts:20](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/PaginatedDocumentKeyAndIdPairObject.ts#L20)
+[src/models/PaginatedDocumentKeyAndIdPairObject.ts:20](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/PaginatedDocumentKeyAndIdPairObject.ts#L20)
 
 ## Methods
 
@@ -74,4 +74,4 @@ ___
 
 #### Defined in
 
-[src/models/PaginatedDocumentKeyAndIdPairObject.ts:22](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/PaginatedDocumentKeyAndIdPairObject.ts#L22)
+[src/models/PaginatedDocumentKeyAndIdPairObject.ts:22](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/PaginatedDocumentKeyAndIdPairObject.ts#L22)

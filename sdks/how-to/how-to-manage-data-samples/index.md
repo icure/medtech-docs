@@ -314,7 +314,7 @@ const filteredDataSamples = await api.dataSampleApi.filterDataSample(filter)
 
 ### Filter builder
 
-To create a filter, we can use the [`DataSampleFilter`](/sdks/references/classes/DataSampleFilter#methods-1) builder methods. This builder allows us to create complex filter object.
+To create a filter, we can use the [`DataSampleFilter`](/sdks/references/filters/DataSampleFilter#methods-1) builder methods. This builder allows us to create complex filter object.
 
 In the example above, we created the filter this way:
 

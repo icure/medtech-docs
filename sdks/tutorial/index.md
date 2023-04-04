@@ -106,7 +106,7 @@ const iCureUserPubKey = process.env.ICURE_USER_PUB_KEY!
 const iCureUserPrivKey = process.env.ICURE_USER_PRIV_KEY!
 await api.initUserCrypto({ publicKey: iCureUserPubKey, privateKey: iCureUserPrivKey })
 ```
-For more information about this method, go to the [References: initUserCrypto](/sdks/references/classes/MedTechApi.md#initusercrypto)
+For more information about this method, go to the [References: initUserCrypto](/sdks/references/entrypoints/MedTechApi#initusercrypto)
 
 :::tip
 
