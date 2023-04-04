@@ -7,7 +7,7 @@ sidebar_position: 2
 
 iCure can easily be used in the browser or with Node.
 
-Node version 16 or higher is fully supported as it includes a webcrypto compatible implementation of the cryptography layer.
+Node version 16 or higher is fully supported as it includes a webcrypto module compatible with the implementation of our cryptography layer.
 
 We recommend using yarn for package management but npm works fine as well.
 
@@ -29,7 +29,7 @@ iCure can be installed locally or in the cloud.
 
 The cloud version is available on [https://api.icure.cloud](https://api.icure.cloud) and can be configured using [our cockpit](https://cockpit.icure.cloud).
 
-If, instead of using the cloud version, you want to install the iCure API locally, you can either use docker (recommended) or install it manually.
+If you want to install the iCure API locally instead of using the cloud version, you can either use docker (recommended) or install it manually.
 
 ### Using iCure Cloud
 

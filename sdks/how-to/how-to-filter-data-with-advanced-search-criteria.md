@@ -46,7 +46,7 @@ const patientsForHcp = await api.patientApi.filterPatients(patientsForHcpFilter)
 
 ```json
 {
-  "healthcarePartyId": "9a3e69d6-f972-486c-84c3-b958227cc705",
+  "healthcarePartyId": "7e1319be-fbaf-438b-ad3d-e405c07933c8",
   "$type": "PatientByHealthcarePartyFilter"
 }
 ```
@@ -62,68 +62,15 @@ const patientsForHcp = await api.patientApi.filterPatients(patientsForHcpFilter)
   "totalSize": 3,
   "rows": [
     {
-      "id": "1576b505-c8e8-405d-be14-c12152fc9822",
+      "id": "d9f0081a-bead-4b3f-9f35-b146158c8ea7",
       "languages": [],
       "active": true,
       "parameters": {},
-      "rev": "1-d9d70be5e2089ea22c0a83861b9f0271",
-      "created": 1679991743097,
-      "modified": 1679991743097,
-      "author": "50a95946-2f13-4cf4-9d24-98d1d1c7f85a",
-      "responsible": "9a3e69d6-f972-486c-84c3-b958227cc705",
-      "firstName": "Zaphod",
-      "lastName": "Beeblebrox",
-      "identifiers": [],
-      "labels": {},
-      "codes": {},
-      "names": [
-        {
-          "firstNames": [
-            "Zaphod"
-          ],
-          "prefix": [],
-          "suffix": [],
-          "lastName": "Beeblebrox",
-          "text": "Beeblebrox Zaphod",
-          "use": "official"
-        }
-      ],
-      "addresses": [],
-      "gender": "indeterminate",
-      "birthSex": "unknown",
-      "mergedIds": {},
-      "deactivationReason": "none",
-      "personalStatus": "unknown",
-      "partnerships": [],
-      "patientHealthCareParties": [],
-      "patientProfessions": [],
-      "properties": {},
-      "systemMetaData": {
-        "hcPartyKeys": {},
-        "privateKeyShamirPartitions": {},
-        "aesExchangeKeys": {},
-        "transferKeys": {},
-        "encryptedSelf": "nRgbL7QMVTmcvKlcDXCncbPqD0zLGdoobowTJALJuGQ=",
-        "secretForeignKeys": [],
-        "cryptedForeignKeys": {},
-        "delegations": {
-          "9a3e69d6-f972-486c-84c3-b958227cc705": {}
-        },
-        "encryptionKeys": {
-          "9a3e69d6-f972-486c-84c3-b958227cc705": {}
-        }
-      }
-    },
-    {
-      "id": "987a97d3-7c80-4c27-880a-8f98546960be",
-      "languages": [],
-      "active": true,
-      "parameters": {},
-      "rev": "1-7db12f96df270ac94fcbf0e1824054bf",
-      "created": 1679991742970,
-      "modified": 1679991742970,
-      "author": "50a95946-2f13-4cf4-9d24-98d1d1c7f85a",
-      "responsible": "9a3e69d6-f972-486c-84c3-b958227cc705",
+      "rev": "1-01cf7f79429f51b1b1940e2545a51ea2",
+      "created": 1680075155078,
+      "modified": 1680075155078,
+      "author": "ea5d2068-55a1-49e9-84b0-ea35dc0c067b",
+      "responsible": "7e1319be-fbaf-438b-ad3d-e405c07933c8",
       "firstName": "Arthur",
       "lastName": "Dent",
       "dateOfBirth": 19810101,
@@ -157,27 +104,80 @@ const patientsForHcp = await api.patientApi.filterPatients(patientsForHcpFilter)
         "privateKeyShamirPartitions": {},
         "aesExchangeKeys": {},
         "transferKeys": {},
-        "encryptedSelf": "X4Z9dne2SvtyHwTcz7U5VzS6qNNp9Vfpnb1Tc5YdbuY=",
+        "encryptedSelf": "9VYPej7J9W7zyEY8nYvsRi13W+gc5nScf4xQgtZsDnE=",
         "secretForeignKeys": [],
         "cryptedForeignKeys": {},
         "delegations": {
-          "9a3e69d6-f972-486c-84c3-b958227cc705": {}
+          "7e1319be-fbaf-438b-ad3d-e405c07933c8": {}
         },
         "encryptionKeys": {
-          "9a3e69d6-f972-486c-84c3-b958227cc705": {}
+          "7e1319be-fbaf-438b-ad3d-e405c07933c8": {}
         }
       }
     },
     {
-      "id": "9fa1f8c9-402a-4ebb-bb1f-0b2d2340f63e",
+      "id": "dc656c4b-341d-4232-8315-baf8e99a1d1d",
       "languages": [],
       "active": true,
       "parameters": {},
-      "rev": "1-2c7201526cb53dc8d1f663165070c87b",
-      "created": 1679991743026,
-      "modified": 1679991743026,
-      "author": "50a95946-2f13-4cf4-9d24-98d1d1c7f85a",
-      "responsible": "9a3e69d6-f972-486c-84c3-b958227cc705",
+      "rev": "1-776c4aed1f59cd894e8b08dcc00017e2",
+      "created": 1680075155579,
+      "modified": 1680075155579,
+      "author": "ea5d2068-55a1-49e9-84b0-ea35dc0c067b",
+      "responsible": "7e1319be-fbaf-438b-ad3d-e405c07933c8",
+      "firstName": "Zaphod",
+      "lastName": "Beeblebrox",
+      "identifiers": [],
+      "labels": {},
+      "codes": {},
+      "names": [
+        {
+          "firstNames": [
+            "Zaphod"
+          ],
+          "prefix": [],
+          "suffix": [],
+          "lastName": "Beeblebrox",
+          "text": "Beeblebrox Zaphod",
+          "use": "official"
+        }
+      ],
+      "addresses": [],
+      "gender": "indeterminate",
+      "birthSex": "unknown",
+      "mergedIds": {},
+      "deactivationReason": "none",
+      "personalStatus": "unknown",
+      "partnerships": [],
+      "patientHealthCareParties": [],
+      "patientProfessions": [],
+      "properties": {},
+      "systemMetaData": {
+        "hcPartyKeys": {},
+        "privateKeyShamirPartitions": {},
+        "aesExchangeKeys": {},
+        "transferKeys": {},
+        "encryptedSelf": "noexafJkkzaLqGT81a8Gp1M6zuBI7NQL4SWG/7iXAoY=",
+        "secretForeignKeys": [],
+        "cryptedForeignKeys": {},
+        "delegations": {
+          "7e1319be-fbaf-438b-ad3d-e405c07933c8": {}
+        },
+        "encryptionKeys": {
+          "7e1319be-fbaf-438b-ad3d-e405c07933c8": {}
+        }
+      }
+    },
+    {
+      "id": "f40562d0-ed84-4274-ac05-87bf4b946a58",
+      "languages": [],
+      "active": true,
+      "parameters": {},
+      "rev": "1-4daa5e68a0aba272b1b86a582b7ee90c",
+      "created": 1680075155353,
+      "modified": 1680075155353,
+      "author": "ea5d2068-55a1-49e9-84b0-ea35dc0c067b",
+      "responsible": "7e1319be-fbaf-438b-ad3d-e405c07933c8",
       "firstName": "Trillian",
       "lastName": "Astra",
       "dateOfBirth": 19810101,
@@ -211,14 +211,14 @@ const patientsForHcp = await api.patientApi.filterPatients(patientsForHcpFilter)
         "privateKeyShamirPartitions": {},
         "aesExchangeKeys": {},
         "transferKeys": {},
-        "encryptedSelf": "wugqeQIb7H0MJyJ45lmN7KdFfleJHMzJ9u2mt6v8SOY=",
+        "encryptedSelf": "Vfr7MzIzT4E7Ii80zirtm3jjO8yE5A63bWxeO8kOnLE=",
         "secretForeignKeys": [],
         "cryptedForeignKeys": {},
         "delegations": {
-          "9a3e69d6-f972-486c-84c3-b958227cc705": {}
+          "7e1319be-fbaf-438b-ad3d-e405c07933c8": {}
         },
         "encryptionKeys": {
-          "9a3e69d6-f972-486c-84c3-b958227cc705": {}
+          "7e1319be-fbaf-438b-ad3d-e405c07933c8": {}
         }
       }
     }
@@ -251,13 +251,13 @@ const ageGenderImplicitPatients = await api.patientApi.filterPatients(ageGenderI
 {
   "filters": [
     {
-      "healthcarePartyId": "9a3e69d6-f972-486c-84c3-b958227cc705",
-      "minDateOfBirth": 19800303,
-      "maxDateOfBirth": 19810302,
+      "healthcarePartyId": "7e1319be-fbaf-438b-ad3d-e405c07933c8",
+      "minDateOfBirth": 19800304,
+      "maxDateOfBirth": 19810303,
       "$type": "PatientByHealthcarePartyDateOfBirthBetweenFilter"
     },
     {
-      "healthcarePartyId": "9a3e69d6-f972-486c-84c3-b958227cc705",
+      "healthcarePartyId": "7e1319be-fbaf-438b-ad3d-e405c07933c8",
       "gender": "female",
       "$type": "PatientByHealthcarePartyGenderEducationProfessionFilter"
     }
@@ -277,15 +277,15 @@ const ageGenderImplicitPatients = await api.patientApi.filterPatients(ageGenderI
   "totalSize": 1,
   "rows": [
     {
-      "id": "9fa1f8c9-402a-4ebb-bb1f-0b2d2340f63e",
+      "id": "f40562d0-ed84-4274-ac05-87bf4b946a58",
       "languages": [],
       "active": true,
       "parameters": {},
-      "rev": "1-2c7201526cb53dc8d1f663165070c87b",
-      "created": 1679991743026,
-      "modified": 1679991743026,
-      "author": "50a95946-2f13-4cf4-9d24-98d1d1c7f85a",
-      "responsible": "9a3e69d6-f972-486c-84c3-b958227cc705",
+      "rev": "1-4daa5e68a0aba272b1b86a582b7ee90c",
+      "created": 1680075155353,
+      "modified": 1680075155353,
+      "author": "ea5d2068-55a1-49e9-84b0-ea35dc0c067b",
+      "responsible": "7e1319be-fbaf-438b-ad3d-e405c07933c8",
       "firstName": "Trillian",
       "lastName": "Astra",
       "dateOfBirth": 19810101,
@@ -319,14 +319,14 @@ const ageGenderImplicitPatients = await api.patientApi.filterPatients(ageGenderI
         "privateKeyShamirPartitions": {},
         "aesExchangeKeys": {},
         "transferKeys": {},
-        "encryptedSelf": "wugqeQIb7H0MJyJ45lmN7KdFfleJHMzJ9u2mt6v8SOY=",
+        "encryptedSelf": "Vfr7MzIzT4E7Ii80zirtm3jjO8yE5A63bWxeO8kOnLE=",
         "secretForeignKeys": [],
         "cryptedForeignKeys": {},
         "delegations": {
-          "9a3e69d6-f972-486c-84c3-b958227cc705": {}
+          "7e1319be-fbaf-438b-ad3d-e405c07933c8": {}
         },
         "encryptionKeys": {
-          "9a3e69d6-f972-486c-84c3-b958227cc705": {}
+          "7e1319be-fbaf-438b-ad3d-e405c07933c8": {}
         }
       }
     }
@@ -336,7 +336,7 @@ const ageGenderImplicitPatients = await api.patientApi.filterPatients(ageGenderI
 ```
 </details>
 
-In this case, the method will return all the patients that the hcp with id `hcpId` can access, whose age is `42`, and whose gender is `female`.
+In this case, the method will return all the patients that the hcp with id `healthcarePartyId` can access, whose age is `42`, and whose gender is `female`.
 You can also explicitly intersect simple filters using the `intersection()` method:
 
 <!-- file://code-samples/how-to/use-complex-search-criteria/index.mts snippet:filter patients with explicit intersection filter-->
@@ -361,15 +361,15 @@ const ageGenderExplicitPatients = await api.patientApi.filterPatients(filterByGe
   "totalSize": 1,
   "rows": [
     {
-      "id": "9fa1f8c9-402a-4ebb-bb1f-0b2d2340f63e",
+      "id": "f40562d0-ed84-4274-ac05-87bf4b946a58",
       "languages": [],
       "active": true,
       "parameters": {},
-      "rev": "1-2c7201526cb53dc8d1f663165070c87b",
-      "created": 1679991743026,
-      "modified": 1679991743026,
-      "author": "50a95946-2f13-4cf4-9d24-98d1d1c7f85a",
-      "responsible": "9a3e69d6-f972-486c-84c3-b958227cc705",
+      "rev": "1-4daa5e68a0aba272b1b86a582b7ee90c",
+      "created": 1680075155353,
+      "modified": 1680075155353,
+      "author": "ea5d2068-55a1-49e9-84b0-ea35dc0c067b",
+      "responsible": "7e1319be-fbaf-438b-ad3d-e405c07933c8",
       "firstName": "Trillian",
       "lastName": "Astra",
       "dateOfBirth": 19810101,
@@ -403,14 +403,14 @@ const ageGenderExplicitPatients = await api.patientApi.filterPatients(filterByGe
         "privateKeyShamirPartitions": {},
         "aesExchangeKeys": {},
         "transferKeys": {},
-        "encryptedSelf": "wugqeQIb7H0MJyJ45lmN7KdFfleJHMzJ9u2mt6v8SOY=",
+        "encryptedSelf": "Vfr7MzIzT4E7Ii80zirtm3jjO8yE5A63bWxeO8kOnLE=",
         "secretForeignKeys": [],
         "cryptedForeignKeys": {},
         "delegations": {
-          "9a3e69d6-f972-486c-84c3-b958227cc705": {}
+          "7e1319be-fbaf-438b-ad3d-e405c07933c8": {}
         },
         "encryptionKeys": {
-          "9a3e69d6-f972-486c-84c3-b958227cc705": {}
+          "7e1319be-fbaf-438b-ad3d-e405c07933c8": {}
         }
       }
     }
@@ -452,12 +452,12 @@ const unionFilterPatients = await api.patientApi.filterPatients(filterFemaleOrIn
 {
   "filters": [
     {
-      "healthcarePartyId": "9a3e69d6-f972-486c-84c3-b958227cc705",
+      "healthcarePartyId": "7e1319be-fbaf-438b-ad3d-e405c07933c8",
       "gender": "female",
       "$type": "PatientByHealthcarePartyGenderEducationProfessionFilter"
     },
     {
-      "healthcarePartyId": "9a3e69d6-f972-486c-84c3-b958227cc705",
+      "healthcarePartyId": "7e1319be-fbaf-438b-ad3d-e405c07933c8",
       "gender": "indeterminate",
       "$type": "PatientByHealthcarePartyGenderEducationProfessionFilter"
     }
@@ -477,15 +477,15 @@ const unionFilterPatients = await api.patientApi.filterPatients(filterFemaleOrIn
   "totalSize": 2,
   "rows": [
     {
-      "id": "1576b505-c8e8-405d-be14-c12152fc9822",
+      "id": "dc656c4b-341d-4232-8315-baf8e99a1d1d",
       "languages": [],
       "active": true,
       "parameters": {},
-      "rev": "1-d9d70be5e2089ea22c0a83861b9f0271",
-      "created": 1679991743097,
-      "modified": 1679991743097,
-      "author": "50a95946-2f13-4cf4-9d24-98d1d1c7f85a",
-      "responsible": "9a3e69d6-f972-486c-84c3-b958227cc705",
+      "rev": "1-776c4aed1f59cd894e8b08dcc00017e2",
+      "created": 1680075155579,
+      "modified": 1680075155579,
+      "author": "ea5d2068-55a1-49e9-84b0-ea35dc0c067b",
+      "responsible": "7e1319be-fbaf-438b-ad3d-e405c07933c8",
       "firstName": "Zaphod",
       "lastName": "Beeblebrox",
       "identifiers": [],
@@ -518,27 +518,27 @@ const unionFilterPatients = await api.patientApi.filterPatients(filterFemaleOrIn
         "privateKeyShamirPartitions": {},
         "aesExchangeKeys": {},
         "transferKeys": {},
-        "encryptedSelf": "nRgbL7QMVTmcvKlcDXCncbPqD0zLGdoobowTJALJuGQ=",
+        "encryptedSelf": "noexafJkkzaLqGT81a8Gp1M6zuBI7NQL4SWG/7iXAoY=",
         "secretForeignKeys": [],
         "cryptedForeignKeys": {},
         "delegations": {
-          "9a3e69d6-f972-486c-84c3-b958227cc705": {}
+          "7e1319be-fbaf-438b-ad3d-e405c07933c8": {}
         },
         "encryptionKeys": {
-          "9a3e69d6-f972-486c-84c3-b958227cc705": {}
+          "7e1319be-fbaf-438b-ad3d-e405c07933c8": {}
         }
       }
     },
     {
-      "id": "9fa1f8c9-402a-4ebb-bb1f-0b2d2340f63e",
+      "id": "f40562d0-ed84-4274-ac05-87bf4b946a58",
       "languages": [],
       "active": true,
       "parameters": {},
-      "rev": "1-2c7201526cb53dc8d1f663165070c87b",
-      "created": 1679991743026,
-      "modified": 1679991743026,
-      "author": "50a95946-2f13-4cf4-9d24-98d1d1c7f85a",
-      "responsible": "9a3e69d6-f972-486c-84c3-b958227cc705",
+      "rev": "1-4daa5e68a0aba272b1b86a582b7ee90c",
+      "created": 1680075155353,
+      "modified": 1680075155353,
+      "author": "ea5d2068-55a1-49e9-84b0-ea35dc0c067b",
+      "responsible": "7e1319be-fbaf-438b-ad3d-e405c07933c8",
       "firstName": "Trillian",
       "lastName": "Astra",
       "dateOfBirth": 19810101,
@@ -572,14 +572,14 @@ const unionFilterPatients = await api.patientApi.filterPatients(filterFemaleOrIn
         "privateKeyShamirPartitions": {},
         "aesExchangeKeys": {},
         "transferKeys": {},
-        "encryptedSelf": "wugqeQIb7H0MJyJ45lmN7KdFfleJHMzJ9u2mt6v8SOY=",
+        "encryptedSelf": "Vfr7MzIzT4E7Ii80zirtm3jjO8yE5A63bWxeO8kOnLE=",
         "secretForeignKeys": [],
         "cryptedForeignKeys": {},
         "delegations": {
-          "9a3e69d6-f972-486c-84c3-b958227cc705": {}
+          "7e1319be-fbaf-438b-ad3d-e405c07933c8": {}
         },
         "encryptionKeys": {
-          "9a3e69d6-f972-486c-84c3-b958227cc705": {}
+          "7e1319be-fbaf-438b-ad3d-e405c07933c8": {}
         }
       }
     }
@@ -608,7 +608,7 @@ In the following list, you will find all the simple queries for each type of ent
 * `forDataOwner(dataOwnerId: string)`: all the Data Samples that the Data Owner passed as parameter can access. **Note:** this field must be specified in all the queries.
 * `byIds(byIds: string[])`: all the Data Samples corresponding to the ids passed as parameter.
 * `byIdentifiers(identifiers: Identifier[])`: all the Data Samples that have the identifier passed as parameter.
-* `byLabelCodeFilter(tagType?: string, tagCode?: string, codeType?: string, codeCode?: string)`: all the Data Samples that matches one of his labels or codes.
+* `byLabelCodeDateFilter(tagType?: string, tagCode?: string, codeType?: string, codeCode?: string, startValueDate?: number, endValueDate?: number)`: all the Data Samples that matches one of his labels or codes, or created in the provided date interval.
 * `forPatients(crypto: IccCryptoXApi, patients: Patient[])`: all the Data Samples related to a certain Patient.
 * `byHealthElementIds(byHealthElementIds: string[])`: all the Data Samples that have the Healthcare Element specified as parameter.
 * `union(filters: UserFilter[])`: creates a union query with the filters passed as parameter.

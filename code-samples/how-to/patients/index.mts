@@ -2,12 +2,12 @@ import { Patient, PatientFilter, PersonName } from '@icure/medical-device-sdk'
 import 'isomorphic-fetch'
 import * as console from 'console'
 
-import { initLocalStorage, initMedTechApi, initMedTechApi2, output } from '../../utils/index.mjs'
+import { initLocalStorage, initMedTechApi, output } from '../../utils/index.mjs'
 import { expect } from 'chai'
 
 initLocalStorage()
 
-const api = await initMedTechApi()
+const api = await initMedTechApi(true)
 const loggedUser = await api.userApi.getLoggedUser()
 
 //tech-doc: create a patient

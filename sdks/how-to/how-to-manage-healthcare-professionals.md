@@ -6,11 +6,9 @@ tags:
 ---
 # Handling healthcare professionals
 
-[Healthcare professionals](../glossary.md#Data owner) are either doctors, nurses, physiotherapists, etc. They are the 
-people who are going to use the medical device to take care of patients.
-
-Healthcare professionals can also in certain cases be a healthcare organization.
-
+[Healthcare professionals](/sdks/glossary#data-owner) are doctors, nurses, physiotherapists, etc. They are the 
+people who are going to use the medical device to take care of patients.  
+Healthcare professionals can also in certain cases be a healthcare organizations.  
 The healthcareProfessionalApi allows you to manage [Healthcare professionals](../references/classes/HealthcareProfessional.md).
 
 ## Create a healthcare professional
@@ -52,9 +50,9 @@ const createdHcp = await api.healthcareProfessionalApi.createOrModifyHealthcareP
 
 ```json
 {
-  "id": "df8326d9-469b-467a-b859-ec5b84737a19",
+  "id": "0e35d33a-6c19-41b9-9f1e-4cd5a043e5cd",
   "languages": [],
-  "rev": "1-183a968e089d33d247d5505b9a4313c1",
+  "rev": "1-e47c0d00b1ed5fc6445a99ceb389e2ac",
   "name": "Keats John",
   "lastName": "Keats",
   "firstName": "John",
@@ -109,9 +107,9 @@ const loadedHcp = await api.healthcareProfessionalApi.getHealthcareProfessional(
 
 ```json
 {
-  "id": "df8326d9-469b-467a-b859-ec5b84737a19",
+  "id": "0e35d33a-6c19-41b9-9f1e-4cd5a043e5cd",
   "languages": [],
-  "rev": "1-183a968e089d33d247d5505b9a4313c1",
+  "rev": "1-e47c0d00b1ed5fc6445a99ceb389e2ac",
   "name": "Keats John",
   "lastName": "Keats",
   "firstName": "John",
@@ -173,12 +171,12 @@ const hcps = await api.healthcareProfessionalApi.filterHealthcareProfessionalBy(
 ```json
 {
   "pageSize": 1000,
-  "totalSize": 364,
+  "totalSize": 433,
   "rows": [
     {
-      "id": "df8326d9-469b-467a-b859-ec5b84737a19",
+      "id": "0e35d33a-6c19-41b9-9f1e-4cd5a043e5cd",
       "languages": [],
-      "rev": "1-183a968e089d33d247d5505b9a4313c1",
+      "rev": "1-e47c0d00b1ed5fc6445a99ceb389e2ac",
       "name": "Keats John",
       "lastName": "Keats",
       "firstName": "John",
@@ -235,6 +233,6 @@ const deletedHcp = await api.healthcareProfessionalApi.deleteHealthcareProfessio
 <summary>deletedHcp</summary>
 
 ```text
-3-3e40b2a5d69659bbae5e50806907e5a6
+3-4d186cb8ed86827c8495cc035e8fd80c
 ```
 </details>

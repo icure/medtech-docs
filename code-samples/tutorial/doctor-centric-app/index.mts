@@ -1,19 +1,13 @@
-import 'isomorphic-fetch'
-import {
-  DataSample,
-  Patient,
-  medTechApi,
-  CodingReference,
-  DataSampleFilter,
-  Content,
-} from '@icure/medical-device-sdk'
 import { initLocalStorage, output } from '../../utils/index.mjs'
 import { expect } from 'chai'
-import { webcrypto } from 'crypto'
 
 initLocalStorage()
 
 //tech-doc: instantiate the api
+import 'isomorphic-fetch'
+import { medTechApi } from '@icure/medical-device-sdk'
+import { webcrypto } from 'crypto'
+
 const iCureHost = process.env.ICURE_URL!
 const iCureUserPassword = process.env.ICURE_USER_PASSWORD!
 const iCureUserLogin = process.env.ICURE_USER_NAME!
@@ -43,6 +37,8 @@ expect(loggedUser.login).to.be.equal(iCureUserLogin)
 output({ loggedUser })
 
 //tech-doc: create your first patient
+import { Patient } from '@icure/medical-device-sdk'
+
 const createdPatient = await api.patientApi.createOrModifyPatient(
   new Patient({
     firstName: 'John',
@@ -62,6 +58,8 @@ expect(createdPatient.id).to.be.equal(johnSnow.id)
 output({ johnSnow })
 
 //tech-doc: create your patient first medical data
+import { CodingReference, Content, DataSample } from '@icure/medical-device-sdk'
+
 const createdData = await api.dataSampleApi.createOrModifyDataSamplesFor(johnSnow.id, [
   new DataSample({
     labels: new Set([new CodingReference({ type: 'LOINC', code: '29463-7', version: '2' })]),
@@ -80,6 +78,8 @@ const createdData = await api.dataSampleApi.createOrModifyDataSamplesFor(johnSno
 output({ createdData })
 
 //tech-doc: Find your patient medical data following some criteria
+import { DataSampleFilter } from '@icure/medical-device-sdk'
+
 const johnData = await api.dataSampleApi.filterDataSample(
   await new DataSampleFilter()
     .forDataOwner(api.dataOwnerApi.getDataOwnerIdOf(loggedUser))
