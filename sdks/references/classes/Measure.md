@@ -40,7 +40,7 @@
 
 #### Defined in
 
-[src/models/Measure.ts:17](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/Measure.ts#L17)
+[src/models/Measure.ts:17](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/Measure.ts#L17)
 
 ## Properties
 
@@ -50,7 +50,7 @@
 
 #### Defined in
 
-[src/models/Measure.ts:32](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/Measure.ts#L32)
+[src/models/Measure.ts:32](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/Measure.ts#L32)
 
 ___
 
@@ -60,7 +60,7 @@ ___
 
 #### Defined in
 
-[src/models/Measure.ts:33](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/Measure.ts#L33)
+[src/models/Measure.ts:33](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/Measure.ts#L33)
 
 ___
 
@@ -70,7 +70,7 @@ ___
 
 #### Defined in
 
-[src/models/Measure.ts:29](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/Measure.ts#L29)
+[src/models/Measure.ts:29](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/Measure.ts#L29)
 
 ___
 
@@ -80,7 +80,7 @@ ___
 
 #### Defined in
 
-[src/models/Measure.ts:25](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/Measure.ts#L25)
+[src/models/Measure.ts:25](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/Measure.ts#L25)
 
 ___
 
@@ -90,7 +90,7 @@ ___
 
 #### Defined in
 
-[src/models/Measure.ts:24](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/Measure.ts#L24)
+[src/models/Measure.ts:24](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/Measure.ts#L24)
 
 ___
 
@@ -100,7 +100,7 @@ ___
 
 #### Defined in
 
-[src/models/Measure.ts:26](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/Measure.ts#L26)
+[src/models/Measure.ts:26](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/Measure.ts#L26)
 
 ___
 
@@ -110,7 +110,7 @@ ___
 
 #### Defined in
 
-[src/models/Measure.ts:27](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/Measure.ts#L27)
+[src/models/Measure.ts:27](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/Measure.ts#L27)
 
 ___
 
@@ -120,7 +120,7 @@ ___
 
 #### Defined in
 
-[src/models/Measure.ts:28](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/Measure.ts#L28)
+[src/models/Measure.ts:28](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/Measure.ts#L28)
 
 ___
 
@@ -130,7 +130,7 @@ ___
 
 #### Defined in
 
-[src/models/Measure.ts:30](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/Measure.ts#L30)
+[src/models/Measure.ts:30](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/Measure.ts#L30)
 
 ___
 
@@ -140,7 +140,7 @@ ___
 
 #### Defined in
 
-[src/models/Measure.ts:31](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/Measure.ts#L31)
+[src/models/Measure.ts:31](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/Measure.ts#L31)
 
 ___
 
@@ -150,7 +150,7 @@ ___
 
 #### Defined in
 
-[src/models/Measure.ts:23](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/Measure.ts#L23)
+[src/models/Measure.ts:23](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/Measure.ts#L23)
 
 ## Methods
 
@@ -164,4 +164,4 @@ ___
 
 #### Defined in
 
-[src/models/Measure.ts:35](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/Measure.ts#L35)
+[src/models/Measure.ts:35](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/Measure.ts#L35)

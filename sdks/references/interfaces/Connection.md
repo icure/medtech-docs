@@ -27,7 +27,7 @@
 
 #### Defined in
 
-[src/models/Connection.ts:4](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/Connection.ts#L4)
+[src/models/Connection.ts:4](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/Connection.ts#L4)
 
 ___
 
@@ -47,7 +47,7 @@ ___
 
 #### Defined in
 
-[src/models/Connection.ts:6](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/Connection.ts#L6)
+[src/models/Connection.ts:6](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/Connection.ts#L6)
 
 ___
 
@@ -67,7 +67,7 @@ ___
 
 #### Defined in
 
-[src/models/Connection.ts:5](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/Connection.ts#L5)
+[src/models/Connection.ts:5](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/Connection.ts#L5)
 
 ___
 
@@ -87,4 +87,4 @@ ___
 
 #### Defined in
 
-[src/models/Connection.ts:7](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/Connection.ts#L7)
+[src/models/Connection.ts:7](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/Connection.ts#L7)

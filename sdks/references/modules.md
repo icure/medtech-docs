@@ -466,7 +466,7 @@ ___
 
 #### Defined in
 
-[src/apis/MedTechApi.ts:384](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/apis/MedTechApi.ts#L384)
+[src/apis/MedTechApi.ts:384](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/apis/MedTechApi.ts#L384)
 
 ___
 

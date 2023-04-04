@@ -39,7 +39,7 @@ a Promise containing the Notification or undefined if something goes wrong.
 
 #### Defined in
 
-[src/apis/NotificationApi.ts:16](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/apis/NotificationApi.ts#L16)
+[src/apis/NotificationApi.ts:16](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/apis/NotificationApi.ts#L16)
 
 ___
 
@@ -63,7 +63,7 @@ a Promise containing the id of the Notification or undefined if something goes w
 
 #### Defined in
 
-[src/apis/NotificationApi.ts:23](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/apis/NotificationApi.ts#L23)
+[src/apis/NotificationApi.ts:23](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/apis/NotificationApi.ts#L23)
 
 ___
 
@@ -90,7 +90,7 @@ a Promise containing the PaginatedList of Notification objects
 
 #### Defined in
 
-[src/apis/NotificationApi.ts:33](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/apis/NotificationApi.ts#L33)
+[src/apis/NotificationApi.ts:33](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/apis/NotificationApi.ts#L33)
 
 ___
 
@@ -114,7 +114,7 @@ a Promise containing the Notification or undefined if something goes wrong.
 
 #### Defined in
 
-[src/apis/NotificationApi.ts:40](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/apis/NotificationApi.ts#L40)
+[src/apis/NotificationApi.ts:40](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/apis/NotificationApi.ts#L40)
 
 ___
 
@@ -138,13 +138,13 @@ an Array of the Notifications matching those criteria
 
 #### Defined in
 
-[src/apis/NotificationApi.ts:48](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/apis/NotificationApi.ts#L48)
+[src/apis/NotificationApi.ts:48](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/apis/NotificationApi.ts#L48)
 
 ___
 
 ### subscribeToNotificationEvents
 
-▸ **subscribeToNotificationEvents**(`eventTypes`, `filter`, `eventFired`, `options?`): `Promise`<[`Connection`](Connection)\>
+▸ **subscribeToNotificationEvents**(`eventTypes`, `filter`, `eventFired`, `options?`): `Promise`<[`Connection`](../interfaces/Connection)\>
 
 Opens a WebSocket Connection in order to receive all the Notification corresponding to specific filter criteria.
 
@@ -161,11 +161,11 @@ Opens a WebSocket Connection in order to receive all the Notification correspond
 
 #### Returns
 
-`Promise`<[`Connection`](Connection)\>
+`Promise`<[`Connection`](../interfaces/Connection)\>
 
 #### Defined in
 
-[src/apis/NotificationApi.ts:69](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/apis/NotificationApi.ts#L69)
+[src/apis/NotificationApi.ts:69](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/apis/NotificationApi.ts#L69)
 
 ___
 
@@ -190,4 +190,4 @@ the updated Notification
 
 #### Defined in
 
-[src/apis/NotificationApi.ts:56](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/apis/NotificationApi.ts#L56)
+[src/apis/NotificationApi.ts:56](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/apis/NotificationApi.ts#L56)

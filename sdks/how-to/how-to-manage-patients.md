@@ -401,7 +401,7 @@ const patients = await api.patientApi.filterPatients(filter)
 
 ### Filter builder
 
-To create a filter, we can use the [`PatientFilter`](/sdks/references/classes/PatientFilter#methods-1) builder methods. This builder allows us to create complex filter object.
+To create a filter, we can use the [`PatientFilter`](/sdks/references/filters/PatientFilter#methods-1) builder methods. This builder allows us to create complex filter object.
 
 In the example above, we created the filter this way:
 

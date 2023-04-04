@@ -72,7 +72,7 @@ Is the patient active (boolean).
 
 #### Defined in
 
-[src/models/Patient.ts:369](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/Patient.ts#L369)
+[src/models/Patient.ts:369](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/Patient.ts#L369)
 
 ___
 
@@ -84,7 +84,7 @@ the list of addresses (with address type).
 
 #### Defined in
 
-[src/models/Patient.ts:341](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/Patient.ts#L341)
+[src/models/Patient.ts:341](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/Patient.ts#L341)
 
 ___
 
@@ -96,7 +96,7 @@ An administrative note, not confidential.
 
 #### Defined in
 
-[src/models/Patient.ts:429](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/Patient.ts#L429)
+[src/models/Patient.ts:429](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/Patient.ts#L429)
 
 ___
 
@@ -108,7 +108,7 @@ An alias of the person, nickname, ...
 
 #### Defined in
 
-[src/models/Patient.ts:365](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/Patient.ts#L365)
+[src/models/Patient.ts:365](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/Patient.ts#L365)
 
 ___
 
@@ -120,7 +120,7 @@ The id of the [User] that created this patient. When creating the patient, this 
 
 #### Defined in
 
-[src/models/Patient.ts:297](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/Patient.ts#L297)
+[src/models/Patient.ts:297](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/Patient.ts#L297)
 
 ___
 
@@ -132,7 +132,7 @@ the birth sex of the patient: male, female, indeterminate, unknown
 
 #### Defined in
 
-[src/models/Patient.ts:353](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/Patient.ts#L353)
+[src/models/Patient.ts:353](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/Patient.ts#L353)
 
 ___
 
@@ -144,7 +144,7 @@ Mr., Ms., Pr., Dr. ...
 
 #### Defined in
 
-[src/models/Patient.ts:345](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/Patient.ts#L345)
+[src/models/Patient.ts:345](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/Patient.ts#L345)
 
 ___
 
@@ -156,7 +156,7 @@ A code is an item from a codification system that qualifies the content of this 
 
 #### Defined in
 
-[src/models/Patient.ts:309](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/Patient.ts#L309)
+[src/models/Patient.ts:309](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/Patient.ts#L309)
 
 ___
 
@@ -168,7 +168,7 @@ the name of the company this patient is member of.
 
 #### Defined in
 
-[src/models/Patient.ts:333](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/Patient.ts#L333)
+[src/models/Patient.ts:333](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/Patient.ts#L333)
 
 ___
 
@@ -180,7 +180,7 @@ the creation date of the patient (encoded as epoch).
 
 #### Defined in
 
-[src/models/Patient.ts:289](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/Patient.ts#L289)
+[src/models/Patient.ts:289](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/Patient.ts#L289)
 
 ___
 
@@ -192,7 +192,7 @@ The birthdate encoded as a fuzzy date on 8 positions (YYYYMMDD) MM and/or DD can
 
 #### Defined in
 
-[src/models/Patient.ts:397](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/Patient.ts#L397)
+[src/models/Patient.ts:397](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/Patient.ts#L397)
 
 ___
 
@@ -204,7 +204,7 @@ The date of death encoded as a fuzzy date on 8 positions (YYYYMMDD) MM and/or DD
 
 #### Defined in
 
-[src/models/Patient.ts:401](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/Patient.ts#L401)
+[src/models/Patient.ts:401](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/Patient.ts#L401)
 
 ___
 
@@ -216,7 +216,7 @@ When not active, the reason for deactivation.
 
 #### Defined in
 
-[src/models/Patient.ts:373](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/Patient.ts#L373)
+[src/models/Patient.ts:373](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/Patient.ts#L373)
 
 ___
 
@@ -228,7 +228,7 @@ Is the patient deceased.
 
 #### Defined in
 
-[src/models/Patient.ts:413](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/Patient.ts#L413)
+[src/models/Patient.ts:413](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/Patient.ts#L413)
 
 ___
 
@@ -240,7 +240,7 @@ the soft delete timestamp. When a patient is ”deleted“, this is set to a non
 
 #### Defined in
 
-[src/models/Patient.ts:317](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/Patient.ts#L317)
+[src/models/Patient.ts:317](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/Patient.ts#L317)
 
 ___
 
@@ -252,7 +252,7 @@ The level of education (college degree, undergraduate, phd).
 
 #### Defined in
 
-[src/models/Patient.ts:417](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/Patient.ts#L417)
+[src/models/Patient.ts:417](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/Patient.ts#L417)
 
 ___
 
@@ -264,7 +264,7 @@ Soft delete (unix epoch in ms) timestamp of the patient
 
 #### Defined in
 
-[src/models/Patient.ts:313](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/Patient.ts#L313)
+[src/models/Patient.ts:313](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/Patient.ts#L313)
 
 ___
 
@@ -276,7 +276,7 @@ The ethnicity of the patient.
 
 #### Defined in
 
-[src/models/Patient.ts:441](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/Patient.ts#L441)
+[src/models/Patient.ts:441](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/Patient.ts#L441)
 
 ___
 
@@ -288,7 +288,7 @@ An external (from another source) id with no guarantee or requirement for unicit
 
 #### Defined in
 
-[src/models/Patient.ts:449](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/Patient.ts#L449)
+[src/models/Patient.ts:449](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/Patient.ts#L449)
 
 ___
 
@@ -300,7 +300,7 @@ the firstname (name) of the patient.
 
 #### Defined in
 
-[src/models/Patient.ts:321](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/Patient.ts#L321)
+[src/models/Patient.ts:321](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/Patient.ts#L321)
 
 ___
 
@@ -312,7 +312,7 @@ the gender of the patient: male, female, indeterminate, changed, changedToMale, 
 
 #### Defined in
 
-[src/models/Patient.ts:349](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/Patient.ts#L349)
+[src/models/Patient.ts:349](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/Patient.ts#L349)
 
 ___
 
@@ -324,7 +324,7 @@ the Id of the patient. We encourage using either a v4 UUID or a HL7 Id.
 
 #### Defined in
 
-[src/models/Patient.ts:277](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/Patient.ts#L277)
+[src/models/Patient.ts:277](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/Patient.ts#L277)
 
 ___
 
@@ -336,7 +336,7 @@ Typically used for business / client identifiers. An identifier should identify 
 
 #### Defined in
 
-[src/models/Patient.ts:285](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/Patient.ts#L285)
+[src/models/Patient.ts:285](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/Patient.ts#L285)
 
 ___
 
@@ -348,7 +348,7 @@ A label is an item from a codification system that qualifies a patient as being 
 
 #### Defined in
 
-[src/models/Patient.ts:305](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/Patient.ts#L305)
+[src/models/Patient.ts:305](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/Patient.ts#L305)
 
 ___
 
@@ -360,7 +360,7 @@ the list of languages spoken by the patient ordered by fluency (alpha-2 code htt
 
 #### Defined in
 
-[src/models/Patient.ts:337](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/Patient.ts#L337)
+[src/models/Patient.ts:337](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/Patient.ts#L337)
 
 ___
 
@@ -372,7 +372,7 @@ the lastname (surname) of the patient. This is the official lastname that should
 
 #### Defined in
 
-[src/models/Patient.ts:325](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/Patient.ts#L325)
+[src/models/Patient.ts:325](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/Patient.ts#L325)
 
 ___
 
@@ -384,7 +384,7 @@ Lastname at birth (can be different of the current name), depending on the count
 
 #### Defined in
 
-[src/models/Patient.ts:381](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/Patient.ts#L381)
+[src/models/Patient.ts:381](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/Patient.ts#L381)
 
 ___
 
@@ -396,7 +396,7 @@ The id of the patient this patient has been merged with.
 
 #### Defined in
 
-[src/models/Patient.ts:357](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/Patient.ts#L357)
+[src/models/Patient.ts:357](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/Patient.ts#L357)
 
 ___
 
@@ -408,7 +408,7 @@ The ids of the patients that have been merged inside this patient.
 
 #### Defined in
 
-[src/models/Patient.ts:361](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/Patient.ts#L361)
+[src/models/Patient.ts:361](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/Patient.ts#L361)
 
 ___
 
@@ -420,7 +420,7 @@ the last modification date of the patient (encoded as epoch).
 
 #### Defined in
 
-[src/models/Patient.ts:293](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/Patient.ts#L293)
+[src/models/Patient.ts:293](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/Patient.ts#L293)
 
 ___
 
@@ -432,7 +432,7 @@ the list of all names of the patient, also containing the official full name inf
 
 #### Defined in
 
-[src/models/Patient.ts:329](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/Patient.ts#L329)
+[src/models/Patient.ts:329](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/Patient.ts#L329)
 
 ___
 
@@ -444,7 +444,7 @@ The nationality of the patient.
 
 #### Defined in
 
-[src/models/Patient.ts:433](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/Patient.ts#L433)
+[src/models/Patient.ts:433](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/Patient.ts#L433)
 
 ___
 
@@ -456,7 +456,7 @@ A text note (can be confidential, encrypted by default).
 
 #### Defined in
 
-[src/models/Patient.ts:425](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/Patient.ts#L425)
+[src/models/Patient.ts:425](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/Patient.ts#L425)
 
 ___
 
@@ -472,7 +472,7 @@ Extra parameters
 
 #### Defined in
 
-[src/models/Patient.ts:465](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/Patient.ts#L465)
+[src/models/Patient.ts:465](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/Patient.ts#L465)
 
 ___
 
@@ -484,7 +484,7 @@ Lastname of the partner, should not be used to design the patient.
 
 #### Defined in
 
-[src/models/Patient.ts:389](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/Patient.ts#L389)
+[src/models/Patient.ts:389](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/Patient.ts#L389)
 
 ___
 
@@ -496,7 +496,7 @@ List of partners, or persons of contact (of class Partnership, see below).
 
 #### Defined in
 
-[src/models/Patient.ts:453](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/Patient.ts#L453)
+[src/models/Patient.ts:453](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/Patient.ts#L453)
 
 ___
 
@@ -508,7 +508,7 @@ Links (usually for therapeutic reasons) between this patient and healthcare part
 
 #### Defined in
 
-[src/models/Patient.ts:457](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/Patient.ts#L457)
+[src/models/Patient.ts:457](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/Patient.ts#L457)
 
 ___
 
@@ -520,7 +520,7 @@ Codified list of professions exercised by this patient.
 
 #### Defined in
 
-[src/models/Patient.ts:461](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/Patient.ts#L461)
+[src/models/Patient.ts:461](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/Patient.ts#L461)
 
 ___
 
@@ -532,7 +532,7 @@ any of `single`, `in_couple`, `married`, `separated`, `divorced`, `divorcing`, `
 
 #### Defined in
 
-[src/models/Patient.ts:393](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/Patient.ts#L393)
+[src/models/Patient.ts:393](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/Patient.ts#L393)
 
 ___
 
@@ -544,7 +544,7 @@ A picture usually saved in JPEG format.
 
 #### Defined in
 
-[src/models/Patient.ts:445](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/Patient.ts#L445)
+[src/models/Patient.ts:445](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/Patient.ts#L445)
 
 ___
 
@@ -556,7 +556,7 @@ The place of birth.
 
 #### Defined in
 
-[src/models/Patient.ts:405](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/Patient.ts#L405)
+[src/models/Patient.ts:405](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/Patient.ts#L405)
 
 ___
 
@@ -568,7 +568,7 @@ The place of death.
 
 #### Defined in
 
-[src/models/Patient.ts:409](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/Patient.ts#L409)
+[src/models/Patient.ts:409](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/Patient.ts#L409)
 
 ___
 
@@ -580,7 +580,7 @@ The current professional activity.
 
 #### Defined in
 
-[src/models/Patient.ts:421](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/Patient.ts#L421)
+[src/models/Patient.ts:421](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/Patient.ts#L421)
 
 ___
 
@@ -592,7 +592,7 @@ Extra properties
 
 #### Defined in
 
-[src/models/Patient.ts:469](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/Patient.ts#L469)
+[src/models/Patient.ts:469](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/Patient.ts#L469)
 
 ___
 
@@ -604,7 +604,7 @@ The race of the patient.
 
 #### Defined in
 
-[src/models/Patient.ts:437](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/Patient.ts#L437)
+[src/models/Patient.ts:437](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/Patient.ts#L437)
 
 ___
 
@@ -616,7 +616,7 @@ The id of the data owner that is responsible of this patient. When creating the 
 
 #### Defined in
 
-[src/models/Patient.ts:301](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/Patient.ts#L301)
+[src/models/Patient.ts:301](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/Patient.ts#L301)
 
 ___
 
@@ -628,7 +628,7 @@ the revision of the patient in the database, used for conflict management / opti
 
 #### Defined in
 
-[src/models/Patient.ts:281](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/Patient.ts#L281)
+[src/models/Patient.ts:281](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/Patient.ts#L281)
 
 ___
 
@@ -640,7 +640,7 @@ Lastname of the spouse for a married woman, depending on the country, can be use
 
 #### Defined in
 
-[src/models/Patient.ts:385](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/Patient.ts#L385)
+[src/models/Patient.ts:385](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/Patient.ts#L385)
 
 ___
 
@@ -652,7 +652,7 @@ Social security inscription number.
 
 #### Defined in
 
-[src/models/Patient.ts:377](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/Patient.ts#L377)
+[src/models/Patient.ts:377](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/Patient.ts#L377)
 
 ___
 
@@ -662,4 +662,4 @@ ___
 
 #### Defined in
 
-[src/models/Patient.ts:470](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/Patient.ts#L470)
+[src/models/Patient.ts:470](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/Patient.ts#L470)

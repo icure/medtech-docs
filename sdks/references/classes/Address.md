@@ -42,7 +42,7 @@ the list of addresses (with address type).
 
 #### Defined in
 
-[src/models/Address.ts:19](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/Address.ts#L19)
+[src/models/Address.ts:19](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/Address.ts#L19)
 
 ## Properties
 
@@ -52,7 +52,7 @@ the list of addresses (with address type).
 
 #### Defined in
 
-[src/models/Address.ts:28](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/Address.ts#L28)
+[src/models/Address.ts:28](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/Address.ts#L28)
 
 ___
 
@@ -62,7 +62,7 @@ ___
 
 #### Defined in
 
-[src/models/Address.ts:34](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/Address.ts#L34)
+[src/models/Address.ts:34](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/Address.ts#L34)
 
 ___
 
@@ -72,7 +72,7 @@ ___
 
 #### Defined in
 
-[src/models/Address.ts:36](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/Address.ts#L36)
+[src/models/Address.ts:36](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/Address.ts#L36)
 
 ___
 
@@ -82,7 +82,7 @@ ___
 
 #### Defined in
 
-[src/models/Address.ts:29](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/Address.ts#L29)
+[src/models/Address.ts:29](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/Address.ts#L29)
 
 ___
 
@@ -92,7 +92,7 @@ ___
 
 #### Defined in
 
-[src/models/Address.ts:31](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/Address.ts#L31)
+[src/models/Address.ts:31](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/Address.ts#L31)
 
 ___
 
@@ -102,7 +102,7 @@ ___
 
 #### Defined in
 
-[src/models/Address.ts:37](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/Address.ts#L37)
+[src/models/Address.ts:37](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/Address.ts#L37)
 
 ___
 
@@ -112,7 +112,7 @@ ___
 
 #### Defined in
 
-[src/models/Address.ts:33](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/Address.ts#L33)
+[src/models/Address.ts:33](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/Address.ts#L33)
 
 ___
 
@@ -122,7 +122,7 @@ ___
 
 #### Defined in
 
-[src/models/Address.ts:32](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/Address.ts#L32)
+[src/models/Address.ts:32](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/Address.ts#L32)
 
 ___
 
@@ -132,7 +132,7 @@ ___
 
 #### Defined in
 
-[src/models/Address.ts:35](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/Address.ts#L35)
+[src/models/Address.ts:35](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/Address.ts#L35)
 
 ___
 
@@ -142,7 +142,7 @@ ___
 
 #### Defined in
 
-[src/models/Address.ts:30](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/Address.ts#L30)
+[src/models/Address.ts:30](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/Address.ts#L30)
 
 ___
 
@@ -152,7 +152,7 @@ ___
 
 #### Defined in
 
-[src/models/Address.ts:38](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/Address.ts#L38)
+[src/models/Address.ts:38](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/Address.ts#L38)
 
 ## Methods
 
@@ -166,4 +166,4 @@ ___
 
 #### Defined in
 
-[src/models/Address.ts:40](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/Address.ts#L40)
+[src/models/Address.ts:40](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/Address.ts#L40)

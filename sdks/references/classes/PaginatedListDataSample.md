@@ -33,7 +33,7 @@
 
 #### Defined in
 
-[src/models/PaginatedListDataSample.ts:18](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/PaginatedListDataSample.ts#L18)
+[src/models/PaginatedListDataSample.ts:18](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/PaginatedListDataSample.ts#L18)
 
 ## Properties
 
@@ -43,7 +43,7 @@
 
 #### Defined in
 
-[src/models/PaginatedListDataSample.ts:30](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/PaginatedListDataSample.ts#L30)
+[src/models/PaginatedListDataSample.ts:30](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/PaginatedListDataSample.ts#L30)
 
 ___
 
@@ -53,7 +53,7 @@ ___
 
 #### Defined in
 
-[src/models/PaginatedListDataSample.ts:27](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/PaginatedListDataSample.ts#L27)
+[src/models/PaginatedListDataSample.ts:27](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/PaginatedListDataSample.ts#L27)
 
 ___
 
@@ -63,7 +63,7 @@ ___
 
 #### Defined in
 
-[src/models/PaginatedListDataSample.ts:29](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/PaginatedListDataSample.ts#L29)
+[src/models/PaginatedListDataSample.ts:29](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/PaginatedListDataSample.ts#L29)
 
 ___
 
@@ -73,7 +73,7 @@ ___
 
 #### Defined in
 
-[src/models/PaginatedListDataSample.ts:28](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/PaginatedListDataSample.ts#L28)
+[src/models/PaginatedListDataSample.ts:28](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/PaginatedListDataSample.ts#L28)
 
 ## Methods
 
@@ -87,4 +87,4 @@ ___
 
 #### Defined in
 
-[src/models/PaginatedListDataSample.ts:32](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/PaginatedListDataSample.ts#L32)
+[src/models/PaginatedListDataSample.ts:32](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/PaginatedListDataSample.ts#L32)

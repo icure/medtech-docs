@@ -45,7 +45,7 @@ This service allows you to create a healthcare element linked to a specific pati
 
 #### Defined in
 
-[src/apis/HealthcareElementApi.ts:23](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/apis/HealthcareElementApi.ts#L23)
+[src/apis/HealthcareElementApi.ts:23](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/apis/HealthcareElementApi.ts#L23)
 
 ___
 
@@ -74,7 +74,7 @@ This service permits you to create multiple healthcare elements for a specific p
 
 #### Defined in
 
-[src/apis/HealthcareElementApi.ts:37](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/apis/HealthcareElementApi.ts#L37)
+[src/apis/HealthcareElementApi.ts:37](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/apis/HealthcareElementApi.ts#L37)
 
 ___
 
@@ -96,7 +96,7 @@ Delete a Healthcare Element from the iCure database
 
 #### Defined in
 
-[src/apis/HealthcareElementApi.ts:43](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/apis/HealthcareElementApi.ts#L43)
+[src/apis/HealthcareElementApi.ts:43](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/apis/HealthcareElementApi.ts#L43)
 
 ___
 
@@ -128,7 +128,7 @@ Load healthcare elements from the database by filtering them using the provided 
 
 #### Defined in
 
-[src/apis/HealthcareElementApi.ts:59](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/apis/HealthcareElementApi.ts#L59)
+[src/apis/HealthcareElementApi.ts:59](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/apis/HealthcareElementApi.ts#L59)
 
 ___
 
@@ -150,7 +150,7 @@ Retrieves the information of a specific Healthcare Element
 
 #### Defined in
 
-[src/apis/HealthcareElementApi.ts:65](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/apis/HealthcareElementApi.ts#L65)
+[src/apis/HealthcareElementApi.ts:65](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/apis/HealthcareElementApi.ts#L65)
 
 ___
 
@@ -174,7 +174,7 @@ an array containing the Healthcare Elements
 
 #### Defined in
 
-[src/apis/HealthcareElementApi.ts:91](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/apis/HealthcareElementApi.ts#L91)
+[src/apis/HealthcareElementApi.ts:91](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/apis/HealthcareElementApi.ts#L91)
 
 ___
 
@@ -198,7 +198,7 @@ For this, the current user data owner should be able to access the healthcare El
 
 #### Defined in
 
-[src/apis/HealthcareElementApi.ts:83](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/apis/HealthcareElementApi.ts#L83)
+[src/apis/HealthcareElementApi.ts:83](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/apis/HealthcareElementApi.ts#L83)
 
 ___
 
@@ -222,13 +222,13 @@ the ids of the healthcare elements satisfying the provided filter
 
 #### Defined in
 
-[src/apis/HealthcareElementApi.ts:74](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/apis/HealthcareElementApi.ts#L74)
+[src/apis/HealthcareElementApi.ts:74](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/apis/HealthcareElementApi.ts#L74)
 
 ___
 
 ### subscribeToHealthcareElementEvents
 
-▸ **subscribeToHealthcareElementEvents**(`eventTypes`, `filter`, `eventFired`, `options?`): `Promise`<[`Connection`](Connection)\>
+▸ **subscribeToHealthcareElementEvents**(`eventTypes`, `filter`, `eventFired`, `options?`): `Promise`<[`Connection`](../interfaces/Connection)\>
 
 Opens a WebSocket Connection in order to receive all the Healthcare Element corresponding to specific filter criteria.
 
@@ -245,8 +245,8 @@ Opens a WebSocket Connection in order to receive all the Healthcare Element corr
 
 #### Returns
 
-`Promise`<[`Connection`](Connection)\>
+`Promise`<[`Connection`](../interfaces/Connection)\>
 
 #### Defined in
 
-[src/apis/HealthcareElementApi.ts:104](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/apis/HealthcareElementApi.ts#L104)
+[src/apis/HealthcareElementApi.ts:104](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/apis/HealthcareElementApi.ts#L104)

@@ -4,7 +4,7 @@
 
 ## Implements
 
-- `FilterBuilder`<[`User`](User)\>
+- `FilterBuilder`<[`User`](../classes/User)\>
 
 ## Table of contents
 
@@ -41,7 +41,7 @@
 
 #### Defined in
 
-[src/filter/filterDsl.ts:55](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/filter/filterDsl.ts#L55)
+[src/filter/filterDsl.ts:55](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/filter/filterDsl.ts#L55)
 
 ___
 
@@ -51,7 +51,7 @@ ___
 
 #### Defined in
 
-[src/filter/filterDsl.ts:57](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/filter/filterDsl.ts#L57)
+[src/filter/filterDsl.ts:57](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/filter/filterDsl.ts#L57)
 
 ___
 
@@ -61,7 +61,7 @@ ___
 
 #### Defined in
 
-[src/filter/filterDsl.ts:58](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/filter/filterDsl.ts#L58)
+[src/filter/filterDsl.ts:58](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/filter/filterDsl.ts#L58)
 
 ___
 
@@ -71,17 +71,17 @@ ___
 
 #### Defined in
 
-[src/filter/filterDsl.ts:56](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/filter/filterDsl.ts#L56)
+[src/filter/filterDsl.ts:56](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/filter/filterDsl.ts#L56)
 
 ## Methods
 
 ### build
 
-▸ **build**(): `Promise`<`Filter`<[`User`](User)\>\>
+▸ **build**(): `Promise`<`Filter`<[`User`](../classes/User)\>\>
 
 #### Returns
 
-`Promise`<`Filter`<[`User`](User)\>\>
+`Promise`<`Filter`<[`User`](../classes/User)\>\>
 
 #### Implementation of
 
@@ -89,7 +89,7 @@ FilterBuilder.build
 
 #### Defined in
 
-[src/filter/filterDsl.ts:80](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/filter/filterDsl.ts#L80)
+[src/filter/filterDsl.ts:80](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/filter/filterDsl.ts#L80)
 
 ___
 
@@ -109,7 +109,7 @@ ___
 
 #### Defined in
 
-[src/filter/filterDsl.ts:60](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/filter/filterDsl.ts#L60)
+[src/filter/filterDsl.ts:60](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/filter/filterDsl.ts#L60)
 
 ___
 
@@ -129,7 +129,7 @@ ___
 
 #### Defined in
 
-[src/filter/filterDsl.ts:65](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/filter/filterDsl.ts#L65)
+[src/filter/filterDsl.ts:65](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/filter/filterDsl.ts#L65)
 
 ___
 
@@ -149,7 +149,7 @@ ___
 
 #### Defined in
 
-[src/filter/filterDsl.ts:75](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/filter/filterDsl.ts#L75)
+[src/filter/filterDsl.ts:75](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/filter/filterDsl.ts#L75)
 
 ___
 
@@ -169,4 +169,4 @@ ___
 
 #### Defined in
 
-[src/filter/filterDsl.ts:70](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/filter/filterDsl.ts#L70)
+[src/filter/filterDsl.ts:70](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/filter/filterDsl.ts#L70)

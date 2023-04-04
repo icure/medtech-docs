@@ -61,7 +61,7 @@ const anonymousApi = await new AnonymousMedTechApiBuilder()
   .build()
 ```
 
-The [AnonymousMedTechApi](sdks/references/classes/AnonymousMedTechApi.md) asks you to provide multiple information. Here 
+The [AnonymousMedTechApi](/sdks/references/entrypoints/AnonymousMedTechApi) asks you to provide multiple information. Here 
 are their details :
 
 | Argument             | Description                                                                                      |
@@ -85,12 +85,12 @@ authProcessByEmailId and `hcpAuthProcessByEmailId` as authProcessBySmsId.
 :::info
 
 On node.js or React Native, two extra parameters are required to set the way the SDK will handle the internal storage of keys and additional data.
-The `withStorage` method allows you to provide a custom implementation of the [Storage](sdks/references/interfaces/Storage.md) interface.
+The `withStorage` method allows you to provide a custom implementation of the [Storage](/sdks/references/interfaces/StorageFacade) interface.
 This implementation is responsible for storing data in platform specific storage facilities.
-The `withKeyStorage` method allows you to provide a custom implementation of the [KeyStorage](sdks/references/interfaces/KeyStorage.md) interface.
+The `withKeyStorage` method allows you to provide a custom implementation of the [KeyStorage](/sdks/references/interfaces/KeyStorageFacade) interface.
 This implementation is responsible for storing cryptographic keys in platform specific secure storage facilities.
 
-You can find more information about this in the [AnonymousMedTechApiBuilder](sdks/references/classes/AnonymousMedTechApiBuilder.md) documentation.
+You can find more information about this in the [AnonymousMedTechApiBuilder](/sdks/references/builders/AnonymousMedTechApiBuilder) documentation.
 
 In the browser, default implementations are used that store data and keys in the browser's local storage.
 
@@ -146,7 +146,7 @@ This `masterHcpId` is optional for healthcare professionals registration but man
 
 It's good to know that after their registration, user will share all their future data with this responsible. The user may decide to stop
 sharing their data with this responsible by using the `userApi.stopSharingDataWith` service. For more information, 
-go to the [How-to: Automatically share data with other data owners](../how-to-share-data-automatically.md).
+go to the [How-to: Automatically share data with other data owners](../how-to-share-data-automatically).
 
 :::
 
@@ -349,7 +349,7 @@ in a safe place in their filesystem, possibly encrypting it with a password.
 
 Make sure your users understand they should never share this file with anyone.
 
-For more information check the In-Depth Explanation [What happens if my user loses his private key ?](sdks/explanations.md)  
+For more information check the In-Depth Explanation [What happens if my user loses his private key ?](sdks/explanations)  
 
 :::
 

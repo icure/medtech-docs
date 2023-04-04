@@ -30,7 +30,7 @@ Returns the data owner id of the provided user
 
 #### Defined in
 
-[src/apis/DataOwnerApi.ts:8](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/apis/DataOwnerApi.ts#L8)
+[src/apis/DataOwnerApi.ts:8](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/apis/DataOwnerApi.ts#L8)
 
 ___
 
@@ -51,7 +51,7 @@ ___
 
 #### Defined in
 
-[src/apis/DataOwnerApi.ts:26](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/apis/DataOwnerApi.ts#L26)
+[src/apis/DataOwnerApi.ts:26](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/apis/DataOwnerApi.ts#L26)
 
 ___
 
@@ -80,4 +80,4 @@ The response will contain the RSA keyPair generated for the provided user;
 
 #### Defined in
 
-[src/apis/DataOwnerApi.ts:24](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/apis/DataOwnerApi.ts#L24)
+[src/apis/DataOwnerApi.ts:24](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/apis/DataOwnerApi.ts#L24)

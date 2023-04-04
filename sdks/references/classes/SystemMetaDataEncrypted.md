@@ -34,7 +34,7 @@
 
 #### Defined in
 
-[src/models/SystemMetaDataEncrypted.ts:17](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/SystemMetaDataEncrypted.ts#L17)
+[src/models/SystemMetaDataEncrypted.ts:17](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/SystemMetaDataEncrypted.ts#L17)
 
 ## Properties
 
@@ -48,7 +48,7 @@
 
 #### Defined in
 
-[src/models/SystemMetaDataEncrypted.ts:42](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/SystemMetaDataEncrypted.ts#L42)
+[src/models/SystemMetaDataEncrypted.ts:42](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/SystemMetaDataEncrypted.ts#L42)
 
 ___
 
@@ -62,7 +62,7 @@ ___
 
 #### Defined in
 
-[src/models/SystemMetaDataEncrypted.ts:43](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/SystemMetaDataEncrypted.ts#L43)
+[src/models/SystemMetaDataEncrypted.ts:43](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/SystemMetaDataEncrypted.ts#L43)
 
 ___
 
@@ -72,7 +72,7 @@ ___
 
 #### Defined in
 
-[src/models/SystemMetaDataEncrypted.ts:45](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/SystemMetaDataEncrypted.ts#L45)
+[src/models/SystemMetaDataEncrypted.ts:45](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/SystemMetaDataEncrypted.ts#L45)
 
 ___
 
@@ -86,7 +86,7 @@ ___
 
 #### Defined in
 
-[src/models/SystemMetaDataEncrypted.ts:44](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/SystemMetaDataEncrypted.ts#L44)
+[src/models/SystemMetaDataEncrypted.ts:44](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/SystemMetaDataEncrypted.ts#L44)
 
 ___
 
@@ -96,7 +96,7 @@ ___
 
 #### Defined in
 
-[src/models/SystemMetaDataEncrypted.ts:41](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/SystemMetaDataEncrypted.ts#L41)
+[src/models/SystemMetaDataEncrypted.ts:41](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/SystemMetaDataEncrypted.ts#L41)
 
 ## Methods
 
@@ -110,4 +110,4 @@ ___
 
 #### Defined in
 
-[src/models/SystemMetaDataEncrypted.ts:47](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/SystemMetaDataEncrypted.ts#L47)
+[src/models/SystemMetaDataEncrypted.ts:47](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/SystemMetaDataEncrypted.ts#L47)

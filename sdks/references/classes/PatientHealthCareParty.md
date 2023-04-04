@@ -33,7 +33,7 @@ Links (usually for therapeutic reasons) between this patient and healthcare part
 
 #### Defined in
 
-[src/models/PatientHealthCareParty.ts:18](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/PatientHealthCareParty.ts#L18)
+[src/models/PatientHealthCareParty.ts:18](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/PatientHealthCareParty.ts#L18)
 
 ## Properties
 
@@ -43,7 +43,7 @@ Links (usually for therapeutic reasons) between this patient and healthcare part
 
 #### Defined in
 
-[src/models/PatientHealthCareParty.ts:25](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/PatientHealthCareParty.ts#L25)
+[src/models/PatientHealthCareParty.ts:25](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/PatientHealthCareParty.ts#L25)
 
 ___
 
@@ -53,7 +53,7 @@ ___
 
 #### Defined in
 
-[src/models/PatientHealthCareParty.ts:24](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/PatientHealthCareParty.ts#L24)
+[src/models/PatientHealthCareParty.ts:24](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/PatientHealthCareParty.ts#L24)
 
 ## Methods
 
@@ -67,4 +67,4 @@ ___
 
 #### Defined in
 
-[src/models/PatientHealthCareParty.ts:27](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/PatientHealthCareParty.ts#L27)
+[src/models/PatientHealthCareParty.ts:27](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/PatientHealthCareParty.ts#L27)

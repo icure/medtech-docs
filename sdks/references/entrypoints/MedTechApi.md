@@ -102,7 +102,7 @@
 
 #### Defined in
 
-[src/apis/MedTechApi.ts:111](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/apis/MedTechApi.ts#L111)
+[src/apis/MedTechApi.ts:111](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/apis/MedTechApi.ts#L111)
 
 ## Properties
 
@@ -112,7 +112,7 @@
 
 #### Defined in
 
-[src/apis/MedTechApi.ts:79](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/apis/MedTechApi.ts#L79)
+[src/apis/MedTechApi.ts:79](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/apis/MedTechApi.ts#L79)
 
 ___
 
@@ -150,7 +150,7 @@ ___
 
 #### Defined in
 
-[src/apis/MedTechApi.ts:85](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/apis/MedTechApi.ts#L85)
+[src/apis/MedTechApi.ts:85](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/apis/MedTechApi.ts#L85)
 
 ___
 
@@ -160,7 +160,7 @@ ___
 
 #### Defined in
 
-[src/apis/MedTechApi.ts:64](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/apis/MedTechApi.ts#L64)
+[src/apis/MedTechApi.ts:64](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/apis/MedTechApi.ts#L64)
 
 ___
 
@@ -170,7 +170,7 @@ ___
 
 #### Defined in
 
-[src/apis/MedTechApi.ts:73](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/apis/MedTechApi.ts#L73)
+[src/apis/MedTechApi.ts:73](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/apis/MedTechApi.ts#L73)
 
 ___
 
@@ -180,7 +180,7 @@ ___
 
 #### Defined in
 
-[src/apis/MedTechApi.ts:72](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/apis/MedTechApi.ts#L72)
+[src/apis/MedTechApi.ts:72](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/apis/MedTechApi.ts#L72)
 
 ___
 
@@ -190,7 +190,7 @@ ___
 
 #### Defined in
 
-[src/apis/MedTechApi.ts:71](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/apis/MedTechApi.ts#L71)
+[src/apis/MedTechApi.ts:71](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/apis/MedTechApi.ts#L71)
 
 ___
 
@@ -200,7 +200,7 @@ ___
 
 #### Defined in
 
-[src/apis/MedTechApi.ts:81](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/apis/MedTechApi.ts#L81)
+[src/apis/MedTechApi.ts:81](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/apis/MedTechApi.ts#L81)
 
 ___
 
@@ -210,7 +210,7 @@ ___
 
 #### Defined in
 
-[src/apis/MedTechApi.ts:67](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/apis/MedTechApi.ts#L67)
+[src/apis/MedTechApi.ts:67](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/apis/MedTechApi.ts#L67)
 
 ___
 
@@ -220,7 +220,7 @@ ___
 
 #### Defined in
 
-[src/apis/MedTechApi.ts:70](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/apis/MedTechApi.ts#L70)
+[src/apis/MedTechApi.ts:70](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/apis/MedTechApi.ts#L70)
 
 ___
 
@@ -230,7 +230,7 @@ ___
 
 #### Defined in
 
-[src/apis/MedTechApi.ts:75](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/apis/MedTechApi.ts#L75)
+[src/apis/MedTechApi.ts:75](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/apis/MedTechApi.ts#L75)
 
 ___
 
@@ -240,7 +240,7 @@ ___
 
 #### Defined in
 
-[src/apis/MedTechApi.ts:84](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/apis/MedTechApi.ts#L84)
+[src/apis/MedTechApi.ts:84](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/apis/MedTechApi.ts#L84)
 
 ___
 
@@ -250,7 +250,7 @@ ___
 
 #### Defined in
 
-[src/apis/MedTechApi.ts:69](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/apis/MedTechApi.ts#L69)
+[src/apis/MedTechApi.ts:69](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/apis/MedTechApi.ts#L69)
 
 ___
 
@@ -260,7 +260,7 @@ ___
 
 #### Defined in
 
-[src/apis/MedTechApi.ts:80](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/apis/MedTechApi.ts#L80)
+[src/apis/MedTechApi.ts:80](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/apis/MedTechApi.ts#L80)
 
 ___
 
@@ -270,7 +270,7 @@ ___
 
 #### Defined in
 
-[src/apis/MedTechApi.ts:68](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/apis/MedTechApi.ts#L68)
+[src/apis/MedTechApi.ts:68](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/apis/MedTechApi.ts#L68)
 
 ___
 
@@ -280,7 +280,7 @@ ___
 
 #### Defined in
 
-[src/apis/MedTechApi.ts:77](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/apis/MedTechApi.ts#L77)
+[src/apis/MedTechApi.ts:77](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/apis/MedTechApi.ts#L77)
 
 ___
 
@@ -290,7 +290,7 @@ ___
 
 #### Defined in
 
-[src/apis/MedTechApi.ts:66](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/apis/MedTechApi.ts#L66)
+[src/apis/MedTechApi.ts:66](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/apis/MedTechApi.ts#L66)
 
 ___
 
@@ -300,7 +300,7 @@ ___
 
 #### Defined in
 
-[src/apis/MedTechApi.ts:82](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/apis/MedTechApi.ts#L82)
+[src/apis/MedTechApi.ts:82](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/apis/MedTechApi.ts#L82)
 
 ___
 
@@ -310,7 +310,7 @@ ___
 
 #### Defined in
 
-[src/apis/MedTechApi.ts:83](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/apis/MedTechApi.ts#L83)
+[src/apis/MedTechApi.ts:83](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/apis/MedTechApi.ts#L83)
 
 ___
 
@@ -320,7 +320,7 @@ ___
 
 #### Defined in
 
-[src/apis/MedTechApi.ts:65](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/apis/MedTechApi.ts#L65)
+[src/apis/MedTechApi.ts:65](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/apis/MedTechApi.ts#L65)
 
 ___
 
@@ -330,7 +330,7 @@ ___
 
 #### Defined in
 
-[src/apis/MedTechApi.ts:76](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/apis/MedTechApi.ts#L76)
+[src/apis/MedTechApi.ts:76](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/apis/MedTechApi.ts#L76)
 
 ## Accessors
 
@@ -344,7 +344,7 @@ ___
 
 #### Defined in
 
-[src/apis/MedTechApi.ts:231](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/apis/MedTechApi.ts#L231)
+[src/apis/MedTechApi.ts:231](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/apis/MedTechApi.ts#L231)
 
 ___
 
@@ -358,7 +358,7 @@ ___
 
 #### Defined in
 
-[src/apis/MedTechApi.ts:191](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/apis/MedTechApi.ts#L191)
+[src/apis/MedTechApi.ts:191](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/apis/MedTechApi.ts#L191)
 
 ___
 
@@ -372,7 +372,7 @@ ___
 
 #### Defined in
 
-[src/apis/MedTechApi.ts:227](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/apis/MedTechApi.ts#L227)
+[src/apis/MedTechApi.ts:227](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/apis/MedTechApi.ts#L227)
 
 ___
 
@@ -386,7 +386,7 @@ ___
 
 #### Defined in
 
-[src/apis/MedTechApi.ts:223](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/apis/MedTechApi.ts#L223)
+[src/apis/MedTechApi.ts:223](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/apis/MedTechApi.ts#L223)
 
 ___
 
@@ -400,7 +400,7 @@ ___
 
 #### Defined in
 
-[src/apis/MedTechApi.ts:219](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/apis/MedTechApi.ts#L219)
+[src/apis/MedTechApi.ts:219](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/apis/MedTechApi.ts#L219)
 
 ___
 
@@ -414,7 +414,7 @@ ___
 
 #### Defined in
 
-[src/apis/MedTechApi.ts:203](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/apis/MedTechApi.ts#L203)
+[src/apis/MedTechApi.ts:203](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/apis/MedTechApi.ts#L203)
 
 ___
 
@@ -428,7 +428,7 @@ ___
 
 #### Defined in
 
-[src/apis/MedTechApi.ts:215](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/apis/MedTechApi.ts#L215)
+[src/apis/MedTechApi.ts:215](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/apis/MedTechApi.ts#L215)
 
 ___
 
@@ -442,7 +442,7 @@ ___
 
 #### Defined in
 
-[src/apis/MedTechApi.ts:241](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/apis/MedTechApi.ts#L241)
+[src/apis/MedTechApi.ts:241](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/apis/MedTechApi.ts#L241)
 
 ___
 
@@ -456,7 +456,7 @@ ___
 
 #### Defined in
 
-[src/apis/MedTechApi.ts:257](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/apis/MedTechApi.ts#L257)
+[src/apis/MedTechApi.ts:257](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/apis/MedTechApi.ts#L257)
 
 ___
 
@@ -470,7 +470,7 @@ ___
 
 #### Defined in
 
-[src/apis/MedTechApi.ts:211](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/apis/MedTechApi.ts#L211)
+[src/apis/MedTechApi.ts:211](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/apis/MedTechApi.ts#L211)
 
 ___
 
@@ -484,7 +484,7 @@ ___
 
 #### Defined in
 
-[src/apis/MedTechApi.ts:207](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/apis/MedTechApi.ts#L207)
+[src/apis/MedTechApi.ts:207](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/apis/MedTechApi.ts#L207)
 
 ___
 
@@ -498,7 +498,7 @@ ___
 
 #### Defined in
 
-[src/apis/MedTechApi.ts:249](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/apis/MedTechApi.ts#L249)
+[src/apis/MedTechApi.ts:249](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/apis/MedTechApi.ts#L249)
 
 ___
 
@@ -512,7 +512,7 @@ ___
 
 #### Defined in
 
-[src/apis/MedTechApi.ts:199](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/apis/MedTechApi.ts#L199)
+[src/apis/MedTechApi.ts:199](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/apis/MedTechApi.ts#L199)
 
 ___
 
@@ -526,7 +526,7 @@ ___
 
 #### Defined in
 
-[src/apis/MedTechApi.ts:253](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/apis/MedTechApi.ts#L253)
+[src/apis/MedTechApi.ts:253](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/apis/MedTechApi.ts#L253)
 
 ___
 
@@ -540,7 +540,7 @@ ___
 
 #### Defined in
 
-[src/apis/MedTechApi.ts:195](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/apis/MedTechApi.ts#L195)
+[src/apis/MedTechApi.ts:195](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/apis/MedTechApi.ts#L195)
 
 ___
 
@@ -554,7 +554,7 @@ ___
 
 #### Defined in
 
-[src/apis/MedTechApi.ts:245](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/apis/MedTechApi.ts#L245)
+[src/apis/MedTechApi.ts:245](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/apis/MedTechApi.ts#L245)
 
 ## Methods
 
@@ -577,7 +577,7 @@ ___
 
 #### Defined in
 
-[src/apis/MedTechApi.ts:261](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/apis/MedTechApi.ts#L261)
+[src/apis/MedTechApi.ts:261](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/apis/MedTechApi.ts#L261)
 
 ___
 
@@ -599,4 +599,4 @@ ___
 
 #### Defined in
 
-[src/apis/MedTechApi.ts:270](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/apis/MedTechApi.ts#L270)
+[src/apis/MedTechApi.ts:270](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/apis/MedTechApi.ts#L270)

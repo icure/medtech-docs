@@ -33,7 +33,7 @@
 
 #### Defined in
 
-[src/models/PaginatedListHealthcareProfessional.ts:17](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/PaginatedListHealthcareProfessional.ts#L17)
+[src/models/PaginatedListHealthcareProfessional.ts:17](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/PaginatedListHealthcareProfessional.ts#L17)
 
 ## Properties
 
@@ -43,7 +43,7 @@
 
 #### Defined in
 
-[src/models/PaginatedListHealthcareProfessional.ts:29](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/PaginatedListHealthcareProfessional.ts#L29)
+[src/models/PaginatedListHealthcareProfessional.ts:29](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/PaginatedListHealthcareProfessional.ts#L29)
 
 ___
 
@@ -53,7 +53,7 @@ ___
 
 #### Defined in
 
-[src/models/PaginatedListHealthcareProfessional.ts:26](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/PaginatedListHealthcareProfessional.ts#L26)
+[src/models/PaginatedListHealthcareProfessional.ts:26](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/PaginatedListHealthcareProfessional.ts#L26)
 
 ___
 
@@ -63,7 +63,7 @@ ___
 
 #### Defined in
 
-[src/models/PaginatedListHealthcareProfessional.ts:28](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/PaginatedListHealthcareProfessional.ts#L28)
+[src/models/PaginatedListHealthcareProfessional.ts:28](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/PaginatedListHealthcareProfessional.ts#L28)
 
 ___
 
@@ -73,7 +73,7 @@ ___
 
 #### Defined in
 
-[src/models/PaginatedListHealthcareProfessional.ts:27](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/PaginatedListHealthcareProfessional.ts#L27)
+[src/models/PaginatedListHealthcareProfessional.ts:27](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/PaginatedListHealthcareProfessional.ts#L27)
 
 ## Methods
 
@@ -87,4 +87,4 @@ ___
 
 #### Defined in
 
-[src/models/PaginatedListHealthcareProfessional.ts:31](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/PaginatedListHealthcareProfessional.ts#L31)
+[src/models/PaginatedListHealthcareProfessional.ts:31](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/PaginatedListHealthcareProfessional.ts#L31)

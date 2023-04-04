@@ -34,7 +34,7 @@ Encrypted and time-limited Authentication tokens used for inter-applications aut
 
 #### Defined in
 
-[src/models/AuthenticationToken.ts:18](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/AuthenticationToken.ts#L18)
+[src/models/AuthenticationToken.ts:18](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/AuthenticationToken.ts#L18)
 
 ## Properties
 
@@ -46,7 +46,7 @@ Validity starting time of the token
 
 #### Defined in
 
-[src/models/AuthenticationToken.ts:29](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/AuthenticationToken.ts#L29)
+[src/models/AuthenticationToken.ts:29](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/AuthenticationToken.ts#L29)
 
 ___
 
@@ -58,7 +58,7 @@ Encrypted token
 
 #### Defined in
 
-[src/models/AuthenticationToken.ts:25](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/AuthenticationToken.ts#L25)
+[src/models/AuthenticationToken.ts:25](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/AuthenticationToken.ts#L25)
 
 ___
 
@@ -70,7 +70,7 @@ Token validity in seconds
 
 #### Defined in
 
-[src/models/AuthenticationToken.ts:33](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/AuthenticationToken.ts#L33)
+[src/models/AuthenticationToken.ts:33](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/AuthenticationToken.ts#L33)
 
 ## Methods
 
@@ -84,4 +84,4 @@ Token validity in seconds
 
 #### Defined in
 
-[src/models/AuthenticationToken.ts:35](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/AuthenticationToken.ts#L35)
+[src/models/AuthenticationToken.ts:35](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/AuthenticationToken.ts#L35)

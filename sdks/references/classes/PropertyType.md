@@ -40,7 +40,7 @@ Do not edit the class manually.
 
 #### Defined in
 
-[src/models/PropertyType.ts:15](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/PropertyType.ts#L15)
+[src/models/PropertyType.ts:15](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/PropertyType.ts#L15)
 
 ## Properties
 
@@ -50,7 +50,7 @@ Do not edit the class manually.
 
 #### Defined in
 
-[src/models/PropertyType.ts:21](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/PropertyType.ts#L21)
+[src/models/PropertyType.ts:21](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/PropertyType.ts#L21)
 
 ___
 
@@ -60,7 +60,7 @@ ___
 
 #### Defined in
 
-[src/models/PropertyType.ts:22](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/PropertyType.ts#L22)
+[src/models/PropertyType.ts:22](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/PropertyType.ts#L22)
 
 ## Methods
 
@@ -74,4 +74,4 @@ ___
 
 #### Defined in
 
-[src/models/PropertyType.ts:24](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/PropertyType.ts#L24)
+[src/models/PropertyType.ts:24](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/PropertyType.ts#L24)

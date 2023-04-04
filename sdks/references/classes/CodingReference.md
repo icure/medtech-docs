@@ -35,7 +35,7 @@ Codified list of professions exercised by this patient.
 
 #### Defined in
 
-[src/models/CodingReference.ts:18](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/CodingReference.ts#L18)
+[src/models/CodingReference.ts:18](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/CodingReference.ts#L18)
 
 ## Properties
 
@@ -45,7 +45,7 @@ Codified list of professions exercised by this patient.
 
 #### Defined in
 
-[src/models/CodingReference.ts:24](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/CodingReference.ts#L24)
+[src/models/CodingReference.ts:24](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/CodingReference.ts#L24)
 
 ___
 
@@ -55,7 +55,7 @@ ___
 
 #### Defined in
 
-[src/models/CodingReference.ts:22](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/CodingReference.ts#L22)
+[src/models/CodingReference.ts:22](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/CodingReference.ts#L22)
 
 ___
 
@@ -65,7 +65,7 @@ ___
 
 #### Defined in
 
-[src/models/CodingReference.ts:23](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/CodingReference.ts#L23)
+[src/models/CodingReference.ts:23](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/CodingReference.ts#L23)
 
 ___
 
@@ -75,7 +75,7 @@ ___
 
 #### Defined in
 
-[src/models/CodingReference.ts:25](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/CodingReference.ts#L25)
+[src/models/CodingReference.ts:25](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/CodingReference.ts#L25)
 
 ## Methods
 
@@ -89,4 +89,4 @@ ___
 
 #### Defined in
 
-[src/models/CodingReference.ts:27](https://github.com/icure/icure-medical-device-js-sdk/blob/a61f48e/src/models/CodingReference.ts#L27)
+[src/models/CodingReference.ts:27](https://github.com/icure/icure-medical-device-js-sdk/blob/95efac3/src/models/CodingReference.ts#L27)
