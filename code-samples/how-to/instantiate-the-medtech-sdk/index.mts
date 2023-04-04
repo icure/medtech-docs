@@ -3,7 +3,7 @@ import {
   AnonymousMedTechApiBuilder,
   KeyStorageImpl,
   LocalStorageImpl,
-  medTechApi
+  medTechApi,
 } from '@icure/medical-device-sdk'
 import { host, msgGtwUrl, password, specId, userName } from '../../utils/index.mjs'
 import { webcrypto } from 'crypto'

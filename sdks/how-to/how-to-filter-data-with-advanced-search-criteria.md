@@ -336,7 +336,7 @@ const ageGenderImplicitPatients = await api.patientApi.filterPatients(ageGenderI
 ```
 </details>
 
-In this case, the method will return all the patients that the hcp with id `hcpId` can access, whose age is `42`, and whose gender is `female`.
+In this case, the method will return all the patients that the hcp with id `healthcarePartyId` can access, whose age is `42`, and whose gender is `female`.
 You can also explicitly intersect simple filters using the `intersection()` method:
 
 <!-- file://code-samples/how-to/use-complex-search-criteria/index.mts snippet:filter patients with explicit intersection filter-->
@@ -608,7 +608,7 @@ In the following list, you will find all the simple queries for each type of ent
 * `forDataOwner(dataOwnerId: string)`: all the Data Samples that the Data Owner passed as parameter can access. **Note:** this field must be specified in all the queries.
 * `byIds(byIds: string[])`: all the Data Samples corresponding to the ids passed as parameter.
 * `byIdentifiers(identifiers: Identifier[])`: all the Data Samples that have the identifier passed as parameter.
-* `byLabelCodeFilter(tagType?: string, tagCode?: string, codeType?: string, codeCode?: string)`: all the Data Samples that matches one of his labels or codes.
+* `byLabelCodeDateFilter(tagType?: string, tagCode?: string, codeType?: string, codeCode?: string, startValueDate?: number, endValueDate?: number)`: all the Data Samples that matches one of his labels or codes, or created in the provided date interval.
 * `forPatients(crypto: IccCryptoXApi, patients: Patient[])`: all the Data Samples related to a certain Patient.
 * `byHealthElementIds(byHealthElementIds: string[])`: all the Data Samples that have the Healthcare Element specified as parameter.
 * `union(filters: UserFilter[])`: creates a union query with the filters passed as parameter.

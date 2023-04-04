@@ -48,6 +48,11 @@ expect(createdUser.login).to.equal(`john+${uniqueId}`)
 expect(createdUser.email).to.equal(`john+${uniqueId}@hospital.care`)
 expect(createdUser.passwordHash).to.not.equal('correct horse battery staple')
 
+//tech-doc: Create a token
+const token = await api.userApi.createToken(createdUser.id, 3600)
+//tech-doc: STOP HERE
+output({ token })
+
 //tech-doc: Create a patient user
 import { Patient, Address, Telecom } from '@icure/medical-device-sdk'
 import { hex2ua } from '@icure/api'

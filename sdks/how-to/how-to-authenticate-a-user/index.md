@@ -72,6 +72,8 @@ are their details :
 | authProcessByEmailId | Identifier of the authentication by email process. See next section to know more about it        |
 | authProcessBySmsId   | Identifier of the authentication by SMS process. See next section to know more about it          |
 
+You can learn about all the options you have when instantiating the MedTech API and the AnonymousMedTech API in the [Instantiation How-To](/sdks/how-to/how-to-instantiate-the-medtech-sdk). 
+
 Since Daenaerys is a patient, you will have to provide the `patientAuthProcessByEmailId` as a 
 authProcessByEmailId and `patientAuthProcessBySmsId` as a authProcessBySmsId. 
 
@@ -169,7 +171,7 @@ by providing two arguments:
 - The previous `AuthenticationProcess`
 - The validation code Daenaerys received by email
 
-This method will also generate the public and private key for the user, saving them in the `keyStorage` property of the 
+This method will also generate the public and private key for the user, saving them in the `keyStorage` of the 
 newly created MedTechAPI.
  
 <!-- file://code-samples/how-to/authenticate-user/index.mts snippet:Complete authentication process-->
@@ -184,7 +186,7 @@ const authenticatedApi = authenticationResult.medTechApi
 console.log(`Your new user id: ${authenticationResult.userId}`)
 console.log(`Database id where new user was created: ${authenticationResult.groupId}`)
 console.log(`Your initialised MedTechAPI: ***\${authenticatedApi}***`)
-console.log(`RSA keypair of your new user: ***\${authenticationResult.keyPair}***`)
+console.log(`RSA key pairs of your new user: ***\${authenticationResult.keyPairs}***`)
 console.log(`Token created to authenticate your new user: ***\${authenticationResult.token}***`)
 ```
 
@@ -192,7 +194,7 @@ As a result, you receive :
 - The MedTechApi instance to use for Daenaerys (properly initialised);
 - The `userId`, identifying Daenaerys user uniquely;
 - The `groupId`, identifying the database in which Daenaerys was created;
-- The `keyPair`, the RSA keypair you provided for Daenaerys through the lambda; 
+- The `keyPair`, the RSA keypair generated for the patient; 
 - The `token`, the time-limited token created for Daenaerys, to authenticate her; 
 
 Make sure to save these elements to be able to authenticate Daenaerys again when she'll come back on your app.
@@ -209,13 +211,6 @@ saveSecurely(
   authenticationResult.keyPairs,
 )
 ```
-
-:::info
-
-You can choose to let the MedTechApi take care of the key pair storage for you. 
-In that case, you do not need to provide the key pair to `initUserCrypto`, you can just call it with no argument.
-
-:::
 
 Now that her authentication is completed, Daenaerys may manage data with iCure.  
 
@@ -284,9 +279,108 @@ const createdDataSample = await authenticatedApi.dataSampleApi.createOrModifyDat
 
 But what do you have to do when the authentication token of Daenaerys expires and she needs to login again?
 
-## Login a user
-In iCure, the login flow is similar to the registration.
-Once Daenaerys's token is expired, she will need to authenticate again to iCure by starting the login process.
+## Logging in with  existing credentials
+Each time you complete the registration or login process, you can save the credentials you receive
+in a secured place.
+We symbolised it through the `saveSecurely` method.
+
+<!-- file://code-samples/how-to/authenticate-user/index.mts snippet:Save credentials-->
+```typescript
+// saveSecurely does not exist: Use your own way of storing the following data securely
+// One option is to put these elements into the localStorage
+saveSecurely(
+  userEmail,
+  authenticationResult.token,
+  authenticationResult.userId,
+  authenticationResult.groupId,
+  authenticationResult.keyPairs,
+)
+```
+
+The first thing you have to do is to retrieve Daenaerys credentials and her RSA Keypair
+<!-- file://code-samples/how-to/authenticate-user/index.mts snippet:Get back credentials-->
+```typescript
+// getBackCredentials does not exist: Use your own way of storing the following data securely
+// One option is to get them back from the localStorage
+const { login, token, pubKey, privKey } = getBackCredentials()
+```
+
+And then, initialise a MedTechApi, authenticating Daenaerys directly.
+<!-- file://code-samples/how-to/authenticate-user/index.mts snippet:Instantiate back a MedTechApi-->
+```typescript
+const reInstantiatedApi = await new MedTechApiBuilder()
+  .withICureBaseUrl(iCureUrl)
+  .withUserName(login)
+  .withPassword(token)
+  .withCrypto(webcrypto as any)
+  .build()
+
+await reInstantiatedApi.initUserCrypto({ publicKey: pubKey, privateKey: privKey })
+```
+
+Daenaerys can finally manage her data again.
+<!-- file://code-samples/how-to/authenticate-user/index.mts snippet:Get back encrypted data-->
+```typescript
+const foundDataSampleAfterInstantiatingApi = await reInstantiatedApi.dataSampleApi.getDataSample(
+  createdDataSample.id,
+)
+```
+
+<!-- output://code-samples/how-to/authenticate-user/foundDataSampleAfterInstantiatingApi.txt -->
+<details>
+<summary>foundDataSampleAfterInstantiatingApi</summary>
+
+```json
+{
+  "id": "460134ac-afbe-41e6-8b53-4ca690b03e56",
+  "qualifiedLinks": {},
+  "batchId": "28d5b6b3-9a9f-41c4-8179-0eb2474f611a",
+  "index": 0,
+  "valueDate": 20230329073044,
+  "openingDate": 20220929083400,
+  "created": 1680075044373,
+  "modified": 1680075044373,
+  "author": "f4c7dd4e-e7c9-4419-8dc1-eb6217654134",
+  "responsible": "59b5a1d8-46a6-429f-9b41-005925c8afd5",
+  "comment": "This is a comment",
+  "identifiers": [],
+  "healthcareElementIds": {},
+  "canvasesIds": {},
+  "content": {
+    "en": {
+      "stringValue": "Hello world",
+      "compoundValue": [],
+      "ratio": [],
+      "range": []
+    }
+  },
+  "codes": {},
+  "labels": {},
+  "systemMetaData": {
+    "secretForeignKeys": [
+      "f0eb3f3d-8c2c-4d34-896d-9faa1713ed33"
+    ],
+    "cryptedForeignKeys": {
+      "59b5a1d8-46a6-429f-9b41-005925c8afd5": {},
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+    },
+    "delegations": {
+      "59b5a1d8-46a6-429f-9b41-005925c8afd5": {},
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+    },
+    "encryptionKeys": {
+      "59b5a1d8-46a6-429f-9b41-005925c8afd5": {},
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+    }
+  }
+}
+```
+</details>
+
+## Regenerate the credentials for a User
+
+Once Daenaerys's token is expired, she will need to authenticate again to iCure by starting the login process. 
+This flow is similar to the one of the registration phase.
 
 As Daenaerys is not authenticated anymore, you have to create a new AnonymousMedTechApi instance. 
 
@@ -322,7 +416,7 @@ const loginResult = await anonymousApiForLogin.authenticationApi.completeAuthent
 console.log(`Your new user id: ${loginResult.userId}`)
 console.log(`Database id where new user was created: ${loginResult.groupId}`)
 console.log(`Your new initialised MedTechAPI: ***\${loginResult.medTechApi}***`)
-console.log(`RSA keypair of your user stays the same: ***\${loginResult.keyPair}***`)
+console.log(`RSA key pairs of your user stays the same: ***\${loginResult.keyPairs}***`)
 console.log(`The token of your user will change: ***\${loginResult.token}***`)
 ```
 
@@ -412,112 +506,6 @@ const foundDataSampleAfterLogin = await loggedUserApi.dataSampleApi.getDataSampl
 }
 ```
 </details>
-
-The last thing you need to know is what to do when Daenaerys credentials are still valid: if you saved
-the result from the login (or registration) process, the token may still be valid the next time Daenaerys
-accesses your application.
-In this case, you can reuse the existing token and avoid having Daenaerys go through the login process
-with email or SMS OTP every time she opens your application.
-
-
-## Reusing existing credentials
-Each time you complete the registration or login process, you can save the credentials you receive
-in a secured place.
-We symbolised it through the `saveSecurely` method.
-
-<!-- file://code-samples/how-to/authenticate-user/index.mts snippet:Save credentials-->
-```typescript
-// saveSecurely does not exist: Use your own way of storing the following data securely
-// One option is to put these elements into the localStorage
-saveSecurely(
-  userEmail,
-  authenticationResult.token,
-  authenticationResult.userId,
-  authenticationResult.groupId,
-  authenticationResult.keyPairs,
-)
-```
-
-The first thing you have to do is to retrieve Daenaerys credentials and her RSA Keypair 
-<!-- file://code-samples/how-to/authenticate-user/index.mts snippet:Get back credentials-->
-```typescript
-// getBackCredentials does not exist: Use your own way of storing the following data securely
-// One option is to get them back from the localStorage
-const { login, token, pubKey, privKey } = getBackCredentials()
-```
-
-And then, initialise a MedTechApi, authenticating Daenaerys directly. 
-<!-- file://code-samples/how-to/authenticate-user/index.mts snippet:Instantiate back a MedTechApi-->
-```typescript
-const reInstantiatedApi = await new MedTechApiBuilder()
-  .withICureBaseUrl(iCureUrl)
-  .withUserName(login)
-  .withPassword(token)
-  .withCrypto(webcrypto as any)
-  .build()
-
-await reInstantiatedApi.initUserCrypto({ publicKey: pubKey, privateKey: privKey })
-```
-
-Daenaerys can finally manage her data again. 
-<!-- file://code-samples/how-to/authenticate-user/index.mts snippet:Get back encrypted data-->
-```typescript
-const foundDataSampleAfterInstantiatingApi = await reInstantiatedApi.dataSampleApi.getDataSample(
-  createdDataSample.id,
-)
-```
-
-<!-- output://code-samples/how-to/authenticate-user/foundDataSampleAfterInstantiatingApi.txt -->
-<details>
-<summary>foundDataSampleAfterInstantiatingApi</summary>
-
-```json
-{
-  "id": "460134ac-afbe-41e6-8b53-4ca690b03e56",
-  "qualifiedLinks": {},
-  "batchId": "28d5b6b3-9a9f-41c4-8179-0eb2474f611a",
-  "index": 0,
-  "valueDate": 20230329073044,
-  "openingDate": 20220929083400,
-  "created": 1680075044373,
-  "modified": 1680075044373,
-  "author": "f4c7dd4e-e7c9-4419-8dc1-eb6217654134",
-  "responsible": "59b5a1d8-46a6-429f-9b41-005925c8afd5",
-  "comment": "This is a comment",
-  "identifiers": [],
-  "healthcareElementIds": {},
-  "canvasesIds": {},
-  "content": {
-    "en": {
-      "stringValue": "Hello world",
-      "compoundValue": [],
-      "ratio": [],
-      "range": []
-    }
-  },
-  "codes": {},
-  "labels": {},
-  "systemMetaData": {
-    "secretForeignKeys": [
-      "f0eb3f3d-8c2c-4d34-896d-9faa1713ed33"
-    ],
-    "cryptedForeignKeys": {
-      "59b5a1d8-46a6-429f-9b41-005925c8afd5": {},
-      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
-    },
-    "delegations": {
-      "59b5a1d8-46a6-429f-9b41-005925c8afd5": {},
-      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
-    },
-    "encryptionKeys": {
-      "59b5a1d8-46a6-429f-9b41-005925c8afd5": {},
-      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
-    }
-  }
-}
-```
-</details>
-
 
 ## What's next? 
 Some specific use cases can bring you some questions: what happens if Daenaerys lost her RSA Keypair?

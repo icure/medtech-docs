@@ -6,18 +6,18 @@ sidebar_position: 1
 
 ## What is iCure ?
 
-*iCure* is a trustable service ensuring the privacy of your patient medical data thanks to [end-to-end encryption](../sdks/explanations/encryption/introduction),
+*iCure* is a trustable service ensuring the privacy of your patient medical data thanks to [end-to-end encryption](explanations/encryption/introduction.mdx),
 meaning your users are the only ones who decide who can access their data.
 
 iCure helps you to manage the encrypted data by providing a series of easy-to-use tools :
-- The **iCure Back-End**, saving your data into the databases and managing the access control to it based on the access
-  rules you defined in your app
-- The **iCure Cockpit Web Portal**, allowing you to create your apps, your databases,
-  your admin users, ... in your iCure environment
-- The [**iCure Client SDKs**](../sdks/intro) taking care of the [end-to-end encryption / decryption](../sdks/explanations/encryption/introduction)
-  of your data and proposes you a series of easy-to-use medical-oriented services
-- The **Interoperability components** helping you to connect with external services by mapping the iCure Data Model to
-  standard models like FHIR
+- The **iCure Back-End** allows you to save your data into the databases and manage the access control to it based on the access
+  rules you defined in your app.
+- The [**iCure Cockpit Web Portal**](../cockpit/intro) allows you to create your apps, your databases and
+  your admin users in your iCure environment.
+- The **iCure Client SDKs** takes care of the [end-to-end encryption / decryption](explanations/encryption/introduction.mdx)
+  of your data and proposes you a series of easy-to-use medical-oriented services.
+- The **Interoperability components** helps you to connect with external services by mapping the iCure Data Model to
+  standard models like FHIR.
 
 
 ## Cockpit Web Portal

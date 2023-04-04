@@ -34,13 +34,13 @@ const createdUser = await api.userApi.createOrModifyUser(userToCreate)
 
 ```json
 {
-  "id": "3e878611-4663-49fc-a78b-8b4aefadd7fd",
-  "rev": "1-341a8003f294e52f30a3f06a180aa046",
-  "created": 1680075120693,
-  "login": "john+rje98ah4k",
+  "id": "744c8b6f-c299-43a6-9926-b773a2ee2d90",
+  "rev": "1-cb8d2dfe526297c49121644ebb5bf4ef",
+  "created": 1680263967084,
+  "login": "john+8fy2x3tv8",
   "passwordHash": "*",
   "groupId": "ic-e2etest-medtech-docs",
-  "email": "john+rje98ah4k@hospital.care",
+  "email": "john+8fy2x3tv8@hospital.care",
   "properties": {},
   "roles": {},
   "sharingDataWith": {},
@@ -56,9 +56,40 @@ The `login` and `email` fields must be unique. If you try to create a user with 
 
 :::
 
+### Creating a temporary authentication token for a User
+
+Sometimes, you may want to create a temporary authentication token for a user that will expire in a fixed amount of time. 
+You can do that using the `createToken` method, that takes as parameters the id of the user for which create the token 
+and the duration of the token, in seconds.
+
+<!-- file://code-samples/how-to/manage-users/index.mts snippet:Create a token-->
+```typescript
+const token = await api.userApi.createToken(createdUser.id, 3600)
+```
+
+<!-- output://code-samples/how-to/manage-users/token.txt -->
+<details>
+<summary>token</summary>
+```text
+b7016fd4-9153-4523-a7a0-add4b74c5e89
+```
+</details>
+
+Now it will be possible for the user to log in using the newly created token, that will expire after 1 hour.
+
+:::note
+
+A User can always create an authentication token for themself, 
+but only Admins and Healthcare Professionals from create authentication tokens for other users.  
+
+
+:::
+
+### Creating a user associated to a patient
+
 The user you just created will be able to connect to the application but will not be able to manage data because it is not connected to a data owner.
 
-You will often need to create a patient that can connect to iCure. In that case you can use [createAndInviteUser](/sdks/references/apis/UserApi.md#createandinviteuser):
+You will often need to create a patient that can connect to iCure. In that case you can use [createAndInviteUser](/sdks/references/apis/UserApi#createandinviteuser):
 
 <!-- file://code-samples/how-to/manage-users/index.mts snippet:Create a patient user-->
 ```typescript
@@ -124,13 +155,13 @@ const createdPatientUser = await api.userApi.createAndInviteUser(
 
 ```json
 {
-  "id": "f5df11a4-fb4b-4958-b480-8e63b7d231d9",
+  "id": "93b7b51b-f1b0-46f8-8029-cdb4c46f7316",
   "languages": [],
   "active": true,
   "parameters": {},
-  "rev": "1-c51a24a6bac9f5acbf2f3b1cc5bfc8b8",
-  "created": 1680075121918,
-  "modified": 1680075121918,
+  "rev": "1-89100da2e888dce6977050aa04e896e1",
+  "created": 1680263968766,
+  "modified": 1680263968766,
   "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
   "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
   "firstName": "Argan",
@@ -157,7 +188,7 @@ const createdPatientUser = await api.userApi.createAndInviteUser(
       "addressType": "home",
       "telecoms": [
         {
-          "telecomNumber": "argan+rje98ah4k@moliere.fr",
+          "telecomNumber": "argan+8fy2x3tv8@moliere.fr",
           "telecomType": "email"
         }
       ]
@@ -177,7 +208,7 @@ const createdPatientUser = await api.userApi.createAndInviteUser(
     "privateKeyShamirPartitions": {},
     "aesExchangeKeys": {},
     "transferKeys": {},
-    "encryptedSelf": "odK1PPEtjrzymLcxKSajdbzeeUembjBHXRaciNyN4z4=",
+    "encryptedSelf": "E3uJlRc5UK4QVrt+6bO3awPqyvDNnel7smSsqmkY0CM=",
     "secretForeignKeys": [],
     "cryptedForeignKeys": {},
     "delegations": {
@@ -197,14 +228,14 @@ const createdPatientUser = await api.userApi.createAndInviteUser(
 
 ```json
 {
-  "id": "93977e47-9c93-467d-811c-2e6afce42f84",
-  "rev": "1-1cada17c034cdca02f154e92a52b17b8",
-  "created": 1680075122248,
-  "name": "argan+rje98ah4k@moliere.fr",
-  "login": "argan+rje98ah4k@moliere.fr",
+  "id": "78eaabf3-ccac-416a-9063-7ef2d6cbb4a6",
+  "rev": "1-a5756aba8def48a40613fe255f81fb41",
+  "created": 1680263968925,
+  "name": "argan+8fy2x3tv8@moliere.fr",
+  "login": "argan+8fy2x3tv8@moliere.fr",
   "groupId": "ic-e2etest-medtech-docs",
-  "patientId": "f5df11a4-fb4b-4958-b480-8e63b7d231d9",
-  "email": "argan+rje98ah4k@moliere.fr",
+  "patientId": "93b7b51b-f1b0-46f8-8029-cdb4c46f7316",
+  "email": "argan+8fy2x3tv8@moliere.fr",
   "properties": {},
   "roles": {},
   "sharingDataWith": {},
@@ -244,13 +275,13 @@ const loadedUser = await api.userApi.getUser(createdUser.id)
 
 ```json
 {
-  "id": "3e878611-4663-49fc-a78b-8b4aefadd7fd",
-  "rev": "1-341a8003f294e52f30a3f06a180aa046",
-  "created": 1680075120693,
-  "login": "john+rje98ah4k",
+  "id": "744c8b6f-c299-43a6-9926-b773a2ee2d90",
+  "rev": "2-00a8d4727a8070cbfcac5896e4210870",
+  "created": 1680263967084,
+  "login": "john+8fy2x3tv8",
   "passwordHash": "*",
   "groupId": "ic-e2etest-medtech-docs",
-  "email": "john+rje98ah4k@hospital.care",
+  "email": "john+8fy2x3tv8@hospital.care",
   "properties": {},
   "roles": {},
   "sharingDataWith": {},
@@ -274,13 +305,13 @@ const loadedUserByEmail = await api.userApi.getUserByEmail(createdUser.email)
 
 ```json
 {
-  "id": "3e878611-4663-49fc-a78b-8b4aefadd7fd",
-  "rev": "1-341a8003f294e52f30a3f06a180aa046",
-  "created": 1680075120693,
-  "login": "john+rje98ah4k",
+  "id": "744c8b6f-c299-43a6-9926-b773a2ee2d90",
+  "rev": "2-00a8d4727a8070cbfcac5896e4210870",
+  "created": 1680263967084,
+  "login": "john+8fy2x3tv8",
   "passwordHash": "*",
   "groupId": "ic-e2etest-medtech-docs",
-  "email": "john+rje98ah4k@hospital.care",
+  "email": "john+8fy2x3tv8@hospital.care",
   "properties": {},
   "roles": {},
   "sharingDataWith": {},
@@ -311,17 +342,17 @@ const users = await api.userApi.filterUsers(
 ```json
 {
   "pageSize": 1000,
-  "totalSize": 440,
+  "totalSize": 500,
   "rows": [
     {
-      "id": "93977e47-9c93-467d-811c-2e6afce42f84",
-      "rev": "2-01b1f74c4644d3bae2b5312569fe748b",
-      "created": 1680075122248,
-      "name": "argan+rje98ah4k@moliere.fr",
-      "login": "argan+rje98ah4k@moliere.fr",
+      "id": "78eaabf3-ccac-416a-9063-7ef2d6cbb4a6",
+      "rev": "2-5a32941014cfe043e2bf96f1b663bec3",
+      "created": 1680263968925,
+      "name": "argan+8fy2x3tv8@moliere.fr",
+      "login": "argan+8fy2x3tv8@moliere.fr",
       "groupId": "ic-e2etest-medtech-docs",
-      "patientId": "f5df11a4-fb4b-4958-b480-8e63b7d231d9",
-      "email": "argan+rje98ah4k@moliere.fr",
+      "patientId": "93b7b51b-f1b0-46f8-8029-cdb4c46f7316",
+      "email": "argan+8fy2x3tv8@moliere.fr",
       "properties": {},
       "roles": {},
       "sharingDataWith": {},
@@ -351,13 +382,13 @@ const modifiedUser = await api.userApi.createOrModifyUser(
 
 ```json
 {
-  "id": "3e878611-4663-49fc-a78b-8b4aefadd7fd",
-  "rev": "2-edc543fe8a667b0ca05cfe72a78264e1",
-  "created": 1680075120693,
-  "login": "john+rje98ah4k",
+  "id": "744c8b6f-c299-43a6-9926-b773a2ee2d90",
+  "rev": "3-e142062dada16ce3cf85dbc1c66f7890",
+  "created": 1680263967084,
+  "login": "john+8fy2x3tv8",
   "passwordHash": "*",
   "groupId": "ic-e2etest-medtech-docs",
-  "email": "john+rje98ah4k@hospital.care",
+  "email": "john+8fy2x3tv8@hospital.care",
   "properties": {},
   "roles": {},
   "sharingDataWith": {},
@@ -380,8 +411,8 @@ const deletedUserId = await api.userApi.deleteUser(createdUser.id)
 <summary>deletedUserId</summary>
 
 ```text
-3-7a58578c79f62dd4267d83efe00cf557
+4-86d268d64c96c62465606ebf5fdda6e2
 ```
 </details>
 
-For the gory details of all you can do with users using the SDK, check out the [UserApi](/sdks/references/apis/UserApi.md) documentation.
+For the gory details of all you can do with users using the SDK, check out the [UserApi](/sdks/references/apis/UserApi) documentation.

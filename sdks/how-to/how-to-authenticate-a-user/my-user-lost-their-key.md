@@ -28,8 +28,7 @@ You can't find back Daenaerys's private key. Depending where you saved her priva
 - ...
 
 Anyway, if you want her to continue using your app, you need to create her a new RSA Keypair. 
-For this, start a new authentication process as usually, and complete it by providing a userKeypair lambda generating 
-a new RSA Keypair in case you can't find it back : 
+For this, start a new authentication process as usual: 
 
 <!-- file://code-samples/how-to/authenticate-user/index.mts snippet:Complete user lost key authentication-->
 ```typescript
@@ -39,7 +38,8 @@ const loginAuthResult = await anonymousMedTechApi.authenticationApi.completeAuth
 )
 ```
 
-At this stage, Daenaerys will be able to create new data, using her new RSA keypair : 
+The `completeAuthentication` will create autonomously a new key pair for the User if an existing one is not found.  
+At this stage, Daenaerys will be able to create new data using her new RSA keypair : 
 
 <!-- file://code-samples/how-to/authenticate-user/index.mts snippet:User can create new data after loosing their key-->
 ```typescript
@@ -278,7 +278,7 @@ Once a notification is treated, do not forget to update its status. (See more in
 
 ## What if the user wants to authenticate on another device but didn't lose their previous key ?
 When a new RSA keypair is generated for Daenaerys, a notification is sent to all data owners she shared data with, 
-but not only : She receives a notification as well. 
+but not only: she receives a notification as well. 
 
 Therefore, the procedure stays the same, except that instead of waiting all data owners to give access back to her data, 
 Daenaerys can get all her pending notifications, and give access back to all her data using her "previous" key.  

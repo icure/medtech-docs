@@ -8,7 +8,7 @@ tags:
 # Inviting an existing patient to become a user
 
 ## Use Case Description
-There may be some cases where a Doctor (Healthcare Professional) wants to invite one of his patients to the platform. 
+There may be some cases where a Healthcare Professional wants to invite one of his patients to the platform. 
 If the Patient already exists in the platform, the MedTech SDK provides a method to automatically invite the User, 
 link it to the existing Patient and then ask all the Healthcare Professionals that manage their data to share those with 
 them.  

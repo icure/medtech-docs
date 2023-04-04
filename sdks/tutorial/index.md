@@ -37,6 +37,10 @@ Provide the iCure host to use and your user credentials in this API.
 
 <!-- file://code-samples/tutorial/doctor-centric-app/index.mts snippet:instantiate the api-->
 ```typescript
+import 'isomorphic-fetch'
+import { medTechApi } from '@icure/medical-device-sdk'
+import { webcrypto } from 'crypto'
+
 const iCureHost = process.env.ICURE_URL!
 const iCureUserPassword = process.env.ICURE_USER_PASSWORD!
 const iCureUserLogin = process.env.ICURE_USER_NAME!
@@ -145,6 +149,8 @@ In most doctor-centric applications, you will have to create patients.
 To do this, call the `api.patientApi.createOrModifyPatient` service. 
 <!-- file://code-samples/tutorial/doctor-centric-app/index.mts snippet:create your first patient-->
 ```typescript
+import { Patient } from '@icure/medical-device-sdk'
+
 const createdPatient = await api.patientApi.createOrModifyPatient(
   new Patient({
     firstName: 'John',
@@ -315,6 +321,8 @@ A data sample must always be linked to a patient.
 
 <!-- file://code-samples/tutorial/doctor-centric-app/index.mts snippet:create your patient first medical data-->
 ```typescript
+import { CodingReference, Content, DataSample } from '@icure/medical-device-sdk'
+
 const createdData = await api.dataSampleApi.createOrModifyDataSamplesFor(johnSnow.id, [
   new DataSample({
     labels: new Set([new CodingReference({ type: 'LOINC', code: '29463-7', version: '2' })]),
@@ -435,6 +443,8 @@ Let's say we would like to find back all medical data with the LOINC label corre
 
 <!-- file://code-samples/tutorial/doctor-centric-app/index.mts snippet:Find your patient medical data following some criteria-->
 ```typescript
+import { DataSampleFilter } from '@icure/medical-device-sdk'
+
 const johnData = await api.dataSampleApi.filterDataSample(
   await new DataSampleFilter()
     .forDataOwner(api.dataOwnerApi.getDataOwnerIdOf(loggedUser))

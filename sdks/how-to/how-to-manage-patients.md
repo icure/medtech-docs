@@ -426,7 +426,7 @@ const patientFilter = new PatientFilter()
 
 The resulting filter object will create a filter that allows us to get all `Patient` that satisfy all the following requirements:
 
-- The `Patient` is owned by the logged user healthcare party
+- The `Patient` can be accessed by the logged user healthcare party
 - The `Patient` gender is `male`
 - The `Patient` is born between January 1st 2800 and January 1st 2900
 
