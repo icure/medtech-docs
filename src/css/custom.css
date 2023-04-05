@@ -28,6 +28,8 @@
   --custom-secondary-bg: #e9f3f9;
   --custom-primary-btn-color-on-hover: #009290;
   --custom-primary-btn-bg-on-hover: rgba(0, 146, 144, 0.05);
+  --ifm-footer-background-color: #e9f3f9;
+  --ifm-footer-color: #000000;
 }
 
 /* For readability concerns, you should choose a lighter palette in dark mode. */
@@ -51,6 +53,8 @@ html[data-theme='dark'] {
   --custom-secondary-bg: #1b2034;
   --custom-primary-btn-color-on-hover: #ffffff;
   --custom-primary-btn-bg-on-hover: rgba(0, 146, 144, 0.25);
+  --ifm-footer-background-color: #1b2034;
+  --ifm-footer-color: #d7d7d7;
 }
 
 [data-theme='light'] img[src$='#dark'],
@@ -90,7 +94,7 @@ html[data-theme='dark'] {
   background: var(--ifm-hover-overlay);
 }
 
-.DocSearch-Button {
+/* .DocSearch-Button {
   height: 42px !important;
   width: 340px;
   margin: 0 0 0 16px;
@@ -123,4 +127,4 @@ html[data-theme='dark'] {
 
 .DocSearch-Search-Icon {
   color: var(--ifm-color-primary) !important;
-}
+} */

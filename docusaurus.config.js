@@ -1,6 +1,5 @@
 // @ts-check
 // Note: type annotations allow type checking and IDEs autocompletion
-
 const lightCodeTheme = require('prism-react-renderer/themes/github');
 const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 
@@ -127,50 +126,9 @@ async function createConfig() {
                     ],
 
                 },
+                // To modify Footer, please go to the src/theme/Footer/Layout/index.js file
+                // ================================================
                 footer: {
-                    style: 'dark',
-                    links: [
-                        {
-                            title: 'Docs',
-                            items: [
-                                {
-                                    label: 'Medical Device SDK',
-                                    to: '/sdks/intro',
-                                },
-                                {
-                                    label: 'Cockpit',
-                                    to: '/cockpit/intro',
-                                },
-                            ],
-                        },
-                        // {
-                        //     title: 'Community',
-                        //     items: [
-                        //         {
-                        //             label: 'Stack Overflow',
-                        //             href: 'https://stackoverflow.com/questions/tagged/docusaurus',
-                        //         },
-                        //         {
-                        //             label: 'Discord',
-                        //             href: 'https://discordapp.com/invite/docusaurus',
-                        //         },
-                        //         {
-                        //             label: 'Twitter',
-                        //             href: 'https://twitter.com/docusaurus',
-                        //         },
-                        //     ],
-                        // },
-                        {
-                            title: 'More',
-                            items: [
-                                {
-                                    label: 'GitHub',
-                                    href: `https://github.com/${GITHUB_USERNAME}`,
-                                },
-                            ],
-                        },
-                    ],
-                    copyright: `Copyright © ${new Date().getFullYear()} iCure SA. Built with Docusaurus.`,
                 },
                 prism: {
                     theme: lightCodeTheme,
