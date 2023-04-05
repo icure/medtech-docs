@@ -194,9 +194,26 @@ $xxl: 1400px;
     max-width: 380px;
   }
 
+
   .homePage__appsCard__codeBlock {
     min-height: 420px;
     width: 95%;
+  }
+
+  .homePage__appsCard__codeBlock > div:nth-child(1) {
+    min-height: 42px;
+  }
+
+  .homePage__appsCard__codeBlock > div:nth-child(2) {
+    min-height: 378px;
+  }
+
+  .homePage__appsCard__codeBlock > div:nth-child(2) pre {
+    min-height: 378px;
+  }
+
+  .homePage__appsCard__codeBlock > div:nth-child(2) code {
+    min-height: 378px;
   }
 
   .homePage__appsCard__codeBlock * {
