@@ -6,30 +6,214 @@
 
 /* You can override the default Infima variables here. */
 :root {
-  --ifm-color-primary: #2e8555;
-  --ifm-color-primary-dark: #29784c;
-  --ifm-color-primary-darker: #277148;
-  --ifm-color-primary-darkest: #205d3b;
-  --ifm-color-primary-light: #33925d;
-  --ifm-color-primary-lighter: #359962;
-  --ifm-color-primary-lightest: #3cad6e;
+  --ifm-color-primary: #009290;
+  --ifm-color-primary-dark: #008382;
+  --ifm-color-primary-darker: #007c7a;
+  --ifm-color-primary-darkest: #006665;
+  --ifm-color-primary-light: #00a19e;
+  --ifm-color-primary-lighter: #00a8a6;
+  --ifm-color-primary-lightest: #00bebb;
   --ifm-code-font-size: 95%;
-  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+  --ifm-background-color: #fbfdff;
+  --ifm-navbar-background-color: #fbfdff;
+  --ifm-heading-color: #090d1f;
+  --ifm-color-content: #090d1f;
+  --ifm-menu-color: #090d1f;
+  --ifm-toc-link-color: #090d1f;
+  --ifm-global-shadow-lw: 0 1px 2px 0 #ccd0e0;
+  --ifm-toc-border-color: #ccd0e0;
+  --ifm-menu-link-sublist-icon: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><path fill-rule='evenodd' clip-rule='evenodd' d='M11.8831 9.85366C12.039 9.69169 12.039 9.42949 11.8831 9.26793L8.57779 5.84263C8.26559 5.51912 7.75912 5.51912 7.44693 5.84263L4.11704 9.29278C3.96274 9.45309 3.96064 9.71199 4.11294 9.87438C4.26843 10.0401 4.52477 10.0421 4.68266 9.87893L7.72954 6.72122C7.88584 6.55926 8.13887 6.55926 8.29517 6.72122L11.3178 9.85366C11.4737 10.0156 11.7272 10.0156 11.8831 9.85366Z' fill='black'/></svg>");
+  --ifm-hover-overlay: #f0f4f9;
+  --ifm-menu-link-padding-vertical: 10px;
+  --custom-secondary-bg: #e9f3f9;
+  --custom-primary-btn-color-on-hover: #009290;
+  --custom-primary-btn-bg-on-hover: rgba(0, 146, 144, 0.05);
+  --ifm-footer-background-color: #e9f3f9;
+  --ifm-footer-color: #000000;
 }
 
 /* For readability concerns, you should choose a lighter palette in dark mode. */
-[data-theme='dark'] {
-  --ifm-color-primary: #25c2a0;
-  --ifm-color-primary-dark: #21af90;
-  --ifm-color-primary-darker: #1fa588;
-  --ifm-color-primary-darkest: #1a8870;
-  --ifm-color-primary-light: #29d5b0;
-  --ifm-color-primary-lighter: #32d8b4;
-  --ifm-color-primary-lightest: #4fddbf;
-  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+html[data-theme='dark'] {
+  --ifm-color-primary: #009290;
+  --ifm-color-primary-dark: #008382;
+  --ifm-color-primary-darker: #007c7a;
+  --ifm-color-primary-darkest: #006665;
+  --ifm-color-primary-light: #00a19e;
+  --ifm-color-primary-lighter: #00a8a6;
+  --ifm-color-primary-lightest: #00bebb;
+  --ifm-background-color: #090d1f;
+  --ifm-navbar-background-color: #090d1f;
+  --ifm-heading-color: #d7d7d7;
+  --ifm-color-content: #d7d7d7;
+  --ifm-menu-color: #d7d7d7;
+  --ifm-toc-link-color: #d7d7d7;
+  --ifm-global-shadow-lw: 0 1px 2px 0 #303443;
+  --ifm-toc-border-color: #303443;
+  --ifm-hover-overlay: #1b2034;
+  --custom-secondary-bg: #1b2034;
+  --custom-primary-btn-color-on-hover: #ffffff;
+  --custom-primary-btn-bg-on-hover: rgba(0, 146, 144, 0.25);
+  --ifm-footer-background-color: #1b2034;
+  --ifm-footer-color: #d7d7d7;
 }
 
 [data-theme='light'] img[src$='#dark'],
 [data-theme='dark'] img[src$='#light'] {
   display: none;
+}
+
+.menu__caret:before,
+.menu__link--sublist-caret:after {
+  content: '';
+  background: var(--ifm-menu-link-sublist-icon) 50% / 1.5rem 1.5rem;
+  filter: var(--ifm-menu-link-sublist-icon-filter);
+  height: 1rem;
+  transform: rotate(180deg);
+  width: 1rem;
+  transition: transform var(--ifm-transition-fast) linear;
+}
+
+.menu__link--active {
+  color: var(--ifm-menu-color-active);
+}
+
+.navbar__items {
+  gap: 8px;
+}
+
+.navbar__link {
+  height: 42px;
+  padding: 0 12px;
+  display: flex;
+  align-items: center;
+  border-radius: 0.25rem;
+}
+
+.navbar__items--right > :last-child {
+  padding: 0;
+}
+
+.navbar__link:hover,
+.navbar__link--active {
+  background: var(--ifm-hover-overlay);
+}
+
+/* mobile */
+@media screen and (max-width: 996px) {
+  .navbar__link {
+    display: none;
+  }
+
+  .navbar__items {
+    gap: 16px;
+  }
+}
+
+.DocSearch-Button {
+  height: 42px !important;
+  width: 340px;
+  margin: 0 0 0 16px;
+  padding: 0;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+
+  background: none !important;
+  border: 1px solid var(--ifm-toc-border-color) !important;
+  border-radius: 5px !important;
+
+  color: var(--docsearch-muted-color) !important;
+
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+@media screen and (max-width: 768px) {
+  .DocSearch-Button {
+    width: 42px;
+    justify-content: center !important;
+  }
+}
+
+.DocSearch-Button:hover {
+  border: 1px solid var(--ifm-color-primary) !important;
+  box-shadow: none !important;
+}
+
+.DocSearch-Button-Placeholder {
+  font-weight: 400;
+  font-size: 14px !important;
+  gap: 0;
+}
+
+.DocSearch-Search-Icon {
+  color: var(--ifm-color-primary) !important;
+}
+
+.searchBox_node_modules-\@docusaurus-theme-classic-lib-theme-Navbar-Search-styles-module {
+  padding: 0 !important;
+  margin-left: 56px;
+}
+
+/* \Header */
+
+/* mobile */
+@media screen and (max-width: 996px) {
+  .gitHubBtn a {
+    height: 42px;
+    padding: 0 12px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    border-radius: 0.25rem;
+    color: var(--ifm-menu-color);
+    line-height: 1.25;
+    padding: var(--ifm-menu-link-padding-vertical) var(--ifm-menu-link-padding-horizontal);
+  }
+  .gitHubBtn svg {
+    display: none;
+  }
+
+  .gitHubBtn a span {
+    display: block;
+  }
+}
+
+@media (min-width: 997px) {
+  .gitHubBtn {
+    width: 42px;
+    height: 42px;
+    -webkit-tap-highlight-color: transparent;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    transition: background var(--ifm-transition-fast);
+    color: var(--ifm-color-primary);
+    border: 1px solid var(--ifm-toc-border-color);
+    border-radius: 5px;
+    padding: 0;
+  }
+
+  .gitHubBtn a {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+  }
+
+  .gitHubBtn a span {
+    display: none;
+  }
+  .gitHubBtn svg {
+    width: 26px;
+    height: 26px;
+  }
+
+  .gitHubBtn:hover {
+    border: 1px solid var(--ifm-color-primary);
+  }
 }
