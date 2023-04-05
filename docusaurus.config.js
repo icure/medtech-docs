@@ -15,9 +15,7 @@ async function createConfig() {
 
     /** @type {import('@docusaurus/types').Config} */
     return {
-        title: 'iCure MedTech Docs',
-
-        tagline: 'Simplified Data Platform for EHR and MedTech',
+        title: 'iCure Documentation',
         url: 'https://docs.icure.com',
         baseUrl: '/',
         onBrokenLinks: 'throw',
@@ -95,7 +93,7 @@ async function createConfig() {
         },
 
         themeConfig:
-        /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
+            /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
             ({
                 colorMode: {
                     defaultMode: 'dark',
@@ -111,13 +109,13 @@ async function createConfig() {
                         {
                             type: 'doc',
                             docId: 'intro',
-                            position: 'left',
-                            label: 'SDKs',
+                            position: 'right',
+                            label: 'Medical Device SDK',
                         },
                         {
                             type: 'doc',
                             docId: 'intro',
-                            position: 'left',
+                            position: 'right',
                             label: 'Cockpit',
                             docsPluginId: 'cockpit',
                         },
@@ -127,6 +125,7 @@ async function createConfig() {
                             position: 'right',
                         },
                     ],
+
                 },
                 footer: {
                     style: 'dark',
@@ -135,7 +134,7 @@ async function createConfig() {
                             title: 'Docs',
                             items: [
                                 {
-                                    label: 'SDKs',
+                                    label: 'Medical Device SDK',
                                     to: '/sdks/intro',
                                 },
                                 {
