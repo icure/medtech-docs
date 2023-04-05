@@ -17,7 +17,7 @@ export default function FooterLayout({ style }) {
       title: 'Having a problem?',
       link: {
         title: 'Contact us',
-        url: 'https://icure.com/'
+        url: 'https://icure.atlassian.net/servicedesk/customer/portal/3'
       }
     }
   ]
