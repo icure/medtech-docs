@@ -145,10 +145,11 @@ $xxl: 1400px;
 
 .homePage__appsCard__codeBlock {
   width: 47%;
+  min-height: 450px;
 }
 
 .homePage__appsCard__codeBlock * {
-  font-size: 12px !important;
+  font-size: 11px !important;
 }
 
 .homePage__appsCard__illustration img {
@@ -194,6 +195,7 @@ $xxl: 1400px;
   }
 
   .homePage__appsCard__codeBlock {
+    min-height: 400px;
     width: 95%;
   }
 
