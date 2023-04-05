@@ -68,7 +68,7 @@ const DocsList: () => DocItem[] = () => [
             'The MedTech SDK provides you a series of services and functionalities focused on managing medical information gathered from medical devices or provided by the patient himself, and store it encrypted in our cloud or on your premises.',
         button: {
             title: 'Explore the SDK Docs',
-            link: '#',
+            link: '/sdks/intro',
         },
     },
     {
@@ -76,7 +76,7 @@ const DocsList: () => DocItem[] = () => [
         description: 'The cockpit is a web platform that allows you to manage easily the apps, users and databases that you need to work with the iCure SDK.',
         button: {
             title: 'Explore the Cockpit Docs',
-            link: '#',
+            link: '/cockpit/intro',
         },
     },
 ]

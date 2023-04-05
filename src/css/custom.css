@@ -82,7 +82,7 @@ html[data-theme='dark'] {
 }
 
 .navbar__link {
-  height: 42px;
+  height: 34px;
   padding: 0 12px;
   display: flex;
   align-items: center;
@@ -110,7 +110,7 @@ html[data-theme='dark'] {
 }
 
 .DocSearch-Button {
-  height: 42px !important;
+  height: 34px !important;
   width: 340px;
   margin: 0 0 0 16px;
   padding: 0;
@@ -132,7 +132,7 @@ html[data-theme='dark'] {
 
 @media screen and (max-width: 768px) {
   .DocSearch-Button {
-    width: 42px;
+    width: 34px;
     justify-content: center !important;
   }
 }
@@ -152,9 +152,11 @@ html[data-theme='dark'] {
   color: var(--ifm-color-primary) !important;
 }
 
-.searchBox_node_modules-\@docusaurus-theme-classic-lib-theme-Navbar-Search-styles-module {
-  padding: 0 !important;
-  margin-left: 56px;
+@media (min-width: 997px) {
+  .searchBox_node_modules-\@docusaurus-theme-classic-lib-theme-Navbar-Search-styles-module {
+    padding: 0 !important;
+    margin-left: 56px;
+  }
 }
 
 /* \Header */
@@ -162,7 +164,7 @@ html[data-theme='dark'] {
 /* mobile */
 @media screen and (max-width: 996px) {
   .gitHubBtn a {
-    height: 42px;
+    height: 34px;
     padding: 0 12px;
     display: flex;
     align-items: center;
@@ -183,8 +185,8 @@ html[data-theme='dark'] {
 
 @media (min-width: 997px) {
   .gitHubBtn {
-    width: 42px;
-    height: 42px;
+    width: 34px;
+    height: 34px;
     -webkit-tap-highlight-color: transparent;
     align-items: center;
     display: flex;
@@ -209,8 +211,8 @@ html[data-theme='dark'] {
     display: none;
   }
   .gitHubBtn svg {
-    width: 26px;
-    height: 26px;
+    width: 22px;
+    height: 22px;
   }
 
   .gitHubBtn:hover {
