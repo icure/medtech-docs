@@ -94,7 +94,18 @@ html[data-theme='dark'] {
   background: var(--ifm-hover-overlay);
 }
 
-/* .DocSearch-Button {
+/* mobile */
+@media screen and (max-width: 996px) {
+  .navbar__link {
+    display: none;
+  }
+
+  .navbar__items {
+    gap: 16px;
+  }
+}
+
+.DocSearch-Button {
   height: 42px !important;
   width: 340px;
   margin: 0 0 0 16px;
@@ -127,4 +138,4 @@ html[data-theme='dark'] {
 
 .DocSearch-Search-Icon {
   color: var(--ifm-color-primary) !important;
-} */
+}
