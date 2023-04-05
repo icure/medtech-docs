@@ -20,12 +20,20 @@ const sidebarsSDK = {
 
   sdkSidebar: [
     'intro',
-    'quick-start',
+    {    
+      type: 'category',
+      label: 'Quick Start',
+      link: {
+        type: 'doc',
+        id: 'quick-start/index',
+      },
+      items: ['quick-start/react-native-quick-start', 'quick-start/react-js-quick-start', 'quick-start/node-js-quick-start']
+    },
     'release-notes',
     {
       type: 'category',
       label: 'Tutorial',
-      items: ['tutorial/index', 'tutorial/boilerplate-reactjs'],
+      items: ['tutorial/index'],
     },
     {
       type: 'category',
