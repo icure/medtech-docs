@@ -15,7 +15,7 @@ By the end of it, you will be able to:
 To begin working with the MedTech SDK, you need to have a valid iCure User.
 You can obtain an iCure user in one of the following ways: 
 - Launch a free iCure instance locally on your computer, which will automatically create a default user for you.
-  To learn how to do this, refer to the [QuickStart](/sdks/quick-start.md) guide.
+  To learn how to do this, refer to the [QuickStart](/sdks/quick-start/index.md) guide.
 - Register on the iCure Cockpit to get your iCure Cloud User.
   To learn how to do this, refer to the [How to register on Cockpit](/cockpit/how-to/how-to-register) guide.
 
