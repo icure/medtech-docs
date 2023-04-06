@@ -1,7 +1,9 @@
 ---
-sidebar_position: 2
+slug: node-js-quick-start
+description: Start your Node JS App
 ---
-# Quick Start
+
+# Start your Node JS App
 
 ## Prerequisites and Installation
 

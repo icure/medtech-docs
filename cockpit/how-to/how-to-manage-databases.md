@@ -7,8 +7,7 @@ slug: how-to-manage-your-databases
 ## Go to a app's databases
 
 Each app has a list of databases. 
-From the Cockpit [dashboard screen](https://cockpit.icure.cloud/dashboard), click on the **Manage** button of the app 
-of your choice. For example, let's click on the **Manage** button of our __Petra React app__. 
+From the Cockpit [dashboard screen](https://cockpit.icure.cloud/dashboard), click on the **Manage** button of the app of your choice. For example, let's click on the **Manage** button of our __Petra React app__. 
 
 ![Manage app btn](./img/database-interactions/dashboard.png)
 

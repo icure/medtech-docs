@@ -3,18 +3,30 @@ slug: how-to-manage-your-apps
 ---
 
 # Handling your apps
-In iCure, you have the possibility to organise your databases according to the specifications of your own products. 
-For example, you may want to have two completely separate environments for two products you are developing.
-Another need could be of having one environment dedicated to the medical data of your users and one
-dedicated to the invoicing, which should never need the medical data of your patients. 
+In iCure, an **App** represents a **medical solution / eco-system** in which the medical data of the users are potentially managed through multiple IT services. It is NOT representing an IT service or a specific Technology App. 
 
-The choice is yours in the organisation of your environment. 
+For example, let's take Petra Corp, developing solutions to help patients follow their menstruation cycle and share medical information linked to it with their gynecologist. 
+
+Petra Corp proposes to their patients the React Native App **Petra**, which allows them to encode their menstruation cycle data. 
+The enterprise also has a second product called **Petra Doc**, allowing the gynecologists to follow the data their patients shared with them, and potentially make a diagnosis. 
+
+Petra Corp invoices the gynecologists and the **Petra users** who are using their solution using a monthly subscription. 
+
+Here is an example of Apps Petra Corp could want to create: 
+
+
+| Apps created on Cockpit | Valid | Remarks |
+|-------------------------|------|---------------|
+| Petra, Petra Doc        |  ❌  | This scheme is inefficient, as patient data will have to be duplicated between Petra and Petra Doc. Moreover, as iCure allows you to share or not data with other actors, it will be easy in one App to define who can access which data |
+| Petra, Petra Invoicing | ✅   | This scheme seems efficient, as Petra Corp doesn't need medical data to create its invoices. Therefore, medical data can be isolated in one App, and invoicing information in another | 
+| Petra, Petra Invoicing, Hospital ABC | ✅ | In case a hospital would like to work with Petra Corp and have a dedicated environment for their patients, Petra Corp could create a dedicated App for Hospital ABC |
+
+Of course, there are a lot more possible scenarios depending on the business needs of your solution. The most important to remember is that the choice is yours in the organisation of your environment, thanks to the Apps. 
 
 :::info
-
-Be aware that users of one app will never be able to see the data of another app, __except__ if you added this user 
-specifically into your other apps as well. 
+Be aware that users of one app will never be able to see the data of another app, __except__ if you added this user specifically into your other apps as well. 
 :::
+
 
 
 ## Create an app

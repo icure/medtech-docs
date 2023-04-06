@@ -1,4 +1,9 @@
-# iCure MedTechReactJS Template
+---
+slug: react-js-quick-start
+description: Start your React JS App
+---
+
+# Start your React JS App
 
 ## What includes this template ?
 - All dependencies needed to use the [iCure MedTech Typescript SDK](https://github.com/icure/icure-medical-device-js-sdk) in a React Native App
