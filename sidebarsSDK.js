@@ -40,7 +40,7 @@ const sidebarsSDK = {
                             'Chapter 1 - Setup': [
                                 'tutorial/petra/chapter-01/prerequisites',
                                 'tutorial/petra/chapter-01/installation',
-                                'tutorial/petra/chapter-01/icure-informations',
+                                // 'tutorial/petra/chapter-01/icure-informations',
                             ],
                         },
                         {
