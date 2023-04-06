@@ -1,0 +1,74 @@
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Installation
+
+In this section, we will see how to clone the project and launch the tutorial application.
+
+## 1. Clone the project
+
+To begin, you need to clone the tutorial project. To do so, open a terminal and run the following command:
+
+```bash
+git clone git@github.com:icure/icure-medical-device-react-native-app-tutorial-template.git
+```
+Alternatively, create a repository from the [tutorial template](https://github.com/icure/icure-medical-device-react-native-app-tutorial-template), more information [here](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template)
+
+## 2. Install dependencies
+
+Once the project is cloned, you need to install the project dependencies. To do so, open a terminal and run the following command:
+
+```bash
+yarn
+```
+
+## 3. Install pods (iOS only)
+
+If you want to run the application on iOS, you need to install the pods. To do so, open a terminal and run the following command:
+
+```bash
+yarn run pod-install
+```
+
+### In case of issue with pod installation
+
+During the writing of this tutorial, we encountered an issue with pod installation.
+
+#### Ruby version issue
+
+If you installed XCode on your machine, it is possible that it installed as well a version of Ruby which is not compatible with the version required by ReactNative. If that's the case, the following error will output when executing the pod-install yarn command: `Your Ruby version is X.X.X, but your Gemfile specified X.X.X`. 
+
+In this case, we suggest using [RVM](https://rvm.io/) or [rbenv](https://github.com/rbenv/rbenv) to install a version of Ruby required by the project.
+
+Once the Ruby version is installed, you will have to install the pods by using this additional command: 
+
+```bash
+cd ios && bundle install && cd ..
+yarn run pod-install
+```
+
+## 4. Launch the application
+
+Once the dependencies are installed, you need to launch the application to verify that everything is correct. To do so, open a terminal and run the following command:
+
+<Tabs
+    defaultValue="ios"
+    values={[
+        {label: 'iOS', value: 'ios'},
+        {label: 'Android', value: 'android'},
+    ]}>
+<TabItem value="ios">
+
+```bash
+yarn run ios
+```
+
+</TabItem>
+<TabItem value="android">
+
+```bash
+yarn run android
+```
+
+</TabItem>
+</Tabs>
