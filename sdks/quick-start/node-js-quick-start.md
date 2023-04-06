@@ -108,4 +108,4 @@ console.log(JSON.stringify(user))
 ```
 
 Congratulations, you are now ready to use the SDK to interact with the iCure API.
-You can now head to the [Tutorial](./tutorial/index.md) to learn how to use the SDK to create a simple application.
+You can now head to the [Tutorial](../tutorial/index.md) to learn how to use the SDK to create a simple application.

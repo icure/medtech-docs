@@ -23,7 +23,7 @@ You should now be able to start configuring your own environment :
 
 ![Registration Completed](./img/registration_complete.png)
 
-The detailed procedure to create an account on Cockpit can be found [here](../../cockpit/how-to/how-to-create-your-account.md). 
+The detailed procedure to create an account on Cockpit can be found [here](/cockpit/how-to/how-to-create-your-account.md). 
 
 ## Create an App
 On the [Cockpit Dashboard](https://cockpit.icure.cloud/dashboard), click on **Create app**. 
@@ -40,7 +40,7 @@ Once you completed all the mandatory information, click on **Create**. You now h
 ### What is an App ? 
 In iCure, an **App** represents a **medical solution / eco-system** in which the medical data of the users are potentially managed through multiple IT services. 
 
-If you would like to know more about what are Apps and how to fully manage them, go [here](../../cockpit/how-to/how-to-manage-apps.md)
+If you would like to know more about what are Apps and how to fully manage them, go [here](/cockpit/how-to/how-to-manage-apps.md)
 
 
 ## Create a Database
@@ -52,7 +52,7 @@ Once you're ready, click on **Add** to create your first database.
 
 ![Database created](./img/first_database_created.png)
 
-If you would like to know more about databases and how to fully manage them, go [here](../../cockpit/how-to/how-to-manage-databases.md).
+If you would like to know more about databases and how to fully manage them, go [here](/cockpit/how-to/how-to-manage-databases.md).
 
 ## Provide your CAPTCHA secret key
 **!!!TO DO!!! NOT PART OF COCKPIT YET!!**
