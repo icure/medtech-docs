@@ -1,5 +1,5 @@
 ---
-slug: how-to-manage-your-apps
+slug: how-to-manage-apps
 ---
 
 # Handling your apps

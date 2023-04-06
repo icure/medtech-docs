@@ -1,5 +1,5 @@
 ---
-slug: how-to-manage-your-databases
+slug: how-to-manage-databases
 ---
 
 # Handling your databases

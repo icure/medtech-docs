@@ -1,5 +1,5 @@
 ---
-slug: how-to-register
+slug: how-to-create-your-account
 ---
 # Registering to the Cockpit
 

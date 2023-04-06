@@ -17,7 +17,7 @@ You can obtain an iCure user in one of the following ways:
 - Launch a free iCure instance locally on your computer, which will automatically create a default user for you.
   To learn how to do this, refer to the [QuickStart](/sdks/quick-start/index.md) guide.
 - Register on the iCure Cockpit to get your iCure Cloud User.
-  To learn how to do this, refer to the [How to register on Cockpit](/cockpit/how-to/how-to-register) guide.
+  To learn how to do this, refer to the [How to register on Cockpit](/cockpit/how-to/how-to-create-your-account) guide.
 
 The iCure User credentials and the host URL of the following steps will depend on your choice.    
 
