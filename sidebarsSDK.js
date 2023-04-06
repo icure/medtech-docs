@@ -18,10 +18,32 @@ const sidebarsSDK = {
 
     // But you can create a sidebar manually
 
-    sdkSidebar: [
-        'intro',
-        'quick-start',
-        'release-notes',
+  sdkSidebar: [
+    'intro',
+    {    
+      type: 'category',
+      label: 'Quick Start',
+      link: {
+        type: 'doc',
+        id: 'quick-start/index',
+      },
+      items: ['quick-start/react-native-quick-start', 'quick-start/react-js-quick-start', 'quick-start/node-js-quick-start']
+    },
+    'release-notes',
+    {
+      type: 'category',
+      label: 'Tutorial',
+      items: ['tutorial/index'],
+    },
+    {
+      type: 'category',
+      label: 'How To',
+      link: {
+        type: 'generated-index',
+        title: 'How To',
+        slug: '/how-to/index',
+      },
+      items: [
         {
             type: 'category',
             label: 'Tutorial',
