@@ -2,7 +2,7 @@
 
 In this section, we will see how to use Redux to query and mutate the data and local storage to store the keys of our patients.
 
-One of the key features of iCure is that it allows you to store data in a secure way. This means that you can store data in a way that only the user can access it. This is done by encrypting the data with the user's public key. This way, only the user can decrypt the data with his private key.
+One of the key features of iCure is that it allows you to store data in a secure way. This means that one can store data in a way that only the user that has created it or users with whom data has been explicitly shared can access it. This is done by ultimately encrypting the collected data with the users' public keys. This way, only users with access to corresponding private keys can decrypt the data.
 
 And to keep this key private, we will store it in the local storage of the device.
 
