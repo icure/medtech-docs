@@ -68,8 +68,8 @@ const anonymousApi = await new AnonymousMedTechApiBuilder()
 * `.withMsgGwUrl(msgGtwUrl)`: sets the url of the Message Gateway instance that will be used to send email and SMS messages to the users. By default, https://msg-gw.icure.cloud. **Only needed in Cloud version**
 * `.withMsgGwSpecId(specId)`: your iCure Message Gateway identifier. **This parameter is mandatory**.
 * `.withCrypto(webcrypto as any)`: an instance of the [Crypto API](https://developer.mozilla.org/en-US/docs/Web/API/Crypto).
-* `.withAuthProcessByEmailId(authProcessEmailId)`: your iCure Message Gateway identifier used to register new user by their email. **This parameter is mandatory**.
-* `.withAuthProcessBySmsId(authProcessSMSId)`: your iCure Message Gateway identifier used to register new user by their phone number. **This parameter is mandatory**.
+* `.withAuthProcessByEmailId(authProcessEmailId)`: your iCure Message Gateway identifier used to register new user by their email.
+* `.withAuthProcessBySmsId(authProcessSMSId)`: your iCure Message Gateway identifier used to register new user by their phone number.
 * `.withStorage(storage)`: an object that implements the [StorageFacade](sdks/references/entrypoints/MedTechApi.md) interface. Will be used to store locally the private key of the user through the key storage. By default, it will use an implementation based on the browser local storage, so you must implement a custom version if your app is based on NodeJS or React Native.
 * `.withKeyStorage(keyStorage)`: an object that implements the [KeyStorageFacade](sdks/references/interfaces/KeyStorageFacade.md) interface. Will be used to store locally the private key of the user. By default, it will use an implementation based on the default local storage.
 * `.preventCookieUsage()`: if set, all the API calls will rely on cookieless authentication methods.
@@ -78,4 +78,7 @@ An API instantiated in this way can only be used to sign up or log in a user. To
 `startAuthentication` method of the Authentication API and then the `completeAuthentication` method. The latter will also
 provide you an instance of the MedTechApi for the newly authenticated user. You will be able to use this instance to access
 all the API methods, and it will have all the parameters that you specified in the anonymous api.  
+To successfully instantiate the AnonymousMedTechApi, you have to pass an `authProcessByEmailId` or an `authProcessBySmsId`. 
+Also, you cannot authenticate a user by email if you do not pass the `authProcessByEmailId` and, similarly, you cannot authenticate
+a user by SMS if you do not pass the `authProcessBySmsId`.
 This procedure is described in more detail in the [user authentication how to](sdks/how-to/how-to-authenticate-a-user/index.md).

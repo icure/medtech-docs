@@ -24,8 +24,8 @@ MedTech SDK.
 Make sure to have the following elements in your possession:
 - The iCure reCAPTCHA v3 SiteKey
 - Your `msgGtwSpecId`
-- Your `patientAuthProcessByEmailId` and `patientAuthProcessBySmsId` identifiers to authenticate your patient users
-- Your `hcpAuthProcessByEmailId` and `hcpAuthProcessBySmsId` identifiers to authenticate your healthcare professionals users
+- Your `patientAuthProcessByEmailId` and/or `patientAuthProcessBySmsId` identifiers to authenticate your patient users
+- Your `hcpAuthProcessByEmailId` and/or `hcpAuthProcessBySmsId` identifiers to authenticate your healthcare professionals users
 
 :::info
 
@@ -75,12 +75,12 @@ are their details :
 You can learn about all the options you have when instantiating the MedTech API and the AnonymousMedTech API in the [Instantiation How-To](/sdks/how-to/how-to-instantiate-the-medtech-sdk). 
 
 Since Daenaerys is a patient, you will have to provide the `patientAuthProcessByEmailId` as a 
-authProcessByEmailId and `patientAuthProcessBySmsId` as a authProcessBySmsId. 
+authProcessByEmailId or `patientAuthProcessBySmsId` as a authProcessBySmsId. 
 
 :::info
 
 If Daenaerys was a doctor, you would instead provide the `hcpAuthProcessByEmailId` as
-authProcessByEmailId and `hcpAuthProcessByEmailId` as authProcessBySmsId.
+authProcessByEmailId or `hcpAuthProcessByEmailId` as authProcessBySmsId.
 
 :::
 
