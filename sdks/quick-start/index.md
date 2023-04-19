@@ -61,12 +61,13 @@ If you would like to learn more about databases and how to fully manage them, go
 ## Get your authentication process ids
 **!!!TO DO!!! NOT PART OF COCKPIT YET!!**
 
-## Create a parent Healthcare professional (Optional)
-If you don't need to access patients' medical data, you should skip this step.
+## Create a parent Healthcare Professional (Optional)
+If you don't need your patients' to share medical data with your organisation, you should skip this step.
 
-If you need your users (patients or healthcare professionals) to automatically share their medical data with your company (to compute new medical data, make diagnoses, etc.), you must create a healthcare professional representing your organization.
+Using iCure, the patient remains the owner of its medical data. However sometimes, your organisation will need to access them in order to create some additional medical data, derived from the ones of the patient. 
+Therefore, you'll need the patient to share some information with you. To do so, you'll need to create a parent healthcare professional representing your organisation, that will be considered as the responsible Healthcare Party of your Patients. 
 
-When configuring the authentication of your users, the id of your healthcare professional will be referenced as the **PARENT_HEALTHCARE_PROFESSIONAL_ID**. That way, every new user will automatically share their created medical data with you as well.
+When configuring the authentication of your users, the id of your parent healthcare professional will be referenced as the **PARENT_HEALTHCARE_PROFESSIONAL_ID**. That way, every new user will automatically share their created medical data with you as well.
 
 :::info
 This feature can also be added or removed for existing users. Go and check our dedicated page on [How to share data automatically with other data owners](../how-to/how-to-share-data-automatically.md)

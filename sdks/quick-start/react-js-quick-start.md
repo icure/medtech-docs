@@ -84,4 +84,4 @@ cd <your-icure-medtech-react-app> && yarn start
 
 
 ## Congratulations !
-You're fully ready to start creating medical data inside your React App ! Time to  have a  look to our various [How To's pages](../how-to/index) and start implementing the functionalities of your choice. 
+You're fully ready to start creating medical data inside your React App ! Time to have a look to our various [How To's pages](../how-to/index) and start implementing the functionalities of your choice. 
