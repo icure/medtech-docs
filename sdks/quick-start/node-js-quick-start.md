@@ -3,109 +3,68 @@ slug: node-js-quick-start
 description: Start your Node JS App
 ---
 
-# Start your Node JS App
+# Start your Node.JS App
+Now your iCure environment is successfully set up, you will be able to start the creation of your Node.JS Server App. 
 
-## Prerequisites and Installation
+To make it easier for you, we created a [Node.JS Template Repository](https://github.com/icure/icure-medical-device-node-js-boilerplate-app-template), that includes: 
+- All the needed dependencies to work with iCure in a Node.JS app;
+- The cryptographic keys creation of your parent organisation (See [Quick Start - Create your parent Organisation](./index.md#create-a-parent-healthcare-professional-optional) for more information), to allow you to directly start working with medical data.
 
-iCure can easily be used in the browser or with Node.
-
-Node version 16 or higher is fully supported as it includes a webcrypto module compatible with the implementation of our cryptography layer.
-
-We recommend using yarn for package management but npm works fine as well.
-
-The main dependency for using iCure is `@icure/medical-device-sdk`, two extra dependencies are required for node : `isomorphic-fetch` and `node-localstorage`.
-
-```bash
-mkdir healthcare-project
-cd healthcare-project
-yarn init -y
-yarn add @icure/medical-device-sdk
-
-#if you are using node two other dependencies are needed
-yarn add isomorphic-fetch node-localstorage
+## Create your project
+### Clone the template repository
+Clone the Node.JS template project: 
+```
+git clone git@github.com:icure/icure-medical-device-node-js-boilerplate-app-template.git <your-icure-nodejs-app>
 ```
 
-## Installing the backend or using iCure cloud
+### Fill the .env file
+While you initialized your environment in [Quick Start](./index.md), we asked you to keep a series of information including: 
+- the **PARENT_HEALTHCARE_PROFESSIONAL_USERNAME**, the username of your parent organisation. 
+- the **PARENT_HEALTHCARE_PROFESSIONAL_TOKEN**, the application token of your parent organisation. 
 
-iCure can be installed locally or in the cloud.
+You need to add these information in your newly created Node.JS Server App. 
+For  this, rename the `.env.default` file to  `.env` and complete the values of the corresponding variables.
 
-The cloud version is available on [https://api.icure.cloud](https://api.icure.cloud) and can be configured using [our cockpit](https://cockpit.icure.cloud).
+Here is the list of a few other optional environment variables you can configure: 
+- the **PARENT_HEALTHCARE_PARTY_PUBLIC_KEY**, RSA public key of your parent organisation, in case you already generated cryptographic keys for your parent organisation in the past. 
+- the **PARENT_HEALTHCARE_PARTY_PRIVATE_KEY**, RSA private key of your parent organisation, in case you already generated cryptographic keys for your parent organisation in the past 
+- the **HOST**, host to use to start your Node.JS server (Default is 127.0.0.1),
+- the **PORT** , the port to use to start your Node.JS server (Default is 3000),
+- the **LOCAL_STORAGE_LOCATION**, the path to your local storage file (Default is ./scratch/localStorage)
 
-If you want to install the iCure API locally instead of using the cloud version, you can either use docker (recommended) or install it manually.
 
-### Using iCure Cloud
-
-Head to [https://cockpit.icure.cloud](https://cockpit.icure.cloud) and create an account.
-Create an app and create a new administrator in the app.
-
-Note down the credentials of your administrator. You will need them later.
-
-### Using docker
-
-Make sure you have docker installed and running on your machine.
-
-Then, run the following command:
-
-```bash
-mkdir icure-api
-cd icure-api
-curl -O https://raw.githubusercontent.com/icure/icure-kraken-oss/main/docker/docker-compose.yaml
-docker compose up -d
+### Start your Node.JS Server
+Once you provided the needed environment variables, start your Node.JS server: 
+```
+cd <your-icure-nodejs-app> && yarn && yarn start
 ```
 
-The current version of iCure is called the Kraken. The docker compose file will start the Kraken and a [CouchDB](https://couchdb.apache.org) instance.
-Kraken connects to the couchdb database to store its data.
+Go to `http://127.0.0.1:3000/` (except if you updated the HOST & PORT environment variables). You should see the information of your parent Healthcare Professional. 
 
-:::tip
-The docker compose file exposes the Kraken on port 16043. It also exposes the CouchDB instance on port 5984.
+And that's it ! You're now all set to add new functionalities in your Node.JS Server using the iCure MedTech SDK. 
+
+## What about the creation of my parent organisation cryptographic keys ?
+When you called `http://127.0.0.1:3000` for the first time, as no cryptographic keys could be detected, neither in the localStorage location, neither in the `.env` file, 
+the `ICureApi` logic created a new keypair for your parent organisation and saved them (both in localStorage location & .env file).
+
+You can find the details of this implementation in the file `services/ICureApi.ts`. 
+
+Calling `http://127.0.0.1:3000/` a second time, the keys being already created, no additional operation is needed and the information of your healthcare professional are directly returned. 
+
+### Special case: The HCP already created some keys in the past
+In cascade, the `ICureApi` will try to: 
+- Get the keys from the localStorage location; 
+- If it can't find them, get them from the `.env` file and save them back into the localStorage; 
+- If it can't find them in the `.env` file as well, try to create a new keypair and add the public key to your healthcare professional in iCure; 
+
+If you started your Node.JS server and got the error `Aborting Cryptographic Keys creation: Current HCP already has cryptographic keys` when calling `http://127.0.0.1:3000/`, it means you already created cryptographic keys for your parent healthcare 
+professional. Therefore, creating a new keypair will override your previous key and you'll not be able to access the data shared with your previous keypair anymore. 
+
+Check if the location of your localStorage didn't change or if your .env file is complete. 
+
+:::warning
+If you really wish to force the re-creation of your parent healthcare professioonal cryptographic keys, you can call `http://127.0.0.1:3000?forceKeysCreation=true`. Be aware you will not be able to decrypt the data shared with your previous RSA key anymore ! You should do this operation for tests purpose-only.  
 :::
 
-To connect to the Kraken, you will need credentials. If no user has ever been created in the database, an entry similar to the one below will appear in the docker logs:
-
-`2022-09-30 07:39:06.700  WARN 7 --- [           main] ication$$EnhancerBySpringCGLIB$$71ea0610 : Default admin user created with password d2217dd39238`
-
-The password is going to be used later. Please note them down.
-
-### Manual installation
-
-You can also install the Kraken manually without relying on docker. This involves installing and configuring a local or remote instance of CouchDB and then installing and starting the Kraken jar.
-
-## Using the SDK
-
-Now that we have credentials for a local or remote instance of the Kraken, we can use the SDK to connect to it.
-
-You can either define the environment variables `ICURE_USER_NAME` and `ICURE_USER_PASSWORD` or directly modify the code below and replace the credentials loaded from the environment by the ones you noted down earlier.
-
-If you use the cloud version, this is the credentials you got from the cockpit. If you use the local installation, the credentials are `admin` and the `password`you got from the logs.
-
-<!-- file://code-samples/quick-start/index.mts snippet:instantiate the api-->
-```typescript
-import 'isomorphic-fetch'
-import { medTechApi } from '@icure/medical-device-sdk'
-import { webcrypto } from 'crypto'
-import * as process from 'process'
-import { output } from '../utils/index.mjs'
-
-export const host = process.env.ICURE_URL ?? 'https://api.icure.cloud/rest/v1'
-export const username = process.env.ICURE_USER_NAME
-export const password = process.env.ICURE_USER_PASSWORD
-
-
-const api = await medTechApi()
-  .withICureBaseUrl(host)
-  .withUserName(username)
-  .withPassword(password)
-  .withCrypto(webcrypto as any)
-  .build()
-```
-
-Once logged in, you can check the user details.
-
-<!-- file://code-samples/quick-start/index.mts snippet:get the currently logged user-->
-```typescript
-const user = await api.userApi.getLoggedUser()
-console.log(JSON.stringify(user))
-```
-
-Congratulations, you are now ready to use the SDK to interact with the iCure API.
-You can now head to the [Tutorial](../tutorial/index.md) to learn how to use the SDK to create a simple application.
+## Congratulations !
+You're fully ready to start managing medical data inside your Node.JS App ! Time to have a look to our various [How To's pages](../how-to/index) and start implementing the functionalities of your choice. 
