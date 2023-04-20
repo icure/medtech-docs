@@ -12,7 +12,7 @@ To make it easier for you, we created a [Node.JS Template Repository](https://gi
 
 ## Create your project
 ### Clone the template repository
-Open a terminal and clone the template repository using the following command: 
+Clone the Node.JS template project: 
 ```
 git clone git@github.com:icure/icure-medical-device-node-js-boilerplate-app-template.git <your-icure-nodejs-app>
 ```
@@ -25,12 +25,12 @@ While you initialized your environment in [Quick Start](./index.md), we asked yo
 You need to add these information in your newly created Node.JS Server App. 
 For  this, rename the `.env.default` file to  `.env` and complete the values of the corresponding variables.
 
-You may also provide a few other environment variables which are all optional: 
+Here is the list of a few other optional environment variables you can configure: 
 - the **PARENT_HEALTHCARE_PARTY_PUBLIC_KEY**, RSA public key of your parent organisation, in case you already generated cryptographic keys for your parent organisation in the past. 
 - the **PARENT_HEALTHCARE_PARTY_PRIVATE_KEY**, RSA private key of your parent organisation, in case you already generated cryptographic keys for your parent organisation in the past 
-- the **HOST**, host to use to start your Node.JS server (127.0.0.1 by default),
-- the **PORT** , the port to use to start your Node.JS server (3000 by default),
-- the **LOCAL_STORAGE_LOCATION**, the path to your local storage file (./scratch/localStorage by default)
+- the **HOST**, host to use to start your Node.JS server (Default is 127.0.0.1),
+- the **PORT** , the port to use to start your Node.JS server (Default is 3000),
+- the **LOCAL_STORAGE_LOCATION**, the path to your local storage file (Default is ./scratch/localStorage)
 
 
 ### Start your Node.JS Server
@@ -39,26 +39,28 @@ Once you provided the needed environment variables, start your Node.JS server:
 cd <your-icure-nodejs-app> && yarn && yarn start
 ```
 
-Go to `http://127.0.0.1:3000/` (except if you updated the HOST & PORT environment variables) and you'll see the information of your parent Healthcare Professional. 
+Go to `http://127.0.0.1:3000/` (except if you updated the HOST & PORT environment variables). You should see the information of your parent Healthcare Professional. 
 
 And that's it ! You're now all set to add new functionalities in your Node.JS Server using the iCure MedTech SDK. 
 
 ## What about the creation of my parent organisation cryptographic keys ?
-When you call `http://127.0.0.1:3000/`, as we saw, the information of your parent healthcare professional will be displayed. 
-
-These information are requested to iCure, using a `ICureMedTechApi` instance. And to create this instance, we need to provide the cryptographic keys to it, to be able to encrypt / decrypt the medical data we may access.
-
-The first time you called the root of the Node.JS server, as the endpoint didn't detect any existing cryptographic keys, neither in the localStorage location, neither in the `.env` file, it launched the creation and the saving of these keys (in both localStorage location & .env file).
+When you called `http://127.0.0.1:3000` for the first time, as no cryptographic keys could be detected, neither in the localStorage location, neither in the `.env` file, 
+the `ICureApi` logic created a new keypair for your parent organisation and saved them (both in localStorage location & .env file).
 
 You can find the details of this implementation in the file `services/ICureApi.ts`. 
 
-When you'll call `http://127.0.0.1:3000/` a second time, the keys being already created, the endpoint will just create the ICureMedTechApi instance without additional operation and return you the information of your healthcare professional. 
+Calling `http://127.0.0.1:3000/` a second time, the keys being already created, no additional operation is needed and the information of your healthcare professional are directly returned. 
 
-### My Node.JS Server stopped with the error `Aborting Cryptographic Keys creation: Current HCP already has cryptographic keys`, what happened ? 
-This error means you already created cryptographic keys for your parent healthcare professional and the template can't find them back. 
+### Special case: The HCP already created some keys in the past
+In cascade, the `ICureApi` will try to: 
+- Get the keys from the localStorage location; 
+- If it can't find them, get them from the `.env` file and save them back into the localStorage; 
+- If it can't find them in the `.env` file as well, try to create a new keypair and add the public key to your healthcare professional in iCure; 
 
-Check if the location of your localStorage didn't change. 
-If it has been erased, check if you didn't delete the `PARENT_HEALTHCARE_PARTY_PUBLIC_KEY` and `PARENT_HEALTHCARE_PARTY_PRIVATE_KEY` from the `.env` file. 
+If you started your Node.JS server and got the error `Aborting Cryptographic Keys creation: Current HCP already has cryptographic keys` when calling `http://127.0.0.1:3000/`, it means you already created cryptographic keys for your parent healthcare 
+professional. Therefore, creating a new keypair will override your previous key and you'll not be able to access the data shared with your previous keypair anymore. 
+
+Check if the location of your localStorage didn't change or if your .env file is complete. 
 
 :::warning
 If you really wish to force the re-creation of your parent healthcare professioonal cryptographic keys, you can call `http://127.0.0.1:3000?forceKeysCreation=true`. Be aware you will not be able to decrypt the data shared with your previous RSA key anymore ! You should do this operation for tests purpose-only.  
