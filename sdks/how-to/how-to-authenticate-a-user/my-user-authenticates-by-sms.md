@@ -24,7 +24,6 @@ const anonymousApi = await new AnonymousMedTechApiBuilder()
   .withCrypto(webcrypto as any)
   .withMsgGwUrl(msgGtwUrl)
   .withMsgGwSpecId(specId)
-  .withAuthProcessByEmailId(authProcessByEmailId)
   .withAuthProcessBySmsId(authProcessBySmsId)
   .build()
 ```
@@ -51,8 +50,8 @@ const authProcess = await anonymousApi.authenticationApi.startAuthentication(
 
 ```json
 {
-  "requestId": "2765a90e-62e6-4de9-bba2-f713c8299ec2",
-  "login": "+32676455247",
+  "requestId": "cb15679d-f0d2-4ef3-8ec2-8e01d98d2d82",
+  "login": "+32588235595",
   "bypassTokenCheck": false
 }
 ```
@@ -105,15 +104,15 @@ const foundPatientAfterLogin = await loggedUserApi.patientApi.getPatient(created
 
 ```json
 {
-  "id": "6d8eab22-c675-4871-9d0b-6fca40a75412",
+  "id": "4d085141-98e4-4cbc-aa34-ef9ed3fc6622",
   "languages": [],
   "active": true,
   "parameters": {},
-  "rev": "1-bb83851d6e3ba170a337a88907df8fe3",
-  "created": 1680075034405,
-  "modified": 1680075034405,
-  "author": "4224ccd4-b8a1-4372-8c12-0a6d2f09a322",
-  "responsible": "8748d23e-98c7-4275-b5a6-06e51f5d445a",
+  "rev": "1-9a90cdd7873ee86f70016fa6d22c3499",
+  "created": 1682493517812,
+  "modified": 1682493517812,
+  "author": "ad20e686-d697-45cc-a779-34a2711b718e",
+  "responsible": "6176f1be-520f-45ea-9ef0-4bd60e593d4c",
   "firstName": "Robb",
   "lastName": "Stark",
   "note": "You must keep one's head",
@@ -147,14 +146,14 @@ const foundPatientAfterLogin = await loggedUserApi.patientApi.getPatient(created
     "privateKeyShamirPartitions": {},
     "aesExchangeKeys": {},
     "transferKeys": {},
-    "encryptedSelf": "TzYbyGx8KGGoEBXGKJCwRkOgiaPPbo0zjm/C+OfBTX6e1GeKCsr3nM3M6sZiZvMWE0bm11kTaSUiLvz0hqggmg==",
+    "encryptedSelf": "XXzr5hjnwZITzfDIsOpqO22DwUFToyAfbwqv9R6uINVX8bgM89HoJBntENjsTrB5BmFPRQ0ybC8AcK3nWIXZUA==",
     "secretForeignKeys": [],
     "cryptedForeignKeys": {},
     "delegations": {
-      "8748d23e-98c7-4275-b5a6-06e51f5d445a": {}
+      "6176f1be-520f-45ea-9ef0-4bd60e593d4c": {}
     },
     "encryptionKeys": {
-      "8748d23e-98c7-4275-b5a6-06e51f5d445a": {}
+      "6176f1be-520f-45ea-9ef0-4bd60e593d4c": {}
     }
   }
 }

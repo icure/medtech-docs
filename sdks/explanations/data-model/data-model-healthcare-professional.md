@@ -44,14 +44,14 @@ const createdUser = await api.userApi.createAndInviteUser(existingPatient, messa
 
 ```json
 {
-  "id": "9ec1e44b-9f52-4102-bd0f-a7952898802f",
-  "rev": "1-6d74940885b8204278839e22bd9bfef3",
-  "created": 1680075173802,
-  "name": "55447a33@icure.com",
-  "login": "55447a33@icure.com",
+  "id": "7a6b2227-a886-43be-a33a-94a6771dc27c",
+  "rev": "1-fb516453aef2f827be7f0533564fce3c",
+  "created": 1682493711304,
+  "name": "fdd399d0@icure.com",
+  "login": "fdd399d0@icure.com",
   "groupId": "ic-e2etest-medtech-docs",
-  "patientId": "e6b0e080-37de-4a18-9821-1b66657b9037",
-  "email": "55447a33@icure.com",
+  "patientId": "82d4ed50-ab11-4009-98ae-e70536546fe2",
+  "email": "fdd399d0@icure.com",
   "properties": {},
   "roles": {},
   "sharingDataWith": {},
@@ -107,15 +107,15 @@ const dataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
 
 ```json
 {
-  "id": "88eebad0-dca1-4559-bc85-734c239dffd7",
-  "rev": "1-a901a3df1e640b8eee670970958a6b0e",
-  "created": 1680075181829,
-  "modified": 1680075181829,
-  "author": "7b9f5cc1-b2d9-4ab0-8052-5ff8c42fa241",
-  "responsible": "2275c045-7c0c-4fa8-8f1c-83f6ad75ad65",
-  "healthcareElementId": "88eebad0-dca1-4559-bc85-734c239dffd7",
-  "valueDate": 20230329073301,
-  "openingDate": 20230329073301,
+  "id": "a72dd3e9-9a50-423c-ae21-35bb380a8e63",
+  "rev": "1-9d34cde2b845705807309417c74506be",
+  "created": 1682493724426,
+  "modified": 1682493724426,
+  "author": "3531d4cd-69a7-41d3-b711-e2edaae99875",
+  "responsible": "d4817fbd-c84e-486d-92da-daa2aa2edc48",
+  "healthcareElementId": "a72dd3e9-9a50-423c-ae21-35bb380a8e63",
+  "valueDate": 20230426072204,
+  "openingDate": 20230426072204,
   "description": "My diagnosis is that the patient has Hay Fever",
   "identifiers": [],
   "codes": {},
@@ -125,15 +125,15 @@ const dataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
       "ce1568d1-d1d5-4c0a-b05b-18efed77163d"
     ],
     "cryptedForeignKeys": {
-      "2275c045-7c0c-4fa8-8f1c-83f6ad75ad65": {}
+      "d4817fbd-c84e-486d-92da-daa2aa2edc48": {}
     },
     "delegations": {
-      "2275c045-7c0c-4fa8-8f1c-83f6ad75ad65": {}
+      "d4817fbd-c84e-486d-92da-daa2aa2edc48": {}
     },
     "encryptionKeys": {
-      "2275c045-7c0c-4fa8-8f1c-83f6ad75ad65": {}
+      "d4817fbd-c84e-486d-92da-daa2aa2edc48": {}
     },
-    "encryptedSelf": "sRX1dynPOS7u5axsDZsru1abWAjpGy+lg2AvNmWg1aSNS8Rig+cz2j5FwXPzXSqY+71QiBQZeORBD3yN3XVyeOdoSyq/3K5U08wkT6pglEA="
+    "encryptedSelf": "h6wo0KjyPMowE7AgZMKPdPZfbMDp6lgezBtLfhthTQXXZyZ9yqYbZ0+heJWuv36LbHQZu71OLt7AIcbAc2X1xSD1yZuz+EPCZtFn6AiBdus="
   }
 }
 ```
@@ -145,16 +145,16 @@ const dataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
 
 ```json
 {
-  "id": "1f048e92-b619-4cb7-9784-41074666da25",
+  "id": "51c2fa84-6141-41ad-8fc0-679fc95b7e0b",
   "qualifiedLinks": {},
-  "batchId": "0028e54a-b674-418e-982f-0c978f0d3d17",
+  "batchId": "5dac91e7-103e-4c7f-a98b-ec8e6d2a37fa",
   "index": 0,
-  "valueDate": 20230329073302,
-  "openingDate": 20230329073302,
-  "created": 1680075182305,
-  "modified": 1680075182305,
-  "author": "7b9f5cc1-b2d9-4ab0-8052-5ff8c42fa241",
-  "responsible": "2275c045-7c0c-4fa8-8f1c-83f6ad75ad65",
+  "valueDate": 20230426072205,
+  "openingDate": 20230426072205,
+  "created": 1682493725225,
+  "modified": 1682493725226,
+  "author": "3531d4cd-69a7-41d3-b711-e2edaae99875",
+  "responsible": "d4817fbd-c84e-486d-92da-daa2aa2edc48",
   "identifiers": [],
   "healthcareElementIds": {},
   "canvasesIds": {},
@@ -173,13 +173,13 @@ const dataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
       "ce1568d1-d1d5-4c0a-b05b-18efed77163d"
     ],
     "cryptedForeignKeys": {
-      "2275c045-7c0c-4fa8-8f1c-83f6ad75ad65": {}
+      "d4817fbd-c84e-486d-92da-daa2aa2edc48": {}
     },
     "delegations": {
-      "2275c045-7c0c-4fa8-8f1c-83f6ad75ad65": {}
+      "d4817fbd-c84e-486d-92da-daa2aa2edc48": {}
     },
     "encryptionKeys": {
-      "2275c045-7c0c-4fa8-8f1c-83f6ad75ad65": {}
+      "d4817fbd-c84e-486d-92da-daa2aa2edc48": {}
     }
   }
 }
@@ -210,10 +210,10 @@ if (!!newPatientNotifications && newPatientNotifications.length > 0) {
 ```text
 [
   {
-    "id": "90e059a7-2f5c-4bff-a0e4-8d9545735fc8",
-    "rev": "1-ebf3839e7858b3c40cf7722d3fd6ac2b",
-    "created": 1680075182795,
-    "modified": 1680075182795,
+    "id": "28a75e22-9d65-4307-9a99-0774d6c7c422",
+    "rev": "1-72c27ed9e1cd3a21873dfe975e7ce433",
+    "created": 1682493726056,
+    "modified": 1682493726056,
     "author": "68a4f7d3-aa5d-43ff-95a1-ba14675397ca",
     "responsible": "3238dd4f-be09-4375-bb5b-0bf9d737ac94",
     "status": "completed",
@@ -225,11 +225,11 @@ if (!!newPatientNotifications && newPatientNotifications.length > 0) {
       "cryptedForeignKeys": {},
       "delegations": {
         "3238dd4f-be09-4375-bb5b-0bf9d737ac94": {},
-        "2275c045-7c0c-4fa8-8f1c-83f6ad75ad65": {}
+        "d4817fbd-c84e-486d-92da-daa2aa2edc48": {}
       },
       "encryptionKeys": {
         "3238dd4f-be09-4375-bb5b-0bf9d737ac94": {},
-        "2275c045-7c0c-4fa8-8f1c-83f6ad75ad65": {}
+        "d4817fbd-c84e-486d-92da-daa2aa2edc48": {}
       }
     }
   }
@@ -266,15 +266,15 @@ const healthcareElement = await api.healthcareElementApi.createOrModifyHealthcar
 
 ```json
 {
-  "id": "06bdea2b-f5b4-42b5-b6fd-1050d052bee4",
-  "rev": "1-e3df7a309a7ee746e609a4809b968e9b",
-  "created": 1680075172334,
-  "modified": 1680075172334,
+  "id": "f291f117-9d0c-42a4-82cd-c3d6f6bc1974",
+  "rev": "1-cdad5190f3f5075789b09cbd9793a0a8",
+  "created": 1682493708885,
+  "modified": 1682493708885,
   "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
   "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
-  "healthcareElementId": "06bdea2b-f5b4-42b5-b6fd-1050d052bee4",
-  "valueDate": 20230329073252,
-  "openingDate": 1680075171966,
+  "healthcareElementId": "f291f117-9d0c-42a4-82cd-c3d6f6bc1974",
+  "valueDate": 20230426072148,
+  "openingDate": 1682493708192,
   "description": "The patient is pregnant",
   "identifiers": [],
   "codes": {},
@@ -292,7 +292,7 @@ const healthcareElement = await api.healthcareElementApi.createOrModifyHealthcar
     "encryptionKeys": {
       "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
     },
-    "encryptedSelf": "74BmMM6YXhGYHsVuwcV8b0qFgS2kfSZy8i5dgwHgsOGwt4iM+LKbRVOs7OsNKYDgxG4EBa8QilBytMHMB9JK2A=="
+    "encryptedSelf": "de8pQxU4RjsIao5xVoBtnQY/hYb1OSGMldoQPAP832NWPLKaps7IItrW1jRgk5lKLSMGutpvoSNyb/wvPZgZig=="
   }
 }
 ```

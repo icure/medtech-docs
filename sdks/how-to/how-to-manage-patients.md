@@ -45,13 +45,13 @@ const createdPatient = await api.patientApi.createOrModifyPatient(
 
 ```json
 {
-  "id": "3ef099c1-4d04-44cf-9abd-2e7e5cf752ab",
+  "id": "ff231dfa-1774-4bbb-866c-18b10ae90e36",
   "languages": [],
   "active": true,
   "parameters": {},
-  "rev": "1-3b02e9f8217561cfb09acb5e625eb637",
-  "created": 1680075127149,
-  "modified": 1680075127149,
+  "rev": "1-7207453909b52f61f8f8ae691648594f",
+  "created": 1682493638943,
+  "modified": 1682493638943,
   "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
   "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
   "firstName": "Hubert",
@@ -97,7 +97,7 @@ const createdPatient = await api.patientApi.createOrModifyPatient(
     "privateKeyShamirPartitions": {},
     "aesExchangeKeys": {},
     "transferKeys": {},
-    "encryptedSelf": "uqGrBA4ny7T7GN7bETYLPGt4D843u3qjWs86Mo/+JSU=",
+    "encryptedSelf": "snYXEp8w/fgu5GgVFmrtuMy+u5TPHT7wfx2RoeFlEQo=",
     "secretForeignKeys": [],
     "cryptedForeignKeys": {},
     "delegations": {
@@ -134,13 +134,13 @@ const updatedPatient = await api.patientApi.createOrModifyPatient(
 
 ```json
 {
-  "id": "3ef099c1-4d04-44cf-9abd-2e7e5cf752ab",
+  "id": "ff231dfa-1774-4bbb-866c-18b10ae90e36",
   "languages": [],
   "active": true,
   "parameters": {},
-  "rev": "2-b46223b18021f1898660fd048e4bd222",
-  "created": 1680075127149,
-  "modified": 1680075127430,
+  "rev": "2-d37cb3eac1e3ca05bc12f3ae4a71f53e",
+  "created": 1682493638943,
+  "modified": 1682493639378,
   "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
   "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
   "firstName": "Hubert",
@@ -187,7 +187,7 @@ const updatedPatient = await api.patientApi.createOrModifyPatient(
     "privateKeyShamirPartitions": {},
     "aesExchangeKeys": {},
     "transferKeys": {},
-    "encryptedSelf": "62lM/xSUgN4tyysqBjEDx5L92iliA1Df4h86Jk9RNVvHqe5Et58mPVC7L07gsav0",
+    "encryptedSelf": "rcZn96y4ocLEycRmvNzsh1tsLy9ZvE3XbnbSB1pJZTEgB0S0H/cl8BHJ2A5DA52R",
     "secretForeignKeys": [],
     "cryptedForeignKeys": {},
     "delegations": {
@@ -217,13 +217,13 @@ const patient = await api.patientApi.getPatient(updatedPatient.id!)
 
 ```json
 {
-  "id": "3ef099c1-4d04-44cf-9abd-2e7e5cf752ab",
+  "id": "ff231dfa-1774-4bbb-866c-18b10ae90e36",
   "languages": [],
   "active": true,
   "parameters": {},
-  "rev": "2-b46223b18021f1898660fd048e4bd222",
-  "created": 1680075127149,
-  "modified": 1680075127430,
+  "rev": "2-d37cb3eac1e3ca05bc12f3ae4a71f53e",
+  "created": 1682493638943,
+  "modified": 1682493639378,
   "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
   "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
   "firstName": "Hubert",
@@ -270,7 +270,7 @@ const patient = await api.patientApi.getPatient(updatedPatient.id!)
     "privateKeyShamirPartitions": {},
     "aesExchangeKeys": {},
     "transferKeys": {},
-    "encryptedSelf": "62lM/xSUgN4tyysqBjEDx5L92iliA1Df4h86Jk9RNVvHqe5Et58mPVC7L07gsav0",
+    "encryptedSelf": "rcZn96y4ocLEycRmvNzsh1tsLy9ZvE3XbnbSB1pJZTEgB0S0H/cl8BHJ2A5DA52R",
     "secretForeignKeys": [],
     "cryptedForeignKeys": {},
     "delegations": {
@@ -299,7 +299,7 @@ const deletedPatientId = await api.patientApi.deletePatient(patient.id!)
 <summary>deletedPatientId</summary>
 
 ```text
-3ef099c1-4d04-44cf-9abd-2e7e5cf752ab
+ff231dfa-1774-4bbb-866c-18b10ae90e36
 ```
 </details>
 
@@ -328,13 +328,13 @@ const patients = await api.patientApi.filterPatients(filter)
   "totalSize": 1,
   "rows": [
     {
-      "id": "3ef099c1-4d04-44cf-9abd-2e7e5cf752ab",
+      "id": "ff231dfa-1774-4bbb-866c-18b10ae90e36",
       "languages": [],
       "active": true,
       "parameters": {},
-      "rev": "2-b46223b18021f1898660fd048e4bd222",
-      "created": 1680075127149,
-      "modified": 1680075127430,
+      "rev": "2-d37cb3eac1e3ca05bc12f3ae4a71f53e",
+      "created": 1682493638943,
+      "modified": 1682493639378,
       "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
       "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
       "firstName": "Hubert",
@@ -380,7 +380,7 @@ const patients = await api.patientApi.filterPatients(filter)
         "privateKeyShamirPartitions": {},
         "aesExchangeKeys": {},
         "transferKeys": {},
-        "encryptedSelf": "62lM/xSUgN4tyysqBjEDx5L92iliA1Df4h86Jk9RNVvHqe5Et58mPVC7L07gsav0",
+        "encryptedSelf": "rcZn96y4ocLEycRmvNzsh1tsLy9ZvE3XbnbSB1pJZTEgB0S0H/cl8BHJ2A5DA52R",
         "secretForeignKeys": [],
         "cryptedForeignKeys": {},
         "delegations": {
@@ -451,7 +451,7 @@ const patientIds = await api.patientApi.matchPatients(filterForMatch)
 
 ```text
 [
-  "3ef099c1-4d04-44cf-9abd-2e7e5cf752ab"
+  "ff231dfa-1774-4bbb-866c-18b10ae90e36"
 ]
 ```
 </details>

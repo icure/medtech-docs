@@ -24,8 +24,8 @@ MedTech SDK.
 Make sure to have the following elements in your possession:
 - The iCure reCAPTCHA v3 SiteKey
 - Your `msgGtwSpecId`
-- Your `patientAuthProcessByEmailId` and `patientAuthProcessBySmsId` identifiers to authenticate your patient users
-- Your `hcpAuthProcessByEmailId` and `hcpAuthProcessBySmsId` identifiers to authenticate your healthcare professionals users
+- Your `patientAuthProcessByEmailId` and/or `patientAuthProcessBySmsId` identifiers to authenticate your patient users
+- Your `hcpAuthProcessByEmailId` and/or `hcpAuthProcessBySmsId` identifiers to authenticate your healthcare professionals users
 
 :::info
 
@@ -75,12 +75,12 @@ are their details :
 You can learn about all the options you have when instantiating the MedTech API and the AnonymousMedTech API in the [Instantiation How-To](/sdks/how-to/how-to-instantiate-the-medtech-sdk). 
 
 Since Daenaerys is a patient, you will have to provide the `patientAuthProcessByEmailId` as a 
-authProcessByEmailId and `patientAuthProcessBySmsId` as a authProcessBySmsId. 
+authProcessByEmailId or `patientAuthProcessBySmsId` as a authProcessBySmsId. 
 
 :::info
 
 If Daenaerys was a doctor, you would instead provide the `hcpAuthProcessByEmailId` as
-authProcessByEmailId and `hcpAuthProcessByEmailId` as authProcessBySmsId.
+authProcessByEmailId or `hcpAuthProcessByEmailId` as authProcessBySmsId.
 
 :::
 
@@ -132,8 +132,8 @@ const authProcess = await anonymousApi.authenticationApi.startAuthentication(
 
 ```json
 {
-  "requestId": "6cf48114-fe4a-4407-b6f3-3e3982d68023",
-  "login": "3l59iqh7o-dt@got.com",
+  "requestId": "598fc4ca-c40f-40cd-915d-2c52607b1ff8",
+  "login": "uhv1yc56y-dt@got.com",
   "bypassTokenCheck": false
 }
 ```
@@ -232,16 +232,16 @@ const createdDataSample = await authenticatedApi.dataSampleApi.createOrModifyDat
 
 ```json
 {
-  "id": "460134ac-afbe-41e6-8b53-4ca690b03e56",
+  "id": "f4a46e45-6bc4-4187-8062-f40b39a25f73",
   "qualifiedLinks": {},
-  "batchId": "28d5b6b3-9a9f-41c4-8179-0eb2474f611a",
+  "batchId": "56ac5218-71d8-4569-9de8-f75eb42d051e",
   "index": 0,
-  "valueDate": 20230329073044,
+  "valueDate": 20230426071850,
   "openingDate": 20220929083400,
-  "created": 1680075044373,
-  "modified": 1680075044373,
-  "author": "f4c7dd4e-e7c9-4419-8dc1-eb6217654134",
-  "responsible": "59b5a1d8-46a6-429f-9b41-005925c8afd5",
+  "created": 1682493530819,
+  "modified": 1682493530819,
+  "author": "cd103856-44d3-43b7-b1bb-9e017834d4bc",
+  "responsible": "fe1a337f-0019-4270-a40b-cbe4791d9cc3",
   "comment": "This is a comment",
   "identifiers": [],
   "healthcareElementIds": {},
@@ -258,18 +258,18 @@ const createdDataSample = await authenticatedApi.dataSampleApi.createOrModifyDat
   "labels": {},
   "systemMetaData": {
     "secretForeignKeys": [
-      "f0eb3f3d-8c2c-4d34-896d-9faa1713ed33"
+      "ad16c74d-3099-4bac-9a9a-23b372a5d34f"
     ],
     "cryptedForeignKeys": {
-      "59b5a1d8-46a6-429f-9b41-005925c8afd5": {},
+      "fe1a337f-0019-4270-a40b-cbe4791d9cc3": {},
       "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
     },
     "delegations": {
-      "59b5a1d8-46a6-429f-9b41-005925c8afd5": {},
+      "fe1a337f-0019-4270-a40b-cbe4791d9cc3": {},
       "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
     },
     "encryptionKeys": {
-      "59b5a1d8-46a6-429f-9b41-005925c8afd5": {},
+      "fe1a337f-0019-4270-a40b-cbe4791d9cc3": {},
       "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
     }
   }
@@ -332,16 +332,16 @@ const foundDataSampleAfterInstantiatingApi = await reInstantiatedApi.dataSampleA
 
 ```json
 {
-  "id": "460134ac-afbe-41e6-8b53-4ca690b03e56",
+  "id": "f4a46e45-6bc4-4187-8062-f40b39a25f73",
   "qualifiedLinks": {},
-  "batchId": "28d5b6b3-9a9f-41c4-8179-0eb2474f611a",
+  "batchId": "56ac5218-71d8-4569-9de8-f75eb42d051e",
   "index": 0,
-  "valueDate": 20230329073044,
+  "valueDate": 20230426071850,
   "openingDate": 20220929083400,
-  "created": 1680075044373,
-  "modified": 1680075044373,
-  "author": "f4c7dd4e-e7c9-4419-8dc1-eb6217654134",
-  "responsible": "59b5a1d8-46a6-429f-9b41-005925c8afd5",
+  "created": 1682493530819,
+  "modified": 1682493530819,
+  "author": "cd103856-44d3-43b7-b1bb-9e017834d4bc",
+  "responsible": "fe1a337f-0019-4270-a40b-cbe4791d9cc3",
   "comment": "This is a comment",
   "identifiers": [],
   "healthcareElementIds": {},
@@ -358,18 +358,18 @@ const foundDataSampleAfterInstantiatingApi = await reInstantiatedApi.dataSampleA
   "labels": {},
   "systemMetaData": {
     "secretForeignKeys": [
-      "f0eb3f3d-8c2c-4d34-896d-9faa1713ed33"
+      "ad16c74d-3099-4bac-9a9a-23b372a5d34f"
     ],
     "cryptedForeignKeys": {
-      "59b5a1d8-46a6-429f-9b41-005925c8afd5": {},
+      "fe1a337f-0019-4270-a40b-cbe4791d9cc3": {},
       "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
     },
     "delegations": {
-      "59b5a1d8-46a6-429f-9b41-005925c8afd5": {},
+      "fe1a337f-0019-4270-a40b-cbe4791d9cc3": {},
       "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
     },
     "encryptionKeys": {
-      "59b5a1d8-46a6-429f-9b41-005925c8afd5": {},
+      "fe1a337f-0019-4270-a40b-cbe4791d9cc3": {},
       "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
     }
   }
@@ -462,16 +462,16 @@ const foundDataSampleAfterLogin = await loggedUserApi.dataSampleApi.getDataSampl
 
 ```json
 {
-  "id": "460134ac-afbe-41e6-8b53-4ca690b03e56",
+  "id": "f4a46e45-6bc4-4187-8062-f40b39a25f73",
   "qualifiedLinks": {},
-  "batchId": "28d5b6b3-9a9f-41c4-8179-0eb2474f611a",
+  "batchId": "56ac5218-71d8-4569-9de8-f75eb42d051e",
   "index": 0,
-  "valueDate": 20230329073044,
+  "valueDate": 20230426071850,
   "openingDate": 20220929083400,
-  "created": 1680075044373,
-  "modified": 1680075044373,
-  "author": "f4c7dd4e-e7c9-4419-8dc1-eb6217654134",
-  "responsible": "59b5a1d8-46a6-429f-9b41-005925c8afd5",
+  "created": 1682493530819,
+  "modified": 1682493530819,
+  "author": "cd103856-44d3-43b7-b1bb-9e017834d4bc",
+  "responsible": "fe1a337f-0019-4270-a40b-cbe4791d9cc3",
   "comment": "This is a comment",
   "identifiers": [],
   "healthcareElementIds": {},
@@ -488,18 +488,18 @@ const foundDataSampleAfterLogin = await loggedUserApi.dataSampleApi.getDataSampl
   "labels": {},
   "systemMetaData": {
     "secretForeignKeys": [
-      "f0eb3f3d-8c2c-4d34-896d-9faa1713ed33"
+      "ad16c74d-3099-4bac-9a9a-23b372a5d34f"
     ],
     "cryptedForeignKeys": {
-      "59b5a1d8-46a6-429f-9b41-005925c8afd5": {},
+      "fe1a337f-0019-4270-a40b-cbe4791d9cc3": {},
       "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
     },
     "delegations": {
-      "59b5a1d8-46a6-429f-9b41-005925c8afd5": {},
+      "fe1a337f-0019-4270-a40b-cbe4791d9cc3": {},
       "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
     },
     "encryptionKeys": {
-      "59b5a1d8-46a6-429f-9b41-005925c8afd5": {},
+      "fe1a337f-0019-4270-a40b-cbe4791d9cc3": {},
       "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
     }
   }

@@ -33,7 +33,7 @@ const unmarshalledUser = new User(marshalledUser)
 ```json
 {
   "id": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
-  "rev": "105-f0830a300c1283d86887a87ab828e211",
+  "rev": "111-c3f1e2908df9a81a43903697937bc56e",
   "created": 1679919731079,
   "name": "Master HCP",
   "login": "master@b16baa.icure",
@@ -45,7 +45,16 @@ const unmarshalledUser = new User(marshalledUser)
   "sharingDataWith": {
     "medicalInformation": {}
   },
-  "authenticationTokens": {}
+  "authenticationTokens": {
+    "aee1860e-eb42-45fc-a2f2-9753f68764e1": {
+      "creationTime": 1679919731274,
+      "validity": 86400
+    },
+    "5d47319d-0487-427f-b492-c761deea7caa": {
+      "creationTime": 1680074455610,
+      "validity": 31536000
+    }
+  }
 }
 ```
 </details>
@@ -57,7 +66,7 @@ const unmarshalledUser = new User(marshalledUser)
 ```json
 {
   "id": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
-  "rev": "105-f0830a300c1283d86887a87ab828e211",
+  "rev": "111-c3f1e2908df9a81a43903697937bc56e",
   "created": 1679919731079,
   "name": "Master HCP",
   "login": "master@b16baa.icure",
@@ -69,7 +78,16 @@ const unmarshalledUser = new User(marshalledUser)
   "sharingDataWith": {
     "medicalInformation": []
   },
-  "authenticationTokens": {}
+  "authenticationTokens": {
+    "aee1860e-eb42-45fc-a2f2-9753f68764e1": {
+      "creationTime": 1679919731274,
+      "validity": 86400
+    },
+    "5d47319d-0487-427f-b492-c761deea7caa": {
+      "creationTime": 1680074455610,
+      "validity": 31536000
+    }
+  }
 }
 ```
 </details>
@@ -81,7 +99,7 @@ const unmarshalledUser = new User(marshalledUser)
 ```json
 {
   "id": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
-  "rev": "105-f0830a300c1283d86887a87ab828e211",
+  "rev": "111-c3f1e2908df9a81a43903697937bc56e",
   "created": 1679919731079,
   "name": "Master HCP",
   "login": "master@b16baa.icure",
@@ -93,7 +111,16 @@ const unmarshalledUser = new User(marshalledUser)
   "sharingDataWith": {
     "medicalInformation": {}
   },
-  "authenticationTokens": {}
+  "authenticationTokens": {
+    "aee1860e-eb42-45fc-a2f2-9753f68764e1": {
+      "creationTime": 1679919731274,
+      "validity": 86400
+    },
+    "5d47319d-0487-427f-b492-c761deea7caa": {
+      "creationTime": 1680074455610,
+      "validity": 31536000
+    }
+  }
 }
 ```
 </details>

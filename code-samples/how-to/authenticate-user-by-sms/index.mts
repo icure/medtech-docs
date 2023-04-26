@@ -60,7 +60,6 @@ const anonymousApi = await new AnonymousMedTechApiBuilder()
   .withCrypto(webcrypto as any)
   .withMsgGwUrl(msgGtwUrl)
   .withMsgGwSpecId(specId)
-  .withAuthProcessByEmailId(authProcessByEmailId)
   .withAuthProcessBySmsId(authProcessBySmsId)
   .build()
 //tech-doc: STOP HERE

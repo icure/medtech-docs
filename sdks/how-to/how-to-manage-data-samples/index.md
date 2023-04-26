@@ -42,14 +42,14 @@ const createdDataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
 
 ```json
 {
-  "id": "c7825d77-1ce8-41db-8aed-4f2f7c35e7b6",
+  "id": "4aecf2be-4c60-4185-8087-1980a7554e05",
   "qualifiedLinks": {},
-  "batchId": "2ac2cb55-7d20-4d48-b85c-47b16840d888",
+  "batchId": "03e6bddc-e077-4d1a-ba3a-88a7a7f941cf",
   "index": 0,
-  "valueDate": 20230329073134,
+  "valueDate": 20230426071955,
   "openingDate": 20220929083400,
-  "created": 1680075094469,
-  "modified": 1680075094469,
+  "created": 1682493595807,
+  "modified": 1682493595807,
   "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
   "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
   "comment": "This is a comment",
@@ -68,7 +68,7 @@ const createdDataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
   "labels": {},
   "systemMetaData": {
     "secretForeignKeys": [
-      "1e56decb-66e1-4ee7-aff3-bc9638bd625f"
+      "a61a256f-f5ab-4fb2-a71a-6f5a405acbfe"
     ],
     "cryptedForeignKeys": {
       "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
@@ -108,14 +108,14 @@ const dataSample = await api.dataSampleApi.getDataSample(createdDataSample.id!)
 
 ```json
 {
-  "id": "c7825d77-1ce8-41db-8aed-4f2f7c35e7b6",
+  "id": "4aecf2be-4c60-4185-8087-1980a7554e05",
   "qualifiedLinks": {},
-  "batchId": "2ac2cb55-7d20-4d48-b85c-47b16840d888",
+  "batchId": "03e6bddc-e077-4d1a-ba3a-88a7a7f941cf",
   "index": 0,
-  "valueDate": 20230329073134,
+  "valueDate": 20230426071955,
   "openingDate": 20220929083400,
-  "created": 1680075094469,
-  "modified": 1680075094469,
+  "created": 1682493595807,
+  "modified": 1682493595807,
   "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
   "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
   "comment": "This is a comment",
@@ -134,7 +134,7 @@ const dataSample = await api.dataSampleApi.getDataSample(createdDataSample.id!)
   "labels": {},
   "systemMetaData": {
     "secretForeignKeys": [
-      "1e56decb-66e1-4ee7-aff3-bc9638bd625f"
+      "a61a256f-f5ab-4fb2-a71a-6f5a405acbfe"
     ],
     "cryptedForeignKeys": {
       "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
@@ -182,14 +182,14 @@ const updatedDataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
 
 ```json
 {
-  "id": "c7825d77-1ce8-41db-8aed-4f2f7c35e7b6",
+  "id": "4aecf2be-4c60-4185-8087-1980a7554e05",
   "qualifiedLinks": {},
-  "batchId": "2ac2cb55-7d20-4d48-b85c-47b16840d888",
+  "batchId": "03e6bddc-e077-4d1a-ba3a-88a7a7f941cf",
   "index": 0,
-  "valueDate": 20230329073134,
+  "valueDate": 20230426071955,
   "openingDate": 20220929083400,
-  "created": 1680075094469,
-  "modified": 1680075095195,
+  "created": 1682493595807,
+  "modified": 1682493596975,
   "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
   "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
   "comment": "This is a updated comment",
@@ -208,7 +208,7 @@ const updatedDataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
   "labels": {},
   "systemMetaData": {
     "secretForeignKeys": [
-      "1e56decb-66e1-4ee7-aff3-bc9638bd625f"
+      "a61a256f-f5ab-4fb2-a71a-6f5a405acbfe"
     ],
     "cryptedForeignKeys": {
       "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
@@ -237,7 +237,7 @@ const deletedDataSample = await api.dataSampleApi.deleteDataSample(updatedDataSa
 <summary>deletedDataSample</summary>
 
 ```text
-c7825d77-1ce8-41db-8aed-4f2f7c35e7b6
+4aecf2be-4c60-4185-8087-1980a7554e05
 ```
 </details>
 
@@ -267,14 +267,14 @@ const filteredDataSamples = await api.dataSampleApi.filterDataSample(filter)
   "totalSize": 1,
   "rows": [
     {
-      "id": "c7825d77-1ce8-41db-8aed-4f2f7c35e7b6",
+      "id": "4aecf2be-4c60-4185-8087-1980a7554e05",
       "qualifiedLinks": {},
-      "batchId": "2ac2cb55-7d20-4d48-b85c-47b16840d888",
+      "batchId": "03e6bddc-e077-4d1a-ba3a-88a7a7f941cf",
       "index": 0,
-      "valueDate": 20230329073134,
+      "valueDate": 20230426071955,
       "openingDate": 20220929083400,
-      "created": 1680075094469,
-      "modified": 1680075095195,
+      "created": 1682493595807,
+      "modified": 1682493596975,
       "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
       "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
       "comment": "This is a updated comment",
@@ -293,7 +293,7 @@ const filteredDataSamples = await api.dataSampleApi.filterDataSample(filter)
       "labels": {},
       "systemMetaData": {
         "secretForeignKeys": [
-          "1e56decb-66e1-4ee7-aff3-bc9638bd625f"
+          "a61a256f-f5ab-4fb2-a71a-6f5a405acbfe"
         ],
         "cryptedForeignKeys": {
           "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
@@ -360,7 +360,7 @@ const matchedDataSampleIds = await api.dataSampleApi.matchDataSample(matchFilter
 
 ```text
 [
-  "c7825d77-1ce8-41db-8aed-4f2f7c35e7b6"
+  "4aecf2be-4c60-4185-8087-1980a7554e05"
 ]
 ```
 </details>
