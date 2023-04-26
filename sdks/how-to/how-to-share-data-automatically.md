@@ -48,7 +48,7 @@ const user = await hcp1Api.userApi.shareAllFutureDataWith(
 ```json
 {
   "id": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
-  "rev": "100-bf0be1ae494c0bb6d4305099003d6cea",
+  "rev": "106-7d51eb2d5b96fcf7982b05a0f50df8d4",
   "created": 1679919731079,
   "name": "Master HCP",
   "login": "master@b16baa.icure",
@@ -60,7 +60,16 @@ const user = await hcp1Api.userApi.shareAllFutureDataWith(
   "sharingDataWith": {
     "medicalInformation": {}
   },
-  "authenticationTokens": {}
+  "authenticationTokens": {
+    "aee1860e-eb42-45fc-a2f2-9753f68764e1": {
+      "creationTime": 1679919731274,
+      "validity": 86400
+    },
+    "5d47319d-0487-427f-b492-c761deea7caa": {
+      "creationTime": 1680074455610,
+      "validity": 31536000
+    }
+  }
 }
 ```
 </details>
@@ -97,13 +106,13 @@ const dataSample2 = await hcp2Api.dataSampleApi.getDataSample(dataSample.id)
 
 ```json
 {
-  "id": "742b0a9c-e68c-4033-bc95-040039550a0f",
+  "id": "5c691167-3e78-42dd-807a-16af169fb8d0",
   "languages": [],
   "active": true,
   "parameters": {},
-  "rev": "1-54129bab0e005b10f312dcf414012ac6",
-  "created": 1680075063668,
-  "modified": 1680075063668,
+  "rev": "1-4a073b749b407e382848e77a91e16467",
+  "created": 1682493554459,
+  "modified": 1682493554459,
   "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
   "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
   "firstName": "John",
@@ -139,7 +148,7 @@ const dataSample2 = await hcp2Api.dataSampleApi.getDataSample(dataSample.id)
     "privateKeyShamirPartitions": {},
     "aesExchangeKeys": {},
     "transferKeys": {},
-    "encryptedSelf": "wLBrXSeyGMVDDs8XjS5QSINgCFgIe2FERyh88jLgc8jWhG3Gr8D/lbos4xx3ho8M",
+    "encryptedSelf": "TRNtX7Xd4qDjVm670bkWx+XBrFZouJSNy3okmKFS9YEpCqPxs3BRx1e9c04XjWVw",
     "secretForeignKeys": [],
     "cryptedForeignKeys": {},
     "delegations": {
@@ -161,13 +170,13 @@ const dataSample2 = await hcp2Api.dataSampleApi.getDataSample(dataSample.id)
 
 ```json
 {
-  "id": "742b0a9c-e68c-4033-bc95-040039550a0f",
+  "id": "5c691167-3e78-42dd-807a-16af169fb8d0",
   "languages": [],
   "active": true,
   "parameters": {},
-  "rev": "1-54129bab0e005b10f312dcf414012ac6",
-  "created": 1680075063668,
-  "modified": 1680075063668,
+  "rev": "1-4a073b749b407e382848e77a91e16467",
+  "created": 1682493554459,
+  "modified": 1682493554459,
   "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
   "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
   "firstName": "John",
@@ -203,7 +212,7 @@ const dataSample2 = await hcp2Api.dataSampleApi.getDataSample(dataSample.id)
     "privateKeyShamirPartitions": {},
     "aesExchangeKeys": {},
     "transferKeys": {},
-    "encryptedSelf": "wLBrXSeyGMVDDs8XjS5QSINgCFgIe2FERyh88jLgc8jWhG3Gr8D/lbos4xx3ho8M",
+    "encryptedSelf": "TRNtX7Xd4qDjVm670bkWx+XBrFZouJSNy3okmKFS9YEpCqPxs3BRx1e9c04XjWVw",
     "secretForeignKeys": [],
     "cryptedForeignKeys": {},
     "delegations": {
@@ -225,14 +234,14 @@ const dataSample2 = await hcp2Api.dataSampleApi.getDataSample(dataSample.id)
 
 ```json
 {
-  "id": "7a59539d-6ca5-4b53-9a38-45686e001b44",
+  "id": "a1c8dbcb-2a8b-43a4-b47a-a73e46d84776",
   "qualifiedLinks": {},
-  "batchId": "8ea02c17-b9d5-457e-a396-9a9c58bdf33c",
+  "batchId": "b4552147-af41-499e-81af-09a34e87fd42",
   "index": 0,
-  "valueDate": 20230329073104,
-  "openingDate": 20230329073104,
-  "created": 1680075064854,
-  "modified": 1680075064854,
+  "valueDate": 20230426071916,
+  "openingDate": 20230426071916,
+  "created": 1682493556591,
+  "modified": 1682493556591,
   "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
   "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
   "identifiers": [],
@@ -250,7 +259,7 @@ const dataSample2 = await hcp2Api.dataSampleApi.getDataSample(dataSample.id)
   "labels": {},
   "systemMetaData": {
     "secretForeignKeys": [
-      "6dbf9c72-42e2-4b68-b490-24e8fd7dd211"
+      "cf2cd48b-e93e-4af8-96a7-fc8c2233bc71"
     ],
     "cryptedForeignKeys": {
       "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {},
@@ -275,14 +284,14 @@ const dataSample2 = await hcp2Api.dataSampleApi.getDataSample(dataSample.id)
 
 ```json
 {
-  "id": "7a59539d-6ca5-4b53-9a38-45686e001b44",
+  "id": "a1c8dbcb-2a8b-43a4-b47a-a73e46d84776",
   "qualifiedLinks": {},
-  "batchId": "8ea02c17-b9d5-457e-a396-9a9c58bdf33c",
+  "batchId": "b4552147-af41-499e-81af-09a34e87fd42",
   "index": 0,
-  "valueDate": 20230329073104,
-  "openingDate": 20230329073104,
-  "created": 1680075064854,
-  "modified": 1680075064854,
+  "valueDate": 20230426071916,
+  "openingDate": 20230426071916,
+  "created": 1682493556591,
+  "modified": 1682493556591,
   "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
   "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
   "identifiers": [],
@@ -300,7 +309,7 @@ const dataSample2 = await hcp2Api.dataSampleApi.getDataSample(dataSample.id)
   "labels": {},
   "systemMetaData": {
     "secretForeignKeys": [
-      "6dbf9c72-42e2-4b68-b490-24e8fd7dd211"
+      "cf2cd48b-e93e-4af8-96a7-fc8c2233bc71"
     ],
     "cryptedForeignKeys": {
       "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {},
@@ -325,14 +334,14 @@ const dataSample2 = await hcp2Api.dataSampleApi.getDataSample(dataSample.id)
 
 ```json
 {
-  "id": "7a59539d-6ca5-4b53-9a38-45686e001b44",
+  "id": "a1c8dbcb-2a8b-43a4-b47a-a73e46d84776",
   "qualifiedLinks": {},
-  "batchId": "8ea02c17-b9d5-457e-a396-9a9c58bdf33c",
+  "batchId": "b4552147-af41-499e-81af-09a34e87fd42",
   "index": 0,
-  "valueDate": 20230329073104,
-  "openingDate": 20230329073104,
-  "created": 1680075064854,
-  "modified": 1680075064854,
+  "valueDate": 20230426071916,
+  "openingDate": 20230426071916,
+  "created": 1682493556591,
+  "modified": 1682493556591,
   "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
   "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
   "identifiers": [],
@@ -350,7 +359,7 @@ const dataSample2 = await hcp2Api.dataSampleApi.getDataSample(dataSample.id)
   "labels": {},
   "systemMetaData": {
     "secretForeignKeys": [
-      "6dbf9c72-42e2-4b68-b490-24e8fd7dd211"
+      "cf2cd48b-e93e-4af8-96a7-fc8c2233bc71"
     ],
     "cryptedForeignKeys": {
       "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {},
@@ -393,14 +402,14 @@ const dataSampleNotOnModify = await hcp1Api.dataSampleApi.createOrModifyDataSamp
 
 ```json
 {
-  "id": "fb66969c-82bb-4e9e-a964-e4d631ff7a7c",
+  "id": "767312c4-eaf8-4301-9f99-42a737f25d1b",
   "qualifiedLinks": {},
-  "batchId": "9e8e85c0-a106-4840-b96a-d55a647759ba",
+  "batchId": "8664ff36-d800-4965-9429-a15ca7717b1f",
   "index": 0,
-  "valueDate": 20230329073106,
-  "openingDate": 20230329073106,
-  "created": 1680075066183,
-  "modified": 1680075066183,
+  "valueDate": 20230426071918,
+  "openingDate": 20230426071918,
+  "created": 1682493558507,
+  "modified": 1682493558507,
   "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
   "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
   "identifiers": [],
@@ -418,7 +427,7 @@ const dataSampleNotOnModify = await hcp1Api.dataSampleApi.createOrModifyDataSamp
   "labels": {},
   "systemMetaData": {
     "secretForeignKeys": [
-      "6dbf9c72-42e2-4b68-b490-24e8fd7dd211"
+      "cf2cd48b-e93e-4af8-96a7-fc8c2233bc71"
     ],
     "cryptedForeignKeys": {
       "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
@@ -459,14 +468,14 @@ const dataSampleNotSharedBy2 = await hcp2Api.dataSampleApi.createOrModifyDataSam
 
 ```json
 {
-  "id": "bc0e265e-8269-4d88-8983-0cd0c7f557f5",
+  "id": "95994944-a833-4452-8dac-658cc3b82249",
   "qualifiedLinks": {},
-  "batchId": "a59b32f4-d412-41da-af16-9dcf6df7bff9",
+  "batchId": "68cf7e75-d326-4020-a4eb-9a1f1b684931",
   "index": 0,
-  "valueDate": 20230329073108,
-  "openingDate": 20230329073108,
-  "created": 1680075068348,
-  "modified": 1680075068348,
+  "valueDate": 20230426071920,
+  "openingDate": 20230426071920,
+  "created": 1682493560959,
+  "modified": 1682493560960,
   "author": "84cb80e5-95fb-46ce-ad08-d5a6c211a9ff",
   "responsible": "396f6d45-1d92-4bca-888c-086d8415aef9",
   "identifiers": [],
@@ -484,7 +493,7 @@ const dataSampleNotSharedBy2 = await hcp2Api.dataSampleApi.createOrModifyDataSam
   "labels": {},
   "systemMetaData": {
     "secretForeignKeys": [
-      "6dbf9c72-42e2-4b68-b490-24e8fd7dd211"
+      "cf2cd48b-e93e-4af8-96a7-fc8c2233bc71"
     ],
     "cryptedForeignKeys": {
       "396f6d45-1d92-4bca-888c-086d8415aef9": {}
@@ -519,7 +528,7 @@ const userWithoutShare = await hcp1Api.userApi.stopSharingDataWith(
 ```json
 {
   "id": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
-  "rev": "103-b3ec9031280f94073e12bf3092e43580",
+  "rev": "109-b654934a9b8c15f25906aad4fbcbb5d5",
   "created": 1679919731079,
   "name": "Master HCP",
   "login": "master@b16baa.icure",
@@ -531,7 +540,16 @@ const userWithoutShare = await hcp1Api.userApi.stopSharingDataWith(
   "sharingDataWith": {
     "medicalInformation": {}
   },
-  "authenticationTokens": {}
+  "authenticationTokens": {
+    "aee1860e-eb42-45fc-a2f2-9753f68764e1": {
+      "creationTime": 1679919731274,
+      "validity": 86400
+    },
+    "5d47319d-0487-427f-b492-c761deea7caa": {
+      "creationTime": 1680074455610,
+      "validity": 31536000
+    }
+  }
 }
 ```
 </details>
@@ -558,14 +576,14 @@ const dataSampleNotSharedAnymore = await hcp1Api.dataSampleApi.createOrModifyDat
 
 ```json
 {
-  "id": "6c1d3b84-a784-4dc7-b908-b990a3101014",
+  "id": "cb3b4d63-9ee9-4ce6-8659-51714cb3e64f",
   "qualifiedLinks": {},
-  "batchId": "2eb2f620-a309-4a8c-9342-3d88cbd99743",
+  "batchId": "82ffccc5-fbcd-420c-9519-6a86c82836a0",
   "index": 0,
-  "valueDate": 20230329073109,
-  "openingDate": 20230329073109,
-  "created": 1680075069571,
-  "modified": 1680075069572,
+  "valueDate": 20230426071922,
+  "openingDate": 20230426071922,
+  "created": 1682493562525,
+  "modified": 1682493562525,
   "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
   "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
   "identifiers": [],
@@ -583,7 +601,7 @@ const dataSampleNotSharedAnymore = await hcp1Api.dataSampleApi.createOrModifyDat
   "labels": {},
   "systemMetaData": {
     "secretForeignKeys": [
-      "6dbf9c72-42e2-4b68-b490-24e8fd7dd211"
+      "cf2cd48b-e93e-4af8-96a7-fc8c2233bc71"
     ],
     "cryptedForeignKeys": {
       "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
@@ -644,14 +662,14 @@ const dataSampleNoChaining = await hcp1Api.dataSampleApi.createOrModifyDataSampl
 
 ```json
 {
-  "id": "c70acda8-62dd-47c3-8118-9a19467dbfa4",
+  "id": "09a5e463-2787-4fd6-9f00-c7481c919137",
   "qualifiedLinks": {},
-  "batchId": "6d12f8f0-5dc3-4151-a5ce-0a2018fa3c9d",
+  "batchId": "09c4fb99-3166-4df0-856e-73ab60009dd7",
   "index": 0,
-  "valueDate": 20230329073110,
-  "openingDate": 20230329073110,
-  "created": 1680075070910,
-  "modified": 1680075070910,
+  "valueDate": 20230426071924,
+  "openingDate": 20230426071924,
+  "created": 1682493564421,
+  "modified": 1682493564421,
   "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
   "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
   "identifiers": [],
@@ -669,7 +687,7 @@ const dataSampleNoChaining = await hcp1Api.dataSampleApi.createOrModifyDataSampl
   "labels": {},
   "systemMetaData": {
     "secretForeignKeys": [
-      "6dbf9c72-42e2-4b68-b490-24e8fd7dd211"
+      "cf2cd48b-e93e-4af8-96a7-fc8c2233bc71"
     ],
     "cryptedForeignKeys": {
       "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {},
