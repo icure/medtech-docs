@@ -2,9 +2,11 @@
 
 Welcome to iCure! If you haven't had the chance to read the [Introduction](../../intro.md) yet, we invite you to do so before continuing to learn more about what iCure is and specifically what iCure MedTech is.
 
-In this tutorial, we will show you how to create a patient-oriented medical application, using iCure MedTech SDK. Specifically, we will create a menstrual cycle tracking application. This app will allow patients to manage their menstrual cycle tracking data (CRUD operations) and optionally, share them with their doctor(s).
+In this tutorial, we will show you how to create a patient-oriented medical application, using iCure MedTech SDK. Specifically, we will create **Petra**, a menstrual cycle tracking application. This app will allow patients to manage their menstrual cycle tracking data (CRUD operations) and optionally, share them with their doctor(s).
 
 This tutorial will only focus on the features of the application and not on its design. To do so, we provide you a [dedicated template repository](https://github.com/icure/icure-medical-device-react-native-app-tutorial-template), containing all the frontend code as well as all the different visuals you will need during this tutorial.
+
+If you would like to directly browse the entire code of Petra, you can head to the [final Petra code repository](https://github.com/icure/icure-medical-device-react-native-app-tutorial).
 
 ## Callouts
 

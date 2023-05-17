@@ -338,3 +338,5 @@ That should be it for the registration process. You can now try to register a ne
 :::tip
 If you encounter any issue, make sur that your environment variables are correctly set.
 :::
+
+Finally, go to Cockpit and check the [patient list of your solution](https://cockpit.icure.cloud/patients). You should now see your newly registered patient. 
