@@ -111,6 +111,18 @@ async function createConfig() {
                         name: 'twitter:image',
                         content: 'img/docs-preview.jpg'
                     },
+                    {
+                        property: "og:title",
+                        content: 'iCure Documentation | Get started, build your Medical Device App or EHR with iCure'
+                    },
+                    {
+                        property: 'og:description',
+                        content: 'iCure is a trustable service ensuring the privacy of your patient medical data thanks to end-to-end encryption, that empowers your users to decide who can access their data.'
+                    },
+                    {
+                        name: 'description',
+                        content: 'iCure is a trustable service ensuring the privacy of your patient medical data thanks to end-to-end encryption, that empowers your users to decide who can access their data.'
+                    },
                 ],
                 colorMode: {
                     defaultMode: 'dark',
