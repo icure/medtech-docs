@@ -101,11 +101,11 @@ async function createConfig() {
                     },
                     {
                         name: 'twitter:title',
-                        content: 'iCure Documentation | Get started, build your Medical Device App or EHR with iCure'
+                        content: 'iCure Documentation | Start to build your Medical Device or EHR App with iCure'
                     },
                     {
                         name: 'twitter:description',
-                        content: 'iCure is a trustable service ensuring the privacy of your patient medical data thanks to end-to-end encryption, that empowers your users to decide who can access their data.'
+                        content: 'iCure is a trustable service ensuring the privacy of your patient medical data thanks to end-to-end encryption and empowering your users to decide who can access their data.'
                     },
                     {
                         name: 'twitter:image',
@@ -113,15 +113,15 @@ async function createConfig() {
                     },
                     {
                         property: "og:title",
-                        content: 'iCure Documentation | Get started, build your Medical Device App or EHR with iCure'
+                        content: 'iCure Documentation | Start to build your Medical Device or EHR App with iCure'
                     },
                     {
                         property: 'og:description',
-                        content: 'iCure is a trustable service ensuring the privacy of your patient medical data thanks to end-to-end encryption, that empowers your users to decide who can access their data.'
+                        content: 'iCure is a trustable service ensuring the privacy of your patient medical data thanks to end-to-end encryption and empowering your users to decide who can access their data.'
                     },
                     {
                         name: 'description',
-                        content: 'iCure is a trustable service ensuring the privacy of your patient medical data thanks to end-to-end encryption, that empowers your users to decide who can access their data.'
+                        content: 'iCure is a trustable service ensuring the privacy of your patient medical data thanks to end-to-end encryption, and empowering your users to decide who can access their data.'
                     },
                 ],
                 colorMode: {
