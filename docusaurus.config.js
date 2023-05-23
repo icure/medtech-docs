@@ -94,6 +94,24 @@ async function createConfig() {
         themeConfig:
             /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
             ({
+                metadata: [
+                    {
+                        name: 'twitter:card',
+                        content: 'summary_large_image'
+                    },
+                    {
+                        name: 'twitter:title',
+                        content: 'iCure Documentation | Get started, build your Medical Device App or EHR with iCure'
+                    },
+                    {
+                        name: 'twitter:description',
+                        content: 'iCure is a trustable service ensuring the privacy of your patient medical data thanks to end-to-end encryption, that empowers your users to decide who can access their data.'
+                    },
+                    {
+                        name: 'twitter:image',
+                        content: 'img/docs-preview.jpg'
+                    },
+                ],
                 colorMode: {
                     defaultMode: 'dark',
                 },
