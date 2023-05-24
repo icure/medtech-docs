@@ -39,17 +39,15 @@ const sidebarsSDK = {
                     type: 'category',
                     label: 'Patient App',
                     link: {
-                        type: 'generated-index',
-                        title: 'Patient App',
-                        slug: '/patient-app/index',
+                        type: 'doc',
+                        id: 'tutorial/petra/foreword',
                     },
                     items: [
-                        {type: 'doc', label: 'Foreword', id: 'tutorial/petra/foreword'},
                         {
                             'Chapter 1 - Setup': [
                                 'tutorial/petra/chapter-01/prerequisites',
                                 'tutorial/petra/chapter-01/installation',
-                                // 'tutorial/petra/chapter-01/icure-informations',
+                                'tutorial/petra/chapter-01/icure-informations',
                             ],
                         },
                         {

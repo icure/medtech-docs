@@ -60,15 +60,18 @@ Your React App created, let's add the missing information to complete an authent
 
 ## Add the authentication information in .env
 While you initialized your environment in [Quick Start](./index.md), we asked you to keep a series of information: 
-- the **MSG_GW_SPEC_ID**, identifying your App in our Authentication component; 
-- the **EMAIL_AUTHENTICATION_PROCESS_ID**, identifying the email template to send to your users during their registration or login;
-- the **SMS_AUTHENTICATION_PROCESS_ID**, identifying the SMS template to send to your users during their registration or login;
-- the **PARENT_HEALTHCARE_PROFESSIONAL_ID** (optional), identifying your organization as a healthcare professional, to let your users (patients or doctors) share medical data with you automatically. 
+- the **EXTERNAL_SERVICES_SPEC_ID**, identifying your solution in our Authentication component; 
+- the **EMAIL_AUTHENTICATION_PROCESS_ID** or **SMS_AUTHENTICATION_PROCESS_ID**, identifying the email / SMS template to send to your users during their registration or login;
+- the **PARENT_ORGANISATION_ID**, identifying your organization as the responsible of the users created through your solution.
 
 You need to add these information in your newly created React Native App. 
-For  this, rename the `.env.default` file to  `.env` and complete the values of the corresponding variables. (If you don't have any **PARENT_HEALTHCARE_PROFESSIONAL_ID**, delete the empty entry). 
+For  this, rename the `.env.default` file to  `.env` and complete the values of the corresponding variables.
 
 The only value missing right now is the one of **FRIENDLY_CAPTCHA_SITE_KEY**. For this one, put your Friendly-Captcha Site Key, that you previously created along with your Friendly-Captcha Secret Key. 
+
+:::tip
+If you decided to use the DEMO Friendly-Captcha temporarily provided by iCure, just copy it from the information you received at the end of your solution creation process. 
+:::
 
 :::caution
 As explained earlier, if you're using the Google reCAPTCHA instead of the Friendly-Captcha, you'll need to do some changes in the project. 
