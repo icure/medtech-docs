@@ -63,14 +63,13 @@ While you initialized your environment in [Quick Start](./index.md), we asked yo
 - the **EXTERNAL_SERVICES_SPEC_ID**, identifying your solution in our Authentication component; 
 - the **EMAIL_AUTHENTICATION_PROCESS_ID** or **SMS_AUTHENTICATION_PROCESS_ID**, identifying the email / SMS template to send to your users during their registration or login;
 - the **PARENT_ORGANISATION_ID**, identifying your organization as the responsible of the users created through your solution.
+- possibly the **FRIENDLY_CAPTCHA_SITE_KEY**, in case you decided to use the DEMO Friendly-Captcha temporarily provided by iCure. 
 
 You need to add these information in your newly created React Native App. 
-For  this, rename the `.env.default` file to  `.env` and complete the values of the corresponding variables.
+For this, rename the `.env.default` file to `.env` and complete the values of the corresponding variables.
 
-The only value missing right now is the one of **FRIENDLY_CAPTCHA_SITE_KEY**. For this one, put your Friendly-Captcha Site Key, that you previously created along with your Friendly-Captcha Secret Key. 
-
-:::tip
-If you decided to use the DEMO Friendly-Captcha temporarily provided by iCure, just copy it from the information you received at the end of your solution creation process. 
+:::caution
+If you decided to use the iCure DEMO Friendly-Captcha, don't forget this is a **TEMPORARY** solution. Make sure to create your own Google ReCaptcha v3 or Friendly-Captcha Secret Key, as you will have a limited number of allowed authentications before the DEMO key expires. 
 :::
 
 :::caution
