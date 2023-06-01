@@ -60,38 +60,45 @@ This method will return an `AuthenticationProcess` object, that we will store in
 import Config from "react-native-config";
 import crypto from '@icure/icure-react-native-crypto';
 import storage from '../utils/storage';
-import { AnonymousMedTechApi, AnonymousMedTechApiBuilder, ICURE_CLOUD_URL, MedTechApi, MSG_GW_CLOUD_URL, User } from "@icure/medical-device-sdk";
+import {AnonymousMedTechApi, AnonymousMedTechApiBuilder, MedTechApi, MedTechApiBuilder, User, ua2b64} from '@icure/medical-device-sdk';
 // highlight-end
 // ...
 
 const apiCache: { [key: string]: MedTechApi | AnonymousMedTechApi } = {};
 
 // highlight-start
-export const startAuthentication = createAsyncThunk('medTechApi/startAuthentication', async (_payload, { getState }) => {
-    const {
-        medTechApi: { email, firstName, lastName },
-    } = getState() as { medTechApi: MedTechApiState };
+export const startAuthentication = createAsyncThunk('medTechApi/startAuthentication', async (_payload, {getState}) => {
+  const {
+    medTechApi: {email, firstName, lastName, recaptcha},
+  } = getState() as {medTechApi: MedTechApiState};
 
-    if (!email) {
-        throw new Error('No email provided');
-    }
+  if (!email) {
+    throw new Error('No email provided');
+  }
 
-    const anonymousApi = await new AnonymousMedTechApiBuilder()
-        .withCrypto(crypto)
-        .withICureBaseUrl(`${ICURE_CLOUD_URL}/rest/v1`)
-        .withMsgGwUrl(MSG_GW_CLOUD_URL)
-        .withMsgGwSpecId(Config.REACT_APP_MSGGW_SPEC_ID!)
-        .withAuthProcessByEmailId(Config.REACT_APP_AUTH_PROCESS_BY_EMAIL_ID!)
-        .withAuthProcessBySmsId(Config.REACT_APP_AUTH_PROCESS_BY_EMAIL_ID!)
-        .withStorage(storage)
-        .preventCookieUsage()
-        .build();
+  const anonymousApi = await new AnonymousMedTechApiBuilder()
+    .withCrypto(crypto)
+    .withMsgGwSpecId(Config.EXTERNAL_SERVICES_SPEC_ID!)
+    .withAuthProcessByEmailId(Config.EMAIL_AUTHENTICATION_PROCESS_ID!)
+    .withStorage(storage)
+    .preventCookieUsage()
+    .build();
 
-    const authProcess = await anonymousApi.authenticationApi.startAuthentication(Config.REACT_APP_RECAPTCHA!, email, undefined, firstName, lastName, Config.REACT_APP_PETRA_HCP);
+  const authProcess = await anonymousApi.authenticationApi.startAuthentication(
+    recaptcha,
+    email,
+    undefined,
+    firstName,
+    lastName,
+    Config.PARENT_ORGANISATION_ID,
+    undefined,
+    undefined,
+    'friendly-captcha',
+  );
 
-    apiCache[`${authProcess.login}/${authProcess.requestId}`] = anonymousApi;
+  apiCache[`${authProcess.login}/${authProcess.requestId}`] = anonymousApi;
 
-    return authProcess;
+  return authProcess;
 });
 // highlight-end
 ```
@@ -206,30 +213,30 @@ To be able to set the `online` state, we will need to add `completeAuthenticatio
 ```typescript title="/services/api.ts"
 // ...
 // highlight-start
-export const completeAuthentication = createAsyncThunk('medTechApi/completeAuthentication', async (_payload, { getState, dispatch }) => {
-    const {
-        medTechApi: { authProcess, token },
-    } = getState() as { medTechApi: MedTechApiState };
+export const completeAuthentication = createAsyncThunk('medTechApi/completeAuthentication', async (_payload, {getState, dispatch}) => {
+  const {
+    medTechApi: {authProcess, token},
+  } = getState() as {medTechApi: MedTechApiState};
 
-    if (!authProcess) {
-        throw new Error('No authProcess provided');
-    }
+  if (!authProcess) {
+    throw new Error('No authProcess provided');
+  }
 
-    if (!token) {
-        throw new Error('No token provided');
-    }
+  if (!token) {
+    throw new Error('No token provided');
+  }
 
-    const anonymousApi = apiCache[`${authProcess.login}/${authProcess.requestId}`] as AnonymousMedTechApi;
-    const result = await anonymousApi.authenticationApi.completeAuthentication(authProcess, token, undefined);
-    const api = result.medTechApi;
-    const user = await api.userApi.getLoggedUser();
+  const anonymousApi = apiCache[`${authProcess.login}/${authProcess.requestId}`] as AnonymousMedTechApi;
+  const result = await anonymousApi.authenticationApi.completeAuthentication(authProcess, token);
+  const api = result.medTechApi;
+  const user = await api.userApi.getLoggedUser();
 
-    apiCache[`${result.groupId}/${result.userId}`] = api;
-    delete apiCache[`${authProcess.login}/${authProcess.requestId}`];
+  apiCache[`${result.groupId}/${result.userId}`] = api;
+  delete apiCache[`${authProcess.login}/${authProcess.requestId}`];
 
-    dispatch(setSavedCredentials({ login: `${result.groupId}/${result.userId}`, token: result.token, tokenTimestamp: +Date.now() }));
+  dispatch(setSavedCredentials({login: `${result.groupId}/${result.userId}`, token: result.token, tokenTimestamp: +Date.now()}));
 
-    return user?.marshal();
+  return user?.marshal();
 });
 // highlight-end
 
