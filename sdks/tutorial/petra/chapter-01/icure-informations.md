@@ -12,13 +12,10 @@ After you registered or signed in on [Cockpit](https://cockpit.icure.cloud), go 
 
 Click on "Create a Solution". You should now see a series of steps to complete. 
 
-Go through each of them, providing the mandatory information, and make sure in this process to: 
+Go through each of them, providing the mandatory information. During this process, make sure to: 
 - Provide a Friendly-Captcha Secret Key (or use the DEMO Setup provided temporarily by iCure);
 - Create an **EMAIL** authentication template (or use the DEMO Setup proposed by iCure);
 
-:::tip 
-To run Petra, you don't have to complete the optional steps of the Quick-Start. 
-:::
 
 Once it's done, you will receive a series of information on the Recap screen:
 - the **EXTERNAL_SERVICES_SPEC_ID**, identifying your App in our Authentication component;
