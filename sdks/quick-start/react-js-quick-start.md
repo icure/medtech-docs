@@ -65,7 +65,7 @@ While you initialized your environment in [Quick Start](./index.md), we asked yo
 - the **PARENT_ORGANISATION_ID**, identifying your organization as the responsible of the users created through your solution.
 - possibly the **FRIENDLY_CAPTCHA_SITE_KEY**, in case you decided to use the DEMO Friendly-Captcha temporarily provided by iCure. 
 
-You need to add these information in your newly created React Native App. 
+You need to add these information in your newly created React.JS App. 
 For this, rename the `.env.default` file to `.env` and complete the values of the corresponding variables.
 
 :::caution
