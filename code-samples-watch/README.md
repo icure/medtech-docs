@@ -3,3 +3,9 @@
 Always test the examples using
 
 ```yarn workspaces run start```
+
+from code-samples directory
+
+# Scan and inject
+
+```yarn run scan```

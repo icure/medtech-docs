@@ -13,3 +13,7 @@ We recommend using [Visual Studio Code](https://code.visualstudio.com/) as your 
 ## NodeJS & yarn
 
 This tutorial assumes that you have [NodeJS](https://nodejs.org/en/) and [yarn](https://classic.yarnpkg.com/en/docs/install/) installed.
+
+## Ruby
+
+To run Petra on an iOS emulator, you'll also need to install Ruby. For this, we recommend you to use [RVM](https://rvm.io/) or [rbenv](https://github.com/rbenv/rbenv). 

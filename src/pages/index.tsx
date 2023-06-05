@@ -83,41 +83,78 @@ const DocsList: () => DocItem[] = () => [
 
 const codeLines = [
   [
-    `npx create-react-native-app --template \\\n https://github.com/icure/icure-medical-device-react-native-boilerplate-app-template
+    `npx react-native init MedtechApp --template \\\n https://github.com/icure/icure-medtech-react-native-boilerplate
     `,
     5,
     100,
   ],
   [
-    `      ✔ What is your app named? … my-icure-app
-      ✔ Downloaded and extracted project files.
+    `                                                          
+               ######                ######               
+             ###     ####        ####     ###             
+            ##          ###    ###          ##            
+            ##             ####             ##            
+            ##             ####             ##            
+            ##           ##    ##           ##            
+            ##         ###      ###         ##            
+             ##  ########################  ##             
+          ######    ###            ###    ######          
+      ###     ##    ##              ##    ##     ###      
+   ###         ## ###      ####      ### ##         ###   
+  ##           ####      ########      ####           ##  
+ ##             ###     ##########     ###             ## 
+  ##           ####      ########      ####           ##  
+   ###         ## ###      ####      ### ##         ###   
+      ###     ##    ##              ##    ##     ###      
+          ######    ###            ###    ######          
+             ##  ########################  ##             
+            ##         ###      ###         ##            
+            ##           ##    ##           ##            
+            ##             ####             ##            
+            ##             ####             ##            
+            ##          ###    ###          ##            
+             ###     ####        ####     ###             
+               ######                ######               
+                                                          
 
+                  Welcome to React Native!                
+                 Learn once, write anywhere               
+
+
+  
+      
+  
 `,
     1,
     300,
   ],
   [
-    `Using Yarn to install packages. You can pass --use-npm to use npm instead.
+    `✔ Downloading template
+✔ Copying template
+✔ Processing template
+ℹ Executing post init script 
+This is post init script
+✔ Installing Bundler
+✔ Installing CocoaPods dependencies (this may take a few minutes)
 
 `,
     0,
     300,
   ],
   [
-    `      ✔ Installed JavaScript dependencies.
+    `      Run instructions for Android:
+    • Have an Android emulator running (quickest way to get started), or a device connected.
+    • cd "/Users/aduchate/Sources/github/MedtechApp" && npx react-native run-android
+  
+  Run instructions for iOS:
+    • cd "/Users/aduchate/Sources/github/MedtechApp" && npx react-native run-ios
+    - or -
+    • Open MedtechApp/ios/MedtechApp.xcworkspace in Xcode or run "xed -b ios"
+    • Hit the Run button
     
-`,
-  ],
-  [
-    `      ✅ Your project is ready!
+  Run instructions for macOS:
+    • See https://aka.ms/ReactNativeGuideMacOS for the latest up-to-date instructions.
 
-To run your project, navigate to the directory and 
-run one of the following yarn commands.
-
-- cd my-icure-app
-- yarn android
-- yarn ios
-- yarn web
 `,
     0,
     0,

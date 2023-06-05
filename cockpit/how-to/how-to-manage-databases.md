@@ -4,19 +4,19 @@ slug: how-to-manage-databases
 
 # Handling your databases
 
-## Go to a app's databases
+## Go to a solution's databases
 
-Each app has a list of databases. 
-From the Cockpit [dashboard screen](https://cockpit.icure.cloud/dashboard), click on the **Manage** button of the app of your choice. For example, let's click on the **Manage** button of our __Petra React app__. 
+Each solution has a list of databases. 
+From the Cockpit [dashboard screen](https://cockpit.icure.cloud/dashboard), click on the **Manage** button of the solution of your choice. For example, let's click on the **Manage** button of our __Petra React app__. 
 
-![Manage app btn](./img/database-interactions/dashboard.png)
+![Manage solution btn](./img/database-interactions/dashboard.png)
 
-You will then see all existing databases linked to this app: 
+You will then see all existing databases linked to this solution: 
 ![Databases list](./img/database-interactions/databases-list.png)
 
 ## Create a database
 
-To create a new database, click on **Add database** button at the top of the App Details screen.
+To create a new database, click on **Add database** button at the top of the Solution Details screen.
 
 Write the name of your database, choose the cluster that should host it and click on the **Add** button.
 
@@ -57,7 +57,7 @@ Database administrators are able to create children databases for the parent dat
 
 You may afterwards see the following sections: 
 - The custom properties
-- The administrators (Global, app, database ones)
+- The administrators (Global, solution, database ones)
 - The danger zone
 
 ### Custom properties
@@ -96,25 +96,25 @@ If you are absolutely sure you want to delete this custom property, click the **
 ![Custom property delete](./img/database-interactions/custom-property/edit-custom-property-modal.png)
 
 ### Global administrators
-Global administrators are the ones who are able to manage your whole iCure account environment, including apps, 
+Global administrators are the ones who are able to manage your whole iCure account environment, including solutions, 
 databases, ...
 
 For now, it is not possible to add new global administrators. It will only be the primary user who created your 
 iCure environment. 
 
-### App administrators
-App administrators are able to manage a particular app. Meaning they will be able to:
-- Add a new database to the app
-- Add new users in the app
-- Check logs of the app
+### Solution administrators
+Solution administrators are able to manage a particular solution. Meaning they will be able to:
+- Add a new database to the solution
+- Add new users in the solution
+- Check logs of the solution
 
-To do all those actions, the app administrator will therefore be able to use the Cockpit Web Portal. 
+To do all those actions, the solution administrator will therefore be able to use the Cockpit Web Portal. 
 
-You can add a new App administrator through the tab **Administrators** at the top of the screen.
+You can add a new Solution administrator through the tab **Administrators** at the top of the screen.
 
 ### Database administrators
 Database administrators will be able to query a database with admin rights. 
-Their purpose is not to manage the apps, databases, ... anymore but to create them in order to administrate your 
+Their purpose is not to manage the solutions, databases, ... anymore but to create them in order to administrate your 
 database data. 
 
 Typically, if you would like to enable user registration, create new patients / doctors, ... you will need a 
