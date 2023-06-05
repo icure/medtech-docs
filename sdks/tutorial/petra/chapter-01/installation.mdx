@@ -12,7 +12,7 @@ To begin, you need to clone the tutorial project. To do so, open a terminal and 
 ```bash
 git clone git@github.com:icure/icure-medical-device-react-native-app-tutorial-template.git
 ```
-Alternatively, create a repository from the [tutorial template](https://github.com/icure/icure-medical-device-react-native-app-tutorial-template), more information [here](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template)
+Alternatively, create a repository from the [tutorial template](https://github.com/icure/icure-medical-device-react-native-app-tutorial-template) (More information [here](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template)).
 
 ## 2. Install dependencies
 
@@ -34,7 +34,7 @@ yarn run pod-install
 
 During the writing of this tutorial, we encountered an issue with pod installation.
 
-#### Ruby version issue
+#### Your Ruby version is X.X.X, but your Gemfile specified X.X.X
 
 If you installed XCode on your machine, it is possible that it installed as well a version of Ruby which is not compatible with the version required by ReactNative. If that's the case, the following error will output when executing the pod-install yarn command: `Your Ruby version is X.X.X, but your Gemfile specified X.X.X`. 
 
@@ -46,6 +46,26 @@ Once the Ruby version is installed, you will have to install the pods by using t
 cd ios && bundle install && cd ..
 yarn run pod-install
 ```
+
+#### version X.X.X is not installed
+It is also possible that you don't have the Ruby version used by the tutorial project (See file .ruby-version) installed on your machine. 
+You will therefore have the error `rbenv: version 'X.X.X' is not installed`. 
+
+To resolve this issue, use [RVM](https://rvm.io/) or [rbenv](https://github.com/rbenv/rbenv) to install the required Ruby version.
+
+#### pod: command not found
+When trying to install your pods, you can also get the error `pod: command not found`. 
+To resolve this issue, you have to install the cocoapods gem using: `sudo gem install cocoapods`. 
+
+#### Could not find ... in locally installed gems
+Pod-install command can also leads you to a similar error message: `Could not find cocoapods-1.11.3, ... in locally installed gems`. 
+
+To resolve this issue, you will have to install the bundle manually to install the missing gems. 
+For this, execute the following command: 
+```bash
+cd ios && bundle install && cd ..
+```
+
 
 ## 4. Launch the application
 
@@ -72,3 +92,5 @@ yarn run android
 
 </TabItem>
 </Tabs>
+
+Let's now configure your first iCure solution. 
