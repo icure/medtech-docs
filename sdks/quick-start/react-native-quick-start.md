@@ -7,7 +7,7 @@ description: Start your React Native App
 
 Now your iCure environment is successfully set up, you will be able to start the creation of your React Native App. 
 
-To make it easier for you, we created a [React Native Template Repository](https://github.com/icure/icure-medical-device-react-native-boilerplate-app-template), that includes: 
+To make it easier for you, we created a [React Native Template Repository](https://github.com/icure/icure-medtech-react-native-boilerplate), that includes: 
 - All the needed dependencies to work with iCure in a React Native app;
 - A fully implemented [authentication flow](https://docs.icure.com/sdks/how-to/how-to-authenticate-a-user/how-to-authenticate-a-user), to allow you to directly start working with medical data. 
 
@@ -28,7 +28,7 @@ To work with our React Native Template, make sure the following tools are instal
 ## Create your project
 Create your React Native App by executing the following command: 
 ```
-npx create-react-native-app --template https://github.com/icure/icure-medical-device-react-native-boilerplate-app-template
+npx react-native init MedtechApp --template https://github.com/icure/icure-medtech-react-native-boilerplate
 ```
 
 Answer the questions in the prompt and once npx instruction is done, you should see a similar entry: 
