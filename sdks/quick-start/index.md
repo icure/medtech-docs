@@ -6,11 +6,11 @@ sidebar_position: 2
 Welcome to iCure!
 In this iCure Quick Start guide, you will learn how to initialize your iCure environment and begin working with the MedTech SDK. The process involves several steps:
 - Create your iCure account by registering on the Cockpit Web Portal.
-- Create an App, which represents a medical solution or ecosystem, in the Cockpit Dashboard.
-- Create a Database within your App to store medical data.
-- Choose the CAPTCHA solution you will use and provide your CAPTCHA secret key.
+- Create a Solution, which represents a medical system, software or platform, in the Cockpit Dashboard.
+- Create a Database within your Solution to store medical data.
+- Choose the CAPTCHA provider you will use and provide your CAPTCHA secret key.
 - Create your authentication email and SMS templates and get their ids. 
-- (Optional) Create a Parent Healthcare Professional if you need to access patients' medical data.
+- Create extra entities: organisations, healthcare professionals, devices, and users that your project requires.
 
 Before moving on to your dedicated Technology page, ensure that you have completed all the necessary steps. Additional resources and detailed procedures are available throughout the guide for more information.
 
@@ -20,46 +20,41 @@ After providing all the required information, click on **Register**.
 
 Within a few seconds, you will receive an invitation at the email address you provided in the form. In the email, click on **Verify** to validate your email address and finalize your iCure account creation.
 
-You should now be able to start configuring your own environment:
+## Configure your Environment
 
-![Registration Completed](./img/registration_complete.png)
+When you log in to the cockpit for the first time, we propose you to create your first Solution using a 5 steps process.
 
-You can find a detailed procedure to create an account on Cockpit [here](../../cockpit/how-to/how-to-create-your-account). 
+The 5 steps are self-explanatory and well documented. At the of the process, you will have created your first Solution and your first Database. 
 
-## Create an App
-On the [Cockpit Dashboard](https://cockpit.icure.cloud/dashboard), click on **Create app**. 
-Choose the name of your App, its cluster location, and its spec id. Keep this last piece of information safe, as you will need it in the next steps of this quick start. It will be referenced as the **MSG_GW_SPEC_ID**. 
+Please note the CAPTCHA client key that is displayed at the end of the process if you have chosen to use the demo version as well as the process id information. You will need it later.
 
-:::caution
-Choose your **MSG_GW_SPEC_ID** carefully before creating your app, as you won't be able to change it later. Be aware that this spec id will prefix the id of your app's databases.
+### What is a solution ? 
+In iCure, an **App** represents a **medical system, software or platform**. 
+
+A Solution can contain several databases that are used to store your data. 
+
+:::info
+When using the free version of iCure, you are limited to creating a single solution.  
 :::
 
-After completing all the required information, click on Create. You now have your first App, and we will need to create a database within it.
-
-![App created](./img/first_app_created.png)
-
-### What is an App ? 
-In iCure, an **App** represents a **medical solution / eco-system** in which users' medical data are potentially managed through multiple IT services. 
-
-If you would like to learn more about Apps and how to fully manage them, go [here](../../cockpit/how-to/how-to-manage-apps)
-
+If you would like to learn more about solutions and how to fully manage them, go [here](../../cockpit/how-to/how-to-manage-solutions)
 
 ## Create a Database
-To add medical data to your App, you will need to create a **Database**. 
+To add medical data to your App, you need to create a **Database**.
+
+While completing the 5 steps process, a database is automatically created for you. However, you can create as more databases if you want.
 
 To do this, click on the App you just created in the [Cockpit Dashboard](https://cockpit.icure.cloud/dashboard). Then, click on **Add database** and fill in all the required information.
 
-When you're ready, click on **Add** to create your first database.
-
-![Database created](./img/first_database_created.png)
+:::info
+When using the free version of iCure, you are limited to creating two databases.  
+:::
 
 If you would like to learn more about databases and how to fully manage them, go [here](../../cockpit/how-to/how-to-manage-databases).
 
-## Provide your CAPTCHA secret key
-**!!!TO DO!!! NOT PART OF COCKPIT YET!!**
-
 ## Get your authentication process ids
-**!!!TO DO!!! NOT PART OF COCKPIT YET!!**
+
+
 
 ## Create a parent Healthcare Professional (Optional)
 If you don't need your patients' to share medical data with your organisation, you should skip this step.

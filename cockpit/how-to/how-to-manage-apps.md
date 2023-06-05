@@ -1,9 +1,9 @@
 ---
-slug: how-to-manage-apps
+slug: how-to-manage-solutions
 ---
 
-# Handling your apps
-In iCure, an **App** represents a **medical solution / eco-system** in which the medical data of the users are potentially managed through multiple IT services. It is NOT representing an IT service or a specific Technology App. 
+# Handling your solutions
+In iCure, a **Solution** represents a **medical system, software or platform** in which users' medical data are potentially managed through multiple IT stakeholders.
 
 For example, let's take Petra Corp, developing solutions to help patients follow their menstruation cycle and share medical information linked to it with their gynecologist. 
 
@@ -12,64 +12,64 @@ The enterprise also has a second product called **Petra Doc**, allowing the gyne
 
 Petra Corp invoices the gynecologists and the **Petra users** who are using their solution using a monthly subscription. 
 
-Here is an example of Apps Petra Corp could want to create: 
+Here is an example of Solutions Petra Corp could want to create: 
 
 
-| Apps created on Cockpit | Valid | Remarks |
-|-------------------------|------|---------------|
-| Petra, Petra Doc        |  ❌  | This scheme is inefficient, as patient data will have to be duplicated between Petra and Petra Doc. Moreover, as iCure allows you to share or not data with other actors, it will be easy in one App to define who can access which data |
-| Petra, Petra Invoicing | ✅   | This scheme seems efficient, as Petra Corp doesn't need medical data to create its invoices. Therefore, medical data can be isolated in one App, and invoicing information in another | 
-| Petra, Petra Invoicing, Hospital ABC | ✅ | In case a hospital would like to work with Petra Corp and have a dedicated environment for their patients, Petra Corp could create a dedicated App for Hospital ABC |
+| Solutions created on Cockpit | Valid | Remarks                                                                                                                                                                                                                                       |
+|-------------------------|------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Petra, Petra Doc        |  ❌  | This scheme is inefficient, as patient data will have to be duplicated between Petra and Petra Doc. Moreover, as iCure allows you to share or not data with other actors, it will be easy in one Solution to define who can access which data |
+| Petra, Petra Invoicing | ✅   | This scheme seems efficient, as Petra Corp doesn't need medical data to create its invoices. Therefore, medical data can be isolated in one Solution, and invoicing information in another                                                    | 
+| Petra, Petra Invoicing, Hospital ABC | ✅ | In case a hospital would like to work with Petra Corp and have a dedicated environment for their patients, Petra Corp could create a dedicated Solution for Hospital ABC                                                                      |
 
-Of course, there are a lot more possible scenarios depending on the business needs of your solution. The most important to remember is that the choice is yours in the organisation of your environment, thanks to the Apps. 
+Of course, there are a lot more possible scenarios depending on the business needs of your solution. The most important to remember is that the choice is yours in the organisation of your environment, thanks to the Solutions. 
 
 :::info
-Be aware that users of one app will never be able to see the data of another app, __except__ if you added this user specifically into your other apps as well. 
+Be aware that users of one solution will never be able to see the data of another solution, __except__ if this user specifically authenticates with the other solution as well. 
 :::
 
 
 
-## Create an app
+## Create a solution
 
-From the Cockpit [dashboard screen](https://cockpit.icure.cloud/dashboard), click on the **Create app** card.
+From the Cockpit [dashboard screen](https://cockpit.icure.cloud/dashboard), click on the **Create solution** card.
 
-![Create app card](./img/app-interactions/create-app-card.png)
+![Create solution card](./img/solution-interactions/create-solution-card.png)
 
-Fill in the app name and chose the cluster which should host the data of your app. 
+Fill in the solution name and chose the cluster which should host the data of your solution by default (the cluster can be changed on a per-database basis). 
 Then, click on the **Create** button.
 
-![Create button](./img/app-interactions/create-button.png)
+![Create button](./img/solution-interactions/create-button.png)
 
 
-## Edit an app
+## Edit an solution
 
-To edit an existing app, click on the **overflow menu**, on the top-right of your 
-app card. Click afterwards on the **Edit** button.
+To edit an existing solution, click on the **overflow menu**, on the top-right of your 
+solution card. Click afterwards on the **Edit** button.
 
-![Edit app option](./img/app-interactions/edit-app-option.png)
+![Edit solution option](./img/solution-interactions/edit-solution-option.png)
 
-For now, you may only edit the name of your app.
+For now, you may only edit the name of your solution.
 
-![Save editing btn](./img/app-interactions/save-editing-btn.png)
+![Save editing btn](./img/solution-interactions/save-editing-btn.png)
 
-Fill in the new app name and click on the **Save** button.
+Fill in the new solution name and click on the **Save** button.
 
-## Delete an app
+## Delete an solution
 
-To delete an app, click on the **overflow menu**, on the top-right of your
-app card. Click afterwards on **Danger Zone** > **Delete**.
+To delete a solution, click on the **overflow menu**, on the top-right of your
+solution card. Click afterwards on **Danger Zone** > **Delete**.
 
-![Delete app option](./img/app-interactions/delete-app-option.png)
+![Delete solution option](./img/solution-interactions/delete-solution-option.png)
 
 A modal appear.
 
-![Delete btn](./img/app-interactions/delete-btn.png)
+![Delete btn](./img/solution-interactions/delete-btn.png)
 
-To definitely delete the app, write back its name into the dedicated input and click on **Delete** button.
+To definitely delete the solution, write back its name into the dedicated input and click on **Delete** button.
 
 :::warning
 
-Once you delete an app, there is no going back: You won't be able to access the data contained in all databases of this app anymore.
-Be aware that all children databases of this app will also be affected by this operation. 
+Once you delete a solution, there is no going back: You won't be able to access the data contained in all databases of this solution anymore.
+Be aware that all children databases of this solution will also be affected by this operation. 
 
 :::

@@ -11,8 +11,8 @@ meaning your users are the only ones who decide who can access their data.
 
 iCure helps you to manage the encrypted data by providing a series of easy-to-use tools :
 - The **iCure Back-End** allows you to save your data into the databases and manage the access control to it based on the access
-  rules you defined in your app.
-- The [**iCure Cockpit Web Portal**](../cockpit/intro) allows you to create your apps, your databases and
+  rules you defined in your solution.
+- The [**iCure Cockpit Web Portal**](../cockpit/intro) allows you to create your solutions, your databases and
   your admin users in your iCure environment.
 - The **iCure Client SDKs** takes care of the [end-to-end encryption / decryption](/sdks/explanations/encryption/introduction)
   of your data and proposes you a series of easy-to-use medical-oriented services.
@@ -26,11 +26,11 @@ A to Z.
 Cockpit is the tool that will help you as a developer to configure / manage your environment. 
 
 In Cockpit, you will be able for example to: 
-- Link each of your app to an iCure environment
-- Manage databases of each of your apps
+- Link each of your solution to an iCure environment
+- Manage databases of each of your solutions
 - Manage the administrators
 - Manage your users
-- Check the logs generated in iCure concerning your apps / databases
+- Check the logs generated in iCure concerning your solutions / databases
 - ...
 
 ## Starting to use Cockpit
