@@ -90,40 +90,8 @@ const codeLines = [
   ],
   [
     `                                                          
-               ######                ######               
-             ###     ####        ####     ###             
-            ##          ###    ###          ##            
-            ##             ####             ##            
-            ##             ####             ##            
-            ##           ##    ##           ##            
-            ##         ###      ###         ##            
-             ##  ########################  ##             
-          ######    ###            ###    ######          
-      ###     ##    ##              ##    ##     ###      
-   ###         ## ###      ####      ### ##         ###   
-  ##           ####      ########      ####           ##  
- ##             ###     ##########     ###             ## 
-  ##           ####      ########      ####           ##  
-   ###         ## ###      ####      ### ##         ###   
-      ###     ##    ##              ##    ##     ###      
-          ######    ###            ###    ######          
-             ##  ########################  ##             
-            ##         ###      ###         ##            
-            ##           ##    ##           ##            
-            ##             ####             ##            
-            ##             ####             ##            
-            ##          ###    ###          ##            
-             ###     ####        ####     ###             
-               ######                ######               
-                                                          
-
                   Welcome to React Native!                
-                 Learn once, write anywhere               
-
-
-  
-      
-  
+                 Learn once, write anywhere                 
 `,
     1,
     300,
@@ -137,27 +105,10 @@ This is post init script
 ✔ Installing Bundler
 ✔ Installing CocoaPods dependencies (this may take a few minutes)
 
+...
 `,
     0,
     300,
-  ],
-  [
-    `      Run instructions for Android:
-    • Have an Android emulator running (quickest way to get started), or a device connected.
-    • cd "/Users/aduchate/Sources/github/MedtechApp" && npx react-native run-android
-  
-  Run instructions for iOS:
-    • cd "/Users/aduchate/Sources/github/MedtechApp" && npx react-native run-ios
-    - or -
-    • Open MedtechApp/ios/MedtechApp.xcworkspace in Xcode or run "xed -b ios"
-    • Hit the Run button
-    
-  Run instructions for macOS:
-    • See https://aka.ms/ReactNativeGuideMacOS for the latest up-to-date instructions.
-
-`,
-    0,
-    0,
   ],
 ] as [string, number, number][]
 
