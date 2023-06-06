@@ -13,7 +13,7 @@ From the Cockpit [login screen](https://cockpit.icure.cloud/login), fill in your
 You should now have received an OTP to the email address you linked to your account. 
 Provide this OTP to the dedicated **Code** input and click on the **Login** button.
 
-![Login form with code](./img/login-form-with-code.png)
+![Login form with code](./img/authenticate-with-code-step-2.png)
 
 :::tip
 
