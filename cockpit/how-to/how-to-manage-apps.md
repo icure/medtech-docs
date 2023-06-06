@@ -35,13 +35,26 @@ From the Cockpit [dashboard screen](https://cockpit.icure.cloud/dashboard), clic
 
 ![Create solution card](./img/solution-interactions/create-solution-card.png)
 
-Fill in the solution name and chose the cluster which should host the data of your solution by default (the cluster can be changed on a per-database basis). 
-Then, click on the **Create** button.
+You'll see a 5 steps process to complete, in order to create your solution. 
 
-![Create button](./img/solution-interactions/create-button.png)
+![5-steps process](./img/solution-interactions/create-solution-card-step-1.png)
+
+The 5 steps are self-explanatory and well documented. Go through each of them and provide the needed information.
+
+At the end of the process, you will receive a series of information :
+- the **EXTERNAL_SERVICES_SPEC_ID**, identifying your Solution in our Authentication component;
+- the **EMAIL_AUTHENTICATION_PROCESS_ID**, identifying the email template to send to your users during their registration or login;
+- the **PARENT_ORGANISATION_ID**, identifying your organization as the responsible of the created users.
+- the **FRIENDLY_CAPTCHA_SITE_KEY**, if you chose to use the Friendly-Captcha temporarily provided by iCure.
+
+Information that you will need when you'll want to start the development of your app. 
+
+![Solution Created](./img/solution-interactions/done-button.png)
+
+Once your solution is created, click on **Done**. 
 
 
-## Edit an solution
+## Edit a solution
 
 To edit an existing solution, click on the **overflow menu**, on the top-right of your 
 solution card. Click afterwards on the **Edit** button.
@@ -54,7 +67,7 @@ For now, you may only edit the name of your solution.
 
 Fill in the new solution name and click on the **Save** button.
 
-## Delete an solution
+## Delete a solution
 
 To delete a solution, click on the **overflow menu**, on the top-right of your
 solution card. Click afterwards on **Danger Zone** > **Delete**.

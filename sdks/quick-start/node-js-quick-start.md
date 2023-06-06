@@ -8,7 +8,13 @@ Now your iCure environment is successfully set up, you will be able to start the
 
 To make it easier for you, we created a [Node.JS Template Repository](https://github.com/icure/icure-medical-device-node-js-boilerplate-app-template), that includes: 
 - All the needed dependencies to work with iCure in a Node.JS app;
-- The cryptographic keys creation of your parent organisation (See [Quick Start - Create your parent Organisation](./index.md#create-a-parent-healthcare-professional-optional) for more information), to allow you to directly start working with medical data.
+- The cryptographic keys creation of your parent organisation (See [Quick Start - Configure your parent Organisation](./index.md#optional-configure-your-parent-organization-to-allow-patients-to-share-data-with-it) for more information), to allow you to directly start working with medical data.
+
+## Before starting
+Make sure you [generated an authentication token](index.md#create-an-authentication-token-for-your-parent-organisation) for your parent organisation, in order to allow it to connect to the iCure Back-End. 
+
+You should now be in possession of your **PARENT_ORGANISATION_USERNAME** and your **PARENT_ORGANISATION_TOKEN**. 
+
 
 ## Create your project
 ### Clone the template repository
@@ -19,15 +25,15 @@ git clone git@github.com:icure/icure-medical-device-node-js-boilerplate-app-temp
 
 ### Fill the .env file
 While you initialized your environment in [Quick Start](./index.md), we asked you to keep a series of information including: 
-- the **PARENT_HEALTHCARE_PROFESSIONAL_USERNAME**, the username of your parent organisation. 
-- the **PARENT_HEALTHCARE_PROFESSIONAL_TOKEN**, the application token of your parent organisation. 
+- the **PARENT_ORGANISATION_USERNAME**, the username of your parent organisation (Generally its email). 
+- the **PARENT_ORGANISATION_TOKEN**, the authentication token of your parent organisation. 
 
 You need to add these information in your newly created Node.JS Server App. 
 For  this, rename the `.env.default` file to  `.env` and complete the values of the corresponding variables.
 
 Here is the list of a few other optional environment variables you can configure: 
-- the **PARENT_HEALTHCARE_PARTY_PUBLIC_KEY**, RSA public key of your parent organisation, in case you already generated cryptographic keys for your parent organisation in the past. 
-- the **PARENT_HEALTHCARE_PARTY_PRIVATE_KEY**, RSA private key of your parent organisation, in case you already generated cryptographic keys for your parent organisation in the past 
+- the **PARENT_ORGANISATION_PUBLIC_KEY**, RSA public key of your parent organisation, in case you already generated cryptographic keys for your parent organisation in the past. 
+- the **PARENT_ORGANISATION_PRIVATE_KEY**, RSA private key of your parent organisation, in case you already generated cryptographic keys for your parent organisation in the past 
 - the **HOST**, host to use to start your Node.JS server (Default is 127.0.0.1),
 - the **PORT** , the port to use to start your Node.JS server (Default is 3000),
 - the **LOCAL_STORAGE_LOCATION**, the path to your local storage file (Default is ./scratch/localStorage)
@@ -66,5 +72,6 @@ Check if the location of your localStorage didn't change or if your .env file is
 If you really wish to force the re-creation of your parent healthcare professioonal cryptographic keys, you can call `http://127.0.0.1:3000?forceKeysCreation=true`. Be aware you will not be able to decrypt the data shared with your previous RSA key anymore ! You should do this operation for tests purpose-only.  
 :::
 
+
 ## Congratulations !
-You're fully ready to start managing medical data inside your Node.JS App ! Time to have a look to our various [How To's pages](../how-to/index) and start implementing the functionalities of your choice. 
+You're ready to start managing medical data inside your Node.JS App ! Time to have a look to our various [How To's pages](../how-to/index) and start implementing the functionalities of your choice. 

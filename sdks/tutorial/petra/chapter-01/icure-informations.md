@@ -18,7 +18,7 @@ Go through each of them, providing the mandatory information. During this proces
 
 
 Once it's done, you will receive a series of information on the Recap screen:
-- the **EXTERNAL_SERVICES_SPEC_ID**, identifying your App in our Authentication component;
+- the **EXTERNAL_SERVICES_SPEC_ID**, identifying your Solution in our Authentication component;
 - the **EMAIL_AUTHENTICATION_PROCESS_ID**, identifying the email template to send to your users during their registration or login;
 - the **PARENT_ORGANISATION_ID**, identifying your organization as the responsible of the created users.
 - the **FRIENDLY_CAPTCHA_SITE_KEY**, if you chose to use the Friendly-Captcha temporarily provided by iCure.

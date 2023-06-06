@@ -30,6 +30,8 @@ const sidebars = {
         },
       ],
     },
+    'glossary',
+    'faq'
   ],
 };
 
