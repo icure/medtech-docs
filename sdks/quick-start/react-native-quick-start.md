@@ -56,7 +56,7 @@ You need to add these information in your newly created React Native App.
 For this, go to the `config/constants.ts` file and complete the values of the variables named the same way.
 
 :::caution
-If you decided to use the iCure DEMO Friendly-Captcha, don't forget this is a **TEMPORARY** solution. Make sure to create your own Google ReCaptcha v3 or Friendly-Captcha Secret Key, as you will have a limited number of allowed authentications before the DEMO key expires. 
+If you decided to use the iCure DEMO Friendly-Captcha, do not forget that this is a **TEMPORARY** solution. Make sure to create your own Google ReCaptcha v3 or Friendly-Captcha Secret Key, as you will have a limited number of allowed authentications before the DEMO key expires. 
 :::
 
 :::caution

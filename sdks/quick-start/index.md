@@ -45,12 +45,12 @@ If you would like to learn more about solutions and how to fully manage them, go
 ### What is the parent organisation ? 
 The parent organization represents your company and will be considered as the responsible of the users created in your database. 
 
-Also, if your app needs to create some additional medical data based on your patient data, your parent organization will be the healthcare party you will use. More information about this in the section [Configure your parent organization to allow patients to share data with it](index.md#optional-configure-your-parent-organization-to-allow-patients-to-share-data-with-it).
+Also, if your app needs to create some additional medical data based on your patient data, your patients will have to share some data with a healthcare party you possess. A possibility will be to share their data with your parent organization. More information about this in the section [Configure your parent organization to allow patients to share data with it](index.md#optional-configure-your-parent-organization-to-allow-patients-to-share-data-with-it).
 
 ### How to update my external services information ? 
-If you chose to use the temporary iCure External Services DEMO Setup, you'll have to provide your own external services information after 20 user authentication (register and/or login). 
+If you chose to use the temporary iCure External Services DEMO Setup, you'll have to provide your own external services information after 20 user authentications (register and/or login). 
 
-Go to the Cockpit dedicated documentation to check [how to manage your account](/cockpit/how-to/how-to-manage-your-account) and specifically, go to the **External Services** section. 
+Go to the Cockpit dedicated documentation to check [how to manage your external services](/cockpit/how-to/how-to-manage-your-account#external-services). 
 
 
 ## (Optional) Configure your parent organization to allow patients to share data with it

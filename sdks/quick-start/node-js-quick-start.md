@@ -74,4 +74,4 @@ If you really wish to force the re-creation of your parent healthcare professioo
 
 
 ## Congratulations !
-You're ready to start managing medical data inside your Node.JS App ! Time to have a look to our various [How To's pages](../how-to/index) and start implementing the functionalities of your choice. 
+You are ready to start managing medical data inside your Node.JS App ! Time to have a look to our various [How To's pages](../how-to/index) and start implementing the functionalities of your choice. 
