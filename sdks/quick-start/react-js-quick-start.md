@@ -31,7 +31,7 @@ Once your project is created and `yarn` installed the needed dependencies, you s
 
 Created git commit.
 
-Success! Created my-official-cra-medtech-2 at /Users/lisatr/_WORK/temp/my-official-cra-medtech-2
+Success! Created <your-icure-medtech-react-app> at /...
 Inside that directory, you can run several commands:
 
   yarn start
@@ -49,7 +49,7 @@ Inside that directory, you can run several commands:
 
 We suggest that you begin by typing:
 
-  cd my-official-cra-medtech-2
+  cd <your-icure-medtech-react-app>
   yarn start
 
 Happy hacking!

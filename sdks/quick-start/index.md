@@ -45,7 +45,7 @@ If you would like to learn more about solutions and how to fully manage them, go
 ### What is the parent organisation ? 
 The parent organization represents your company and will be considered as the responsible of the users created in your database. 
 
-Also, if your app needs to create some additional medical data based on your patient data, your parent organization will be the healthcare party you will use. More information about this in the section [Configure your parent organization to allow patients to share data with it](index.md#optional-configure-your-parent-organization-to-allow-patients-to-share-data-with-it)
+Also, if your app needs to create some additional medical data based on your patient data, your parent organization will be the healthcare party you will use. More information about this in the section [Configure your parent organization to allow patients to share data with it](index.md#optional-configure-your-parent-organization-to-allow-patients-to-share-data-with-it).
 
 ### How to update my external services information ? 
 If you chose to use the temporary iCure External Services DEMO Setup, you'll have to provide your own external services information after 20 user authentication (register and/or login). 
@@ -69,6 +69,12 @@ Click on the database in which your patients will need to share information with
 Go to the **HCP** tab and find your parent organisation thanks to the Search Bar. When you found it, show its detailed information and click on the **+** button to add an authentication token. 
 
 You should now see a modal to create a new authentication token. In this modal, fill in the value of your token key and its expiration date. Once you're done, click on **Submit token**. 
+
+The value of your newly created token should be displayed. 
+
+:::danger
+For security reasons, the token value is only showed at its creation and not anymore. Make sure to copy and save it as you won't be able to find it back !
+:::
 
 :::caution
 For security reasons, we need to make sure a token doesn't have an infinite timelife. When your token is about to expire, make sure to create another one to avoid any issues while using your services. 

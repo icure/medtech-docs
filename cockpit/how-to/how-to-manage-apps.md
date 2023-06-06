@@ -35,13 +35,13 @@ From the Cockpit [dashboard screen](https://cockpit.icure.cloud/dashboard), clic
 
 ![Create solution card](./img/solution-interactions/create-solution-card.png)
 
-Fill in the solution name and chose the cluster which should host the data of your solution by default (the cluster can be changed on a per-database basis). 
+Fill in the solution name and choose the cluster which should host the data of your solution by default (the cluster can be changed on a per-database basis). 
 Then, click on the **Create** button.
 
 ![Create button](./img/solution-interactions/create-button.png)
 
 
-## Edit an solution
+## Edit a solution
 
 To edit an existing solution, click on the **overflow menu**, on the top-right of your 
 solution card. Click afterwards on the **Edit** button.
@@ -54,7 +54,7 @@ For now, you may only edit the name of your solution.
 
 Fill in the new solution name and click on the **Save** button.
 
-## Delete an solution
+## Delete a solution
 
 To delete a solution, click on the **overflow menu**, on the top-right of your
 solution card. Click afterwards on **Danger Zone** > **Delete**.
