@@ -17,11 +17,20 @@ You should now be in possession of your **PARENT_ORGANISATION_USERNAME** and you
 
 
 ## Create your project
-### Clone the template repository
-Clone the Node.JS template project: 
+### Create a new repository from the template
+Head to our [node js app template](https://github.com/icure/icure-medical-device-node-js-boilerplate-app-template) and click on `Use this template` to create a new repository
+initialised with the essential files for a node-js icure app ([more on github templates](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template)).
+You can also initialise the repository using the GitHub CLI:
+```
+gh repo create <your-icure-nodejs-app> --private --clone --template icure/icure-medical-device-node-js-boilerplate-app-template
+```
+
+Alternatively you can also clone the Node.JS template project: 
 ```
 git clone git@github.com:icure/icure-medical-device-node-js-boilerplate-app-template.git <your-icure-nodejs-app>
 ```
+Beware that if you do this your repository will be initialised with the history from the template repository and the `origin` remote pointing to it. You may want to delete the `.git` folder and
+re-initialise the repository to achieve an effect similar to the github template.
 
 ### Fill the .env file
 While you initialized your environment in [Quick Start](./index.md), we asked you to keep a series of information including: 
