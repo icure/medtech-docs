@@ -3,7 +3,7 @@ slug: how-to-create-your-account
 ---
 # Registering to the Cockpit
 
-First, open the Cockpit [Home screen](https://cockpit.icure.cloud) in your browser. You'll see a 
+First, open the Cockpit [Home screen](https://cockpit.icure.dev) in your browser. You'll see a 
 registration form :
 
 ![Registration form](./img/register/register.png)

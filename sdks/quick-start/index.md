@@ -5,14 +5,14 @@ sidebar_position: 2
 
 Welcome to iCure!
 In this iCure Quick Start guide, you will learn how to initialize your iCure environment and begin working with the MedTech SDK. The process involves several steps:
-- Create your iCure account by registering on the Cockpit Web Portal.
-- Configure an iCure environement on the Cockpit Web Portal.
+- Create your iCure account by registering on the [Cockpit Web Portal](https://cockpit.icure.dev).
+- Configure an iCure environement on the [Cockpit Web Portal](https://cockpit.icure.dev).
 - Configure your parent organization to allow patients to share data with it (Optional).
 
 Before moving on to your dedicated Technology page, ensure that you have completed all the necessary steps. Additional resources and detailed procedures are available throughout the guide for more information.
 
 ## Create your iCure account 
-Visit our [Cockpit Web Portal](https://cockpit.icure.cloud) and fill in the registration form. 
+Visit our [Cockpit Web Portal](https://cockpit.icure.dev) and fill in the registration form. 
 After providing all the required information, click on **Register**. 
 
 Within a few seconds, you will receive an invitation at the email address you provided in the form. In the email, click on **Verify** to validate your email address and finalize your iCure account creation.
@@ -62,7 +62,7 @@ Therefore, your patients will need to share their data with your organization; T
 
 
 ### Create an authentication token for your parent organisation
-Go to your [Cockpit Dashboard](https://cockpit.icure.cloud/dashboard) and select your Solution.
+Go to your [Cockpit Dashboard](https://cockpit.icure.dev/dashboard) and select your Solution.
 
 Click on the database in which your patients will need to share information with your parent organisation. 
 

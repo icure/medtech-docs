@@ -31,7 +31,7 @@ Be aware that users of one solution will never be able to see the data of anothe
 
 ## Create a solution
 
-From the Cockpit [dashboard screen](https://cockpit.icure.cloud/dashboard), click on the **Create solution** card.
+From the Cockpit [dashboard screen](https://cockpit.icure.dev/dashboard), click on the **Create solution** card.
 
 ![Create solution card](./img/solution-interactions/create-solution-card.png)
 
