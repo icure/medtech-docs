@@ -5,7 +5,7 @@ slug: how-to-login
 # Login to the Cockpit
 
 ## Login using an OTP
-From the Cockpit [login screen](https://cockpit.icure.cloud/login), fill in your username and click on the 
+From the Cockpit [login screen](https://cockpit.icure.dev/login), fill in your username and click on the 
 **Receive a one time code** button.
 
 ![Authenticate with code](./img/authenticate-with-code.png)
@@ -26,7 +26,7 @@ If you still don't receive it, make sure you created an account previously.
 ## Login with username and password
 If you don't want to login using a generated OTP, you may still choose to login using a username / password. 
 
-From the Cockpit [login screen](https://cockpit.icure.cloud/login), click on the option **Authenticate with a password**.
+From the Cockpit [login screen](https://cockpit.icure.dev/login), click on the option **Authenticate with a password**.
 
 ![Authenticate with password](./img/authenticate-with-password.png)
 

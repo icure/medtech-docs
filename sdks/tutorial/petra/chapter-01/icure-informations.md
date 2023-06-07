@@ -1,5 +1,5 @@
 # Init your iCure solution
-In order to be able to register users through Petra, you will need to create an iCure solution in [Cockpit](https://cockpit.icure.cloud/dashboard).
+In order to be able to register users through Petra, you will need to create an iCure solution in [Cockpit](https://cockpit.icure.dev/dashboard).
 
 It's in this solution and its dedicated database(s) that the data created with Petra will be stored.
 
@@ -8,7 +8,7 @@ In this section, we'll only cover the most important steps / information of the 
 :::
 
 ## Create an iCure solution for Petra
-After you registered or signed in on [Cockpit](https://cockpit.icure.cloud), go to the [Dashboard page](https://cockpit.icure.cloud/dashboard). 
+After you registered or signed in on [Cockpit](https://cockpit.icure.dev), go to the [Dashboard page](https://cockpit.icure.dev/dashboard). 
 
 Click on "Create a Solution". You should now see a series of steps to complete. 
 

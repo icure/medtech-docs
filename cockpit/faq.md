@@ -29,7 +29,7 @@ The **FRIENDLY_CAPTCHA_SITE_KEY** is displayed there, **only** if you're using t
 
 ### Find my EMAIL_AUTHENTICATION_PROCESS_ID or SMS_AUTHENTICATION_PROCESS_ID
 
-Go to the [Cockpit Dashboard](https://cockpit.icure.cloud/dashboard) and click on your solution. 
+Go to the [Cockpit Dashboard](https://cockpit.icure.dev/dashboard) and click on your solution. 
 
 Click afterwards on your database. 
 
@@ -40,14 +40,14 @@ You always have the possibility to edit the process or to create a new one if yo
 :::
 
 ### Find my PARENT_ORGANISATION_ID
-Go to the [Cockpit Dashboard](https://cockpit.icure.cloud/dashboard) and click on your solution. 
+Go to the [Cockpit Dashboard](https://cockpit.icure.dev/dashboard) and click on your solution. 
 
 Click afterwards on your database. 
 
 Go to the **HCP** tab. Click on your parent organisation (you can find it more easily using the searchbar) to show its detailed information and check its **Organisation ID** column. 
 
 ### Find my PARENT_ORGANISATION_USERNAME
-Go to the [Cockpit Dashboard](https://cockpit.icure.cloud/dashboard) and click on your solution. 
+Go to the [Cockpit Dashboard](https://cockpit.icure.dev/dashboard) and click on your solution. 
 
 Click afterwards on your database. 
 
@@ -58,7 +58,7 @@ Go to the **HCP** tab. Pick your parent organisation (you can find it more easil
 
 The token value is showed only at its creation, for security reasons. If you lost the value of your PARENT_ORGANISATION_TOKEN, you need to create a new token. 
 
-For this, go to the [Cockpit Dashboard](https://cockpit.icure.cloud/dashboard) and click on your solution. 
+For this, go to the [Cockpit Dashboard](https://cockpit.icure.dev/dashboard) and click on your solution. 
 
 Click afterwards on your database. 
 
