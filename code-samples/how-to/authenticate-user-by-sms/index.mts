@@ -4,6 +4,7 @@ import { Patient, AnonymousMedTechApiBuilder, MedTechApiBuilder } from '@icure/m
 import { webcrypto } from 'crypto'
 import * as process from 'process'
 import { getLastSMS } from '../../utils/msgGtw.mjs'
+import { SimpleMedTechCryptoStrategies } from '@icure/medical-device-sdk/src/services/impl/SimpleMedTechCryptoStrategies';
 
 const cachedInfo = {} as { [key: string]: string }
 const userPhoneNumber = `+32${Math.floor(Math.random() * 1000000000)}`
@@ -118,9 +119,8 @@ const reInstantiatedApi = await new MedTechApiBuilder()
   .withUserName(login)
   .withPassword(token)
   .withCrypto(webcrypto as any)
+  .withCryptoStrategies(new SimpleMedTechCryptoStrategies([{ publicKey: pubKey, privateKey: privKey }]))
   .build()
-
-await reInstantiatedApi.initUserCrypto({ publicKey: pubKey, privateKey: privKey })
 
 const foundPatientAfterInstantiatingApi = await reInstantiatedApi.patientApi.getPatient(
   createdPatient.id,

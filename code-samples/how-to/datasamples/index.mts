@@ -7,7 +7,6 @@ import {
 } from '@icure/medical-device-sdk'
 import { hex2ua, sleep } from '@icure/api'
 import 'isomorphic-fetch'
-import * as console from 'console'
 
 import { initLocalStorage, initMedTechApi, output, privKey } from '../../utils/index.mjs'
 
