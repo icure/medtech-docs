@@ -13,6 +13,7 @@ import * as process from 'process'
 import { getLastEmail } from '../../utils/msgGtw.mjs'
 import { expect } from 'chai'
 import { NotificationTypeEnum } from '@icure/medical-device-sdk/src/models/Notification.js'
+import { SimpleMedTechCryptoStrategies } from '@icure/medical-device-sdk/src/services/impl/SimpleMedTechCryptoStrategies';
 
 const cachedInfo = {} as { [key: string]: string }
 const uniqueId = Math.random().toString(36).substring(4)
@@ -152,9 +153,8 @@ const reInstantiatedApi = await new MedTechApiBuilder()
   .withUserName(login)
   .withPassword(token)
   .withCrypto(webcrypto as any)
+  .withCryptoStrategies(new SimpleMedTechCryptoStrategies([{ publicKey: pubKey, privateKey: privKey }]))
   .build()
-
-await reInstantiatedApi.initUserCrypto({ publicKey: pubKey, privateKey: privKey })
 //tech-doc: STOP HERE
 
 //tech-doc: Get back encrypted data
@@ -325,7 +325,6 @@ output({ daenaerysPatientId, daenaerysPatientPubKey, accessBack })
 
 // Then
 const updatedApi = await medTechApi(loginAuthResult.medTechApi).build()
-await updatedApi.initUserCrypto(loginAuthResult.keyPairs[0])
 
 const previousDataSample = await updatedApi.dataSampleApi.getDataSample(createdDataSample.id!)
 expect(previousDataSample).to.not.be.undefined //skip

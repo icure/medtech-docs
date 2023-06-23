@@ -317,6 +317,14 @@ const reInstantiatedApi = await new MedTechApiBuilder()
 
 await reInstantiatedApi.initUserCrypto({ publicKey: pubKey, privateKey: privKey })
 ```
+The MedTech API will automatically load the keys for that user from the local storage, but you can also pass them
+explicitly through the `.withCryptoStrategies` method of the builder.
+
+:::info
+
+You can learn more about the Crypto Strategies [here](/sdks/explanations/crypto-strategies/crypto-strategies).
+
+:::
 
 Daenaerys can finally manage her data again.
 <!-- file://code-samples/how-to/authenticate-user/index.mts snippet:Get back encrypted data-->

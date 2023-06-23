@@ -223,7 +223,8 @@ const sidebarsSDK = {
                         'explanations/data-model/data-model-user'
                     ],
                 },
-                'explanations/encryption/introduction'
+                'explanations/encryption/introduction',
+                'explanations/crypto-strategies/index'
                 /* TODO: when we make more encryption docs we need to replace explanations/encryption/introduction with this
                  *  and update the introduction document to become again "introduction"
                 {
