@@ -180,9 +180,9 @@ await api.healthcareElementApi.createOrModifyHealthcareElement(
 )
 
 //tech-doc: create HE filter
-const healthcareElementFilter = await new HealthcareElementFilter()
+const healthcareElementFilter = await new HealthcareElementFilter(api)
   .forDataOwner(user.healthcarePartyId)
-  .forPatients(api.cryptoApi, [patient])
+  .forPatients([patient])
   .build()
 //tech-doc: STOP HERE
 output({ healthcareElementFilter })

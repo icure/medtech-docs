@@ -18,8 +18,6 @@ Pass the `healthcareProfessional` to the createHealthcareProfessional method of 
 
 <!-- file://code-samples/how-to/manage-healthcare-professionals/index.mts snippet:Create a healthcare professional-->
 ```typescript
-import { User } from '@icure/medical-device-sdk'
-
 const healthcareProfessional: HealthcareProfessional = new HealthcareProfessional({
   firstName: 'John',
   lastName: 'Keats',
@@ -50,9 +48,9 @@ const createdHcp = await api.healthcareProfessionalApi.createOrModifyHealthcareP
 
 ```json
 {
-  "id": "c70e0d39-1035-4cd7-babe-54c6a1b111a8",
+  "id": "36393c21-55a2-4bb2-a5aa-9cc0dd42cb6b",
   "languages": [],
-  "rev": "1-87437e18f593fd8e7980c964ed8a05ab",
+  "rev": "1-383f2261a274fb63ffe103e81fa698c8",
   "name": "Keats John",
   "lastName": "Keats",
   "firstName": "John",
@@ -83,10 +81,11 @@ const createdHcp = await api.healthcareProfessionalApi.createOrModifyHealthcareP
   ],
   "properties": {},
   "systemMetaData": {
+    "aesExchangeKeys": {},
     "hcPartyKeys": {},
     "privateKeyShamirPartitions": {},
-    "aesExchangeKeys": {},
-    "transferKeys": {}
+    "transferKeys": {},
+    "publicKeysForOaepWithSha256": {}
   }
 }
 ```
@@ -107,9 +106,9 @@ const loadedHcp = await api.healthcareProfessionalApi.getHealthcareProfessional(
 
 ```json
 {
-  "id": "c70e0d39-1035-4cd7-babe-54c6a1b111a8",
+  "id": "36393c21-55a2-4bb2-a5aa-9cc0dd42cb6b",
   "languages": [],
-  "rev": "1-87437e18f593fd8e7980c964ed8a05ab",
+  "rev": "1-383f2261a274fb63ffe103e81fa698c8",
   "name": "Keats John",
   "lastName": "Keats",
   "firstName": "John",
@@ -140,10 +139,11 @@ const loadedHcp = await api.healthcareProfessionalApi.getHealthcareProfessional(
   ],
   "properties": {},
   "systemMetaData": {
+    "aesExchangeKeys": {},
     "hcPartyKeys": {},
     "privateKeyShamirPartitions": {},
-    "aesExchangeKeys": {},
-    "transferKeys": {}
+    "transferKeys": {},
+    "publicKeysForOaepWithSha256": {}
   }
 }
 ```
@@ -158,7 +158,7 @@ You can build filters by hand or use the DSL provided by the HealthcareProfessio
 <!-- file://code-samples/how-to/manage-healthcare-professionals/index.mts snippet:Filter healthcare professionals-->
 ```typescript
 const hcps = await api.healthcareProfessionalApi.filterHealthcareProfessionalBy(
-  await new HealthcareProfessionalFilter()
+  await new HealthcareProfessionalFilter(api)
     .byLabelCodeFilter(undefined, undefined, 'practitioner-specialty', healthcareProfessionalCode)
     .build(),
 )
@@ -171,12 +171,12 @@ const hcps = await api.healthcareProfessionalApi.filterHealthcareProfessionalBy(
 ```json
 {
   "pageSize": 1000,
-  "totalSize": 714,
+  "totalSize": 360,
   "rows": [
     {
-      "id": "c70e0d39-1035-4cd7-babe-54c6a1b111a8",
+      "id": "36393c21-55a2-4bb2-a5aa-9cc0dd42cb6b",
       "languages": [],
-      "rev": "1-87437e18f593fd8e7980c964ed8a05ab",
+      "rev": "1-383f2261a274fb63ffe103e81fa698c8",
       "name": "Keats John",
       "lastName": "Keats",
       "firstName": "John",
@@ -207,10 +207,11 @@ const hcps = await api.healthcareProfessionalApi.filterHealthcareProfessionalBy(
       ],
       "properties": {},
       "systemMetaData": {
+        "aesExchangeKeys": {},
         "hcPartyKeys": {},
         "privateKeyShamirPartitions": {},
-        "aesExchangeKeys": {},
-        "transferKeys": {}
+        "transferKeys": {},
+        "publicKeysForOaepWithSha256": {}
       }
     }
   ],
@@ -233,6 +234,6 @@ const deletedHcp = await api.healthcareProfessionalApi.deleteHealthcareProfessio
 <summary>deletedHcp</summary>
 
 ```text
-3-4de05aff984f2c8b66f3892fd3b26bb1
+3-8de9c2cb140fde4a2c8d4a70fdd99b9d
 ```
 </details>

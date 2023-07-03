@@ -1,13 +1,19 @@
 import 'isomorphic-fetch'
-import { initLocalStorage, initMedTechApi, output } from '../../utils/index.mjs'
-import { Patient, AnonymousMedTechApiBuilder, MedTechApiBuilder } from '@icure/medical-device-sdk'
+import { initLocalStorage, output, password } from '../../utils/index.mjs'
+import {
+  Patient,
+  AnonymousMedTechApiBuilder,
+  MedTechApiBuilder,
+  medTechApi,
+} from '@icure/medical-device-sdk'
 import { webcrypto } from 'crypto'
 import * as process from 'process'
 import { getLastSMS } from '../../utils/msgGtw.mjs'
-import { SimpleMedTechCryptoStrategies } from '@icure/medical-device-sdk/src/services/impl/SimpleMedTechCryptoStrategies';
+import { SimpleMedTechCryptoStrategies } from '@icure/medical-device-sdk'
+import { username } from '../../quick-start/index.mjs'
 
 const cachedInfo = {} as { [key: string]: string }
-const userPhoneNumber = `+32${Math.floor(Math.random() * 1000000000)}`
+const userPhoneNumber = `+24${Math.floor(Math.random() * 1000000000)}`
 
 function saveSecurely(
   userLogin: string,
@@ -42,14 +48,21 @@ function getBackCredentials(): {
 initLocalStorage()
 
 //tech-doc: Get master Hcp Id
-const masterHcpApi = await initMedTechApi()
+const iCureUrl = process.env.ICURE_URL
+
+const masterHcpApi = await medTechApi()
+  .withICureBaseUrl(iCureUrl)
+  .withUserName(username)
+  .withPassword(password)
+  .withCrypto(webcrypto as any)
+  .withCryptoStrategies(new SimpleMedTechCryptoStrategies([]))
+  .build()
 const masterUser = await masterHcpApi.userApi.getLoggedUser()
 const masterHcpId = masterHcpApi.dataOwnerApi.getDataOwnerIdOf(masterUser)
 //tech-doc: STOP HERE
 output({ masterUser, masterHcpId })
 
 //tech-doc: Instantiate AnonymousMedTech API
-const iCureUrl = process.env.ICURE_URL
 const msgGtwUrl = process.env.ICURE_MSG_GTW_URL
 const specId = process.env.SPEC_ID
 const authProcessByEmailId = process.env.AUTH_BY_EMAIL_HCP_PROCESS_ID
@@ -62,6 +75,7 @@ const anonymousApi = await new AnonymousMedTechApiBuilder()
   .withMsgGwUrl(msgGtwUrl)
   .withMsgGwSpecId(specId)
   .withAuthProcessBySmsId(authProcessBySmsId)
+  .withCryptoStrategies(new SimpleMedTechCryptoStrategies([]))
   .build()
 //tech-doc: STOP HERE
 
@@ -119,7 +133,9 @@ const reInstantiatedApi = await new MedTechApiBuilder()
   .withUserName(login)
   .withPassword(token)
   .withCrypto(webcrypto as any)
-  .withCryptoStrategies(new SimpleMedTechCryptoStrategies([{ publicKey: pubKey, privateKey: privKey }]))
+  .withCryptoStrategies(
+    new SimpleMedTechCryptoStrategies([{ publicKey: pubKey, privateKey: privKey }]),
+  )
   .build()
 
 const foundPatientAfterInstantiatingApi = await reInstantiatedApi.patientApi.getPatient(
@@ -136,6 +152,7 @@ const anonymousApiForLogin = await new AnonymousMedTechApiBuilder()
   .withMsgGwSpecId(specId)
   .withAuthProcessByEmailId(authProcessByEmailId)
   .withAuthProcessBySmsId(authProcessBySmsId)
+  .withCryptoStrategies(new SimpleMedTechCryptoStrategies([]))
   .build()
 
 const authProcessLogin = await anonymousApiForLogin.authenticationApi.startAuthentication(

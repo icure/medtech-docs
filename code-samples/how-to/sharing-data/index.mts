@@ -77,15 +77,16 @@ expect(
   //skip
   (await hcp1Api.healthcareElementApi.getHealthcareElement(healthcareElement.id)).description, //skip
 ).to.equal(description) //skip
-expect((await hcp2Api.healthcareElementApi.getHealthcareElement(healthcareElement.id)).description) //skip
-  .to.be.undefined //skip
-expect(pApi.healthcareElementApi.getHealthcareElement(healthcareElement.id)).to.be.rejected //skip
+await expect(hcp2Api.healthcareElementApi.getHealthcareElement(healthcareElement.id)).to.be.rejected //skip //skip
+await expect(pApi.healthcareElementApi.getHealthcareElement(healthcareElement.id)).to.be.rejected //skip
 // hcp1 shares `healthcareElement` with p
 await hcp1Api.healthcareElementApi.giveAccessTo(
   healthcareElement,
   hcp1Api.dataOwnerApi.getDataOwnerIdOf(pUser),
 )
 //tech-doc: end
+console.log('Share HE with another HCP')
+
 //tech-doc: share a healthcare element
 // p retrieves `healthcareElement` and shares it with hcp2
 await pApi.healthcareElementApi.giveAccessTo(

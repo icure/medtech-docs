@@ -44,14 +44,14 @@ const createdUser = await api.userApi.createAndInviteUser(existingPatient, messa
 
 ```json
 {
-  "id": "7a6b2227-a886-43be-a33a-94a6771dc27c",
-  "rev": "1-fb516453aef2f827be7f0533564fce3c",
-  "created": 1682493711304,
-  "name": "fdd399d0@icure.com",
-  "login": "fdd399d0@icure.com",
+  "id": "f9ae2441-cb35-4a4c-bcc2-d87d9d045835",
+  "rev": "1-4612fed481010a57d45deaee2fa2d9e9",
+  "created": 1688375637135,
+  "name": "740d356d@icure.com",
+  "login": "740d356d@icure.com",
   "groupId": "ic-e2etest-medtech-docs",
-  "patientId": "82d4ed50-ab11-4009-98ae-e70536546fe2",
-  "email": "fdd399d0@icure.com",
+  "patientId": "c4eec5b6-0d62-4cba-8ad8-614e1df660d2",
+  "email": "740d356d@icure.com",
   "properties": {},
   "roles": {},
   "sharingDataWith": {},
@@ -107,33 +107,33 @@ const dataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
 
 ```json
 {
-  "id": "a72dd3e9-9a50-423c-ae21-35bb380a8e63",
-  "rev": "1-9d34cde2b845705807309417c74506be",
-  "created": 1682493724426,
-  "modified": 1682493724426,
-  "author": "3531d4cd-69a7-41d3-b711-e2edaae99875",
-  "responsible": "d4817fbd-c84e-486d-92da-daa2aa2edc48",
-  "healthcareElementId": "a72dd3e9-9a50-423c-ae21-35bb380a8e63",
-  "valueDate": 20230426072204,
-  "openingDate": 20230426072204,
+  "id": "25a46efc-96c7-4f65-9f9c-a10b7e9ef24b",
+  "rev": "1-0b02cbf013763ec2c9b319f9e242ab26",
+  "created": 1688375638088,
+  "modified": 1688375638088,
+  "author": "6a541dfb-40d9-41f5-ba76-e3a5e277813f",
+  "responsible": "e2b6e873-035b-4964-885b-5a90e99c43b4",
+  "healthcareElementId": "25a46efc-96c7-4f65-9f9c-a10b7e9ef24b",
+  "valueDate": 20230703111358,
+  "openingDate": 20230703111358,
   "description": "My diagnosis is that the patient has Hay Fever",
   "identifiers": [],
   "codes": {},
   "labels": {},
   "systemMetaData": {
     "secretForeignKeys": [
-      "ce1568d1-d1d5-4c0a-b05b-18efed77163d"
+      "41b78e71-f3fe-4a00-8540-ab2e845144dc"
     ],
     "cryptedForeignKeys": {
-      "d4817fbd-c84e-486d-92da-daa2aa2edc48": {}
+      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
     },
     "delegations": {
-      "d4817fbd-c84e-486d-92da-daa2aa2edc48": {}
+      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
     },
     "encryptionKeys": {
-      "d4817fbd-c84e-486d-92da-daa2aa2edc48": {}
+      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
     },
-    "encryptedSelf": "h6wo0KjyPMowE7AgZMKPdPZfbMDp6lgezBtLfhthTQXXZyZ9yqYbZ0+heJWuv36LbHQZu71OLt7AIcbAc2X1xSD1yZuz+EPCZtFn6AiBdus="
+    "encryptedSelf": "lhgG/jBFbq8ov1+01xVPz2TXdJYY4rfKLJcEDst9XEy4MifxWnUYodpVNdx7ozVhrIp8Qoxd+0a3awa6bNvuC+CbFh/RQvMqOQKNA1MXCXA="
   }
 }
 ```
@@ -145,16 +145,16 @@ const dataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
 
 ```json
 {
-  "id": "51c2fa84-6141-41ad-8fc0-679fc95b7e0b",
+  "id": "a45fad0a-bfc1-4b2c-a0bb-d9cd55bd2811",
   "qualifiedLinks": {},
-  "batchId": "5dac91e7-103e-4c7f-a98b-ec8e6d2a37fa",
+  "batchId": "aefd6e81-bfea-42ab-b639-98b9ee5f5248",
   "index": 0,
-  "valueDate": 20230426072205,
-  "openingDate": 20230426072205,
-  "created": 1682493725225,
-  "modified": 1682493725226,
-  "author": "3531d4cd-69a7-41d3-b711-e2edaae99875",
-  "responsible": "d4817fbd-c84e-486d-92da-daa2aa2edc48",
+  "valueDate": 20230703111358,
+  "openingDate": 20230703111358,
+  "created": 1688375638132,
+  "modified": 1688375638131,
+  "author": "6a541dfb-40d9-41f5-ba76-e3a5e277813f",
+  "responsible": "e2b6e873-035b-4964-885b-5a90e99c43b4",
   "identifiers": [],
   "healthcareElementIds": {},
   "canvasesIds": {},
@@ -169,18 +169,20 @@ const dataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
   "codes": {},
   "labels": {},
   "systemMetaData": {
+    "encryptedSelf": "zLCR5yXnEbq8qBHCTVTLD3xhF5TZNQwsql/4I45m+cJvc80Xg60fMY+KyzNDKqpMSyjJEJV2Wm5dq6wx+BKkCBWpLXVfyYRsfuit4UzT+y/2KA2MLJa1Qd0lsMoV1xKe750zuKPFI+n3qZ7gClW+nSz8mLJpZqLWIUuxwxTJHHM=",
     "secretForeignKeys": [
-      "ce1568d1-d1d5-4c0a-b05b-18efed77163d"
+      "41b78e71-f3fe-4a00-8540-ab2e845144dc"
     ],
     "cryptedForeignKeys": {
-      "d4817fbd-c84e-486d-92da-daa2aa2edc48": {}
+      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
     },
     "delegations": {
-      "d4817fbd-c84e-486d-92da-daa2aa2edc48": {}
+      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
     },
     "encryptionKeys": {
-      "d4817fbd-c84e-486d-92da-daa2aa2edc48": {}
-    }
+      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
+    },
+    "publicKeysForOaepWithSha256": {}
   }
 }
 ```
@@ -210,12 +212,12 @@ if (!!newPatientNotifications && newPatientNotifications.length > 0) {
 ```text
 [
   {
-    "id": "28a75e22-9d65-4307-9a99-0774d6c7c422",
-    "rev": "1-72c27ed9e1cd3a21873dfe975e7ce433",
-    "created": 1682493726056,
-    "modified": 1682493726056,
-    "author": "68a4f7d3-aa5d-43ff-95a1-ba14675397ca",
-    "responsible": "3238dd4f-be09-4375-bb5b-0bf9d737ac94",
+    "id": "a1c28ece-f624-4c7a-b919-e12f04428141",
+    "rev": "1-d95edad32e9656c326a946998d31625f",
+    "created": 1688375638146,
+    "modified": 1688375638146,
+    "author": "14e2a82b-f7a9-44d9-b135-fdf7575f884f",
+    "responsible": "1457ac8d-fb1f-4645-aaad-98f093a6c341",
     "status": "completed",
     "identifiers": [],
     "properties": [],
@@ -224,13 +226,39 @@ if (!!newPatientNotifications && newPatientNotifications.length > 0) {
       "secretForeignKeys": [],
       "cryptedForeignKeys": {},
       "delegations": {
-        "3238dd4f-be09-4375-bb5b-0bf9d737ac94": {},
-        "d4817fbd-c84e-486d-92da-daa2aa2edc48": {}
+        "1457ac8d-fb1f-4645-aaad-98f093a6c341": {},
+        "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
       },
       "encryptionKeys": {
-        "3238dd4f-be09-4375-bb5b-0bf9d737ac94": {},
-        "d4817fbd-c84e-486d-92da-daa2aa2edc48": {}
-      }
+        "1457ac8d-fb1f-4645-aaad-98f093a6c341": {},
+        "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
+      },
+      "encryptedSelf": "J7pAlo17oR6DUmc3arKprHpErTAQj7383qsGPpd9Y50="
+    }
+  },
+  {
+    "id": "3796628c-a302-4e42-af5d-619a4769337a",
+    "rev": "1-eb641d7c97359fca12dbccfd05d86527",
+    "created": 1688375623944,
+    "modified": 1688375623944,
+    "author": "14e2a82b-f7a9-44d9-b135-fdf7575f884f",
+    "responsible": "1457ac8d-fb1f-4645-aaad-98f093a6c341",
+    "status": "pending",
+    "identifiers": [],
+    "properties": [],
+    "type": "OTHER",
+    "systemMetaData": {
+      "secretForeignKeys": [],
+      "cryptedForeignKeys": {},
+      "delegations": {
+        "1457ac8d-fb1f-4645-aaad-98f093a6c341": {},
+        "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
+      },
+      "encryptionKeys": {
+        "1457ac8d-fb1f-4645-aaad-98f093a6c341": {},
+        "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
+      },
+      "encryptedSelf": "fu1O5aJ+mrVmx5+5S344YKkwSYrT/lIeEvH2ltFgbQk="
     }
   }
 ]
@@ -266,33 +294,33 @@ const healthcareElement = await api.healthcareElementApi.createOrModifyHealthcar
 
 ```json
 {
-  "id": "f291f117-9d0c-42a4-82cd-c3d6f6bc1974",
-  "rev": "1-cdad5190f3f5075789b09cbd9793a0a8",
-  "created": 1682493708885,
-  "modified": 1682493708885,
-  "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
-  "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
-  "healthcareElementId": "f291f117-9d0c-42a4-82cd-c3d6f6bc1974",
-  "valueDate": 20230426072148,
-  "openingDate": 1682493708192,
+  "id": "db88d52d-15c2-406b-bf4c-aa8ef3297ca1",
+  "rev": "1-63ff9e411d9310799d7c4f13af2e5a93",
+  "created": 1688375636420,
+  "modified": 1688375636420,
+  "author": "6a541dfb-40d9-41f5-ba76-e3a5e277813f",
+  "responsible": "e2b6e873-035b-4964-885b-5a90e99c43b4",
+  "healthcareElementId": "db88d52d-15c2-406b-bf4c-aa8ef3297ca1",
+  "valueDate": 20230703111356,
+  "openingDate": 1688375636390,
   "description": "The patient is pregnant",
   "identifiers": [],
   "codes": {},
   "labels": {},
   "systemMetaData": {
     "secretForeignKeys": [
-      "4742a08d-bbc1-4ed1-a758-f0a605529bf1"
+      "41b78e71-f3fe-4a00-8540-ab2e845144dc"
     ],
     "cryptedForeignKeys": {
-      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
     },
     "delegations": {
-      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
     },
     "encryptionKeys": {
-      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
     },
-    "encryptedSelf": "de8pQxU4RjsIao5xVoBtnQY/hYb1OSGMldoQPAP832NWPLKaps7IItrW1jRgk5lKLSMGutpvoSNyb/wvPZgZig=="
+    "encryptedSelf": "ggBwCs1qSRLmodgJPwoo1/vjadzFToPVbLdbBtKVgESgtdv81EbyMhhbzLjbl3nEkGKxdZVOItvEF6+OMRRz3A=="
   }
 }
 ```

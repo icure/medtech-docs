@@ -1,16 +1,10 @@
 import 'isomorphic-fetch'
-import { medTechApi, NotificationFilter } from '@icure/medical-device-sdk'
-import { webcrypto } from 'crypto'
-import { hex2ua } from '@icure/api'
+import { NotificationFilter } from '@icure/medical-device-sdk'
 import {
-  host,
-  privKey,
-  patientUserName,
-  patientPassword,
-  patientPrivKey,
   initLocalStorage,
   initMedTechApi,
   output,
+  initPatientMedTechApi,
 } from '../../utils/index.mjs'
 import { assert, expect } from 'chai'
 import {
@@ -20,26 +14,10 @@ import {
 
 initLocalStorage()
 
-const patientApi = await medTechApi()
-  .withICureBaseUrl(host)
-  .withUserName(patientUserName)
-  .withPassword(patientPassword)
-  .withCrypto(webcrypto as any)
-  .build()
-
-const patientUser = await patientApi.userApi.getLoggedUser()
-await patientApi.cryptoApi.loadKeyPairsAsTextInBrowserLocalStorage(
-  patientUser.healthcarePartyId ?? patientUser.patientId ?? patientUser.deviceId,
-  hex2ua(patientPrivKey),
-)
-
-const api = await initMedTechApi()
+const patientApi = await initPatientMedTechApi(true)
+const api = await initMedTechApi(true)
 
 const user = await api.userApi.getLoggedUser()
-await api.cryptoApi.loadKeyPairsAsTextInBrowserLocalStorage(
-  user.healthcarePartyId ?? user.patientId ?? user.deviceId,
-  hex2ua(privKey),
-)
 const hcp = await api.healthcareProfessionalApi.getHealthcareProfessional(user.healthcarePartyId)
 
 //tech-doc: create a notification as patient
@@ -76,7 +54,7 @@ expect(createdNotification.id).to.eq(retrievedNotification.id)
 //tech-doc: creates after date filter
 const startTimestamp = new Date(2022, 8, 27).getTime()
 
-const afterDateFilter = await new NotificationFilter()
+const afterDateFilter = await new NotificationFilter(api)
   .forDataOwner(user.healthcarePartyId)
   .afterDate(startTimestamp)
   .build()

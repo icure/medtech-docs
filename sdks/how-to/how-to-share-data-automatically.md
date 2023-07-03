@@ -47,27 +47,23 @@ const user = await hcp1Api.userApi.shareAllFutureDataWith(
 
 ```json
 {
-  "id": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
-  "rev": "106-7d51eb2d5b96fcf7982b05a0f50df8d4",
-  "created": 1679919731079,
+  "id": "6a541dfb-40d9-41f5-ba76-e3a5e277813f",
+  "rev": "75-98fac92aa5782708c41e7f1d5b1dc768",
+  "created": 1688371977279,
   "name": "Master HCP",
-  "login": "master@b16baa.icure",
+  "login": "master@e2b6e8.icure",
   "groupId": "ic-e2etest-medtech-docs",
-  "healthcarePartyId": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
-  "email": "master@b16baa.icure",
+  "healthcarePartyId": "e2b6e873-035b-4964-885b-5a90e99c43b4",
+  "email": "master@e2b6e8.icure",
   "properties": {},
   "roles": {},
   "sharingDataWith": {
     "medicalInformation": {}
   },
   "authenticationTokens": {
-    "aee1860e-eb42-45fc-a2f2-9753f68764e1": {
-      "creationTime": 1679919731274,
+    "c1284f05-cca6-444e-bdac-3cd134d54e6b": {
+      "creationTime": 1688371977378,
       "validity": 86400
-    },
-    "5d47319d-0487-427f-b492-c761deea7caa": {
-      "creationTime": 1680074455610,
-      "validity": 31536000
     }
   }
 }
@@ -106,15 +102,15 @@ const dataSample2 = await hcp2Api.dataSampleApi.getDataSample(dataSample.id)
 
 ```json
 {
-  "id": "5c691167-3e78-42dd-807a-16af169fb8d0",
+  "id": "8ab2fc96-ac87-47c2-ac51-1f6cddad01ac",
   "languages": [],
   "active": true,
   "parameters": {},
-  "rev": "1-4a073b749b407e382848e77a91e16467",
-  "created": 1682493554459,
-  "modified": 1682493554459,
-  "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
-  "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
+  "rev": "1-585fd019c82a832b26856dcf9329a18d",
+  "created": 1688375598835,
+  "modified": 1688375598835,
+  "author": "6a541dfb-40d9-41f5-ba76-e3a5e277813f",
+  "responsible": "e2b6e873-035b-4964-885b-5a90e99c43b4",
   "firstName": "John",
   "lastName": "Snow",
   "note": "Winter is coming",
@@ -144,21 +140,22 @@ const dataSample2 = await hcp2Api.dataSampleApi.getDataSample(dataSample.id)
   "patientProfessions": [],
   "properties": {},
   "systemMetaData": {
+    "aesExchangeKeys": {},
     "hcPartyKeys": {},
     "privateKeyShamirPartitions": {},
-    "aesExchangeKeys": {},
     "transferKeys": {},
-    "encryptedSelf": "TRNtX7Xd4qDjVm670bkWx+XBrFZouJSNy3okmKFS9YEpCqPxs3BRx1e9c04XjWVw",
+    "encryptedSelf": "tZTIAjfWfon1RInBZ3ZmvbHb4W4Lg+Z5VLA/TST4xqNI3VSf+4z7gKcpu2L61sBY",
     "secretForeignKeys": [],
     "cryptedForeignKeys": {},
     "delegations": {
-      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {},
-      "396f6d45-1d92-4bca-888c-086d8415aef9": {}
+      "e2b6e873-035b-4964-885b-5a90e99c43b4": {},
+      "64738f29-9344-4a05-bbd6-29d897977748": {}
     },
     "encryptionKeys": {
-      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {},
-      "396f6d45-1d92-4bca-888c-086d8415aef9": {}
-    }
+      "e2b6e873-035b-4964-885b-5a90e99c43b4": {},
+      "64738f29-9344-4a05-bbd6-29d897977748": {}
+    },
+    "publicKeysForOaepWithSha256": {}
   }
 }
 ```
@@ -170,15 +167,15 @@ const dataSample2 = await hcp2Api.dataSampleApi.getDataSample(dataSample.id)
 
 ```json
 {
-  "id": "5c691167-3e78-42dd-807a-16af169fb8d0",
+  "id": "8ab2fc96-ac87-47c2-ac51-1f6cddad01ac",
   "languages": [],
   "active": true,
   "parameters": {},
-  "rev": "1-4a073b749b407e382848e77a91e16467",
-  "created": 1682493554459,
-  "modified": 1682493554459,
-  "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
-  "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
+  "rev": "1-585fd019c82a832b26856dcf9329a18d",
+  "created": 1688375598835,
+  "modified": 1688375598835,
+  "author": "6a541dfb-40d9-41f5-ba76-e3a5e277813f",
+  "responsible": "e2b6e873-035b-4964-885b-5a90e99c43b4",
   "firstName": "John",
   "lastName": "Snow",
   "note": "Winter is coming",
@@ -208,21 +205,22 @@ const dataSample2 = await hcp2Api.dataSampleApi.getDataSample(dataSample.id)
   "patientProfessions": [],
   "properties": {},
   "systemMetaData": {
+    "aesExchangeKeys": {},
     "hcPartyKeys": {},
     "privateKeyShamirPartitions": {},
-    "aesExchangeKeys": {},
     "transferKeys": {},
-    "encryptedSelf": "TRNtX7Xd4qDjVm670bkWx+XBrFZouJSNy3okmKFS9YEpCqPxs3BRx1e9c04XjWVw",
+    "encryptedSelf": "tZTIAjfWfon1RInBZ3ZmvbHb4W4Lg+Z5VLA/TST4xqNI3VSf+4z7gKcpu2L61sBY",
     "secretForeignKeys": [],
     "cryptedForeignKeys": {},
     "delegations": {
-      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {},
-      "396f6d45-1d92-4bca-888c-086d8415aef9": {}
+      "e2b6e873-035b-4964-885b-5a90e99c43b4": {},
+      "64738f29-9344-4a05-bbd6-29d897977748": {}
     },
     "encryptionKeys": {
-      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {},
-      "396f6d45-1d92-4bca-888c-086d8415aef9": {}
-    }
+      "e2b6e873-035b-4964-885b-5a90e99c43b4": {},
+      "64738f29-9344-4a05-bbd6-29d897977748": {}
+    },
+    "publicKeysForOaepWithSha256": {}
   }
 }
 ```
@@ -234,16 +232,16 @@ const dataSample2 = await hcp2Api.dataSampleApi.getDataSample(dataSample.id)
 
 ```json
 {
-  "id": "a1c8dbcb-2a8b-43a4-b47a-a73e46d84776",
+  "id": "80e28261-ffc1-4330-b158-6d79f36658b8",
   "qualifiedLinks": {},
-  "batchId": "b4552147-af41-499e-81af-09a34e87fd42",
+  "batchId": "1d46e1ca-7767-44d0-915c-24cbcf8ca7cc",
   "index": 0,
-  "valueDate": 20230426071916,
-  "openingDate": 20230426071916,
-  "created": 1682493556591,
-  "modified": 1682493556591,
-  "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
-  "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
+  "valueDate": 20230703111318,
+  "openingDate": 20230703111318,
+  "created": 1688375598890,
+  "modified": 1688375598890,
+  "author": "6a541dfb-40d9-41f5-ba76-e3a5e277813f",
+  "responsible": "e2b6e873-035b-4964-885b-5a90e99c43b4",
   "identifiers": [],
   "healthcareElementIds": {},
   "canvasesIds": {},
@@ -258,21 +256,23 @@ const dataSample2 = await hcp2Api.dataSampleApi.getDataSample(dataSample.id)
   "codes": {},
   "labels": {},
   "systemMetaData": {
+    "encryptedSelf": "jSXcMzESgKsZfBzTnZOfEJ4PrrNYWKWYysl1INT/1t+vGG6XSZTe6Q/RnzPxtPPKHXddhK6Gt77LNbFvG+tdFrQgdaIN9cdZIuCKF0E4hs9M8Cn6/DxMr8WXJuBEEPyeyR1A/knQDHgyfmq+O0krbQ==",
     "secretForeignKeys": [
-      "cf2cd48b-e93e-4af8-96a7-fc8c2233bc71"
+      "ec6e2516-cc70-4b7e-adf2-d2c895abd004"
     ],
     "cryptedForeignKeys": {
-      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {},
-      "396f6d45-1d92-4bca-888c-086d8415aef9": {}
+      "e2b6e873-035b-4964-885b-5a90e99c43b4": {},
+      "64738f29-9344-4a05-bbd6-29d897977748": {}
     },
     "delegations": {
-      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {},
-      "396f6d45-1d92-4bca-888c-086d8415aef9": {}
+      "e2b6e873-035b-4964-885b-5a90e99c43b4": {},
+      "64738f29-9344-4a05-bbd6-29d897977748": {}
     },
     "encryptionKeys": {
-      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {},
-      "396f6d45-1d92-4bca-888c-086d8415aef9": {}
-    }
+      "e2b6e873-035b-4964-885b-5a90e99c43b4": {},
+      "64738f29-9344-4a05-bbd6-29d897977748": {}
+    },
+    "publicKeysForOaepWithSha256": {}
   }
 }
 ```
@@ -284,16 +284,16 @@ const dataSample2 = await hcp2Api.dataSampleApi.getDataSample(dataSample.id)
 
 ```json
 {
-  "id": "a1c8dbcb-2a8b-43a4-b47a-a73e46d84776",
+  "id": "80e28261-ffc1-4330-b158-6d79f36658b8",
   "qualifiedLinks": {},
-  "batchId": "b4552147-af41-499e-81af-09a34e87fd42",
+  "batchId": "1d46e1ca-7767-44d0-915c-24cbcf8ca7cc",
   "index": 0,
-  "valueDate": 20230426071916,
-  "openingDate": 20230426071916,
-  "created": 1682493556591,
-  "modified": 1682493556591,
-  "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
-  "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
+  "valueDate": 20230703111318,
+  "openingDate": 20230703111318,
+  "created": 1688375598890,
+  "modified": 1688375598890,
+  "author": "6a541dfb-40d9-41f5-ba76-e3a5e277813f",
+  "responsible": "e2b6e873-035b-4964-885b-5a90e99c43b4",
   "identifiers": [],
   "healthcareElementIds": {},
   "canvasesIds": {},
@@ -308,21 +308,23 @@ const dataSample2 = await hcp2Api.dataSampleApi.getDataSample(dataSample.id)
   "codes": {},
   "labels": {},
   "systemMetaData": {
+    "encryptedSelf": "jSXcMzESgKsZfBzTnZOfEJ4PrrNYWKWYysl1INT/1t+vGG6XSZTe6Q/RnzPxtPPKHXddhK6Gt77LNbFvG+tdFrQgdaIN9cdZIuCKF0E4hs9M8Cn6/DxMr8WXJuBEEPyeyR1A/knQDHgyfmq+O0krbQ==",
     "secretForeignKeys": [
-      "cf2cd48b-e93e-4af8-96a7-fc8c2233bc71"
+      "ec6e2516-cc70-4b7e-adf2-d2c895abd004"
     ],
     "cryptedForeignKeys": {
-      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {},
-      "396f6d45-1d92-4bca-888c-086d8415aef9": {}
+      "e2b6e873-035b-4964-885b-5a90e99c43b4": {},
+      "64738f29-9344-4a05-bbd6-29d897977748": {}
     },
     "delegations": {
-      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {},
-      "396f6d45-1d92-4bca-888c-086d8415aef9": {}
+      "e2b6e873-035b-4964-885b-5a90e99c43b4": {},
+      "64738f29-9344-4a05-bbd6-29d897977748": {}
     },
     "encryptionKeys": {
-      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {},
-      "396f6d45-1d92-4bca-888c-086d8415aef9": {}
-    }
+      "e2b6e873-035b-4964-885b-5a90e99c43b4": {},
+      "64738f29-9344-4a05-bbd6-29d897977748": {}
+    },
+    "publicKeysForOaepWithSha256": {}
   }
 }
 ```
@@ -334,16 +336,16 @@ const dataSample2 = await hcp2Api.dataSampleApi.getDataSample(dataSample.id)
 
 ```json
 {
-  "id": "a1c8dbcb-2a8b-43a4-b47a-a73e46d84776",
+  "id": "80e28261-ffc1-4330-b158-6d79f36658b8",
   "qualifiedLinks": {},
-  "batchId": "b4552147-af41-499e-81af-09a34e87fd42",
+  "batchId": "1d46e1ca-7767-44d0-915c-24cbcf8ca7cc",
   "index": 0,
-  "valueDate": 20230426071916,
-  "openingDate": 20230426071916,
-  "created": 1682493556591,
-  "modified": 1682493556591,
-  "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
-  "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
+  "valueDate": 20230703111318,
+  "openingDate": 20230703111318,
+  "created": 1688375598890,
+  "modified": 1688375598890,
+  "author": "6a541dfb-40d9-41f5-ba76-e3a5e277813f",
+  "responsible": "e2b6e873-035b-4964-885b-5a90e99c43b4",
   "identifiers": [],
   "healthcareElementIds": {},
   "canvasesIds": {},
@@ -358,21 +360,23 @@ const dataSample2 = await hcp2Api.dataSampleApi.getDataSample(dataSample.id)
   "codes": {},
   "labels": {},
   "systemMetaData": {
+    "encryptedSelf": "jSXcMzESgKsZfBzTnZOfEJ4PrrNYWKWYysl1INT/1t+vGG6XSZTe6Q/RnzPxtPPKHXddhK6Gt77LNbFvG+tdFrQgdaIN9cdZIuCKF0E4hs9M8Cn6/DxMr8WXJuBEEPyeyR1A/knQDHgyfmq+O0krbQ==",
     "secretForeignKeys": [
-      "cf2cd48b-e93e-4af8-96a7-fc8c2233bc71"
+      "ec6e2516-cc70-4b7e-adf2-d2c895abd004"
     ],
     "cryptedForeignKeys": {
-      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {},
-      "396f6d45-1d92-4bca-888c-086d8415aef9": {}
+      "e2b6e873-035b-4964-885b-5a90e99c43b4": {},
+      "64738f29-9344-4a05-bbd6-29d897977748": {}
     },
     "delegations": {
-      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {},
-      "396f6d45-1d92-4bca-888c-086d8415aef9": {}
+      "e2b6e873-035b-4964-885b-5a90e99c43b4": {},
+      "64738f29-9344-4a05-bbd6-29d897977748": {}
     },
     "encryptionKeys": {
-      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {},
-      "396f6d45-1d92-4bca-888c-086d8415aef9": {}
-    }
+      "e2b6e873-035b-4964-885b-5a90e99c43b4": {},
+      "64738f29-9344-4a05-bbd6-29d897977748": {}
+    },
+    "publicKeysForOaepWithSha256": {}
   }
 }
 ```
@@ -402,16 +406,16 @@ const dataSampleNotOnModify = await hcp1Api.dataSampleApi.createOrModifyDataSamp
 
 ```json
 {
-  "id": "767312c4-eaf8-4301-9f99-42a737f25d1b",
+  "id": "607efc45-c128-4158-b8ae-4b0cf5402ed7",
   "qualifiedLinks": {},
-  "batchId": "8664ff36-d800-4965-9429-a15ca7717b1f",
+  "batchId": "1b03b47a-eb56-4861-bad8-dfdc03728854",
   "index": 0,
-  "valueDate": 20230426071918,
-  "openingDate": 20230426071918,
-  "created": 1682493558507,
-  "modified": 1682493558507,
-  "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
-  "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
+  "valueDate": 20230703111319,
+  "openingDate": 20230703111319,
+  "created": 1688375599005,
+  "modified": 1688375599005,
+  "author": "6a541dfb-40d9-41f5-ba76-e3a5e277813f",
+  "responsible": "e2b6e873-035b-4964-885b-5a90e99c43b4",
   "identifiers": [],
   "healthcareElementIds": {},
   "canvasesIds": {},
@@ -426,18 +430,20 @@ const dataSampleNotOnModify = await hcp1Api.dataSampleApi.createOrModifyDataSamp
   "codes": {},
   "labels": {},
   "systemMetaData": {
+    "encryptedSelf": "XFd579Yxv9iK5DWWXLrkryxtnUQG/lCzoLqzzsKAOB+1RfXjXNfb4SUrAwIS9ODcDp0KfnnPpwCdBdALT30lS5vUx6gJ59lcR6uDWgi3wwyClSwlSeqK66hpx84HnkDN7MKru9l+VZdQsKId+MrSolp/3BP68WrbSdX1yB0HF7dHeE7aKtUOofZWsGuy9lCAV7oSZxtrbbNCTdRnvLNUIA==",
     "secretForeignKeys": [
-      "cf2cd48b-e93e-4af8-96a7-fc8c2233bc71"
+      "ec6e2516-cc70-4b7e-adf2-d2c895abd004"
     ],
     "cryptedForeignKeys": {
-      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
     },
     "delegations": {
-      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
     },
     "encryptionKeys": {
-      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
-    }
+      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
+    },
+    "publicKeysForOaepWithSha256": {}
   }
 }
 ```
@@ -468,16 +474,16 @@ const dataSampleNotSharedBy2 = await hcp2Api.dataSampleApi.createOrModifyDataSam
 
 ```json
 {
-  "id": "95994944-a833-4452-8dac-658cc3b82249",
+  "id": "95759cc3-c13e-45f7-9104-481eb3ae05b5",
   "qualifiedLinks": {},
-  "batchId": "68cf7e75-d326-4020-a4eb-9a1f1b684931",
+  "batchId": "ae7d0310-8874-4255-85cd-5db5fa137206",
   "index": 0,
-  "valueDate": 20230426071920,
-  "openingDate": 20230426071920,
-  "created": 1682493560959,
-  "modified": 1682493560960,
-  "author": "84cb80e5-95fb-46ce-ad08-d5a6c211a9ff",
-  "responsible": "396f6d45-1d92-4bca-888c-086d8415aef9",
+  "valueDate": 20230703111319,
+  "openingDate": 20230703111319,
+  "created": 1688375599197,
+  "modified": 1688375599197,
+  "author": "1b66e6d6-d71f-432e-876b-5e883bdc7bd9",
+  "responsible": "64738f29-9344-4a05-bbd6-29d897977748",
   "identifiers": [],
   "healthcareElementIds": {},
   "canvasesIds": {},
@@ -492,18 +498,20 @@ const dataSampleNotSharedBy2 = await hcp2Api.dataSampleApi.createOrModifyDataSam
   "codes": {},
   "labels": {},
   "systemMetaData": {
+    "encryptedSelf": "wYzEEzS2VxrWWFZY7EkKaRVkTt1vgV1zJsx9YBtrVk/M9l0fbZ71pEyLdxBj7KJXbHTJ8A2cDwHjp4st86+tDthLKN/VwiLfFqHpFi8eC4VCAw89DiTgkjSo1VtkpVvSYSyEVEiGyMuoewPEDyAW4CdTm/EAZZSFWfgBsfOQdIjts+Eofb+JsqUD3KNwMF+j",
     "secretForeignKeys": [
-      "cf2cd48b-e93e-4af8-96a7-fc8c2233bc71"
+      "ec6e2516-cc70-4b7e-adf2-d2c895abd004"
     ],
     "cryptedForeignKeys": {
-      "396f6d45-1d92-4bca-888c-086d8415aef9": {}
+      "64738f29-9344-4a05-bbd6-29d897977748": {}
     },
     "delegations": {
-      "396f6d45-1d92-4bca-888c-086d8415aef9": {}
+      "64738f29-9344-4a05-bbd6-29d897977748": {}
     },
     "encryptionKeys": {
-      "396f6d45-1d92-4bca-888c-086d8415aef9": {}
-    }
+      "64738f29-9344-4a05-bbd6-29d897977748": {}
+    },
+    "publicKeysForOaepWithSha256": {}
   }
 }
 ```
@@ -527,27 +535,23 @@ const userWithoutShare = await hcp1Api.userApi.stopSharingDataWith(
 
 ```json
 {
-  "id": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
-  "rev": "109-b654934a9b8c15f25906aad4fbcbb5d5",
-  "created": 1679919731079,
+  "id": "6a541dfb-40d9-41f5-ba76-e3a5e277813f",
+  "rev": "78-2363d8822a3a4fc0dbaff82eafe236fe",
+  "created": 1688371977279,
   "name": "Master HCP",
-  "login": "master@b16baa.icure",
+  "login": "master@e2b6e8.icure",
   "groupId": "ic-e2etest-medtech-docs",
-  "healthcarePartyId": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
-  "email": "master@b16baa.icure",
+  "healthcarePartyId": "e2b6e873-035b-4964-885b-5a90e99c43b4",
+  "email": "master@e2b6e8.icure",
   "properties": {},
   "roles": {},
   "sharingDataWith": {
     "medicalInformation": {}
   },
   "authenticationTokens": {
-    "aee1860e-eb42-45fc-a2f2-9753f68764e1": {
-      "creationTime": 1679919731274,
+    "c1284f05-cca6-444e-bdac-3cd134d54e6b": {
+      "creationTime": 1688371977378,
       "validity": 86400
-    },
-    "5d47319d-0487-427f-b492-c761deea7caa": {
-      "creationTime": 1680074455610,
-      "validity": 31536000
     }
   }
 }
@@ -576,16 +580,16 @@ const dataSampleNotSharedAnymore = await hcp1Api.dataSampleApi.createOrModifyDat
 
 ```json
 {
-  "id": "cb3b4d63-9ee9-4ce6-8659-51714cb3e64f",
+  "id": "83702f59-1084-41d9-86d9-7a0fd957ea93",
   "qualifiedLinks": {},
-  "batchId": "82ffccc5-fbcd-420c-9519-6a86c82836a0",
+  "batchId": "7ab81b0d-2204-447f-951a-2c45c55172a2",
   "index": 0,
-  "valueDate": 20230426071922,
-  "openingDate": 20230426071922,
-  "created": 1682493562525,
-  "modified": 1682493562525,
-  "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
-  "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
+  "valueDate": 20230703111319,
+  "openingDate": 20230703111319,
+  "created": 1688375599296,
+  "modified": 1688375599296,
+  "author": "6a541dfb-40d9-41f5-ba76-e3a5e277813f",
+  "responsible": "e2b6e873-035b-4964-885b-5a90e99c43b4",
   "identifiers": [],
   "healthcareElementIds": {},
   "canvasesIds": {},
@@ -600,18 +604,20 @@ const dataSampleNotSharedAnymore = await hcp1Api.dataSampleApi.createOrModifyDat
   "codes": {},
   "labels": {},
   "systemMetaData": {
+    "encryptedSelf": "qIpqeI9oYR9BfQXuZ3qBdQWBqoZIwyYZAR/uBsz3ebmzvrAHN0DMVOJ5NoKEQSNSZSjLoOf3O7wJRswLRa/KvAgkXn/GGnSWXLeAw2k/MijecAyUaiPbjVS20UHe6CjkeN+jXd9fff62d/fh1KMn9yo2spNZCbe5uk9RH8exgcpY8LrWEL5QU1T9GwZD5ZK7",
     "secretForeignKeys": [
-      "cf2cd48b-e93e-4af8-96a7-fc8c2233bc71"
+      "ec6e2516-cc70-4b7e-adf2-d2c895abd004"
     ],
     "cryptedForeignKeys": {
-      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
     },
     "delegations": {
-      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
     },
     "encryptionKeys": {
-      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
-    }
+      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
+    },
+    "publicKeysForOaepWithSha256": {}
   }
 }
 ```
@@ -662,16 +668,16 @@ const dataSampleNoChaining = await hcp1Api.dataSampleApi.createOrModifyDataSampl
 
 ```json
 {
-  "id": "09a5e463-2787-4fd6-9f00-c7481c919137",
+  "id": "2131cfde-88dd-4a2c-a66c-358938384dfe",
   "qualifiedLinks": {},
-  "batchId": "09c4fb99-3166-4df0-856e-73ab60009dd7",
+  "batchId": "edfaf05a-d23a-42d2-b97f-2b8a987067a9",
   "index": 0,
-  "valueDate": 20230426071924,
-  "openingDate": 20230426071924,
-  "created": 1682493564421,
-  "modified": 1682493564421,
-  "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
-  "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
+  "valueDate": 20230703111319,
+  "openingDate": 20230703111319,
+  "created": 1688375599400,
+  "modified": 1688375599400,
+  "author": "6a541dfb-40d9-41f5-ba76-e3a5e277813f",
+  "responsible": "e2b6e873-035b-4964-885b-5a90e99c43b4",
   "identifiers": [],
   "healthcareElementIds": {},
   "canvasesIds": {},
@@ -686,21 +692,23 @@ const dataSampleNoChaining = await hcp1Api.dataSampleApi.createOrModifyDataSampl
   "codes": {},
   "labels": {},
   "systemMetaData": {
+    "encryptedSelf": "BFBzFAzHGo66ChtS05gIYtqcuw1ps7gAgCYekiLfVSOKBcSQEEeaPOn47BDoDKclLrZdKjY4PEoZk9fNfN0Aa92BW0uO7qcLdqVixWk68WWw4E2vej+VBSm2d6MOjE8vc7/ymHoKk1E2XAC71z8Xh37QUwMQnDQs0viDvS69AC7AwLxJnkr7nDaDJFEmUrbZR96b5r/vIpGMbgKPBZDZryOjLksD/G9amr1eX0TqpZCMh3xHqgeye9M7wr+62aKP",
     "secretForeignKeys": [
-      "cf2cd48b-e93e-4af8-96a7-fc8c2233bc71"
+      "ec6e2516-cc70-4b7e-adf2-d2c895abd004"
     ],
     "cryptedForeignKeys": {
-      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {},
-      "3238dd4f-be09-4375-bb5b-0bf9d737ac94": {}
+      "e2b6e873-035b-4964-885b-5a90e99c43b4": {},
+      "1457ac8d-fb1f-4645-aaad-98f093a6c341": {}
     },
     "delegations": {
-      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {},
-      "3238dd4f-be09-4375-bb5b-0bf9d737ac94": {}
+      "e2b6e873-035b-4964-885b-5a90e99c43b4": {},
+      "1457ac8d-fb1f-4645-aaad-98f093a6c341": {}
     },
     "encryptionKeys": {
-      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {},
-      "3238dd4f-be09-4375-bb5b-0bf9d737ac94": {}
-    }
+      "e2b6e873-035b-4964-885b-5a90e99c43b4": {},
+      "1457ac8d-fb1f-4645-aaad-98f093a6c341": {}
+    },
+    "publicKeysForOaepWithSha256": {}
   }
 }
 ```

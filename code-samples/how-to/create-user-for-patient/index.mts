@@ -4,6 +4,7 @@ import {
   authProcessId,
   host,
   initLocalStorage,
+  initMedTechApi,
   msgGtwUrl,
   output,
   password,
@@ -25,28 +26,19 @@ import {
   ICureRegistrationEmail,
   medTechApi,
   Patient,
+  SimpleMedTechCryptoStrategies,
   Telecom,
 } from '@icure/medical-device-sdk'
+
 import { webcrypto } from 'crypto'
 import { NotificationTypeEnum } from '@icure/medical-device-sdk/src/models/Notification.js'
 import { getLastEmail } from '../../utils/msgGtw.mjs'
 
 initLocalStorage()
 
-const apiAsDoctor = await medTechApi()
-  .withICureBaseUrl(host)
-  .withUserName(userName)
-  .withPassword(password)
-  .withMsgGwUrl(msgGtwUrl)
-  .withMsgGwSpecId(specId)
-  .withCrypto(webcrypto as any)
-  .build()
+const apiAsDoctor = await initMedTechApi(true)
 
 const loggedUser = await apiAsDoctor.userApi.getLoggedUser()
-await apiAsDoctor.cryptoApi.loadKeyPairsAsTextInBrowserLocalStorage(
-  loggedUser.healthcarePartyId,
-  hex2ua(privKey),
-)
 
 const hcp = await apiAsDoctor.healthcareProfessionalApi.getHealthcareProfessional(
   loggedUser.healthcarePartyId,
@@ -124,6 +116,7 @@ const anonymousMedTechApi = await new AnonymousMedTechApiBuilder()
   .withCrypto(webcrypto as any)
   .withAuthProcessByEmailId(authProcessId)
   .withAuthProcessBySmsId(authProcessId)
+  .withCryptoStrategies(new SimpleMedTechCryptoStrategies([]))
   .build()
 
 const authenticationResult =
@@ -177,9 +170,9 @@ console.log(await apiAsDoctor.healthcareElementApi.getHealthcareElement(newHealt
 output({ newHealthcareElement, sharedHealthcareElement })
 
 //tech-doc: share healthcare element sfk
-const filterForHcpWithoutAccessByPatient = await new HealthcareElementFilter()
-  .forPatients(apiAsDoctor.cryptoApi, [await apiAsDoctor.patientApi.getPatient(patient.id)])
+const filterForHcpWithoutAccessByPatient = await new HealthcareElementFilter(apiAsDoctor)
   .forDataOwner(hcp.id)
+  .forPatients([await apiAsDoctor.patientApi.getPatient(patient.id)])
   .build()
 const notFoundHEs = await apiAsDoctor.healthcareElementApi.filterHealthcareElement(
   filterForHcpWithoutAccessByPatient,
@@ -189,9 +182,9 @@ expect(notFoundHEs.rows.find((x) => x.id == newHealthcareElement.id)).to.be.unde
 // The patient shares his secret foreign key with the doctor
 await apiAsPatient.patientApi.giveAccessToPotentiallyEncrypted(modifiedPatientDetails, hcp.id)
 // The doctor can now also find the healthcare element
-const filterForHcpWithAccessByPatient = await new HealthcareElementFilter()
-  .forPatients(apiAsDoctor.cryptoApi, [await apiAsDoctor.patientApi.getPatient(patient.id)])
+const filterForHcpWithAccessByPatient = await new HealthcareElementFilter(apiAsDoctor)
   .forDataOwner(hcp.id)
+  .forPatients([await apiAsDoctor.patientApi.getPatient(patient.id)])
   .build()
 const foundHEs = await apiAsDoctor.healthcareElementApi.filterHealthcareElement(
   filterForHcpWithAccessByPatient,

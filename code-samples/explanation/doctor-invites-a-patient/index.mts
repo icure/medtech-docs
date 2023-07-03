@@ -1,42 +1,15 @@
 import 'isomorphic-fetch'
-import {
-  ICureRegistrationEmail,
-  Patient,
-  Address,
-  Telecom,
-  medTechApi,
-} from '@icure/medical-device-sdk'
-import { hex2ua } from '@icure/api'
-import {
-  host,
-  initLocalStorage,
-  msgGtwUrl,
-  output,
-  password,
-  privKey,
-  specId,
-  userName,
-} from '../../utils/index.mjs'
+import { ICureRegistrationEmail, Patient, Address, Telecom } from '@icure/medical-device-sdk'
+import { initLocalStorage, initMedTechApi, output } from '../../utils/index.mjs'
 import { expect } from 'chai'
 import { v4 as uuid } from 'uuid'
-import { webcrypto } from 'crypto'
 
 initLocalStorage()
 
-const api = await medTechApi()
-  .withICureBaseUrl(host)
-  .withUserName(userName)
-  .withPassword(password)
-  .withMsgGwUrl(msgGtwUrl)
-  .withMsgGwSpecId(specId)
-  .withCrypto(webcrypto as any)
-  .build()
+const api = await initMedTechApi(true)
 
 const user = await api.userApi.getLoggedUser()
-await api.cryptoApi.loadKeyPairsAsTextInBrowserLocalStorage(
-  user.healthcarePartyId ?? user.patientId ?? user.deviceId,
-  hex2ua(privKey),
-)
+
 const hcp = await api.healthcareProfessionalApi.getHealthcareProfessional(user.healthcarePartyId)
 hcp.addresses = [
   new Address({

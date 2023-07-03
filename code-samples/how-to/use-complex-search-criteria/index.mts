@@ -8,7 +8,7 @@ import {
   signUpUserUsingEmail,
   specId,
 } from '../../utils/index.mjs'
-import { Patient, PatientFilter } from '@icure/medical-device-sdk'
+import { FilterComposition, Patient, PatientFilter } from '@icure/medical-device-sdk'
 import { expect } from 'chai'
 import process from 'process'
 
@@ -39,7 +39,7 @@ await api.patientApi.createOrModifyPatient(
     firstName: 'Arthur',
     lastName: 'Dent',
     gender: 'male',
-    dateOfBirth: parseInt(`${now.getFullYear() - 42}0101`),
+    dateOfBirth: parseInt(`19520101`),
   }),
 )
 
@@ -48,7 +48,7 @@ await api.patientApi.createOrModifyPatient(
     firstName: 'Trillian',
     lastName: 'Astra',
     gender: 'female',
-    dateOfBirth: parseInt(`${now.getFullYear() - 42}0101`),
+    dateOfBirth: parseInt(`19520101`),
   }),
 )
 
@@ -57,11 +57,12 @@ await api.patientApi.createOrModifyPatient(
     firstName: 'Zaphod',
     lastName: 'Beeblebrox',
     gender: 'indeterminate',
+    dateOfBirth: parseInt(`19420101`),
   }),
 )
 
 //tech-doc: filter patients for hcp
-const patientsForHcpFilter = await new PatientFilter().forDataOwner(healthcarePartyId).build()
+const patientsForHcpFilter = await new PatientFilter(api).forDataOwner(healthcarePartyId).build()
 const patientsForHcp = await api.patientApi.filterPatients(patientsForHcpFilter)
 //tech-doc: end
 output({ patientsForHcpFilter, patientsForHcp })
@@ -72,31 +73,48 @@ patientsForHcp.rows.forEach((p) => {
 })
 
 //tech-doc: filter patients with implicit intersection filter
-const ageGenderImplicitFilter = await new PatientFilter()
+const ageGenderFilter = await new PatientFilter(api)
   .forDataOwner(user.healthcarePartyId!)
-  .ofAge(42)
+  .dateOfBirthBetween(19511211, 19520203)
   .byGenderEducationProfession('female')
   .build()
 
-const ageGenderImplicitPatients = await api.patientApi.filterPatients(ageGenderImplicitFilter)
+const ageGenderPatients = await api.patientApi.filterPatients(ageGenderFilter)
 //tech-doc: end
-output({ ageGenderImplicitFilter, ageGenderImplicitPatients })
+output({ ageGenderFilter, ageGenderPatients })
 
-expect(ageGenderImplicitPatients.rows.length).to.be.greaterThan(0)
-ageGenderImplicitPatients.rows.forEach((p) => {
+expect(ageGenderPatients.rows.length).to.be.greaterThan(0)
+ageGenderPatients.rows.forEach((p) => {
   expect(p.gender).to.be.eq('female')
-  const year = getYear(p.dateOfBirth)
-  expect(now.getFullYear() - year).to.be.eq(42)
+  expect(p.dateOfBirth).to.be.greaterThan(19511211)
+  expect(p.dateOfBirth).to.be.lessThan(19520202)
 })
 
-//tech-doc: filter patients with explicit intersection filter
-const filterByAge = new PatientFilter().forDataOwner(user.healthcarePartyId!).ofAge(42)
+//tech-doc: filter patients with implicit intersection filter with sorting
+const ageGenderSortedFilter = await new PatientFilter(api)
+  .forDataOwner(user.healthcarePartyId!)
+  .sort.dateOfBirthBetween(19391211, 19520203)
+  .byGenderEducationProfession('female')
+  .build()
 
-const filterByGenderAndAge = await new PatientFilter()
+const ageGenderSortedPatients = await api.patientApi.filterPatients(ageGenderFilter)
+//tech-doc: end
+output({ ageGenderSortedFilter, ageGenderSortedPatients })
+
+expect(ageGenderSortedPatients.rows.length).to.be.greaterThan(0)
+
+//tech-doc: filter patients with explicit intersection filter
+const filterByAge = await new PatientFilter(api)
+  .forDataOwner(user.healthcarePartyId!)
+  .dateOfBirthBetween(19511211, 19520203)
+  .build()
+
+const filterByGender = await new PatientFilter(api)
   .forDataOwner(user.healthcarePartyId!)
   .byGenderEducationProfession('female')
-  .intersection([filterByAge])
   .build()
+
+const filterByGenderAndAge = FilterComposition.intersection(filterByAge, filterByGender)
 
 const ageGenderExplicitPatients = await api.patientApi.filterPatients(filterByGenderAndAge)
 //tech-doc: end
@@ -105,20 +123,22 @@ output({ filterByGenderAndAge, ageGenderExplicitPatients })
 expect(ageGenderExplicitPatients.rows.length).to.be.greaterThan(0)
 ageGenderExplicitPatients.rows.forEach((p) => {
   expect(p.gender).to.be.eq('female')
-  const year = getYear(p.dateOfBirth)
-  expect(now.getFullYear() - year).to.be.eq(42)
+  expect(p.dateOfBirth).to.be.greaterThan(19511211)
+  expect(p.dateOfBirth).to.be.lessThan(19520202)
 })
 
 //tech-doc: filter patients with union filter
-const filterFemales = new PatientFilter()
+const filterFemales = await new PatientFilter(api)
   .forDataOwner(user.healthcarePartyId!)
   .byGenderEducationProfession('female')
+  .build()
 
-const filterFemaleOrIndeterminate = await new PatientFilter()
+const filterIndeterminate = await new PatientFilter(api)
   .forDataOwner(user.healthcarePartyId!)
   .byGenderEducationProfession('indeterminate')
-  .union([filterFemales])
   .build()
+
+const filterFemaleOrIndeterminate = FilterComposition.union(filterFemales, filterIndeterminate)
 
 const unionFilterPatients = await api.patientApi.filterPatients(filterFemaleOrIndeterminate)
 //tech-doc: end

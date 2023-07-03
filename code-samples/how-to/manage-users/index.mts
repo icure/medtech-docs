@@ -1,29 +1,11 @@
-import { medTechApi, UserFilter } from '@icure/medical-device-sdk'
-import { webcrypto } from 'crypto'
-import { host, userName, password, privKey, output } from '../../utils/index.mjs'
+import { UserFilter } from '@icure/medical-device-sdk'
+import { output, initLocalStorage, initMedTechApi } from '../../utils/index.mjs'
 import 'isomorphic-fetch'
-import { LocalStorage } from 'node-localstorage'
-import * as os from 'os'
 import { expect } from 'chai'
 
-const tmp = os.tmpdir()
-;(global as any).localStorage = new LocalStorage(tmp, 5 * 1024 * 1024 * 1024)
-;(global as any).Storage = ''
+initLocalStorage()
 
-const api = await medTechApi()
-  .withICureBaseUrl(host)
-  .withUserName(userName)
-  .withPassword(password)
-  .withMsgGwSpecId('ic')
-  .withMsgGwUrl('https://msg-gw.icure.dev')
-  .withCrypto(webcrypto as any)
-  .build()
-
-const user = await api.userApi.getLoggedUser()
-await api.cryptoApi.loadKeyPairsAsTextInBrowserLocalStorage(
-  user.healthcarePartyId ?? user.patientId ?? user.deviceId,
-  hex2ua(privKey),
-)
+const api = await initMedTechApi(true)
 
 //tech-doc: Create a user
 import { User } from '@icure/medical-device-sdk'
@@ -33,8 +15,8 @@ import { ICureRegistrationEmail } from '@icure/medical-device-sdk'
 const uniqueId = Math.random().toString(36).substring(4)
 
 const userToCreate = new User({
-  login: `john+${uniqueId}`,
-  email: `john+${uniqueId}@hospital.care`,
+  login: `john${uniqueId}`,
+  email: `john${uniqueId}@hospital.care`,
   passwordHash: 'correct horse battery staple',
 })
 
@@ -44,8 +26,8 @@ const createdUser = await api.userApi.createOrModifyUser(userToCreate)
 output({ createdUser, userToCreate })
 
 expect(createdUser.id).to.be.a('string')
-expect(createdUser.login).to.equal(`john+${uniqueId}`)
-expect(createdUser.email).to.equal(`john+${uniqueId}@hospital.care`)
+expect(createdUser.login).to.equal(`john${uniqueId}`)
+expect(createdUser.email).to.equal(`john${uniqueId}@hospital.care`)
 expect(createdUser.passwordHash).to.not.equal('correct horse battery staple')
 
 //tech-doc: Create a token
@@ -55,7 +37,6 @@ output({ token })
 
 //tech-doc: Create a patient user
 import { Patient, Address, Telecom } from '@icure/medical-device-sdk'
-import { hex2ua } from '@icure/api'
 
 const loggedUser = await api.userApi.getLoggedUser()
 const loggedHcp = await api.healthcareProfessionalApi.getHealthcareProfessional(
@@ -73,7 +54,7 @@ if (
       telecoms: [
         new Telecom({
           telecomType: 'email',
-          telecomNumber: `hcp+${uniqueId}@hospital.care`,
+          telecomNumber: `hcp${uniqueId}@hospital.care`,
         }),
       ],
     }),
@@ -89,7 +70,7 @@ const patientToCreate = new Patient({
       telecoms: [
         new Telecom({
           telecomType: 'email',
-          telecomNumber: `argan+${uniqueId}@moliere.fr`,
+          telecomNumber: `argan${uniqueId}@moliere.fr`,
         }),
       ],
     }),
@@ -114,8 +95,8 @@ output({ createdPatient, createdPatientUser })
 
 expect(createdPatientUser.id).to.be.a('string')
 expect(createdPatientUser.patientId).to.be.equal(createdPatient.id)
-expect(createdPatientUser.login).to.equal(`argan+${uniqueId}@moliere.fr`)
-expect(createdPatientUser.email).to.equal(`argan+${uniqueId}@moliere.fr`)
+expect(createdPatientUser.login).to.equal(`argan${uniqueId}@moliere.fr`)
+expect(createdPatientUser.email).to.equal(`argan${uniqueId}@moliere.fr`)
 
 //tech-doc: Load a user
 const loadedUser = await api.userApi.getUser(createdUser.id)
@@ -124,8 +105,8 @@ const loadedUser = await api.userApi.getUser(createdUser.id)
 output({ loadedUser })
 
 expect(loadedUser.id).to.be.equal(createdUser.id)
-expect(loadedUser.login).to.equal(`john+${uniqueId}`)
-expect(loadedUser.email).to.equal(`john+${uniqueId}@hospital.care`)
+expect(loadedUser.login).to.equal(`john${uniqueId}`)
+expect(loadedUser.email).to.equal(`john${uniqueId}@hospital.care`)
 
 //tech-doc: Load a user by email
 const loadedUserByEmail = await api.userApi.getUserByEmail(createdUser.email)
@@ -134,12 +115,12 @@ const loadedUserByEmail = await api.userApi.getUserByEmail(createdUser.email)
 output({ loadedUserByEmail })
 
 expect(loadedUserByEmail.id).to.be.equal(createdUser.id)
-expect(loadedUserByEmail.login).to.equal(`john+${uniqueId}`)
-expect(loadedUserByEmail.email).to.equal(`john+${uniqueId}@hospital.care`)
+expect(loadedUserByEmail.login).to.equal(`john${uniqueId}`)
+expect(loadedUserByEmail.email).to.equal(`john${uniqueId}@hospital.care`)
 
 //tech-doc: Filter users
 const users = await api.userApi.filterUsers(
-  await new UserFilter().byPatientId(createdPatient.id).build(),
+  await new UserFilter(api).byPatientId(createdPatient.id).build(),
 )
 
 //tech-doc: STOP HERE
@@ -158,7 +139,7 @@ const modifiedUser = await api.userApi.createOrModifyUser(
 output({ modifiedUser })
 
 expect(modifiedUser.id).to.be.equal(createdUser.id)
-expect(modifiedUser.login).to.equal(`john+${uniqueId}`)
+expect(modifiedUser.login).to.equal(`john${uniqueId}`)
 expect(modifiedUser.passwordHash).to.not.equal('wrong horse battery staple')
 
 //tech-doc: Delete a user

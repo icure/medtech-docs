@@ -3,28 +3,16 @@ import {
   Content,
   DataSample,
   DataSampleFilter,
-  medTechApi,
   Patient,
 } from '@icure/medical-device-sdk'
-import { webcrypto } from 'crypto'
-import { hex2ua, sleep } from '@icure/api'
-import { host, userName, password, privKey, initLocalStorage, output } from '../../utils/index.mjs'
+import { sleep } from '@icure/api'
+import { initLocalStorage, output, initMedTechApi } from '../../utils/index.mjs'
 import 'isomorphic-fetch'
 
 initLocalStorage()
 
-const api = await medTechApi()
-  .withICureBaseUrl(host)
-  .withUserName(userName)
-  .withPassword(password)
-  .withCrypto(webcrypto as any)
-  .build()
-
+const api = await initMedTechApi(true)
 const loggedUser = await api.userApi.getLoggedUser()
-await api!.cryptoApi.loadKeyPairsAsTextInBrowserLocalStorage(
-  loggedUser.healthcarePartyId!,
-  hex2ua(privKey),
-)
 
 //tech-doc: can listen to dataSample events
 const events: DataSample[] = []
@@ -33,7 +21,7 @@ const statuses: string[] = []
 const connection = (
   await api.dataSampleApi.subscribeToDataSampleEvents(
     ['CREATE'], // Event types to listen to
-    await new DataSampleFilter()
+    await new DataSampleFilter(api)
       .forDataOwner(loggedUser.healthcarePartyId!)
       .byLabelCodeDateFilter('IC-TEST', 'TEST')
       .build(),

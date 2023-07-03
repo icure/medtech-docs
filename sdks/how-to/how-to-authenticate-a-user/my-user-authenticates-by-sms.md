@@ -12,7 +12,6 @@ the [User Authentication - Init AnonymousMedTechApi](/sdks/how-to/how-to-authent
 
 <!-- file://code-samples/how-to/authenticate-user-by-sms/index.mts snippet:Instantiate AnonymousMedTech API-->
 ```typescript
-const iCureUrl = process.env.ICURE_URL
 const msgGtwUrl = process.env.ICURE_MSG_GTW_URL
 const specId = process.env.SPEC_ID
 const authProcessByEmailId = process.env.AUTH_BY_EMAIL_HCP_PROCESS_ID
@@ -25,6 +24,7 @@ const anonymousApi = await new AnonymousMedTechApiBuilder()
   .withMsgGwUrl(msgGtwUrl)
   .withMsgGwSpecId(specId)
   .withAuthProcessBySmsId(authProcessBySmsId)
+  .withCryptoStrategies(new SimpleMedTechCryptoStrategies([]))
   .build()
 ```
 
@@ -50,8 +50,8 @@ const authProcess = await anonymousApi.authenticationApi.startAuthentication(
 
 ```json
 {
-  "requestId": "cb15679d-f0d2-4ef3-8ec2-8e01d98d2d82",
-  "login": "+32588235595",
+  "requestId": "839431d3-e44d-4b77-8741-65be0e71978b",
+  "login": "+2486179855",
   "bypassTokenCheck": false
 }
 ```
@@ -78,6 +78,7 @@ const anonymousApiForLogin = await new AnonymousMedTechApiBuilder()
   .withMsgGwSpecId(specId)
   .withAuthProcessByEmailId(authProcessByEmailId)
   .withAuthProcessBySmsId(authProcessBySmsId)
+  .withCryptoStrategies(new SimpleMedTechCryptoStrategies([]))
   .build()
 
 const authProcessLogin = await anonymousApiForLogin.authenticationApi.startAuthentication(
@@ -104,15 +105,15 @@ const foundPatientAfterLogin = await loggedUserApi.patientApi.getPatient(created
 
 ```json
 {
-  "id": "4d085141-98e4-4cbc-aa34-ef9ed3fc6622",
+  "id": "dc2d6c27-7599-4853-b393-6aea83e8f01e",
   "languages": [],
   "active": true,
   "parameters": {},
-  "rev": "1-9a90cdd7873ee86f70016fa6d22c3499",
-  "created": 1682493517812,
-  "modified": 1682493517812,
-  "author": "ad20e686-d697-45cc-a779-34a2711b718e",
-  "responsible": "6176f1be-520f-45ea-9ef0-4bd60e593d4c",
+  "rev": "1-001ab59d4a5cc52fc7eba31ab46dbc77",
+  "created": 1688375597204,
+  "modified": 1688375597204,
+  "author": "1d7eb8e3-3999-4f6e-a13c-a4be09547941",
+  "responsible": "8477a29b-2989-43f6-9e0b-414fe7f3d100",
   "firstName": "Robb",
   "lastName": "Stark",
   "note": "You must keep one's head",
@@ -142,19 +143,20 @@ const foundPatientAfterLogin = await loggedUserApi.patientApi.getPatient(created
   "patientProfessions": [],
   "properties": {},
   "systemMetaData": {
+    "aesExchangeKeys": {},
     "hcPartyKeys": {},
     "privateKeyShamirPartitions": {},
-    "aesExchangeKeys": {},
     "transferKeys": {},
-    "encryptedSelf": "XXzr5hjnwZITzfDIsOpqO22DwUFToyAfbwqv9R6uINVX8bgM89HoJBntENjsTrB5BmFPRQ0ybC8AcK3nWIXZUA==",
+    "encryptedSelf": "TQRSsfEp+35gQquleXHeZzi+KMgEn9Xkv3BG+4CRsjYyUBwQJl2umWtGTk+Op1P0CQ3pPi9JWMuMYXY+IT6S5g==",
     "secretForeignKeys": [],
     "cryptedForeignKeys": {},
     "delegations": {
-      "6176f1be-520f-45ea-9ef0-4bd60e593d4c": {}
+      "8477a29b-2989-43f6-9e0b-414fe7f3d100": {}
     },
     "encryptionKeys": {
-      "6176f1be-520f-45ea-9ef0-4bd60e593d4c": {}
-    }
+      "8477a29b-2989-43f6-9e0b-414fe7f3d100": {}
+    },
+    "publicKeysForOaepWithSha256": {}
   }
 }
 ```

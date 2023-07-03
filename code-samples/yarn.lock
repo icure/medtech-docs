@@ -2,6 +2,13 @@
 # yarn lockfile v1
 
 
+"@babel/runtime@^7.21.0":
+  version "7.22.5"
+  resolved "http://localhost:4873/@babel/runtime/-/runtime-7.22.5.tgz#8564dd588182ce0047d55d7a75e93921107b57ec"
+  integrity sha512-ecjvYlnAaZ/KVneE/OdKYBYfgXV3Ptu6zQWmgEF7vwKhQnvVS6bjMD2XYgj+SNvQ1GfK/pjgokfPkC/2CO8CuA==
+  dependencies:
+    regenerator-runtime "^0.13.11"
+
 "@es-joy/jsdoccomment@~0.22.1":
   version "0.22.2"
   resolved "https://registry.yarnpkg.com/@es-joy/jsdoccomment/-/jsdoccomment-0.22.2.tgz#1c972f56a265ada7facbd0770a6caea6a391f5c8"
@@ -62,19 +69,6 @@
   resolved "https://registry.yarnpkg.com/@humanwhocodes/object-schema/-/object-schema-1.2.1.tgz#b520529ec21d8e5945a1851dfd1c32e94e39ff45"
   integrity sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==
 
-"@icure/api@6.0.0":
-  version "6.0.0"
-  resolved "https://registry.yarnpkg.com/@icure/api/-/api-6.0.0.tgz#a2ce308552b221baf38ab96060536ead938700af"
-  integrity sha512-T55qLjbbXBm47EJEQOrNHVyTggt0ylAQwad8K0is4CxIazsQ4Eg5KEt5D3T9PSeJxcwMS5eDYc9SKoUG3j/92w==
-  dependencies:
-    date-fns "^2.23.0"
-    libphonenumber-js "^1.7.18"
-    lodash "^4.17.21"
-    moment "^2.22.1"
-    text-encoding "^0.7.0"
-    uuid "^8.3.2"
-    uuid-encoder "^1.1.0"
-
 "@icure/api@7.0.0-beta.4":
   version "7.0.0-beta.4"
   resolved "https://registry.yarnpkg.com/@icure/api/-/api-7.0.0-beta.4.tgz#12094a977b4f363d58ab0689b28ed02686729a6c"
@@ -88,10 +82,10 @@
     uuid "^8.3.2"
     uuid-encoder "^1.1.0"
 
-"@icure/medical-device-sdk@^2.3.0":
-  version "2.3.0"
-  resolved "https://registry.yarnpkg.com/@icure/medical-device-sdk/-/medical-device-sdk-2.3.0.tgz#14ce3960e5ba04611c9f2afbb685af3e0c76cf90"
-  integrity sha512-d67gq0JiHp7Bz7n9WBfyRDLu/dlm9H349kl9eQzikeMrRWcCTRf19OM95Ouc/NtwdDuNqsGA0eX4ubsMRcfkuA==
+"@icure/medical-device-sdk@^2.3.3-local":
+  version "2.3.3-local"
+  resolved "http://localhost:4873/@icure/medical-device-sdk/-/medical-device-sdk-2.3.3-local.tgz#1bceda971214bfe8db8e5cbf8ac06e480e1d054d"
+  integrity sha512-jX2dWJ2Wk6rPZnxGnjSKb98T7DoQq42Cl7cmN45wlRlka1scQXQmrdYWKPaWVysEM7D47ih1tDmZveh6m/PH1Q==
   dependencies:
     "@icure/api" "7.0.0-beta.4"
     browser-or-node "^2.1.1"
@@ -101,6 +95,18 @@
     node-jq "^2.3.3"
     uuid "^8.3.2"
     ws "^8.13.0"
+
+"@icure/test-setup@^0.0.52":
+  version "0.0.52"
+  resolved "http://localhost:4873/@icure/test-setup/-/test-setup-0.0.52.tgz#5247483b1647b6ee895a725aa98fa10c76a4e0fe"
+  integrity sha512-la39eKt4CRsNBGs/i2MNBnD5NUrxgqjMv9CY764ZHqJ5sw381s8SANqa7j4zrRiQ/rhbKzVpvzDYWz19MpYUaw==
+  dependencies:
+    "@icure/api" "7.0.0-beta.4"
+    "@types/react-dom" "^18.0.6"
+    date-fns "^2.3.0"
+    isomorphic-fetch "^3.0.0"
+    node-localstorage "^2.2.1"
+    uuid "^3.3.2"
 
 "@nodelib/fs.scandir@2.1.5":
   version "2.1.5"
@@ -171,6 +177,32 @@
   version "3.0.5"
   resolved "https://registry.yarnpkg.com/@types/minimatch/-/minimatch-3.0.5.tgz#1001cc5e6a3704b83c236027e77f2f58ea010f40"
   integrity sha512-Klz949h02Gz2uZCMGwDUSDS1YBlTdDDgbWHi+81l29tQALUtvz4rAYi5uoVhE5Lagoq6DeqAUlbrHvW/mXDgdQ==
+
+"@types/prop-types@*":
+  version "15.7.5"
+  resolved "http://localhost:4873/@types/prop-types/-/prop-types-15.7.5.tgz#5f19d2b85a98e9558036f6a3cacc8819420f05cf"
+  integrity sha512-JCB8C6SnDoQf0cNycqd/35A7MjcnK+ZTqE7judS6o7utxUCg6imJg3QK2qzHKszlTjcj2cn+NwMB2i96ubpj7w==
+
+"@types/react-dom@^18.0.6":
+  version "18.2.6"
+  resolved "http://localhost:4873/@types/react-dom/-/react-dom-18.2.6.tgz#ad621fa71a8db29af7c31b41b2ea3d8a6f4144d1"
+  integrity sha512-2et4PDvg6PVCyS7fuTc4gPoksV58bW0RwSxWKcPRcHZf0PRUGq03TKcD/rUHe3azfV6/5/biUBJw+HhCQjaP0A==
+  dependencies:
+    "@types/react" "*"
+
+"@types/react@*":
+  version "18.2.14"
+  resolved "http://localhost:4873/@types/react/-/react-18.2.14.tgz#fa7a6fecf1ce35ca94e74874f70c56ce88f7a127"
+  integrity sha512-A0zjq+QN/O0Kpe30hA1GidzyFjatVvrpIvWLxD+xv67Vt91TWWgco9IvrJBkeyHm1trGaFS/FSGqPlhyeZRm0g==
+  dependencies:
+    "@types/prop-types" "*"
+    "@types/scheduler" "*"
+    csstype "^3.0.2"
+
+"@types/scheduler@*":
+  version "0.16.3"
+  resolved "http://localhost:4873/@types/scheduler/-/scheduler-0.16.3.tgz#cef09e3ec9af1d63d2a6cc5b383a737e24e6dcf5"
+  integrity sha512-5cJ8CB4yAx7BH1oMvdU0Jh9lrEXyPkar6F9G/ERswkCuvP4KQZfZkSjcMbAICCpQTN4OuZn8tz0HiKv9TGZgrQ==
 
 "@typescript-eslint/eslint-plugin@^5.38.1":
   version "5.38.1"
@@ -639,10 +671,22 @@ cross-spawn@^7.0.0, cross-spawn@^7.0.2, cross-spawn@^7.0.3:
     shebang-command "^2.0.0"
     which "^2.0.1"
 
+csstype@^3.0.2:
+  version "3.1.2"
+  resolved "http://localhost:4873/csstype/-/csstype-3.1.2.tgz#1d4bf9d572f11c14031f0436e1c10bc1f571f50b"
+  integrity sha512-I7K1Uu0MBPzaFKg4nI5Q7Vs2t+3gWWW648spaF+Rg7pI9ds18Ugn+lvg4SHczUdKlHI5LWBXyqfS8+DufyBsgQ==
+
 date-fns@^2.23.0, date-fns@^2.28.0:
   version "2.29.3"
   resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-2.29.3.tgz#27402d2fc67eb442b511b70bbdf98e6411cd68a8"
   integrity sha512-dDCnyH2WnnKusqvZZ6+jA1O51Ibt8ZMRNkDZdyAyK4YfbDwa/cEmuztzG5pk6hqlp9aSBPYcjOlktquahGwGeA==
+
+date-fns@^2.3.0:
+  version "2.30.0"
+  resolved "http://localhost:4873/date-fns/-/date-fns-2.30.0.tgz#f367e644839ff57894ec6ac480de40cae4b0f4d0"
+  integrity sha512-fnULvOpxnC5/Vg3NCiWelDsLiUc9bRwAPs/+LfTLNvetFCtCTN+yQz15C/fs4AwX1R9K5GLtLfn8QW+dWisaAw==
+  dependencies:
+    "@babel/runtime" "^7.21.0"
 
 debug@^2.6.9:
   version "2.6.9"
@@ -2464,6 +2508,11 @@ readable-stream@^2.0.0, readable-stream@^2.3.0, readable-stream@^2.3.5:
     safe-buffer "~5.1.1"
     string_decoder "~1.1.1"
     util-deprecate "~1.0.1"
+
+regenerator-runtime@^0.13.11:
+  version "0.13.11"
+  resolved "http://localhost:4873/regenerator-runtime/-/regenerator-runtime-0.13.11.tgz#f6dca3e7ceec20590d07ada785636a90cdca17f9"
+  integrity sha512-kY1AZVr2Ra+t+piVaJ4gxaFaReZVH40AKNo7UCX6W+dEwBo/2oZJzqfuN1qLq1oL45o56cPaTXELwrTh8Fpggg==
 
 regexp.prototype.flags@^1.4.3:
   version "1.4.3"

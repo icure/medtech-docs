@@ -35,7 +35,7 @@ This api object will automatically manage the authentication to the iCure backen
 
 Provide the iCure host to use and your user credentials in this API.
 
-<!-- file://code-samples/tutorial/doctor-centric-app/index.mts snippet:instantiate the api-->
+<!-- file://code-samples/tutorial/doctor-centric-app/index.mts snippet:instantiate the api with existing keys-->
 ```typescript
 import 'isomorphic-fetch'
 import { medTechApi } from '@icure/medical-device-sdk'
@@ -44,12 +44,19 @@ import { webcrypto } from 'crypto'
 const iCureHost = process.env.ICURE_URL!
 const iCureUserPassword = process.env.ICURE_USER_PASSWORD!
 const iCureUserLogin = process.env.ICURE_USER_NAME!
+const iCureUserPubKey = process.env.ICURE_USER_PUB_KEY!
+const iCureUserPrivKey = process.env.ICURE_USER_PRIV_KEY!
 
-const api = await medTechApi()
+const apiWithKeys = await medTechApi()
   .withICureBaseUrl(iCureHost)
   .withUserName(iCureUserLogin)
   .withPassword(iCureUserPassword)
   .withCrypto(webcrypto as any)
+  .withCryptoStrategies(
+    new SimpleMedTechCryptoStrategies([
+      { publicKey: iCureUserPubKey, privateKey: iCureUserPrivKey },
+    ]),
+  )
   .build()
 ```
 
@@ -66,27 +73,23 @@ expect(loggedUser.login).to.be.equal(iCureUserLogin)
 
 ```json
 {
-  "id": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
-  "rev": "111-c3f1e2908df9a81a43903697937bc56e",
-  "created": 1679919731079,
+  "id": "6a541dfb-40d9-41f5-ba76-e3a5e277813f",
+  "rev": "80-9e7d4c1261e3913204403fc2e9e1a668",
+  "created": 1688371977279,
   "name": "Master HCP",
-  "login": "master@b16baa.icure",
+  "login": "master@e2b6e8.icure",
   "groupId": "ic-e2etest-medtech-docs",
-  "healthcarePartyId": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
-  "email": "master@b16baa.icure",
+  "healthcarePartyId": "e2b6e873-035b-4964-885b-5a90e99c43b4",
+  "email": "master@e2b6e8.icure",
   "properties": {},
   "roles": {},
   "sharingDataWith": {
     "medicalInformation": {}
   },
   "authenticationTokens": {
-    "aee1860e-eb42-45fc-a2f2-9753f68764e1": {
-      "creationTime": 1679919731274,
+    "c1284f05-cca6-444e-bdac-3cd134d54e6b": {
+      "creationTime": 1688371977378,
       "validity": 86400
-    },
-    "5d47319d-0487-427f-b492-c761deea7caa": {
-      "creationTime": 1680074455610,
-      "validity": 31536000
     }
   }
 }
@@ -98,28 +101,29 @@ an RSA keypair.
 
 
 ## Init user cryptography
-`initUserCrypto` will create an RSA Keypair and assign it to your user. This way, they will be able to encrypt/decrypt 
-data.
+You may have noticed the `withCryptoStrategies()` method in the instantiation of the api. This allows the user to load
+his existing key pairs. If you don't have any existing key pair, you can instantiate the MedTech API without specifying
+them:
 
-<!-- file://code-samples/tutorial/doctor-centric-app/index.mts snippet:init user crypto-->
+<!-- file://code-samples/tutorial/doctor-centric-app/index.mts snippet:instantiate api without keys-->
 ```typescript
-await api.initUserCrypto()
+const apiWithoutKeys = await medTechApi()
+  .withICureBaseUrl(iCureHost)
+  .withUserName(iCureUserLogin)
+  .withPassword(iCureUserPassword)
+  .withCrypto(webcrypto as any)
+  .withCryptoStrategies(new SimpleMedTechCryptoStrategies([]))
+  .build()
 ```
 
-This works for the first time you're initializing user cryptography. However, you don't want to create an RSA keypair 
-each time your user connects. 
+If you do not specify a key pair during the instantiation, the API will try to retrieve it from the local storage. If 
+the local storage contains no key, then a new pair will be created.
 
-If your user already has her/his RSA keypair, call `initUserCrypto` providing their existing keypair, in order to 
-initialize the cryptography properly. 
+:::info
 
-Here is an example on how to do it:
-<!-- file://code-samples/tutorial/doctor-centric-app/index.mts snippet:init user crypto with existing key-->
-```typescript
-const iCureUserPubKey = process.env.ICURE_USER_PUB_KEY!
-const iCureUserPrivKey = process.env.ICURE_USER_PRIV_KEY!
-await api.initUserCrypto({ publicKey: iCureUserPubKey, privateKey: iCureUserPrivKey })
-```
-For more information about this method, go to the [References: initUserCrypto](/sdks/references/entrypoints/MedTechApi#initusercrypto)
+You can learn more about the Crypto Strategies [here](/sdks/explanations/crypto-strategies/crypto-strategies).
+
+:::
 
 :::tip
 
@@ -177,15 +181,15 @@ console.log(`Your new patient id : ${createdPatient.id}`)
 
 ```json
 {
-  "id": "7b896898-53ac-4ee4-985f-f2895506b4ed",
+  "id": "27773ab2-593a-44f6-9bd3-1bef03bf5009",
   "languages": [],
   "active": true,
   "parameters": {},
-  "rev": "1-00d78093250ea88c70c1c5a096185b2d",
-  "created": 1682493700411,
-  "modified": 1682493700411,
-  "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
-  "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
+  "rev": "1-73b2b31bfab5c7c9ecacee242b8b42ff",
+  "created": 1688375634875,
+  "modified": 1688375634875,
+  "author": "6a541dfb-40d9-41f5-ba76-e3a5e277813f",
+  "responsible": "e2b6e873-035b-4964-885b-5a90e99c43b4",
   "firstName": "John",
   "lastName": "Snow",
   "note": "Winter is coming",
@@ -215,19 +219,20 @@ console.log(`Your new patient id : ${createdPatient.id}`)
   "patientProfessions": [],
   "properties": {},
   "systemMetaData": {
+    "aesExchangeKeys": {},
     "hcPartyKeys": {},
     "privateKeyShamirPartitions": {},
-    "aesExchangeKeys": {},
     "transferKeys": {},
-    "encryptedSelf": "fW/6f0A982+mCwFmiea25NRzWagg+cNw+j/7NyO3xlmIcpfxOyssb5CTnwZB1ipt",
+    "encryptedSelf": "M1zHU7qVDhRAw9chD+70EKYrWr1LFD6kqEbiWrxQ3XGhn4p6aRFu71dDREORETix",
     "secretForeignKeys": [],
     "cryptedForeignKeys": {},
     "delegations": {
-      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
     },
     "encryptionKeys": {
-      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
-    }
+      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
+    },
+    "publicKeysForOaepWithSha256": {}
   }
 }
 ```
@@ -258,15 +263,15 @@ expect(createdPatient.id).to.be.equal(johnSnow.id)
 
 ```json
 {
-  "id": "7b896898-53ac-4ee4-985f-f2895506b4ed",
+  "id": "27773ab2-593a-44f6-9bd3-1bef03bf5009",
   "languages": [],
   "active": true,
   "parameters": {},
-  "rev": "1-00d78093250ea88c70c1c5a096185b2d",
-  "created": 1682493700411,
-  "modified": 1682493700411,
-  "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
-  "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
+  "rev": "1-73b2b31bfab5c7c9ecacee242b8b42ff",
+  "created": 1688375634875,
+  "modified": 1688375634875,
+  "author": "6a541dfb-40d9-41f5-ba76-e3a5e277813f",
+  "responsible": "e2b6e873-035b-4964-885b-5a90e99c43b4",
   "firstName": "John",
   "lastName": "Snow",
   "note": "Winter is coming",
@@ -296,19 +301,20 @@ expect(createdPatient.id).to.be.equal(johnSnow.id)
   "patientProfessions": [],
   "properties": {},
   "systemMetaData": {
+    "aesExchangeKeys": {},
     "hcPartyKeys": {},
     "privateKeyShamirPartitions": {},
-    "aesExchangeKeys": {},
     "transferKeys": {},
-    "encryptedSelf": "fW/6f0A982+mCwFmiea25NRzWagg+cNw+j/7NyO3xlmIcpfxOyssb5CTnwZB1ipt",
+    "encryptedSelf": "M1zHU7qVDhRAw9chD+70EKYrWr1LFD6kqEbiWrxQ3XGhn4p6aRFu71dDREORETix",
     "secretForeignKeys": [],
     "cryptedForeignKeys": {},
     "delegations": {
-      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
     },
     "encryptionKeys": {
-      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
-    }
+      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
+    },
+    "publicKeysForOaepWithSha256": {}
   }
 }
 ```
@@ -355,16 +361,16 @@ const createdData = await api.dataSampleApi.createOrModifyDataSamplesFor(johnSno
 ```text
 [
   {
-    "id": "be859c2b-6faf-49d1-8ced-0cdc6c9bc7cf",
+    "id": "829a4359-1475-4e52-bc4f-e113bd6b62a5",
     "qualifiedLinks": {},
-    "batchId": "046aceb3-bd73-4937-bece-b29cf7bcbc94",
+    "batchId": "104fb57c-1c18-4c46-84f3-ccc3999b4bf1",
     "index": 0,
     "valueDate": 20220203111034,
-    "openingDate": 20230426072141,
-    "created": 1682493701450,
-    "modified": 1682493701450,
-    "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
-    "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
+    "openingDate": 20230703111354,
+    "created": 1688375634920,
+    "modified": 1688375634920,
+    "author": "6a541dfb-40d9-41f5-ba76-e3a5e277813f",
+    "responsible": "e2b6e873-035b-4964-885b-5a90e99c43b4",
     "comment": "Height",
     "identifiers": [],
     "healthcareElementIds": {},
@@ -380,31 +386,33 @@ const createdData = await api.dataSampleApi.createOrModifyDataSamplesFor(johnSno
     "codes": {},
     "labels": {},
     "systemMetaData": {
+      "encryptedSelf": "hoDAp0UY8jQgpmOTYcKo+cUO7wQAAzFIguLB4yDIqXXk3hm8Xgnrdw78CAHfzf5mHvAKSvtcgf/Ofk4EVOt28VOH62lv3RxNwIjnF1lbuiLUEmCSM+vNAKn07A+7SGhK",
       "secretForeignKeys": [
-        "647dcaee-97e1-449e-ba7e-5c01e171b23e"
+        "31fd89a8-53db-4470-8f21-90f345f02de5"
       ],
       "cryptedForeignKeys": {
-        "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+        "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
       },
       "delegations": {
-        "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+        "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
       },
       "encryptionKeys": {
-        "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
-      }
+        "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
+      },
+      "publicKeysForOaepWithSha256": {}
     }
   },
   {
-    "id": "8d6cd26c-6f21-4936-aadf-3f96729940d1",
+    "id": "c7af5940-4716-4972-86a8-080e82f8d150",
     "qualifiedLinks": {},
-    "batchId": "046aceb3-bd73-4937-bece-b29cf7bcbc94",
+    "batchId": "104fb57c-1c18-4c46-84f3-ccc3999b4bf1",
     "index": 1,
     "valueDate": 20220203111034,
-    "openingDate": 20230426072141,
-    "created": 1682493701450,
-    "modified": 1682493701450,
-    "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
-    "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
+    "openingDate": 20230703111354,
+    "created": 1688375634920,
+    "modified": 1688375634920,
+    "author": "6a541dfb-40d9-41f5-ba76-e3a5e277813f",
+    "responsible": "e2b6e873-035b-4964-885b-5a90e99c43b4",
     "comment": "Weight",
     "identifiers": [],
     "healthcareElementIds": {},
@@ -420,18 +428,20 @@ const createdData = await api.dataSampleApi.createOrModifyDataSamplesFor(johnSno
     "codes": {},
     "labels": {},
     "systemMetaData": {
+      "encryptedSelf": "KvTEKtw/aCP89y9W36t9KrXV4m35U99i8ffySDzyAG4+C6YeYtypRD2cSsNPdwULhmI+RhAyAvbVb2f0UW9ikcNJtETybxU1+Z1RgO9Ox1CIDpnu1KypE1kdPtqU9QvkXQs3huB4p8kthsZ36/95nw==",
       "secretForeignKeys": [
-        "647dcaee-97e1-449e-ba7e-5c01e171b23e"
+        "31fd89a8-53db-4470-8f21-90f345f02de5"
       ],
       "cryptedForeignKeys": {
-        "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+        "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
       },
       "delegations": {
-        "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+        "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
       },
       "encryptionKeys": {
-        "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
-      }
+        "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
+      },
+      "publicKeysForOaepWithSha256": {}
     }
   }
 ]
@@ -453,11 +463,12 @@ Let's say we would like to find back all medical data with the LOINC label corre
 <!-- file://code-samples/tutorial/doctor-centric-app/index.mts snippet:Find your patient medical data following some criteria-->
 ```typescript
 import { DataSampleFilter } from '@icure/medical-device-sdk'
+import { SimpleMedTechCryptoStrategies } from '@icure/medical-device-sdk'
 
 const johnData = await api.dataSampleApi.filterDataSample(
-  await new DataSampleFilter()
+  await new DataSampleFilter(api)
     .forDataOwner(api.dataOwnerApi.getDataOwnerIdOf(loggedUser))
-    .forPatients(api.cryptoApi, [johnSnow])
+    .forPatients([johnSnow])
     .byLabelCodeDateFilter('LOINC', '29463-7')
     .build(),
 )
@@ -478,16 +489,16 @@ expect(johnData.rows[0].comment).to.be.equal('Weight')
   "totalSize": 1,
   "rows": [
     {
-      "id": "8d6cd26c-6f21-4936-aadf-3f96729940d1",
+      "id": "c7af5940-4716-4972-86a8-080e82f8d150",
       "qualifiedLinks": {},
-      "batchId": "046aceb3-bd73-4937-bece-b29cf7bcbc94",
+      "batchId": "104fb57c-1c18-4c46-84f3-ccc3999b4bf1",
       "index": 1,
       "valueDate": 20220203111034,
-      "openingDate": 20230426072141,
-      "created": 1682493701450,
-      "modified": 1682493701450,
-      "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
-      "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
+      "openingDate": 20230703111354,
+      "created": 1688375634920,
+      "modified": 1688375634920,
+      "author": "6a541dfb-40d9-41f5-ba76-e3a5e277813f",
+      "responsible": "e2b6e873-035b-4964-885b-5a90e99c43b4",
       "comment": "Weight",
       "identifiers": [],
       "healthcareElementIds": {},
@@ -503,18 +514,20 @@ expect(johnData.rows[0].comment).to.be.equal('Weight')
       "codes": {},
       "labels": {},
       "systemMetaData": {
+        "encryptedSelf": "KvTEKtw/aCP89y9W36t9KrXV4m35U99i8ffySDzyAG4+C6YeYtypRD2cSsNPdwULhmI+RhAyAvbVb2f0UW9ikcNJtETybxU1+Z1RgO9Ox1CIDpnu1KypE1kdPtqU9QvkXQs3huB4p8kthsZ36/95nw==",
         "secretForeignKeys": [
-          "647dcaee-97e1-449e-ba7e-5c01e171b23e"
+          "31fd89a8-53db-4470-8f21-90f345f02de5"
         ],
         "cryptedForeignKeys": {
-          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+          "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
         },
         "delegations": {
-          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+          "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
         },
         "encryptionKeys": {
-          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
-        }
+          "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
+        },
+        "publicKeysForOaepWithSha256": {}
       }
     }
   ],
@@ -545,16 +558,16 @@ expect(johnWeight.comment).to.be.equal('Weight')
 
 ```json
 {
-  "id": "8d6cd26c-6f21-4936-aadf-3f96729940d1",
+  "id": "c7af5940-4716-4972-86a8-080e82f8d150",
   "qualifiedLinks": {},
-  "batchId": "046aceb3-bd73-4937-bece-b29cf7bcbc94",
+  "batchId": "104fb57c-1c18-4c46-84f3-ccc3999b4bf1",
   "index": 1,
   "valueDate": 20220203111034,
-  "openingDate": 20230426072141,
-  "created": 1682493701450,
-  "modified": 1682493701450,
-  "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
-  "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
+  "openingDate": 20230703111354,
+  "created": 1688375634920,
+  "modified": 1688375634920,
+  "author": "6a541dfb-40d9-41f5-ba76-e3a5e277813f",
+  "responsible": "e2b6e873-035b-4964-885b-5a90e99c43b4",
   "comment": "Weight",
   "identifiers": [],
   "healthcareElementIds": {},
@@ -570,18 +583,20 @@ expect(johnWeight.comment).to.be.equal('Weight')
   "codes": {},
   "labels": {},
   "systemMetaData": {
+    "encryptedSelf": "KvTEKtw/aCP89y9W36t9KrXV4m35U99i8ffySDzyAG4+C6YeYtypRD2cSsNPdwULhmI+RhAyAvbVb2f0UW9ikcNJtETybxU1+Z1RgO9Ox1CIDpnu1KypE1kdPtqU9QvkXQs3huB4p8kthsZ36/95nw==",
     "secretForeignKeys": [
-      "647dcaee-97e1-449e-ba7e-5c01e171b23e"
+      "31fd89a8-53db-4470-8f21-90f345f02de5"
     ],
     "cryptedForeignKeys": {
-      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
     },
     "delegations": {
-      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
     },
     "encryptionKeys": {
-      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
-    }
+      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
+    },
+    "publicKeysForOaepWithSha256": {}
   }
 }
 ```

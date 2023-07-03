@@ -15,8 +15,6 @@ const api = await initMedTechApi(true)
 const healthcareProfessionalCode = Math.random().toString(36).substring(4)
 
 //tech-doc: Create a healthcare professional
-import { User } from '@icure/medical-device-sdk'
-
 const healthcareProfessional: HealthcareProfessional = new HealthcareProfessional({
   firstName: 'John',
   lastName: 'Keats',
@@ -59,7 +57,7 @@ expect(loadedHcp.lastName).to.equal('Keats')
 
 //tech-doc: Filter healthcare professionals
 const hcps = await api.healthcareProfessionalApi.filterHealthcareProfessionalBy(
-  await new HealthcareProfessionalFilter()
+  await new HealthcareProfessionalFilter(api)
     .byLabelCodeFilter(undefined, undefined, 'practitioner-specialty', healthcareProfessionalCode)
     .build(),
 )

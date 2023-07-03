@@ -5,20 +5,16 @@ import {
   DataSampleFilter,
   Patient,
 } from '@icure/medical-device-sdk'
-import { hex2ua, sleep } from '@icure/api'
+import { sleep } from '@icure/api'
 import 'isomorphic-fetch'
 
-import { initLocalStorage, initMedTechApi, output, privKey } from '../../utils/index.mjs'
+import { initLocalStorage, initMedTechApi, output } from '../../utils/index.mjs'
 
 initLocalStorage()
 
-const api = await initMedTechApi()
+const api = await initMedTechApi(true)
 
 const loggedUser = await api.userApi.getLoggedUser()
-await api!.cryptoApi.loadKeyPairsAsTextInBrowserLocalStorage(
-  loggedUser.healthcarePartyId!,
-  hex2ua(privKey),
-)
 
 //tech-doc: create a patient for datasample
 const patient = await api.patientApi.createOrModifyPatient(
@@ -66,10 +62,10 @@ output({ updatedDataSample })
 await sleep(5000)
 
 //tech-doc: get a list of dataSamples
-const filter = await new DataSampleFilter()
+const filter = await new DataSampleFilter(api)
   .forDataOwner(loggedUser.healthcarePartyId!)
   .byLabelCodeDateFilter('IC-TEST', 'TEST')
-  .forPatients(api.cryptoApi, [patient])
+  .forPatients([patient])
   .build()
 
 const filteredDataSamples = await api.dataSampleApi.filterDataSample(filter)
@@ -77,9 +73,9 @@ const filteredDataSamples = await api.dataSampleApi.filterDataSample(filter)
 output({ filteredDataSamples })
 
 //tech-doc: get a list of dataSamples ids
-const matchFilter = await new DataSampleFilter()
+const matchFilter = await new DataSampleFilter(api)
   .forDataOwner(loggedUser.healthcarePartyId!)
-  .forPatients(api.cryptoApi, [patient])
+  .forPatients([patient])
   .build()
 
 const matchedDataSampleIds = await api.dataSampleApi.matchDataSample(matchFilter)
@@ -93,10 +89,10 @@ const deletedDataSample = await api.dataSampleApi.deleteDataSample(updatedDataSa
 output({ deletedDataSample })
 
 //tech-doc: filter builder
-const dataSampleFilter = new DataSampleFilter()
+const dataSampleFilter = new DataSampleFilter(api)
   .forDataOwner(loggedUser.healthcarePartyId!)
   .byLabelCodeDateFilter('IC-TEST', 'TEST')
-  .forPatients(api.cryptoApi, [patient])
+  .forPatients([patient])
   .build()
 //tech-doc: STOP HERE
 output({ dataSampleFilter })

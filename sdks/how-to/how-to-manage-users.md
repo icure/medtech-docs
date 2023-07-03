@@ -20,8 +20,8 @@ import { ICureRegistrationEmail } from '@icure/medical-device-sdk'
 const uniqueId = Math.random().toString(36).substring(4)
 
 const userToCreate = new User({
-  login: `john+${uniqueId}`,
-  email: `john+${uniqueId}@hospital.care`,
+  login: `john${uniqueId}`,
+  email: `john${uniqueId}@hospital.care`,
   passwordHash: 'correct horse battery staple',
 })
 
@@ -34,13 +34,13 @@ const createdUser = await api.userApi.createOrModifyUser(userToCreate)
 
 ```json
 {
-  "id": "aa2b997f-4940-47ce-9db4-bf424964c348",
-  "rev": "1-f754b92c9c89dc85bf10a5ba40473b75",
-  "created": 1682493643604,
-  "login": "john+csez0lmfp",
+  "id": "e3615060-f659-4e3d-81ab-7f9925b0b2d7",
+  "rev": "1-8f1a358ed184a1dadf26afd1906752a4",
+  "created": 1688375624991,
+  "login": "johno7r8on9m",
   "passwordHash": "*",
   "groupId": "ic-e2etest-medtech-docs",
-  "email": "john+csez0lmfp@hospital.care",
+  "email": "johno7r8on9m@hospital.care",
   "properties": {},
   "roles": {},
   "sharingDataWith": {},
@@ -72,7 +72,7 @@ const token = await api.userApi.createToken(createdUser.id, 3600)
 <summary>token</summary>
 
 ```text
-f7b331b7-75de-4cc3-b5e1-fae71113fa9a
+7aae3aab-4ad1-48aa-a3ad-4cf3c614401a
 ```
 </details>
 
@@ -95,7 +95,6 @@ You will often need to create a patient that can connect to iCure. In that case 
 <!-- file://code-samples/how-to/manage-users/index.mts snippet:Create a patient user-->
 ```typescript
 import { Patient, Address, Telecom } from '@icure/medical-device-sdk'
-import { hex2ua } from '@icure/api'
 
 const loggedUser = await api.userApi.getLoggedUser()
 const loggedHcp = await api.healthcareProfessionalApi.getHealthcareProfessional(
@@ -113,7 +112,7 @@ if (
       telecoms: [
         new Telecom({
           telecomType: 'email',
-          telecomNumber: `hcp+${uniqueId}@hospital.care`,
+          telecomNumber: `hcp${uniqueId}@hospital.care`,
         }),
       ],
     }),
@@ -129,7 +128,7 @@ const patientToCreate = new Patient({
       telecoms: [
         new Telecom({
           telecomType: 'email',
-          telecomNumber: `argan+${uniqueId}@moliere.fr`,
+          telecomNumber: `argan${uniqueId}@moliere.fr`,
         }),
       ],
     }),
@@ -156,15 +155,15 @@ const createdPatientUser = await api.userApi.createAndInviteUser(
 
 ```json
 {
-  "id": "daf57bd4-a644-41e2-a724-8c1cb7f4e6d4",
+  "id": "5a66c5c7-cf14-42c6-b271-43ba4771e5d1",
   "languages": [],
   "active": true,
   "parameters": {},
-  "rev": "1-bcdfeb220845201e66854df3502862d0",
-  "created": 1682493646024,
-  "modified": 1682493646024,
-  "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
-  "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
+  "rev": "1-f6f64641467a9ef4bab5408df5a9fdf1",
+  "created": 1688375625056,
+  "modified": 1688375625056,
+  "author": "6a541dfb-40d9-41f5-ba76-e3a5e277813f",
+  "responsible": "e2b6e873-035b-4964-885b-5a90e99c43b4",
   "firstName": "Argan",
   "lastName": "Poquelin",
   "ssin": "1973021014722",
@@ -189,7 +188,7 @@ const createdPatientUser = await api.userApi.createAndInviteUser(
       "addressType": "home",
       "telecoms": [
         {
-          "telecomNumber": "argan+csez0lmfp@moliere.fr",
+          "telecomNumber": "argano7r8on9m@moliere.fr",
           "telecomType": "email"
         }
       ]
@@ -205,19 +204,20 @@ const createdPatientUser = await api.userApi.createAndInviteUser(
   "patientProfessions": [],
   "properties": {},
   "systemMetaData": {
+    "aesExchangeKeys": {},
     "hcPartyKeys": {},
     "privateKeyShamirPartitions": {},
-    "aesExchangeKeys": {},
     "transferKeys": {},
-    "encryptedSelf": "IrjAPabEzVuLOUCvphbHD6T8ewqDep3xLaSD4heT1uU=",
+    "encryptedSelf": "M5vpVJqHYKBtDKcpIWD/b7Lgc9Umlh+Rnl2HN3Ob2mA=",
     "secretForeignKeys": [],
     "cryptedForeignKeys": {},
     "delegations": {
-      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
     },
     "encryptionKeys": {
-      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
-    }
+      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
+    },
+    "publicKeysForOaepWithSha256": {}
   }
 }
 ```
@@ -229,14 +229,14 @@ const createdPatientUser = await api.userApi.createAndInviteUser(
 
 ```json
 {
-  "id": "d68e5e3f-8c23-407d-b636-a4e40047435f",
-  "rev": "1-a0b50780da20bb277033d48eaaf56081",
-  "created": 1682493646532,
-  "name": "argan+csez0lmfp@moliere.fr",
-  "login": "argan+csez0lmfp@moliere.fr",
+  "id": "5b051d2d-4a1a-4707-a24b-b3d3ca1143ae",
+  "rev": "1-f328ab564e8fe3c332ec77feeee7060c",
+  "created": 1688375625117,
+  "name": "argano7r8on9m@moliere.fr",
+  "login": "argano7r8on9m@moliere.fr",
   "groupId": "ic-e2etest-medtech-docs",
-  "patientId": "daf57bd4-a644-41e2-a724-8c1cb7f4e6d4",
-  "email": "argan+csez0lmfp@moliere.fr",
+  "patientId": "5a66c5c7-cf14-42c6-b271-43ba4771e5d1",
+  "email": "argano7r8on9m@moliere.fr",
   "properties": {},
   "roles": {},
   "sharingDataWith": {},
@@ -276,19 +276,19 @@ const loadedUser = await api.userApi.getUser(createdUser.id)
 
 ```json
 {
-  "id": "aa2b997f-4940-47ce-9db4-bf424964c348",
-  "rev": "2-8b59bd5a79b9abb5348861747824b972",
-  "created": 1682493643604,
-  "login": "john+csez0lmfp",
+  "id": "e3615060-f659-4e3d-81ab-7f9925b0b2d7",
+  "rev": "2-6bd37618105cccdcc7529897b08574b6",
+  "created": 1688375624991,
+  "login": "johno7r8on9m",
   "passwordHash": "*",
   "groupId": "ic-e2etest-medtech-docs",
-  "email": "john+csez0lmfp@hospital.care",
+  "email": "johno7r8on9m@hospital.care",
   "properties": {},
   "roles": {},
   "sharingDataWith": {},
   "authenticationTokens": {
-    "d14075cc-313d-4962-a171-d3c9a53afa18": {
-      "creationTime": 1682493643814,
+    "a50e5a58-128b-4ec2-938a-80a7d0986c77": {
+      "creationTime": 1688375625006,
       "validity": 3600
     }
   }
@@ -311,19 +311,19 @@ const loadedUserByEmail = await api.userApi.getUserByEmail(createdUser.email)
 
 ```json
 {
-  "id": "aa2b997f-4940-47ce-9db4-bf424964c348",
-  "rev": "2-8b59bd5a79b9abb5348861747824b972",
-  "created": 1682493643604,
-  "login": "john+csez0lmfp",
+  "id": "e3615060-f659-4e3d-81ab-7f9925b0b2d7",
+  "rev": "2-6bd37618105cccdcc7529897b08574b6",
+  "created": 1688375624991,
+  "login": "johno7r8on9m",
   "passwordHash": "*",
   "groupId": "ic-e2etest-medtech-docs",
-  "email": "john+csez0lmfp@hospital.care",
+  "email": "johno7r8on9m@hospital.care",
   "properties": {},
   "roles": {},
   "sharingDataWith": {},
   "authenticationTokens": {
-    "d14075cc-313d-4962-a171-d3c9a53afa18": {
-      "creationTime": 1682493643814,
+    "a50e5a58-128b-4ec2-938a-80a7d0986c77": {
+      "creationTime": 1688375625006,
       "validity": 3600
     }
   }
@@ -342,7 +342,7 @@ The following filters are available:
 <!-- file://code-samples/how-to/manage-users/index.mts snippet:Filter users-->
 ```typescript
 const users = await api.userApi.filterUsers(
-  await new UserFilter().byPatientId(createdPatient.id).build(),
+  await new UserFilter(api).byPatientId(createdPatient.id).build(),
 )
 ```
 
@@ -353,23 +353,23 @@ const users = await api.userApi.filterUsers(
 ```json
 {
   "pageSize": 1000,
-  "totalSize": 721,
+  "totalSize": 367,
   "rows": [
     {
-      "id": "d68e5e3f-8c23-407d-b636-a4e40047435f",
-      "rev": "2-c1500155eaaf2365b47c7ce547fa10f9",
-      "created": 1682493646532,
-      "name": "argan+csez0lmfp@moliere.fr",
-      "login": "argan+csez0lmfp@moliere.fr",
+      "id": "5b051d2d-4a1a-4707-a24b-b3d3ca1143ae",
+      "rev": "2-2b285a7e4b06f1645c82e249b1de38af",
+      "created": 1688375625117,
+      "name": "argano7r8on9m@moliere.fr",
+      "login": "argano7r8on9m@moliere.fr",
       "groupId": "ic-e2etest-medtech-docs",
-      "patientId": "daf57bd4-a644-41e2-a724-8c1cb7f4e6d4",
-      "email": "argan+csez0lmfp@moliere.fr",
+      "patientId": "5a66c5c7-cf14-42c6-b271-43ba4771e5d1",
+      "email": "argano7r8on9m@moliere.fr",
       "properties": {},
       "roles": {},
       "sharingDataWith": {},
       "authenticationTokens": {
-        "41af21ed-435c-4834-ab78-6269f4a6e4ec": {
-          "creationTime": 1682493647069,
+        "acec275e-2e70-4af6-a8e8-e06bae26252f": {
+          "creationTime": 1688375625137,
           "validity": 172800
         }
       }
@@ -398,19 +398,19 @@ const modifiedUser = await api.userApi.createOrModifyUser(
 
 ```json
 {
-  "id": "aa2b997f-4940-47ce-9db4-bf424964c348",
-  "rev": "3-52538bab5460d34442f3615529dab1cd",
-  "created": 1682493643604,
-  "login": "john+csez0lmfp",
+  "id": "e3615060-f659-4e3d-81ab-7f9925b0b2d7",
+  "rev": "3-2f0ce3f43e35f48a53b058214d2a8488",
+  "created": 1688375624991,
+  "login": "johno7r8on9m",
   "passwordHash": "*",
   "groupId": "ic-e2etest-medtech-docs",
-  "email": "john+csez0lmfp@hospital.care",
+  "email": "johno7r8on9m@hospital.care",
   "properties": {},
   "roles": {},
   "sharingDataWith": {},
   "authenticationTokens": {
-    "d14075cc-313d-4962-a171-d3c9a53afa18": {
-      "creationTime": 1682493643814,
+    "a50e5a58-128b-4ec2-938a-80a7d0986c77": {
+      "creationTime": 1688375625006,
       "validity": 3600
     }
   }
@@ -432,7 +432,7 @@ const deletedUserId = await api.userApi.deleteUser(createdUser.id)
 <summary>deletedUserId</summary>
 
 ```text
-4-32eecf82638266eba206c43122c6a6c6
+4-ab07685eeaa4a314d225e37677c21915
 ```
 </details>
 

@@ -44,7 +44,6 @@ You will have to create an `AnonymousMedTechApi` instead.
 ### Init AnonymousMedTechApi
 <!-- file://code-samples/how-to/authenticate-user/index.mts snippet:Instantiate AnonymousMedTech API-->
 ```typescript
-const iCureUrl = process.env.ICURE_URL
 const msgGtwUrl = process.env.ICURE_MSG_GTW_URL
 const specId = process.env.SPEC_ID
 const authProcessByEmailId = process.env.AUTH_BY_EMAIL_PROCESS_ID
@@ -58,6 +57,7 @@ const anonymousApi = await new AnonymousMedTechApiBuilder()
   .withMsgGwSpecId(specId)
   .withAuthProcessByEmailId(authProcessByEmailId)
   .withAuthProcessBySmsId(authProcessBySmsId)
+  .withCryptoStrategies(new SimpleMedTechCryptoStrategies([]))
   .build()
 ```
 
@@ -132,8 +132,8 @@ const authProcess = await anonymousApi.authenticationApi.startAuthentication(
 
 ```json
 {
-  "requestId": "598fc4ca-c40f-40cd-915d-2c52607b1ff8",
-  "login": "uhv1yc56y-dt@got.com",
+  "requestId": "06713e50-1cd4-4eb3-be19-b21c6c9b961c",
+  "login": "8a8chz7ak-dt@got.com",
   "bypassTokenCheck": false
 }
 ```
@@ -232,16 +232,16 @@ const createdDataSample = await authenticatedApi.dataSampleApi.createOrModifyDat
 
 ```json
 {
-  "id": "f4a46e45-6bc4-4187-8062-f40b39a25f73",
+  "id": "39fcf7c6-fabc-4d20-b1a4-be3e01d0644f",
   "qualifiedLinks": {},
-  "batchId": "56ac5218-71d8-4569-9de8-f75eb42d051e",
+  "batchId": "fcfe9fde-c77e-41fe-b454-39415002e343",
   "index": 0,
-  "valueDate": 20230426071850,
+  "valueDate": 20230703111322,
   "openingDate": 20220929083400,
-  "created": 1682493530819,
-  "modified": 1682493530819,
-  "author": "cd103856-44d3-43b7-b1bb-9e017834d4bc",
-  "responsible": "fe1a337f-0019-4270-a40b-cbe4791d9cc3",
+  "created": 1688375602250,
+  "modified": 1688375602250,
+  "author": "c2625efc-8141-4839-b324-42e91e8da2c0",
+  "responsible": "fa3c69fe-b87d-457f-8423-f673288d9336",
   "comment": "This is a comment",
   "identifiers": [],
   "healthcareElementIds": {},
@@ -257,21 +257,23 @@ const createdDataSample = await authenticatedApi.dataSampleApi.createOrModifyDat
   "codes": {},
   "labels": {},
   "systemMetaData": {
+    "encryptedSelf": "zJH3l/emDNRad2W4DsFNv+/3F9yacoxCMcwUf5/PcjuKJdPy8BpDjDu6zellExSO7vj+3P+h3ETYQ4Vax1bY5JjCRxyus4PrZ2apIxm5/cT8fGLTz6wz1wqMbZ7YY6BAX/ZUGU1lbGyS3qGpGECSUw==",
     "secretForeignKeys": [
-      "ad16c74d-3099-4bac-9a9a-23b372a5d34f"
+      "8a70e8ba-f57d-4e67-98c2-eb39a9b70686"
     ],
     "cryptedForeignKeys": {
-      "fe1a337f-0019-4270-a40b-cbe4791d9cc3": {},
-      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+      "fa3c69fe-b87d-457f-8423-f673288d9336": {},
+      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
     },
     "delegations": {
-      "fe1a337f-0019-4270-a40b-cbe4791d9cc3": {},
-      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+      "fa3c69fe-b87d-457f-8423-f673288d9336": {},
+      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
     },
     "encryptionKeys": {
-      "fe1a337f-0019-4270-a40b-cbe4791d9cc3": {},
-      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
-    }
+      "fa3c69fe-b87d-457f-8423-f673288d9336": {},
+      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
+    },
+    "publicKeysForOaepWithSha256": {}
   }
 }
 ```
@@ -313,9 +315,10 @@ const reInstantiatedApi = await new MedTechApiBuilder()
   .withUserName(login)
   .withPassword(token)
   .withCrypto(webcrypto as any)
+  .withCryptoStrategies(
+    new SimpleMedTechCryptoStrategies([{ publicKey: pubKey, privateKey: privKey }]),
+  )
   .build()
-
-await reInstantiatedApi.initUserCrypto({ publicKey: pubKey, privateKey: privKey })
 ```
 The MedTech API will automatically load the keys for that user from the local storage, but you can also pass them
 explicitly through the `.withCryptoStrategies` method of the builder.
@@ -340,16 +343,16 @@ const foundDataSampleAfterInstantiatingApi = await reInstantiatedApi.dataSampleA
 
 ```json
 {
-  "id": "f4a46e45-6bc4-4187-8062-f40b39a25f73",
+  "id": "39fcf7c6-fabc-4d20-b1a4-be3e01d0644f",
   "qualifiedLinks": {},
-  "batchId": "56ac5218-71d8-4569-9de8-f75eb42d051e",
+  "batchId": "fcfe9fde-c77e-41fe-b454-39415002e343",
   "index": 0,
-  "valueDate": 20230426071850,
+  "valueDate": 20230703111322,
   "openingDate": 20220929083400,
-  "created": 1682493530819,
-  "modified": 1682493530819,
-  "author": "cd103856-44d3-43b7-b1bb-9e017834d4bc",
-  "responsible": "fe1a337f-0019-4270-a40b-cbe4791d9cc3",
+  "created": 1688375602250,
+  "modified": 1688375602250,
+  "author": "c2625efc-8141-4839-b324-42e91e8da2c0",
+  "responsible": "fa3c69fe-b87d-457f-8423-f673288d9336",
   "comment": "This is a comment",
   "identifiers": [],
   "healthcareElementIds": {},
@@ -365,21 +368,23 @@ const foundDataSampleAfterInstantiatingApi = await reInstantiatedApi.dataSampleA
   "codes": {},
   "labels": {},
   "systemMetaData": {
+    "encryptedSelf": "zJH3l/emDNRad2W4DsFNv+/3F9yacoxCMcwUf5/PcjuKJdPy8BpDjDu6zellExSO7vj+3P+h3ETYQ4Vax1bY5JjCRxyus4PrZ2apIxm5/cT8fGLTz6wz1wqMbZ7YY6BAX/ZUGU1lbGyS3qGpGECSUw==",
     "secretForeignKeys": [
-      "ad16c74d-3099-4bac-9a9a-23b372a5d34f"
+      "8a70e8ba-f57d-4e67-98c2-eb39a9b70686"
     ],
     "cryptedForeignKeys": {
-      "fe1a337f-0019-4270-a40b-cbe4791d9cc3": {},
-      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+      "fa3c69fe-b87d-457f-8423-f673288d9336": {},
+      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
     },
     "delegations": {
-      "fe1a337f-0019-4270-a40b-cbe4791d9cc3": {},
-      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+      "fa3c69fe-b87d-457f-8423-f673288d9336": {},
+      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
     },
     "encryptionKeys": {
-      "fe1a337f-0019-4270-a40b-cbe4791d9cc3": {},
-      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
-    }
+      "fa3c69fe-b87d-457f-8423-f673288d9336": {},
+      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
+    },
+    "publicKeysForOaepWithSha256": {}
   }
 }
 ```
@@ -401,6 +406,7 @@ const anonymousApiForLogin = await new AnonymousMedTechApiBuilder()
   .withMsgGwSpecId(specId)
   .withAuthProcessByEmailId(authProcessByEmailId)
   .withAuthProcessBySmsId(authProcessBySmsId)
+  .withCryptoStrategies(new SimpleMedTechCryptoStrategies([]))
   .build()
 
 const authProcessLogin = await anonymousApiForLogin.authenticationApi.startAuthentication(
@@ -470,16 +476,16 @@ const foundDataSampleAfterLogin = await loggedUserApi.dataSampleApi.getDataSampl
 
 ```json
 {
-  "id": "f4a46e45-6bc4-4187-8062-f40b39a25f73",
+  "id": "39fcf7c6-fabc-4d20-b1a4-be3e01d0644f",
   "qualifiedLinks": {},
-  "batchId": "56ac5218-71d8-4569-9de8-f75eb42d051e",
+  "batchId": "fcfe9fde-c77e-41fe-b454-39415002e343",
   "index": 0,
-  "valueDate": 20230426071850,
+  "valueDate": 20230703111322,
   "openingDate": 20220929083400,
-  "created": 1682493530819,
-  "modified": 1682493530819,
-  "author": "cd103856-44d3-43b7-b1bb-9e017834d4bc",
-  "responsible": "fe1a337f-0019-4270-a40b-cbe4791d9cc3",
+  "created": 1688375602250,
+  "modified": 1688375602250,
+  "author": "c2625efc-8141-4839-b324-42e91e8da2c0",
+  "responsible": "fa3c69fe-b87d-457f-8423-f673288d9336",
   "comment": "This is a comment",
   "identifiers": [],
   "healthcareElementIds": {},
@@ -495,21 +501,23 @@ const foundDataSampleAfterLogin = await loggedUserApi.dataSampleApi.getDataSampl
   "codes": {},
   "labels": {},
   "systemMetaData": {
+    "encryptedSelf": "zJH3l/emDNRad2W4DsFNv+/3F9yacoxCMcwUf5/PcjuKJdPy8BpDjDu6zellExSO7vj+3P+h3ETYQ4Vax1bY5JjCRxyus4PrZ2apIxm5/cT8fGLTz6wz1wqMbZ7YY6BAX/ZUGU1lbGyS3qGpGECSUw==",
     "secretForeignKeys": [
-      "ad16c74d-3099-4bac-9a9a-23b372a5d34f"
+      "8a70e8ba-f57d-4e67-98c2-eb39a9b70686"
     ],
     "cryptedForeignKeys": {
-      "fe1a337f-0019-4270-a40b-cbe4791d9cc3": {},
-      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+      "fa3c69fe-b87d-457f-8423-f673288d9336": {},
+      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
     },
     "delegations": {
-      "fe1a337f-0019-4270-a40b-cbe4791d9cc3": {},
-      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+      "fa3c69fe-b87d-457f-8423-f673288d9336": {},
+      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
     },
     "encryptionKeys": {
-      "fe1a337f-0019-4270-a40b-cbe4791d9cc3": {},
-      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
-    }
+      "fa3c69fe-b87d-457f-8423-f673288d9336": {},
+      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
+    },
+    "publicKeysForOaepWithSha256": {}
   }
 }
 ```

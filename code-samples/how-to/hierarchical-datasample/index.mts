@@ -6,21 +6,14 @@ import {
   TimeSeries,
   Measure,
 } from '@icure/medical-device-sdk'
-import { hex2ua } from '@icure/api'
 import 'isomorphic-fetch'
 import * as console from 'console'
 
-import { initLocalStorage, initMedTechApi, output, privKey } from '../../utils/index.mjs'
+import { initLocalStorage, initMedTechApi, output } from '../../utils/index.mjs'
 
 initLocalStorage()
 
-const api = await initMedTechApi()
-
-const loggedUser = await api.userApi.getLoggedUser()
-await api!.cryptoApi.loadKeyPairsAsTextInBrowserLocalStorage(
-  loggedUser.healthcarePartyId!,
-  hex2ua(privKey),
-)
+const api = await initMedTechApi(true)
 
 //tech-doc: create a patient for datasample
 const patient = await api.patientApi.createOrModifyPatient(
@@ -121,5 +114,3 @@ const createdDataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
 )
 //tech-doc: STOP HERE
 output({ meanHeartRateDataSample, createdDataSample })
-
-console.log(JSON.stringify(createdDataSample))

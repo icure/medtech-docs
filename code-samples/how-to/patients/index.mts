@@ -68,9 +68,8 @@ console.log('Get: ', JSON.stringify(patient))
 expect(JSON.stringify(patient)).to.equal(JSON.stringify(updatedPatient))
 
 //tech-doc: get a list of patient
-const filter = await new PatientFilter()
+const filter = await new PatientFilter(api)
   .forDataOwner(loggedUser.healthcarePartyId!)
-
   .dateOfBirthBetween(28000101, 29000101)
   .build()
 
@@ -79,12 +78,11 @@ const patients = await api.patientApi.filterPatients(filter)
 output({ patients })
 
 // console.log('Filter: ', JSON.stringify(patients))
-
 expect(patients.rows).to.lengthOf.greaterThan(0)
 
 // THIS SHOULD WORK, BUT DOESN'T (We need to merge the PR about RSocket)
 //tech-doc: get a list of patient ids
-const filterForMatch = await new PatientFilter()
+const filterForMatch = await new PatientFilter(api)
   .forDataOwner(loggedUser.healthcarePartyId!)
 
   .dateOfBirthBetween(28000101, 29000101)
@@ -108,9 +106,8 @@ console.log('Delete: ', JSON.stringify(deletedPatientId))
 expect(deletedPatientId).to.equal(patient.id)
 
 //tech-doc: filter builder
-const patientFilter = new PatientFilter()
+const patientFilter = new PatientFilter(api)
   .forDataOwner(loggedUser.healthcarePartyId!)
-
   .dateOfBirthBetween(28000101, 29000101)
   .build()
 //tech-doc: STOP HERE
