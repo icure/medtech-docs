@@ -447,14 +447,14 @@ const createdDataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
 
 ```json
 {
-  "id": "8e9dcc08-79e9-474f-bba8-60de9c4b5487",
+  "id": "81d2da0f-e676-4fa1-86fe-2366cdf7c277",
   "qualifiedLinks": {},
-  "batchId": "ba6aa245-11c9-4f86-8e16-cf0484e3d6e7",
+  "batchId": "e5632bcf-5feb-49e0-a4e5-7a9ddc4d8073",
   "index": 0,
-  "valueDate": 20230703111324,
+  "valueDate": 20230703120926,
   "openingDate": 20220929083400,
-  "created": 1688375604584,
-  "modified": 1688375604584,
+  "created": 1688378966794,
+  "modified": 1688378966794,
   "author": "6a541dfb-40d9-41f5-ba76-e3a5e277813f",
   "responsible": "e2b6e873-035b-4964-885b-5a90e99c43b4",
   "identifiers": [],
@@ -464,7 +464,7 @@ const createdDataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
     "en": {
       "compoundValue": [
         {
-          "id": "f9b262f5-1402-4e3d-85ba-2b601ac90e9e",
+          "id": "3d65cb0c-8964-437e-846c-f0a3338352b6",
           "qualifiedLinks": {},
           "openingDate": 20220929083400,
           "comment": "Heart rate 1 hour mean",
@@ -486,7 +486,7 @@ const createdDataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
           "codes": {},
           "labels": {},
           "systemMetaData": {
-            "encryptedSelf": "lVIbXfmQUUBDjngqPUoTB8pJ7Z9dYKQvtOWsubCrbgU8xhn5oE7knfRkr2ZxXBr4+eoCJTSYOKlz7piXIIezuXSZMh+M4+Jei746V77uY0uwdBda9QMzVwSAqsgf9Z3XUG6xfAGLlwvb0QEeMFaZXOGLuA7XC1yAaeTd6MLH0G3rjoZISCR5rS/RJ0iOXk+i2ORO8RZG/NRdu6YhuHjI60sQr1PaVWpoSyItkE0ySJ1X/Ed0jdPLpytNtYhQnu4dKzUbVupcREAqE3Z59qH0RA==",
+            "encryptedSelf": "qN4yRNPzR6+YQriJryleO5nHYUL31JIHJbIB/z/sASwLsJvH7XBAYm7xIXG0O4hOWBY4f+fXqUSTpBCua43ie+CI50o8eba/fIFB7FNs3rpkbqA8nToLidN2kdWzDSLUdC+ngjgvNe7tBh5+uNKzCVrHVvC60Jy8VM6VTiU8uXOKYZ8S77bpQJ88wQsUQUQKGwtc/c1pXCgH/P4zvHhtB3Bn2+JuzRlsIVqrSCqfCq7rD7XoZ6buNnC4FFBkUUYpqiaW5KB2jdGeIPV3VzBMfQ==",
             "secretForeignKeys": [],
             "cryptedForeignKeys": {},
             "delegations": {},
@@ -495,7 +495,7 @@ const createdDataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
           }
         },
         {
-          "id": "1698c593-62a4-4119-9682-ebe64c9dffb4",
+          "id": "39f3ae05-aaa5-495d-8ddb-7b519186860f",
           "qualifiedLinks": {},
           "openingDate": 20220929083400,
           "comment": "Heart rate 8 hour mean",
@@ -517,7 +517,7 @@ const createdDataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
           "codes": {},
           "labels": {},
           "systemMetaData": {
-            "encryptedSelf": "2zuKbDZ28iupFGcICmsmmipyr24ze2DQ9zxqL+FmlyFfWSt5snjeq+S+LeNqAHQPm2hCo5OuNTn4qNYs0aJLwrm5OI8rDE6V3yR/9SizB1mHSu33jgDG7GqNJz0clhVf14sXjwuxZlw5XaPjSDaUlm0zczVwpfg1f40S1iZ6btsFLTkxyPu+GbikbYIOC2Fait3vsf+al/YOQyzK9qg8mk23hdsrLHAX+GTlE4mQjnSAwUlV35yXM+UZzrZ1f2FJfLFoiz6V9/eNl8pCBJLJgg==",
+            "encryptedSelf": "D0rjznJhSfpSf6VpwUtKGQa3vvFpqoiL7HFuESeuEq05DuVPrfTYp7S3DMA7lo337XyGgWRhCEPDl5f3Nyw+SfeJMbL6lzQzsZR0C936rqsbtQfjeEjODxyBVuAQhy500yFN2U7adGLY0lWSsJe57EVDe4tkSAlJP8tJqBNfyrAi7X07fCtOqU4GzrUsYbI3RJKaXgB0TFIEFOImVLz5+Eq9dMjKbJiIxHmqj5FVMg+uqkxKCV7brP+OeNxJ/A7qSjwQlKOG/p9uwhDzjoaOfg==",
             "secretForeignKeys": [],
             "cryptedForeignKeys": {},
             "delegations": {},
@@ -526,7 +526,7 @@ const createdDataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
           }
         },
         {
-          "id": "3886c533-a850-4d9b-a1de-85827900b781",
+          "id": "7bb7d542-6501-4344-906f-e15b27201a8c",
           "qualifiedLinks": {},
           "openingDate": 20220929083400,
           "comment": "Body temperature",
@@ -631,7 +631,7 @@ const createdDataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
   "labels": {},
   "systemMetaData": {
     "secretForeignKeys": [
-      "12721466-eb60-4b68-aff4-d50ba0c7a2db"
+      "659454da-f513-4a9b-8fda-f5095586e3ab"
     ],
     "cryptedForeignKeys": {
       "e2b6e873-035b-4964-885b-5a90e99c43b4": {}

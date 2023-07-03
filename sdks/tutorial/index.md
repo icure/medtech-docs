@@ -74,7 +74,7 @@ expect(loggedUser.login).to.be.equal(iCureUserLogin)
 ```json
 {
   "id": "6a541dfb-40d9-41f5-ba76-e3a5e277813f",
-  "rev": "80-9e7d4c1261e3913204403fc2e9e1a668",
+  "rev": "86-f61f23df73e93c801ed8adb583640235",
   "created": 1688371977279,
   "name": "Master HCP",
   "login": "master@e2b6e8.icure",
@@ -181,13 +181,13 @@ console.log(`Your new patient id : ${createdPatient.id}`)
 
 ```json
 {
-  "id": "27773ab2-593a-44f6-9bd3-1bef03bf5009",
+  "id": "0b75d4b3-2a70-41d9-86d0-ecd3a79b08ec",
   "languages": [],
   "active": true,
   "parameters": {},
-  "rev": "1-73b2b31bfab5c7c9ecacee242b8b42ff",
-  "created": 1688375634875,
-  "modified": 1688375634875,
+  "rev": "1-8864b1198626b14f72b77fef90bf7f92",
+  "created": 1688378939938,
+  "modified": 1688378939938,
   "author": "6a541dfb-40d9-41f5-ba76-e3a5e277813f",
   "responsible": "e2b6e873-035b-4964-885b-5a90e99c43b4",
   "firstName": "John",
@@ -223,7 +223,7 @@ console.log(`Your new patient id : ${createdPatient.id}`)
     "hcPartyKeys": {},
     "privateKeyShamirPartitions": {},
     "transferKeys": {},
-    "encryptedSelf": "M1zHU7qVDhRAw9chD+70EKYrWr1LFD6kqEbiWrxQ3XGhn4p6aRFu71dDREORETix",
+    "encryptedSelf": "i2t/WdM+3emkqFgYMxV3rbN2l1Bl10DSPgafb/FlCWjs8rUJ424rNE5dEoCz1ARD",
     "secretForeignKeys": [],
     "cryptedForeignKeys": {},
     "delegations": {
@@ -263,13 +263,13 @@ expect(createdPatient.id).to.be.equal(johnSnow.id)
 
 ```json
 {
-  "id": "27773ab2-593a-44f6-9bd3-1bef03bf5009",
+  "id": "0b75d4b3-2a70-41d9-86d0-ecd3a79b08ec",
   "languages": [],
   "active": true,
   "parameters": {},
-  "rev": "1-73b2b31bfab5c7c9ecacee242b8b42ff",
-  "created": 1688375634875,
-  "modified": 1688375634875,
+  "rev": "1-8864b1198626b14f72b77fef90bf7f92",
+  "created": 1688378939938,
+  "modified": 1688378939938,
   "author": "6a541dfb-40d9-41f5-ba76-e3a5e277813f",
   "responsible": "e2b6e873-035b-4964-885b-5a90e99c43b4",
   "firstName": "John",
@@ -305,7 +305,7 @@ expect(createdPatient.id).to.be.equal(johnSnow.id)
     "hcPartyKeys": {},
     "privateKeyShamirPartitions": {},
     "transferKeys": {},
-    "encryptedSelf": "M1zHU7qVDhRAw9chD+70EKYrWr1LFD6kqEbiWrxQ3XGhn4p6aRFu71dDREORETix",
+    "encryptedSelf": "i2t/WdM+3emkqFgYMxV3rbN2l1Bl10DSPgafb/FlCWjs8rUJ424rNE5dEoCz1ARD",
     "secretForeignKeys": [],
     "cryptedForeignKeys": {},
     "delegations": {
@@ -361,14 +361,14 @@ const createdData = await api.dataSampleApi.createOrModifyDataSamplesFor(johnSno
 ```text
 [
   {
-    "id": "829a4359-1475-4e52-bc4f-e113bd6b62a5",
+    "id": "0744664d-e8c9-4c5f-9850-047029a09ab3",
     "qualifiedLinks": {},
-    "batchId": "104fb57c-1c18-4c46-84f3-ccc3999b4bf1",
+    "batchId": "9fcaf0b3-6d46-451a-bf16-d9bcaf3a5308",
     "index": 0,
     "valueDate": 20220203111034,
-    "openingDate": 20230703111354,
-    "created": 1688375634920,
-    "modified": 1688375634920,
+    "openingDate": 20230703120859,
+    "created": 1688378939993,
+    "modified": 1688378939993,
     "author": "6a541dfb-40d9-41f5-ba76-e3a5e277813f",
     "responsible": "e2b6e873-035b-4964-885b-5a90e99c43b4",
     "comment": "Height",
@@ -386,9 +386,9 @@ const createdData = await api.dataSampleApi.createOrModifyDataSamplesFor(johnSno
     "codes": {},
     "labels": {},
     "systemMetaData": {
-      "encryptedSelf": "hoDAp0UY8jQgpmOTYcKo+cUO7wQAAzFIguLB4yDIqXXk3hm8Xgnrdw78CAHfzf5mHvAKSvtcgf/Ofk4EVOt28VOH62lv3RxNwIjnF1lbuiLUEmCSM+vNAKn07A+7SGhK",
+      "encryptedSelf": "JlpCSXcN03HM5EUh7gq1arA5qVfuRzCeKq/4b1tAEuh2Ahnx6kfHNmnuZs3Y/LteSsASAmmEdIuHg0OvCJ2olImUJObo4f1gn1MMwGyzxrONHb5Tlca2TtxMfticGGuv",
       "secretForeignKeys": [
-        "31fd89a8-53db-4470-8f21-90f345f02de5"
+        "cc58e3cb-e318-4bc3-b75c-0bf41ddc886c"
       ],
       "cryptedForeignKeys": {
         "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
@@ -403,14 +403,14 @@ const createdData = await api.dataSampleApi.createOrModifyDataSamplesFor(johnSno
     }
   },
   {
-    "id": "c7af5940-4716-4972-86a8-080e82f8d150",
+    "id": "1c03b2e4-fef4-4a53-a57a-0a0d81d041f1",
     "qualifiedLinks": {},
-    "batchId": "104fb57c-1c18-4c46-84f3-ccc3999b4bf1",
+    "batchId": "9fcaf0b3-6d46-451a-bf16-d9bcaf3a5308",
     "index": 1,
     "valueDate": 20220203111034,
-    "openingDate": 20230703111354,
-    "created": 1688375634920,
-    "modified": 1688375634920,
+    "openingDate": 20230703120859,
+    "created": 1688378939993,
+    "modified": 1688378939993,
     "author": "6a541dfb-40d9-41f5-ba76-e3a5e277813f",
     "responsible": "e2b6e873-035b-4964-885b-5a90e99c43b4",
     "comment": "Weight",
@@ -428,9 +428,9 @@ const createdData = await api.dataSampleApi.createOrModifyDataSamplesFor(johnSno
     "codes": {},
     "labels": {},
     "systemMetaData": {
-      "encryptedSelf": "KvTEKtw/aCP89y9W36t9KrXV4m35U99i8ffySDzyAG4+C6YeYtypRD2cSsNPdwULhmI+RhAyAvbVb2f0UW9ikcNJtETybxU1+Z1RgO9Ox1CIDpnu1KypE1kdPtqU9QvkXQs3huB4p8kthsZ36/95nw==",
+      "encryptedSelf": "OvcZKF+b6o2Nj4GkGWKulA9PsRA2h154lmPzPRkdILu8fvBhk+gy0zo/yWxJiMdUC7gfX7aTfIlqmhLtZnhEB/RZ+pDlzIW8abrmF/mF20QKVUmOCXj9w1GHqSNz6oRv0ad6vBiBZ8wDrK0qvX2OdA==",
       "secretForeignKeys": [
-        "31fd89a8-53db-4470-8f21-90f345f02de5"
+        "cc58e3cb-e318-4bc3-b75c-0bf41ddc886c"
       ],
       "cryptedForeignKeys": {
         "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
@@ -489,14 +489,14 @@ expect(johnData.rows[0].comment).to.be.equal('Weight')
   "totalSize": 1,
   "rows": [
     {
-      "id": "c7af5940-4716-4972-86a8-080e82f8d150",
+      "id": "1c03b2e4-fef4-4a53-a57a-0a0d81d041f1",
       "qualifiedLinks": {},
-      "batchId": "104fb57c-1c18-4c46-84f3-ccc3999b4bf1",
+      "batchId": "9fcaf0b3-6d46-451a-bf16-d9bcaf3a5308",
       "index": 1,
       "valueDate": 20220203111034,
-      "openingDate": 20230703111354,
-      "created": 1688375634920,
-      "modified": 1688375634920,
+      "openingDate": 20230703120859,
+      "created": 1688378939993,
+      "modified": 1688378939993,
       "author": "6a541dfb-40d9-41f5-ba76-e3a5e277813f",
       "responsible": "e2b6e873-035b-4964-885b-5a90e99c43b4",
       "comment": "Weight",
@@ -514,9 +514,9 @@ expect(johnData.rows[0].comment).to.be.equal('Weight')
       "codes": {},
       "labels": {},
       "systemMetaData": {
-        "encryptedSelf": "KvTEKtw/aCP89y9W36t9KrXV4m35U99i8ffySDzyAG4+C6YeYtypRD2cSsNPdwULhmI+RhAyAvbVb2f0UW9ikcNJtETybxU1+Z1RgO9Ox1CIDpnu1KypE1kdPtqU9QvkXQs3huB4p8kthsZ36/95nw==",
+        "encryptedSelf": "OvcZKF+b6o2Nj4GkGWKulA9PsRA2h154lmPzPRkdILu8fvBhk+gy0zo/yWxJiMdUC7gfX7aTfIlqmhLtZnhEB/RZ+pDlzIW8abrmF/mF20QKVUmOCXj9w1GHqSNz6oRv0ad6vBiBZ8wDrK0qvX2OdA==",
         "secretForeignKeys": [
-          "31fd89a8-53db-4470-8f21-90f345f02de5"
+          "cc58e3cb-e318-4bc3-b75c-0bf41ddc886c"
         ],
         "cryptedForeignKeys": {
           "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
@@ -558,14 +558,14 @@ expect(johnWeight.comment).to.be.equal('Weight')
 
 ```json
 {
-  "id": "c7af5940-4716-4972-86a8-080e82f8d150",
+  "id": "1c03b2e4-fef4-4a53-a57a-0a0d81d041f1",
   "qualifiedLinks": {},
-  "batchId": "104fb57c-1c18-4c46-84f3-ccc3999b4bf1",
+  "batchId": "9fcaf0b3-6d46-451a-bf16-d9bcaf3a5308",
   "index": 1,
   "valueDate": 20220203111034,
-  "openingDate": 20230703111354,
-  "created": 1688375634920,
-  "modified": 1688375634920,
+  "openingDate": 20230703120859,
+  "created": 1688378939993,
+  "modified": 1688378939993,
   "author": "6a541dfb-40d9-41f5-ba76-e3a5e277813f",
   "responsible": "e2b6e873-035b-4964-885b-5a90e99c43b4",
   "comment": "Weight",
@@ -583,9 +583,9 @@ expect(johnWeight.comment).to.be.equal('Weight')
   "codes": {},
   "labels": {},
   "systemMetaData": {
-    "encryptedSelf": "KvTEKtw/aCP89y9W36t9KrXV4m35U99i8ffySDzyAG4+C6YeYtypRD2cSsNPdwULhmI+RhAyAvbVb2f0UW9ikcNJtETybxU1+Z1RgO9Ox1CIDpnu1KypE1kdPtqU9QvkXQs3huB4p8kthsZ36/95nw==",
+    "encryptedSelf": "OvcZKF+b6o2Nj4GkGWKulA9PsRA2h154lmPzPRkdILu8fvBhk+gy0zo/yWxJiMdUC7gfX7aTfIlqmhLtZnhEB/RZ+pDlzIW8abrmF/mF20QKVUmOCXj9w1GHqSNz6oRv0ad6vBiBZ8wDrK0qvX2OdA==",
     "secretForeignKeys": [
-      "31fd89a8-53db-4470-8f21-90f345f02de5"
+      "cc58e3cb-e318-4bc3-b75c-0bf41ddc886c"
     ],
     "cryptedForeignKeys": {
       "e2b6e873-035b-4964-885b-5a90e99c43b4": {}

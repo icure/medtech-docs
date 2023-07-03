@@ -100,22 +100,22 @@ const dataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
 
 ```json
 {
-  "id": "02a8bbb3-4fb2-4bf1-bb9b-dd2b7341220e",
-  "rev": "1-89fd4b9e9d1dd31bf7e3a98ee31fbcf2",
-  "created": 1688375635698,
-  "modified": 1688375635698,
+  "id": "1a5ea884-2e16-4a05-92dc-aaf039495f02",
+  "rev": "1-f062aebec81da6b4ab81c9ac44fabd63",
+  "created": 1688378940977,
+  "modified": 1688378940977,
   "author": "6a541dfb-40d9-41f5-ba76-e3a5e277813f",
   "responsible": "e2b6e873-035b-4964-885b-5a90e99c43b4",
-  "healthcareElementId": "02a8bbb3-4fb2-4bf1-bb9b-dd2b7341220e",
-  "valueDate": 20230703111355,
-  "openingDate": 20230703111355,
+  "healthcareElementId": "1a5ea884-2e16-4a05-92dc-aaf039495f02",
+  "valueDate": 20230703120900,
+  "openingDate": 20230703120900,
   "description": "My diagnosis is that the patient has Hay Fever",
   "identifiers": [],
   "codes": {},
   "labels": {},
   "systemMetaData": {
     "secretForeignKeys": [
-      "41b78e71-f3fe-4a00-8540-ab2e845144dc"
+      "c52b89c3-d70f-4823-9fd9-a97f946ce1fd"
     ],
     "cryptedForeignKeys": {
       "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
@@ -126,7 +126,7 @@ const dataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
     "encryptionKeys": {
       "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
     },
-    "encryptedSelf": "Mh5yNY9GRIHGQv7ew3UZ1jVUvsPQXTvxm6c1IupUcbQdYhEJBmWB0asJSvX8cGJfeiDDUieZbesTr+w4A5yioLS4SyIiK5vB5J40tQI7vbI="
+    "encryptedSelf": "R90mdcD8niWw2Lya3fKvlaqTri5It5LpbpjmQwhdl9KBzOCaIvZOA8yBVXqBty9AByqf+JL/jhTtuTOtVu58uhIX+WVWeyMWxrFrQFPl7To="
   }
 }
 ```
@@ -138,14 +138,14 @@ const dataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
 
 ```json
 {
-  "id": "9b913c03-811e-495a-a272-5620c052ff14",
+  "id": "25eb6a58-36d6-4e31-884f-bf1f1e77097e",
   "qualifiedLinks": {},
-  "batchId": "34420ec9-efaf-4630-9e47-939c9317ff07",
+  "batchId": "c6279d82-93b5-4578-b797-04df3d0b0747",
   "index": 0,
-  "valueDate": 20230703111355,
-  "openingDate": 20230703111355,
-  "created": 1688375635734,
-  "modified": 1688375635734,
+  "valueDate": 20230703120901,
+  "openingDate": 20230703120901,
+  "created": 1688378941048,
+  "modified": 1688378941048,
   "author": "6a541dfb-40d9-41f5-ba76-e3a5e277813f",
   "responsible": "e2b6e873-035b-4964-885b-5a90e99c43b4",
   "identifiers": [],
@@ -162,9 +162,9 @@ const dataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
   "codes": {},
   "labels": {},
   "systemMetaData": {
-    "encryptedSelf": "o0620wKMungmxKrwxEQtn621iHecRqxFNHrAerz1MNK+T0vTkhm7bn9v4z79W4DMg9QuyNix/KF8SJawg4do8Uy+t2YPcoT8F4cq1Xh+rLXqLg+AfWN2f0nm6mFOR8jdMZsGmCDN4hTFw+epllhRirFHJtxxKZdatHSrI4aEJVs=",
+    "encryptedSelf": "RKqqVROZlYdJl16L7HT7GtPaVVg8NmSr8sWDRj2aoyp8VsZWj9UbAAPEGx3wheLol/ON8FBXszSWXkaZH66UfSqSvN8WpXvZcesswoQPK5GikY+JdfV5GozxuvFA7nggcRn4voGUSaV0qbP0XDf/DVEYwPOqXQlKKX91uCfeuDI=",
     "secretForeignKeys": [
-      "41b78e71-f3fe-4a00-8540-ab2e845144dc"
+      "c52b89c3-d70f-4823-9fd9-a97f946ce1fd"
     ],
     "cryptedForeignKeys": {
       "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
