@@ -41,6 +41,7 @@ const medtechApi = await medTechApi()
   .withUserName(userName)
   .withPassword(password)
   .withCrypto(webcrypto as any)
+  .withCryptoStrategies(new SimpleMedTechCryptoStrategies([]))
   .build()
 ```
 

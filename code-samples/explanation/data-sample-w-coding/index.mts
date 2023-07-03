@@ -1,19 +1,11 @@
 import 'isomorphic-fetch'
 import { CodingReference, Content, DataSample, HealthcareElement } from '@icure/medical-device-sdk'
-import { hex2ua } from '@icure/api'
-import { initLocalStorage, initMedTechApi, output, patientId, privKey } from '../../utils/index.mjs'
+import { initLocalStorage, initMedTechApi, output, patientId } from '../../utils/index.mjs'
 import { expect } from 'chai'
 
 initLocalStorage()
 
-const api = await initMedTechApi()
-
-const user = await api.userApi.getLoggedUser()
-await api.cryptoApi.loadKeyPairsAsTextInBrowserLocalStorage(
-  user.healthcarePartyId ?? user.patientId ?? user.deviceId,
-  hex2ua(privKey),
-)
-
+const api = await initMedTechApi(true)
 const patient = await api.patientApi.getPatient(patientId)
 
 //tech-doc: doctor can create DS and HE

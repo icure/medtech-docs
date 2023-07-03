@@ -37,7 +37,7 @@ In the following example we will get all the Patients that a Healthcare Professi
 
 <!-- file://code-samples/how-to/use-complex-search-criteria/index.mts snippet:filter patients for hcp-->
 ```typescript
-const patientsForHcpFilter = await new PatientFilter().forDataOwner(healthcarePartyId).build()
+const patientsForHcpFilter = await new PatientFilter(api).forDataOwner(healthcarePartyId).build()
 const patientsForHcp = await api.patientApi.filterPatients(patientsForHcpFilter)
 ```
 <!-- output://code-samples/how-to/use-complex-search-criteria/patientsForHcpFilter.txt -->
@@ -46,7 +46,7 @@ const patientsForHcp = await api.patientApi.filterPatients(patientsForHcpFilter)
 
 ```json
 {
-  "healthcarePartyId": "27c0b9d6-974b-4a78-9966-ba524d0e5de4",
+  "healthcarePartyId": "f746f65a-1452-45e6-90c9-481b3745bf19",
   "$type": "PatientByHealthcarePartyFilter"
 }
 ```
@@ -62,34 +62,35 @@ const patientsForHcp = await api.patientApi.filterPatients(patientsForHcpFilter)
   "totalSize": 3,
   "rows": [
     {
-      "id": "86039fbf-3db6-4f20-9caf-64532764e061",
+      "id": "3f864d99-55b3-499c-8332-f2a4a2bf6896",
       "languages": [],
       "active": true,
       "parameters": {},
-      "rev": "1-8e5a31d053261328b063f7eb88cea543",
-      "created": 1682493686133,
-      "modified": 1682493686133,
-      "author": "f9b4563e-35d1-4760-ad5f-5c2213f6298c",
-      "responsible": "27c0b9d6-974b-4a78-9966-ba524d0e5de4",
-      "firstName": "Zaphod",
-      "lastName": "Beeblebrox",
+      "rev": "1-5f458fe10057eda4133c82e27462c2e0",
+      "created": 1688375626322,
+      "modified": 1688375626322,
+      "author": "2eb0fa0e-5748-4887-aa5a-a419f8790366",
+      "responsible": "f746f65a-1452-45e6-90c9-481b3745bf19",
+      "firstName": "Trillian",
+      "lastName": "Astra",
+      "dateOfBirth": 19520101,
       "identifiers": [],
       "labels": {},
       "codes": {},
       "names": [
         {
           "firstNames": [
-            "Zaphod"
+            "Trillian"
           ],
           "prefix": [],
           "suffix": [],
-          "lastName": "Beeblebrox",
-          "text": "Beeblebrox Zaphod",
+          "lastName": "Astra",
+          "text": "Astra Trillian",
           "use": "official"
         }
       ],
       "addresses": [],
-      "gender": "indeterminate",
+      "gender": "female",
       "birthSex": "unknown",
       "mergedIds": {},
       "deactivationReason": "none",
@@ -99,34 +100,35 @@ const patientsForHcp = await api.patientApi.filterPatients(patientsForHcpFilter)
       "patientProfessions": [],
       "properties": {},
       "systemMetaData": {
+        "aesExchangeKeys": {},
         "hcPartyKeys": {},
         "privateKeyShamirPartitions": {},
-        "aesExchangeKeys": {},
         "transferKeys": {},
-        "encryptedSelf": "Kl5irEl2skNE83uJ4ZOVGhuasYkxPVJNjyNk6v3Ydmo=",
+        "encryptedSelf": "aGgZTVz08n0fgVpudx1OCBcPdQ1uJZKj//zSwRgDyGY=",
         "secretForeignKeys": [],
         "cryptedForeignKeys": {},
         "delegations": {
-          "27c0b9d6-974b-4a78-9966-ba524d0e5de4": {}
+          "f746f65a-1452-45e6-90c9-481b3745bf19": {}
         },
         "encryptionKeys": {
-          "27c0b9d6-974b-4a78-9966-ba524d0e5de4": {}
-        }
+          "f746f65a-1452-45e6-90c9-481b3745bf19": {}
+        },
+        "publicKeysForOaepWithSha256": {}
       }
     },
     {
-      "id": "9d82320f-ebba-4b04-96a5-0eb3bc5a9a96",
+      "id": "5422f306-af87-41ec-91f3-82b497f554a5",
       "languages": [],
       "active": true,
       "parameters": {},
-      "rev": "1-9406d501378f08365e1d920825da4d31",
-      "created": 1682493685331,
-      "modified": 1682493685331,
-      "author": "f9b4563e-35d1-4760-ad5f-5c2213f6298c",
-      "responsible": "27c0b9d6-974b-4a78-9966-ba524d0e5de4",
+      "rev": "1-24716632b40f9f3052f399fe429c98e4",
+      "created": 1688375626307,
+      "modified": 1688375626307,
+      "author": "2eb0fa0e-5748-4887-aa5a-a419f8790366",
+      "responsible": "f746f65a-1452-45e6-90c9-481b3745bf19",
       "firstName": "Arthur",
       "lastName": "Dent",
-      "dateOfBirth": 19810101,
+      "dateOfBirth": 19520101,
       "identifiers": [],
       "labels": {},
       "codes": {},
@@ -153,341 +155,35 @@ const patientsForHcp = await api.patientApi.filterPatients(patientsForHcpFilter)
       "patientProfessions": [],
       "properties": {},
       "systemMetaData": {
+        "aesExchangeKeys": {},
         "hcPartyKeys": {},
         "privateKeyShamirPartitions": {},
-        "aesExchangeKeys": {},
         "transferKeys": {},
-        "encryptedSelf": "BIoE6cgSZ09k2QwfWdf2HmzIgjZHyXnjoty0WRy0mAM=",
+        "encryptedSelf": "bbiuVfSbOKs53Nyfd0S24iZaUBYNGAUIc9gLcuKmZ0Y=",
         "secretForeignKeys": [],
         "cryptedForeignKeys": {},
         "delegations": {
-          "27c0b9d6-974b-4a78-9966-ba524d0e5de4": {}
+          "f746f65a-1452-45e6-90c9-481b3745bf19": {}
         },
         "encryptionKeys": {
-          "27c0b9d6-974b-4a78-9966-ba524d0e5de4": {}
-        }
+          "f746f65a-1452-45e6-90c9-481b3745bf19": {}
+        },
+        "publicKeysForOaepWithSha256": {}
       }
     },
     {
-      "id": "d80f9a73-e47b-4870-87ff-fa8489dea1ed",
+      "id": "b4924956-f1d2-439b-8c1b-7e39e03439b7",
       "languages": [],
       "active": true,
       "parameters": {},
-      "rev": "1-f7a09d4134d647c4d7b0d3af82ea34f5",
-      "created": 1682493685716,
-      "modified": 1682493685716,
-      "author": "f9b4563e-35d1-4760-ad5f-5c2213f6298c",
-      "responsible": "27c0b9d6-974b-4a78-9966-ba524d0e5de4",
-      "firstName": "Trillian",
-      "lastName": "Astra",
-      "dateOfBirth": 19810101,
-      "identifiers": [],
-      "labels": {},
-      "codes": {},
-      "names": [
-        {
-          "firstNames": [
-            "Trillian"
-          ],
-          "prefix": [],
-          "suffix": [],
-          "lastName": "Astra",
-          "text": "Astra Trillian",
-          "use": "official"
-        }
-      ],
-      "addresses": [],
-      "gender": "female",
-      "birthSex": "unknown",
-      "mergedIds": {},
-      "deactivationReason": "none",
-      "personalStatus": "unknown",
-      "partnerships": [],
-      "patientHealthCareParties": [],
-      "patientProfessions": [],
-      "properties": {},
-      "systemMetaData": {
-        "hcPartyKeys": {},
-        "privateKeyShamirPartitions": {},
-        "aesExchangeKeys": {},
-        "transferKeys": {},
-        "encryptedSelf": "mWtWUCcsqsp2HKeTWFeCNJN5bMia9ACM+Kg88tJV+lc=",
-        "secretForeignKeys": [],
-        "cryptedForeignKeys": {},
-        "delegations": {
-          "27c0b9d6-974b-4a78-9966-ba524d0e5de4": {}
-        },
-        "encryptionKeys": {
-          "27c0b9d6-974b-4a78-9966-ba524d0e5de4": {}
-        }
-      }
-    }
-  ],
-  "nextKeyPair": {}
-}
-```
-</details>
-
-### Intersection Queries
-
-You can define more complex queries by adding more parameters. The results will be the set of entities which satisfy
-all the constraints at the same time.
-
-<!-- file://code-samples/how-to/use-complex-search-criteria/index.mts snippet:filter patients with implicit intersection filter-->
-```typescript
-const ageGenderImplicitFilter = await new PatientFilter()
-  .forDataOwner(user.healthcarePartyId!)
-  .ofAge(42)
-  .byGenderEducationProfession('female')
-  .build()
-
-const ageGenderImplicitPatients = await api.patientApi.filterPatients(ageGenderImplicitFilter)
-```
-<!-- output://code-samples/how-to/use-complex-search-criteria/ageGenderImplicitFilter.txt -->
-<details>
-<summary>ageGenderImplicitFilter</summary>
-
-```json
-{
-  "filters": [
-    {
-      "healthcarePartyId": "27c0b9d6-974b-4a78-9966-ba524d0e5de4",
-      "minDateOfBirth": 19800404,
-      "maxDateOfBirth": 19810403,
-      "$type": "PatientByHealthcarePartyDateOfBirthBetweenFilter"
-    },
-    {
-      "healthcarePartyId": "27c0b9d6-974b-4a78-9966-ba524d0e5de4",
-      "gender": "female",
-      "$type": "PatientByHealthcarePartyGenderEducationProfessionFilter"
-    }
-  ],
-  "$type": "IntersectionFilter"
-}
-```
-</details>
-
-<!-- output://code-samples/how-to/use-complex-search-criteria/ageGenderImplicitPatients.txt -->
-<details>
-<summary>ageGenderImplicitPatients</summary>
-
-```json
-{
-  "pageSize": 1000,
-  "totalSize": 1,
-  "rows": [
-    {
-      "id": "d80f9a73-e47b-4870-87ff-fa8489dea1ed",
-      "languages": [],
-      "active": true,
-      "parameters": {},
-      "rev": "1-f7a09d4134d647c4d7b0d3af82ea34f5",
-      "created": 1682493685716,
-      "modified": 1682493685716,
-      "author": "f9b4563e-35d1-4760-ad5f-5c2213f6298c",
-      "responsible": "27c0b9d6-974b-4a78-9966-ba524d0e5de4",
-      "firstName": "Trillian",
-      "lastName": "Astra",
-      "dateOfBirth": 19810101,
-      "identifiers": [],
-      "labels": {},
-      "codes": {},
-      "names": [
-        {
-          "firstNames": [
-            "Trillian"
-          ],
-          "prefix": [],
-          "suffix": [],
-          "lastName": "Astra",
-          "text": "Astra Trillian",
-          "use": "official"
-        }
-      ],
-      "addresses": [],
-      "gender": "female",
-      "birthSex": "unknown",
-      "mergedIds": {},
-      "deactivationReason": "none",
-      "personalStatus": "unknown",
-      "partnerships": [],
-      "patientHealthCareParties": [],
-      "patientProfessions": [],
-      "properties": {},
-      "systemMetaData": {
-        "hcPartyKeys": {},
-        "privateKeyShamirPartitions": {},
-        "aesExchangeKeys": {},
-        "transferKeys": {},
-        "encryptedSelf": "mWtWUCcsqsp2HKeTWFeCNJN5bMia9ACM+Kg88tJV+lc=",
-        "secretForeignKeys": [],
-        "cryptedForeignKeys": {},
-        "delegations": {
-          "27c0b9d6-974b-4a78-9966-ba524d0e5de4": {}
-        },
-        "encryptionKeys": {
-          "27c0b9d6-974b-4a78-9966-ba524d0e5de4": {}
-        }
-      }
-    }
-  ],
-  "nextKeyPair": {}
-}
-```
-</details>
-
-In this case, the method will return all the patients that the hcp with id `healthcarePartyId` can access, whose age is `42`, and whose gender is `female`.
-You can also explicitly intersect simple filters using the `intersection()` method:
-
-<!-- file://code-samples/how-to/use-complex-search-criteria/index.mts snippet:filter patients with explicit intersection filter-->
-```typescript
-const filterByAge = new PatientFilter().forDataOwner(user.healthcarePartyId!).ofAge(42)
-
-const filterByGenderAndAge = await new PatientFilter()
-  .forDataOwner(user.healthcarePartyId!)
-  .byGenderEducationProfession('female')
-  .intersection([filterByAge])
-  .build()
-
-const ageGenderExplicitPatients = await api.patientApi.filterPatients(filterByGenderAndAge)
-```
-<!-- output://code-samples/how-to/use-complex-search-criteria/ageGenderExplicitPatients.txt -->
-<details>
-<summary>ageGenderExplicitPatients</summary>
-
-```json
-{
-  "pageSize": 1000,
-  "totalSize": 1,
-  "rows": [
-    {
-      "id": "d80f9a73-e47b-4870-87ff-fa8489dea1ed",
-      "languages": [],
-      "active": true,
-      "parameters": {},
-      "rev": "1-f7a09d4134d647c4d7b0d3af82ea34f5",
-      "created": 1682493685716,
-      "modified": 1682493685716,
-      "author": "f9b4563e-35d1-4760-ad5f-5c2213f6298c",
-      "responsible": "27c0b9d6-974b-4a78-9966-ba524d0e5de4",
-      "firstName": "Trillian",
-      "lastName": "Astra",
-      "dateOfBirth": 19810101,
-      "identifiers": [],
-      "labels": {},
-      "codes": {},
-      "names": [
-        {
-          "firstNames": [
-            "Trillian"
-          ],
-          "prefix": [],
-          "suffix": [],
-          "lastName": "Astra",
-          "text": "Astra Trillian",
-          "use": "official"
-        }
-      ],
-      "addresses": [],
-      "gender": "female",
-      "birthSex": "unknown",
-      "mergedIds": {},
-      "deactivationReason": "none",
-      "personalStatus": "unknown",
-      "partnerships": [],
-      "patientHealthCareParties": [],
-      "patientProfessions": [],
-      "properties": {},
-      "systemMetaData": {
-        "hcPartyKeys": {},
-        "privateKeyShamirPartitions": {},
-        "aesExchangeKeys": {},
-        "transferKeys": {},
-        "encryptedSelf": "mWtWUCcsqsp2HKeTWFeCNJN5bMia9ACM+Kg88tJV+lc=",
-        "secretForeignKeys": [],
-        "cryptedForeignKeys": {},
-        "delegations": {
-          "27c0b9d6-974b-4a78-9966-ba524d0e5de4": {}
-        },
-        "encryptionKeys": {
-          "27c0b9d6-974b-4a78-9966-ba524d0e5de4": {}
-        }
-      }
-    }
-  ],
-  "nextKeyPair": {}
-}
-```
-</details>
-
-:::note
-
-The Data Owner Id is a mandatory parameter in filtering patients. Therefore, it must be added to all the filters of the intersection.
-
-:::
-
-### Union Queries
-
-To apply a filter that returns entities which satisfy at least one of multiple criteria, you can use the `union()` function.
-
-<!-- file://code-samples/how-to/use-complex-search-criteria/index.mts snippet:filter patients with union filter-->
-```typescript
-const filterFemales = new PatientFilter()
-  .forDataOwner(user.healthcarePartyId!)
-  .byGenderEducationProfession('female')
-
-const filterFemaleOrIndeterminate = await new PatientFilter()
-  .forDataOwner(user.healthcarePartyId!)
-  .byGenderEducationProfession('indeterminate')
-  .union([filterFemales])
-  .build()
-
-const unionFilterPatients = await api.patientApi.filterPatients(filterFemaleOrIndeterminate)
-```
-<!-- output://code-samples/how-to/use-complex-search-criteria/filterFemaleOrIndeterminate.txt -->
-<details>
-<summary>filterFemaleOrIndeterminate</summary>
-
-```json
-{
-  "filters": [
-    {
-      "healthcarePartyId": "27c0b9d6-974b-4a78-9966-ba524d0e5de4",
-      "gender": "female",
-      "$type": "PatientByHealthcarePartyGenderEducationProfessionFilter"
-    },
-    {
-      "healthcarePartyId": "27c0b9d6-974b-4a78-9966-ba524d0e5de4",
-      "gender": "indeterminate",
-      "$type": "PatientByHealthcarePartyGenderEducationProfessionFilter"
-    }
-  ],
-  "$type": "UnionFilter"
-}
-```
-</details>
-
-<!-- output://code-samples/how-to/use-complex-search-criteria/unionFilterPatients.txt -->
-<details>
-<summary>unionFilterPatients</summary>
-
-```json
-{
-  "pageSize": 1000,
-  "totalSize": 2,
-  "rows": [
-    {
-      "id": "86039fbf-3db6-4f20-9caf-64532764e061",
-      "languages": [],
-      "active": true,
-      "parameters": {},
-      "rev": "1-8e5a31d053261328b063f7eb88cea543",
-      "created": 1682493686133,
-      "modified": 1682493686133,
-      "author": "f9b4563e-35d1-4760-ad5f-5c2213f6298c",
-      "responsible": "27c0b9d6-974b-4a78-9966-ba524d0e5de4",
+      "rev": "1-b7cc3b8d229773db8b1a04c90c4eb867",
+      "created": 1688375626335,
+      "modified": 1688375626335,
+      "author": "2eb0fa0e-5748-4887-aa5a-a419f8790366",
+      "responsible": "f746f65a-1452-45e6-90c9-481b3745bf19",
       "firstName": "Zaphod",
       "lastName": "Beeblebrox",
+      "dateOfBirth": 19420101,
       "identifiers": [],
       "labels": {},
       "codes": {},
@@ -514,34 +210,103 @@ const unionFilterPatients = await api.patientApi.filterPatients(filterFemaleOrIn
       "patientProfessions": [],
       "properties": {},
       "systemMetaData": {
+        "aesExchangeKeys": {},
         "hcPartyKeys": {},
         "privateKeyShamirPartitions": {},
-        "aesExchangeKeys": {},
         "transferKeys": {},
-        "encryptedSelf": "Kl5irEl2skNE83uJ4ZOVGhuasYkxPVJNjyNk6v3Ydmo=",
+        "encryptedSelf": "F46og9dy7GwGAJorj0tyOpoJUn37JFvHm0Ai58a6vM0=",
         "secretForeignKeys": [],
         "cryptedForeignKeys": {},
         "delegations": {
-          "27c0b9d6-974b-4a78-9966-ba524d0e5de4": {}
+          "f746f65a-1452-45e6-90c9-481b3745bf19": {}
         },
         "encryptionKeys": {
-          "27c0b9d6-974b-4a78-9966-ba524d0e5de4": {}
-        }
+          "f746f65a-1452-45e6-90c9-481b3745bf19": {}
+        },
+        "publicKeysForOaepWithSha256": {}
       }
+    }
+  ],
+  "nextKeyPair": {}
+}
+```
+</details>
+
+:::info
+
+Some filters require you to specify a Data Owner in order to filter the results. You can either use the `forDataOwner()` 
+method, passing as parameter the id of the Data Owner you want filter the entities for, or the `forSelf()` method that 
+will filter the entities for the current logged-in user.
+
+:::
+
+:::caution
+
+You must have access to an entity in order to retrieve it by any means, filtering included.
+
+:::
+
+### Specifying More Conditions
+
+You can define more complex queries by adding more parameters. The results will be the set of entities which satisfy
+all the constraints at the same time.
+
+<!-- file://code-samples/how-to/use-complex-search-criteria/index.mts snippet:filter patients with implicit intersection filter-->
+```typescript
+const ageGenderFilter = await new PatientFilter(api)
+  .forDataOwner(user.healthcarePartyId!)
+  .dateOfBirthBetween(19511211, 19520203)
+  .byGenderEducationProfession('female')
+  .build()
+
+const ageGenderPatients = await api.patientApi.filterPatients(ageGenderFilter)
+```
+<!-- output://code-samples/how-to/use-complex-search-criteria/ageGenderFilter.txt -->
+<details>
+<summary>ageGenderFilter</summary>
+
+```json
+{
+  "filters": [
+    {
+      "healthcarePartyId": "f746f65a-1452-45e6-90c9-481b3745bf19",
+      "minDateOfBirth": 19511211,
+      "maxDateOfBirth": 19520203,
+      "$type": "PatientByHealthcarePartyDateOfBirthBetweenFilter"
     },
     {
-      "id": "d80f9a73-e47b-4870-87ff-fa8489dea1ed",
+      "healthcarePartyId": "f746f65a-1452-45e6-90c9-481b3745bf19",
+      "gender": "female",
+      "$type": "PatientByHealthcarePartyGenderEducationProfessionFilter"
+    }
+  ],
+  "$type": "IntersectionFilter"
+}
+```
+</details>
+
+<!-- output://code-samples/how-to/use-complex-search-criteria/ageGenderPatients.txt -->
+<details>
+<summary>ageGenderPatients</summary>
+
+```json
+{
+  "pageSize": 1000,
+  "totalSize": 1,
+  "rows": [
+    {
+      "id": "3f864d99-55b3-499c-8332-f2a4a2bf6896",
       "languages": [],
       "active": true,
       "parameters": {},
-      "rev": "1-f7a09d4134d647c4d7b0d3af82ea34f5",
-      "created": 1682493685716,
-      "modified": 1682493685716,
-      "author": "f9b4563e-35d1-4760-ad5f-5c2213f6298c",
-      "responsible": "27c0b9d6-974b-4a78-9966-ba524d0e5de4",
+      "rev": "1-5f458fe10057eda4133c82e27462c2e0",
+      "created": 1688375626322,
+      "modified": 1688375626322,
+      "author": "2eb0fa0e-5748-4887-aa5a-a419f8790366",
+      "responsible": "f746f65a-1452-45e6-90c9-481b3745bf19",
       "firstName": "Trillian",
       "lastName": "Astra",
-      "dateOfBirth": 19810101,
+      "dateOfBirth": 19520101,
       "identifiers": [],
       "labels": {},
       "codes": {},
@@ -568,19 +333,394 @@ const unionFilterPatients = await api.patientApi.filterPatients(filterFemaleOrIn
       "patientProfessions": [],
       "properties": {},
       "systemMetaData": {
+        "aesExchangeKeys": {},
         "hcPartyKeys": {},
         "privateKeyShamirPartitions": {},
-        "aesExchangeKeys": {},
         "transferKeys": {},
-        "encryptedSelf": "mWtWUCcsqsp2HKeTWFeCNJN5bMia9ACM+Kg88tJV+lc=",
+        "encryptedSelf": "aGgZTVz08n0fgVpudx1OCBcPdQ1uJZKj//zSwRgDyGY=",
         "secretForeignKeys": [],
         "cryptedForeignKeys": {},
         "delegations": {
-          "27c0b9d6-974b-4a78-9966-ba524d0e5de4": {}
+          "f746f65a-1452-45e6-90c9-481b3745bf19": {}
         },
         "encryptionKeys": {
-          "27c0b9d6-974b-4a78-9966-ba524d0e5de4": {}
+          "f746f65a-1452-45e6-90c9-481b3745bf19": {}
+        },
+        "publicKeysForOaepWithSha256": {}
+      }
+    }
+  ],
+  "nextKeyPair": {}
+}
+```
+</details>
+
+In this case, the method will return all the patients that the hcp with id `healthcarePartyId` can access, bborn between the
+11th of December 1951 and the 3rd of February 1952, and whose gender is `female`.
+
+### Sorting Filters
+
+When defining a filter with more than one condition, you can also set one of them as the sorting key of the final result:
+
+<!-- file://code-samples/how-to/use-complex-search-criteria/index.mts snippet:filter patients with implicit intersection filter with sorting-->
+```typescript
+const ageGenderSortedFilter = await new PatientFilter(api)
+  .forDataOwner(user.healthcarePartyId!)
+  .sort.dateOfBirthBetween(19391211, 19520203)
+  .byGenderEducationProfession('female')
+  .build()
+
+const ageGenderSortedPatients = await api.patientApi.filterPatients(ageGenderFilter)
+```
+
+<!-- output://code-samples/how-to/use-complex-search-criteria/ageGenderSortedFilter.txt -->
+<details>
+<summary>ageGenderSortedFilter</summary>
+
+```json
+{
+  "filters": [
+    {
+      "healthcarePartyId": "f746f65a-1452-45e6-90c9-481b3745bf19",
+      "minDateOfBirth": 19391211,
+      "maxDateOfBirth": 19520203,
+      "$type": "PatientByHealthcarePartyDateOfBirthBetweenFilter"
+    },
+    {
+      "healthcarePartyId": "f746f65a-1452-45e6-90c9-481b3745bf19",
+      "gender": "female",
+      "$type": "PatientByHealthcarePartyGenderEducationProfessionFilter"
+    }
+  ],
+  "$type": "IntersectionFilter"
+}
+```
+</details>
+
+<!-- output://code-samples/how-to/use-complex-search-criteria/ageGenderSortedPatients.txt -->
+<details>
+<summary>ageGenderSortedPatients</summary>
+
+```json
+{
+  "pageSize": 1000,
+  "totalSize": 1,
+  "rows": [
+    {
+      "id": "3f864d99-55b3-499c-8332-f2a4a2bf6896",
+      "languages": [],
+      "active": true,
+      "parameters": {},
+      "rev": "1-5f458fe10057eda4133c82e27462c2e0",
+      "created": 1688375626322,
+      "modified": 1688375626322,
+      "author": "2eb0fa0e-5748-4887-aa5a-a419f8790366",
+      "responsible": "f746f65a-1452-45e6-90c9-481b3745bf19",
+      "firstName": "Trillian",
+      "lastName": "Astra",
+      "dateOfBirth": 19520101,
+      "identifiers": [],
+      "labels": {},
+      "codes": {},
+      "names": [
+        {
+          "firstNames": [
+            "Trillian"
+          ],
+          "prefix": [],
+          "suffix": [],
+          "lastName": "Astra",
+          "text": "Astra Trillian",
+          "use": "official"
         }
+      ],
+      "addresses": [],
+      "gender": "female",
+      "birthSex": "unknown",
+      "mergedIds": {},
+      "deactivationReason": "none",
+      "personalStatus": "unknown",
+      "partnerships": [],
+      "patientHealthCareParties": [],
+      "patientProfessions": [],
+      "properties": {},
+      "systemMetaData": {
+        "aesExchangeKeys": {},
+        "hcPartyKeys": {},
+        "privateKeyShamirPartitions": {},
+        "transferKeys": {},
+        "encryptedSelf": "aGgZTVz08n0fgVpudx1OCBcPdQ1uJZKj//zSwRgDyGY=",
+        "secretForeignKeys": [],
+        "cryptedForeignKeys": {},
+        "delegations": {
+          "f746f65a-1452-45e6-90c9-481b3745bf19": {}
+        },
+        "encryptionKeys": {
+          "f746f65a-1452-45e6-90c9-481b3745bf19": {}
+        },
+        "publicKeysForOaepWithSha256": {}
+      }
+    }
+  ],
+  "nextKeyPair": {}
+}
+```
+</details>
+
+In this case, the method will return all the patients that the hcp with id `healthcarePartyId` can access, born between the
+11th of December 1939 and the 3rd of February 1952, and whose gender is `female`. The result will be sorted by date of 
+birth in ascending order.
+
+### Combining Filters
+
+If you have more than one filter for the same entity, you can create a new filter that will return the intersection of their results
+using the `intersection()` static method of the `FilterComposition` class:
+
+<!-- file://code-samples/how-to/use-complex-search-criteria/index.mts snippet:filter patients with explicit intersection filter-->
+```typescript
+const filterByAge = await new PatientFilter(api)
+  .forDataOwner(user.healthcarePartyId!)
+  .dateOfBirthBetween(19511211, 19520203)
+  .build()
+
+const filterByGender = await new PatientFilter(api)
+  .forDataOwner(user.healthcarePartyId!)
+  .byGenderEducationProfession('female')
+  .build()
+
+const filterByGenderAndAge = FilterComposition.intersection(filterByAge, filterByGender)
+
+const ageGenderExplicitPatients = await api.patientApi.filterPatients(filterByGenderAndAge)
+```
+<!-- output://code-samples/how-to/use-complex-search-criteria/ageGenderExplicitPatients.txt -->
+<details>
+<summary>ageGenderExplicitPatients</summary>
+
+```json
+{
+  "pageSize": 1000,
+  "totalSize": 1,
+  "rows": [
+    {
+      "id": "3f864d99-55b3-499c-8332-f2a4a2bf6896",
+      "languages": [],
+      "active": true,
+      "parameters": {},
+      "rev": "1-5f458fe10057eda4133c82e27462c2e0",
+      "created": 1688375626322,
+      "modified": 1688375626322,
+      "author": "2eb0fa0e-5748-4887-aa5a-a419f8790366",
+      "responsible": "f746f65a-1452-45e6-90c9-481b3745bf19",
+      "firstName": "Trillian",
+      "lastName": "Astra",
+      "dateOfBirth": 19520101,
+      "identifiers": [],
+      "labels": {},
+      "codes": {},
+      "names": [
+        {
+          "firstNames": [
+            "Trillian"
+          ],
+          "prefix": [],
+          "suffix": [],
+          "lastName": "Astra",
+          "text": "Astra Trillian",
+          "use": "official"
+        }
+      ],
+      "addresses": [],
+      "gender": "female",
+      "birthSex": "unknown",
+      "mergedIds": {},
+      "deactivationReason": "none",
+      "personalStatus": "unknown",
+      "partnerships": [],
+      "patientHealthCareParties": [],
+      "patientProfessions": [],
+      "properties": {},
+      "systemMetaData": {
+        "aesExchangeKeys": {},
+        "hcPartyKeys": {},
+        "privateKeyShamirPartitions": {},
+        "transferKeys": {},
+        "encryptedSelf": "aGgZTVz08n0fgVpudx1OCBcPdQ1uJZKj//zSwRgDyGY=",
+        "secretForeignKeys": [],
+        "cryptedForeignKeys": {},
+        "delegations": {
+          "f746f65a-1452-45e6-90c9-481b3745bf19": {}
+        },
+        "encryptionKeys": {
+          "f746f65a-1452-45e6-90c9-481b3745bf19": {}
+        },
+        "publicKeysForOaepWithSha256": {}
+      }
+    }
+  ],
+  "nextKeyPair": {}
+}
+```
+</details>
+
+Similarly, you can create a new filter that will return the union of more filters for the same entity using the 
+`intersection()` static method of the `FilterComposition` class:
+
+<!-- file://code-samples/how-to/use-complex-search-criteria/index.mts snippet:filter patients with union filter-->
+```typescript
+const filterFemales = await new PatientFilter(api)
+  .forDataOwner(user.healthcarePartyId!)
+  .byGenderEducationProfession('female')
+  .build()
+
+const filterIndeterminate = await new PatientFilter(api)
+  .forDataOwner(user.healthcarePartyId!)
+  .byGenderEducationProfession('indeterminate')
+  .build()
+
+const filterFemaleOrIndeterminate = FilterComposition.union(filterFemales, filterIndeterminate)
+
+const unionFilterPatients = await api.patientApi.filterPatients(filterFemaleOrIndeterminate)
+```
+<!-- output://code-samples/how-to/use-complex-search-criteria/filterFemaleOrIndeterminate.txt -->
+<details>
+<summary>filterFemaleOrIndeterminate</summary>
+
+```json
+{
+  "filters": [
+    {
+      "healthcarePartyId": "f746f65a-1452-45e6-90c9-481b3745bf19",
+      "gender": "female",
+      "$type": "PatientByHealthcarePartyGenderEducationProfessionFilter"
+    },
+    {
+      "healthcarePartyId": "f746f65a-1452-45e6-90c9-481b3745bf19",
+      "gender": "indeterminate",
+      "$type": "PatientByHealthcarePartyGenderEducationProfessionFilter"
+    }
+  ],
+  "$type": "UnionFilter"
+}
+```
+</details>
+
+<!-- output://code-samples/how-to/use-complex-search-criteria/unionFilterPatients.txt -->
+<details>
+<summary>unionFilterPatients</summary>
+
+```json
+{
+  "pageSize": 1000,
+  "totalSize": 2,
+  "rows": [
+    {
+      "id": "3f864d99-55b3-499c-8332-f2a4a2bf6896",
+      "languages": [],
+      "active": true,
+      "parameters": {},
+      "rev": "1-5f458fe10057eda4133c82e27462c2e0",
+      "created": 1688375626322,
+      "modified": 1688375626322,
+      "author": "2eb0fa0e-5748-4887-aa5a-a419f8790366",
+      "responsible": "f746f65a-1452-45e6-90c9-481b3745bf19",
+      "firstName": "Trillian",
+      "lastName": "Astra",
+      "dateOfBirth": 19520101,
+      "identifiers": [],
+      "labels": {},
+      "codes": {},
+      "names": [
+        {
+          "firstNames": [
+            "Trillian"
+          ],
+          "prefix": [],
+          "suffix": [],
+          "lastName": "Astra",
+          "text": "Astra Trillian",
+          "use": "official"
+        }
+      ],
+      "addresses": [],
+      "gender": "female",
+      "birthSex": "unknown",
+      "mergedIds": {},
+      "deactivationReason": "none",
+      "personalStatus": "unknown",
+      "partnerships": [],
+      "patientHealthCareParties": [],
+      "patientProfessions": [],
+      "properties": {},
+      "systemMetaData": {
+        "aesExchangeKeys": {},
+        "hcPartyKeys": {},
+        "privateKeyShamirPartitions": {},
+        "transferKeys": {},
+        "encryptedSelf": "aGgZTVz08n0fgVpudx1OCBcPdQ1uJZKj//zSwRgDyGY=",
+        "secretForeignKeys": [],
+        "cryptedForeignKeys": {},
+        "delegations": {
+          "f746f65a-1452-45e6-90c9-481b3745bf19": {}
+        },
+        "encryptionKeys": {
+          "f746f65a-1452-45e6-90c9-481b3745bf19": {}
+        },
+        "publicKeysForOaepWithSha256": {}
+      }
+    },
+    {
+      "id": "b4924956-f1d2-439b-8c1b-7e39e03439b7",
+      "languages": [],
+      "active": true,
+      "parameters": {},
+      "rev": "1-b7cc3b8d229773db8b1a04c90c4eb867",
+      "created": 1688375626335,
+      "modified": 1688375626335,
+      "author": "2eb0fa0e-5748-4887-aa5a-a419f8790366",
+      "responsible": "f746f65a-1452-45e6-90c9-481b3745bf19",
+      "firstName": "Zaphod",
+      "lastName": "Beeblebrox",
+      "dateOfBirth": 19420101,
+      "identifiers": [],
+      "labels": {},
+      "codes": {},
+      "names": [
+        {
+          "firstNames": [
+            "Zaphod"
+          ],
+          "prefix": [],
+          "suffix": [],
+          "lastName": "Beeblebrox",
+          "text": "Beeblebrox Zaphod",
+          "use": "official"
+        }
+      ],
+      "addresses": [],
+      "gender": "indeterminate",
+      "birthSex": "unknown",
+      "mergedIds": {},
+      "deactivationReason": "none",
+      "personalStatus": "unknown",
+      "partnerships": [],
+      "patientHealthCareParties": [],
+      "patientProfessions": [],
+      "properties": {},
+      "systemMetaData": {
+        "aesExchangeKeys": {},
+        "hcPartyKeys": {},
+        "privateKeyShamirPartitions": {},
+        "transferKeys": {},
+        "encryptedSelf": "F46og9dy7GwGAJorj0tyOpoJUn37JFvHm0Ai58a6vM0=",
+        "secretForeignKeys": [],
+        "cryptedForeignKeys": {},
+        "delegations": {
+          "f746f65a-1452-45e6-90c9-481b3745bf19": {}
+        },
+        "encryptionKeys": {
+          "f746f65a-1452-45e6-90c9-481b3745bf19": {}
+        },
+        "publicKeysForOaepWithSha256": {}
       }
     }
   ],
@@ -592,6 +732,13 @@ const unionFilterPatients = await api.patientApi.filterPatients(filterFemaleOrIn
 In this case, the method will return all the patients that the hcp with id `hcpId` can access and whose gender is `indeterminate` or
 whose gender is `female`.
 
+:::caution
+
+The sorting order of the results of a composition of filter created using one of those two methods is never guaranteed,
+even if one of the filter you used was sorted.
+
+:::
+
 ## Base Query Methods
 
 In the following list, you will find all the simple queries for each type of entity filter.
@@ -600,68 +747,80 @@ In the following list, you will find all the simple queries for each type of ent
 
 * `byIds(byIds: string[])`: all the Codings corresponding to the ids passed as parameter.
 * `byRegionLanguageTypeLabel(region?: string, language?: string, type?: string, label?: string)`: all the Codings that have the provided region, language, type, and label
-* `union(filters: UserFilter[])`: creates a union query with the filters passed as parameter.
-* `intersection(filters: UserFilter[])**`: creates an intersection query with the filters passed as parameter.
+
+:::info
+
+If no condition is specified, the generated filter will return all the Coding in your database.
+
+:::
 
 ### Data Sample
 
-* `forDataOwner(dataOwnerId: string)`: all the Data Samples that the Data Owner passed as parameter can access. **Note:** this field must be specified in all the queries.
+* `forDataOwner(dataOwnerId: string)`: all the Data Samples that the Data Owner passed as parameter can access.
+* `forSelf()`: all the Data Samples that the logged-in Data Owner.
 * `byIds(byIds: string[])`: all the Data Samples corresponding to the ids passed as parameter.
 * `byIdentifiers(identifiers: Identifier[])`: all the Data Samples that have the identifier passed as parameter.
-* `byLabelCodeDateFilter(tagType?: string, tagCode?: string, codeType?: string, codeCode?: string, startValueDate?: number, endValueDate?: number)`: all the Data Samples that matches one of his labels or codes, or created in the provided date interval.
+* `byLabelCodeDateFilter(tagType?: string, tagCode?: string, codeType?: string, codeCode?: string, startValueDate?: number, endValueDate?: number, descending: boolean?)`: all the Data Samples that matches one of his labels or codes, or created in the provided date interval.
 * `forPatients(crypto: IccCryptoXApi, patients: Patient[])`: all the Data Samples related to a certain Patient.
 * `byHealthElementIds(byHealthElementIds: string[])`: all the Data Samples that have the Healthcare Element specified as parameter.
-* `union(filters: UserFilter[])`: creates a union query with the filters passed as parameter.
-* `intersection(filters: UserFilter[])**`: creates an intersection query with the filters passed as parameter.
 
 ### Healthcare Element
 
-* `forDataOwner(dataOwnerId: string)`: all the Healthcare Elements that the Data Owner passed as parameter can access. **Note:** this field must be specified in all the queries.
+* `forDataOwner(dataOwnerId: string)`: all the Healthcare Elements that the Data Owner passed as parameter can access. 
+* `forSelf()`: all the Data Samples that the logged-in Data Owner.
 * `byIds(byIds: string[])`: all the Healthcare Elements corresponding to the ids passed as parameter.
 * `byIdentifiers(identifiers: Identifier[])`: all the Healthcare Elements that have the identifier passed as parameter.
 * `byLabelCodeFilter(tagType?: string, tagCode?: string, codeType?: string, codeCode?: string)`: all the Healthcare Elements that matches one of his labels or codes.
 * `forPatients(crypto: IccCryptoXApi, patients: Patient[])`: all the Healthcare Elements related to a certain Patient.
-* `union(filters: UserFilter[])`: creates a union query with the filters passed as parameter.
-* `intersection(filters: UserFilter[])**`: creates an intersection query with the filters passed as parameter.
 
 ### Healthcare Professional
 
 * `byIds(byIds: string[])`: all the Healthcare Professionals corresponding to the ids passed as parameter.
 * `byLabelCodeFilter(labelType?: string, labelCode?: string, codeType?: string, codeCode?: string)`: all the Healthcare Professionals whose label or code matches the one passed as parameter.
-* `union(filters: UserFilter[])`: creates a union query with the filters passed as parameter.
-* `intersection(filters: UserFilter[])**`: creates an intersection query with the filters passed as parameter.
+
+:::info
+
+If no condition is specified, the generated filter will return all the Healthcare Professionals in your database.
+
+:::
 
 ### Medical Device
 
 * `byIds(byIds: string[])`: all the Medical Devices corresponding to the ids passed as parameter.
-* `union(filters: UserFilter[])`: creates a union query with the filters passed as parameter.
-* `intersection(filters: UserFilter[])**`: creates an intersection query with the filters passed as parameter.
+
+:::info
+
+If no condition is specified, the generated filter will return all the Medical Devices in your database.
+
+:::
 
 ### Notification
 
 * `forDataOwner(dataOwnerId: string)`: all the Notifications that the Data Owner passed as parameter can access. **Note:** this field must be specified in all the queries.
+* `forSelf()`: all the Data Samples that the logged-in Data Owner.
 * `byIds(byIds: string[])`: all the Notifications corresponding to the ids passed as parameter.
 * `withType(type: NotificationTypeEnum)`: all the Notifications that are of the type passed as parameter.
-* `afterDate(fromDate: number)`: all the Notifications created after the timestamp passed as parameter
-* `union(filters: UserFilter[])`: creates a union query with the filters passed as parameter.
-* `intersection(filters: UserFilter[])**`: creates an intersection query with the filters passed as parameter.
+* `afterDate(fromDate: number)`: all the Notifications created after the timestamp passed as parameter.
 
 ### Patient
 
-* `forDataOwner(dataOwnerId: string)`: all the Patients that the Data Owner passed as parameter can access. **Note:** this field must be specified in all the queries.
+* `forDataOwner(dataOwnerId: string)`: all the Patients that the Data Owner passed as parameter can access.
+* `forSelf()`: all the Data Samples that the logged-in Data Owner.
 * `byIds(byIds: string[])`: all the Patients corresponding to the ids passed as parameter.
 * `byIdentifiers(identifiers: Identifier[])`: all the Patients that have the identifier passed as parameter.
 * `byGenderEducationProfession(gender: PatientGenderEnum, education?: string, profession?: string)`: all the Patients that matches the gender, the education, or the profession passed as parameters.
 * `withSsins(withSsins: string[])`: all the Patients corresponding to the SSIN numbers passed as parameters.
 * `ofAge(age: number)`: all the Patients of the age passed as parameter.
 * `dateOfBirthBetween(from: number, to: number)` all the Patients whose birthdate is between the ones passed as parameters.
-* `containsFuzzy(searchString: string)`:
-* `union(filters: UserFilter[])`: creates a union query with the filters passed as parameter.
-* `intersection(filters: UserFilter[])**`: creates an intersection query with the filters passed as parameter.
+* `containsFuzzy(searchString: string)`: all the patients which first name, last name, maiden name or spouse name matches, even partially, the string passed as parameter.
 
 ### User
 
 * `byIds(byIds: string[])`: all the Users corresponding to the ids passed as parameter.
 * `byPatientId(patientId: string)`: the User that has the patient id passed as parameter.
-* `union(filters: UserFilter[])`: creates a union query with the filters passed as parameter.
-* `intersection(filters: UserFilter[])**`: creates an intersection query with the filters passed as parameter.
+
+:::info
+
+If no condition is specified, the generated filter will return all the Users in your database.
+
+:::

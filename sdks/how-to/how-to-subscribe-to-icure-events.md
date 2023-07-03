@@ -38,7 +38,7 @@ const statuses: string[] = []
 const connection = (
   await api.dataSampleApi.subscribeToDataSampleEvents(
     ['CREATE'], // Event types to listen to
-    await new DataSampleFilter()
+    await new DataSampleFilter(api)
       .forDataOwner(loggedUser.healthcarePartyId!)
       .byLabelCodeDateFilter('IC-TEST', 'TEST')
       .build(),
@@ -100,15 +100,15 @@ const patient = await api.patientApi.createOrModifyPatient(
 
 ```json
 {
-  "id": "1b27442c-69fa-43e8-a8bb-3a4c6be909e5",
+  "id": "a083d257-bda7-4c92-ab49-effe1293c48d",
   "languages": [],
   "active": true,
   "parameters": {},
-  "rev": "1-691bedb8160cf3a83eb8b774909ed5a9",
-  "created": 1682493690227,
-  "modified": 1682493690227,
-  "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
-  "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
+  "rev": "1-8d164b273bbbd6d935a7c31407d25f3f",
+  "created": 1688375627182,
+  "modified": 1688375627182,
+  "author": "6a541dfb-40d9-41f5-ba76-e3a5e277813f",
+  "responsible": "e2b6e873-035b-4964-885b-5a90e99c43b4",
   "firstName": "John",
   "lastName": "Snow",
   "note": "Winter is coming",
@@ -138,19 +138,20 @@ const patient = await api.patientApi.createOrModifyPatient(
   "patientProfessions": [],
   "properties": {},
   "systemMetaData": {
+    "aesExchangeKeys": {},
     "hcPartyKeys": {},
     "privateKeyShamirPartitions": {},
-    "aesExchangeKeys": {},
     "transferKeys": {},
-    "encryptedSelf": "9UcENUsx2colHWTis/HYYXQosi2+WwGu9jf6YrRCyvHAR5iuVEj2TGsPp7tuoQwj",
+    "encryptedSelf": "NDRtOR6NiQ1chu0yQFLzawO7qXY3HHSZUoPH0z5Xgu/6OWFmTy4EObSIxwCruW25",
     "secretForeignKeys": [],
     "cryptedForeignKeys": {},
     "delegations": {
-      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
     },
     "encryptionKeys": {
-      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
-    }
+      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
+    },
+    "publicKeysForOaepWithSha256": {}
   }
 }
 ```
@@ -175,16 +176,16 @@ const dataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
 
 ```json
 {
-  "id": "855560b8-e9c4-4eac-bc6e-9881c37d2d6e",
+  "id": "886f4279-15f2-47c7-8648-42e5c3f5f5d7",
   "qualifiedLinks": {},
-  "batchId": "4621cc35-4e55-45d2-8897-01a61ed9e4d4",
+  "batchId": "53cbc7cf-87ae-41fc-9085-59626acc827c",
   "index": 0,
-  "valueDate": 20230426072130,
-  "openingDate": 20230426072130,
-  "created": 1682493690826,
-  "modified": 1682493690826,
-  "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
-  "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
+  "valueDate": 20230703111347,
+  "openingDate": 20230703111347,
+  "created": 1688375627220,
+  "modified": 1688375627220,
+  "author": "6a541dfb-40d9-41f5-ba76-e3a5e277813f",
+  "responsible": "e2b6e873-035b-4964-885b-5a90e99c43b4",
   "identifiers": [],
   "healthcareElementIds": {},
   "canvasesIds": {},
@@ -199,18 +200,20 @@ const dataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
   "codes": {},
   "labels": {},
   "systemMetaData": {
+    "encryptedSelf": "v6AITGZWxM8JaF0Jtn6lqkL+xk1aiE6aFdmGm64eprUUz2iohkLKUR10N7iZdT7jq2Z1gQQeqnpaxwNcz+oTO9I2nYZxQfhPNaikUGprI6TNkx0R+2GuBAGqZD1CIJQmMg++rHquvIrscEctpckBZg==",
     "secretForeignKeys": [
-      "ec36ce37-15aa-459a-a3e8-fcd006d06d44"
+      "b3784ca3-c454-4435-812b-8c1a88878dcc"
     ],
     "cryptedForeignKeys": {
-      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
     },
     "delegations": {
-      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
     },
     "encryptionKeys": {
-      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
-    }
+      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
+    },
+    "publicKeysForOaepWithSha256": {}
   }
 }
 ```
@@ -230,47 +233,7 @@ connection.close()
 <summary>events</summary>
 
 ```text
-[
-  {
-    "id": "855560b8-e9c4-4eac-bc6e-9881c37d2d6e",
-    "qualifiedLinks": {},
-    "batchId": "4621cc35-4e55-45d2-8897-01a61ed9e4d4",
-    "index": 0,
-    "valueDate": 20230426072130,
-    "openingDate": 20230426072130,
-    "created": 1682493690826,
-    "modified": 1682493690826,
-    "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
-    "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
-    "identifiers": [],
-    "healthcareElementIds": {},
-    "canvasesIds": {},
-    "content": {
-      "en": {
-        "stringValue": "Hello world",
-        "compoundValue": [],
-        "ratio": [],
-        "range": []
-      }
-    },
-    "codes": {},
-    "labels": {},
-    "systemMetaData": {
-      "secretForeignKeys": [
-        "ec36ce37-15aa-459a-a3e8-fcd006d06d44"
-      ],
-      "cryptedForeignKeys": {
-        "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
-      },
-      "delegations": {
-        "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
-      },
-      "encryptionKeys": {
-        "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
-      }
-    }
-  }
-]
+[]
 ```
 </details>
 

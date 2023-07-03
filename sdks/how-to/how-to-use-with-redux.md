@@ -32,27 +32,23 @@ const unmarshalledUser = new User(marshalledUser)
 
 ```json
 {
-  "id": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
-  "rev": "111-c3f1e2908df9a81a43903697937bc56e",
-  "created": 1679919731079,
+  "id": "6a541dfb-40d9-41f5-ba76-e3a5e277813f",
+  "rev": "80-9e7d4c1261e3913204403fc2e9e1a668",
+  "created": 1688371977279,
   "name": "Master HCP",
-  "login": "master@b16baa.icure",
+  "login": "master@e2b6e8.icure",
   "groupId": "ic-e2etest-medtech-docs",
-  "healthcarePartyId": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
-  "email": "master@b16baa.icure",
+  "healthcarePartyId": "e2b6e873-035b-4964-885b-5a90e99c43b4",
+  "email": "master@e2b6e8.icure",
   "properties": {},
   "roles": {},
   "sharingDataWith": {
     "medicalInformation": {}
   },
   "authenticationTokens": {
-    "aee1860e-eb42-45fc-a2f2-9753f68764e1": {
-      "creationTime": 1679919731274,
+    "c1284f05-cca6-444e-bdac-3cd134d54e6b": {
+      "creationTime": 1688371977378,
       "validity": 86400
-    },
-    "5d47319d-0487-427f-b492-c761deea7caa": {
-      "creationTime": 1680074455610,
-      "validity": 31536000
     }
   }
 }
@@ -65,27 +61,23 @@ const unmarshalledUser = new User(marshalledUser)
 
 ```json
 {
-  "id": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
-  "rev": "111-c3f1e2908df9a81a43903697937bc56e",
-  "created": 1679919731079,
+  "id": "6a541dfb-40d9-41f5-ba76-e3a5e277813f",
+  "rev": "80-9e7d4c1261e3913204403fc2e9e1a668",
+  "created": 1688371977279,
   "name": "Master HCP",
-  "login": "master@b16baa.icure",
+  "login": "master@e2b6e8.icure",
   "groupId": "ic-e2etest-medtech-docs",
-  "healthcarePartyId": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
-  "email": "master@b16baa.icure",
+  "healthcarePartyId": "e2b6e873-035b-4964-885b-5a90e99c43b4",
+  "email": "master@e2b6e8.icure",
   "properties": [],
   "roles": [],
   "sharingDataWith": {
     "medicalInformation": []
   },
   "authenticationTokens": {
-    "aee1860e-eb42-45fc-a2f2-9753f68764e1": {
-      "creationTime": 1679919731274,
+    "c1284f05-cca6-444e-bdac-3cd134d54e6b": {
+      "creationTime": 1688371977378,
       "validity": 86400
-    },
-    "5d47319d-0487-427f-b492-c761deea7caa": {
-      "creationTime": 1680074455610,
-      "validity": 31536000
     }
   }
 }
@@ -98,27 +90,23 @@ const unmarshalledUser = new User(marshalledUser)
 
 ```json
 {
-  "id": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
-  "rev": "111-c3f1e2908df9a81a43903697937bc56e",
-  "created": 1679919731079,
+  "id": "6a541dfb-40d9-41f5-ba76-e3a5e277813f",
+  "rev": "80-9e7d4c1261e3913204403fc2e9e1a668",
+  "created": 1688371977279,
   "name": "Master HCP",
-  "login": "master@b16baa.icure",
+  "login": "master@e2b6e8.icure",
   "groupId": "ic-e2etest-medtech-docs",
-  "healthcarePartyId": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
-  "email": "master@b16baa.icure",
+  "healthcarePartyId": "e2b6e873-035b-4964-885b-5a90e99c43b4",
+  "email": "master@e2b6e8.icure",
   "properties": {},
   "roles": {},
   "sharingDataWith": {
     "medicalInformation": {}
   },
   "authenticationTokens": {
-    "aee1860e-eb42-45fc-a2f2-9753f68764e1": {
-      "creationTime": 1679919731274,
+    "c1284f05-cca6-444e-bdac-3cd134d54e6b": {
+      "creationTime": 1688371977378,
       "validity": 86400
-    },
-    "5d47319d-0487-427f-b492-c761deea7caa": {
-      "creationTime": 1680074455610,
-      "validity": 31536000
     }
   }
 }

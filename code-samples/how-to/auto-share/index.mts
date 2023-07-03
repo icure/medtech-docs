@@ -14,14 +14,19 @@ import { CodingReference, Content, DataSample, Patient } from '@icure/medical-de
 import chaiAsPromised from 'chai-as-promised'
 chaiUse(chaiAsPromised)
 
-console.log('Initialising')
 initLocalStorage()
 const hcp1Api = await initMedTechApi(true)
 const hcp2Api = await initMedTechApi2(true)
 const pApi = await initPatientMedTechApi(true)
+
 const hcp1User = await hcp1Api.userApi.getLoggedUser()
 const hcp2User = await hcp2Api.userApi.getLoggedUser()
 const pUser = await pApi.userApi.getLoggedUser()
+await hcp1Api.patientApi.giveAccessTo(
+  await hcp1Api.patientApi.getPatient(pUser.patientId),
+  hcp2User.healthcarePartyId!,
+)
+
 expect(hcp1User.email).to.equal(userName)
 expect(hcp2User.email).to.equal(userName2)
 expect(pUser.email).to.equal(patientUserName)

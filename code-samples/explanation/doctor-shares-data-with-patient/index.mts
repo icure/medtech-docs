@@ -1,15 +1,11 @@
 import 'isomorphic-fetch'
 import { CodingReference, Content, DataSample, HealthcareElement } from '@icure/medical-device-sdk'
 import {
-  host,
   initLocalStorage,
   initMedTechApi,
   initPatientMedTechApi,
-  msgGtwUrl,
   output,
   patientId,
-  signUpUserUsingEmail,
-  specId,
 } from '../../utils/index.mjs'
 import { expect } from 'chai'
 import {
@@ -17,26 +13,15 @@ import {
   NotificationTypeEnum,
 } from '@icure/medical-device-sdk/src/models/Notification.js'
 import { v4 as uuid } from 'uuid'
-import process from 'process'
 
 initLocalStorage()
 
-const masterApi = await initMedTechApi(true)
-const masterUser = await masterApi.userApi.getLoggedUser()
-
-const { api } = await signUpUserUsingEmail(
-  host,
-  msgGtwUrl,
-  specId,
-  process.env.AUTH_BY_EMAIL_HCP_PROCESS_ID,
-  masterUser.healthcarePartyId!,
-)
+const api = await initMedTechApi(true)
 const user = await api.userApi.getLoggedUser()
 
 const patientApi = await initPatientMedTechApi(true)
 const patient = await patientApi.patientApi.getPatient(patientId)
 const patientUser = await patientApi.userApi.getLoggedUser()
-await patientApi.patientApi.giveAccessTo(patient, user.healthcarePartyId!)
 
 //tech-doc: doctor shares medical data
 const healthcareElement = await api.healthcareElementApi.createOrModifyHealthcareElement(

@@ -5,8 +5,18 @@ import {
   LocalStorageImpl,
   medTechApi,
 } from '@icure/medical-device-sdk'
-import { host, msgGtwUrl, password, specId, userName } from '../../utils/index.mjs'
+import {
+  host,
+  initLocalStorage,
+  msgGtwUrl,
+  password,
+  specId,
+  userName,
+} from '../../utils/index.mjs'
 import { webcrypto } from 'crypto'
+import { SimpleMedTechCryptoStrategies } from '@icure/medical-device-sdk'
+
+initLocalStorage()
 
 const storage = new LocalStorageImpl()
 const keyStorage = new KeyStorageImpl(storage)
@@ -25,7 +35,7 @@ const api = await medTechApi()
   .withAuthProcessBySmsId(authProcessSMSId)
   .withStorage(storage)
   .withKeyStorage(keyStorage)
-  .preventCookieUsage()
+  .withCryptoStrategies(new SimpleMedTechCryptoStrategies([]))
   .build()
 //tech-doc: STOP HERE
 
@@ -39,6 +49,6 @@ const anonymousApi = await new AnonymousMedTechApiBuilder()
   .withAuthProcessBySmsId(authProcessSMSId)
   .withStorage(storage)
   .withKeyStorage(keyStorage)
-  .preventCookieUsage()
+  .withCryptoStrategies(new SimpleMedTechCryptoStrategies([]))
   .build()
 //tech-doc: STOP HERE

@@ -1,5 +1,5 @@
 import 'isomorphic-fetch'
-import { initLocalStorage, initMedTechApi, output } from '../../utils/index.mjs'
+import { initLocalStorage, initMedTechApi, output, password } from '../../utils/index.mjs'
 import {
   AnonymousMedTechApiBuilder,
   MedTechApiBuilder,
@@ -11,9 +11,13 @@ import {
 import { webcrypto } from 'crypto'
 import * as process from 'process'
 import { getLastEmail } from '../../utils/msgGtw.mjs'
-import { expect } from 'chai'
+import { expect, use as chaiUse } from 'chai'
 import { NotificationTypeEnum } from '@icure/medical-device-sdk/src/models/Notification.js'
-import { SimpleMedTechCryptoStrategies } from '@icure/medical-device-sdk/src/services/impl/SimpleMedTechCryptoStrategies';
+import { SimpleMedTechCryptoStrategies } from '@icure/medical-device-sdk'
+import { username } from '../../quick-start/index.mjs'
+import chaiAsPromised from 'chai-as-promised'
+import { MemoryKeyStorage, MemoryStorage } from '../../utils/memoryStorage.mjs'
+chaiUse(chaiAsPromised)
 
 const cachedInfo = {} as { [key: string]: string }
 const uniqueId = Math.random().toString(36).substring(4)
@@ -49,17 +53,26 @@ function getBackCredentials(): {
   }
 }
 
-initLocalStorage()
-
 //tech-doc: Get master Hcp Id
-const masterHcpApi = await initMedTechApi()
+const iCureUrl = process.env.ICURE_URL
+const masterHcpApi = await medTechApi()
+  .withICureBaseUrl(iCureUrl)
+  .withUserName(username)
+  .withPassword(password)
+  .withCrypto(webcrypto as any)
+  .withCryptoStrategies(new SimpleMedTechCryptoStrategies([]))
+  .withStorage(new MemoryStorage()) //skip
+  .withKeyStorage(new MemoryKeyStorage()) //skip
+  .build()
 const masterUser = await masterHcpApi.userApi.getLoggedUser()
 const masterHcpId = masterHcpApi.dataOwnerApi.getDataOwnerIdOf(masterUser)
 //tech-doc: STOP HERE
 output({ masterHcpId, masterUser })
 
+const memoryStorage = new MemoryStorage()
+const memoryKeyStorage = new MemoryKeyStorage()
+
 //tech-doc: Instantiate AnonymousMedTech API
-const iCureUrl = process.env.ICURE_URL
 const msgGtwUrl = process.env.ICURE_MSG_GTW_URL
 const specId = process.env.SPEC_ID
 const authProcessByEmailId = process.env.AUTH_BY_EMAIL_PROCESS_ID
@@ -73,6 +86,9 @@ const anonymousApi = await new AnonymousMedTechApiBuilder()
   .withMsgGwSpecId(specId)
   .withAuthProcessByEmailId(authProcessByEmailId)
   .withAuthProcessBySmsId(authProcessBySmsId)
+  .withCryptoStrategies(new SimpleMedTechCryptoStrategies([]))
+  .withStorage(memoryStorage) //skip
+  .withKeyStorage(memoryKeyStorage) //skip
   .build()
 //tech-doc: STOP HERE
 output({
@@ -153,7 +169,11 @@ const reInstantiatedApi = await new MedTechApiBuilder()
   .withUserName(login)
   .withPassword(token)
   .withCrypto(webcrypto as any)
-  .withCryptoStrategies(new SimpleMedTechCryptoStrategies([{ publicKey: pubKey, privateKey: privKey }]))
+  .withCryptoStrategies(
+    new SimpleMedTechCryptoStrategies([{ publicKey: pubKey, privateKey: privKey }]),
+  )
+  .withStorage(memoryStorage) //skip
+  .withKeyStorage(memoryKeyStorage) //skip
   .build()
 //tech-doc: STOP HERE
 
@@ -172,6 +192,9 @@ const anonymousApiForLogin = await new AnonymousMedTechApiBuilder()
   .withMsgGwSpecId(specId)
   .withAuthProcessByEmailId(authProcessByEmailId)
   .withAuthProcessBySmsId(authProcessBySmsId)
+  .withCryptoStrategies(new SimpleMedTechCryptoStrategies([]))
+  .withStorage(memoryStorage) //skip
+  .withKeyStorage(memoryKeyStorage) //skip
   .build()
 
 const authProcessLogin = await anonymousApiForLogin.authenticationApi.startAuthentication(
@@ -210,16 +233,13 @@ const currentPatient = await loggedUserApi.patientApi.getPatient(daenaerysId)
 await loggedUserApi.patientApi.giveAccessTo(currentPatient, masterHcpId)
 await loggedUserApi.dataSampleApi.giveAccessTo(createdDataSample, masterHcpId)
 
-localStorage.removeItem(
-  `${currentPatient.id}.${currentPatient.systemMetaData.publicKey.slice(-32)}`,
-)
-
 cachedInfo['login'] = undefined
 cachedInfo['token'] = undefined
 cachedInfo['userId'] = undefined
 cachedInfo['groupId'] = undefined
 cachedInfo['pubKey'] = undefined
 cachedInfo['privKey'] = undefined
+await memoryKeyStorage.clear()
 
 // User lost his key and logs back
 const anonymousMedTechApi = await new AnonymousMedTechApiBuilder()
@@ -229,6 +249,9 @@ const anonymousMedTechApi = await new AnonymousMedTechApiBuilder()
   .withCrypto(webcrypto as any)
   .withAuthProcessByEmailId(authProcessByEmailId)
   .withAuthProcessBySmsId(authProcessBySmsId)
+  .withCryptoStrategies(new SimpleMedTechCryptoStrategies([]))
+  .withStorage(new MemoryStorage()) //skip
+  .withKeyStorage(new MemoryKeyStorage()) //skip
   .build()
 
 const loginProcess = await anonymousMedTechApi.authenticationApi.startAuthentication(
@@ -271,16 +294,11 @@ output({ newlyCreatedDataSample })
 
 expect(newlyCreatedDataSample).to.not.be.undefined //skip
 
-// But can't access previous ones
-try {
-  await loginAuthResult.medTechApi.dataSampleApi.getDataSample(createdDataSample.id!)
-  expect(true).to.be.equal(
-    false,
-    "Patient should not be able to get access to his previous data, as his new key can't decrypt corresponding AES Exchange keys",
-  )
-} catch (e: any) {
-  expect(e.message).to.not.be.empty
-}
+// Can access previous ones but cannot decrypt them
+const oldCreatedDataSample = await loginAuthResult.medTechApi.dataSampleApi.getDataSample(
+  createdDataSample.id!,
+)
+expect(Object.entries(oldCreatedDataSample.content ?? {})).to.be.empty
 
 // When the delegate gave him access back
 // Hcp checks dedicated notification
@@ -315,13 +333,12 @@ const daenaerysPatientPubKey = daenaerysNotification!.properties?.find(
 )
 expect(daenaerysPatientPubKey).to.not.be.undefined //skip
 
-const accessBack = await hcpApi.dataOwnerApi.giveAccessBackTo(
+await hcpApi.dataOwnerApi.giveAccessBackTo(
   daenaerysPatientId!.typedValue!.stringValue!,
   daenaerysPatientPubKey!.typedValue!.stringValue!,
 )
-expect(accessBack).to.be.true //skip
 //tech-doc: STOP HERE
-output({ daenaerysPatientId, daenaerysPatientPubKey, accessBack })
+output({ daenaerysPatientId, daenaerysPatientPubKey })
 
 // Then
 const updatedApi = await medTechApi(loginAuthResult.medTechApi).build()

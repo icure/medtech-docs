@@ -45,15 +45,15 @@ const createdPatient = await api.patientApi.createOrModifyPatient(
 
 ```json
 {
-  "id": "ff231dfa-1774-4bbb-866c-18b10ae90e36",
+  "id": "0d680319-e8f2-4d84-9bc7-9ed8e4fbe190",
   "languages": [],
   "active": true,
   "parameters": {},
-  "rev": "1-7207453909b52f61f8f8ae691648594f",
-  "created": 1682493638943,
-  "modified": 1682493638943,
-  "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
-  "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
+  "rev": "1-e289ab17943d04b73611a0652c424322",
+  "created": 1688375621351,
+  "modified": 1688375621351,
+  "author": "6a541dfb-40d9-41f5-ba76-e3a5e277813f",
+  "responsible": "e2b6e873-035b-4964-885b-5a90e99c43b4",
   "firstName": "Hubert",
   "lastName": "Farnsworth",
   "dateOfBirth": 28410409,
@@ -93,19 +93,20 @@ const createdPatient = await api.patientApi.createOrModifyPatient(
   "patientProfessions": [],
   "properties": {},
   "systemMetaData": {
+    "aesExchangeKeys": {},
     "hcPartyKeys": {},
     "privateKeyShamirPartitions": {},
-    "aesExchangeKeys": {},
     "transferKeys": {},
-    "encryptedSelf": "snYXEp8w/fgu5GgVFmrtuMy+u5TPHT7wfx2RoeFlEQo=",
+    "encryptedSelf": "BwAASxqt3JWcCW2xbyB87I2pxQ5pcoCZqymNloaKQlg=",
     "secretForeignKeys": [],
     "cryptedForeignKeys": {},
     "delegations": {
-      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
     },
     "encryptionKeys": {
-      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
-    }
+      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
+    },
+    "publicKeysForOaepWithSha256": {}
   }
 }
 ```
@@ -134,15 +135,15 @@ const updatedPatient = await api.patientApi.createOrModifyPatient(
 
 ```json
 {
-  "id": "ff231dfa-1774-4bbb-866c-18b10ae90e36",
+  "id": "0d680319-e8f2-4d84-9bc7-9ed8e4fbe190",
   "languages": [],
   "active": true,
   "parameters": {},
-  "rev": "2-d37cb3eac1e3ca05bc12f3ae4a71f53e",
-  "created": 1682493638943,
-  "modified": 1682493639378,
-  "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
-  "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
+  "rev": "2-072df0dee196c538c29e319c04e3a204",
+  "created": 1688375621351,
+  "modified": 1688375621385,
+  "author": "6a541dfb-40d9-41f5-ba76-e3a5e277813f",
+  "responsible": "e2b6e873-035b-4964-885b-5a90e99c43b4",
   "firstName": "Hubert",
   "lastName": "Farnsworth",
   "dateOfBirth": 28410409,
@@ -183,19 +184,20 @@ const updatedPatient = await api.patientApi.createOrModifyPatient(
   "patientProfessions": [],
   "properties": {},
   "systemMetaData": {
+    "aesExchangeKeys": {},
     "hcPartyKeys": {},
     "privateKeyShamirPartitions": {},
-    "aesExchangeKeys": {},
     "transferKeys": {},
-    "encryptedSelf": "rcZn96y4ocLEycRmvNzsh1tsLy9ZvE3XbnbSB1pJZTEgB0S0H/cl8BHJ2A5DA52R",
+    "encryptedSelf": "lthaVyY+EGFIS6s4ZgPrZwfRf3gHYMPa1YSNpeeJiKBA3l4IWIQAv2pGHQOeVcaS",
     "secretForeignKeys": [],
     "cryptedForeignKeys": {},
     "delegations": {
-      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
     },
     "encryptionKeys": {
-      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
-    }
+      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
+    },
+    "publicKeysForOaepWithSha256": {}
   }
 }
 ```
@@ -217,15 +219,15 @@ const patient = await api.patientApi.getPatient(updatedPatient.id!)
 
 ```json
 {
-  "id": "ff231dfa-1774-4bbb-866c-18b10ae90e36",
+  "id": "0d680319-e8f2-4d84-9bc7-9ed8e4fbe190",
   "languages": [],
   "active": true,
   "parameters": {},
-  "rev": "2-d37cb3eac1e3ca05bc12f3ae4a71f53e",
-  "created": 1682493638943,
-  "modified": 1682493639378,
-  "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
-  "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
+  "rev": "2-072df0dee196c538c29e319c04e3a204",
+  "created": 1688375621351,
+  "modified": 1688375621385,
+  "author": "6a541dfb-40d9-41f5-ba76-e3a5e277813f",
+  "responsible": "e2b6e873-035b-4964-885b-5a90e99c43b4",
   "firstName": "Hubert",
   "lastName": "Farnsworth",
   "dateOfBirth": 28410409,
@@ -266,19 +268,20 @@ const patient = await api.patientApi.getPatient(updatedPatient.id!)
   "patientProfessions": [],
   "properties": {},
   "systemMetaData": {
+    "aesExchangeKeys": {},
     "hcPartyKeys": {},
     "privateKeyShamirPartitions": {},
-    "aesExchangeKeys": {},
     "transferKeys": {},
-    "encryptedSelf": "rcZn96y4ocLEycRmvNzsh1tsLy9ZvE3XbnbSB1pJZTEgB0S0H/cl8BHJ2A5DA52R",
+    "encryptedSelf": "lthaVyY+EGFIS6s4ZgPrZwfRf3gHYMPa1YSNpeeJiKBA3l4IWIQAv2pGHQOeVcaS",
     "secretForeignKeys": [],
     "cryptedForeignKeys": {},
     "delegations": {
-      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
     },
     "encryptionKeys": {
-      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
-    }
+      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
+    },
+    "publicKeysForOaepWithSha256": {}
   }
 }
 ```
@@ -299,7 +302,7 @@ const deletedPatientId = await api.patientApi.deletePatient(patient.id!)
 <summary>deletedPatientId</summary>
 
 ```text
-ff231dfa-1774-4bbb-866c-18b10ae90e36
+0d680319-e8f2-4d84-9bc7-9ed8e4fbe190
 ```
 </details>
 
@@ -309,9 +312,8 @@ To filter patients, we can use the `filterPatients` method on the `PatientApi` o
 
 <!-- file://code-samples/how-to/patients/index.mts snippet:get a list of patient-->
 ```typescript
-const filter = await new PatientFilter()
+const filter = await new PatientFilter(api)
   .forDataOwner(loggedUser.healthcarePartyId!)
-
   .dateOfBirthBetween(28000101, 29000101)
   .build()
 
@@ -328,15 +330,15 @@ const patients = await api.patientApi.filterPatients(filter)
   "totalSize": 1,
   "rows": [
     {
-      "id": "ff231dfa-1774-4bbb-866c-18b10ae90e36",
+      "id": "0d680319-e8f2-4d84-9bc7-9ed8e4fbe190",
       "languages": [],
       "active": true,
       "parameters": {},
-      "rev": "2-d37cb3eac1e3ca05bc12f3ae4a71f53e",
-      "created": 1682493638943,
-      "modified": 1682493639378,
-      "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
-      "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
+      "rev": "2-072df0dee196c538c29e319c04e3a204",
+      "created": 1688375621351,
+      "modified": 1688375621385,
+      "author": "6a541dfb-40d9-41f5-ba76-e3a5e277813f",
+      "responsible": "e2b6e873-035b-4964-885b-5a90e99c43b4",
       "firstName": "Hubert",
       "lastName": "Farnsworth",
       "dateOfBirth": 28410409,
@@ -376,19 +378,20 @@ const patients = await api.patientApi.filterPatients(filter)
       "patientProfessions": [],
       "properties": {},
       "systemMetaData": {
+        "aesExchangeKeys": {},
         "hcPartyKeys": {},
         "privateKeyShamirPartitions": {},
-        "aesExchangeKeys": {},
         "transferKeys": {},
-        "encryptedSelf": "rcZn96y4ocLEycRmvNzsh1tsLy9ZvE3XbnbSB1pJZTEgB0S0H/cl8BHJ2A5DA52R",
+        "encryptedSelf": "lthaVyY+EGFIS6s4ZgPrZwfRf3gHYMPa1YSNpeeJiKBA3l4IWIQAv2pGHQOeVcaS",
         "secretForeignKeys": [],
         "cryptedForeignKeys": {},
         "delegations": {
-          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+          "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
         },
         "encryptionKeys": {
-          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
-        }
+          "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
+        },
+        "publicKeysForOaepWithSha256": {}
       }
     }
   ],
@@ -407,9 +410,8 @@ In the example above, we created the filter this way:
 
 <!-- file://code-samples/how-to/patients/index.mts snippet:filter builder-->
 ```typescript
-const patientFilter = new PatientFilter()
+const patientFilter = new PatientFilter(api)
   .forDataOwner(loggedUser.healthcarePartyId!)
-
   .dateOfBirthBetween(28000101, 29000101)
   .build()
 ```
@@ -436,7 +438,7 @@ In some circumstances, you might want to get a list of `Patient` ids instead of 
 
 <!-- file://code-samples/how-to/patients/index.mts snippet:get a list of patient ids-->
 ```typescript
-const filterForMatch = await new PatientFilter()
+const filterForMatch = await new PatientFilter(api)
   .forDataOwner(loggedUser.healthcarePartyId!)
 
   .dateOfBirthBetween(28000101, 29000101)
@@ -451,7 +453,7 @@ const patientIds = await api.patientApi.matchPatients(filterForMatch)
 
 ```text
 [
-  "ff231dfa-1774-4bbb-866c-18b10ae90e36"
+  "0d680319-e8f2-4d84-9bc7-9ed8e4fbe190"
 ]
 ```
 </details>

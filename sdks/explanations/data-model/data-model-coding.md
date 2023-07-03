@@ -81,33 +81,33 @@ const dataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
 
 ```json
 {
-  "id": "26ac3674-fae5-4f2a-a55a-a997f4b5a6fb",
-  "rev": "1-9200a3ad6af97c84551d77c0d1bf47d8",
-  "created": 1682493705082,
-  "modified": 1682493705082,
-  "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
-  "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
-  "healthcareElementId": "26ac3674-fae5-4f2a-a55a-a997f4b5a6fb",
-  "valueDate": 20230426072145,
-  "openingDate": 20230426072145,
+  "id": "02a8bbb3-4fb2-4bf1-bb9b-dd2b7341220e",
+  "rev": "1-89fd4b9e9d1dd31bf7e3a98ee31fbcf2",
+  "created": 1688375635698,
+  "modified": 1688375635698,
+  "author": "6a541dfb-40d9-41f5-ba76-e3a5e277813f",
+  "responsible": "e2b6e873-035b-4964-885b-5a90e99c43b4",
+  "healthcareElementId": "02a8bbb3-4fb2-4bf1-bb9b-dd2b7341220e",
+  "valueDate": 20230703111355,
+  "openingDate": 20230703111355,
   "description": "My diagnosis is that the patient has Hay Fever",
   "identifiers": [],
   "codes": {},
   "labels": {},
   "systemMetaData": {
     "secretForeignKeys": [
-      "4742a08d-bbc1-4ed1-a758-f0a605529bf1"
+      "41b78e71-f3fe-4a00-8540-ab2e845144dc"
     ],
     "cryptedForeignKeys": {
-      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
     },
     "delegations": {
-      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
     },
     "encryptionKeys": {
-      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
     },
-    "encryptedSelf": "cYRxQOFEpfJwJB6vOG/UjdAmKBBad20QAKJM+t0ck06DuT/rTI+TOHlKGAHzrr3vtFGarTDWJ0fAkoVKKhL0VsDke08xQqxp78tO1SP/BTU="
+    "encryptedSelf": "Mh5yNY9GRIHGQv7ew3UZ1jVUvsPQXTvxm6c1IupUcbQdYhEJBmWB0asJSvX8cGJfeiDDUieZbesTr+w4A5yioLS4SyIiK5vB5J40tQI7vbI="
   }
 }
 ```
@@ -119,16 +119,16 @@ const dataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
 
 ```json
 {
-  "id": "f1d45fc7-8282-4985-8614-015f1a573cab",
+  "id": "9b913c03-811e-495a-a272-5620c052ff14",
   "qualifiedLinks": {},
-  "batchId": "19ca29de-6d79-40dc-8917-272ba7c37bb6",
+  "batchId": "34420ec9-efaf-4630-9e47-939c9317ff07",
   "index": 0,
-  "valueDate": 20230426072145,
-  "openingDate": 20230426072145,
-  "created": 1682493705938,
-  "modified": 1682493705938,
-  "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
-  "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
+  "valueDate": 20230703111355,
+  "openingDate": 20230703111355,
+  "created": 1688375635734,
+  "modified": 1688375635734,
+  "author": "6a541dfb-40d9-41f5-ba76-e3a5e277813f",
+  "responsible": "e2b6e873-035b-4964-885b-5a90e99c43b4",
   "identifiers": [],
   "healthcareElementIds": {},
   "canvasesIds": {},
@@ -143,18 +143,20 @@ const dataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
   "codes": {},
   "labels": {},
   "systemMetaData": {
+    "encryptedSelf": "o0620wKMungmxKrwxEQtn621iHecRqxFNHrAerz1MNK+T0vTkhm7bn9v4z79W4DMg9QuyNix/KF8SJawg4do8Uy+t2YPcoT8F4cq1Xh+rLXqLg+AfWN2f0nm6mFOR8jdMZsGmCDN4hTFw+epllhRirFHJtxxKZdatHSrI4aEJVs=",
     "secretForeignKeys": [
-      "4742a08d-bbc1-4ed1-a758-f0a605529bf1"
+      "41b78e71-f3fe-4a00-8540-ab2e845144dc"
     ],
     "cryptedForeignKeys": {
-      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
     },
     "delegations": {
-      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
     },
     "encryptionKeys": {
-      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
-    }
+      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
+    },
+    "publicKeysForOaepWithSha256": {}
   }
 }
 ```

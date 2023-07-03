@@ -447,16 +447,16 @@ const createdDataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
 
 ```json
 {
-  "id": "e3c819b3-0275-402e-a639-082166b5441b",
+  "id": "8e9dcc08-79e9-474f-bba8-60de9c4b5487",
   "qualifiedLinks": {},
-  "batchId": "6d8b0db6-b617-4cac-ae75-8f657e9b3cb0",
+  "batchId": "ba6aa245-11c9-4f86-8e16-cf0484e3d6e7",
   "index": 0,
-  "valueDate": 20230426072006,
+  "valueDate": 20230703111324,
   "openingDate": 20220929083400,
-  "created": 1682493606873,
-  "modified": 1682493606873,
-  "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
-  "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
+  "created": 1688375604584,
+  "modified": 1688375604584,
+  "author": "6a541dfb-40d9-41f5-ba76-e3a5e277813f",
+  "responsible": "e2b6e873-035b-4964-885b-5a90e99c43b4",
   "identifiers": [],
   "healthcareElementIds": {},
   "canvasesIds": {},
@@ -464,7 +464,7 @@ const createdDataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
     "en": {
       "compoundValue": [
         {
-          "id": "8900c62c-753a-4e8d-80bb-d0713d3a84c3",
+          "id": "f9b262f5-1402-4e3d-85ba-2b601ac90e9e",
           "qualifiedLinks": {},
           "openingDate": 20220929083400,
           "comment": "Heart rate 1 hour mean",
@@ -486,14 +486,16 @@ const createdDataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
           "codes": {},
           "labels": {},
           "systemMetaData": {
+            "encryptedSelf": "lVIbXfmQUUBDjngqPUoTB8pJ7Z9dYKQvtOWsubCrbgU8xhn5oE7knfRkr2ZxXBr4+eoCJTSYOKlz7piXIIezuXSZMh+M4+Jei746V77uY0uwdBda9QMzVwSAqsgf9Z3XUG6xfAGLlwvb0QEeMFaZXOGLuA7XC1yAaeTd6MLH0G3rjoZISCR5rS/RJ0iOXk+i2ORO8RZG/NRdu6YhuHjI60sQr1PaVWpoSyItkE0ySJ1X/Ed0jdPLpytNtYhQnu4dKzUbVupcREAqE3Z59qH0RA==",
             "secretForeignKeys": [],
             "cryptedForeignKeys": {},
             "delegations": {},
-            "encryptionKeys": {}
+            "encryptionKeys": {},
+            "publicKeysForOaepWithSha256": {}
           }
         },
         {
-          "id": "a03d6356-1b16-464d-a7c0-fb8d468a085c",
+          "id": "1698c593-62a4-4119-9682-ebe64c9dffb4",
           "qualifiedLinks": {},
           "openingDate": 20220929083400,
           "comment": "Heart rate 8 hour mean",
@@ -515,14 +517,16 @@ const createdDataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
           "codes": {},
           "labels": {},
           "systemMetaData": {
+            "encryptedSelf": "2zuKbDZ28iupFGcICmsmmipyr24ze2DQ9zxqL+FmlyFfWSt5snjeq+S+LeNqAHQPm2hCo5OuNTn4qNYs0aJLwrm5OI8rDE6V3yR/9SizB1mHSu33jgDG7GqNJz0clhVf14sXjwuxZlw5XaPjSDaUlm0zczVwpfg1f40S1iZ6btsFLTkxyPu+GbikbYIOC2Fait3vsf+al/YOQyzK9qg8mk23hdsrLHAX+GTlE4mQjnSAwUlV35yXM+UZzrZ1f2FJfLFoiz6V9/eNl8pCBJLJgg==",
             "secretForeignKeys": [],
             "cryptedForeignKeys": {},
             "delegations": {},
-            "encryptionKeys": {}
+            "encryptionKeys": {},
+            "publicKeysForOaepWithSha256": {}
           }
         },
         {
-          "id": "9687cde2-f82f-4805-855b-e5c108366f36",
+          "id": "3886c533-a850-4d9b-a1de-85827900b781",
           "qualifiedLinks": {},
           "openingDate": 20220929083400,
           "comment": "Body temperature",
@@ -614,7 +618,8 @@ const createdDataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
             "secretForeignKeys": [],
             "cryptedForeignKeys": {},
             "delegations": {},
-            "encryptionKeys": {}
+            "encryptionKeys": {},
+            "publicKeysForOaepWithSha256": {}
           }
         }
       ],
@@ -626,17 +631,18 @@ const createdDataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
   "labels": {},
   "systemMetaData": {
     "secretForeignKeys": [
-      "ee2c9c8b-55d8-47bd-a563-1d1e3c9ce94f"
+      "12721466-eb60-4b68-aff4-d50ba0c7a2db"
     ],
     "cryptedForeignKeys": {
-      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
     },
     "delegations": {
-      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
     },
     "encryptionKeys": {
-      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
-    }
+      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
+    },
+    "publicKeysForOaepWithSha256": {}
   }
 }
 ```

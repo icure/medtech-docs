@@ -3,7 +3,7 @@ import { expect } from 'chai'
 
 initLocalStorage()
 
-//tech-doc: instantiate the api
+//tech-doc: instantiate the api with existing keys
 import 'isomorphic-fetch'
 import { medTechApi } from '@icure/medical-device-sdk'
 import { webcrypto } from 'crypto'
@@ -11,24 +11,33 @@ import { webcrypto } from 'crypto'
 const iCureHost = process.env.ICURE_URL!
 const iCureUserPassword = process.env.ICURE_USER_PASSWORD!
 const iCureUserLogin = process.env.ICURE_USER_NAME!
+const iCureUserPubKey = process.env.ICURE_USER_PUB_KEY!
+const iCureUserPrivKey = process.env.ICURE_USER_PRIV_KEY!
 
-const api = await medTechApi()
+const apiWithKeys = await medTechApi()
   .withICureBaseUrl(iCureHost)
   .withUserName(iCureUserLogin)
   .withPassword(iCureUserPassword)
   .withCrypto(webcrypto as any)
+  .withCryptoStrategies(
+    new SimpleMedTechCryptoStrategies([
+      { publicKey: iCureUserPubKey, privateKey: iCureUserPrivKey },
+    ]),
+  )
   .build()
 //tech-doc: STOP HERE
 
-//tech-doc: init user crypto
-await api.initUserCrypto()
+//tech-doc: instantiate api without keys
+const apiWithoutKeys = await medTechApi()
+  .withICureBaseUrl(iCureHost)
+  .withUserName(iCureUserLogin)
+  .withPassword(iCureUserPassword)
+  .withCrypto(webcrypto as any)
+  .withCryptoStrategies(new SimpleMedTechCryptoStrategies([]))
+  .build()
 //tech-doc: STOP HERE
 
-//tech-doc: init user crypto with existing key
-const iCureUserPubKey = process.env.ICURE_USER_PUB_KEY!
-const iCureUserPrivKey = process.env.ICURE_USER_PRIV_KEY!
-await api.initUserCrypto({ publicKey: iCureUserPubKey, privateKey: iCureUserPrivKey })
-//tech-doc: STOP HERE
+const api = apiWithKeys
 
 //tech-doc: get current user
 const loggedUser = await api.userApi.getLoggedUser()
@@ -79,11 +88,12 @@ output({ createdData })
 
 //tech-doc: Find your patient medical data following some criteria
 import { DataSampleFilter } from '@icure/medical-device-sdk'
+import { SimpleMedTechCryptoStrategies } from '@icure/medical-device-sdk'
 
 const johnData = await api.dataSampleApi.filterDataSample(
-  await new DataSampleFilter()
+  await new DataSampleFilter(api)
     .forDataOwner(api.dataOwnerApi.getDataOwnerIdOf(loggedUser))
-    .forPatients(api.cryptoApi, [johnSnow])
+    .forPatients([johnSnow])
     .byLabelCodeDateFilter('LOINC', '29463-7')
     .build(),
 )

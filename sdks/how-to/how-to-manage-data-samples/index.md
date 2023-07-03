@@ -42,16 +42,16 @@ const createdDataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
 
 ```json
 {
-  "id": "4aecf2be-4c60-4185-8087-1980a7554e05",
+  "id": "150fe143-6b51-4dbc-9aeb-87deb6b9bda0",
   "qualifiedLinks": {},
-  "batchId": "03e6bddc-e077-4d1a-ba3a-88a7a7f941cf",
+  "batchId": "df2cc34c-b1b6-4a6d-ac4f-3a794da6c5e8",
   "index": 0,
-  "valueDate": 20230426071955,
+  "valueDate": 20230703111325,
   "openingDate": 20220929083400,
-  "created": 1682493595807,
-  "modified": 1682493595807,
-  "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
-  "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
+  "created": 1688375605231,
+  "modified": 1688375605231,
+  "author": "6a541dfb-40d9-41f5-ba76-e3a5e277813f",
+  "responsible": "e2b6e873-035b-4964-885b-5a90e99c43b4",
   "comment": "This is a comment",
   "identifiers": [],
   "healthcareElementIds": {},
@@ -67,18 +67,20 @@ const createdDataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
   "codes": {},
   "labels": {},
   "systemMetaData": {
+    "encryptedSelf": "ekbRvY4iIqbnUV3/nSkqzoQSGLWzaQWK4nxLGHiqaQFOFv6goSfwNbnx+qDMTPTpXKQhlXZ7zMnYAuErFobq6QeMClcCNBIJ4Ui+Y/hnUYO36M1oiPNfWbnjhkmf6VIACKen9pVGcv2/xLZ8nOLFlw==",
     "secretForeignKeys": [
-      "a61a256f-f5ab-4fb2-a71a-6f5a405acbfe"
+      "65a8fbc3-0644-4daf-b791-7598775d3142"
     ],
     "cryptedForeignKeys": {
-      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
     },
     "delegations": {
-      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
     },
     "encryptionKeys": {
-      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
-    }
+      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
+    },
+    "publicKeysForOaepWithSha256": {}
   }
 }
 ```
@@ -108,16 +110,16 @@ const dataSample = await api.dataSampleApi.getDataSample(createdDataSample.id!)
 
 ```json
 {
-  "id": "4aecf2be-4c60-4185-8087-1980a7554e05",
+  "id": "150fe143-6b51-4dbc-9aeb-87deb6b9bda0",
   "qualifiedLinks": {},
-  "batchId": "03e6bddc-e077-4d1a-ba3a-88a7a7f941cf",
+  "batchId": "df2cc34c-b1b6-4a6d-ac4f-3a794da6c5e8",
   "index": 0,
-  "valueDate": 20230426071955,
+  "valueDate": 20230703111325,
   "openingDate": 20220929083400,
-  "created": 1682493595807,
-  "modified": 1682493595807,
-  "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
-  "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
+  "created": 1688375605231,
+  "modified": 1688375605231,
+  "author": "6a541dfb-40d9-41f5-ba76-e3a5e277813f",
+  "responsible": "e2b6e873-035b-4964-885b-5a90e99c43b4",
   "comment": "This is a comment",
   "identifiers": [],
   "healthcareElementIds": {},
@@ -133,18 +135,20 @@ const dataSample = await api.dataSampleApi.getDataSample(createdDataSample.id!)
   "codes": {},
   "labels": {},
   "systemMetaData": {
+    "encryptedSelf": "ekbRvY4iIqbnUV3/nSkqzoQSGLWzaQWK4nxLGHiqaQFOFv6goSfwNbnx+qDMTPTpXKQhlXZ7zMnYAuErFobq6QeMClcCNBIJ4Ui+Y/hnUYO36M1oiPNfWbnjhkmf6VIACKen9pVGcv2/xLZ8nOLFlw==",
     "secretForeignKeys": [
-      "a61a256f-f5ab-4fb2-a71a-6f5a405acbfe"
+      "65a8fbc3-0644-4daf-b791-7598775d3142"
     ],
     "cryptedForeignKeys": {
-      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
     },
     "delegations": {
-      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
     },
     "encryptionKeys": {
-      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
-    }
+      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
+    },
+    "publicKeysForOaepWithSha256": {}
   }
 }
 ```
@@ -182,16 +186,16 @@ const updatedDataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
 
 ```json
 {
-  "id": "4aecf2be-4c60-4185-8087-1980a7554e05",
+  "id": "150fe143-6b51-4dbc-9aeb-87deb6b9bda0",
   "qualifiedLinks": {},
-  "batchId": "03e6bddc-e077-4d1a-ba3a-88a7a7f941cf",
+  "batchId": "df2cc34c-b1b6-4a6d-ac4f-3a794da6c5e8",
   "index": 0,
-  "valueDate": 20230426071955,
+  "valueDate": 20230703111325,
   "openingDate": 20220929083400,
-  "created": 1682493595807,
-  "modified": 1682493596975,
-  "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
-  "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
+  "created": 1688375605231,
+  "modified": 1688375605326,
+  "author": "6a541dfb-40d9-41f5-ba76-e3a5e277813f",
+  "responsible": "e2b6e873-035b-4964-885b-5a90e99c43b4",
   "comment": "This is a updated comment",
   "identifiers": [],
   "healthcareElementIds": {},
@@ -207,18 +211,20 @@ const updatedDataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
   "codes": {},
   "labels": {},
   "systemMetaData": {
+    "encryptedSelf": "sJudB4mJSVleTDPGArXVfAmJzIkRuftaUYflsfpUhBgAGANKgnIzCxtk0I6Zz6FB/vc3tu4PXtE4UqKB6fBCF++9YXaNp4BxfgIuXGEO9doi58wG0PxGOLc7DLSBWPZbFfQP9IT9EYgYawq1WKBpLECecDtt7ln5WT53wWacAEs=",
     "secretForeignKeys": [
-      "a61a256f-f5ab-4fb2-a71a-6f5a405acbfe"
+      "65a8fbc3-0644-4daf-b791-7598775d3142"
     ],
     "cryptedForeignKeys": {
-      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
     },
     "delegations": {
-      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
     },
     "encryptionKeys": {
-      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
-    }
+      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
+    },
+    "publicKeysForOaepWithSha256": {}
   }
 }
 ```
@@ -237,7 +243,7 @@ const deletedDataSample = await api.dataSampleApi.deleteDataSample(updatedDataSa
 <summary>deletedDataSample</summary>
 
 ```text
-4aecf2be-4c60-4185-8087-1980a7554e05
+150fe143-6b51-4dbc-9aeb-87deb6b9bda0
 ```
 </details>
 
@@ -249,10 +255,10 @@ We can build the filter object using the `DataSampleFilter` builder.
 
 <!-- file://code-samples/how-to/datasamples/index.mts snippet:get a list of dataSamples-->
 ```typescript
-const filter = await new DataSampleFilter()
+const filter = await new DataSampleFilter(api)
   .forDataOwner(loggedUser.healthcarePartyId!)
   .byLabelCodeDateFilter('IC-TEST', 'TEST')
-  .forPatients(api.cryptoApi, [patient])
+  .forPatients([patient])
   .build()
 
 const filteredDataSamples = await api.dataSampleApi.filterDataSample(filter)
@@ -267,16 +273,16 @@ const filteredDataSamples = await api.dataSampleApi.filterDataSample(filter)
   "totalSize": 1,
   "rows": [
     {
-      "id": "4aecf2be-4c60-4185-8087-1980a7554e05",
+      "id": "150fe143-6b51-4dbc-9aeb-87deb6b9bda0",
       "qualifiedLinks": {},
-      "batchId": "03e6bddc-e077-4d1a-ba3a-88a7a7f941cf",
+      "batchId": "df2cc34c-b1b6-4a6d-ac4f-3a794da6c5e8",
       "index": 0,
-      "valueDate": 20230426071955,
+      "valueDate": 20230703111325,
       "openingDate": 20220929083400,
-      "created": 1682493595807,
-      "modified": 1682493596975,
-      "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
-      "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
+      "created": 1688375605231,
+      "modified": 1688375605326,
+      "author": "6a541dfb-40d9-41f5-ba76-e3a5e277813f",
+      "responsible": "e2b6e873-035b-4964-885b-5a90e99c43b4",
       "comment": "This is a updated comment",
       "identifiers": [],
       "healthcareElementIds": {},
@@ -292,18 +298,20 @@ const filteredDataSamples = await api.dataSampleApi.filterDataSample(filter)
       "codes": {},
       "labels": {},
       "systemMetaData": {
+        "encryptedSelf": "sJudB4mJSVleTDPGArXVfAmJzIkRuftaUYflsfpUhBgAGANKgnIzCxtk0I6Zz6FB/vc3tu4PXtE4UqKB6fBCF++9YXaNp4BxfgIuXGEO9doi58wG0PxGOLc7DLSBWPZbFfQP9IT9EYgYawq1WKBpLECecDtt7ln5WT53wWacAEs=",
         "secretForeignKeys": [
-          "a61a256f-f5ab-4fb2-a71a-6f5a405acbfe"
+          "65a8fbc3-0644-4daf-b791-7598775d3142"
         ],
         "cryptedForeignKeys": {
-          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+          "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
         },
         "delegations": {
-          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+          "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
         },
         "encryptionKeys": {
-          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
-        }
+          "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
+        },
+        "publicKeysForOaepWithSha256": {}
       }
     }
   ],
@@ -320,10 +328,10 @@ In the example above, we created the filter this way:
 
 <!-- file://code-samples/how-to/datasamples/index.mts snippet:filter builder-->
 ```typescript
-const dataSampleFilter = new DataSampleFilter()
+const dataSampleFilter = new DataSampleFilter(api)
   .forDataOwner(loggedUser.healthcarePartyId!)
   .byLabelCodeDateFilter('IC-TEST', 'TEST')
-  .forPatients(api.cryptoApi, [patient])
+  .forPatients([patient])
   .build()
 ```
 <!-- output://code-samples/how-to/datasamples/dataSampleFilter.txt -->
@@ -347,9 +355,9 @@ In some circumstances, you might want to get a list of DataSample ids instead of
 
 <!-- file://code-samples/how-to/datasamples/index.mts snippet:get a list of dataSamples ids-->
 ```typescript
-const matchFilter = await new DataSampleFilter()
+const matchFilter = await new DataSampleFilter(api)
   .forDataOwner(loggedUser.healthcarePartyId!)
-  .forPatients(api.cryptoApi, [patient])
+  .forPatients([patient])
   .build()
 
 const matchedDataSampleIds = await api.dataSampleApi.matchDataSample(matchFilter)
@@ -360,7 +368,7 @@ const matchedDataSampleIds = await api.dataSampleApi.matchDataSample(matchFilter
 
 ```text
 [
-  "4aecf2be-4c60-4185-8087-1980a7554e05"
+  "150fe143-6b51-4dbc-9aeb-87deb6b9bda0"
 ]
 ```
 </details>

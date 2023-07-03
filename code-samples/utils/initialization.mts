@@ -3,7 +3,9 @@ import console from 'console'
 import { LocalStorage } from 'node-localstorage'
 import { AnonymousMedTechApiBuilder, medTechApi, MedTechApi, User } from '@icure/medical-device-sdk'
 import {
+  authProcessId,
   host,
+  msgGtwUrl,
   password,
   password2,
   patientPassword,
@@ -11,14 +13,16 @@ import {
   patientUserName,
   privKey,
   privKey2,
+  specId,
   userName,
   userName2,
 } from './endpoint.mjs'
 import { webcrypto } from 'crypto'
-import { hex2ua, pkcs8ToJwk } from '@icure/api'
+import { hex2ua, jwk2spki, pkcs8ToJwk } from '@icure/api'
 import { assert } from 'chai'
 import { v4 as uuid } from 'uuid'
 import { getLastEmail } from './msgGtw.mjs'
+import { SimpleMedTechCryptoStrategies } from '@icure/medical-device-sdk'
 
 export function initLocalStorage() {
   const tmp = os.tmpdir()
@@ -50,19 +54,43 @@ async function initAnyMedTechApi(
     .withUserName(username)
     .withPassword(password)
     .withCrypto(webcrypto as any)
+    .withCryptoStrategies(new SimpleMedTechCryptoStrategies([]))
+    .withMsgGwUrl(msgGtwUrl)
+    .withMsgGwSpecId(specId)
+    .withAuthProcessByEmailId(authProcessId)
     .build()
   if (initcrypto) {
     const loggedUser = await api.userApi.getLoggedUser()
-    const loggedDataOwner = await api.cryptoApi.getDataOwner(
+    const loggedDataOwner = await api.dataOwnerApi.getDataOwner(
       api.dataOwnerApi.getDataOwnerIdOf(loggedUser),
     )
-    const pubKey = api.cryptoApi.getPublicKeyFromPrivateKey(
-      pkcs8ToJwk(hex2ua(privatekey)),
-      loggedDataOwner.dataOwner,
-    )
-    await api.initUserCrypto({ publicKey: pubKey, privateKey: privatekey })
+
+    const publicKeyFromPrivateKey = jwk2spki(pkcs8ToJwk(hex2ua(privatekey)))
+    const foundPublicKey = [
+      loggedDataOwner.dataOwner.systemMetaData.publicKey,
+      ...Object.keys(loggedDataOwner.dataOwner.systemMetaData.aesExchangeKeys ?? {}),
+      ...loggedDataOwner.dataOwner.systemMetaData.publicKeysForOaepWithSha256,
+    ].find((x) => x === publicKeyFromPrivateKey)
+
+    if (!!foundPublicKey) {
+      return await medTechApi()
+        .withICureBaseUrl(host)
+        .withUserName(username)
+        .withPassword(password)
+        .withCrypto(webcrypto as any)
+        .withCryptoStrategies(
+          new SimpleMedTechCryptoStrategies([
+            { privateKey: privatekey, publicKey: foundPublicKey },
+          ]),
+        )
+        .withMsgGwUrl(msgGtwUrl)
+        .withMsgGwSpecId(specId)
+        .withAuthProcessByEmailId(authProcessId)
+        .build()
+    } else return api
+  } else {
+    return api
   }
-  return api
 }
 
 export async function signUpUserUsingEmail(
@@ -79,6 +107,7 @@ export async function signUpUserUsingEmail(
     .withCrypto(webcrypto as any)
     .withAuthProcessByEmailId(authProcessId)
     .withAuthProcessBySmsId(authProcessId)
+    .withCryptoStrategies(new SimpleMedTechCryptoStrategies([]))
 
   const anonymousMedTechApi = await builder.build()
 
@@ -99,7 +128,7 @@ export async function signUpUserUsingEmail(
   const subjectCode = emails.subject!
 
   const result = await anonymousMedTechApi.authenticationApi.completeAuthentication(
-    process!,
+    process,
     subjectCode,
   )
 
@@ -108,10 +137,7 @@ export async function signUpUserUsingEmail(
   }
 
   const foundUser = await result.medTechApi.userApi.getLoggedUser()
-  await result.medTechApi.cryptoApi.loadKeyPairsAsTextInBrowserLocalStorage(
-    foundUser.healthcarePartyId ?? foundUser.patientId ?? foundUser.deviceId!,
-    hex2ua(result.keyPairs[0].privateKey),
-  )
+
   assert(result)
   assert(result!.token != null)
   assert(result!.userId != null)

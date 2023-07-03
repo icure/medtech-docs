@@ -8,7 +8,7 @@
     "lint": "eslint --ext .js,.ts,.mjs,.mts .",
     "lint-fix": "eslint --fix --ext .js,.ts,.mjs,.mts .",
     "start": "yarn run lint-fix && yarn run build && node runall.mjs",
-    "start-specific": "yarn run build && node how-to/manage-users/index.mjs",
+    "start-specific": "yarn run build && node how-to/authenticate-user-by-sms/index.mjs",
     "start-how-to-use-with-redux": "yarn run build && node how-to/how-to-use-with-redux/index.mjs"
   },
   "lint-staged": {
@@ -30,8 +30,8 @@
     ]
   },
   "dependencies": {
-    "@icure/api": "6.0.0",
-    "@icure/medical-device-sdk": "^2.3.0",
+    "@icure/api": "7.0.0-beta.4",
+    "@icure/medical-device-sdk": "^2.3.3-local",
     "isomorphic-fetch": "^3.0.0",
     "node-fetch": "^2.6.1",
     "node-localstorage": "^2.2.1",
