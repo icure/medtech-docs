@@ -54,33 +54,33 @@ const dataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
 
 ```json
 {
-  "id": "68f5c324-c37a-46a2-952c-35488f7c7bef",
-  "rev": "1-e24cfda23e437c95495feb708b41db96",
-  "created": 1688375638866,
-  "modified": 1688375638866,
-  "author": "14e2a82b-f7a9-44d9-b135-fdf7575f884f",
-  "responsible": "1457ac8d-fb1f-4645-aaad-98f093a6c341",
-  "healthcareElementId": "68f5c324-c37a-46a2-952c-35488f7c7bef",
-  "valueDate": 20230703111358,
-  "openingDate": 20230703111358,
+  "id": "e1b17f65-358e-4c55-8119-59d047a1f396",
+  "rev": "1-0b860e3ccce0959eb2ae2db0d51a6310",
+  "created": 1688378944382,
+  "modified": 1688378944382,
+  "author": "9bcfa0be-af9a-4d3e-a3da-321270563e24",
+  "responsible": "d8df1f2b-938c-46c0-a85c-015117142cc6",
+  "healthcareElementId": "e1b17f65-358e-4c55-8119-59d047a1f396",
+  "valueDate": 20230703120904,
+  "openingDate": 20230703120904,
   "description": "My period started",
   "identifiers": [],
   "codes": {},
   "labels": {},
   "systemMetaData": {
     "secretForeignKeys": [
-      "41b78e71-f3fe-4a00-8540-ab2e845144dc"
+      "baa346f5-db86-4317-8115-0f7d2c5b075e"
     ],
     "cryptedForeignKeys": {
-      "1457ac8d-fb1f-4645-aaad-98f093a6c341": {}
+      "d8df1f2b-938c-46c0-a85c-015117142cc6": {}
     },
     "delegations": {
-      "1457ac8d-fb1f-4645-aaad-98f093a6c341": {}
+      "d8df1f2b-938c-46c0-a85c-015117142cc6": {}
     },
     "encryptionKeys": {
-      "1457ac8d-fb1f-4645-aaad-98f093a6c341": {}
+      "d8df1f2b-938c-46c0-a85c-015117142cc6": {}
     },
-    "encryptedSelf": "fGl5MMi4boiwHgBJICXbu3fFOXI1TzT2Bj2/roSv4TkTIXzjBySigC98ZQpqg8jh"
+    "encryptedSelf": "Htq/RR4p5EQaXKuCfk692gBeUb8XniKTuXwOb+c3FOJ5Y+5RmHjYaCRRfayR/k6K"
   }
 }
 ```
@@ -92,16 +92,16 @@ const dataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
 
 ```json
 {
-  "id": "1319bd7c-9610-4951-9606-69fcb3354820",
+  "id": "b5c4fa09-e97e-43c8-bdd3-a799ae35ce5b",
   "qualifiedLinks": {},
-  "batchId": "c654b7cc-cbbd-4fa3-9276-f468517d11d7",
+  "batchId": "72a4f0fd-e1cc-4719-a816-400801e70966",
   "index": 0,
-  "valueDate": 20230703111358,
-  "openingDate": 20230703111358,
-  "created": 1688375638916,
-  "modified": 1688375638916,
-  "author": "14e2a82b-f7a9-44d9-b135-fdf7575f884f",
-  "responsible": "1457ac8d-fb1f-4645-aaad-98f093a6c341",
+  "valueDate": 20230703120904,
+  "openingDate": 20230703120904,
+  "created": 1688378944443,
+  "modified": 1688378944443,
+  "author": "9bcfa0be-af9a-4d3e-a3da-321270563e24",
+  "responsible": "d8df1f2b-938c-46c0-a85c-015117142cc6",
   "identifiers": [],
   "healthcareElementIds": {},
   "canvasesIds": {},
@@ -116,18 +116,18 @@ const dataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
   "codes": {},
   "labels": {},
   "systemMetaData": {
-    "encryptedSelf": "LvH2vlxmWy64ik8f0KaNzkHzIXUGNIXvICqKvVX259MPMalqjO1k/PSYUz1ueLKS7qnjzFuuLkhhWKP2W6YNQprmvVgUy7RGfTGjqp/a2mywvQxn4R/xgmlVTGjDlMsDPlcVsuEshPUyNfY69X2SWw==",
+    "encryptedSelf": "r3a47An2aJrbJWug1hnquOc+TREkF4he9hak5d2OVLw2DA3+CIyX5pVaUbqTKZhK26dg1OqmrwbWgl/zVF95lx3iyshBkhxiCyEjwMC2zoHtZRB2/2C7lhtfdv5y7cHvsYKrIy9BtJNqS1xOaBKvEg==",
     "secretForeignKeys": [
-      "41b78e71-f3fe-4a00-8540-ab2e845144dc"
+      "baa346f5-db86-4317-8115-0f7d2c5b075e"
     ],
     "cryptedForeignKeys": {
-      "1457ac8d-fb1f-4645-aaad-98f093a6c341": {}
+      "d8df1f2b-938c-46c0-a85c-015117142cc6": {}
     },
     "delegations": {
-      "1457ac8d-fb1f-4645-aaad-98f093a6c341": {}
+      "d8df1f2b-938c-46c0-a85c-015117142cc6": {}
     },
     "encryptionKeys": {
-      "1457ac8d-fb1f-4645-aaad-98f093a6c341": {}
+      "d8df1f2b-938c-46c0-a85c-015117142cc6": {}
     },
     "publicKeysForOaepWithSha256": {}
   }
@@ -163,22 +163,22 @@ const healthcareElement = await api.healthcareElementApi.createOrModifyHealthcar
 
 ```json
 {
-  "id": "db88d52d-15c2-406b-bf4c-aa8ef3297ca1",
-  "rev": "1-63ff9e411d9310799d7c4f13af2e5a93",
-  "created": 1688375636420,
-  "modified": 1688375636420,
+  "id": "68a213d2-23b2-4d95-b1df-1de467b403fb",
+  "rev": "1-996c06c7fea838b2b47eac0d6843a008",
+  "created": 1688378941768,
+  "modified": 1688378941768,
   "author": "6a541dfb-40d9-41f5-ba76-e3a5e277813f",
   "responsible": "e2b6e873-035b-4964-885b-5a90e99c43b4",
-  "healthcareElementId": "db88d52d-15c2-406b-bf4c-aa8ef3297ca1",
-  "valueDate": 20230703111356,
-  "openingDate": 1688375636390,
+  "healthcareElementId": "68a213d2-23b2-4d95-b1df-1de467b403fb",
+  "valueDate": 20230703120901,
+  "openingDate": 1688378941744,
   "description": "The patient is pregnant",
   "identifiers": [],
   "codes": {},
   "labels": {},
   "systemMetaData": {
     "secretForeignKeys": [
-      "41b78e71-f3fe-4a00-8540-ab2e845144dc"
+      "c52b89c3-d70f-4823-9fd9-a97f946ce1fd"
     ],
     "cryptedForeignKeys": {
       "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
@@ -189,7 +189,7 @@ const healthcareElement = await api.healthcareElementApi.createOrModifyHealthcar
     "encryptionKeys": {
       "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
     },
-    "encryptedSelf": "ggBwCs1qSRLmodgJPwoo1/vjadzFToPVbLdbBtKVgESgtdv81EbyMhhbzLjbl3nEkGKxdZVOItvEF6+OMRRz3A=="
+    "encryptedSelf": "wizUUK7TJRTq7OdWIi4U93InI+ZW/XG+dTtRL/8M9zcg58+bC76VAWO3XHWXzuZB3zO1Ap+QiYdGH0DTLPUU3Q=="
   }
 }
 ```

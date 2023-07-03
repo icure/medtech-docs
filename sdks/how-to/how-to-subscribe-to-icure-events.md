@@ -100,13 +100,13 @@ const patient = await api.patientApi.createOrModifyPatient(
 
 ```json
 {
-  "id": "a083d257-bda7-4c92-ab49-effe1293c48d",
+  "id": "60456fce-50ec-4a25-8cae-184799caca21",
   "languages": [],
   "active": true,
   "parameters": {},
-  "rev": "1-8d164b273bbbd6d935a7c31407d25f3f",
-  "created": 1688375627182,
-  "modified": 1688375627182,
+  "rev": "1-5c5effe144996ef9a9db1f091ddefaa0",
+  "created": 1688378977235,
+  "modified": 1688378977235,
   "author": "6a541dfb-40d9-41f5-ba76-e3a5e277813f",
   "responsible": "e2b6e873-035b-4964-885b-5a90e99c43b4",
   "firstName": "John",
@@ -142,7 +142,7 @@ const patient = await api.patientApi.createOrModifyPatient(
     "hcPartyKeys": {},
     "privateKeyShamirPartitions": {},
     "transferKeys": {},
-    "encryptedSelf": "NDRtOR6NiQ1chu0yQFLzawO7qXY3HHSZUoPH0z5Xgu/6OWFmTy4EObSIxwCruW25",
+    "encryptedSelf": "h3XpCBZRKqNsoHO+fGQYTwn+/Z+ZUNhpmmE8KlOhrHlGu2EkHOJ5x1wJZFXNlb0l",
     "secretForeignKeys": [],
     "cryptedForeignKeys": {},
     "delegations": {
@@ -176,14 +176,14 @@ const dataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
 
 ```json
 {
-  "id": "886f4279-15f2-47c7-8648-42e5c3f5f5d7",
+  "id": "cf182b3c-14b6-4e6e-ad81-1026d2984a47",
   "qualifiedLinks": {},
-  "batchId": "53cbc7cf-87ae-41fc-9085-59626acc827c",
+  "batchId": "81bf51df-fe56-4c17-8e4a-fd572962cf4f",
   "index": 0,
-  "valueDate": 20230703111347,
-  "openingDate": 20230703111347,
-  "created": 1688375627220,
-  "modified": 1688375627220,
+  "valueDate": 20230703120937,
+  "openingDate": 20230703120937,
+  "created": 1688378977275,
+  "modified": 1688378977275,
   "author": "6a541dfb-40d9-41f5-ba76-e3a5e277813f",
   "responsible": "e2b6e873-035b-4964-885b-5a90e99c43b4",
   "identifiers": [],
@@ -200,9 +200,9 @@ const dataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
   "codes": {},
   "labels": {},
   "systemMetaData": {
-    "encryptedSelf": "v6AITGZWxM8JaF0Jtn6lqkL+xk1aiE6aFdmGm64eprUUz2iohkLKUR10N7iZdT7jq2Z1gQQeqnpaxwNcz+oTO9I2nYZxQfhPNaikUGprI6TNkx0R+2GuBAGqZD1CIJQmMg++rHquvIrscEctpckBZg==",
+    "encryptedSelf": "AiXVUip7oBsZZyMsEgSOBkFJ0X8qpsuLIYl1KiGKfZeyXi481oFm8b7FTSe0/Fd8CRWGxRYrxIeobK0s/btzaZYBAxeAcvirdDWBj21QR2X2HPFxeSo2/O078lsmCemZE1iLENbVaIVk+mByjAjjCg==",
     "secretForeignKeys": [
-      "b3784ca3-c454-4435-812b-8c1a88878dcc"
+      "12f953ec-709c-46dc-a426-58d0b2f9526c"
     ],
     "cryptedForeignKeys": {
       "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
@@ -233,7 +233,49 @@ connection.close()
 <summary>events</summary>
 
 ```text
-[]
+[
+  {
+    "id": "cf182b3c-14b6-4e6e-ad81-1026d2984a47",
+    "qualifiedLinks": {},
+    "batchId": "81bf51df-fe56-4c17-8e4a-fd572962cf4f",
+    "index": 0,
+    "valueDate": 20230703120937,
+    "openingDate": 20230703120937,
+    "created": 1688378977275,
+    "modified": 1688378977275,
+    "author": "6a541dfb-40d9-41f5-ba76-e3a5e277813f",
+    "responsible": "e2b6e873-035b-4964-885b-5a90e99c43b4",
+    "identifiers": [],
+    "healthcareElementIds": {},
+    "canvasesIds": {},
+    "content": {
+      "en": {
+        "stringValue": "Hello world",
+        "compoundValue": [],
+        "ratio": [],
+        "range": []
+      }
+    },
+    "codes": {},
+    "labels": {},
+    "systemMetaData": {
+      "encryptedSelf": "AiXVUip7oBsZZyMsEgSOBkFJ0X8qpsuLIYl1KiGKfZeyXi481oFm8b7FTSe0/Fd8CRWGxRYrxIeobK0s/btzaZYBAxeAcvirdDWBj21QR2X2HPFxeSo2/O078lsmCemZE1iLENbVaIVk+mByjAjjCg==",
+      "secretForeignKeys": [
+        "12f953ec-709c-46dc-a426-58d0b2f9526c"
+      ],
+      "cryptedForeignKeys": {
+        "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
+      },
+      "delegations": {
+        "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
+      },
+      "encryptionKeys": {
+        "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
+      },
+      "publicKeysForOaepWithSha256": {}
+    }
+  }
+]
 ```
 </details>
 
