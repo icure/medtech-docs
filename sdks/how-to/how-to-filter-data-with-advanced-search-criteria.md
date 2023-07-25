@@ -563,7 +563,7 @@ const ageGenderExplicitPatients = await api.patientApi.filterPatients(filterByGe
 </details>
 
 Similarly, you can create a new filter that will return the union of more filters for the same entity using the 
-`intersection()` static method of the `FilterComposition` class:
+`union()` static method of the `FilterComposition` class:
 
 <!-- file://code-samples/how-to/use-complex-search-criteria/index.mts snippet:filter patients with union filter-->
 ```typescript
