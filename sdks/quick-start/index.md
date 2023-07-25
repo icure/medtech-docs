@@ -94,8 +94,8 @@ The Node.JS Boilerplate App is already doing it for you. Have a look at its [Qui
 
 ### Share patient data with your parent organisation
 To allow your patients to share data with your parent organisation, you have two options: 
-- [Share new data created by a data owner automatically](../how-to/how-to-share-data-automatically.md) with your parent organisation. 
-- [Share a specific medical data](../how-to/how-to-share-data.md) with your parent organisation. 
+- [Share new data created by a data owner automatically](../how-to/how-to-share-data/how-to-share-data-automatically.md) with your parent organisation. 
+- [Share a specific medical data](../how-to/how-to-share-data/index.md) with your parent organisation. 
 
 Go check the dedicated How-To's to know how to implement these functionalities in your code. 
 

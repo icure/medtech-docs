@@ -148,7 +148,7 @@ This `masterHcpId` is optional for healthcare professionals registration but man
 
 It's good to know that after their registration, user will share all their future data with this responsible. The user may decide to stop
 sharing their data with this responsible by using the `userApi.stopSharingDataWith` service. For more information, 
-go to the [How-to: Automatically share data with other data owners](../how-to-share-data-automatically).
+go to the [How-to: Automatically share data with other data owners](../how-to-share-data/how-to-share-data-automatically.md).
 
 :::
 
