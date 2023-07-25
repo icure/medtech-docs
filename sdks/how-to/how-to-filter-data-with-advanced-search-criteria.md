@@ -469,7 +469,13 @@ const ageGenderSortedPatients = await api.patientApi.filterPatients(ageGenderFil
 
 In this case, the method will return all the patients that the hcp with id `healthcarePartyId` can access, born between the
 11th of December 1939 and the 3rd of February 1952, and whose gender is `female`. The result will be sorted by date of 
-birth in ascending order.
+birth in ascending order. If you don't specify the sorting key the data may still be ordered according to some field, but we do not guarantee that this will be a consistent behaviour. 
+
+::: info
+
+In complex situations sorted filters may be less efficient than unsorted filters. You should not request sorting unless you really need sorted data. 
+
+:::
 
 ### Combining Filters
 
