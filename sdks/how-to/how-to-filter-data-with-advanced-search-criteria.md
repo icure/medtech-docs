@@ -568,6 +568,12 @@ const ageGenderExplicitPatients = await api.patientApi.filterPatients(filterByGe
 ```
 </details>
 
+::: note
+
+This is equivalent to specify all the conditions in a single filter, as shown in the previous section.
+
+:::
+
 Similarly, you can create a new filter that will return the union of more filters for the same entity using the 
 `union()` static method of the `FilterComposition` class:
 
