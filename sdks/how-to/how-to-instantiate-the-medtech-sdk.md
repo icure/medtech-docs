@@ -38,7 +38,7 @@ const api = await medTechApi()
 * `.withPassword(password)`: sets the password of the user to log in. **This parameter is mandatory**.
 * `.withMsgGwUrl(msgGtwUrl)`: sets the url of the Message Gateway instance that will be used to send email and SMS messages to the users. By default, https://msg-gw.icure.cloud. **Only needed in Cloud version**
 * `.withMsgGwSpecId(specId)`: your iCure Message Gateway identifier. **Only needed in Cloud version**
-* `.withCryptoStrategies(cryptoStrategy)`: sets the Crypto Strategy for the API. You can learn more about the Crypto Strategies [here](/sdks/explanations/crypto-strategies/crypto-strategies). **This parameter is mandatory**.
+* `.withCryptoStrategies(cryptoStrategy)`: sets the Crypto Strategy for the API. You can learn more about the Crypto Strategies [here](/sdks/explanations/crypto-strategies). **This parameter is mandatory**.
 * `.withCrypto(webcrypto as any)`: an instance of the [Crypto API](https://developer.mozilla.org/en-US/docs/Web/API/Crypto).
 * `.withAuthProcessByEmailId(authProcessEmailId)`: your iCure Message Gateway identifier used to register new user by their email.
 * `.withAuthProcessBySmsId(authProcessSMSId)`: your iCure Message Gateway identifier used to register new user by their phone number.
