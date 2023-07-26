@@ -29,6 +29,10 @@ different set of delegate data owners.
 For example if Dr Bob visits patient Charlie and creates two `DataSample`s *md1* and *md2*, he can decide to share
 only *md1* with Dr Alice and not *md2* nor the `Patient` information of Charlie.
 
+In some applications you may need to always share data created by a data owner with another specific data owner (for
+example a patient may want to share all their data with their doctor). iCure provides a way to do this using the
+[automatic sharing feature](how-to-share-data-automatically.md).
+
 ## Modifying shared data
 
 A data owner can modify any entity that has been shared with him through the appropriate entity-specific api methods, 
@@ -45,7 +49,7 @@ There are various mechanisms in place to mitigate this issue, and data sharing i
 
 If Alice has shared an entity with Bob both Alice and Bob can access the encrypted content of the entity.
 This means that if Alice loses her private key she can ask Bob to share with her all entities she shared with him in
-the past, allowing her to regain access to these entities.
+the past, allowing her to regain access to these entities ([related how-to](../how-to-authenticate-a-user/my-user-lost-their-key.md)).
 
 On the contrary, if Alice never shared the entity with any other data owner and she loses her private key, no one will
 be able to access the content of the entity anymore.

@@ -1,6 +1,7 @@
 ---
 slug: how-to-manage-hierarchical-data-samples-structure
 description: Learn how to create a data sample with hierarchical information.
+sidebar_position: 50
 tags:
 - DataSample
 - Measure
