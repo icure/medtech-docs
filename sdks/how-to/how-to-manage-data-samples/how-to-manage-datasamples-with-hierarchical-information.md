@@ -1,25 +1,25 @@
 ---
 slug: how-to-manage-hierarchical-data-samples-structure
-description: Learn how to create a {{ service }} with hierarchical information.
+description: Learn how to create a {{service}} with hierarchical information.
 tags:
 - DataSample
 - Measure
 - TimeSeries
 ---
 
-# Handling a hierarchical {{ services }} structure
+# Handling a hierarchical {{services}} structure
 
-In this section, we will learn how to create {{ services }} with complex nested objects.
+In this section, we will learn how to create {{services}} with complex nested objects.
 
 :::info
 
-You can learn more about the DataSample class in the [DataSample Glossary reference](/{{ sdk }}/glossary#data-sample).
+You can learn more about the DataSample class in the [DataSample Glossary reference](/{{sdk}}/glossary#data-sample).
 
 :::
 
 :::note
 
-We assume that you already know how to manage {{ services }}. If not, please follow the [Handling DataSamples](/{{ sdk }}/how-to/how-to-manage-data-samples/index.md) guide
+We assume that you already know how to manage {{services}}. If not, please follow the [Handling DataSamples](/{{sdk}}/how-to/how-to-manage-data-samples/index.md) guide
 
 :::
 
@@ -29,7 +29,7 @@ In some cases, you may want to create a `DataSample` with nested DataSamples.
 For example, you may want to create a single `DataSample` which groups mean heart rate measurements over
 different time intervals (1 hour mean heart rate, 8 hour mean heart, ...).
 
-As you know the `content` of a `DataSample` is a `Map<String, Content>`, where each entry associates a language code ([ISO 639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes)) to a [`Content`](/{{ sdk }}/references/classes/Content) object.
+As you know the `content` of a `DataSample` is a `Map<String, Content>`, where each entry associates a language code ([ISO 639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes)) to a [`Content`](/{{sdk}}/references/classes/Content) object.
 
 A `Content` object allows us to store different types of data. In this example we will use the `compoundValue`, `measureValue` and `timeSeries` properties.
 
@@ -37,7 +37,7 @@ A `Content` object allows us to store different types of data. In this example w
 
 The first step is to create the children DataSamples. For example, we will create a DataSample with 1 hour mean heart rate measurements.
 
-<!-- file://code-samples/how-to/hierarchical-datasample/index.mts snippet:create children dataSample one hour mean-->
+<!-- file://code-samples/{{sdk}}/how-to/hierarchical-datasample/index.mts snippet:create children dataSample one hour mean-->
 ```typescript
 const oneHourMeanDataSample = new DataSample({
   labels: new Set([new CodingReference({ type: 'LOINC', code: '41920-0', version: '2.73' })]),
@@ -56,7 +56,7 @@ const oneHourMeanDataSample = new DataSample({
   },
 })
 ```
-<!-- output://code-samples/how-to/hierarchical-datasample/oneHourMeanDataSample.txt -->
+<!-- output://code-samples/{{sdk}}/how-to/hierarchical-datasample/oneHourMeanDataSample.txt -->
 <details>
 <summary>oneHourMeanDataSample</summary>
 
@@ -89,7 +89,7 @@ const oneHourMeanDataSample = new DataSample({
 
 Then, we will create a DataSample with 8 hours mean heart rate measurements.
 
-<!-- file://code-samples/how-to/hierarchical-datasample/index.mts snippet:create children dataSample eight hour mean-->
+<!-- file://code-samples/{{sdk}}/how-to/hierarchical-datasample/index.mts snippet:create children dataSample eight hour mean-->
 ```typescript
 const eightHourMeanDataSample = new DataSample({
   labels: new Set([new CodingReference({ type: 'LOINC', code: '41921-8', version: '2.73' })]),
@@ -108,7 +108,7 @@ const eightHourMeanDataSample = new DataSample({
   },
 })
 ```
-<!-- output://code-samples/how-to/hierarchical-datasample/eightHourMeanDataSample.txt -->
+<!-- output://code-samples/{{sdk}}/how-to/hierarchical-datasample/eightHourMeanDataSample.txt -->
 <details>
 <summary>eightHourMeanDataSample</summary>
 
@@ -141,7 +141,7 @@ const eightHourMeanDataSample = new DataSample({
 
 And finally, we will create a DataSample with multiple temperature measurements, using a `TimeSeries`.
 
-<!-- file://code-samples/how-to/hierarchical-datasample/index.mts snippet:create children dataSample temperatures-->
+<!-- file://code-samples/{{sdk}}/how-to/hierarchical-datasample/index.mts snippet:create children dataSample temperatures-->
 ```typescript
 const temperaturesDataSample = new DataSample({
   labels: new Set([new CodingReference({ type: 'LOINC', code: '8310-5', version: '2.73' })]),
@@ -162,7 +162,7 @@ const temperaturesDataSample = new DataSample({
   },
 })
 ```
-<!-- output://code-samples/how-to/hierarchical-datasample/temperaturesDataSample.txt -->
+<!-- output://code-samples/{{sdk}}/how-to/hierarchical-datasample/temperaturesDataSample.txt -->
 <details>
 <summary>temperaturesDataSample</summary>
 
@@ -263,7 +263,7 @@ These examples are in no way real values. They are only used to illustrate the c
 
 Now that we have created the children DataSamples, we can create the parent DataSample.
 
-<!-- file://code-samples/how-to/hierarchical-datasample/index.mts snippet:create heart rate datasample-->
+<!-- file://code-samples/{{sdk}}/how-to/hierarchical-datasample/index.mts snippet:create heart rate datasample-->
 ```typescript
 const meanHeartRateDataSample = new DataSample({
   labels: new Set([
@@ -292,7 +292,7 @@ const createdDataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
   meanHeartRateDataSample,
 )
 ```
-<!-- output://code-samples/how-to/hierarchical-datasample/meanHeartRateDataSample.txt -->
+<!-- output://code-samples/{{sdk}}/how-to/hierarchical-datasample/meanHeartRateDataSample.txt -->
 <details>
 <summary>meanHeartRateDataSample</summary>
 
@@ -441,22 +441,22 @@ const createdDataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
 ```
 </details>
 
-<!-- output://code-samples/how-to/hierarchical-datasample/createdDataSample.txt -->
+<!-- output://code-samples/{{sdk}}/how-to/hierarchical-datasample/createdDataSample.txt -->
 <details>
 <summary>createdDataSample</summary>
 
 ```json
 {
-  "id": "81d2da0f-e676-4fa1-86fe-2366cdf7c277",
+  "id": "6e12ef8a-e62d-4abc-b9e2-622d8ee1a5ed",
   "qualifiedLinks": {},
-  "batchId": "e5632bcf-5feb-49e0-a4e5-7a9ddc4d8073",
+  "batchId": "99e6b010-d3a8-4e36-8ba4-75a7c495a748",
   "index": 0,
-  "valueDate": 20230703120926,
+  "valueDate": 20230327141535,
   "openingDate": 20220929083400,
-  "created": 1688378966794,
-  "modified": 1688378966794,
-  "author": "6a541dfb-40d9-41f5-ba76-e3a5e277813f",
-  "responsible": "e2b6e873-035b-4964-885b-5a90e99c43b4",
+  "created": 1679926535583,
+  "modified": 1679926535583,
+  "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
+  "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
   "identifiers": [],
   "healthcareElementIds": {},
   "canvasesIds": {},
@@ -464,7 +464,7 @@ const createdDataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
     "en": {
       "compoundValue": [
         {
-          "id": "3d65cb0c-8964-437e-846c-f0a3338352b6",
+          "id": "4cecbb7c-24bf-4a90-ac04-6acd6929c244",
           "qualifiedLinks": {},
           "openingDate": 20220929083400,
           "comment": "Heart rate 1 hour mean",
@@ -486,16 +486,14 @@ const createdDataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
           "codes": {},
           "labels": {},
           "systemMetaData": {
-            "encryptedSelf": "qN4yRNPzR6+YQriJryleO5nHYUL31JIHJbIB/z/sASwLsJvH7XBAYm7xIXG0O4hOWBY4f+fXqUSTpBCua43ie+CI50o8eba/fIFB7FNs3rpkbqA8nToLidN2kdWzDSLUdC+ngjgvNe7tBh5+uNKzCVrHVvC60Jy8VM6VTiU8uXOKYZ8S77bpQJ88wQsUQUQKGwtc/c1pXCgH/P4zvHhtB3Bn2+JuzRlsIVqrSCqfCq7rD7XoZ6buNnC4FFBkUUYpqiaW5KB2jdGeIPV3VzBMfQ==",
             "secretForeignKeys": [],
             "cryptedForeignKeys": {},
             "delegations": {},
-            "encryptionKeys": {},
-            "publicKeysForOaepWithSha256": {}
+            "encryptionKeys": {}
           }
         },
         {
-          "id": "39f3ae05-aaa5-495d-8ddb-7b519186860f",
+          "id": "9a4318dd-7f17-42b9-9e46-8b5497139138",
           "qualifiedLinks": {},
           "openingDate": 20220929083400,
           "comment": "Heart rate 8 hour mean",
@@ -517,16 +515,14 @@ const createdDataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
           "codes": {},
           "labels": {},
           "systemMetaData": {
-            "encryptedSelf": "D0rjznJhSfpSf6VpwUtKGQa3vvFpqoiL7HFuESeuEq05DuVPrfTYp7S3DMA7lo337XyGgWRhCEPDl5f3Nyw+SfeJMbL6lzQzsZR0C936rqsbtQfjeEjODxyBVuAQhy500yFN2U7adGLY0lWSsJe57EVDe4tkSAlJP8tJqBNfyrAi7X07fCtOqU4GzrUsYbI3RJKaXgB0TFIEFOImVLz5+Eq9dMjKbJiIxHmqj5FVMg+uqkxKCV7brP+OeNxJ/A7qSjwQlKOG/p9uwhDzjoaOfg==",
             "secretForeignKeys": [],
             "cryptedForeignKeys": {},
             "delegations": {},
-            "encryptionKeys": {},
-            "publicKeysForOaepWithSha256": {}
+            "encryptionKeys": {}
           }
         },
         {
-          "id": "7bb7d542-6501-4344-906f-e15b27201a8c",
+          "id": "b40f6fc5-9fec-4367-b7d8-574bdb4090a8",
           "qualifiedLinks": {},
           "openingDate": 20220929083400,
           "comment": "Body temperature",
@@ -618,8 +614,7 @@ const createdDataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
             "secretForeignKeys": [],
             "cryptedForeignKeys": {},
             "delegations": {},
-            "encryptionKeys": {},
-            "publicKeysForOaepWithSha256": {}
+            "encryptionKeys": {}
           }
         }
       ],
@@ -631,18 +626,17 @@ const createdDataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
   "labels": {},
   "systemMetaData": {
     "secretForeignKeys": [
-      "659454da-f513-4a9b-8fda-f5095586e3ab"
+      "c55a9a2a-b18a-484d-9c7f-0da7a1db3329"
     ],
     "cryptedForeignKeys": {
-      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
     },
     "delegations": {
-      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
     },
     "encryptionKeys": {
-      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
-    },
-    "publicKeysForOaepWithSha256": {}
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+    }
   }
 }
 ```

@@ -63,12 +63,21 @@ const AppsList: (code: string) => AppItem[] = (code) => [
 
 const DocsList: () => DocItem[] = () => [
   {
-    title: 'Medical Device SDK Docs',
+    title: 'EHR Lite SDK Docs',
     description:
-      'The MedTech SDK provides you a series of services and functionalities focused on managing medical information gathered from medical devices or provided by the patient himself, and store it encrypted in our cloud or on your premises.',
+      'The EHR Lite SDK provides you a series of services and functionalities focused on creating EHR solutions, collecting patient data, and store it encrypted in our cloud or on your premises.',
     button: {
       title: 'Explore the SDK Docs',
-      link: '/sdks/intro',
+      link: '/ehr-lite-sdk/intro',
+    },
+  },
+  {
+    title: 'Medical Device SDK Docs',
+    description:
+        'The MedTech SDK provides you a series of services and functionalities focused on managing medical information gathered from medical devices or provided by the patient himself, and store it encrypted in our cloud or on your premises.',
+    button: {
+      title: 'Explore the SDK Docs',
+      link: '/medtech-sdk/intro',
     },
   },
   {

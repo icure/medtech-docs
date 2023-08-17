@@ -34,7 +34,7 @@ To migrate properly to the Cloud version, you must apply the following changes t
 First, you will have to change the URL used to instantiate the MedTech API to allow you application to contact the iCure
  Cloud Backend:
 
-<!-- file://code-samples/how-to/migrate-to-premium/index.mts snippet:instantiate the api-->
+<!-- file://code-samples/{{sdk}}/how-to/migrate-to-premium/index.mts snippet:instantiate the api-->
 ```typescript
 const medtechApi = await medTechApi()
   .withICureBaseUrl(host)
@@ -50,8 +50,8 @@ const medtechApi = await medTechApi()
 While testing your app, you could experience some `403 - FORBIDDEN` errors on iCure Backend requests.
  This is because the cloud version applies a permission-based access control on its endpoints, which is useless for the iCure free version.
 To resolve those issues, make sure your data owner may access the requested data. 
- If not, give him access through the [giveAccessTo service](/{{ sdk }}/how-to/how-to-share-data) first, 
-or [share of all future data](/{{ sdk }}/how-to/how-to-share-data-automatically) with another user.
+ If not, give him access through the [giveAccessTo service](/{{sdk}}/how-to/how-to-share-data) first, 
+or [share of all future data](/{{sdk}}/how-to/how-to-share-data-automatically) with another user.
 
 ## Additional Features
 
@@ -61,12 +61,12 @@ By subscribing to the cloud version of the iCure backend, you will have access t
 ### User Creation
 
 You are now able to register new users by sending them an email or an SMS message to invite them. For more information, 
- go to [How to register a user](/{{ sdk }}/how-to/how-to-authenticate-a-user/how-to-authenticate-a-user).
+ go to [How to register a user](/{{sdk}}/how-to/how-to-authenticate-a-user/how-to-authenticate-a-user).
 You now also have the possibility to create users for existing patients, still by email or SMS. For this process, you can 
- head to [How to Create a User for an Existing Patient](/{{ sdk }}/how-to/how-to-invite-existing-patient-as-a-user).
+ head to [How to Create a User for an Existing Patient](/{{sdk}}/how-to/how-to-invite-existing-patient-as-a-user).
 
 ### Event Subscription
 
 Now, you also may use iCure WebHook, in order to subscribe to events concerning several types of entities. 
  Through this mechanism, you will be able to receive real-time notifications when an entity is created, updated, or deleted.
-This process is detailed in the [Listening to iCure events](/{{ sdk }}/how-to/how-to-subscribe-to-icure-events) how-to.
+This process is detailed in the [Listening to iCure events](/{{sdk}}/how-to/how-to-subscribe-to-icure-events) how-to.

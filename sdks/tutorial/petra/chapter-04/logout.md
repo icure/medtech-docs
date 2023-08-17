@@ -90,7 +90,7 @@ export const {
 
 The `logout` action will reset the state of the application to its initial state. This is done by dispatching
 the `revertAll` (that we have added in
-the [Chapter 2](/{{ sdk }}/tutorial/petra/chapter-02/redux-and-storage#state-of-the-application)) and `resetCredentials`
+the [Chapter 2](/{{sdk}}/tutorial/petra/chapter-02/redux-and-storage#state-of-the-application)) and `resetCredentials`
 actions.
 
 Now that we have the `logout` action, we can add the logout button to the `My information` and `My doctors` modals.

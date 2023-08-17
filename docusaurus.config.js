@@ -39,7 +39,7 @@ async function createConfig() {
             [
                 'content-docs',
                 {
-                    id: 'default',
+                    id: 'ehrlite',
                     path: './ehr-lite-sdk',
                     routeBasePath: 'ehr-lite-sdk',
                     sidebarPath: require.resolve('./sidebarsEhrLiteSDK.js'),
@@ -154,7 +154,15 @@ async function createConfig() {
                             type: 'doc',
                             docId: 'intro',
                             position: 'right',
+                            label: 'EHR Lite SDK',
+                            docsPluginId: 'ehrlite',
+                        },
+                        {
+                            type: 'doc',
+                            docId: 'intro',
+                            position: 'right',
                             label: 'Medical Device SDK',
+                            docsPluginId: 'medtech',
                         },
                         {
                             type: 'doc',

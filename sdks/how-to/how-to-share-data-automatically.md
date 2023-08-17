@@ -5,7 +5,7 @@ slug: how-to-share-data-automatically
 # Sharing data automatically with other data owners
 
 iCure allows to share data between different data owners, as explained in the guide 
-[How to share data between data owners](/{{ sdk }}/how-to/how-to-share-data), however this requires to perform an explicit request every time
+[How to share data between data owners](/{{sdk}}/how-to/how-to-share-data), however this requires to perform an explicit request every time
 we want to share a new entity. 
 
 In some cases you may need to always share all data created by a data owner with other data-owners, for example you may
@@ -34,38 +34,33 @@ If the kind argument is omitted, all data will be shared.
 
 :::
 
-<!-- file://code-samples/how-to/auto-share/index.mts snippet:auto share-->
+<!-- file://code-samples/{{sdk}}/how-to/auto-share/index.mts snippet:auto share-->
 ```typescript
 const user = await hcp1Api.userApi.shareAllFutureDataWith(
   [hcp1Api.dataOwnerApi.getDataOwnerIdOf(hcp2User)],
   'medicalInformation',
 )
 ```
-<!-- output://code-samples/how-to/auto-share/user.txt -->
+<!-- output://code-samples/{{sdk}}/how-to/auto-share/user.txt -->
 <details>
 <summary>user</summary>
 
 ```json
 {
-  "id": "6a541dfb-40d9-41f5-ba76-e3a5e277813f",
-  "rev": "87-c8850505205ccfcdf2cbb8e6716b81fc",
-  "created": 1688371977279,
+  "id": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
+  "rev": "51-fe8db573a38943cde0c4e76e6013eb71",
+  "created": 1679919731079,
   "name": "Master HCP",
-  "login": "master@e2b6e8.icure",
+  "login": "master@b16baa.icure",
   "groupId": "ic-e2etest-medtech-docs",
-  "healthcarePartyId": "e2b6e873-035b-4964-885b-5a90e99c43b4",
-  "email": "master@e2b6e8.icure",
+  "healthcarePartyId": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
+  "email": "master@b16baa.icure",
   "properties": {},
   "roles": {},
   "sharingDataWith": {
     "medicalInformation": {}
   },
-  "authenticationTokens": {
-    "c1284f05-cca6-444e-bdac-3cd134d54e6b": {
-      "creationTime": 1688371977378,
-      "validity": 86400
-    }
-  }
+  "authenticationTokens": {}
 }
 ```
 </details>
@@ -73,7 +68,7 @@ const user = await hcp1Api.userApi.shareAllFutureDataWith(
 <details>
     <summary>Data creation example</summary>
 
-<!-- file://code-samples/how-to/auto-share/index.mts snippet:sample creation-->
+<!-- file://code-samples/{{sdk}}/how-to/auto-share/index.mts snippet:sample creation-->
 ```typescript
 const note = 'Winter is coming'
 const patient = await hcp1Api.patientApi.createOrModifyPatient(
@@ -96,21 +91,21 @@ const dataSample2 = await hcp2Api.dataSampleApi.getDataSample(dataSample.id)
 ```
 </details>
 
-<!-- output://code-samples/how-to/auto-share/patient1.txt -->
+<!-- output://code-samples/{{sdk}}/how-to/auto-share/patient1.txt -->
 <details>
 <summary>patient1</summary>
 
 ```json
 {
-  "id": "dd8a343e-1dbd-4b92-8b00-7407339f8f74",
+  "id": "9ab45e4a-93f1-49db-875e-13799756454b",
   "languages": [],
   "active": true,
   "parameters": {},
-  "rev": "1-d23ee9f3c8f772866ed07bcc91e9647d",
-  "created": 1688378947289,
-  "modified": 1688378947289,
-  "author": "6a541dfb-40d9-41f5-ba76-e3a5e277813f",
-  "responsible": "e2b6e873-035b-4964-885b-5a90e99c43b4",
+  "rev": "1-bdfe7cb1c186a01913275ac747f13b00",
+  "created": 1679926499767,
+  "modified": 1679926499767,
+  "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
+  "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
   "firstName": "John",
   "lastName": "Snow",
   "note": "Winter is coming",
@@ -140,42 +135,41 @@ const dataSample2 = await hcp2Api.dataSampleApi.getDataSample(dataSample.id)
   "patientProfessions": [],
   "properties": {},
   "systemMetaData": {
-    "aesExchangeKeys": {},
     "hcPartyKeys": {},
     "privateKeyShamirPartitions": {},
+    "aesExchangeKeys": {},
     "transferKeys": {},
-    "encryptedSelf": "o66vME7T1G/FHgNDkKWSdykFBEJ/MwTOQJBnZeALaIgddG1JQHs5Z8xArWRv9lrw",
+    "encryptedSelf": "KPN88ia0OgrcrHpVASJTqt2XufJA1b93k2zzOGqrV5tfhZe+whJn8IxZaGbQckjN",
     "secretForeignKeys": [],
     "cryptedForeignKeys": {},
     "delegations": {
-      "e2b6e873-035b-4964-885b-5a90e99c43b4": {},
-      "950898e3-4cee-4228-a609-f08606f680e5": {}
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {},
+      "396f6d45-1d92-4bca-888c-086d8415aef9": {}
     },
     "encryptionKeys": {
-      "e2b6e873-035b-4964-885b-5a90e99c43b4": {},
-      "950898e3-4cee-4228-a609-f08606f680e5": {}
-    },
-    "publicKeysForOaepWithSha256": {}
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {},
+      "396f6d45-1d92-4bca-888c-086d8415aef9": {}
+    }
   }
 }
 ```
 </details>
 
-<!-- output://code-samples/how-to/auto-share/patient2.txt -->
+<!-- output://code-samples/{{sdk}}/how-to/auto-share/patient2.txt -->
 <details>
 <summary>patient2</summary>
 
 ```json
 {
-  "id": "dd8a343e-1dbd-4b92-8b00-7407339f8f74",
+  "id": "9ab45e4a-93f1-49db-875e-13799756454b",
   "languages": [],
   "active": true,
   "parameters": {},
-  "rev": "1-d23ee9f3c8f772866ed07bcc91e9647d",
-  "created": 1688378947289,
-  "modified": 1688378947289,
-  "author": "6a541dfb-40d9-41f5-ba76-e3a5e277813f",
-  "responsible": "e2b6e873-035b-4964-885b-5a90e99c43b4",
+  "rev": "1-bdfe7cb1c186a01913275ac747f13b00",
+  "created": 1679926499767,
+  "modified": 1679926499767,
+  "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
+  "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
   "firstName": "John",
   "lastName": "Snow",
   "note": "Winter is coming",
@@ -205,43 +199,42 @@ const dataSample2 = await hcp2Api.dataSampleApi.getDataSample(dataSample.id)
   "patientProfessions": [],
   "properties": {},
   "systemMetaData": {
-    "aesExchangeKeys": {},
     "hcPartyKeys": {},
     "privateKeyShamirPartitions": {},
+    "aesExchangeKeys": {},
     "transferKeys": {},
-    "encryptedSelf": "o66vME7T1G/FHgNDkKWSdykFBEJ/MwTOQJBnZeALaIgddG1JQHs5Z8xArWRv9lrw",
+    "encryptedSelf": "KPN88ia0OgrcrHpVASJTqt2XufJA1b93k2zzOGqrV5tfhZe+whJn8IxZaGbQckjN",
     "secretForeignKeys": [],
     "cryptedForeignKeys": {},
     "delegations": {
-      "e2b6e873-035b-4964-885b-5a90e99c43b4": {},
-      "950898e3-4cee-4228-a609-f08606f680e5": {}
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {},
+      "396f6d45-1d92-4bca-888c-086d8415aef9": {}
     },
     "encryptionKeys": {
-      "e2b6e873-035b-4964-885b-5a90e99c43b4": {},
-      "950898e3-4cee-4228-a609-f08606f680e5": {}
-    },
-    "publicKeysForOaepWithSha256": {}
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {},
+      "396f6d45-1d92-4bca-888c-086d8415aef9": {}
+    }
   }
 }
 ```
 </details>
 
-<!-- output://code-samples/how-to/auto-share/dataSample.txt -->
+<!-- output://code-samples/{{sdk}}/how-to/auto-share/dataSample.txt -->
 <details>
 <summary>dataSample</summary>
 
 ```json
 {
-  "id": "07459079-e7be-47b3-998f-53baae16689d",
+  "id": "74de504b-1169-4a69-8975-5a9893243f25",
   "qualifiedLinks": {},
-  "batchId": "54ed842f-8fd9-4d7b-ba14-b4f31fc392e7",
+  "batchId": "a5c41104-6b86-4339-97cb-7d6074580d2e",
   "index": 0,
-  "valueDate": 20230703120907,
-  "openingDate": 20230703120907,
-  "created": 1688378947355,
-  "modified": 1688378947355,
-  "author": "6a541dfb-40d9-41f5-ba76-e3a5e277813f",
-  "responsible": "e2b6e873-035b-4964-885b-5a90e99c43b4",
+  "valueDate": 20230327141501,
+  "openingDate": 20230327141501,
+  "created": 1679926501433,
+  "modified": 1679926501433,
+  "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
+  "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
   "identifiers": [],
   "healthcareElementIds": {},
   "canvasesIds": {},
@@ -256,44 +249,42 @@ const dataSample2 = await hcp2Api.dataSampleApi.getDataSample(dataSample.id)
   "codes": {},
   "labels": {},
   "systemMetaData": {
-    "encryptedSelf": "icfuKkZOIMGlEXuo5LAXE5icukphIa+7el5NjEytpHbIl9VyRjSGmzvY1gXjQotkf0RHbWddt0hSSicPRzEcPniesE5yEDKwUAIgkgQz36SF30Nci9597D7AFth2BkkES4yN+lZfakViVe6TAZY4sw==",
     "secretForeignKeys": [
-      "5518665e-d0a1-4482-9860-15292eb5dfe7"
+      "0dad2deb-9dca-4a83-b11a-4967440d6b5b"
     ],
     "cryptedForeignKeys": {
-      "e2b6e873-035b-4964-885b-5a90e99c43b4": {},
-      "950898e3-4cee-4228-a609-f08606f680e5": {}
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {},
+      "396f6d45-1d92-4bca-888c-086d8415aef9": {}
     },
     "delegations": {
-      "e2b6e873-035b-4964-885b-5a90e99c43b4": {},
-      "950898e3-4cee-4228-a609-f08606f680e5": {}
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {},
+      "396f6d45-1d92-4bca-888c-086d8415aef9": {}
     },
     "encryptionKeys": {
-      "e2b6e873-035b-4964-885b-5a90e99c43b4": {},
-      "950898e3-4cee-4228-a609-f08606f680e5": {}
-    },
-    "publicKeysForOaepWithSha256": {}
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {},
+      "396f6d45-1d92-4bca-888c-086d8415aef9": {}
+    }
   }
 }
 ```
 </details>
 
-<!-- output://code-samples/how-to/auto-share/dataSample1.txt -->
+<!-- output://code-samples/{{sdk}}/how-to/auto-share/dataSample1.txt -->
 <details>
 <summary>dataSample1</summary>
 
 ```json
 {
-  "id": "07459079-e7be-47b3-998f-53baae16689d",
+  "id": "74de504b-1169-4a69-8975-5a9893243f25",
   "qualifiedLinks": {},
-  "batchId": "54ed842f-8fd9-4d7b-ba14-b4f31fc392e7",
+  "batchId": "a5c41104-6b86-4339-97cb-7d6074580d2e",
   "index": 0,
-  "valueDate": 20230703120907,
-  "openingDate": 20230703120907,
-  "created": 1688378947355,
-  "modified": 1688378947355,
-  "author": "6a541dfb-40d9-41f5-ba76-e3a5e277813f",
-  "responsible": "e2b6e873-035b-4964-885b-5a90e99c43b4",
+  "valueDate": 20230327141501,
+  "openingDate": 20230327141501,
+  "created": 1679926501433,
+  "modified": 1679926501433,
+  "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
+  "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
   "identifiers": [],
   "healthcareElementIds": {},
   "canvasesIds": {},
@@ -308,44 +299,42 @@ const dataSample2 = await hcp2Api.dataSampleApi.getDataSample(dataSample.id)
   "codes": {},
   "labels": {},
   "systemMetaData": {
-    "encryptedSelf": "icfuKkZOIMGlEXuo5LAXE5icukphIa+7el5NjEytpHbIl9VyRjSGmzvY1gXjQotkf0RHbWddt0hSSicPRzEcPniesE5yEDKwUAIgkgQz36SF30Nci9597D7AFth2BkkES4yN+lZfakViVe6TAZY4sw==",
     "secretForeignKeys": [
-      "5518665e-d0a1-4482-9860-15292eb5dfe7"
+      "0dad2deb-9dca-4a83-b11a-4967440d6b5b"
     ],
     "cryptedForeignKeys": {
-      "e2b6e873-035b-4964-885b-5a90e99c43b4": {},
-      "950898e3-4cee-4228-a609-f08606f680e5": {}
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {},
+      "396f6d45-1d92-4bca-888c-086d8415aef9": {}
     },
     "delegations": {
-      "e2b6e873-035b-4964-885b-5a90e99c43b4": {},
-      "950898e3-4cee-4228-a609-f08606f680e5": {}
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {},
+      "396f6d45-1d92-4bca-888c-086d8415aef9": {}
     },
     "encryptionKeys": {
-      "e2b6e873-035b-4964-885b-5a90e99c43b4": {},
-      "950898e3-4cee-4228-a609-f08606f680e5": {}
-    },
-    "publicKeysForOaepWithSha256": {}
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {},
+      "396f6d45-1d92-4bca-888c-086d8415aef9": {}
+    }
   }
 }
 ```
 </details>
 
-<!-- output://code-samples/how-to/auto-share/dataSample2.txt -->
+<!-- output://code-samples/{{sdk}}/how-to/auto-share/dataSample2.txt -->
 <details>
 <summary>dataSample2</summary>
 
 ```json
 {
-  "id": "07459079-e7be-47b3-998f-53baae16689d",
+  "id": "74de504b-1169-4a69-8975-5a9893243f25",
   "qualifiedLinks": {},
-  "batchId": "54ed842f-8fd9-4d7b-ba14-b4f31fc392e7",
+  "batchId": "a5c41104-6b86-4339-97cb-7d6074580d2e",
   "index": 0,
-  "valueDate": 20230703120907,
-  "openingDate": 20230703120907,
-  "created": 1688378947355,
-  "modified": 1688378947355,
-  "author": "6a541dfb-40d9-41f5-ba76-e3a5e277813f",
-  "responsible": "e2b6e873-035b-4964-885b-5a90e99c43b4",
+  "valueDate": 20230327141501,
+  "openingDate": 20230327141501,
+  "created": 1679926501433,
+  "modified": 1679926501433,
+  "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
+  "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
   "identifiers": [],
   "healthcareElementIds": {},
   "canvasesIds": {},
@@ -360,23 +349,21 @@ const dataSample2 = await hcp2Api.dataSampleApi.getDataSample(dataSample.id)
   "codes": {},
   "labels": {},
   "systemMetaData": {
-    "encryptedSelf": "icfuKkZOIMGlEXuo5LAXE5icukphIa+7el5NjEytpHbIl9VyRjSGmzvY1gXjQotkf0RHbWddt0hSSicPRzEcPniesE5yEDKwUAIgkgQz36SF30Nci9597D7AFth2BkkES4yN+lZfakViVe6TAZY4sw==",
     "secretForeignKeys": [
-      "5518665e-d0a1-4482-9860-15292eb5dfe7"
+      "0dad2deb-9dca-4a83-b11a-4967440d6b5b"
     ],
     "cryptedForeignKeys": {
-      "e2b6e873-035b-4964-885b-5a90e99c43b4": {},
-      "950898e3-4cee-4228-a609-f08606f680e5": {}
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {},
+      "396f6d45-1d92-4bca-888c-086d8415aef9": {}
     },
     "delegations": {
-      "e2b6e873-035b-4964-885b-5a90e99c43b4": {},
-      "950898e3-4cee-4228-a609-f08606f680e5": {}
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {},
+      "396f6d45-1d92-4bca-888c-086d8415aef9": {}
     },
     "encryptionKeys": {
-      "e2b6e873-035b-4964-885b-5a90e99c43b4": {},
-      "950898e3-4cee-4228-a609-f08606f680e5": {}
-    },
-    "publicKeysForOaepWithSha256": {}
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {},
+      "396f6d45-1d92-4bca-888c-086d8415aef9": {}
+    }
   }
 }
 ```
@@ -388,7 +375,7 @@ The automatic data sharing applies only on entity creation, and not on modificat
 another user and modifies an entity that is not yet shared with that user the updated entity won't automatically be 
 shared with them.
 
-<!-- file://code-samples/how-to/auto-share/index.mts snippet:not on modify-->
+<!-- file://code-samples/{{sdk}}/how-to/auto-share/index.mts snippet:not on modify-->
 ```typescript
 const contentNotOnModify = "Won't automatically update who the data is shared with on modify"
 const dataSampleNotOnModify = await hcp1Api.dataSampleApi.createOrModifyDataSampleFor(
@@ -400,22 +387,22 @@ const dataSampleNotOnModify = await hcp1Api.dataSampleApi.createOrModifyDataSamp
 )
 ```
 
-<!-- output://code-samples/how-to/auto-share/dataSampleNotOnModify.txt -->
+<!-- output://code-samples/{{sdk}}/how-to/auto-share/dataSampleNotOnModify.txt -->
 <details>
 <summary>dataSampleNotOnModify</summary>
 
 ```json
 {
-  "id": "d16ca9b2-1a78-474e-9ab4-e2c087b71c5e",
+  "id": "e03e2d47-a69c-4c4e-a268-cc24da82924e",
   "qualifiedLinks": {},
-  "batchId": "8582ade4-5f34-4c08-9989-40a428bcdf69",
+  "batchId": "dd379bc2-1dba-4bd6-a295-924069976cd2",
   "index": 0,
-  "valueDate": 20230703120907,
-  "openingDate": 20230703120907,
-  "created": 1688378947474,
-  "modified": 1688378947474,
-  "author": "6a541dfb-40d9-41f5-ba76-e3a5e277813f",
-  "responsible": "e2b6e873-035b-4964-885b-5a90e99c43b4",
+  "valueDate": 20230327141502,
+  "openingDate": 20230327141502,
+  "created": 1679926502699,
+  "modified": 1679926502699,
+  "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
+  "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
   "identifiers": [],
   "healthcareElementIds": {},
   "canvasesIds": {},
@@ -430,20 +417,18 @@ const dataSampleNotOnModify = await hcp1Api.dataSampleApi.createOrModifyDataSamp
   "codes": {},
   "labels": {},
   "systemMetaData": {
-    "encryptedSelf": "fTAyCRIuTWoaDZDe9PKGUiqsMARVBIyCp4EamQRmcqp2hqGeFmIiD7OUycz2Cy2OIy5qjItLcIb6114LYR7Kxqc0ip6fEa54b8Nw7kLhRqpcXg+dMLYbC1RS+BOPLYMaY9wcOEQ2nlWSokeXwieuMVmNryRDxBcabU+D60DMJp/iZRgszsn6knjepCiRXeq3O5q91om9Yax1ZP3ZM4e0kA==",
     "secretForeignKeys": [
-      "5518665e-d0a1-4482-9860-15292eb5dfe7"
+      "0dad2deb-9dca-4a83-b11a-4967440d6b5b"
     ],
     "cryptedForeignKeys": {
-      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
     },
     "delegations": {
-      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
     },
     "encryptionKeys": {
-      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
-    },
-    "publicKeysForOaepWithSha256": {}
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+    }
   }
 }
 ```
@@ -456,7 +441,7 @@ Note that the auto-share is uni-directional: if `hcp1` is automatically sharing 
 `hcp2` will automatically data with `hcp1`. Anything created by `hcp2` won't be accessible to `hcp1` until `hcp2` shares
 it.
 
-<!-- file://code-samples/how-to/auto-share/index.mts snippet:one directional-->
+<!-- file://code-samples/{{sdk}}/how-to/auto-share/index.mts snippet:one directional-->
 ```typescript
 const contentNotSharedBy2 = 'Hcp 2 is not sharing automatically with 1'
 const dataSampleNotSharedBy2 = await hcp2Api.dataSampleApi.createOrModifyDataSampleFor(
@@ -468,22 +453,22 @@ const dataSampleNotSharedBy2 = await hcp2Api.dataSampleApi.createOrModifyDataSam
 )
 ```
 
-<!-- output://code-samples/how-to/auto-share/dataSampleNotSharedBy2.txt -->
+<!-- output://code-samples/{{sdk}}/how-to/auto-share/dataSampleNotSharedBy2.txt -->
 <details>
 <summary>dataSampleNotSharedBy2</summary>
 
 ```json
 {
-  "id": "73d58dde-130a-455d-8841-0a2eabfc377b",
+  "id": "2b0b514b-1b3a-4a4e-a033-36d7bfe7c96d",
   "qualifiedLinks": {},
-  "batchId": "a508b6e6-a8d3-4e6c-8821-cae549c49fe6",
+  "batchId": "1cd07fe5-d0d7-468e-ba58-e280dbee4dd5",
   "index": 0,
-  "valueDate": 20230703120907,
-  "openingDate": 20230703120907,
-  "created": 1688378947667,
-  "modified": 1688378947667,
-  "author": "9a55eaed-b2d0-41f9-8345-507f8e42460e",
-  "responsible": "950898e3-4cee-4228-a609-f08606f680e5",
+  "valueDate": 20230327141504,
+  "openingDate": 20230327141504,
+  "created": 1679926504250,
+  "modified": 1679926504250,
+  "author": "84cb80e5-95fb-46ce-ad08-d5a6c211a9ff",
+  "responsible": "396f6d45-1d92-4bca-888c-086d8415aef9",
   "identifiers": [],
   "healthcareElementIds": {},
   "canvasesIds": {},
@@ -498,20 +483,18 @@ const dataSampleNotSharedBy2 = await hcp2Api.dataSampleApi.createOrModifyDataSam
   "codes": {},
   "labels": {},
   "systemMetaData": {
-    "encryptedSelf": "8XiQUWx32172wEQ7zn4Lk4o53veSQdKYOmxghtV96rVm7TmoiItCvkxavbLYYuUa5acY6N5KitB4enyR8NWMI2kPSxe8vvZx0U9nSqVNqdXqr22g43wDpSYl0Gq7NbwqG5iOr9z5Gbam57XjdB8P0N6cSl0Is1ZdFjtg6/X9PopEfolBWNgXOXrtPoyEyES0",
     "secretForeignKeys": [
-      "5518665e-d0a1-4482-9860-15292eb5dfe7"
+      "0dad2deb-9dca-4a83-b11a-4967440d6b5b"
     ],
     "cryptedForeignKeys": {
-      "950898e3-4cee-4228-a609-f08606f680e5": {}
+      "396f6d45-1d92-4bca-888c-086d8415aef9": {}
     },
     "delegations": {
-      "950898e3-4cee-4228-a609-f08606f680e5": {}
+      "396f6d45-1d92-4bca-888c-086d8415aef9": {}
     },
     "encryptionKeys": {
-      "950898e3-4cee-4228-a609-f08606f680e5": {}
-    },
-    "publicKeysForOaepWithSha256": {}
+      "396f6d45-1d92-4bca-888c-086d8415aef9": {}
+    }
   }
 }
 ```
@@ -521,7 +504,7 @@ const dataSampleNotSharedBy2 = await hcp2Api.dataSampleApi.createOrModifyDataSam
 
 You can stop the automatic data share using the `stopSharingDataWith` method.
 
-<!-- file://code-samples/how-to/auto-share/index.mts snippet:stop auto share-->
+<!-- file://code-samples/{{sdk}}/how-to/auto-share/index.mts snippet:stop auto share-->
 ```typescript
 const userWithoutShare = await hcp1Api.userApi.stopSharingDataWith(
   [hcp1Api.dataOwnerApi.getDataOwnerIdOf(hcp2User)],
@@ -529,31 +512,26 @@ const userWithoutShare = await hcp1Api.userApi.stopSharingDataWith(
 )
 ```
 
-<!-- output://code-samples/how-to/auto-share/userWithoutShare.txt -->
+<!-- output://code-samples/{{sdk}}/how-to/auto-share/userWithoutShare.txt -->
 <details>
 <summary>userWithoutShare</summary>
 
 ```json
 {
-  "id": "6a541dfb-40d9-41f5-ba76-e3a5e277813f",
-  "rev": "90-33d46790d9953be2e24e9791e8a79c6f",
-  "created": 1688371977279,
+  "id": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
+  "rev": "54-0bc6091f7d41bb93bd9cbf1763dd49c3",
+  "created": 1679919731079,
   "name": "Master HCP",
-  "login": "master@e2b6e8.icure",
+  "login": "master@b16baa.icure",
   "groupId": "ic-e2etest-medtech-docs",
-  "healthcarePartyId": "e2b6e873-035b-4964-885b-5a90e99c43b4",
-  "email": "master@e2b6e8.icure",
+  "healthcarePartyId": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
+  "email": "master@b16baa.icure",
   "properties": {},
   "roles": {},
   "sharingDataWith": {
     "medicalInformation": {}
   },
-  "authenticationTokens": {
-    "c1284f05-cca6-444e-bdac-3cd134d54e6b": {
-      "creationTime": 1688371977378,
-      "validity": 86400
-    }
-  }
+  "authenticationTokens": {}
 }
 ```
 </details>
@@ -561,7 +539,7 @@ const userWithoutShare = await hcp1Api.userApi.stopSharingDataWith(
 <details>
     <summary>Data creation example</summary>
 
-<!-- file://code-samples/how-to/auto-share/index.mts snippet:sample no share-->
+<!-- file://code-samples/{{sdk}}/how-to/auto-share/index.mts snippet:sample no share-->
 ```typescript
 const contentNotSharedAnymore = 'Hcp 1 stopped sharing data automatically with 2'
 const dataSampleNotSharedAnymore = await hcp1Api.dataSampleApi.createOrModifyDataSampleFor(
@@ -574,22 +552,22 @@ const dataSampleNotSharedAnymore = await hcp1Api.dataSampleApi.createOrModifyDat
 ```
 </details>
 
-<!-- output://code-samples/how-to/auto-share/dataSampleNotSharedAnymore.txt -->
+<!-- output://code-samples/{{sdk}}/how-to/auto-share/dataSampleNotSharedAnymore.txt -->
 <details>
 <summary>dataSampleNotSharedAnymore</summary>
 
 ```json
 {
-  "id": "5f1088e2-2bf6-4811-8a17-6430ad53c7fe",
+  "id": "b8c66f29-f8d9-414f-bd8a-b4ec6f5ac0c4",
   "qualifiedLinks": {},
-  "batchId": "0c720630-a9fc-4463-b281-6880dfa25620",
+  "batchId": "d90acf65-e06a-40cc-b4b4-e6816400800e",
   "index": 0,
-  "valueDate": 20230703120907,
-  "openingDate": 20230703120907,
-  "created": 1688378947743,
-  "modified": 1688378947743,
-  "author": "6a541dfb-40d9-41f5-ba76-e3a5e277813f",
-  "responsible": "e2b6e873-035b-4964-885b-5a90e99c43b4",
+  "valueDate": 20230327141505,
+  "openingDate": 20230327141505,
+  "created": 1679926505206,
+  "modified": 1679926505206,
+  "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
+  "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
   "identifiers": [],
   "healthcareElementIds": {},
   "canvasesIds": {},
@@ -604,20 +582,18 @@ const dataSampleNotSharedAnymore = await hcp1Api.dataSampleApi.createOrModifyDat
   "codes": {},
   "labels": {},
   "systemMetaData": {
-    "encryptedSelf": "K6Tkw7aOQRaOTuuRURukPbyL91gLJto4nLr5YS/Kd4YDe5gopnNyL4OANJxn1QbBGxA38ieeKXo6lKvghqXk9c0A62o9C5/Oli0tRbL4S/KnYOQks91/sIeQUjHJ0diYLuSNw1Qs0Vn/wG98lZdzMXFe2KBzNaMNbLX/x6rFiIsoDp9zFlhxvMykHNYc9g0R",
     "secretForeignKeys": [
-      "5518665e-d0a1-4482-9860-15292eb5dfe7"
+      "0dad2deb-9dca-4a83-b11a-4967440d6b5b"
     ],
     "cryptedForeignKeys": {
-      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
     },
     "delegations": {
-      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
     },
     "encryptionKeys": {
-      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
-    },
-    "publicKeysForOaepWithSha256": {}
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+    }
   }
 }
 ```
@@ -640,7 +616,7 @@ The automatic data sharing applies only to entities created by the user which is
 data with `p` and `p` shares all data with `hcp2` when `hcp1` creates a new entity it will only be shared with `p`, and
 not also with `hcp2`.
 
-<!-- file://code-samples/how-to/auto-share/index.mts snippet:share chain-->
+<!-- file://code-samples/{{sdk}}/how-to/auto-share/index.mts snippet:share chain-->
 ```typescript
 await hcp1Api.userApi.shareAllFutureDataWith(
   [hcp1Api.dataOwnerApi.getDataOwnerIdOf(pUser)],
@@ -662,22 +638,22 @@ const dataSampleNoChaining = await hcp1Api.dataSampleApi.createOrModifyDataSampl
 )
 ```
 
-<!-- output://code-samples/how-to/auto-share/dataSampleNoChaining.txt -->
+<!-- output://code-samples/{{sdk}}/how-to/auto-share/dataSampleNoChaining.txt -->
 <details>
 <summary>dataSampleNoChaining</summary>
 
 ```json
 {
-  "id": "3ae4782e-0ee7-4162-b21f-dc3486b07311",
+  "id": "081faf2a-2320-4bd8-ac8a-d2bf678c5b06",
   "qualifiedLinks": {},
-  "batchId": "30fb71e4-535e-45c9-a66c-dfde1d9e9c93",
+  "batchId": "20598099-a415-4204-bf52-53554e5044ff",
   "index": 0,
-  "valueDate": 20230703120907,
-  "openingDate": 20230703120907,
-  "created": 1688378947846,
-  "modified": 1688378947846,
-  "author": "6a541dfb-40d9-41f5-ba76-e3a5e277813f",
-  "responsible": "e2b6e873-035b-4964-885b-5a90e99c43b4",
+  "valueDate": 20230327141506,
+  "openingDate": 20230327141506,
+  "created": 1679926506473,
+  "modified": 1679926506472,
+  "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
+  "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
   "identifiers": [],
   "healthcareElementIds": {},
   "canvasesIds": {},
@@ -692,23 +668,21 @@ const dataSampleNoChaining = await hcp1Api.dataSampleApi.createOrModifyDataSampl
   "codes": {},
   "labels": {},
   "systemMetaData": {
-    "encryptedSelf": "XxAnanTwk5/6hAoo4IPgZqEpSIZY+BtjqUS61f2i8aNFrLrrh5kqwPrcaqPXdyFasQuFGDUPrXUzUl+rjwUDdMvm0o0yTnInigdBqvO9xuOIDaY3GOi2mNpKh8/9M5Rr6Phow5PLGkojf2XwhLt7KkWzSPGULl9d9CrL/XpY7QuEqcsFonf79V9i3xL2VjlDUd0Qrx9idVxvtiezC080SHFSVSLbNhwX7G6mZOMObPq37OWVtPZ6oenvW7e4i3F0",
     "secretForeignKeys": [
-      "5518665e-d0a1-4482-9860-15292eb5dfe7"
+      "0dad2deb-9dca-4a83-b11a-4967440d6b5b"
     ],
     "cryptedForeignKeys": {
-      "e2b6e873-035b-4964-885b-5a90e99c43b4": {},
-      "d8df1f2b-938c-46c0-a85c-015117142cc6": {}
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {},
+      "3238dd4f-be09-4375-bb5b-0bf9d737ac94": {}
     },
     "delegations": {
-      "e2b6e873-035b-4964-885b-5a90e99c43b4": {},
-      "d8df1f2b-938c-46c0-a85c-015117142cc6": {}
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {},
+      "3238dd4f-be09-4375-bb5b-0bf9d737ac94": {}
     },
     "encryptionKeys": {
-      "e2b6e873-035b-4964-885b-5a90e99c43b4": {},
-      "d8df1f2b-938c-46c0-a85c-015117142cc6": {}
-    },
-    "publicKeysForOaepWithSha256": {}
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {},
+      "3238dd4f-be09-4375-bb5b-0bf9d737ac94": {}
+    }
   }
 }
 ```

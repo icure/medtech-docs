@@ -2,7 +2,7 @@
 
 # SDK API: HealthcareElementApi
 
-The HealthcareElementApi interface provides methods to manage {{ healthcareElements }}.
+The HealthcareElementApi interface provides methods to manage {{healthcareElements}}.
 
 ## Table of contents
 
@@ -25,19 +25,19 @@ The HealthcareElementApi interface provides methods to manage {{ healthcareEleme
 ▸ **createOrModifyHealthcareElement**(`healthcareElement`, `patientId?`): `Promise`<[`HealthcareElement`](../classes/HealthcareElement)\>
 
 A Healthcare Element is a data giving some medical context to a series of measures, symptoms, ...
-For example, if the {{ services }} are symptoms representing fever, cold feel, headache, ... the associated healthcare
+For example, if the {{services}} are symptoms representing fever, cold feel, headache, ... the associated healthcare
 element could be a flue.
 
-A healthcare Element can be linked to a patient and to a series of {{ services }}.
+A healthcare Element can be linked to a patient and to a series of {{services}}.
 
-This service allows you to create a {{ healthcareElement }} linked to a specific patient
+This service allows you to create a {{healthcareElement}} linked to a specific patient
 
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `healthcareElement` | [`HealthcareElement`](../classes/HealthcareElement) | {{ HealthcareElement }} to create in iCure Database |
-| `patientId?` | `string` | Id of the patient to which the {{ healthcareElement }} is linked |
+| `healthcareElement` | [`HealthcareElement`](../classes/HealthcareElement) | {{HealthcareElement}} to create in iCure Database |
+| `patientId?` | `string` | Id of the patient to which the {{healthcareElement}} is linked |
 
 #### Returns
 
@@ -54,19 +54,19 @@ ___
 ▸ **createOrModifyHealthcareElements**(`healthcareElement`, `patientId?`): `Promise`<[`HealthcareElement`](../classes/HealthcareElement)[]\>
 
 A Healthcare Element is a data giving some medical context to a series of measures, symptoms, ...
-For example, if the {{ services }} are symptoms representing fever, cold feel, headache, ... the associated healthcare
+For example, if the {{services}} are symptoms representing fever, cold feel, headache, ... the associated healthcare
 element could be a flue.
 
-A healthcare Element can be linked to a patient and to a series of {{ services }}.
+A healthcare Element can be linked to a patient and to a series of {{services}}.
 
-This service permits you to create multiple {{ healthcareElements }} for a specific patient
+This service permits you to create multiple {{healthcareElements}} for a specific patient
 
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
 | `healthcareElement` | [`HealthcareElement`](../classes/HealthcareElement)[] |  |
-| `patientId?` | `string` | Id of the patient to which the {{ healthcareElements }} are linked |
+| `patientId?` | `string` | Id of the patient to which the {{healthcareElements}} are linked |
 
 #### Returns
 
@@ -88,7 +88,7 @@ Delete a Healthcare Element from the iCure database
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `id` | `string` | Id of the {{ healthcareElement }} to delete |
+| `id` | `string` | Id of the {{healthcareElement}} to delete |
 
 #### Returns
 
@@ -104,23 +104,23 @@ ___
 
 ▸ **filterHealthcareElement**(`filter`, `nextHealthElementId?`, `limit?`): `Promise`<[`PaginatedListHealthcareElement`](../classes/PaginatedListHealthcareElement)\>
 
-Filters are complex selectors that are built by combining basic building blocks. Examples of filters available for {{ HealthcareElements }} are :
+Filters are complex selectors that are built by combining basic building blocks. Examples of filters available for {{HealthcareElements}} are :
  - HealthcareElementByHealthcarePartyFilter;
  - HealthcareElementByHealthcarePartyIdentifiersFilter;
  - HealthcareElementByHealthcarePartyLabelCodeFilter;
  - HealthcareElementByHealthcarePartyPatientFilter;
  - and HealthcareElementByIdsFilter.
 
-This method returns a paginated list of {{ healthcareElements }} (with a cursor that lets you query the following items).
-Load {{ healthcareElements }} from the database by filtering them using the provided Filter.
+This method returns a paginated list of {{healthcareElements}} (with a cursor that lets you query the following items).
+Load {{healthcareElements}} from the database by filtering them using the provided Filter.
 
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
 | `filter` | `Filter`<[`HealthcareElement`](../classes/HealthcareElement)\> | The Filter object that describes which condition(s) the elements whose the ids should be returned must fulfill |
-| `nextHealthElementId?` | `string` | The id of the first {{ Hcp }} in the next page |
-| `limit?` | `number` | The maximum number of {{ healthcareElements }} that should contain the returned page. By default, a page contains 1000 {{ healthcareElements }} |
+| `nextHealthElementId?` | `string` | The id of the first {{Hcp}} in the next page |
+| `limit?` | `number` | The maximum number of {{healthcareElements}} that should contain the returned page. By default, a page contains 1000 {{healthcareElements}} |
 
 #### Returns
 
@@ -142,7 +142,7 @@ Retrieves the information of a specific Healthcare Element
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `id` | `string` | Id of the {{ healthcareElement }} to retrieve |
+| `id` | `string` | Id of the {{healthcareElement}} to retrieve |
 
 #### Returns
 
@@ -158,19 +158,19 @@ ___
 
 ▸ **getHealthcareElementsForPatient**(`patient`): `Promise`<[`HealthcareElement`](../classes/HealthcareElement)[]\>
 
-Gets all the {{ HealthcareElements }} associated to a Patient that the current dataOwner can access.
+Gets all the {{HealthcareElements}} associated to a Patient that the current dataOwner can access.
 
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `patient` | [`Patient`](../classes/Patient) | the Patient associated to the {{ HealthcareElements }} to get |
+| `patient` | [`Patient`](../classes/Patient) | the Patient associated to the {{HealthcareElements}} to get |
 
 #### Returns
 
 `Promise`<[`HealthcareElement`](../classes/HealthcareElement)[]\>
 
-an array containing the {{ HealthcareElements }}
+an array containing the {{HealthcareElements}}
 
 #### Defined in
 
@@ -206,19 +206,19 @@ ___
 
 ▸ **matchHealthcareElement**(`filter`): `Promise`<`string`[]\>
 
-Find which {{ HealthcareElements }} are matching a specific filter.
+Find which {{HealthcareElements}} are matching a specific filter.
 
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `filter` | `Filter`<[`HealthcareElement`](../classes/HealthcareElement)\> | Filtering conditions that the returned {{ healthcareElement }} ids are satisfying. |
+| `filter` | `Filter`<[`HealthcareElement`](../classes/HealthcareElement)\> | Filtering conditions that the returned {{healthcareElement}} ids are satisfying. |
 
 #### Returns
 
 `Promise`<`string`[]\>
 
-the ids of the {{ healthcareElements }} satisfying the provided filter
+the ids of the {{healthcareElements}} satisfying the provided filter
 
 #### Defined in
 
@@ -237,8 +237,8 @@ Opens a WebSocket Connection in order to receive all the Healthcare Element corr
 | Name | Type | Description |
 | :------ | :------ | :------ |
 | `eventTypes` | (``"CREATE"`` \| ``"UPDATE"`` \| ``"DELETE"``)[] | Type of event you would like to listen. It can be CREATE, UPDATE or DELETE |
-| `filter` | `Filter`<[`HealthcareElement`](../classes/HealthcareElement)\> | Filter criteria to filter to the {{ healthcareElement }} you would like to receive |
-| `eventFired` | (`dataSample`: [`HealthcareElement`](../classes/HealthcareElement)) => `Promise`<`void`\> | Action applied each time you receive a {{ healthcareElement }} through the WebSocket |
+| `filter` | `Filter`<[`HealthcareElement`](../classes/HealthcareElement)\> | Filter criteria to filter to the {{healthcareElement}} you would like to receive |
+| `eventFired` | (`dataSample`: [`HealthcareElement`](../classes/HealthcareElement)) => `Promise`<`void`\> | Action applied each time you receive a {{healthcareElement}} through the WebSocket |
 | `options?` | `Object` | Options to configure the WebSocket. - keepAlive : How long to keep connection alive (ms); - lifetime : How long to keep the WebSocket alive (ms); - connectionMaxRetry : how many time retrying to reconnect to the iCure WebSocket; - connectionRetryIntervalInMs : How long base interval will be between two retry. The retry attempt is exponential and using a random value (connectionRetryIntervalMs * (random between 1 and 2))^nbAttempts) |
 | `options.connectionMaxRetry?` | `number` | - |
 | `options.connectionRetryIntervalMs?` | `number` | - |

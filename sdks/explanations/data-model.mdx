@@ -22,42 +22,42 @@ The following diagram explains the relationships among the entities.
 
 ## Actor Entities
 This section describes the different actors that can operate on the iCure platform.
-Patient, Medical Device, and Healthcare Professional belong to the [Data Owner](/{{ sdk }}/glossary#data-owner) category.
+Patient, Medical Device, and Healthcare Professional belong to the [Data Owner](/{{sdk}}/glossary#data-owner) category.
 
-### [Patient](/{{ sdk }}/explanations/data-model/patient)
+### [Patient](/{{sdk}}/explanations/data-model/patient)
 A Patient is an actor that uses the iCure platform to manage they own medical data.
 Their sensitive data is encrypted, and they can decide to share it with other actors, or forbid other actors to access it, at any time.
 
-### [Medical Device](/{{ sdk }}/explanations/data-model/medical-device)
+### [Medical Device](/{{sdk}}/explanations/data-model/medical-device)
 A Medical Device is an actor that can represent any device used by patients or doctors to acquire data.
 Medical devices can upload data to the iCure platform and share it.
 
-### [Healthcare Professional](/{{ sdk }}/explanations/data-model/healthcare-professional)
+### [Healthcare Professional](/{{sdk}}/explanations/data-model/healthcare-professional)
 A Healthcare Professional is an actor that is responsible for Patients, Medical Devices as well as other Healthcare Professionals.
 They can invite them to the iCure Platform and, if allowed, manage their data.
 
-### [User](/{{ sdk }}/explanations/data-model/user)
+### [User](/{{sdk}}/explanations/data-model/user)
 A User is an actor that can log in to the iCure platform.
 Each user can be related to a Patient, a Healthcare Professional, or a Medical Device.
 
 ## Medical Data Entities
 This section describes the different medical data types managed by the iCure platform.
 
-### [{{ Service }}](/{{ sdk }}/explanations/data-model/data-sample)
-A {{ Service }} is a piece of medical information acquired at a certain point of time.
+### [{{Service}}](/{{sdk}}/explanations/data-model/data-sample)
+A {{Service}} is a piece of medical information acquired at a certain point of time.
 It can be created by a Data Owner, and its encrypted data can be shared with other Data Owners.
 
-### [Healthcare Element](/{{ sdk }}/explanations/data-model/healthcare-element)
-A Healthcare Element is a piece of medical information that can provide a context to a set of medical measurements.
-It can be associated to Patients and {{ Services }} and, as such, it is encrypted.
+### [{{{{HealthcareElementNoSpace}}}}](/{{sdk}}/explanations/data-model/healthcare-element)
+A {{{{HealthcareElementNoSpace}}}} is a piece of medical information that can provide a context to a set of medical measurements.
+It can be associated to Patients and {{Services}} and, as such, it is encrypted.
 
-### [Coding](/{{ sdk }}/explanations/data-model/coding)
-A Coding represents a code of a [Terminology](/{{ sdk }}/glossary#terminologies) (such as SNOMED CT or LOINC).
-It is used by {{ Services }} and {{ HealthcareElements }} to describe the different pieces of medical information.
+### [Coding](/{{sdk}}/explanations/data-model/coding)
+A Coding represents a code of a [Terminology](/{{sdk}}/glossary#terminologies) (such as SNOMED CT or LOINC).
+It is used by {{Services}} and {{{{{{HealthcareElementNoSpace}}sNoSpace}}}} to describe the different pieces of medical information.
 
 ## Support Entities
 This section describes all the entities used in the several data management processes of the iCure platform.
 
-### [Notification](/{{ sdk }}/explanations/data-model/notification)
+### [Notification](/{{sdk}}/explanations/data-model/notification)
 A Notification is a request by a Data Owner for a Healthcare Professional to perform a particular action, such as sharing a piece of information.
 The type of action and the status of the request are encoded in the Notification itself.

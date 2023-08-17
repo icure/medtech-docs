@@ -8,7 +8,7 @@ tags:
 
 # Coding
 
-A Coding represents a code of a [Terminology](/{{ sdk }}/glossary#terminologies) (such as SNOMED CT or LOINC).  
+A Coding represents a code of a [Terminology](/{{sdk}}/glossary#terminologies) (such as SNOMED CT or LOINC).  
 A Coding is uniquely identified by:
 - **Type**: the Terminology it belongs to (e.g. SNOMED CT)
 - **Code**: the unique code in the Terminology (e.g. 84229001)
@@ -17,15 +17,15 @@ A Coding is uniquely identified by:
 ## When Should I Use a Coding?
 
 You should use a Coding when a Data Owner wants to define the medical information of other entities, such as Data 
-Samples or {{ HealthcareElements }}, using standards that are widely used in the medical field rather than in natural language.
+Samples or {{HealthcareElements}}, using standards that are widely used in the medical field rather than in natural language.
 
 ## How is a Coding Related to Other Entities?
 
-You can add a Coding to {{ HealthcareElements }} and {{ Services }}.
+You can add a Coding to {{HealthcareElements}} and {{Services}}.
 
 :::note
 
-To add a Coding to a Healthcare Element or a {{ Service }}, you just need to add its CodingReference, that contains the 
+To add a Coding to a Healthcare Element or a {{Service}}, you just need to add its CodingReference, that contains the 
 type, code, and version of the coding.
 
 :::
@@ -34,12 +34,12 @@ type, code, and version of the coding.
 
 ### A Doctor Registering a Diagnosis
 
-After a visit, a Doctor register the symptoms the Patient is experiencing ([fatigue](https://snomedbrowser.com/Codes/Details/84229001)) as a new {{ Service }}.  
-Then, they add the diagnosis ([hay fever](https://snomedbrowser.com/Codes/Details/21719001)) as associated Healthcare Element.
+After a visit, a Doctor register the symptoms the Patient is experiencing ([fatigue](https://snomedbrowser.com/Codes/Details/84229001)) as a new {{Service}}.  
+Then, they add the diagnosis ([hay fever](https://snomedbrowser.com/Codes/Details/21719001)) as associated {{HealthcareElement}}.
 Instead of using the natural language description for both, the application allows the Doctor to select the proper 
 SNOMED CT terms using Codings.
 
-<!-- file://code-samples/explanation/data-sample-w-coding/index.mts snippet:doctor can create DS and HE-->
+<!-- file://code-samples/{{sdk}}/explanation/data-sample-w-coding/index.mts snippet:doctor can create DS and HE-->
 ```typescript
 const healthcareElement = await api.healthcareElementApi.createOrModifyHealthcareElement(
   new HealthcareElement({
@@ -75,60 +75,60 @@ const dataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
   }),
 )
 ```
-<!-- output://code-samples/explanation/data-sample-w-coding/healthcareElement.txt -->
+<!-- output://code-samples/{{sdk}}/explanation/data-sample-w-coding/healthcareElement.txt -->
 <details>
-<summary>healthcareElement</summary>
+<summary>{{healthcareElementNoSpace}}</summary>
 
 ```json
 {
-  "id": "1a5ea884-2e16-4a05-92dc-aaf039495f02",
-  "rev": "1-f062aebec81da6b4ab81c9ac44fabd63",
-  "created": 1688378940977,
-  "modified": 1688378940977,
-  "author": "6a541dfb-40d9-41f5-ba76-e3a5e277813f",
-  "responsible": "e2b6e873-035b-4964-885b-5a90e99c43b4",
-  "healthcareElementId": "1a5ea884-2e16-4a05-92dc-aaf039495f02",
-  "valueDate": 20230703120900,
-  "openingDate": 20230703120900,
+  "id": "dcecd029-a957-47be-b950-5493dc66b886",
+  "rev": "1-57784152c3a73d536e80b2954398eb73",
+  "created": 1679997643409,
+  "modified": 1679997643409,
+  "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
+  "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
+  "healthcareElementId": "dcecd029-a957-47be-b950-5493dc66b886",
+  "valueDate": 20230328100043,
+  "openingDate": 20230328100043,
   "description": "My diagnosis is that the patient has Hay Fever",
   "identifiers": [],
   "codes": {},
   "labels": {},
   "systemMetaData": {
     "secretForeignKeys": [
-      "c52b89c3-d70f-4823-9fd9-a97f946ce1fd"
+      "4742a08d-bbc1-4ed1-a758-f0a605529bf1"
     ],
     "cryptedForeignKeys": {
-      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
     },
     "delegations": {
-      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
     },
     "encryptionKeys": {
-      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
     },
-    "encryptedSelf": "R90mdcD8niWw2Lya3fKvlaqTri5It5LpbpjmQwhdl9KBzOCaIvZOA8yBVXqBty9AByqf+JL/jhTtuTOtVu58uhIX+WVWeyMWxrFrQFPl7To="
+    "encryptedSelf": "R2G3aeSUeLmHwq9PL8o/D+8HZMiNqwEG9RUPFj0dZhtEPy/oESzurR0AfUqUmv5lvOoogQfgnuhKuVjTcPAAbs9L+vZd0O8tEJ5ZBYqN1Pg="
   }
 }
 ```
 </details>
 
-<!-- output://code-samples/explanation/data-sample-w-coding/dataSample.txt -->
+<!-- output://code-samples/{{sdk}}/explanation/data-sample-w-coding/dataSample.txt -->
 <details>
-<summary>dataSample</summary>
+<summary>{{dataSampleNoSpace}}</summary>
 
 ```json
 {
-  "id": "25eb6a58-36d6-4e31-884f-bf1f1e77097e",
+  "id": "6ef07673-05a4-445c-b0ba-9f19702ee9ac",
   "qualifiedLinks": {},
-  "batchId": "c6279d82-93b5-4578-b797-04df3d0b0747",
+  "batchId": "34a978e1-8de5-4b94-895a-0d054f7dc976",
   "index": 0,
-  "valueDate": 20230703120901,
-  "openingDate": 20230703120901,
-  "created": 1688378941048,
-  "modified": 1688378941048,
-  "author": "6a541dfb-40d9-41f5-ba76-e3a5e277813f",
-  "responsible": "e2b6e873-035b-4964-885b-5a90e99c43b4",
+  "valueDate": 20230328100044,
+  "openingDate": 20230328100044,
+  "created": 1679997644163,
+  "modified": 1679997644163,
+  "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
+  "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
   "identifiers": [],
   "healthcareElementIds": {},
   "canvasesIds": {},
@@ -143,20 +143,18 @@ const dataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
   "codes": {},
   "labels": {},
   "systemMetaData": {
-    "encryptedSelf": "RKqqVROZlYdJl16L7HT7GtPaVVg8NmSr8sWDRj2aoyp8VsZWj9UbAAPEGx3wheLol/ON8FBXszSWXkaZH66UfSqSvN8WpXvZcesswoQPK5GikY+JdfV5GozxuvFA7nggcRn4voGUSaV0qbP0XDf/DVEYwPOqXQlKKX91uCfeuDI=",
     "secretForeignKeys": [
-      "c52b89c3-d70f-4823-9fd9-a97f946ce1fd"
+      "4742a08d-bbc1-4ed1-a758-f0a605529bf1"
     ],
     "cryptedForeignKeys": {
-      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
     },
     "delegations": {
-      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
     },
     "encryptionKeys": {
-      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
-    },
-    "publicKeysForOaepWithSha256": {}
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+    }
   }
 }
 ```

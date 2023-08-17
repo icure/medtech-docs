@@ -10,16 +10,16 @@ The typical use case for creating a Node.JS application is to build a service, t
 
 All medical data is encrypted by default inside iCure. This is why you need to be able to decrypt it in your Node.JS app before being able to process it. In the following Quick Start, *you* are connecting using the credentials of the parent organization.
 
-In this Quick Start, we assume you already followed the [Quick Start - Set up your environment](./index.md) including the [Quick Start - Configure your parent Organisation](./index.md#optional-configure-your-parent-organization-to-allow-patients-to-share-data-with-it) step.
+In this Quick Start, we assume you already followed the [Quick Start - Set up your environment](/{{sdk}}/quick-start/index.md) including the [Quick Start - Configure your parent Organisation](/{{sdk}}/quick-start/index.md#optional-configure-your-parent-organization-to-allow-patients-to-share-data-with-it) step.
 
-We also assume that you already have a React.JS or React Native App, that you have connected to iCure. Two other quick starts are available to help you with this: [Quick Start - Connect your React.JS App](../react-js-quick-start/index.md) and [Quick Start - Connect your React Native App](../react-native-quick-start/index.md). In this App you will have to set up sharing of encrypted information with the parent organization.
+We also assume that you already have a React.JS or React Native App, that you have connected to iCure. Two other quick starts are available to help you with this: [Quick Start - Connect your React.JS App](/{{sdk}}/quick-start/react-js-quick-start.md) and [Quick Start - Connect your React Native App](/{{sdk}}/quick-start/react-native-quick-start.md). In this App you will have to set up sharing of encrypted information with the parent organization.
 
 To make it easier for you, we created a [Node.JS Template Repository](https://github.com/icure/icure-medical-device-node-js-boilerplate-app-template), that includes: 
 - All the needed dependencies to work with iCure in a Node.JS app;
-- The cryptographic keys creation of your parent organisation (See [Quick Start - Configure your parent Organisation](./index.md#optional-configure-your-parent-organization-to-allow-patients-to-share-data-with-it) for more information), to allow you to directly start working with medical data.
+- The cryptographic keys creation of your parent organisation (See [Quick Start - Configure your parent Organisation](/{{sdk}}/quick-start/index.md#optional-configure-your-parent-organization-to-allow-patients-to-share-data-with-it) for more information), to allow you to directly start working with medical data.
 
 ## Before starting
-Make sure you [generated an authentication token](index.md#create-an-authentication-token-for-your-parent-organisation) for your parent organisation, in order to allow it to connect to the iCure Back-End. 
+Make sure you [generated an authentication token](/{{sdk}}/quick-start/index.md#create-an-authentication-token-for-your-parent-organisation) for your parent organisation, in order to allow it to connect to the iCure Back-End. 
 
 You should now be in possession of your **PARENT_ORGANISATION_USERNAME** and your **PARENT_ORGANISATION_TOKEN**. 
 
@@ -41,7 +41,7 @@ Beware that if you do this your repository will be initialised with the history 
 re-initialise the repository to achieve an effect similar to the github template.
 
 ### Fill the .env file
-While you initialized your environment in [Quick Start](./index.md), we asked you to keep a series of information including: 
+While you initialized your environment in [Quick Start](/{{sdk}}/quick-start/index.md), we asked you to keep a series of information including: 
 - the **PARENT_ORGANISATION_USERNAME**, the username of your parent organisation (Generally its email). 
 - the **PARENT_ORGANISATION_TOKEN**, the authentication token of your parent organisation. 
 
@@ -72,13 +72,13 @@ the `ICureApi` logic created a new keypair for your parent organisation and save
 
 You can find the details of this implementation in the file `services/ICureApi.ts`. 
 
-Calling `http://127.0.0.1:3000/` a second time, the keys being already created, no additional operation is needed and the information of your {{ hcp }} are directly returned. 
+Calling `http://127.0.0.1:3000/` a second time, the keys being already created, no additional operation is needed and the information of your {{hcp}} are directly returned. 
 
 ### Special case: The HCP already created some keys in the past
 In cascade, the `ICureApi` will try to: 
 - Get the keys from the localStorage location; 
 - If it can't find them, get them from the `.env` file and save them back into the localStorage; 
-- If it can't find them in the `.env` file as well, try to create a new keypair and add the public key to your {{ hcp }} in iCure; 
+- If it can't find them in the `.env` file as well, try to create a new keypair and add the public key to your {{hcp}} in iCure; 
 
 If you started your Node.JS server and got the error `Aborting Cryptographic Keys creation: Current HCP already has cryptographic keys` when calling `http://127.0.0.1:3000/`, it means you already created cryptographic keys for your parent healthcare 
 professional. Therefore, creating a new keypair will override your previous key and you'll not be able to access the data shared with your previous keypair anymore. 

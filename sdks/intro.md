@@ -19,16 +19,21 @@ of your data and proposes you a series of easy-to-use medical-oriented services.
 - The **Interoperability components** helps you to connect with external services by mapping the iCure Data Model to 
 standard models like FHIR.
 
-## iCure for MedTech
-This documentation is focusing on the **iCure MedTech SDK**, tailored for medical device manufacturers and for the 
+## iCure {{ Sdk }}
+{{#medtech}}
+This documentation is focusing on the **iCure {{ Sdk }}**, tailored for medical device manufacturers and for the 
 development teams responsible for the software of medical devices.
+{{/medtech}}
+{{#ehrlite}}
+This documentation is focusing on the **iCure {{ Sdk }}**, tailored for the creation of EHR (Electronic Health Record) solutions.
+{{/ehrlite}}
 
 The SDK provides you a series of services and functionalities to help you manage medical information gathered 
-from medical devices or provided by the patient himself, and store it encrypted in our cloud or on your premises.
+from doctors, medical devices or provided by the patient himself, and store it encrypted in our cloud or on your premises.
 
 ## Supported development platforms
 
-For now, iCure MedTech can be used with Node, React and React Native.
+For now, iCure {{ Sdk }} can be used with Node, React and React Native.
 
 Experimental versions of the SDKs are available for Flutter and native Android/iOS development. You can request access 
 to them by contacting us through our [support portal](https://icure.atlassian.net/servicedesk/customer/portal/3).
@@ -37,8 +42,8 @@ to them by contacting us through our [support portal](https://icure.atlassian.ne
 
 To hit the ground running, you can head to our [quick-start](./quick-start/index.md) or our [tutorials](./tutorial/index.md) section.
 
-In the [how-to](/{{ sdk }}/how-to/index) section, you will find more detailed information on how to use the SDKs to perform the most common tasks.
+In the [how-to](/{{sdk}}/how-to/index) section, you will find more detailed information on how to use the SDKs to perform the most common tasks.
 
-The [explanation](/{{ sdk }}/explanations) section contains more in-depth information on how iCure works and how data is organised, secured and stored.
+The [explanation](/{{sdk}}/explanations) section contains more in-depth information on how iCure works and how data is organised, secured and stored.
 
-The [reference](/{{ sdk }}/references/modules.md) section contains the full documentation of the SDKs and the API.
+The [reference](/{{sdk}}/references/modules.md) section contains the full documentation of the SDKs and the API.

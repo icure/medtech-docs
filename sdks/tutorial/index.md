@@ -7,15 +7,15 @@ By the end of it, you will be able to:
 - Instantiate a MedTech API.
 - Create a Patient.
 - Get your newly created Patient information. 
-- Create {{ services }} related to your patient.
-- Get your newly created {{ Service }} information.
-- Search for {{ services }} satisfying some criteria.
+- Create {{services}} related to your patient.
+- Get your newly created {{Service}} information.
+- Search for {{services}} satisfying some criteria.
 
 ## Pre-requisites
 To begin working with the MedTech SDK, you need to have a valid iCure User.
 You can obtain an iCure user in one of the following ways: 
 - Launch a free iCure instance locally on your computer, which will automatically create a default user for you.
-  To learn how to do this, refer to the [QuickStart](/{{ sdk }}/quick-start/index.md) guide.
+  To learn how to do this, refer to the [QuickStart](/{{sdk}}/quick-start/index.md) guide.
 - Register on the iCure Cockpit to get your iCure Cloud User.
   To learn how to do this, refer to the [How to register on Cockpit](/cockpit/how-to/how-to-create-your-account) guide.
 
@@ -35,7 +35,7 @@ This api object will automatically manage the authentication to the iCure backen
 
 Provide the iCure host to use and your user credentials in this API.
 
-<!-- file://code-samples/tutorial/doctor-centric-app/index.mts snippet:instantiate the api with existing keys-->
+<!-- file://code-samples/{{sdk}}/tutorial/doctor-centric-app/index.mts snippet:instantiate the api with existing keys-->
 ```typescript
 import 'isomorphic-fetch'
 import { medTechApi } from '@icure/medical-device-sdk'
@@ -61,37 +61,32 @@ const apiWithKeys = await medTechApi()
 ```
 
 After instantiating your API, you can now get the information of your logged user. 
-<!-- file://code-samples/tutorial/doctor-centric-app/index.mts snippet:get current user-->
+<!-- file://code-samples/{{sdk}}/tutorial/doctor-centric-app/index.mts snippet:get current user-->
 ```typescript
 const loggedUser = await api.userApi.getLoggedUser()
 expect(loggedUser.login).to.be.equal(iCureUserLogin)
 ```
 
-<!-- output://code-samples/tutorial/doctor-centric-app/loggedUser.txt -->
+<!-- output://code-samples/{{sdk}}/tutorial/doctor-centric-app/loggedUser.txt -->
 <details>
 <summary>loggedUser</summary>
 
 ```json
 {
-  "id": "6a541dfb-40d9-41f5-ba76-e3a5e277813f",
-  "rev": "86-f61f23df73e93c801ed8adb583640235",
-  "created": 1688371977279,
+  "id": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
+  "rev": "56-9ce9dee823b57cd2705a0f4efa3f8670",
+  "created": 1679919731079,
   "name": "Master HCP",
-  "login": "master@e2b6e8.icure",
+  "login": "master@b16baa.icure",
   "groupId": "ic-e2etest-medtech-docs",
-  "healthcarePartyId": "e2b6e873-035b-4964-885b-5a90e99c43b4",
-  "email": "master@e2b6e8.icure",
+  "healthcarePartyId": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
+  "email": "master@b16baa.icure",
   "properties": {},
   "roles": {},
   "sharingDataWith": {
     "medicalInformation": {}
   },
-  "authenticationTokens": {
-    "c1284f05-cca6-444e-bdac-3cd134d54e6b": {
-      "creationTime": 1688371977378,
-      "validity": 86400
-    }
-  }
+  "authenticationTokens": {}
 }
 ```
 </details>
@@ -105,7 +100,7 @@ You may have noticed the `withCryptoStrategies()` method in the instantiation of
 his existing key pairs. If you don't have any existing key pair, you can instantiate the MedTech API without specifying
 them:
 
-<!-- file://code-samples/tutorial/doctor-centric-app/index.mts snippet:instantiate api without keys-->
+<!-- file://code-samples/{{sdk}}/tutorial/doctor-centric-app/index.mts snippet:instantiate api without keys-->
 ```typescript
 const apiWithoutKeys = await medTechApi()
   .withICureBaseUrl(iCureHost)
@@ -121,7 +116,7 @@ the local storage contains no key, then a new pair will be created.
 
 :::info
 
-You can learn more about the Crypto Strategies [here](/{{ sdk }}/explanations/crypto-strategies/crypto-strategies).
+You can learn more about the Crypto Strategies [here](/{{sdk}}/explanations/crypto-strategies/crypto-strategies).
 
 :::
 
@@ -160,7 +155,7 @@ check how you can create a patient with iCure.
 In most doctor-centric applications, you will have to create patients.
 
 To do this, call the `api.patientApi.createOrModifyPatient` service. 
-<!-- file://code-samples/tutorial/doctor-centric-app/index.mts snippet:create your first patient-->
+<!-- file://code-samples/{{sdk}}/tutorial/doctor-centric-app/index.mts snippet:create your first patient-->
 ```typescript
 import { Patient } from '@icure/medical-device-sdk'
 
@@ -175,21 +170,21 @@ const createdPatient = await api.patientApi.createOrModifyPatient(
 console.log(`Your new patient id : ${createdPatient.id}`)
 ```
 
-<!-- output://code-samples/tutorial/doctor-centric-app/createdPatient.txt -->
+<!-- output://code-samples/{{sdk}}/tutorial/doctor-centric-app/createdPatient.txt -->
 <details>
 <summary>createdPatient</summary>
 
 ```json
 {
-  "id": "0b75d4b3-2a70-41d9-86d0-ecd3a79b08ec",
+  "id": "ca9cff67-cc51-45ab-87e0-38cea4604afb",
   "languages": [],
   "active": true,
   "parameters": {},
-  "rev": "1-8864b1198626b14f72b77fef90bf7f92",
-  "created": 1688378939938,
-  "modified": 1688378939938,
-  "author": "6a541dfb-40d9-41f5-ba76-e3a5e277813f",
-  "responsible": "e2b6e873-035b-4964-885b-5a90e99c43b4",
+  "rev": "1-484251d1b7b086b1fb5be20e58aee04a",
+  "created": 1679926586745,
+  "modified": 1679926586745,
+  "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
+  "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
   "firstName": "John",
   "lastName": "Snow",
   "note": "Winter is coming",
@@ -219,20 +214,19 @@ console.log(`Your new patient id : ${createdPatient.id}`)
   "patientProfessions": [],
   "properties": {},
   "systemMetaData": {
-    "aesExchangeKeys": {},
     "hcPartyKeys": {},
     "privateKeyShamirPartitions": {},
+    "aesExchangeKeys": {},
     "transferKeys": {},
-    "encryptedSelf": "i2t/WdM+3emkqFgYMxV3rbN2l1Bl10DSPgafb/FlCWjs8rUJ424rNE5dEoCz1ARD",
+    "encryptedSelf": "bel9gPaPivU1l1PBrR7wuqtiEvAHm/tKGDaJEqh64BkTxpToM+eVWB90AP+LPui9",
     "secretForeignKeys": [],
     "cryptedForeignKeys": {},
     "delegations": {
-      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
     },
     "encryptionKeys": {
-      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
-    },
-    "publicKeysForOaepWithSha256": {}
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+    }
   }
 }
 ```
@@ -251,27 +245,27 @@ You will need this id to retrieve the information of your patient later.
 ## Get your newly created Patient information
 You can retrieve patient information using `patientApi.getPatient` with the id of the patient you want to retrieve. 
 
-<!-- file://code-samples/tutorial/doctor-centric-app/index.mts snippet:get your patient information-->
+<!-- file://code-samples/{{sdk}}/tutorial/doctor-centric-app/index.mts snippet:get your patient information-->
 ```typescript
 const johnSnow = await api.patientApi.getPatient(createdPatient.id)
 expect(createdPatient.id).to.be.equal(johnSnow.id)
 ```
 
-<!-- output://code-samples/tutorial/doctor-centric-app/johnSnow.txt -->
+<!-- output://code-samples/{{sdk}}/tutorial/doctor-centric-app/johnSnow.txt -->
 <details>
 <summary>johnSnow</summary>
 
 ```json
 {
-  "id": "0b75d4b3-2a70-41d9-86d0-ecd3a79b08ec",
+  "id": "ca9cff67-cc51-45ab-87e0-38cea4604afb",
   "languages": [],
   "active": true,
   "parameters": {},
-  "rev": "1-8864b1198626b14f72b77fef90bf7f92",
-  "created": 1688378939938,
-  "modified": 1688378939938,
-  "author": "6a541dfb-40d9-41f5-ba76-e3a5e277813f",
-  "responsible": "e2b6e873-035b-4964-885b-5a90e99c43b4",
+  "rev": "1-484251d1b7b086b1fb5be20e58aee04a",
+  "created": 1679926586745,
+  "modified": 1679926586745,
+  "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
+  "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
   "firstName": "John",
   "lastName": "Snow",
   "note": "Winter is coming",
@@ -301,20 +295,19 @@ expect(createdPatient.id).to.be.equal(johnSnow.id)
   "patientProfessions": [],
   "properties": {},
   "systemMetaData": {
-    "aesExchangeKeys": {},
     "hcPartyKeys": {},
     "privateKeyShamirPartitions": {},
+    "aesExchangeKeys": {},
     "transferKeys": {},
-    "encryptedSelf": "i2t/WdM+3emkqFgYMxV3rbN2l1Bl10DSPgafb/FlCWjs8rUJ424rNE5dEoCz1ARD",
+    "encryptedSelf": "bel9gPaPivU1l1PBrR7wuqtiEvAHm/tKGDaJEqh64BkTxpToM+eVWB90AP+LPui9",
     "secretForeignKeys": [],
     "cryptedForeignKeys": {},
     "delegations": {
-      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
     },
     "encryptionKeys": {
-      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
-    },
-    "publicKeysForOaepWithSha256": {}
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+    }
   }
 }
 ```
@@ -324,17 +317,17 @@ If you would like to know more about the information contained in Patient, go ch
 
 Let's now create some medical data for our patient. 
 
-## Create your first {{ service }}
-You can use {{ services }} to store information related to the health of a patient.
-For example, when a patient goes to the doctor, we can use {{ services }} to register the symptoms they experience and/or 
+## Create your first {{service}}
+You can use {{services}} to store information related to the health of a patient.
+For example, when a patient goes to the doctor, we can use {{services}} to register the symptoms they experience and/or 
 the results of measurements taken by the doctor. 
 
-You can create a new {{ service }} with `dataSampleApi.createOrModifyDataSample`. If you want to create many {{ services }} at once, 
+You can create a new {{service}} with `dataSampleApi.createOrModifyDataSample`. If you want to create many {{services}} at once, 
 you should instead use `dataSampleApi.createOrModifyDataSamples`.
-Link these {{ services }} to the patient you created earlier through the `patientId` parameter.
-A {{ service }} must always be linked to a patient. 
+Link these {{services}} to the patient you created earlier through the `patientId` parameter.
+A {{service}} must always be linked to a patient. 
 
-<!-- file://code-samples/tutorial/doctor-centric-app/index.mts snippet:create your patient first medical data-->
+<!-- file://code-samples/{{sdk}}/tutorial/doctor-centric-app/index.mts snippet:create your patient first medical data-->
 ```typescript
 import { CodingReference, Content, DataSample } from '@icure/medical-device-sdk'
 
@@ -354,23 +347,23 @@ const createdData = await api.dataSampleApi.createOrModifyDataSamplesFor(johnSno
 ])
 ```
 
-<!-- output://code-samples/tutorial/doctor-centric-app/createdData.txt -->
+<!-- output://code-samples/{{sdk}}/tutorial/doctor-centric-app/createdData.txt -->
 <details>
 <summary>createdData</summary>
 
 ```text
 [
   {
-    "id": "0744664d-e8c9-4c5f-9850-047029a09ab3",
+    "id": "021666bd-cba7-416e-909f-3a2aa8b1905d",
     "qualifiedLinks": {},
-    "batchId": "9fcaf0b3-6d46-451a-bf16-d9bcaf3a5308",
+    "batchId": "5d99ab7b-f2e0-4405-a936-c530a2f13c4e",
     "index": 0,
     "valueDate": 20220203111034,
-    "openingDate": 20230703120859,
-    "created": 1688378939993,
-    "modified": 1688378939993,
-    "author": "6a541dfb-40d9-41f5-ba76-e3a5e277813f",
-    "responsible": "e2b6e873-035b-4964-885b-5a90e99c43b4",
+    "openingDate": 20230327141627,
+    "created": 1679926587329,
+    "modified": 1679926587329,
+    "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
+    "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
     "comment": "Height",
     "identifiers": [],
     "healthcareElementIds": {},
@@ -386,33 +379,31 @@ const createdData = await api.dataSampleApi.createOrModifyDataSamplesFor(johnSno
     "codes": {},
     "labels": {},
     "systemMetaData": {
-      "encryptedSelf": "JlpCSXcN03HM5EUh7gq1arA5qVfuRzCeKq/4b1tAEuh2Ahnx6kfHNmnuZs3Y/LteSsASAmmEdIuHg0OvCJ2olImUJObo4f1gn1MMwGyzxrONHb5Tlca2TtxMfticGGuv",
       "secretForeignKeys": [
-        "cc58e3cb-e318-4bc3-b75c-0bf41ddc886c"
+        "52128660-a16c-4b56-99d1-01cbd297addb"
       ],
       "cryptedForeignKeys": {
-        "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
+        "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
       },
       "delegations": {
-        "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
+        "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
       },
       "encryptionKeys": {
-        "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
-      },
-      "publicKeysForOaepWithSha256": {}
+        "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+      }
     }
   },
   {
-    "id": "1c03b2e4-fef4-4a53-a57a-0a0d81d041f1",
+    "id": "e717b684-f9c6-479d-b023-d58623bae12d",
     "qualifiedLinks": {},
-    "batchId": "9fcaf0b3-6d46-451a-bf16-d9bcaf3a5308",
+    "batchId": "5d99ab7b-f2e0-4405-a936-c530a2f13c4e",
     "index": 1,
     "valueDate": 20220203111034,
-    "openingDate": 20230703120859,
-    "created": 1688378939993,
-    "modified": 1688378939993,
-    "author": "6a541dfb-40d9-41f5-ba76-e3a5e277813f",
-    "responsible": "e2b6e873-035b-4964-885b-5a90e99c43b4",
+    "openingDate": 20230327141627,
+    "created": 1679926587329,
+    "modified": 1679926587329,
+    "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
+    "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
     "comment": "Weight",
     "identifiers": [],
     "healthcareElementIds": {},
@@ -428,20 +419,18 @@ const createdData = await api.dataSampleApi.createOrModifyDataSamplesFor(johnSno
     "codes": {},
     "labels": {},
     "systemMetaData": {
-      "encryptedSelf": "OvcZKF+b6o2Nj4GkGWKulA9PsRA2h154lmPzPRkdILu8fvBhk+gy0zo/yWxJiMdUC7gfX7aTfIlqmhLtZnhEB/RZ+pDlzIW8abrmF/mF20QKVUmOCXj9w1GHqSNz6oRv0ad6vBiBZ8wDrK0qvX2OdA==",
       "secretForeignKeys": [
-        "cc58e3cb-e318-4bc3-b75c-0bf41ddc886c"
+        "52128660-a16c-4b56-99d1-01cbd297addb"
       ],
       "cryptedForeignKeys": {
-        "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
+        "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
       },
       "delegations": {
-        "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
+        "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
       },
       "encryptionKeys": {
-        "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
-      },
-      "publicKeysForOaepWithSha256": {}
+        "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+      }
     }
   }
 ]
@@ -449,18 +438,18 @@ const createdData = await api.dataSampleApi.createOrModifyDataSamplesFor(johnSno
 </details>
 
 
-When creating your {{ services }}, iCure will automatically assign an id to each of them, similarly to what happens for patients.
+When creating your {{services}}, iCure will automatically assign an id to each of them, similarly to what happens for patients.
 
 But what happens if you don't know these ids? How can you find back your data?
 
 
-## Search for {{ services }} satisfying some criteria
+## Search for {{services}} satisfying some criteria
 Sometimes you will want to search for data which satisfies some specific criteria.
 
 You can do this using the `filter` services of the apis, such as `dataSampleApi.filterDataSamples` or `patientApi.filterPatients`.
 Let's say we would like to find back all medical data with the LOINC label corresponding to the body weight for the patient we have created.
 
-<!-- file://code-samples/tutorial/doctor-centric-app/index.mts snippet:Find your patient medical data following some criteria-->
+<!-- file://code-samples/{{sdk}}/tutorial/doctor-centric-app/index.mts snippet:Find your patient medical data following some criteria-->
 ```typescript
 import { DataSampleFilter } from '@icure/medical-device-sdk'
 import { SimpleMedTechCryptoStrategies } from '@icure/medical-device-sdk'
@@ -479,7 +468,7 @@ expect(johnData.rows[0].content['en'].numberValue).to.be.equal(92.5)
 expect(johnData.rows[0].comment).to.be.equal('Weight')
 ```
 
-<!-- output://code-samples/tutorial/doctor-centric-app/johnData.txt -->
+<!-- output://code-samples/{{sdk}}/tutorial/doctor-centric-app/johnData.txt -->
 <details>
 <summary>johnData</summary>
 
@@ -489,16 +478,16 @@ expect(johnData.rows[0].comment).to.be.equal('Weight')
   "totalSize": 1,
   "rows": [
     {
-      "id": "1c03b2e4-fef4-4a53-a57a-0a0d81d041f1",
+      "id": "e717b684-f9c6-479d-b023-d58623bae12d",
       "qualifiedLinks": {},
-      "batchId": "9fcaf0b3-6d46-451a-bf16-d9bcaf3a5308",
+      "batchId": "5d99ab7b-f2e0-4405-a936-c530a2f13c4e",
       "index": 1,
       "valueDate": 20220203111034,
-      "openingDate": 20230703120859,
-      "created": 1688378939993,
-      "modified": 1688378939993,
-      "author": "6a541dfb-40d9-41f5-ba76-e3a5e277813f",
-      "responsible": "e2b6e873-035b-4964-885b-5a90e99c43b4",
+      "openingDate": 20230327141627,
+      "created": 1679926587329,
+      "modified": 1679926587329,
+      "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
+      "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
       "comment": "Weight",
       "identifiers": [],
       "healthcareElementIds": {},
@@ -514,20 +503,18 @@ expect(johnData.rows[0].comment).to.be.equal('Weight')
       "codes": {},
       "labels": {},
       "systemMetaData": {
-        "encryptedSelf": "OvcZKF+b6o2Nj4GkGWKulA9PsRA2h154lmPzPRkdILu8fvBhk+gy0zo/yWxJiMdUC7gfX7aTfIlqmhLtZnhEB/RZ+pDlzIW8abrmF/mF20QKVUmOCXj9w1GHqSNz6oRv0ad6vBiBZ8wDrK0qvX2OdA==",
         "secretForeignKeys": [
-          "cc58e3cb-e318-4bc3-b75c-0bf41ddc886c"
+          "52128660-a16c-4b56-99d1-01cbd297addb"
         ],
         "cryptedForeignKeys": {
-          "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
+          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
         },
         "delegations": {
-          "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
+          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
         },
         "encryptionKeys": {
-          "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
-        },
-        "publicKeysForOaepWithSha256": {}
+          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+        }
       }
     }
   ],
@@ -541,10 +528,10 @@ Filters offer you a lot of possibilities. Go have a look at
 the [How To search data in iCure using complex filters](../how-to/how-to-filter-data-with-advanced-search-criteria.md) 
 guide to know more about them. 
 
-## Get your newly created {{ Service }} information
-Finally, you can also get the information of a specific {{ service }}, if you know its id. 
+## Get your newly created {{Service}} information
+Finally, you can also get the information of a specific {{service}}, if you know its id. 
 
-<!-- file://code-samples/tutorial/doctor-centric-app/index.mts snippet:get specific medical data information-->
+<!-- file://code-samples/{{sdk}}/tutorial/doctor-centric-app/index.mts snippet:get specific medical data information-->
 ```typescript
 const johnWeight = await api.dataSampleApi.getDataSample(johnData.rows[0].id)
 expect(johnData.rows[0].id).to.be.equal(johnWeight.id)
@@ -552,22 +539,22 @@ expect(johnWeight.content['en'].numberValue).to.be.equal(92.5)
 expect(johnWeight.comment).to.be.equal('Weight')
 ```
 
-<!-- output://code-samples/tutorial/doctor-centric-app/johnWeight.txt -->
+<!-- output://code-samples/{{sdk}}/tutorial/doctor-centric-app/johnWeight.txt -->
 <details>
 <summary>johnWeight</summary>
 
 ```json
 {
-  "id": "1c03b2e4-fef4-4a53-a57a-0a0d81d041f1",
+  "id": "e717b684-f9c6-479d-b023-d58623bae12d",
   "qualifiedLinks": {},
-  "batchId": "9fcaf0b3-6d46-451a-bf16-d9bcaf3a5308",
+  "batchId": "5d99ab7b-f2e0-4405-a936-c530a2f13c4e",
   "index": 1,
   "valueDate": 20220203111034,
-  "openingDate": 20230703120859,
-  "created": 1688378939993,
-  "modified": 1688378939993,
-  "author": "6a541dfb-40d9-41f5-ba76-e3a5e277813f",
-  "responsible": "e2b6e873-035b-4964-885b-5a90e99c43b4",
+  "openingDate": 20230327141627,
+  "created": 1679926587329,
+  "modified": 1679926587329,
+  "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
+  "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
   "comment": "Weight",
   "identifiers": [],
   "healthcareElementIds": {},
@@ -583,29 +570,27 @@ expect(johnWeight.comment).to.be.equal('Weight')
   "codes": {},
   "labels": {},
   "systemMetaData": {
-    "encryptedSelf": "OvcZKF+b6o2Nj4GkGWKulA9PsRA2h154lmPzPRkdILu8fvBhk+gy0zo/yWxJiMdUC7gfX7aTfIlqmhLtZnhEB/RZ+pDlzIW8abrmF/mF20QKVUmOCXj9w1GHqSNz6oRv0ad6vBiBZ8wDrK0qvX2OdA==",
     "secretForeignKeys": [
-      "cc58e3cb-e318-4bc3-b75c-0bf41ddc886c"
+      "52128660-a16c-4b56-99d1-01cbd297addb"
     ],
     "cryptedForeignKeys": {
-      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
     },
     "delegations": {
-      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
     },
     "encryptionKeys": {
-      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
-    },
-    "publicKeysForOaepWithSha256": {}
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+    }
   }
 }
 ```
 </details>
 
-To know more about the {{ Service }} information, go check the [References](/{{ sdk }}/references/classes/DataSample.md)
+To know more about the {{Service}} information, go check the [References](/{{sdk}}/references/classes/DataSample.md)
 
 ## What's next ? 
 Congratulations, you are now able to use the basic functions of the iCure MedTech SDK. 
-However, the SDK offers a lot of other services: head to the [How-To](/{{ sdk }}/how-to/index) section to discover all of them. 
-You can also check the different [In-Depth Explanations](/{{ sdk }}/explanations), to understand fully what's happening 
+However, the SDK offers a lot of other services: head to the [How-To](/{{sdk}}/how-to/index) section to discover all of them. 
+You can also check the different [In-Depth Explanations](/{{sdk}}/explanations), to understand fully what's happening 
 behind each service of iCure.

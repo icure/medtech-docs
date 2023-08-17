@@ -7,13 +7,13 @@ tags:
 
 # Handling patients
 
-In this section, we will learn how to manage patients. [Patient](/{{ sdk }}/references/classes/Patient) is a class that represents a patient in the system. It contains all the information about the patient.
+In this section, we will learn how to manage patients. [Patient](/{{sdk}}/references/classes/Patient) is a class that represents a patient in the system. It contains all the information about the patient.
 
 ## How to create a patient&#8239;?
 
 To create a patient, we can use the `createOrModifyPatient` method on the `PatientApi` object. This method takes one parameter: the Patient object.
 
-<!-- file://code-samples/how-to/patients/index.mts snippet:create a patient-->
+<!-- file://code-samples/{{sdk}}/how-to/patients/index.mts snippet:create a patient-->
 ```typescript
 const createdPatient = await api.patientApi.createOrModifyPatient(
   new Patient({
@@ -39,21 +39,21 @@ const createdPatient = await api.patientApi.createOrModifyPatient(
 )
 ```
 
-<!-- output://code-samples/how-to/patients/createdPatient.txt -->
+<!-- output://code-samples/{{sdk}}/how-to/patients/createdPatient.txt -->
 <details>
 <summary>createdPatient</summary>
 
 ```json
 {
-  "id": "866d6a5d-6b76-4b4e-a54e-27ee76d76b5e",
+  "id": "fb442885-0697-4803-903d-2f8d947bccd1",
   "languages": [],
   "active": true,
   "parameters": {},
-  "rev": "1-578d8fc648335f6c72ff3289fdf121fd",
-  "created": 1688378973339,
-  "modified": 1688378973339,
-  "author": "6a541dfb-40d9-41f5-ba76-e3a5e277813f",
-  "responsible": "e2b6e873-035b-4964-885b-5a90e99c43b4",
+  "rev": "1-a3873fcdbb72acc294023435519b214a",
+  "created": 1679926559766,
+  "modified": 1679926559766,
+  "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
+  "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
   "firstName": "Hubert",
   "lastName": "Farnsworth",
   "dateOfBirth": 28410409,
@@ -93,20 +93,19 @@ const createdPatient = await api.patientApi.createOrModifyPatient(
   "patientProfessions": [],
   "properties": {},
   "systemMetaData": {
-    "aesExchangeKeys": {},
     "hcPartyKeys": {},
     "privateKeyShamirPartitions": {},
+    "aesExchangeKeys": {},
     "transferKeys": {},
-    "encryptedSelf": "74uJ4GQHm+eHEHxSvlUtSSaJjFu3Ra8KZPmKjIcpBok=",
+    "encryptedSelf": "Yt6LWhGr9/fbyMCNvWd2p/EIExBcvxULXBTN8srkysQ=",
     "secretForeignKeys": [],
     "cryptedForeignKeys": {},
     "delegations": {
-      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
     },
     "encryptionKeys": {
-      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
-    },
-    "publicKeysForOaepWithSha256": {}
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+    }
   }
 }
 ```
@@ -116,7 +115,7 @@ const createdPatient = await api.patientApi.createOrModifyPatient(
 
 To update a patient, we can use the `createOrModifyPatient` method on the `PatientApi` object. This method takes one parameter: the Patient object.
 
-<!-- file://code-samples/how-to/patients/index.mts snippet:update a patient-->
+<!-- file://code-samples/{{sdk}}/how-to/patients/index.mts snippet:update a patient-->
 ```typescript
 const updatedPatient = await api.patientApi.createOrModifyPatient(
   new Patient({
@@ -129,21 +128,21 @@ const updatedPatient = await api.patientApi.createOrModifyPatient(
 )
 ```
 
-<!-- output://code-samples/how-to/patients/updatedPatient.txt -->
+<!-- output://code-samples/{{sdk}}/how-to/patients/updatedPatient.txt -->
 <details>
 <summary>updatedPatient</summary>
 
 ```json
 {
-  "id": "866d6a5d-6b76-4b4e-a54e-27ee76d76b5e",
+  "id": "fb442885-0697-4803-903d-2f8d947bccd1",
   "languages": [],
   "active": true,
   "parameters": {},
-  "rev": "2-c908c2fef3e2b34eb39b287add17c469",
-  "created": 1688378973339,
-  "modified": 1688378973361,
-  "author": "6a541dfb-40d9-41f5-ba76-e3a5e277813f",
-  "responsible": "e2b6e873-035b-4964-885b-5a90e99c43b4",
+  "rev": "2-081c23c9ca40ef5bbbb9915ebb9dd2d3",
+  "created": 1679926559766,
+  "modified": 1679926560030,
+  "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
+  "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
   "firstName": "Hubert",
   "lastName": "Farnsworth",
   "dateOfBirth": 28410409,
@@ -184,20 +183,19 @@ const updatedPatient = await api.patientApi.createOrModifyPatient(
   "patientProfessions": [],
   "properties": {},
   "systemMetaData": {
-    "aesExchangeKeys": {},
     "hcPartyKeys": {},
     "privateKeyShamirPartitions": {},
+    "aesExchangeKeys": {},
     "transferKeys": {},
-    "encryptedSelf": "hX5bF+EK5/XO+9SBedOp6fGTiX7vniRFYLJSDH4TXOheUuQxHn3W7q0cefVAKSJI",
+    "encryptedSelf": "sxl//v+/2wVroXbDGGeet+PVTGR7jFrA8I4FaRAfsLdc73AM6cBiKyjO9Ik2ayai",
     "secretForeignKeys": [],
     "cryptedForeignKeys": {},
     "delegations": {
-      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
     },
     "encryptionKeys": {
-      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
-    },
-    "publicKeysForOaepWithSha256": {}
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+    }
   }
 }
 ```
@@ -208,26 +206,26 @@ const updatedPatient = await api.patientApi.createOrModifyPatient(
 
 To get a patient, we can use the `getPatient` method on the `PatientApi` object. This method takes one parameter: the patient id.
 
-<!-- file://code-samples/how-to/patients/index.mts snippet:get a patient-->
+<!-- file://code-samples/{{sdk}}/how-to/patients/index.mts snippet:get a patient-->
 ```typescript
 const patient = await api.patientApi.getPatient(updatedPatient.id!)
 ```
 
-<!-- output://code-samples/how-to/patients/patient.txt -->
+<!-- output://code-samples/{{sdk}}/how-to/patients/patient.txt -->
 <details>
 <summary>patient</summary>
 
 ```json
 {
-  "id": "866d6a5d-6b76-4b4e-a54e-27ee76d76b5e",
+  "id": "fb442885-0697-4803-903d-2f8d947bccd1",
   "languages": [],
   "active": true,
   "parameters": {},
-  "rev": "2-c908c2fef3e2b34eb39b287add17c469",
-  "created": 1688378973339,
-  "modified": 1688378973361,
-  "author": "6a541dfb-40d9-41f5-ba76-e3a5e277813f",
-  "responsible": "e2b6e873-035b-4964-885b-5a90e99c43b4",
+  "rev": "2-081c23c9ca40ef5bbbb9915ebb9dd2d3",
+  "created": 1679926559766,
+  "modified": 1679926560030,
+  "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
+  "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
   "firstName": "Hubert",
   "lastName": "Farnsworth",
   "dateOfBirth": 28410409,
@@ -268,20 +266,19 @@ const patient = await api.patientApi.getPatient(updatedPatient.id!)
   "patientProfessions": [],
   "properties": {},
   "systemMetaData": {
-    "aesExchangeKeys": {},
     "hcPartyKeys": {},
     "privateKeyShamirPartitions": {},
+    "aesExchangeKeys": {},
     "transferKeys": {},
-    "encryptedSelf": "hX5bF+EK5/XO+9SBedOp6fGTiX7vniRFYLJSDH4TXOheUuQxHn3W7q0cefVAKSJI",
+    "encryptedSelf": "sxl//v+/2wVroXbDGGeet+PVTGR7jFrA8I4FaRAfsLdc73AM6cBiKyjO9Ik2ayai",
     "secretForeignKeys": [],
     "cryptedForeignKeys": {},
     "delegations": {
-      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
     },
     "encryptionKeys": {
-      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
-    },
-    "publicKeysForOaepWithSha256": {}
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+    }
   }
 }
 ```
@@ -292,17 +289,17 @@ const patient = await api.patientApi.getPatient(updatedPatient.id!)
 
 To delete a patient, we can use the `deletePatient` method on the `PatientApi` object. This method takes one parameter: the patient id.
 
-<!-- file://code-samples/how-to/patients/index.mts snippet:delete a patient-->
+<!-- file://code-samples/{{sdk}}/how-to/patients/index.mts snippet:delete a patient-->
 ```typescript
 const deletedPatientId = await api.patientApi.deletePatient(patient.id!)
 ```
 
-<!-- output://code-samples/how-to/patients/deletedPatientId.txt -->
+<!-- output://code-samples/{{sdk}}/how-to/patients/deletedPatientId.txt -->
 <details>
 <summary>deletedPatientId</summary>
 
 ```text
-866d6a5d-6b76-4b4e-a54e-27ee76d76b5e
+fb442885-0697-4803-903d-2f8d947bccd1
 ```
 </details>
 
@@ -310,7 +307,7 @@ const deletedPatientId = await api.patientApi.deletePatient(patient.id!)
 
 To filter patients, we can use the `filterPatients` method on the `PatientApi` object. This method takes one parameter: the filter.
 
-<!-- file://code-samples/how-to/patients/index.mts snippet:get a list of patient-->
+<!-- file://code-samples/{{sdk}}/how-to/patients/index.mts snippet:get a list of patient-->
 ```typescript
 const filter = await new PatientFilter(api)
   .forDataOwner(loggedUser.healthcarePartyId!)
@@ -320,7 +317,7 @@ const filter = await new PatientFilter(api)
 const patients = await api.patientApi.filterPatients(filter)
 ```
 
-<!-- output://code-samples/how-to/patients/patients.txt -->
+<!-- output://code-samples/{{sdk}}/how-to/patients/patients.txt -->
 <details>
 <summary>patients</summary>
 
@@ -330,15 +327,15 @@ const patients = await api.patientApi.filterPatients(filter)
   "totalSize": 1,
   "rows": [
     {
-      "id": "866d6a5d-6b76-4b4e-a54e-27ee76d76b5e",
+      "id": "fb442885-0697-4803-903d-2f8d947bccd1",
       "languages": [],
       "active": true,
       "parameters": {},
-      "rev": "2-c908c2fef3e2b34eb39b287add17c469",
-      "created": 1688378973339,
-      "modified": 1688378973361,
-      "author": "6a541dfb-40d9-41f5-ba76-e3a5e277813f",
-      "responsible": "e2b6e873-035b-4964-885b-5a90e99c43b4",
+      "rev": "2-081c23c9ca40ef5bbbb9915ebb9dd2d3",
+      "created": 1679926559766,
+      "modified": 1679926560030,
+      "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
+      "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
       "firstName": "Hubert",
       "lastName": "Farnsworth",
       "dateOfBirth": 28410409,
@@ -378,20 +375,19 @@ const patients = await api.patientApi.filterPatients(filter)
       "patientProfessions": [],
       "properties": {},
       "systemMetaData": {
-        "aesExchangeKeys": {},
         "hcPartyKeys": {},
         "privateKeyShamirPartitions": {},
+        "aesExchangeKeys": {},
         "transferKeys": {},
-        "encryptedSelf": "hX5bF+EK5/XO+9SBedOp6fGTiX7vniRFYLJSDH4TXOheUuQxHn3W7q0cefVAKSJI",
+        "encryptedSelf": "sxl//v+/2wVroXbDGGeet+PVTGR7jFrA8I4FaRAfsLdc73AM6cBiKyjO9Ik2ayai",
         "secretForeignKeys": [],
         "cryptedForeignKeys": {},
         "delegations": {
-          "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
+          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
         },
         "encryptionKeys": {
-          "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
-        },
-        "publicKeysForOaepWithSha256": {}
+          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+        }
       }
     }
   ],
@@ -404,11 +400,11 @@ const patients = await api.patientApi.filterPatients(filter)
 
 ### Filter builder
 
-To create a filter, we can use the [`PatientFilter`](/{{ sdk }}/references/filters/PatientFilter#methods-1) builder methods. This builder allows us to create complex filter object.
+To create a filter, we can use the [`PatientFilter`](/{{sdk}}/references/filters/PatientFilter#methods-1) builder methods. This builder allows us to create complex filter object.
 
 In the example above, we created the filter this way:
 
-<!-- file://code-samples/how-to/patients/index.mts snippet:filter builder-->
+<!-- file://code-samples/{{sdk}}/how-to/patients/index.mts snippet:filter builder-->
 ```typescript
 const patientFilter = new PatientFilter(api)
   .forDataOwner(loggedUser.healthcarePartyId!)
@@ -416,7 +412,7 @@ const patientFilter = new PatientFilter(api)
   .build()
 ```
 
-<!-- output://code-samples/how-to/patients/patientFilter.txt -->
+<!-- output://code-samples/{{sdk}}/how-to/patients/patientFilter.txt -->
 <details>
 <summary>patientFilter</summary>
 
@@ -436,7 +432,7 @@ The resulting filter object will create a filter that allows us to get all `Pati
 
 In some circumstances, you might want to get a list of `Patient` ids instead of the `Patient` entities themselves. To do so, you can use the `matchPatients` method on the `PatientApi`. This method takes one parameter: the filter object.
 
-<!-- file://code-samples/how-to/patients/index.mts snippet:get a list of patient ids-->
+<!-- file://code-samples/{{sdk}}/how-to/patients/index.mts snippet:get a list of patient ids-->
 ```typescript
 const filterForMatch = await new PatientFilter(api)
   .forDataOwner(loggedUser.healthcarePartyId!)
@@ -447,13 +443,13 @@ const filterForMatch = await new PatientFilter(api)
 const patientIds = await api.patientApi.matchPatients(filterForMatch)
 ```
 
-<!-- output://code-samples/how-to/patients/patientIds.txt -->
+<!-- output://code-samples/{{sdk}}/how-to/patients/patientIds.txt -->
 <details>
 <summary>patientIds</summary>
 
 ```text
 [
-  "866d6a5d-6b76-4b4e-a54e-27ee76d76b5e"
+  "fb442885-0697-4803-903d-2f8d947bccd1"
 ]
 ```
 </details>
@@ -475,4 +471,4 @@ However, you can still access and modify any unencrypted data using the methods 
 `EncryptedPatient` if only the unencrypted data is available. The method `modifyEncryptedPatient` instead takes in 
 input an `EncryptedPatient` and allows you to modify any non-encrypted field of the `Patient` entity.
 
-You can see an example on how to use these methods in the tutorial [Inviting an existing patient to become a user](/{{ sdk }}/how-to/how-to-invite-existing-patient-as-a-user).
+You can see an example on how to use these methods in the tutorial [Inviting an existing patient to become a user](/{{sdk}}/how-to/how-to-invite-existing-patient-as-a-user).

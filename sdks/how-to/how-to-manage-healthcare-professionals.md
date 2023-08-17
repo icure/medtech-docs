@@ -1,22 +1,22 @@
 ---
 slug: how-to-manage-healthcare-professionals
-description: Learn how to manage {{ hcps }}
+description: Learn how to manage {{hcps}}
 tags:
 - HealthcareProfessional
 ---
-# Handling {{ hcps }}
+# Handling {{hcps}}
 
-[{{ Hcps }}](/{{ sdk }}/glossary#data-owner) are doctors, nurses, physiotherapists, etc. They are the 
+[{{Hcps}}](/{{sdk}}/glossary#data-owner) are doctors, nurses, physiotherapists, etc. They are the 
 people who are going to use the medical device to take care of patients.  
-{{ Hcps }} can also in certain cases be a healthcare organizations.  
-The healthcareProfessionalApi allows you to manage [{{ Hcps }}](../references/classes/HealthcareProfessional.md).
+{{Hcps}} can also in certain cases be a healthcare organizations.  
+The healthcareProfessionalApi allows you to manage [{{Hcps}}](../references/classes/HealthcareProfessional.md).
 
-## Create a {{ hcp }}
+## Create a {{hcp}}
 
-You first need to instantiate a [{{ Hcp }}](../references/classes/HealthcareProfessional.md) object.
+You first need to instantiate a [{{Hcp}}](../references/classes/HealthcareProfessional.md) object.
 Pass the `healthcareProfessional` to the createHealthcareProfessional method of the healthcareProfessionalApi to create it in the database.
 
-<!-- file://code-samples/how-to/manage-healthcare-professionals/index.mts snippet:Create a {{ hcp }}-->
+<!-- file://code-samples/{{sdk}}/how-to/manage-healthcare-professionals/index.mts snippet:Create a {{hcp}}-->
 ```typescript
 const healthcareProfessional: HealthcareProfessional = new HealthcareProfessional({
   firstName: 'John',
@@ -42,15 +42,15 @@ const createdHcp = await api.healthcareProfessionalApi.createOrModifyHealthcareP
 )
 ```
 
-<!-- output://code-samples/how-to/manage-healthcare-professionals/createdHcp.txt -->
+<!-- output://code-samples/{{sdk}}/how-to/manage-healthcare-professionals/createdHcp.txt -->
 <details>
 <summary>createdHcp</summary>
 
 ```json
 {
-  "id": "07bda9b6-b70b-4c08-9841-f0d8aa15208c",
+  "id": "885de220-ed2d-45eb-af8c-70dde427b679",
   "languages": [],
-  "rev": "1-9b135fd45393e8e5a3d3b63bcbfab447",
+  "rev": "1-51f36dc600b3a7814e1fc33ea19b9bda",
   "name": "Keats John",
   "lastName": "Keats",
   "firstName": "John",
@@ -81,34 +81,33 @@ const createdHcp = await api.healthcareProfessionalApi.createOrModifyHealthcareP
   ],
   "properties": {},
   "systemMetaData": {
-    "aesExchangeKeys": {},
     "hcPartyKeys": {},
     "privateKeyShamirPartitions": {},
-    "transferKeys": {},
-    "publicKeysForOaepWithSha256": {}
+    "aesExchangeKeys": {},
+    "transferKeys": {}
   }
 }
 ```
 </details>
 
-## Load a {{ hcp }} by id
+## Load a {{hcp}} by id
 
-The getHealthcareProfessional method of the healthcareProfessionalApi allows you to load a [{{ Hcp }}](../references/classes/HealthcareProfessional.md) by id.
+The getHealthcareProfessional method of the healthcareProfessionalApi allows you to load a [{{Hcp}}](../references/classes/HealthcareProfessional.md) by id.
 
-<!-- file://code-samples/how-to/manage-healthcare-professionals/index.mts snippet:Load a {{ hcp }} by id-->
+<!-- file://code-samples/{{sdk}}/how-to/manage-healthcare-professionals/index.mts snippet:Load a {{hcp}} by id-->
 ```typescript
 const loadedHcp = await api.healthcareProfessionalApi.getHealthcareProfessional(createdHcp.id)
 ```
 
-<!-- output://code-samples/how-to/manage-healthcare-professionals/loadedHcp.txt -->
+<!-- output://code-samples/{{sdk}}/how-to/manage-healthcare-professionals/loadedHcp.txt -->
 <details>
 <summary>loadedHcp</summary>
 
 ```json
 {
-  "id": "07bda9b6-b70b-4c08-9841-f0d8aa15208c",
+  "id": "885de220-ed2d-45eb-af8c-70dde427b679",
   "languages": [],
-  "rev": "1-9b135fd45393e8e5a3d3b63bcbfab447",
+  "rev": "1-51f36dc600b3a7814e1fc33ea19b9bda",
   "name": "Keats John",
   "lastName": "Keats",
   "firstName": "John",
@@ -139,23 +138,22 @@ const loadedHcp = await api.healthcareProfessionalApi.getHealthcareProfessional(
   ],
   "properties": {},
   "systemMetaData": {
-    "aesExchangeKeys": {},
     "hcPartyKeys": {},
     "privateKeyShamirPartitions": {},
-    "transferKeys": {},
-    "publicKeysForOaepWithSha256": {}
+    "aesExchangeKeys": {},
+    "transferKeys": {}
   }
 }
 ```
 </details>
 
-## Filter {{ hcps }}
+## Filter {{hcps}}
 
-You can build complex queries and use them to retrieve [{{ Hcps }}](../references/classes/HealthcareProfessional.md) using the filterHealthcareProfessionals method of the healthcareProfessionalApi.
+You can build complex queries and use them to retrieve [{{Hcps}}](../references/classes/HealthcareProfessional.md) using the filterHealthcareProfessionals method of the healthcareProfessionalApi.
 
 You can build filters by hand or use the DSL provided by the HealthcareProfessionalFilter class.
 
-<!-- file://code-samples/how-to/manage-healthcare-professionals/index.mts snippet:Filter {{ hcps }}-->
+<!-- file://code-samples/{{sdk}}/how-to/manage-healthcare-professionals/index.mts snippet:Filter {{hcps}}-->
 ```typescript
 const hcps = await api.healthcareProfessionalApi.filterHealthcareProfessionalBy(
   await new HealthcareProfessionalFilter(api)
@@ -164,19 +162,19 @@ const hcps = await api.healthcareProfessionalApi.filterHealthcareProfessionalBy(
 )
 ```
 
-<!-- output://code-samples/how-to/manage-healthcare-professionals/hcps.txt -->
+<!-- output://code-samples/{{sdk}}/how-to/manage-healthcare-professionals/hcps.txt -->
 <details>
 <summary>hcps</summary>
 
 ```json
 {
   "pageSize": 1000,
-  "totalSize": 441,
+  "totalSize": 250,
   "rows": [
     {
-      "id": "07bda9b6-b70b-4c08-9841-f0d8aa15208c",
+      "id": "885de220-ed2d-45eb-af8c-70dde427b679",
       "languages": [],
-      "rev": "1-9b135fd45393e8e5a3d3b63bcbfab447",
+      "rev": "1-51f36dc600b3a7814e1fc33ea19b9bda",
       "name": "Keats John",
       "lastName": "Keats",
       "firstName": "John",
@@ -207,11 +205,10 @@ const hcps = await api.healthcareProfessionalApi.filterHealthcareProfessionalBy(
       ],
       "properties": {},
       "systemMetaData": {
-        "aesExchangeKeys": {},
         "hcPartyKeys": {},
         "privateKeyShamirPartitions": {},
-        "transferKeys": {},
-        "publicKeysForOaepWithSha256": {}
+        "aesExchangeKeys": {},
+        "transferKeys": {}
       }
     }
   ],
@@ -220,20 +217,20 @@ const hcps = await api.healthcareProfessionalApi.filterHealthcareProfessionalBy(
 ```
 </details>
 
-## Delete a {{ hcp }}
+## Delete a {{hcp}}
 
-The deleteHealthcareProfessional method of the healthcareProfessionalApi allows you to delete a [{{ Hcp }}](../references/classes/HealthcareProfessional.md) by id.
+The deleteHealthcareProfessional method of the healthcareProfessionalApi allows you to delete a [{{Hcp}}](../references/classes/HealthcareProfessional.md) by id.
 
-<!-- file://code-samples/how-to/manage-healthcare-professionals/index.mts snippet:Delete a {{ hcp }}-->
+<!-- file://code-samples/{{sdk}}/how-to/manage-healthcare-professionals/index.mts snippet:Delete a {{hcp}}-->
 ```typescript
 const deletedHcp = await api.healthcareProfessionalApi.deleteHealthcareProfessional(createdHcp.id)
 ```
 
-<!-- output://code-samples/how-to/manage-healthcare-professionals/deletedHcp.txt -->
+<!-- output://code-samples/{{sdk}}/how-to/manage-healthcare-professionals/deletedHcp.txt -->
 <details>
 <summary>deletedHcp</summary>
 
 ```text
-3-a2c6eb49f60a29190496bec0ea27c306
+3-ced7d11ed93a65d8d1d32f12358ce9fe
 ```
 </details>

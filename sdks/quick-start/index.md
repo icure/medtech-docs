@@ -88,7 +88,7 @@ In the next sections of this quick start, the email of your parent organisation 
 
 
 ### Generate the cryptographic keys of your Parent Organisation
-When a patient or a doctor wants to share their medical data with you, they will need to use the public key of your parent {{ hcp }}. That's why, in order to complete the previous step, you need to generate the cryptographic keys of your parent organisation.
+When a patient or a doctor wants to share their medical data with you, they will need to use the public key of your parent {{hcp}}. That's why, in order to complete the previous step, you need to generate the cryptographic keys of your parent organisation.
 
 The Node.JS Boilerplate App is already doing it for you. Have a look at its [Quick Start](node-js-quick-start.md) to know more about it. 
 
