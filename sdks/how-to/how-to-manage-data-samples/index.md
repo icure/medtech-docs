@@ -1,21 +1,21 @@
 ---
 slug: how-to-manage-data-samples
-description: Learn how to manage data samples
+description: Learn how to manage {{ services }}
 tags:
 
 - DataSample
 
 ---
 
-# Handling data samples
+# Handling {{ services }}
 
-In this section, we will learn how to manage data samples. DataSamples are used to store data that is not part of the
+In this section, we will learn how to manage {{ services }}. DataSamples are used to store data that is not part of the
 patient's medical record, such as blood pressure measurements.
 
 :::note
 
 We assume in the examples below that you have already created a patient. If not, please follow
-the [Handling patients](/sdks/how-to/how-to-manage-patients) guide.
+the [Handling patients](/{{ sdk }}/how-to/how-to-manage-patients) guide.
 
 :::
 
@@ -322,7 +322,7 @@ const filteredDataSamples = await api.dataSampleApi.filterDataSample(filter)
 
 ### Filter builder
 
-To create a filter, we can use the [`DataSampleFilter`](/sdks/references/filters/DataSampleFilter#methods) builder methods. This builder allows us to create complex filter object.
+To create a filter, we can use the [`DataSampleFilter`](/{{ sdk }}/references/filters/DataSampleFilter#methods) builder methods. This builder allows us to create complex filter object.
 
 In the example above, we created the filter this way:
 

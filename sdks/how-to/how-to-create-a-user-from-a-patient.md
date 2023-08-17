@@ -98,12 +98,12 @@ The patient can now start using iCure, but there are still some limitations to w
 
 The patient can't:
 
-- access any existing data samples and health elements
+- access any existing {{ services }} and health elements
 - access encrypted data in his `Patient` entity
 
 but the patient can:
 
-- create new data samples and health elements
+- create new {{ services }} and health elements
 - share newly created medical data with his doctor
 - access and modify non-encrypted data in his `Patient` entity
 
@@ -332,9 +332,9 @@ const modifiedPatientDetails = await apiAsPatient.patientApi.modifyPotentiallyEn
 ```
 </details>
 
-The patient can also create and share data sample and health elements as normal:
+The patient can also create and share {{ service }} and health elements as normal:
 
-<!-- file://code-samples/how-to/create-user-for-patient/index.mts snippet:create healthcare element-->
+<!-- file://code-samples/how-to/create-user-for-patient/index.mts snippet:create {{ healthcareElement }}-->
 ```typescript
 const newHealthcareElement =
   await apiAsPatient.healthcareElementApi.createOrModifyHealthcareElement(
@@ -356,7 +356,7 @@ const sharedHealthcareElement = await apiAsPatient.healthcareElementApi.giveAcce
   newHealthcareElement,
   hcp.id,
 )
-// The doctor can now access the healthcare element
+// The doctor can now access the {{ healthcareElement }}
 apiAsDoctor.cryptoApi.emptyHcpCache(hcp.id)
 console.log(await apiAsDoctor.healthcareElementApi.getHealthcareElement(newHealthcareElement.id!)) // HealthcareElement...
 ```
@@ -444,7 +444,7 @@ new data is created using a new secret foreign key that only the patient knows. 
 this new medical data you will have to share the secret foreign key using the 
 `PatientApi.giveAccessToPotentiallyEncrypted` method.
 
-<!-- file://code-samples/how-to/create-user-for-patient/index.mts snippet:share healthcare element sfk-->
+<!-- file://code-samples/how-to/create-user-for-patient/index.mts snippet:share {{ healthcareElement }} sfk-->
 ```typescript
 const filterForHcpWithoutAccessByPatient = await new HealthcareElementFilter(apiAsDoctor)
   .forDataOwner(hcp.id)
@@ -456,7 +456,7 @@ const notFoundHEs = await apiAsDoctor.healthcareElementApi.filterHealthcareEleme
 console.log(notFoundHEs.rows.find((x) => x.id == newHealthcareElement.id)) // undefined
 // The patient shares his secret foreign key with the doctor
 await apiAsPatient.patientApi.giveAccessToPotentiallyEncrypted(modifiedPatientDetails, hcp.id)
-// The doctor can now also find the healthcare element
+// The doctor can now also find the {{ healthcareElement }}
 const filterForHcpWithAccessByPatient = await new HealthcareElementFilter(apiAsDoctor)
   .forDataOwner(hcp.id)
   .forPatients([await apiAsDoctor.patientApi.getPatient(patient.id)])

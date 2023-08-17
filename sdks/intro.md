@@ -37,8 +37,8 @@ to them by contacting us through our [support portal](https://icure.atlassian.ne
 
 To hit the ground running, you can head to our [quick-start](./quick-start/index.md) or our [tutorials](./tutorial/index.md) section.
 
-In the [how-to](/sdks/how-to/index) section, you will find more detailed information on how to use the SDKs to perform the most common tasks.
+In the [how-to](/{{ sdk }}/how-to/index) section, you will find more detailed information on how to use the SDKs to perform the most common tasks.
 
-The [explanation](/sdks/explanations) section contains more in-depth information on how iCure works and how data is organised, secured and stored.
+The [explanation](/{{ sdk }}/explanations) section contains more in-depth information on how iCure works and how data is organised, secured and stored.
 
-The [reference](/sdks/references/modules.md) section contains the full documentation of the SDKs and the API.
+The [reference](/{{ sdk }}/references/modules.md) section contains the full documentation of the SDKs and the API.

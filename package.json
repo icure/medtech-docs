@@ -2,7 +2,9 @@
   "name": "icure-medtech-docs",
   "version": "0.0.0",
   "private": true,
+  "type": "module",
   "scripts": {
+    "make": "node make.js",
     "docusaurus": "docusaurus",
     "start": "docusaurus start",
     "build": "docusaurus build",
@@ -35,6 +37,7 @@
   "devDependencies": {
     "@docusaurus/module-type-aliases": "2.4.0",
     "@tsconfig/docusaurus": "^1.0.5",
+    "mustache": "^4.2.0",
     "typescript": "^4.7.4"
   },
   "browserslist": {

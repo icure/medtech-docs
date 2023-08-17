@@ -9,7 +9,7 @@ tags:
 A User represents an actor that can log in to the iCure platform and instantiate the MedTech API. It can be associated 
 to a Healthcare Professional, to a Patient, or to a Device.  
 A Healthcare Professional can create and invite a new User, as well as modifying or deactivating an existing one.
-A [Data Owner](/sdks/glossary#data-owner) without a User cannot access the iCure Platform.
+A [Data Owner](/{{ sdk }}/glossary#data-owner) without a User cannot access the iCure Platform.
 
 ## When Should I Use a User?
 

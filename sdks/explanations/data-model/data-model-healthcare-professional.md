@@ -3,13 +3,13 @@ slug: healthcare-professional
 tags:
     - data model
     - data owner
-    - healthcare professional
+    - {{ hcp }}
 ---
 # Healthcare Professional
 
 A Healthcare Professional is an actor that can manage and is responsible for Patients, Medical Devices and other 
 Healthcare Professionals.  
-As [Data Owners](/sdks/glossary#data-owner) they can create medical information and share it with other Data Owners.
+As [Data Owners](/{{ sdk }}/glossary#data-owner) they can create medical information and share it with other Data Owners.
 Other Data Owner can decide to share their medical information with them.
 
 ## When Should I Use a Healthcare Professional?
@@ -22,8 +22,8 @@ medical data, and treatments, in your application.
 A Healthcare Professional can:
 - create Users for other Patients, Medical Devices, and Healthcare Professionals.  
 - manage other Users, by changing their passwords or deactivating them.  
-- create Data Samples and Healthcare Elements for Patients.  
-- share Data Samples and Healthcare Elements with other Data Owners.  
+- create {{ Services }} and {{ HealthcareElements }} for Patients.  
+- share {{ Services }} and {{ HealthcareElements }} with other Data Owners.  
 - create Notifications and  update the ones shared with them.
 
 ## Examples
@@ -62,7 +62,7 @@ const createdUser = await api.userApi.createAndInviteUser(existingPatient, messa
 
 ### A Doctor Registering a Visit and Sharing the Outcome with the Patient
 
-After a visit, a Doctor register the symptoms the Patient is experiencing (fatigue) as a new Data Sample.  
+After a visit, a Doctor register the symptoms the Patient is experiencing (fatigue) as a new {{ Service }}.  
 Then, they add the diagnosis (hay fever) as associated Healthcare Element.
 
 <!-- file://code-samples/explanation/doctor-shares-data-with-patient/index.mts snippet:doctor shares medical data-->

@@ -72,13 +72,13 @@ the `ICureApi` logic created a new keypair for your parent organisation and save
 
 You can find the details of this implementation in the file `services/ICureApi.ts`. 
 
-Calling `http://127.0.0.1:3000/` a second time, the keys being already created, no additional operation is needed and the information of your healthcare professional are directly returned. 
+Calling `http://127.0.0.1:3000/` a second time, the keys being already created, no additional operation is needed and the information of your {{ hcp }} are directly returned. 
 
 ### Special case: The HCP already created some keys in the past
 In cascade, the `ICureApi` will try to: 
 - Get the keys from the localStorage location; 
 - If it can't find them, get them from the `.env` file and save them back into the localStorage; 
-- If it can't find them in the `.env` file as well, try to create a new keypair and add the public key to your healthcare professional in iCure; 
+- If it can't find them in the `.env` file as well, try to create a new keypair and add the public key to your {{ hcp }} in iCure; 
 
 If you started your Node.JS server and got the error `Aborting Cryptographic Keys creation: Current HCP already has cryptographic keys` when calling `http://127.0.0.1:3000/`, it means you already created cryptographic keys for your parent healthcare 
 professional. Therefore, creating a new keypair will override your previous key and you'll not be able to access the data shared with your previous keypair anymore. 

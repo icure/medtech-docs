@@ -7,7 +7,7 @@ tags:
 
 # Handling patients
 
-In this section, we will learn how to manage patients. [Patient](/sdks/references/classes/Patient) is a class that represents a patient in the system. It contains all the information about the patient.
+In this section, we will learn how to manage patients. [Patient](/{{ sdk }}/references/classes/Patient) is a class that represents a patient in the system. It contains all the information about the patient.
 
 ## How to create a patient&#8239;?
 
@@ -404,7 +404,7 @@ const patients = await api.patientApi.filterPatients(filter)
 
 ### Filter builder
 
-To create a filter, we can use the [`PatientFilter`](/sdks/references/filters/PatientFilter#methods-1) builder methods. This builder allows us to create complex filter object.
+To create a filter, we can use the [`PatientFilter`](/{{ sdk }}/references/filters/PatientFilter#methods-1) builder methods. This builder allows us to create complex filter object.
 
 In the example above, we created the filter this way:
 
@@ -475,4 +475,4 @@ However, you can still access and modify any unencrypted data using the methods 
 `EncryptedPatient` if only the unencrypted data is available. The method `modifyEncryptedPatient` instead takes in 
 input an `EncryptedPatient` and allows you to modify any non-encrypted field of the `Patient` entity.
 
-You can see an example on how to use these methods in the tutorial [Inviting an existing patient to become a user](/sdks/how-to/how-to-invite-existing-patient-as-a-user).
+You can see an example on how to use these methods in the tutorial [Inviting an existing patient to become a user](/{{ sdk }}/how-to/how-to-invite-existing-patient-as-a-user).

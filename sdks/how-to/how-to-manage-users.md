@@ -90,7 +90,7 @@ but only Admins and Healthcare Professionals from create authentication tokens f
 
 The user you just created will be able to connect to the application but will not be able to manage data because it is not connected to a data owner.
 
-You will often need to create a patient that can connect to iCure. In that case you can use [createAndInviteUser](/sdks/references/apis/UserApi#createandinviteuser):
+You will often need to create a patient that can connect to iCure. In that case you can use [createAndInviteUser](/{{ sdk }}/references/apis/UserApi#createandinviteuser):
 
 <!-- file://code-samples/how-to/manage-users/index.mts snippet:Create a patient user-->
 ```typescript
@@ -106,7 +106,7 @@ if (
     a.telecoms.some((t) => t.telecomType === 'email' && !!t.telecomNumber),
   )
 ) {
-  //An email address is required for the healthcare professional to send the invitation
+  //An email address is required for the {{ hcp }} to send the invitation
   loggedHcp.addresses.push(
     new Address({
       telecoms: [
@@ -256,7 +256,7 @@ The email will contain the username and a temporary password.
 :::caution
 
 For this process to succeed the following conditions must be met: 
-* the healthcare professional and the patient must have an email address or a mobile phone number.
+* the {{ hcp }} and the patient must have an email address or a mobile phone number.
 * the email address or the phone number of the patient must not be in use by another user in the database.
 
 :::
@@ -436,4 +436,4 @@ const deletedUserId = await api.userApi.deleteUser(createdUser.id)
 ```
 </details>
 
-For the gory details of all you can do with users using the SDK, check out the [UserApi](/sdks/references/apis/UserApi) documentation.
+For the gory details of all you can do with users using the SDK, check out the [UserApi](/{{ sdk }}/references/apis/UserApi) documentation.

@@ -7,15 +7,15 @@ By the end of it, you will be able to:
 - Instantiate a MedTech API.
 - Create a Patient.
 - Get your newly created Patient information. 
-- Create data samples related to your patient.
-- Get your newly created Data Sample information.
-- Search for data samples satisfying some criteria.
+- Create {{ services }} related to your patient.
+- Get your newly created {{ Service }} information.
+- Search for {{ services }} satisfying some criteria.
 
 ## Pre-requisites
 To begin working with the MedTech SDK, you need to have a valid iCure User.
 You can obtain an iCure user in one of the following ways: 
 - Launch a free iCure instance locally on your computer, which will automatically create a default user for you.
-  To learn how to do this, refer to the [QuickStart](/sdks/quick-start/index.md) guide.
+  To learn how to do this, refer to the [QuickStart](/{{ sdk }}/quick-start/index.md) guide.
 - Register on the iCure Cockpit to get your iCure Cloud User.
   To learn how to do this, refer to the [How to register on Cockpit](/cockpit/how-to/how-to-create-your-account) guide.
 
@@ -121,7 +121,7 @@ the local storage contains no key, then a new pair will be created.
 
 :::info
 
-You can learn more about the Crypto Strategies [here](/sdks/explanations/crypto-strategies/crypto-strategies).
+You can learn more about the Crypto Strategies [here](/{{ sdk }}/explanations/crypto-strategies/crypto-strategies).
 
 :::
 
@@ -324,15 +324,15 @@ If you would like to know more about the information contained in Patient, go ch
 
 Let's now create some medical data for our patient. 
 
-## Create your first data sample
-You can use data samples to store information related to the health of a patient.
-For example, when a patient goes to the doctor, we can use data samples to register the symptoms they experience and/or 
+## Create your first {{ service }}
+You can use {{ services }} to store information related to the health of a patient.
+For example, when a patient goes to the doctor, we can use {{ services }} to register the symptoms they experience and/or 
 the results of measurements taken by the doctor. 
 
-You can create a new data sample with `dataSampleApi.createOrModifyDataSample`. If you want to create many data samples at once, 
+You can create a new {{ service }} with `dataSampleApi.createOrModifyDataSample`. If you want to create many {{ services }} at once, 
 you should instead use `dataSampleApi.createOrModifyDataSamples`.
-Link these data samples to the patient you created earlier through the `patientId` parameter.
-A data sample must always be linked to a patient. 
+Link these {{ services }} to the patient you created earlier through the `patientId` parameter.
+A {{ service }} must always be linked to a patient. 
 
 <!-- file://code-samples/tutorial/doctor-centric-app/index.mts snippet:create your patient first medical data-->
 ```typescript
@@ -449,12 +449,12 @@ const createdData = await api.dataSampleApi.createOrModifyDataSamplesFor(johnSno
 </details>
 
 
-When creating your data samples, iCure will automatically assign an id to each of them, similarly to what happens for patients.
+When creating your {{ services }}, iCure will automatically assign an id to each of them, similarly to what happens for patients.
 
 But what happens if you don't know these ids? How can you find back your data?
 
 
-## Search for data samples satisfying some criteria
+## Search for {{ services }} satisfying some criteria
 Sometimes you will want to search for data which satisfies some specific criteria.
 
 You can do this using the `filter` services of the apis, such as `dataSampleApi.filterDataSamples` or `patientApi.filterPatients`.
@@ -541,8 +541,8 @@ Filters offer you a lot of possibilities. Go have a look at
 the [How To search data in iCure using complex filters](../how-to/how-to-filter-data-with-advanced-search-criteria.md) 
 guide to know more about them. 
 
-## Get your newly created Data Sample information
-Finally, you can also get the information of a specific data sample, if you know its id. 
+## Get your newly created {{ Service }} information
+Finally, you can also get the information of a specific {{ service }}, if you know its id. 
 
 <!-- file://code-samples/tutorial/doctor-centric-app/index.mts snippet:get specific medical data information-->
 ```typescript
@@ -602,10 +602,10 @@ expect(johnWeight.comment).to.be.equal('Weight')
 ```
 </details>
 
-To know more about the Data Sample information, go check the [References](/sdks/references/classes/DataSample.md)
+To know more about the {{ Service }} information, go check the [References](/{{ sdk }}/references/classes/DataSample.md)
 
 ## What's next ? 
 Congratulations, you are now able to use the basic functions of the iCure MedTech SDK. 
-However, the SDK offers a lot of other services: head to the [How-To](/sdks/how-to/index) section to discover all of them. 
-You can also check the different [In-Depth Explanations](/sdks/explanations), to understand fully what's happening 
+However, the SDK offers a lot of other services: head to the [How-To](/{{ sdk }}/how-to/index) section to discover all of them. 
+You can also check the different [In-Depth Explanations](/{{ sdk }}/explanations), to understand fully what's happening 
 behind each service of iCure.

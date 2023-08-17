@@ -1,25 +1,25 @@
 ---
 slug: how-to-manage-hierarchical-data-samples-structure
-description: Learn how to create a data sample with hierarchical information.
+description: Learn how to create a {{ service }} with hierarchical information.
 tags:
 - DataSample
 - Measure
 - TimeSeries
 ---
 
-# Handling a hierarchical data samples structure
+# Handling a hierarchical {{ services }} structure
 
-In this section, we will learn how to create data samples with complex nested objects.
+In this section, we will learn how to create {{ services }} with complex nested objects.
 
 :::info
 
-You can learn more about the DataSample class in the [DataSample Glossary reference](/sdks/glossary#data-sample).
+You can learn more about the DataSample class in the [DataSample Glossary reference](/{{ sdk }}/glossary#data-sample).
 
 :::
 
 :::note
 
-We assume that you already know how to manage data samples. If not, please follow the [Handling DataSamples](/sdks/how-to/how-to-manage-data-samples/index.md) guide
+We assume that you already know how to manage {{ services }}. If not, please follow the [Handling DataSamples](/{{ sdk }}/how-to/how-to-manage-data-samples/index.md) guide
 
 :::
 
@@ -29,7 +29,7 @@ In some cases, you may want to create a `DataSample` with nested DataSamples.
 For example, you may want to create a single `DataSample` which groups mean heart rate measurements over
 different time intervals (1 hour mean heart rate, 8 hour mean heart, ...).
 
-As you know the `content` of a `DataSample` is a `Map<String, Content>`, where each entry associates a language code ([ISO 639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes)) to a [`Content`](/sdks/references/classes/Content) object.
+As you know the `content` of a `DataSample` is a `Map<String, Content>`, where each entry associates a language code ([ISO 639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes)) to a [`Content`](/{{ sdk }}/references/classes/Content) object.
 
 A `Content` object allows us to store different types of data. In this example we will use the `compoundValue`, `measureValue` and `timeSeries` properties.
 

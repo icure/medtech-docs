@@ -1,22 +1,22 @@
 ---
 slug: how-to-manage-healthcare-professionals
-description: Learn how to manage healthcare professionals
+description: Learn how to manage {{ hcps }}
 tags:
 - HealthcareProfessional
 ---
-# Handling healthcare professionals
+# Handling {{ hcps }}
 
-[Healthcare professionals](/sdks/glossary#data-owner) are doctors, nurses, physiotherapists, etc. They are the 
+[{{ Hcps }}](/{{ sdk }}/glossary#data-owner) are doctors, nurses, physiotherapists, etc. They are the 
 people who are going to use the medical device to take care of patients.  
-Healthcare professionals can also in certain cases be a healthcare organizations.  
-The healthcareProfessionalApi allows you to manage [Healthcare professionals](../references/classes/HealthcareProfessional.md).
+{{ Hcps }} can also in certain cases be a healthcare organizations.  
+The healthcareProfessionalApi allows you to manage [{{ Hcps }}](../references/classes/HealthcareProfessional.md).
 
-## Create a healthcare professional
+## Create a {{ hcp }}
 
-You first need to instantiate a [Healthcare professional](../references/classes/HealthcareProfessional.md) object.
+You first need to instantiate a [{{ Hcp }}](../references/classes/HealthcareProfessional.md) object.
 Pass the `healthcareProfessional` to the createHealthcareProfessional method of the healthcareProfessionalApi to create it in the database.
 
-<!-- file://code-samples/how-to/manage-healthcare-professionals/index.mts snippet:Create a healthcare professional-->
+<!-- file://code-samples/how-to/manage-healthcare-professionals/index.mts snippet:Create a {{ hcp }}-->
 ```typescript
 const healthcareProfessional: HealthcareProfessional = new HealthcareProfessional({
   firstName: 'John',
@@ -91,11 +91,11 @@ const createdHcp = await api.healthcareProfessionalApi.createOrModifyHealthcareP
 ```
 </details>
 
-## Load a healthcare professional by id
+## Load a {{ hcp }} by id
 
-The getHealthcareProfessional method of the healthcareProfessionalApi allows you to load a [Healthcare professional](../references/classes/HealthcareProfessional.md) by id.
+The getHealthcareProfessional method of the healthcareProfessionalApi allows you to load a [{{ Hcp }}](../references/classes/HealthcareProfessional.md) by id.
 
-<!-- file://code-samples/how-to/manage-healthcare-professionals/index.mts snippet:Load a healthcare professional by id-->
+<!-- file://code-samples/how-to/manage-healthcare-professionals/index.mts snippet:Load a {{ hcp }} by id-->
 ```typescript
 const loadedHcp = await api.healthcareProfessionalApi.getHealthcareProfessional(createdHcp.id)
 ```
@@ -149,13 +149,13 @@ const loadedHcp = await api.healthcareProfessionalApi.getHealthcareProfessional(
 ```
 </details>
 
-## Filter healthcare professionals
+## Filter {{ hcps }}
 
-You can build complex queries and use them to retrieve [Healthcare professionals](../references/classes/HealthcareProfessional.md) using the filterHealthcareProfessionals method of the healthcareProfessionalApi.
+You can build complex queries and use them to retrieve [{{ Hcps }}](../references/classes/HealthcareProfessional.md) using the filterHealthcareProfessionals method of the healthcareProfessionalApi.
 
 You can build filters by hand or use the DSL provided by the HealthcareProfessionalFilter class.
 
-<!-- file://code-samples/how-to/manage-healthcare-professionals/index.mts snippet:Filter healthcare professionals-->
+<!-- file://code-samples/how-to/manage-healthcare-professionals/index.mts snippet:Filter {{ hcps }}-->
 ```typescript
 const hcps = await api.healthcareProfessionalApi.filterHealthcareProfessionalBy(
   await new HealthcareProfessionalFilter(api)
@@ -220,11 +220,11 @@ const hcps = await api.healthcareProfessionalApi.filterHealthcareProfessionalBy(
 ```
 </details>
 
-## Delete a healthcare professional
+## Delete a {{ hcp }}
 
-The deleteHealthcareProfessional method of the healthcareProfessionalApi allows you to delete a [Healthcare professional](../references/classes/HealthcareProfessional.md) by id.
+The deleteHealthcareProfessional method of the healthcareProfessionalApi allows you to delete a [{{ Hcp }}](../references/classes/HealthcareProfessional.md) by id.
 
-<!-- file://code-samples/how-to/manage-healthcare-professionals/index.mts snippet:Delete a healthcare professional-->
+<!-- file://code-samples/how-to/manage-healthcare-professionals/index.mts snippet:Delete a {{ hcp }}-->
 ```typescript
 const deletedHcp = await api.healthcareProfessionalApi.deleteHealthcareProfessional(createdHcp.id)
 ```

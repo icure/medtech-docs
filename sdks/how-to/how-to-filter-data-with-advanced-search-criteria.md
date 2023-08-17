@@ -17,7 +17,7 @@ function filterPatients(filter: Filter<Patient>, nextPatientId?: string, limit?:
 function matchPatients(filter: Filter<Patient>): Promise<Array<string>> { /*...*/ }
 ```
 
-you can learn more about these methods, their parameter and their return type in the [reference](/sdks/references/apis/PatientApi).
+you can learn more about these methods, their parameter and their return type in the [reference](/{{ sdk }}/references/apis/PatientApi).
 As for now, let us focus on the `filter` parameter.
 
 ## The Filter DSL
@@ -766,24 +766,24 @@ If no condition is specified, the generated filter will return all the Coding in
 
 :::
 
-### Data Sample
+### {{ Service }}
 
-* `forDataOwner(dataOwnerId: string)`: all the Data Samples that the Data Owner passed as parameter can access.
-* `forSelf()`: all the Data Samples that the logged-in Data Owner.
-* `byIds(byIds: string[])`: all the Data Samples corresponding to the ids passed as parameter.
-* `byIdentifiers(identifiers: Identifier[])`: all the Data Samples that have the identifier passed as parameter.
-* `byLabelCodeDateFilter(tagType?: string, tagCode?: string, codeType?: string, codeCode?: string, startValueDate?: number, endValueDate?: number, descending: boolean?)`: all the Data Samples that matches one of his labels or codes, or created in the provided date interval.
-* `forPatients(crypto: IccCryptoXApi, patients: Patient[])`: all the Data Samples related to a certain Patient.
-* `byHealthElementIds(byHealthElementIds: string[])`: all the Data Samples that have the Healthcare Element specified as parameter.
+* `forDataOwner(dataOwnerId: string)`: all the {{ Services }} that the Data Owner passed as parameter can access.
+* `forSelf()`: all the {{ Services }} that the logged-in Data Owner.
+* `byIds(byIds: string[])`: all the {{ Services }} corresponding to the ids passed as parameter.
+* `byIdentifiers(identifiers: Identifier[])`: all the {{ Services }} that have the identifier passed as parameter.
+* `byLabelCodeDateFilter(tagType?: string, tagCode?: string, codeType?: string, codeCode?: string, startValueDate?: number, endValueDate?: number, descending: boolean?)`: all the {{ Services }} that matches one of his labels or codes, or created in the provided date interval.
+* `forPatients(crypto: IccCryptoXApi, patients: Patient[])`: all the {{ Services }} related to a certain Patient.
+* `byHealthElementIds(byHealthElementIds: string[])`: all the {{ Services }} that have the Healthcare Element specified as parameter.
 
 ### Healthcare Element
 
-* `forDataOwner(dataOwnerId: string)`: all the Healthcare Elements that the Data Owner passed as parameter can access. 
-* `forSelf()`: all the Data Samples that the logged-in Data Owner.
-* `byIds(byIds: string[])`: all the Healthcare Elements corresponding to the ids passed as parameter.
-* `byIdentifiers(identifiers: Identifier[])`: all the Healthcare Elements that have the identifier passed as parameter.
-* `byLabelCodeFilter(tagType?: string, tagCode?: string, codeType?: string, codeCode?: string)`: all the Healthcare Elements that matches one of his labels or codes.
-* `forPatients(crypto: IccCryptoXApi, patients: Patient[])`: all the Healthcare Elements related to a certain Patient.
+* `forDataOwner(dataOwnerId: string)`: all the {{ HealthcareElements }} that the Data Owner passed as parameter can access. 
+* `forSelf()`: all the {{ Services }} that the logged-in Data Owner.
+* `byIds(byIds: string[])`: all the {{ HealthcareElements }} corresponding to the ids passed as parameter.
+* `byIdentifiers(identifiers: Identifier[])`: all the {{ HealthcareElements }} that have the identifier passed as parameter.
+* `byLabelCodeFilter(tagType?: string, tagCode?: string, codeType?: string, codeCode?: string)`: all the {{ HealthcareElements }} that matches one of his labels or codes.
+* `forPatients(crypto: IccCryptoXApi, patients: Patient[])`: all the {{ HealthcareElements }} related to a certain Patient.
 
 ### Healthcare Professional
 
@@ -809,7 +809,7 @@ If no condition is specified, the generated filter will return all the Medical D
 ### Notification
 
 * `forDataOwner(dataOwnerId: string)`: all the Notifications that the Data Owner passed as parameter can access. **Note:** this field must be specified in all the queries.
-* `forSelf()`: all the Data Samples that the logged-in Data Owner.
+* `forSelf()`: all the {{ Services }} that the logged-in Data Owner.
 * `byIds(byIds: string[])`: all the Notifications corresponding to the ids passed as parameter.
 * `withType(type: NotificationTypeEnum)`: all the Notifications that are of the type passed as parameter.
 * `afterDate(fromDate: number)`: all the Notifications created after the timestamp passed as parameter.
@@ -817,7 +817,7 @@ If no condition is specified, the generated filter will return all the Medical D
 ### Patient
 
 * `forDataOwner(dataOwnerId: string)`: all the Patients that the Data Owner passed as parameter can access.
-* `forSelf()`: all the Data Samples that the logged-in Data Owner.
+* `forSelf()`: all the {{ Services }} that the logged-in Data Owner.
 * `byIds(byIds: string[])`: all the Patients corresponding to the ids passed as parameter.
 * `byIdentifiers(identifiers: Identifier[])`: all the Patients that have the identifier passed as parameter.
 * `byGenderEducationProfession(gender: PatientGenderEnum, education?: string, profession?: string)`: all the Patients that matches the gender, the education, or the profession passed as parameters.

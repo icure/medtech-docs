@@ -75,11 +75,11 @@ relative.
 ## Sharing data created by someone else
 
 Users are allowed to share any entity to which they have access, even if they were not the original creators.
-In this example `hcp1` creates a healthcare element and shares it with `p`.
+In this example `hcp1` creates a {{ healthcareElement }} and shares it with `p`.
 
-<!-- file://code-samples/how-to/sharing-data/index.mts snippet:create a healthcare element-->
+<!-- file://code-samples/how-to/sharing-data/index.mts snippet:create a {{ healthcareElement }}-->
 ```typescript
-// hcp1 creates a new healthcare element
+// hcp1 creates a new {{ healthcareElement }}
 const description = 'The patient has been diagnosed Pararibulitis'
 const healthcareElement = await hcp1Api.healthcareElementApi.createOrModifyHealthcareElement(
   new HealthcareElement({
@@ -104,9 +104,9 @@ await hcp1Api.healthcareElementApi.giveAccessTo(
 )
 ```
 
-Now also `p` can share the healthcare element with other data owners.
+Now also `p` can share the {{ healthcareElement }} with other data owners.
 
-<!-- file://code-samples/how-to/sharing-data/index.mts snippet:share a healthcare element-->
+<!-- file://code-samples/how-to/sharing-data/index.mts snippet:share a {{ healthcareElement }}-->
 ```typescript
 // p retrieves `healthcareElement` and shares it with hcp2
 await pApi.healthcareElementApi.giveAccessTo(
@@ -118,11 +118,11 @@ await pApi.healthcareElementApi.giveAccessTo(
 ## Sharing data as a patient
 
 Patient data owners can create entities and share them with other data owners.
-In this example `p` creates a data sample and shares it with `hcp1`, then `hcp1` shares it also with `hcp2`. 
+In this example `p` creates a {{ service }} and shares it with `hcp1`, then `hcp1` shares it also with `hcp2`. 
 
-<!-- file://code-samples/how-to/sharing-data/index.mts snippet:create and share a data sample-->
+<!-- file://code-samples/how-to/sharing-data/index.mts snippet:create and share a {{ service }}-->
 ```typescript
-// p creates a data sample
+// p creates a {{ service }}
 const contentString = 'Hello world'
 const dataSample = await pApi.dataSampleApi.createOrModifyDataSampleFor(
   patient.id,
@@ -134,9 +134,9 @@ const dataSample = await pApi.dataSampleApi.createOrModifyDataSampleFor(
   }),
 )
 expect((await pApi.dataSampleApi.getDataSample(dataSample.id)).content['en'].stringValue).to.equal(
-// p shares the data sample with hcp1
+// p shares the {{ service }} with hcp1
 await pApi.dataSampleApi.giveAccessTo(dataSample, pApi.dataOwnerApi.getDataOwnerIdOf(hcp1User))
-// hcp1 shares the data sample with hcp2
+// hcp1 shares the {{ service }} with hcp2
 await hcp1Api.dataSampleApi.giveAccessTo(
   await hcp1Api.dataSampleApi.getDataSample(dataSample.id),
   hcp1Api.dataOwnerApi.getDataOwnerIdOf(hcp2User),

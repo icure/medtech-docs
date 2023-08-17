@@ -1,16 +1,16 @@
 ---
 slug: how-to-manage-healthcare-elements
-description: Learn how to manage healthcare elements
+description: Learn how to manage {{ healthcareElements }}
 tags:
 - HealthcareElement
 ---
-# Handling healthcare elements
+# Handling {{ healthcareElements }}
 
 ## What is a Healthcare Element?
 
-A [Healthcare Element](../references/classes/HealthcareElement) is a piece of medical information that can be used to give more details about the context of a [Data Sample](../references/classes/DataSample).  
+A [Healthcare Element](../references/classes/HealthcareElement) is a piece of medical information that can be used to give more details about the context of a [{{ Service }}](../references/classes/DataSample).  
 It typically describes a long-lasting condition affecting a Patient.
-Healthcare Elements can be created by [Patient](../references/classes/Patient) and Healthcare Professionals. The sensitive information they contain are 
+{{ HealthcareElements }} can be created by [Patient](../references/classes/Patient) and Healthcare Professionals. The sensitive information they contain are 
 encrypted and can be read only by Data Owners with an explicit access.
 
 :::note
@@ -113,8 +113,8 @@ If not specified, the value of the following parameters will be automatically se
 
 When creating a new Healthcare Element, you must specify the Patient it is associated to.  
 If the method runs successfully, the Promise will return the newly created Healthcare Element.
-It is also possible to create a series of Healthcare Elements that describe a medical history. In a medical history, 
-the healthcare elements share the same `healthcareElementId`
+It is also possible to create a series of {{ HealthcareElements }} that describe a medical history. In a medical history, 
+the {{ healthcareElements }} share the same `healthcareElementId`
 
 <!-- file://code-samples/how-to/manage-healthcare-elements/index.mts snippet:create multiple related HEs as data owner-->
 ```typescript
@@ -225,7 +225,7 @@ The `healthcareElementId` is the id of the first Healthcare Element of the serie
 
 :::
 
-Several unrelated Healthcare Elements can also be created at once.
+Several unrelated {{ HealthcareElements }} can also be created at once.
 
 <!-- file://code-samples/how-to/manage-healthcare-elements/index.mts snippet:create multiple HEs as data owner-->
 ```typescript
@@ -660,7 +660,7 @@ You can learn more about filters in the [how to](../how-to/how-to-filter-data-wi
 
 :::
 
-After creating a filter, you can use it to retrieve the Healthcare Elements.
+After creating a filter, you can use it to retrieve the {{ HealthcareElements }}.
 
 <!-- file://code-samples/how-to/manage-healthcare-elements/index.mts snippet:use HE filter method-->
 ```typescript
@@ -953,7 +953,7 @@ const healthcareElementsFirstPage = await api.healthcareElementApi.filterHealthc
 
 The `filter` method returns a PaginatedList that contains at most the number of elements stated
  in the method's parameter. If you do not specify any number, the default value is 1000.  
-To retrieve more Healthcare Elements, you can call the same method again, using the startDocumentId provided in the previous PaginatedList.
+To retrieve more {{ HealthcareElements }}, you can call the same method again, using the startDocumentId provided in the previous PaginatedList.
 
 <!-- file://code-samples/how-to/manage-healthcare-elements/index.mts snippet:use HE filter method second page-->
 ```typescript
@@ -1244,7 +1244,7 @@ const healthcareElementsSecondPage = await api.healthcareElementApi.filterHealth
 ```
 </details>
 
-If the `nextKeyPair` property of the result is `undefined`, than there are no more Healthcare Elements to retrieve.  
+If the `nextKeyPair` property of the result is `undefined`, than there are no more {{ HealthcareElements }} to retrieve.  
 You can also retrieve just the id of the Healthcare Element instead of the whole documents by using the match method.
 
 <!-- file://code-samples/how-to/manage-healthcare-elements/index.mts snippet:use HE match method-->
@@ -1272,7 +1272,7 @@ const healthcareElementsIdList = await api.healthcareElementApi.matchHealthcareE
 ```
 </details>
 
-You can also retrieve all the Healthcare Elements belonging to a specific patient that the current Data Owner 
+You can also retrieve all the {{ HealthcareElements }} belonging to a specific patient that the current Data Owner 
 can access.
 
 <!-- file://code-samples/how-to/manage-healthcare-elements/index.mts snippet:use by patient method-->

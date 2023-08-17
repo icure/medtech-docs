@@ -16,8 +16,8 @@ Therefore, we assume that you're already familiar with :
 
 At this stage, you should : 
 - Have a patient user
-- Have a healthcare professional user
-- Have some data created by your patient and shared with your healthcare professional user
+- Have a {{ hcp }} user
+- Have some data created by your patient and shared with your {{ hcp }} user
 
 ## Login and create a new RSA Keypair
 You can't find back Daenaerys's private key. Depending where you saved her private key, it could be because:

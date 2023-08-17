@@ -9,7 +9,7 @@ Now your iCure environment is successfully set up, you will be able to start the
 
 To make it easier for you, we created a [React Native Template Repository](https://github.com/icure/icure-medtech-react-native-boilerplate), that includes: 
 - All the needed dependencies to work with iCure in a React Native app;
-- A fully implemented [authentication flow](https://docs.icure.com/sdks/how-to/how-to-authenticate-a-user/how-to-authenticate-a-user), to allow you to directly start working with medical data. 
+- A fully implemented [authentication flow](https://docs.icure.com/{{ sdk }}/how-to/how-to-authenticate-a-user/how-to-authenticate-a-user), to allow you to directly start working with medical data. 
 
 :::info
 We use [Friendly-Captcha](https://friendlycaptcha.com/) as our CAPTCHA solution in the template's authentication implementation, as we consider it more privacy friendly than Google reCaptcha. If you would like to use Google reCAPTCHA in your React Native App, you will have to implement your own reCAPTCHA component first. 

@@ -25,7 +25,7 @@ Make sure to have the following elements in your possession:
 - The iCure reCAPTCHA v3 SiteKey
 - Your `msgGtwSpecId`
 - Your `patientAuthProcessByEmailId` and/or `patientAuthProcessBySmsId` identifiers to authenticate your patient users
-- Your `hcpAuthProcessByEmailId` and/or `hcpAuthProcessBySmsId` identifiers to authenticate your healthcare professionals users
+- Your `hcpAuthProcessByEmailId` and/or `hcpAuthProcessBySmsId` identifiers to authenticate your {{ hcps }} users
 
 :::info
 
@@ -61,7 +61,7 @@ const anonymousApi = await new AnonymousMedTechApiBuilder()
   .build()
 ```
 
-The [AnonymousMedTechApi](/sdks/references/entrypoints/AnonymousMedTechApi) asks you to provide multiple information. Here 
+The [AnonymousMedTechApi](/{{ sdk }}/references/entrypoints/AnonymousMedTechApi) asks you to provide multiple information. Here 
 are their details :
 
 | Argument             | Description                                                                                      |
@@ -72,7 +72,7 @@ are their details :
 | authProcessByEmailId | Identifier of the authentication by email process. See next section to know more about it        |
 | authProcessBySmsId   | Identifier of the authentication by SMS process. See next section to know more about it          |
 
-You can learn about all the options you have when instantiating the MedTech API and the AnonymousMedTech API in the [Instantiation How-To](/sdks/how-to/how-to-instantiate-the-medtech-sdk). 
+You can learn about all the options you have when instantiating the MedTech API and the AnonymousMedTech API in the [Instantiation How-To](/{{ sdk }}/how-to/how-to-instantiate-the-medtech-sdk). 
 
 Since Daenaerys is a patient, you will have to provide the `patientAuthProcessByEmailId` as a 
 authProcessByEmailId or `patientAuthProcessBySmsId` as a authProcessBySmsId. 
@@ -87,12 +87,12 @@ authProcessByEmailId or `hcpAuthProcessByEmailId` as authProcessBySmsId.
 :::info
 
 On node.js or React Native, two extra parameters are required to set the way the SDK will handle the internal storage of keys and additional data.
-The `withStorage` method allows you to provide a custom implementation of the [Storage](/sdks/references/interfaces/StorageFacade) interface.
+The `withStorage` method allows you to provide a custom implementation of the [Storage](/{{ sdk }}/references/interfaces/StorageFacade) interface.
 This implementation is responsible for storing data in platform specific storage facilities.
-The `withKeyStorage` method allows you to provide a custom implementation of the [KeyStorage](/sdks/references/interfaces/KeyStorageFacade) interface.
+The `withKeyStorage` method allows you to provide a custom implementation of the [KeyStorage](/{{ sdk }}/references/interfaces/KeyStorageFacade) interface.
 This implementation is responsible for storing cryptographic keys in platform specific secure storage facilities.
 
-You can find more information about this in the [AnonymousMedTechApiBuilder](/sdks/references/builders/AnonymousMedTechApiBuilder) documentation.
+You can find more information about this in the [AnonymousMedTechApiBuilder](/{{ sdk }}/references/builders/AnonymousMedTechApiBuilder) documentation.
 
 In the browser, default implementations are used that store data and keys in the browser's local storage.
 
@@ -144,7 +144,7 @@ As an output, you receive an `AuthenticationProcess` object, which you will need
 :::info
 
 The `masterHcpId` represents the identifier of the dataOwner that will be responsible of Daenaerys user creation.
-This `masterHcpId` is optional for healthcare professionals registration but mandatory for patients. 
+This `masterHcpId` is optional for {{ hcps }} registration but mandatory for patients. 
 
 It's good to know that after their registration, user will share all their future data with this responsible. The user may decide to stop
 sharing their data with this responsible by using the `userApi.stopSharingDataWith` service. For more information, 
@@ -325,7 +325,7 @@ explicitly through the `.withCryptoStrategies` method of the builder.
 
 :::info
 
-You can learn more about the Crypto Strategies [here](/sdks/explanations/crypto-strategies/crypto-strategies).
+You can learn more about the Crypto Strategies [here](/{{ sdk }}/explanations/crypto-strategies/crypto-strategies).
 
 :::
 
@@ -457,7 +457,7 @@ in a safe place in their filesystem, possibly encrypting it with a password.
 
 Make sure your users understand they should never share this file with anyone.
 
-For more information check the In-Depth Explanation [What happens if my user loses his private key ?](sdks/explanations)  
+For more information check the In-Depth Explanation [What happens if my user loses his private key ?]({{ sdk }}/explanations)  
 
 :::
 

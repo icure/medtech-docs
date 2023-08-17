@@ -8,7 +8,7 @@ Now your iCure environment is successfully set up, you will be able to start the
 
 To make it easier for you, we created a [React JS Template Repository](https://github.com/icure/icure-medical-device-react-js-boilerplate-app-template), that includes: 
 - All the needed dependencies to work with iCure in a React JS app;
-- A fully implemented [authentication flow](https://docs.icure.com/sdks/how-to/how-to-authenticate-a-user/how-to-authenticate-a-user), to allow you to directly start working with medical data. 
+- A fully implemented [authentication flow](https://docs.icure.com/{{ sdk }}/how-to/how-to-authenticate-a-user/how-to-authenticate-a-user), to allow you to directly start working with medical data. 
 
 :::info
 We use [Friendly-Captcha](https://friendlycaptcha.com/) as our CAPTCHA solution in the template's authentication implementation, as we consider it more privacy friendly than Google reCaptcha. If you would like to use Google reCAPTCHA in your React JS solution, you will have to implement your own reCAPTCHA component first. 

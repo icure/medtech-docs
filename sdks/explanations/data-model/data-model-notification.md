@@ -6,7 +6,7 @@ tags:
 ---
 # Notification
 
-A Notification is a request by a [Data Owner](/sdks/glossary#data-owner) for a Healthcare Professional to perform a 
+A Notification is a request by a [Data Owner](/{{ sdk }}/glossary#data-owner) for a Healthcare Professional to perform a 
 particular action, such as sharing a piece of information.  
 Since the Notification is encrypted, only the responsible Healthcare Professional can see its content.
 
@@ -25,7 +25,7 @@ A Healthcare Professional can modify a Notification shared with them.
 
 ### A Doctor Receives a Data Sharing Request
 
-After a visit, a Doctor register the symptoms the Patient is experiencing (fatigue) as a new Data Sample.  
+After a visit, a Doctor register the symptoms the Patient is experiencing (fatigue) as a new {{ Service }}.  
 Then, they add the diagnosis (hay fever) as associated Healthcare Element.
 
 <!-- file://code-samples/explanation/notification/index.mts snippet:doctor shares medical data-->

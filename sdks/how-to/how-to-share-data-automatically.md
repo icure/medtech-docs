@@ -5,7 +5,7 @@ slug: how-to-share-data-automatically
 # Sharing data automatically with other data owners
 
 iCure allows to share data between different data owners, as explained in the guide 
-[How to share data between data owners](/sdks/how-to/how-to-share-data), however this requires to perform an explicit request every time
+[How to share data between data owners](/{{ sdk }}/how-to/how-to-share-data), however this requires to perform an explicit request every time
 we want to share a new entity. 
 
 In some cases you may need to always share all data created by a data owner with other data-owners, for example you may

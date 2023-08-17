@@ -9,7 +9,7 @@ tags:
 
 ## What Is a Notification?
 
-A Notification represents a request from a [Data Owner](/sdks/glossary#data-owner) to another to perform 
+A Notification represents a request from a [Data Owner](/{{ sdk }}/glossary#data-owner) to another to perform 
 an operation.  
 As for now, there are three types of Notifications:
 
