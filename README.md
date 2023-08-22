@@ -9,6 +9,7 @@ The documentation platform of iCure (Medtech/Cockpit/...) using [Docusaurus](htt
 
 ## Run Locally
 
+
 Clone the project
 
 ```bash
