@@ -45,7 +45,7 @@ const AppsList: (code: string) => AppItem[] = (code) => [
     description: 'Use our template to start up your project integrating our MedTech SDK. You will be ready to try the functionalities of our APIs in a matter of minutes.',
     button: {
       title: 'Quick start',
-      link: '/sdks/quick-start',
+      link: '/ehr-lite-sdk/quick-start',
     },
     IllustrationNode: Code(code),
   },
@@ -55,7 +55,7 @@ const AppsList: (code: string) => AppItem[] = (code) => [
     description: 'Explore Petra, our sample app, to discover all the functionalities offered by iCure. Learn from a working example of a patient-oriented medical app.',
     button: {
       title: 'Discover Petra',
-      link: '/sdks/tutorial/petra/foreword',
+      link: '/ehr-lite-sdk/tutorial/petra/foreword',
     },
     IllustrationNode: Image(),
   },
