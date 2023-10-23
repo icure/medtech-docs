@@ -1,95 +1,88 @@
-import {
-  CodingReference,
-  Content,
-  DataSample,
-  DataSampleFilter,
-  Patient,
-} from '@icure/medical-device-sdk'
 import { sleep } from '@icure/api'
 import 'isomorphic-fetch'
 
-import { initLocalStorage, initMedTechApi, output } from '../../utils/index.mjs'
+import { initLocalStorage, output } from '../../../utils/index.mjs'
+import { initEHRLiteApi } from '@site/code-samples/ehr-lite-sdk/utils/index.mjs'
+import { LocalComponent, Observation, ObservationFilter, Patient } from '@icure/ehr-lite-sdk'
+import { CodingReference, mapOf } from '@icure/typescript-common'
 
 initLocalStorage()
 
-const api = await initMedTechApi(true)
+const api = await initEHRLiteApi(true)
 
-const loggedUser = await api.userApi.getLoggedUser()
+const loggedUser = await api.userApi.getLogged()
 
 //tech-doc: create a patient for datasample
-const patient = await api.patientApi.createOrModifyPatient(
+const patient = await api.patientApi.createOrModify(
   new Patient({
     firstName: 'John',
     lastName: 'Snow',
-    note: 'Winter is coming',
   }),
 )
 //tech-doc: STOP HERE
 output({ patient })
 
 //tech-doc: create a dataSample
-const createdDataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
+const createdObservation = await api.observationApi.createOrModifyFor(
   patient.id!,
-  new DataSample({
-    labels: new Set([new CodingReference({ type: 'IC-TEST', code: 'TEST' })]),
-    content: { en: new Content({ stringValue: 'Hello world' }) },
+  new Observation({
+    tags: new Set([new CodingReference({ type: 'IC-TEST', code: 'TEST' })]),
+    localContent: mapOf({ en: new LocalComponent({ stringValue: 'Hello world' }) }),
     openingDate: 20220929083400,
-    comment: 'This is a comment',
   }),
 )
 //tech-doc: STOP HERE
-output({ createdDataSample })
+output({ createdObservation: createdObservation })
 
 //tech-doc: get a dataSample
-const dataSample = await api.dataSampleApi.getDataSample(createdDataSample.id!)
+const dataSample = await api.observationApi.get(createdObservation.id!)
 //tech-doc: STOP HERE
 output({ dataSample })
 
 //tech-doc: update a dataSample
-const updatedDataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
+const updatedObservation = await api.observationApi.createOrModifyFor(
   patient.id!,
-  new DataSample({
-    ...createdDataSample,
+  new Observation({
+    ...createdObservation,
     // highlight-start
-    content: { en: new Content({ stringValue: 'Hello world updated' }) },
-    comment: 'This is a updated comment',
+    localContent: mapOf({ en: new LocalComponent({ stringValue: 'Hello world updated' }) }),
     modified: undefined,
     // highlight-end
   }),
 )
 //tech-doc: STOP HERE
-output({ updatedDataSample })
+output({ updatedObservation })
 await sleep(5000)
 
 //tech-doc: get a list of dataSamples
-const filter = await new DataSampleFilter(api)
+const filter = await new ObservationFilter(api)
   .forDataOwner(loggedUser.healthcarePartyId!)
   .byLabelCodeDateFilter('IC-TEST', 'TEST')
   .forPatients([patient])
   .build()
 
-const filteredDataSamples = await api.dataSampleApi.filterDataSample(filter)
+const filteredObservations = await api.observationApi.filterBy(filter)
 //tech-doc: STOP HERE
-output({ filteredDataSamples })
+output({ filteredObservations })
 
 //tech-doc: get a list of dataSamples ids
-const matchFilter = await new DataSampleFilter(api)
+const matchFilter = await new ObservationFilter(api)
   .forDataOwner(loggedUser.healthcarePartyId!)
   .forPatients([patient])
   .build()
 
-const matchedDataSampleIds = await api.dataSampleApi.matchDataSample(matchFilter)
+const matchedObservationIds = await api.observationApi.matchBy(matchFilter)
 //tech-doc: STOP HERE
-output({ matchedDataSampleIds })
+output({ matchedObservationIds })
 
 // THIS SHOULD WORK, BUT DOESN'T (We need to merge the PR about RSocket)
 //tech-doc: delete a dataSample
-const deletedDataSample = await api.dataSampleApi.deleteDataSample(updatedDataSample.id!)
+const deletedObservation = await api.observationApi.delete(updatedObservation.id!)
 //tech-doc: STOP HERE
-output({ deletedDataSample })
+output({ deletedObservation })
 
 //tech-doc: filter builder
-const dataSampleFilter = new DataSampleFilter(api)
+const dataSampleFilter = new ObservationFilter(api)
   .forDataOwner(loggedUser.healthcarePartyId!)
   .byLabelCodeDateFilter('IC-TEST', 'TEST')
   .forPatients([patient])

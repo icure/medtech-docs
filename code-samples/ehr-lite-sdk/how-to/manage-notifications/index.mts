@@ -2,30 +2,26 @@ import 'isomorphic-fetch'
 import { NotificationFilter } from '@icure/medical-device-sdk'
 import {
   initLocalStorage,
-  initMedTechApi,
   output,
-  initPatientMedTechApi,
-} from '../../utils/index.mjs'
+} from '../../../utils/index.mjs'
 import { assert, expect } from 'chai'
-import {
-  Notification,
-  NotificationTypeEnum,
-} from '@icure/medical-device-sdk/src/models/Notification.js'
+import {initEHRLiteApi, initPatientEHRLiteApi} from "@site/code-samples/ehr-lite-sdk/utils/index.mjs";
+import { Notification, NotificationTypeEnum } from "@icure/typescript-common";
 
 initLocalStorage()
 
-const patientApi = await initPatientMedTechApi(true)
-const api = await initMedTechApi(true)
+const patientApi = await initPatientEHRLiteApi(true)
+const api = await initEHRLiteApi(true)
 
-const user = await api.userApi.getLoggedUser()
-const hcp = await api.healthcareProfessionalApi.getHealthcareProfessional(user.healthcarePartyId)
+const user = await api.userApi.getLogged()
+const practitioner = await api.practitionerApi.get(user.healthcarePartyId)
 
 //tech-doc: create a notification as patient
-const accessNotification = await patientApi.notificationApi.createOrModifyNotification(
+const accessNotification = await patientApi.notificationApi.createOrModify(
   new Notification({
     type: NotificationTypeEnum.KEY_PAIR_UPDATE,
   }),
-  hcp.id,
+  practitioner.id,
 )
 //tech-doc: STOP HERE
 output({ accessNotification })
@@ -34,14 +30,14 @@ expect(!!accessNotification).to.eq(true)
 expect(accessNotification.type).to.eq(NotificationTypeEnum.KEY_PAIR_UPDATE)
 
 //tech-doc: creates a notification, then retrieves it
-const createdNotification = await patientApi.notificationApi.createOrModifyNotification(
+const createdNotification = await patientApi.notificationApi.createOrModify(
   new Notification({
     type: NotificationTypeEnum.OTHER,
   }),
-  hcp.id,
+  practitioner.id,
 )
 
-const retrievedNotification = await patientApi.notificationApi.getNotification(
+const retrievedNotification = await patientApi.notificationApi.get(
   createdNotification.id,
 )
 //tech-doc: STOP HERE
@@ -64,7 +60,7 @@ output({ afterDateFilter })
 expect(!!afterDateFilter).to.eq(true)
 
 //tech-doc: gets the first page of results
-const notificationsFirstPage = await api.notificationApi.filterNotifications(
+const notificationsFirstPage = await api.notificationApi.filterBy(
   afterDateFilter,
   undefined,
   10,
@@ -79,7 +75,7 @@ notificationsFirstPage.rows.forEach((notification) => {
 })
 
 //tech-doc: gets the second page of results
-const notificationsSecondPage = await api.notificationApi.filterNotifications(
+const notificationsSecondPage = await api.notificationApi.filterBy(
   afterDateFilter,
   notificationsFirstPage.nextKeyPair.startKeyDocId,
   10,
@@ -94,7 +90,7 @@ notificationsSecondPage.rows.forEach((notification) => {
 })
 
 //tech-doc: gets the pending notifications
-const pendingNotifications = await api.notificationApi.getPendingNotificationsAfter()
+const pendingNotifications = await api.notificationApi.getPendingAfter()
 //tech-doc: STOP HERE
 output({ pendingNotifications })
 
@@ -105,18 +101,18 @@ pendingNotifications.forEach((notification) => {
 })
 
 //tech-doc: modifies a notification
-const newNotification = await api.notificationApi.createOrModifyNotification(
+const newNotification = await api.notificationApi.createOrModify(
   new Notification({
     type: NotificationTypeEnum.KEY_PAIR_UPDATE,
   }),
-  hcp.id,
+  practitioner.id,
 )
 
 const notificationToModify = new Notification({ ...newNotification, status: 'ongoing' })
 
-const modifiedNotification = await api.notificationApi.createOrModifyNotification(
+const modifiedNotification = await api.notificationApi.createOrModify(
   notificationToModify,
-  hcp.id,
+  practitioner.id,
 )
 //tech-doc: STOP HERE
 output({ newNotification, modifiedNotification })
@@ -128,15 +124,15 @@ expect(newNotification.status).to.eq('pending')
 expect(modifiedNotification.status).to.eq('ongoing')
 
 //tech-doc: updates notification status
-const notificationToUpdate = await api.notificationApi.createOrModifyNotification(
+const notificationToUpdate = await api.notificationApi.createOrModify(
   new Notification({
     type: NotificationTypeEnum.KEY_PAIR_UPDATE,
     status: 'pending',
   }),
-  hcp.id,
+  practitioner.id,
 )
 
-const updatedNotification = await api.notificationApi.updateNotificationStatus(
+const updatedNotification = await api.notificationApi.updateStatus(
   notificationToUpdate,
   'ongoing',
 )
@@ -149,14 +145,14 @@ expect(notificationToUpdate.id).to.eq(updatedNotification.id)
 expect(updatedNotification.status).to.eq('ongoing')
 
 //tech-doc: deletes a notification
-const notificationToDelete = await api.notificationApi.createOrModifyNotification(
+const notificationToDelete = await api.notificationApi.createOrModify(
   new Notification({
     type: NotificationTypeEnum.KEY_PAIR_UPDATE,
   }),
-  hcp.id,
+  practitioner.id,
 )
 
-const deletedNotificationId = await api.notificationApi.deleteNotification(notificationToDelete.id)
+const deletedNotificationId = await api.notificationApi.delete(notificationToDelete.id)
 //tech-doc: STOP HERE
 output({ notificationToDelete, deletedNotificationId })
 

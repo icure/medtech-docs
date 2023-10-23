@@ -1,84 +1,79 @@
-import {
-  Address,
-  CodingReference,
-  HealthcareProfessional,
-  HealthcareProfessionalFilter,
-  Telecom,
-} from '@icure/medical-device-sdk'
-import { initLocalStorage, initMedTechApi, output } from '../../utils/index.mjs'
+import { initLocalStorage, output } from '../../../utils/index.mjs'
 import 'isomorphic-fetch'
 import { expect } from 'chai'
+import { initEHRLiteApi } from '@site/code-samples/ehr-lite-sdk/utils/index.mjs'
+import {Practitioner, Location, ContactPoint, PractitionerFilter} from "@icure/ehr-lite-sdk";
+import {CodingReference} from "@icure/typescript-common";
+import {ContactPointTelecomTypeEnum} from "@icure/ehr-lite-sdk/models/enums/ContactPointTelecomType.enum";
 
 initLocalStorage()
 
-const api = await initMedTechApi(true)
-const healthcareProfessionalCode = Math.random().toString(36).substring(4)
+const api = await initEHRLiteApi(true)
+const practitionerCode = Math.random().toString(36).substring(4)
 
 //tech-doc: Create a healthcare professional
-const healthcareProfessional: HealthcareProfessional = new HealthcareProfessional({
+const practitioner: Practitioner = new Practitioner({
   firstName: 'John',
   lastName: 'Keats',
   speciality: 'Psychiatrist',
-  codes: new Set([
-    new CodingReference({ type: 'practitioner-specialty', code: healthcareProfessionalCode }),
-  ]),
+  codes: new Set([new CodingReference({ type: 'practitioner-specialty', code: practitionerCode })]),
   addresses: [
-    new Address({
+    new Location({
       telecoms: [
-        new Telecom({
-          telecomType: 'email',
-          telecomNumber: `jk@hospital.care`,
+        new ContactPoint({
+          system: ContactPointTelecomTypeEnum.EMAIL,
+          value: `jk@hospital.care`,
         }),
       ],
     }),
   ],
 })
 
-const createdHcp = await api.healthcareProfessionalApi.createOrModifyHealthcareProfessional(
-  healthcareProfessional,
+const createdPractitioner = await api.practitionerApi.createOrModify(
+  practitioner,
 )
 
 //tech-doc: STOP HERE
-output({ createdHcp, healthcareProfessional })
+output({ createdHcp: createdPractitioner, healthcareProfessional: practitioner })
 
-expect(createdHcp.id).to.be.a('string')
-expect(createdHcp.firstName).to.equal('John')
-expect(createdHcp.lastName).to.equal('Keats')
-expect(createdHcp.addresses[0].telecoms[0].telecomNumber).to.equal('jk@hospital.care')
+expect(createdPractitioner.id).to.be.a('string')
+expect(createdPractitioner.firstName).to.equal('John')
+expect(createdPractitioner.lastName).to.equal('Keats')
+expect(createdPractitioner.addresses[0].telecoms[0].value).to.equal('jk@hospital.care')
 
 //tech-doc: Load a healthcare professional by id
-const loadedHcp = await api.healthcareProfessionalApi.getHealthcareProfessional(createdHcp.id)
+const loadedPractitioner = await api.practitionerApi.get(createdPractitioner.id)
 //tech-doc: STOP HERE
-output({ loadedHcp })
+output({ loadedHcp: loadedPractitioner })
 
-expect(loadedHcp.id).to.be.equal(createdHcp.id)
-expect(loadedHcp.firstName).to.equal('John')
-expect(loadedHcp.lastName).to.equal('Keats')
+expect(loadedPractitioner.id).to.be.equal(createdPractitioner.id)
+expect(loadedPractitioner.firstName).to.equal('John')
+expect(loadedPractitioner.lastName).to.equal('Keats')
 
 //tech-doc: Filter healthcare professionals
-const hcps = await api.healthcareProfessionalApi.filterHealthcareProfessionalBy(
-  await new HealthcareProfessionalFilter(api)
-    .byLabelCodeFilter(undefined, undefined, 'practitioner-specialty', healthcareProfessionalCode)
+const practitioners = await api.practitionerApi.filterBy(
+  await new PractitionerFilter(api)
+    .byLabelCodeFilter(undefined, undefined, 'practitioner-specialty', practitionerCode)
     .build(),
 )
 //tech-doc: STOP HERE
-output({ hcps })
+output({ hcps: practitioners })
 
-expect(hcps.rows.length).to.be.equal(1)
-expect(hcps.rows[0].id).to.be.equal(createdHcp.id)
+expect(practitioners.rows.length).to.be.equal(1)
+expect(practitioners.rows[0].id).to.be.equal(createdPractitioner.id)
 
 //tech-doc: Update a healthcare professional
-const hcpToModify = await api.healthcareProfessionalApi.getHealthcareProfessional(createdHcp.id)
-const modifiedHcp = await api.healthcareProfessionalApi.createOrModifyHealthcareProfessional(
-  new HealthcareProfessional({ ...hcpToModify, civility: 'Dr.' }),
+const practitionerToModify = await api.practitionerApi.get(createdPractitioner.id)
+const modifiedPractitioner = await api.practitionerApi.createOrModify(
+  new Practitioner({ ...practitionerToModify, civility: 'Dr.' }),
 )
 //tech-doc: STOP HERE
-output({ modifiedHcp })
+output({ modifiedHcp: modifiedPractitioner })
 
-expect(modifiedHcp.id).to.be.equal(createdHcp.id)
-expect(modifiedHcp.civility).to.equal('Dr.')
+expect(modifiedPractitioner.id).to.be.equal(createdPractitioner.id)
+expect(modifiedPractitioner.civility).to.equal('Dr.')
 
 //tech-doc: Delete a healthcare professional
-const deletedHcp = await api.healthcareProfessionalApi.deleteHealthcareProfessional(createdHcp.id)
+const deletedPractitioner = await api.practitionerApi.delete(createdPractitioner.id)
 //tech-doc: STOP HERE
-output({ deletedHcp })
+output({ deletedHcp: deletedPractitioner })

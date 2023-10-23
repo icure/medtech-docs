@@ -1,5 +1,4 @@
 import { KeyStorageFacade, StorageFacade } from '@icure/api'
-import PromisedSatisfy = Chai.PromisedSatisfy
 
 export class MemoryStorage implements StorageFacade<string> {
   private readonly data = new Map<string, string>()

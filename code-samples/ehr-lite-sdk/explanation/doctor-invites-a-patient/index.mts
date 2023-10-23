@@ -1,24 +1,27 @@
 import 'isomorphic-fetch'
-import { ICureRegistrationEmail, Patient, Address, Telecom } from '@icure/medical-device-sdk'
-import { initLocalStorage, initMedTechApi, output } from '../../utils/index.mjs'
+import { initEHRLiteApi } from '../../utils/index.mjs'
 import { expect } from 'chai'
 import { v4 as uuid } from 'uuid'
+import { initLocalStorage, output } from '../../../utils/index.mjs'
+import { ContactPoint, Location, Patient } from '@icure/ehr-lite-sdk'
+import { LocationAddressTypeEnum } from '@icure/ehr-lite-sdk/models/enums/LocationAddressType.enum'
+import {ContactPointTelecomTypeEnum} from "@icure/ehr-lite-sdk/models/enums/ContactPointTelecomType.enum";
 
 initLocalStorage()
 
-const api = await initMedTechApi(true)
+const api = await initEHRLiteApi(true)
 
-const user = await api.userApi.getLoggedUser()
+const user = await api.userApi.getLogged()
 
-const hcp = await api.healthcareProfessionalApi.getHealthcareProfessional(user.healthcarePartyId)
-hcp.addresses = [
-  new Address({
-    addressType: 'home',
+const practitioner = await api.practitionerApi.get(user.healthcarePartyId)
+practitioner.addresses = [
+  new Location({
+    addressType: LocationAddressTypeEnum.HOME,
     description: 'London',
     telecoms: [
-      new Telecom({
-        telecomType: 'email',
-        telecomNumber: 'test@example.com',
+      new ContactPoint({
+        system: ContactPointTelecomTypeEnum.EMAIL,
+        value: 'test@example.com',
       }),
     ],
   }),
@@ -26,18 +29,18 @@ hcp.addresses = [
 
 const patientEmail = `${uuid().substring(0, 8)}@icure.com`
 
-const existingPatient = await api.patientApi.createOrModifyPatient(
+const existingPatient = await api.patientApi.createOrModify(
   new Patient({
     firstName: 'Marc',
     lastName: 'Specter',
     addresses: [
-      new Address({
-        addressType: 'home',
+      new Location({
+        addressType: LocationAddressTypeEnum.HOME,
         description: 'London',
         telecoms: [
-          new Telecom({
-            telecomType: 'email',
-            telecomNumber: patientEmail,
+          new ContactPoint({
+            system: ContactPointTelecomTypeEnum.EMAIL,
+            value: patientEmail,
           }),
         ],
       }),
@@ -47,8 +50,7 @@ const existingPatient = await api.patientApi.createOrModifyPatient(
 expect(!!existingPatient).to.eq(true) //skip
 
 //tech-doc: doctor invites user
-const messageFactory = new ICureRegistrationEmail(hcp, 'test', 'iCure', existingPatient)
-const createdUser = await api.userApi.createAndInviteUser(existingPatient, messageFactory)
+const createdUser = await api.userApi.createAndInviteFor(existingPatient)
 //tech-doc: STOP HERE
 output({ createdUser })
 expect(createdUser.patientId).to.eq(existingPatient.id)

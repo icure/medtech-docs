@@ -86,6 +86,21 @@
   resolved "https://registry.yarnpkg.com/@humanwhocodes/object-schema/-/object-schema-1.2.1.tgz#b520529ec21d8e5945a1851dfd1c32e94e39ff45"
   integrity sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==
 
+"@icure/api@7.1.13":
+  version "7.1.13"
+  resolved "https://registry.yarnpkg.com/@icure/api/-/api-7.1.13.tgz#fbe6977f5dadaeb137b95c68378c695d35b9ce4d"
+  integrity sha512-xljOi9ZsnA/+FZLqal99j/e/0+4oAZFrDeFvqnUBY3BIsxEjM0y8HqerMEWJra2zd5256h7PXcRvMKiO6CzoLQ==
+  dependencies:
+    browser-or-node "^2.1.1"
+    date-fns "^2.23.0"
+    libphonenumber-js "^1.7.18"
+    lodash "^4.17.21"
+    moment "^2.22.1"
+    text-encoding "^0.7.0"
+    uuid "^8.3.2"
+    uuid-encoder "^1.1.0"
+    ws "^8.13.0"
+
 "@icure/api@7.1.8":
   version "7.1.8"
   resolved "https://registry.yarnpkg.com/@icure/api/-/api-7.1.8.tgz#2883b18b0f7732e8cdf3ceea0bafd7de212272b5"
@@ -116,6 +131,16 @@
     uuid-encoder "^1.1.0"
     ws "^8.13.0"
 
+"@icure/ehr-lite-sdk@1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@icure/ehr-lite-sdk/-/ehr-lite-sdk-1.0.2.tgz#12beb484772538a575444d0f7d0e8de93d1c108b"
+  integrity sha512-8xsZzJhWepdaXkSfk0yNbRAY/VRP3Wvsuac7c5ptyJW+eW5TsOfhObtVI69skPuMjU4SfuXOCkV6OCaJjbKqbQ==
+  dependencies:
+    "@icure/api" "7.1.8"
+    "@icure/typescript-common" "1.1.1"
+    reflect-metadata "^0.1.13"
+    uuid "^9.0.0"
+
 "@icure/medical-device-sdk@^3.0.3":
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/@icure/medical-device-sdk/-/medical-device-sdk-3.0.3.tgz#c442ea085aa231cfb95629cbdf582906de4e7b4f"
@@ -130,6 +155,18 @@
     node-jq "^2.3.3"
     uuid "^8.3.2"
     ws "^8.13.0"
+
+"@icure/test-setup@^0.0.61":
+  version "0.0.61"
+  resolved "https://registry.yarnpkg.com/@icure/test-setup/-/test-setup-0.0.61.tgz#d272615dab5ac9de4ca6bdfd22e5ff0d4b57dac3"
+  integrity sha512-MkJuqeXxmyEt+lSWzbWnCCeYcckoobgHFIvCbfebUJYx6IBK+J7H4s/YRWToANc7SIkWrSM+97NjuxtJjoJHuw==
+  dependencies:
+    "@icure/api" "7.1.13"
+    "@types/react-dom" "^18.0.6"
+    date-fns "^2.3.0"
+    isomorphic-fetch "^3.0.0"
+    node-localstorage "^2.2.1"
+    uuid "^3.3.2"
 
 "@icure/typescript-common@1.1.1":
   version "1.1.1"
@@ -204,6 +241,32 @@
   version "3.0.5"
   resolved "https://registry.yarnpkg.com/@types/minimatch/-/minimatch-3.0.5.tgz#1001cc5e6a3704b83c236027e77f2f58ea010f40"
   integrity sha512-Klz949h02Gz2uZCMGwDUSDS1YBlTdDDgbWHi+81l29tQALUtvz4rAYi5uoVhE5Lagoq6DeqAUlbrHvW/mXDgdQ==
+
+"@types/prop-types@*":
+  version "15.7.9"
+  resolved "https://registry.yarnpkg.com/@types/prop-types/-/prop-types-15.7.9.tgz#b6f785caa7ea1fe4414d9df42ee0ab67f23d8a6d"
+  integrity sha512-n1yyPsugYNSmHgxDFjicaI2+gCNjsBck8UX9kuofAKlc0h1bL+20oSF72KeNaW2DUlesbEVCFgyV2dPGTiY42g==
+
+"@types/react-dom@^18.0.6":
+  version "18.2.14"
+  resolved "https://registry.yarnpkg.com/@types/react-dom/-/react-dom-18.2.14.tgz#c01ba40e5bb57fc1dc41569bb3ccdb19eab1c539"
+  integrity sha512-V835xgdSVmyQmI1KLV2BEIUgqEuinxp9O4G6g3FqO/SqLac049E53aysv0oEFD2kHfejeKU+ZqL2bcFWj9gLAQ==
+  dependencies:
+    "@types/react" "*"
+
+"@types/react@*":
+  version "18.2.31"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-18.2.31.tgz#74ae2630e4aa9af599584157abd3b95d96fb9b40"
+  integrity sha512-c2UnPv548q+5DFh03y8lEDeMfDwBn9G3dRwfkrxQMo/dOtRHUUO57k6pHvBIfH/VF4Nh+98mZ5aaSe+2echD5g==
+  dependencies:
+    "@types/prop-types" "*"
+    "@types/scheduler" "*"
+    csstype "^3.0.2"
+
+"@types/scheduler@*":
+  version "0.16.5"
+  resolved "https://registry.yarnpkg.com/@types/scheduler/-/scheduler-0.16.5.tgz#4751153abbf8d6199babb345a52e1eb4167d64af"
+  integrity sha512-s/FPdYRmZR8SjLWGMCuax7r3qCWQw9QKHzXVukAuuIJkXkDRwp+Pu5LMIVFi0Fxbav35WURicYr8u1QsoybnQw==
 
 "@types/semver@^7.3.12":
   version "7.5.0"
@@ -424,6 +487,13 @@ available-typed-arrays@^1.0.5:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/available-typed-arrays/-/available-typed-arrays-1.0.5.tgz#92f95616501069d07d10edb2fc37d3e1c65123b7"
   integrity sha512-DMD0KiN46eipeziST1LPP/STfDU0sufISXmjSgvVsoU2tqxctQeASejWcfNtxYKqETM1UxQ8sp2OrSBWpHY6sw==
+
+axios@^0.26.1:
+  version "0.26.1"
+  resolved "https://registry.yarnpkg.com/axios/-/axios-0.26.1.tgz#1ede41c51fcf51bbbd6fd43669caaa4f0495aaa9"
+  integrity sha512-fPwcX4EvnSHuInCMItEhAGnaSEXRBjtzh9fOtsE6E1G6p7vl7edEeZe11QHf18+6+9gR5PbKV/sGKNaD8YaMeA==
+  dependencies:
+    follow-redirects "^1.14.8"
 
 balanced-match@^1.0.0:
   version "1.0.2"
@@ -677,7 +747,12 @@ cross-spawn@^7.0.0, cross-spawn@^7.0.2, cross-spawn@^7.0.3:
     shebang-command "^2.0.0"
     which "^2.0.1"
 
-date-fns@^2.23.0, date-fns@^2.28.0:
+csstype@^3.0.2:
+  version "3.1.2"
+  resolved "https://registry.yarnpkg.com/csstype/-/csstype-3.1.2.tgz#1d4bf9d572f11c14031f0436e1c10bc1f571f50b"
+  integrity sha512-I7K1Uu0MBPzaFKg4nI5Q7Vs2t+3gWWW648spaF+Rg7pI9ds18Ugn+lvg4SHczUdKlHI5LWBXyqfS8+DufyBsgQ==
+
+date-fns@^2.23.0, date-fns@^2.28.0, date-fns@^2.3.0:
   version "2.30.0"
   resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-2.30.0.tgz#f367e644839ff57894ec6ac480de40cae4b0f4d0"
   integrity sha512-fnULvOpxnC5/Vg3NCiWelDsLiUc9bRwAPs/+LfTLNvetFCtCTN+yQz15C/fs4AwX1R9K5GLtLfn8QW+dWisaAw==
@@ -1271,6 +1346,11 @@ flatted@^3.1.0:
   version "3.2.7"
   resolved "https://registry.yarnpkg.com/flatted/-/flatted-3.2.7.tgz#609f39207cb614b89d0765b477cb2d437fbf9787"
   integrity sha512-5nqDSxl8nn5BSNxyR3n4I6eDmbolI6WT+QqR547RwxQapgjQBmtktdP+HTBb/a/zLsbzERTONyUB5pefh5TtjQ==
+
+follow-redirects@^1.14.8:
+  version "1.15.3"
+  resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.15.3.tgz#fe2f3ef2690afce7e82ed0b44db08165b207123a"
+  integrity sha512-1VzOtuEM8pC9SFU1E+8KfTjZyMztRsgEfwQl44z8A25uy13jSzTj6dyK2Df52iV0vgHCfBwLhDWevLn95w5v6Q==
 
 for-each@^0.3.3:
   version "0.3.3"

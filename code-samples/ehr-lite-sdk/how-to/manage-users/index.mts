@@ -1,15 +1,14 @@
-import { UserFilter } from '@icure/medical-device-sdk'
-import { output, initLocalStorage, initMedTechApi } from '../../utils/index.mjs'
+import {User, UserFilter} from '@icure/medical-device-sdk'
+import {initLocalStorage, output} from '../../../utils/index.mjs'
+import {initEHRLiteApi} from "../../utils/index.mjs";
 import 'isomorphic-fetch'
-import { expect } from 'chai'
+import {expect} from 'chai'
+import { Patient, Location, ContactPoint} from '@icure/ehr-lite-sdk'
+import {ContactPointTelecomTypeEnum} from "@icure/ehr-lite-sdk/models/enums/ContactPointTelecomType.enum";
 
 initLocalStorage()
 
-const api = await initMedTechApi(true)
-
-//tech-doc: Create a user
-import { User } from '@icure/medical-device-sdk'
-import { ICureRegistrationEmail } from '@icure/medical-device-sdk'
+const api = await initEHRLiteApi(true)
 
 //4 random characters to guarantee login uniqueness
 const uniqueId = Math.random().toString(36).substring(4)
@@ -20,7 +19,7 @@ const userToCreate = new User({
   passwordHash: 'correct horse battery staple',
 })
 
-const createdUser = await api.userApi.createOrModifyUser(userToCreate)
+const createdUser = await api.userApi.createOrModify(userToCreate)
 
 //tech-doc: STOP HERE
 output({ createdUser, userToCreate })
@@ -35,24 +34,21 @@ const token = await api.userApi.createToken(createdUser.id, 3600)
 //tech-doc: STOP HERE
 output({ token })
 
-//tech-doc: Create a patient user
-import { Patient, Address, Telecom } from '@icure/medical-device-sdk'
-
-const loggedUser = await api.userApi.getLoggedUser()
-const loggedHcp = await api.healthcareProfessionalApi.getHealthcareProfessional(
+const loggedUser = await api.userApi.getLogged()
+const loggedPractitioner = await api.practitionerApi.get(
   loggedUser.healthcarePartyId,
 )
 
 if (
-  !loggedHcp.addresses.find((a) =>
-    a.telecoms.some((t) => t.telecomType === 'email' && !!t.telecomNumber),
+  !loggedPractitioner.addresses.find((a) =>
+    a.telecoms.some((t) => t.system === ContactPointTelecomTypeEnum.EMAIL && !!t.value),
   )
 ) {
   //An email address is required for the healthcare professional to send the invitation
-  loggedHcp.addresses.push(
-    new Address({
+  loggedPractitioner.addresses.push(
+    new Location({
       telecoms: [
-        new Telecom({
+        new ContactPoint({
           telecomType: 'email',
           telecomNumber: `hcp${uniqueId}@hospital.care`,
         }),
@@ -83,7 +79,7 @@ const createdPatient = await api.patientApi.createOrModifyPatient(patientToCreat
 const createdPatientUser = await api.userApi.createAndInviteUser(
   createdPatient,
   new ICureRegistrationEmail(
-    loggedHcp,
+    loggedPractitioner,
     'https://myapplication.care/login',
     'My application',
     createdPatient,

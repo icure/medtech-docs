@@ -9,11 +9,11 @@ import {
   User,
 } from '@icure/medical-device-sdk'
 import { CryptoStrategies, DataOwnerWithType, IcureApi } from '@icure/api'
+import { webcrypto } from 'crypto'
+import { v4 as uuid } from 'uuid'
 import { CryptoPrimitives } from '@icure/api/icc-x-api/crypto/CryptoPrimitives'
 import { KeyPair } from '@icure/api/icc-x-api/crypto/RSA'
 import { CryptoActorStubWithType } from '@icure/api/icc-api/model/CryptoActorStub'
-import { webcrypto } from 'crypto'
-import { v4 as uuid } from 'uuid'
 
 function requireDefined(s: string, name: string): string {
   if (!s) {
@@ -152,41 +152,19 @@ export const host = requireDefined(process.env.ICURE_URL, 'ICURE_URL')
 export const msgGtwUrl = requireDefined(process.env.ICURE_MSG_GTW_URL, 'ICURE_MSG_GTW_URL')
 export const specId = requireDefined(process.env.SPEC_ID, 'SPEC_ID')
 export const authProcessId = requireDefined(process.env.AUTH_PROCESS_ID, 'AUTH_PROCESS_ID')
-
-let patientIdFallback = process.env.ICURE_PATIENT_ID
-let patientUsernameFallback = process.env.ICURE_PATIENT_USER_NAME
-let patientPasswordFallback = process.env.ICURE_PATIENT_PASSWORD
-let patientPrivateKeyFallback = process.env.ICURE_PATIENT_PRIV_KEY
-
-if (
-  !patientIdFallback ||
-  !patientUsernameFallback ||
-  !patientPasswordFallback ||
-  !patientPrivateKeyFallback
-) {
-  const user = await createPatientUser()
-  patientIdFallback = user.dataOwnerId
-  patientUsernameFallback = user.user
-  patientPasswordFallback = user.password
-  patientPrivateKeyFallback = user.privateKey
-}
-
-export const patientId = patientIdFallback
-export const patientUserName = patientUsernameFallback
-export const patientPassword = patientPasswordFallback
-export const patientPrivKey = patientPrivateKeyFallback
-
-let hcp2UsernameFallback = process.env.ICURE_USER2_NAME
-let hcp2PasswordFallback = process.env.ICURE_USER2_PASSWORD
-let hcp2PrivateKeyFallback = process.env.ICURE_USER2_PRIV_KEY
-
-if (!hcp2UsernameFallback || !hcp2PasswordFallback || !hcp2PrivateKeyFallback) {
-  const user = await createHcpUser()
-  hcp2UsernameFallback = user.user
-  hcp2PasswordFallback = user.password
-  hcp2PrivateKeyFallback = user.privateKey
-}
-
-export const password2 = hcp2PasswordFallback
-export const userName2 = hcp2UsernameFallback
-export const privKey2 = hcp2PrivateKeyFallback
+export const patientId = requireDefined(process.env.ICURE_PATIENT_ID, 'ICURE_PATIENT_ID')
+export const patientUserName = requireDefined(
+  process.env.ICURE_PATIENT_USER_NAME,
+  'ICURE_PATIENT_USER_NAME',
+)
+export const patientPassword = requireDefined(
+  process.env.ICURE_PATIENT_PASSWORD,
+  'ICURE_PATIENT_PASSWORD',
+)
+export const patientPrivKey = requireDefined(
+  process.env.ICURE_PATIENT_PRIV_KEY,
+  'ICURE_PATIENT_PRIV_KEY',
+)
+export const password2 = requireDefined(process.env.ICURE_USER2_NAME, 'ICURE_USER2_NAME')
+export const userName2 = requireDefined(process.env.ICURE_USER2_PASSWORD, 'ICURE_USER2_PASSWORD')
+export const privKey2 = requireDefined(process.env.ICURE_USER2_PRIV_KEY, 'ICURE_USER2_PRIV_KEY')

@@ -1,22 +1,16 @@
 import 'isomorphic-fetch'
-import { initLocalStorage, initMedTechApi, output, password } from '../../utils/index.mjs'
-import {
-  AnonymousMedTechApiBuilder,
-  MedTechApiBuilder,
-  DataSample,
-  CodingReference,
-  medTechApi,
-  Content,
-} from '@icure/medical-device-sdk'
+import { initEHRLiteApi, password } from '../../utils/index.mjs'
+import { output } from '../../../utils/index.mjs'
 import { webcrypto } from 'crypto'
 import * as process from 'process'
-import { getLastEmail } from '../../utils/msgGtw.mjs'
+import { getLastEmail } from '../../../utils/msgGtw.mjs'
 import { expect, use as chaiUse } from 'chai'
-import { NotificationTypeEnum } from '@icure/medical-device-sdk/src/models/Notification.js'
-import { SimpleMedTechCryptoStrategies } from '@icure/medical-device-sdk'
 import { username } from '../../quick-start/index.mjs'
 import chaiAsPromised from 'chai-as-promised'
-import { MemoryKeyStorage, MemoryStorage } from '../../utils/memoryStorage.mjs'
+import { MemoryKeyStorage, MemoryStorage } from '../../../utils/memoryStorage.mjs'
+import { AnonymousEHRLiteApi, EHRLiteApi, LocalComponent, Observation } from '@icure/ehr-lite-sdk'
+import { SimpleEHRLiteCryptoStrategies } from '@icure/ehr-lite-sdk/services/EHRLiteCryptoStrategies'
+import { CodingReference, mapOf, NotificationTypeEnum } from '@icure/typescript-common'
 chaiUse(chaiAsPromised)
 
 const cachedInfo = {} as { [key: string]: string }
@@ -55,16 +49,17 @@ function getBackCredentials(): {
 
 //tech-doc: Get master Hcp Id
 const iCureUrl = process.env.ICURE_URL
-const masterHcpApi = await medTechApi()
+const masterHcpApi = await new EHRLiteApi.Builder()
   .withICureBaseUrl(iCureUrl)
   .withUserName(username)
   .withPassword(password)
   .withCrypto(webcrypto as any)
-  .withCryptoStrategies(new SimpleMedTechCryptoStrategies([]))
+  .withCryptoStrategies(new SimpleEHRLiteCryptoStrategies())
   .withStorage(new MemoryStorage()) //skip
   .withKeyStorage(new MemoryKeyStorage()) //skip
   .build()
-const masterUser = await masterHcpApi.userApi.getLoggedUser()
+
+const masterUser = await masterHcpApi.userApi.getLogged()
 const masterHcpId = masterHcpApi.dataOwnerApi.getDataOwnerIdOf(masterUser)
 //tech-doc: STOP HERE
 output({ masterHcpId, masterUser })
@@ -79,14 +74,14 @@ const authProcessByEmailId = process.env.AUTH_BY_EMAIL_PROCESS_ID
 const authProcessBySmsId = process.env.AUTH_BY_SMS_PROCESS_ID
 const recaptcha = process.env.RECAPTCHA
 
-const anonymousApi = await new AnonymousMedTechApiBuilder()
+const anonymousApi = await new AnonymousEHRLiteApi.Builder()
   .withICureBaseUrl(iCureUrl)
   .withCrypto(webcrypto as any)
   .withMsgGwUrl(msgGtwUrl)
   .withMsgGwSpecId(specId)
   .withAuthProcessByEmailId(authProcessByEmailId)
   .withAuthProcessBySmsId(authProcessBySmsId)
-  .withCryptoStrategies(new SimpleMedTechCryptoStrategies([]))
+  .withCryptoStrategies(new SimpleEHRLiteCryptoStrategies([]))
   .withStorage(memoryStorage) //skip
   .withKeyStorage(memoryKeyStorage) //skip
   .build()
@@ -117,7 +112,7 @@ const authenticationResult = await anonymousApi.authenticationApi.completeAuthen
   validationCode,
 )
 
-const authenticatedApi = authenticationResult.medTechApi
+const authenticatedApi = authenticationResult.api
 
 console.log(`Your new user id: ${authenticationResult.userId}`)
 console.log(`Database id where new user was created: ${authenticationResult.groupId}`)
@@ -140,22 +135,21 @@ saveSecurely(
 //tech-doc: STOP HERE
 
 //tech-doc: Get logged user info
-const loggedUser = await authenticatedApi.userApi.getLoggedUser()
+const loggedUser = await authenticatedApi.userApi.getLogged()
 //tech-doc: STOP HERE
 output({ loggedUser })
 
 //tech-doc: Create encrypted data
-const createdDataSample = await authenticatedApi.dataSampleApi.createOrModifyDataSampleFor(
+const createdObservation = await authenticatedApi.observationApi.createOrModifyFor(
   loggedUser.patientId,
-  new DataSample({
-    labels: new Set([new CodingReference({ type: 'IC-TEST', code: 'TEST' })]),
-    content: { en: new Content({ stringValue: 'Hello world' }) },
+  new Observation({
+    tags: new Set([new CodingReference({ type: 'IC-TEST', code: 'TEST' })]),
+    localContent: mapOf({ en: new LocalComponent({ stringValue: 'Hello world' }) }),
     openingDate: 20220929083400,
-    comment: 'This is a comment',
   }),
 )
 //tech-doc: STOP HERE
-output({ createdDataSample })
+output({ createdObservation })
 
 //tech-doc: Get back credentials
 // getBackCredentials does not exist: Use your own way of storing the following data securely
@@ -164,13 +158,13 @@ const { login, token, pubKey, privKey } = getBackCredentials()
 //tech-doc: STOP HERE
 
 //tech-doc: Instantiate back a MedTechApi
-const reInstantiatedApi = await new MedTechApiBuilder()
+const reInstantiatedApi = await new EHRLiteApi.Builder()
   .withICureBaseUrl(iCureUrl)
   .withUserName(login)
   .withPassword(token)
   .withCrypto(webcrypto as any)
   .withCryptoStrategies(
-    new SimpleMedTechCryptoStrategies([{ publicKey: pubKey, privateKey: privKey }]),
+    new SimpleEHRLiteCryptoStrategies([{ publicKey: pubKey, privateKey: privKey }]),
   )
   .withStorage(memoryStorage) //skip
   .withKeyStorage(memoryKeyStorage) //skip
@@ -178,21 +172,21 @@ const reInstantiatedApi = await new MedTechApiBuilder()
 //tech-doc: STOP HERE
 
 //tech-doc: Get back encrypted data
-const foundDataSampleAfterInstantiatingApi = await reInstantiatedApi.dataSampleApi.getDataSample(
-  createdDataSample.id,
+const foundDataSampleAfterInstantiatingApi = await reInstantiatedApi.observationApi.get(
+  createdObservation.id,
 )
 //tech-doc: STOP HERE
 output({ foundDataSampleAfterInstantiatingApi })
 
 //tech-doc: Login
-const anonymousApiForLogin = await new AnonymousMedTechApiBuilder()
+const anonymousApiForLogin = await new AnonymousEHRLiteApi.Builder()
   .withICureBaseUrl(iCureUrl)
   .withCrypto(webcrypto as any)
   .withMsgGwUrl(msgGtwUrl)
   .withMsgGwSpecId(specId)
   .withAuthProcessByEmailId(authProcessByEmailId)
   .withAuthProcessBySmsId(authProcessBySmsId)
-  .withCryptoStrategies(new SimpleMedTechCryptoStrategies([]))
+  .withCryptoStrategies(new SimpleEHRLiteCryptoStrategies([]))
   .withStorage(memoryStorage) //skip
   .withKeyStorage(memoryKeyStorage) //skip
   .build()
@@ -219,19 +213,17 @@ console.log(`The token of your user will change: ***\${loginResult.token}***`)
 output({ loginResult })
 
 //tech-doc: Access back encrypted data
-const loggedUserApi = loginResult.medTechApi
+const loggedUserApi = loginResult.api
 
-const foundDataSampleAfterLogin = await loggedUserApi.dataSampleApi.getDataSample(
-  createdDataSample.id,
-)
+const foundDataSampleAfterLogin = await loggedUserApi.observationApi.get(createdObservation.id)
 //tech-doc: STOP HERE
 output({ foundDataSampleAfterLogin })
 
 // User lost his key section
 const daenaerysId = loggedUser.patientId
-const currentPatient = await loggedUserApi.patientApi.getPatient(daenaerysId)
+const currentPatient = await loggedUserApi.patientApi.get(daenaerysId)
 await loggedUserApi.patientApi.giveAccessTo(currentPatient, masterHcpId)
-await loggedUserApi.dataSampleApi.giveAccessTo(createdDataSample, masterHcpId)
+await loggedUserApi.observationApi.giveAccessTo(createdObservation, masterHcpId)
 
 cachedInfo['login'] = undefined
 cachedInfo['token'] = undefined
@@ -242,14 +234,14 @@ cachedInfo['privKey'] = undefined
 await memoryKeyStorage.clear()
 
 // User lost his key and logs back
-const anonymousMedTechApi = await new AnonymousMedTechApiBuilder()
+const anonymousMedTechApi = await new AnonymousEHRLiteApi.Builder()
   .withICureBaseUrl(iCureUrl)
   .withMsgGwUrl(msgGtwUrl)
   .withMsgGwSpecId(specId)
   .withCrypto(webcrypto as any)
   .withAuthProcessByEmailId(authProcessByEmailId)
   .withAuthProcessBySmsId(authProcessBySmsId)
-  .withCryptoStrategies(new SimpleMedTechCryptoStrategies([]))
+  .withCryptoStrategies(new SimpleEHRLiteCryptoStrategies([]))
   .withStorage(new MemoryStorage()) //skip
   .withKeyStorage(new MemoryKeyStorage()) //skip
   .build()
@@ -268,7 +260,7 @@ const loginAuthResult = await anonymousMedTechApi.authenticationApi.completeAuth
 )
 //tech-doc: STOP HERE
 
-const foundUser = await loginAuthResult.medTechApi.userApi.getLoggedUser()
+const foundUser = await loginAuthResult.api.userApi.getLogged()
 
 saveSecurely(
   userEmail,
@@ -279,36 +271,32 @@ saveSecurely(
 )
 
 //tech-doc: User can create new data after loosing their key
-const newlyCreatedDataSample =
-  await loginAuthResult.medTechApi.dataSampleApi.createOrModifyDataSampleFor(
-    foundUser.patientId,
-    new DataSample({
-      labels: new Set([new CodingReference({ type: 'IC-TEST', code: 'TEST' })]),
-      content: { en: new Content({ stringValue: 'Hello world' }) },
-      openingDate: 20220929083400,
-      comment: 'This is a comment',
-    }),
-  )
+const newlyCreatedObservation = await loginAuthResult.api.observationApi.createOrModifyFor(
+  foundUser.patientId,
+  new Observation({
+    tags: new Set([new CodingReference({ type: 'IC-TEST', code: 'TEST' })]),
+    localContent: mapOf({ en: new LocalComponent({ stringValue: 'Hello world' }) }),
+    openingDate: 20220929083400,
+  }),
+)
 //tech-doc: STOP HERE
-output({ newlyCreatedDataSample })
+output({ newlyCreatedObservation })
 
-expect(newlyCreatedDataSample).to.not.be.undefined //skip
+expect(newlyCreatedObservation).to.not.be.undefined //skip
 
 // Can access previous ones but cannot decrypt them
-const oldCreatedDataSample = await loginAuthResult.medTechApi.dataSampleApi.getDataSample(
-  createdDataSample.id!,
-)
-expect(Object.entries(oldCreatedDataSample.content ?? {})).to.be.empty
+const oldCreatedObservation = await loginAuthResult.api.observationApi.get(createdObservation.id!)
+expect(Object.entries(oldCreatedObservation.localContent ?? {})).to.be.empty
 
 // When the delegate gave him access back
 // Hcp checks dedicated notification
-const hcpApi = await initMedTechApi(true)
+const hcpApi = await initEHRLiteApi(true)
 
 const startTimestamp = new Date().getTime() - 100000
 
 //tech-doc: Data owner gets all their pending notifications
 const hcpNotifications = await hcpApi.notificationApi
-  .getPendingNotificationsAfter(startTimestamp)
+  .getPendingAfter(startTimestamp)
   .then((notifs) => notifs.filter((notif) => notif.type === NotificationTypeEnum.KEY_PAIR_UPDATE))
 //tech-doc: STOP HERE
 output({ hcpNotifications })
@@ -318,17 +306,19 @@ expect(hcpNotifications.length).to.be.greaterThan(0)
 const daenaerysNotification = hcpNotifications.find(
   (notif) =>
     notif.type === NotificationTypeEnum.KEY_PAIR_UPDATE &&
-    notif.properties?.find((prop) => prop.typedValue?.stringValue == daenaerysId) != undefined,
+    Array.from(notif.properties ?? []).find(
+      (prop) => prop.typedValue?.stringValue == daenaerysId,
+    ) != undefined,
 )
 
 expect(daenaerysNotification).to.not.be.undefined //skip
 
 //tech-doc: Give access back to a user with their new key
-const daenaerysPatientId = daenaerysNotification!.properties?.find(
+const daenaerysPatientId = Array.from(daenaerysNotification!.properties ?? []).find(
   (prop) => prop.id == 'dataOwnerConcernedId',
 )
 expect(daenaerysPatientId).to.not.be.undefined //skip
-const daenaerysPatientPubKey = daenaerysNotification!.properties?.find(
+const daenaerysPatientPubKey = Array.from(daenaerysNotification!.properties ?? []).find(
   (prop) => prop.id == 'dataOwnerConcernedPubKey',
 )
 expect(daenaerysPatientPubKey).to.not.be.undefined //skip
@@ -341,10 +331,10 @@ await hcpApi.dataOwnerApi.giveAccessBackTo(
 output({ daenaerysPatientId, daenaerysPatientPubKey })
 
 // Then
-const updatedApi = await medTechApi(loginAuthResult.medTechApi).build()
+const updatedApi = await new EHRLiteApi.Builder(loginAuthResult.api).build()
 
-const previousDataSample = await updatedApi.dataSampleApi.getDataSample(createdDataSample.id!)
-expect(previousDataSample).to.not.be.undefined //skip
+const previousObservation = await updatedApi.observationApi.get(createdObservation.id!)
+expect(previousObservation).to.not.be.undefined //skip
 //tech-doc: STOP HERE
 
-output({ previousDataSample })
+output({ previousDataSample: previousObservation })
