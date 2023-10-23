@@ -24,13 +24,13 @@ Currently, iCure supports the following event types for the following entities:
 
 :::note
 
-We assume that you already know the [How to authenticate a user](sdks/how-to/how-to-authenticate-a-user/index.md) guide.
+We assume that you already know the [How to authenticate a user]({{sdk}}/how-to/how-to-authenticate-a-user/index.md) guide.
 
 :::
 
 As an example, we will listen to `CREATE` events for `DataSample` objects. This methodology can be applied to any other type of event and objects.
 
-<!-- file://code-samples/how-to/websocket/index.mts snippet:can listen to dataSample events-->
+<!-- file://code-samples/{{sdk}}/how-to/websocket/index.mts snippet:can listen to dataSample events-->
 ```typescript
 const events: DataSample[] = []
 const statuses: string[] = []
@@ -81,7 +81,7 @@ We assume that you already have a patient created. If not, you can add the follo
 <details>
   <summary>Create a patient</summary>
 
-<!-- file://code-samples/how-to/websocket/index.mts snippet:create a patient for websocket-->
+<!-- file://code-samples/{{sdk}}/how-to/websocket/index.mts snippet:create a patient for websocket-->
 ```typescript
 const patient = await api.patientApi.createOrModifyPatient(
   new Patient({
@@ -94,21 +94,21 @@ const patient = await api.patientApi.createOrModifyPatient(
 
 </details>
 
-<!-- output://code-samples/how-to/websocket/patient.txt -->
+<!-- output://code-samples/{{sdk}}/how-to/websocket/patient.txt -->
 <details>
 <summary>patient</summary>
 
 ```json
 {
-  "id": "60456fce-50ec-4a25-8cae-184799caca21",
+  "id": "9148d804-111b-4c19-a02a-2e405bc72fed",
   "languages": [],
   "active": true,
   "parameters": {},
-  "rev": "1-5c5effe144996ef9a9db1f091ddefaa0",
-  "created": 1688378977235,
-  "modified": 1688378977235,
-  "author": "6a541dfb-40d9-41f5-ba76-e3a5e277813f",
-  "responsible": "e2b6e873-035b-4964-885b-5a90e99c43b4",
+  "rev": "1-0e69a95a5199b9bf4f34dfbd4868f0e5",
+  "created": 1679928181117,
+  "modified": 1679928181117,
+  "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
+  "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
   "firstName": "John",
   "lastName": "Snow",
   "note": "Winter is coming",
@@ -138,20 +138,19 @@ const patient = await api.patientApi.createOrModifyPatient(
   "patientProfessions": [],
   "properties": {},
   "systemMetaData": {
-    "aesExchangeKeys": {},
     "hcPartyKeys": {},
     "privateKeyShamirPartitions": {},
+    "aesExchangeKeys": {},
     "transferKeys": {},
-    "encryptedSelf": "h3XpCBZRKqNsoHO+fGQYTwn+/Z+ZUNhpmmE8KlOhrHlGu2EkHOJ5x1wJZFXNlb0l",
+    "encryptedSelf": "B50sdC+IBLpgiqynG6ldjE9OMsbU+OflKKsfpznPFTLJvwqgz/XPSvdq/sOQo4Bg",
     "secretForeignKeys": [],
     "cryptedForeignKeys": {},
     "delegations": {
-      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
     },
     "encryptionKeys": {
-      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
-    },
-    "publicKeysForOaepWithSha256": {}
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+    }
   }
 }
 ```
@@ -159,7 +158,7 @@ const patient = await api.patientApi.createOrModifyPatient(
 
 :::
 
-<!-- file://code-samples/how-to/websocket/index.mts snippet:create a dataSample for websocket-->
+<!-- file://code-samples/{{sdk}}/how-to/websocket/index.mts snippet:create a dataSample for websocket-->
 ```typescript
 const dataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
   patient.id!,
@@ -170,22 +169,22 @@ const dataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
 )
 ```
 
-<!-- output://code-samples/how-to/websocket/dataSample.txt -->
+<!-- output://code-samples/{{sdk}}/how-to/websocket/dataSample.txt -->
 <details>
 <summary>dataSample</summary>
 
 ```json
 {
-  "id": "cf182b3c-14b6-4e6e-ad81-1026d2984a47",
+  "id": "6a0e9b7d-12ab-43f1-8d12-862fc26db631",
   "qualifiedLinks": {},
-  "batchId": "81bf51df-fe56-4c17-8e4a-fd572962cf4f",
+  "batchId": "d6e48192-0d44-483b-abbe-b6544c9543f2",
   "index": 0,
-  "valueDate": 20230703120937,
-  "openingDate": 20230703120937,
-  "created": 1688378977275,
-  "modified": 1688378977275,
-  "author": "6a541dfb-40d9-41f5-ba76-e3a5e277813f",
-  "responsible": "e2b6e873-035b-4964-885b-5a90e99c43b4",
+  "valueDate": 20230327144301,
+  "openingDate": 20230327144301,
+  "created": 1679928181474,
+  "modified": 1679928181473,
+  "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
+  "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
   "identifiers": [],
   "healthcareElementIds": {},
   "canvasesIds": {},
@@ -200,20 +199,18 @@ const dataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
   "codes": {},
   "labels": {},
   "systemMetaData": {
-    "encryptedSelf": "AiXVUip7oBsZZyMsEgSOBkFJ0X8qpsuLIYl1KiGKfZeyXi481oFm8b7FTSe0/Fd8CRWGxRYrxIeobK0s/btzaZYBAxeAcvirdDWBj21QR2X2HPFxeSo2/O078lsmCemZE1iLENbVaIVk+mByjAjjCg==",
     "secretForeignKeys": [
-      "12f953ec-709c-46dc-a426-58d0b2f9526c"
+      "c643480a-faa7-4068-a6b3-fed0999340f1"
     ],
     "cryptedForeignKeys": {
-      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
     },
     "delegations": {
-      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
     },
     "encryptionKeys": {
-      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
-    },
-    "publicKeysForOaepWithSha256": {}
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+    }
   }
 }
 ```
@@ -223,28 +220,28 @@ const dataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
 
 To stop listening to events, you can call the `close` method on the `Connection` object.
 
-<!-- file://code-samples/how-to/websocket/index.mts snippet:close the connection-->
+<!-- file://code-samples/{{sdk}}/how-to/websocket/index.mts snippet:close the connection-->
 ```typescript
 connection.close()
 ```
 
-<!-- output://code-samples/how-to/websocket/events.txt -->
+<!-- output://code-samples/{{sdk}}/how-to/websocket/events.txt -->
 <details>
 <summary>events</summary>
 
 ```text
 [
   {
-    "id": "cf182b3c-14b6-4e6e-ad81-1026d2984a47",
+    "id": "6a0e9b7d-12ab-43f1-8d12-862fc26db631",
     "qualifiedLinks": {},
-    "batchId": "81bf51df-fe56-4c17-8e4a-fd572962cf4f",
+    "batchId": "d6e48192-0d44-483b-abbe-b6544c9543f2",
     "index": 0,
-    "valueDate": 20230703120937,
-    "openingDate": 20230703120937,
-    "created": 1688378977275,
-    "modified": 1688378977275,
-    "author": "6a541dfb-40d9-41f5-ba76-e3a5e277813f",
-    "responsible": "e2b6e873-035b-4964-885b-5a90e99c43b4",
+    "valueDate": 20230327144301,
+    "openingDate": 20230327144301,
+    "created": 1679928181474,
+    "modified": 1679928181473,
+    "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
+    "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
     "identifiers": [],
     "healthcareElementIds": {},
     "canvasesIds": {},
@@ -259,27 +256,25 @@ connection.close()
     "codes": {},
     "labels": {},
     "systemMetaData": {
-      "encryptedSelf": "AiXVUip7oBsZZyMsEgSOBkFJ0X8qpsuLIYl1KiGKfZeyXi481oFm8b7FTSe0/Fd8CRWGxRYrxIeobK0s/btzaZYBAxeAcvirdDWBj21QR2X2HPFxeSo2/O078lsmCemZE1iLENbVaIVk+mByjAjjCg==",
       "secretForeignKeys": [
-        "12f953ec-709c-46dc-a426-58d0b2f9526c"
+        "c643480a-faa7-4068-a6b3-fed0999340f1"
       ],
       "cryptedForeignKeys": {
-        "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
+        "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
       },
       "delegations": {
-        "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
+        "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
       },
       "encryptionKeys": {
-        "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
-      },
-      "publicKeysForOaepWithSha256": {}
+        "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+      }
     }
   }
 ]
 ```
 </details>
 
-<!-- output://code-samples/how-to/websocket/statuses.txt -->
+<!-- output://code-samples/{{sdk}}/how-to/websocket/statuses.txt -->
 <details>
 <summary>statuses</summary>
 

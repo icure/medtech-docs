@@ -11,7 +11,7 @@ tags:
 
 To create a user, you first need to create a [User](../references/classes/User.md) object and call the `createUser` method on the `UserService` object.
 
-<!-- file://code-samples/how-to/manage-users/index.mts snippet:Create a user-->
+<!-- file://code-samples/{{sdk}}/how-to/manage-users/index.mts snippet:Create a user-->
 ```typescript
 import { User } from '@icure/medical-device-sdk'
 import { ICureRegistrationEmail } from '@icure/medical-device-sdk'
@@ -28,19 +28,19 @@ const userToCreate = new User({
 const createdUser = await api.userApi.createOrModifyUser(userToCreate)
 ```
 
-<!-- output://code-samples/how-to/manage-users/createdUser.txt -->
+<!-- output://code-samples/{{sdk}}/how-to/manage-users/createdUser.txt -->
 <details>
 <summary>createdUser</summary>
 
 ```json
 {
-  "id": "310c31dc-0cb2-41c4-8911-7acc2461fb85",
-  "rev": "1-5680dab9f15afa557209cea31afff475",
-  "created": 1688378971900,
-  "login": "johnprlq1sm9g",
+  "id": "8a87f8c9-7175-41ed-86e8-180708abc758",
+  "rev": "1-ea64d488f765933925ea0460fed2ca80",
+  "created": 1679926553666,
+  "login": "john+fpou08319",
   "passwordHash": "*",
   "groupId": "ic-e2etest-medtech-docs",
-  "email": "johnprlq1sm9g@hospital.care",
+  "email": "john+fpou08319@hospital.care",
   "properties": {},
   "roles": {},
   "sharingDataWith": {},
@@ -62,12 +62,12 @@ Sometimes, you may want to create a temporary authentication token for a user th
 You can do that using the `createToken` method, that takes as parameters the id of the user for which create the token 
 and the duration of the token, in seconds.
 
-<!-- file://code-samples/how-to/manage-users/index.mts snippet:Create a token-->
+<!-- file://code-samples/{{sdk}}/how-to/manage-users/index.mts snippet:Create a token-->
 ```typescript
 const token = await api.userApi.createToken(createdUser.id, 3600)
 ```
 
-<!-- output://code-samples/how-to/manage-users/token.txt -->
+<!-- output://code-samples/{{sdk}}/how-to/manage-users/token.txt -->
 <details>
 <summary>token</summary>
 
@@ -90,9 +90,9 @@ but only Admins and Healthcare Professionals from create authentication tokens f
 
 The user you just created will be able to connect to the application but will not be able to manage data because it is not connected to a data owner.
 
-You will often need to create a patient that can connect to iCure. In that case you can use [createAndInviteUser](/sdks/references/apis/UserApi#createandinviteuser):
+You will often need to create a patient that can connect to iCure. In that case you can use [createAndInviteUser](/{{sdk}}/references/apis/UserApi#createandinviteuser):
 
-<!-- file://code-samples/how-to/manage-users/index.mts snippet:Create a patient user-->
+<!-- file://code-samples/{{sdk}}/how-to/manage-users/index.mts snippet:Create a patient user-->
 ```typescript
 import { Patient, Address, Telecom } from '@icure/medical-device-sdk'
 
@@ -149,21 +149,21 @@ const createdPatientUser = await api.userApi.createAndInviteUser(
 )
 ```
 
-<!-- output://code-samples/how-to/manage-users/createdPatient.txt -->
+<!-- output://code-samples/{{sdk}}/how-to/manage-users/createdPatient.txt -->
 <details>
 <summary>createdPatient</summary>
 
 ```json
 {
-  "id": "af378d93-d7f5-4247-a59e-479fa9be036c",
+  "id": "a2bf8e81-0155-465c-8eef-7ef68b510daa",
   "languages": [],
   "active": true,
   "parameters": {},
-  "rev": "1-1214965a9df7143e2b999644bb6328d4",
-  "created": 1688378971969,
-  "modified": 1688378971969,
-  "author": "6a541dfb-40d9-41f5-ba76-e3a5e277813f",
-  "responsible": "e2b6e873-035b-4964-885b-5a90e99c43b4",
+  "rev": "1-4ab0a19c997a92ab9f2ef2fa30eb48e7",
+  "created": 1679926554832,
+  "modified": 1679926554832,
+  "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
+  "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
   "firstName": "Argan",
   "lastName": "Poquelin",
   "ssin": "1973021014722",
@@ -188,7 +188,7 @@ const createdPatientUser = await api.userApi.createAndInviteUser(
       "addressType": "home",
       "telecoms": [
         {
-          "telecomNumber": "arganprlq1sm9g@moliere.fr",
+          "telecomNumber": "argan+fpou08319@moliere.fr",
           "telecomType": "email"
         }
       ]
@@ -204,39 +204,38 @@ const createdPatientUser = await api.userApi.createAndInviteUser(
   "patientProfessions": [],
   "properties": {},
   "systemMetaData": {
-    "aesExchangeKeys": {},
     "hcPartyKeys": {},
     "privateKeyShamirPartitions": {},
+    "aesExchangeKeys": {},
     "transferKeys": {},
-    "encryptedSelf": "LevbBdcSTaGpEMPRTfPDn7It3PgdofmlGgMh6C+Is6U=",
+    "encryptedSelf": "pUfGQ5W6qBKcfNto4B7tZHMNfoim0auje5P/g/Kste4=",
     "secretForeignKeys": [],
     "cryptedForeignKeys": {},
     "delegations": {
-      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
     },
     "encryptionKeys": {
-      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
-    },
-    "publicKeysForOaepWithSha256": {}
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+    }
   }
 }
 ```
 </details>
 
-<!-- output://code-samples/how-to/manage-users/createdPatientUser.txt -->
+<!-- output://code-samples/{{sdk}}/how-to/manage-users/createdPatientUser.txt -->
 <details>
 <summary>createdPatientUser</summary>
 
 ```json
 {
-  "id": "0d6c6aaf-350e-489b-9fad-62f8eebec949",
-  "rev": "1-9b6877462964f7659d76d2a91566abb3",
-  "created": 1688378972035,
-  "name": "arganprlq1sm9g@moliere.fr",
-  "login": "arganprlq1sm9g@moliere.fr",
+  "id": "7af73f15-f16d-46f1-9437-89a676192032",
+  "rev": "1-c930b4b0e7f2942cc6af7c4317fd54dd",
+  "created": 1679926555303,
+  "name": "argan+fpou08319@moliere.fr",
+  "login": "argan+fpou08319@moliere.fr",
   "groupId": "ic-e2etest-medtech-docs",
-  "patientId": "af378d93-d7f5-4247-a59e-479fa9be036c",
-  "email": "arganprlq1sm9g@moliere.fr",
+  "patientId": "a2bf8e81-0155-465c-8eef-7ef68b510daa",
+  "email": "argan+fpou08319@moliere.fr",
   "properties": {},
   "roles": {},
   "sharingDataWith": {},
@@ -256,7 +255,7 @@ The email will contain the username and a temporary password.
 :::caution
 
 For this process to succeed the following conditions must be met: 
-* the healthcare professional and the patient must have an email address or a mobile phone number.
+* the {{hcp}} and the patient must have an email address or a mobile phone number.
 * the email address or the phone number of the patient must not be in use by another user in the database.
 
 :::
@@ -265,33 +264,28 @@ For this process to succeed the following conditions must be met:
 
 To load a user by id, you can use the `getUser` method on the `userApi`:
 
-<!-- file://code-samples/how-to/manage-users/index.mts snippet:Load a user-->
+<!-- file://code-samples/{{sdk}}/how-to/manage-users/index.mts snippet:Load a user-->
 ```typescript
 const loadedUser = await api.userApi.getUser(createdUser.id)
 ```
 
-<!-- output://code-samples/how-to/manage-users/loadedUser.txt -->
+<!-- output://code-samples/{{sdk}}/how-to/manage-users/loadedUser.txt -->
 <details>
 <summary>loadedUser</summary>
 
 ```json
 {
-  "id": "310c31dc-0cb2-41c4-8911-7acc2461fb85",
-  "rev": "2-3626deb4da17351a013da77bf32a8914",
-  "created": 1688378971900,
-  "login": "johnprlq1sm9g",
+  "id": "8a87f8c9-7175-41ed-86e8-180708abc758",
+  "rev": "1-ea64d488f765933925ea0460fed2ca80",
+  "created": 1679926553666,
+  "login": "john+fpou08319",
   "passwordHash": "*",
   "groupId": "ic-e2etest-medtech-docs",
-  "email": "johnprlq1sm9g@hospital.care",
+  "email": "john+fpou08319@hospital.care",
   "properties": {},
   "roles": {},
   "sharingDataWith": {},
-  "authenticationTokens": {
-    "ff3e00cf-ede1-41c6-abcc-0bd6d976b382": {
-      "creationTime": 1688378971914,
-      "validity": 3600
-    }
-  }
+  "authenticationTokens": {}
 }
 ```
 </details>
@@ -300,33 +294,28 @@ const loadedUser = await api.userApi.getUser(createdUser.id)
 
 To load a user by email, you can use the `getUserByEmail` method on the `userApi`:
 
-<!-- file://code-samples/how-to/manage-users/index.mts snippet:Load a user by email-->
+<!-- file://code-samples/{{sdk}}/how-to/manage-users/index.mts snippet:Load a user by email-->
 ```typescript
 const loadedUserByEmail = await api.userApi.getUserByEmail(createdUser.email)
 ```
 
-<!-- output://code-samples/how-to/manage-users/loadedUserByEmail.txt -->
+<!-- output://code-samples/{{sdk}}/how-to/manage-users/loadedUserByEmail.txt -->
 <details>
 <summary>loadedUserByEmail</summary>
 
 ```json
 {
-  "id": "310c31dc-0cb2-41c4-8911-7acc2461fb85",
-  "rev": "2-3626deb4da17351a013da77bf32a8914",
-  "created": 1688378971900,
-  "login": "johnprlq1sm9g",
+  "id": "8a87f8c9-7175-41ed-86e8-180708abc758",
+  "rev": "1-ea64d488f765933925ea0460fed2ca80",
+  "created": 1679926553666,
+  "login": "john+fpou08319",
   "passwordHash": "*",
   "groupId": "ic-e2etest-medtech-docs",
-  "email": "johnprlq1sm9g@hospital.care",
+  "email": "john+fpou08319@hospital.care",
   "properties": {},
   "roles": {},
   "sharingDataWith": {},
-  "authenticationTokens": {
-    "ff3e00cf-ede1-41c6-abcc-0bd6d976b382": {
-      "creationTime": 1688378971914,
-      "validity": 3600
-    }
-  }
+  "authenticationTokens": {}
 }
 ```
 </details>
@@ -339,40 +328,35 @@ The following filters are available:
 * Filtering on a collection of ids
 * Filtering by patient id
 
-<!-- file://code-samples/how-to/manage-users/index.mts snippet:Filter users-->
+<!-- file://code-samples/{{sdk}}/how-to/manage-users/index.mts snippet:Filter users-->
 ```typescript
 const users = await api.userApi.filterUsers(
   await new UserFilter(api).byPatientId(createdPatient.id).build(),
 )
 ```
 
-<!-- output://code-samples/how-to/manage-users/users.txt -->
+<!-- output://code-samples/{{sdk}}/how-to/manage-users/users.txt -->
 <details>
 <summary>users</summary>
 
 ```json
 {
   "pageSize": 1000,
-  "totalSize": 448,
+  "totalSize": 257,
   "rows": [
     {
-      "id": "0d6c6aaf-350e-489b-9fad-62f8eebec949",
-      "rev": "2-3b2cf0c426cdce9be9089efce8ce9574",
-      "created": 1688378972035,
-      "name": "arganprlq1sm9g@moliere.fr",
-      "login": "arganprlq1sm9g@moliere.fr",
+      "id": "7af73f15-f16d-46f1-9437-89a676192032",
+      "rev": "2-c9f65e910e7aedb1044bd24451285dd6",
+      "created": 1679926555303,
+      "name": "argan+fpou08319@moliere.fr",
+      "login": "argan+fpou08319@moliere.fr",
       "groupId": "ic-e2etest-medtech-docs",
-      "patientId": "af378d93-d7f5-4247-a59e-479fa9be036c",
-      "email": "arganprlq1sm9g@moliere.fr",
+      "patientId": "a2bf8e81-0155-465c-8eef-7ef68b510daa",
+      "email": "argan+fpou08319@moliere.fr",
       "properties": {},
       "roles": {},
       "sharingDataWith": {},
-      "authenticationTokens": {
-        "b1e6c518-a3a8-4e9a-8a5f-7f56fa5c6fa8": {
-          "creationTime": 1688378972057,
-          "validity": 172800
-        }
-      }
+      "authenticationTokens": {}
     }
   ],
   "nextKeyPair": {}
@@ -384,7 +368,7 @@ const users = await api.userApi.filterUsers(
 
 To update a user, you first need to load the user you want to update, then modify the fields you want to update and call the `createOrModifyUser` method on the `userApi`.
 
-<!-- file://code-samples/how-to/manage-users/index.mts snippet:Update a user-->
+<!-- file://code-samples/{{sdk}}/how-to/manage-users/index.mts snippet:Update a user-->
 ```typescript
 const userToModify = await api.userApi.getUser(createdUser.id)
 const modifiedUser = await api.userApi.createOrModifyUser(
@@ -392,28 +376,23 @@ const modifiedUser = await api.userApi.createOrModifyUser(
 )
 ```
 
-<!-- output://code-samples/how-to/manage-users/modifiedUser.txt -->
+<!-- output://code-samples/{{sdk}}/how-to/manage-users/modifiedUser.txt -->
 <details>
 <summary>modifiedUser</summary>
 
 ```json
 {
-  "id": "310c31dc-0cb2-41c4-8911-7acc2461fb85",
-  "rev": "3-bbfd4a77c910433d4eebaacfad823135",
-  "created": 1688378971900,
-  "login": "johnprlq1sm9g",
+  "id": "8a87f8c9-7175-41ed-86e8-180708abc758",
+  "rev": "2-3c7c6231fb5c338ceea419751e79374a",
+  "created": 1679926553666,
+  "login": "john+fpou08319",
   "passwordHash": "*",
   "groupId": "ic-e2etest-medtech-docs",
-  "email": "johnprlq1sm9g@hospital.care",
+  "email": "john+fpou08319@hospital.care",
   "properties": {},
   "roles": {},
   "sharingDataWith": {},
-  "authenticationTokens": {
-    "ff3e00cf-ede1-41c6-abcc-0bd6d976b382": {
-      "creationTime": 1688378971914,
-      "validity": 3600
-    }
-  }
+  "authenticationTokens": {}
 }
 ```
 </details>
@@ -422,18 +401,18 @@ const modifiedUser = await api.userApi.createOrModifyUser(
 
 To delete a user, you call the `deleteUser` method on the `userApi` and pass the id of the user to be deleted.
 
-<!-- file://code-samples/how-to/manage-users/index.mts snippet:Delete a user-->
+<!-- file://code-samples/{{sdk}}/how-to/manage-users/index.mts snippet:Delete a user-->
 ```typescript
 const deletedUserId = await api.userApi.deleteUser(createdUser.id)
 ```
 
-<!-- output://code-samples/how-to/manage-users/deletedUserId.txt -->
+<!-- output://code-samples/{{sdk}}/how-to/manage-users/deletedUserId.txt -->
 <details>
 <summary>deletedUserId</summary>
 
 ```text
-4-27703d6f5b159ce6c94835e728d502e0
+3-0a0a726e42f631f0a5067892648963e3
 ```
 </details>
 
-For the gory details of all you can do with users using the SDK, check out the [UserApi](/sdks/references/apis/UserApi) documentation.
+For the gory details of all you can do with users using the SDK, check out the [UserApi](/{{sdk}}/references/apis/UserApi) documentation.

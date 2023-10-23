@@ -39,10 +39,24 @@ async function createConfig() {
             [
                 'content-docs',
                 {
-                    id: 'default',
-                    path: './sdks',
-                    routeBasePath: 'sdks',
-                    sidebarPath: require.resolve('./sidebarsSDK.js'),
+                    id: 'ehrlite',
+                    path: './ehr-lite-sdk',
+                    routeBasePath: 'ehr-lite-sdk',
+                    sidebarPath: require.resolve('./sidebarsEhrLiteSDK.js'),
+                    editUrl:
+                        `https://github.com/${GITHUB_USERNAME}/medtech-docs/edit/main/`,
+                    remarkPlugins: [
+                        [remarkKroki, krokiConfig]
+                    ],
+                },
+            ],
+            [
+                'content-docs',
+                {
+                    id: 'medtech',
+                    path: './medtech-sdk',
+                    routeBasePath: 'medtech-sdk',
+                    sidebarPath: require.resolve('./sidebarsMedtechSDK.js'),
                     editUrl:
                         `https://github.com/${GITHUB_USERNAME}/medtech-docs/edit/main/`,
                     remarkPlugins: [
@@ -140,7 +154,15 @@ async function createConfig() {
                             type: 'doc',
                             docId: 'intro',
                             position: 'right',
+                            label: 'EHR Lite SDK',
+                            docsPluginId: 'ehrlite',
+                        },
+                        {
+                            type: 'doc',
+                            docId: 'intro',
+                            position: 'right',
                             label: 'Medical Device SDK',
+                            docsPluginId: 'medtech',
                         },
                         {
                             type: 'doc',

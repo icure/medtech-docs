@@ -8,9 +8,9 @@ If your user would like to authenticate by SMS, the authentication process (Regi
 ## Register a user by SMS
 When you want to start user registration, make sure to call the method `withAuthProcessBySmsId()` to provide the 
 `authenticationProcessBySmsId`. For detailed information about those authentication process ids, head to 
-the [User Authentication - Init AnonymousMedTechApi](/sdks/how-to/how-to-authenticate-a-user/how-to-authenticate-a-user#init-anonymousmedtechapi) how to.
+the [User Authentication - Init AnonymousMedTechApi](/{{sdk}}/how-to/how-to-authenticate-a-user/how-to-authenticate-a-user#init-anonymousmedtechapi) how to.
 
-<!-- file://code-samples/how-to/authenticate-user-by-sms/index.mts snippet:Instantiate AnonymousMedTech API-->
+<!-- file://code-samples/{{sdk}}/how-to/authenticate-user-by-sms/index.mts snippet:Instantiate AnonymousMedTech API-->
 ```typescript
 const msgGtwUrl = process.env.ICURE_MSG_GTW_URL
 const specId = process.env.SPEC_ID
@@ -33,7 +33,7 @@ Once your AnonymousMedTechApi is initialised, you can start the authentication o
 
 Make sure to provide user's phone number instead of their email. 
 
-<!-- file://code-samples/how-to/authenticate-user-by-sms/index.mts snippet:Start Authentication Process By SMS-->
+<!-- file://code-samples/{{sdk}}/how-to/authenticate-user-by-sms/index.mts snippet:Start Authentication Process By SMS-->
 ```typescript
 const authProcess = await anonymousApi.authenticationApi.startAuthentication(
   recaptcha,
@@ -44,14 +44,14 @@ const authProcess = await anonymousApi.authenticationApi.startAuthentication(
   masterHcpId,
 )
 ```
-<!-- output://code-samples/how-to/authenticate-user-by-sms/authProcess.txt -->
+<!-- output://code-samples/{{sdk}}/how-to/authenticate-user-by-sms/authProcess.txt -->
 <details>
 <summary>authProcess</summary>
 
 ```json
 {
-  "requestId": "9190796e-2341-4a55-8d70-5756fc2deca6",
-  "login": "+24300751319",
+  "requestId": "f238b4eb-6389-439f-a966-dc4384fa8c8d",
+  "login": "+32778028653",
   "bypassTokenCheck": false
 }
 ```
@@ -67,9 +67,9 @@ If you choose to provide user email **AND** phone number, they will by default, 
 
 ## Login by SMS
 Use the `authenticationApi.startAuthentication` service again, by providing the user's phone number. The login process 
-stays very similar to [Login By Email](/sdks/how-to/how-to-authenticate-a-user/how-to-authenticate-a-user#regenerate-the-credentials-for-a-user). 
+stays very similar to [Login By Email](/{{sdk}}/how-to/how-to-authenticate-a-user/how-to-authenticate-a-user#regenerate-the-credentials-for-a-user). 
 
-<!-- file://code-samples/how-to/authenticate-user-by-sms/index.mts snippet:Login by SMS-->
+<!-- file://code-samples/{{sdk}}/how-to/authenticate-user-by-sms/index.mts snippet:Login by SMS-->
 ```typescript
 const anonymousApiForLogin = await new AnonymousMedTechApiBuilder()
   .withICureBaseUrl(iCureUrl)
@@ -88,7 +88,7 @@ const authProcessLogin = await anonymousApiForLogin.authenticationApi.startAuthe
 )
 ```
 
-<!-- file://code-samples/how-to/authenticate-user-by-sms/index.mts snippet:Complete login authentication process-->
+<!-- file://code-samples/{{sdk}}/how-to/authenticate-user-by-sms/index.mts snippet:Complete login authentication process-->
 ```typescript
 const loginResult = await anonymousApiForLogin.authenticationApi.completeAuthentication(
   authProcessLogin!,
@@ -99,21 +99,21 @@ const loggedUserApi = loginResult.medTechApi
 
 const foundPatientAfterLogin = await loggedUserApi.patientApi.getPatient(createdPatient.id)
 ```
-<!-- output://code-samples/how-to/authenticate-user-by-sms/foundPatientAfterLogin.txt -->
+<!-- output://code-samples/{{sdk}}/how-to/authenticate-user-by-sms/foundPatientAfterLogin.txt -->
 <details>
 <summary>foundPatientAfterLogin</summary>
 
 ```json
 {
-  "id": "2114f46a-4f11-4ab7-afbb-dd7ab188403c",
+  "id": "c05bfb27-bac9-4117-ba51-ec44bd96e4f1",
   "languages": [],
   "active": true,
   "parameters": {},
-  "rev": "1-d7c0be28f0f06f10f96386f0b6a648ff",
-  "created": 1688378945566,
-  "modified": 1688378945566,
-  "author": "8dc29c7f-d13c-4286-b85d-a6d34c04bd7a",
-  "responsible": "f5179ae6-03a2-44b1-ae98-b55ea5d49927",
+  "rev": "1-9c712757738ccdabf7da0638968e0262",
+  "created": 1679997692519,
+  "modified": 1679997692519,
+  "author": "169f7a83-3aa0-4722-8914-5b9b8bfbcaee",
+  "responsible": "16f68184-5547-4fa9-ad84-5c46e57b9cbb",
   "firstName": "Robb",
   "lastName": "Stark",
   "note": "You must keep one's head",
@@ -143,20 +143,19 @@ const foundPatientAfterLogin = await loggedUserApi.patientApi.getPatient(created
   "patientProfessions": [],
   "properties": {},
   "systemMetaData": {
-    "aesExchangeKeys": {},
     "hcPartyKeys": {},
     "privateKeyShamirPartitions": {},
+    "aesExchangeKeys": {},
     "transferKeys": {},
-    "encryptedSelf": "zEHMzKX1plLccjOfmhIyEKlUNMKwSN3B8b7vSN+WFfMp2oa1OBBbQx8Z5HBUIredy9lDwpxvioDjPszzJYDoyw==",
+    "encryptedSelf": "Xou8KoD+S9Aza9AHKxqNmtQloAUkUe/EIF/XPKmOMu8EBOdPHvGf+cv9ionMEa9brYP+h6n66ACyyLTMHs0dIg==",
     "secretForeignKeys": [],
     "cryptedForeignKeys": {},
     "delegations": {
-      "f5179ae6-03a2-44b1-ae98-b55ea5d49927": {}
+      "16f68184-5547-4fa9-ad84-5c46e57b9cbb": {}
     },
     "encryptionKeys": {
-      "f5179ae6-03a2-44b1-ae98-b55ea5d49927": {}
-    },
-    "publicKeysForOaepWithSha256": {}
+      "16f68184-5547-4fa9-ad84-5c46e57b9cbb": {}
+    }
   }
 }
 ```

@@ -1,21 +1,21 @@
 ---
 slug: how-to-manage-data-samples
-description: Learn how to manage data samples
+description: Learn how to manage {{services}}
 tags:
 
 - DataSample
 
 ---
 
-# Handling data samples
+# Handling {{services}}
 
-In this section, we will learn how to manage data samples. DataSamples are used to store data that is not part of the
+In this section, we will learn how to manage {{services}}. DataSamples are used to store data that is not part of the
 patient's medical record, such as blood pressure measurements.
 
 :::note
 
 We assume in the examples below that you have already created a patient. If not, please follow
-the [Handling patients](/sdks/how-to/how-to-manage-patients) guide.
+the [Handling patients](/{{sdk}}/how-to/how-to-manage-patients) guide.
 
 :::
 
@@ -24,7 +24,7 @@ the [Handling patients](/sdks/how-to/how-to-manage-patients) guide.
 To create a DataSample, we can use the `createOrModifyDataSampleFor` method on the `DataSampleApi` object. This method
 takes two parameters: the patient's id and the DataSample object.
 
-<!-- file://code-samples/how-to/datasamples/index.mts snippet:create a dataSample-->
+<!-- file://code-samples/{{sdk}}/how-to/datasamples/index.mts snippet:create a dataSample-->
 ```typescript
 const createdDataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
   patient.id!,
@@ -36,22 +36,22 @@ const createdDataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
   }),
 )
 ```
-<!-- output://code-samples/how-to/datasamples/createdDataSample.txt -->
+<!-- output://code-samples/{{sdk}}/how-to/datasamples/createdDataSample.txt -->
 <details>
 <summary>createdDataSample</summary>
 
 ```json
 {
-  "id": "e6d46fe0-10a6-4db3-98b7-fc82d6c23e5c",
+  "id": "4b59d528-6c22-430f-8fc7-61f44b5e716b",
   "qualifiedLinks": {},
-  "batchId": "8acc89bd-8519-4231-9551-0418b4a60217",
+  "batchId": "f73812c1-3e39-46c7-a6f5-f83f5e7508c6",
   "index": 0,
-  "valueDate": 20230703120920,
+  "valueDate": 20230328100138,
   "openingDate": 20220929083400,
-  "created": 1688378960770,
-  "modified": 1688378960770,
-  "author": "6a541dfb-40d9-41f5-ba76-e3a5e277813f",
-  "responsible": "e2b6e873-035b-4964-885b-5a90e99c43b4",
+  "created": 1679997698795,
+  "modified": 1679997698795,
+  "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
+  "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
   "comment": "This is a comment",
   "identifiers": [],
   "healthcareElementIds": {},
@@ -67,20 +67,18 @@ const createdDataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
   "codes": {},
   "labels": {},
   "systemMetaData": {
-    "encryptedSelf": "7G//2M8dtSUlqN8COVGwI7ePy3PVwXqf58FtzTqVm56H7Le+BATaW2/dlzaAjqXnzGjBPBadZ3ZBHuVu49Sf3juFZJoVw6maj2d4PpIOz3i7bYYpO5/IH4JSROT/uDn/Ix30oGJSfHfrctx5FeMSig==",
     "secretForeignKeys": [
-      "e09ea1ef-ac34-4c5e-8421-2194fc484da4"
+      "daf17f76-fc81-470b-b0b8-4918f2cc383f"
     ],
     "cryptedForeignKeys": {
-      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
     },
     "delegations": {
-      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
     },
     "encryptionKeys": {
-      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
-    },
-    "publicKeysForOaepWithSha256": {}
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+    }
   }
 }
 ```
@@ -100,26 +98,26 @@ Behind the scenes: the `createOrModifyDataSampleFor` method will encrypt the `Da
 To retrieve a DataSample, we can use the `getDataSample` method on the `DataSampleApi`. This method takes one
 parameter: the DataSample's id.
 
-<!-- file://code-samples/how-to/datasamples/index.mts snippet:get a dataSample-->
+<!-- file://code-samples/{{sdk}}/how-to/datasamples/index.mts snippet:get a dataSample-->
 ```typescript
 const dataSample = await api.dataSampleApi.getDataSample(createdDataSample.id!)
 ```
-<!-- output://code-samples/how-to/datasamples/dataSample.txt -->
+<!-- output://code-samples/{{sdk}}/how-to/datasamples/dataSample.txt -->
 <details>
 <summary>dataSample</summary>
 
 ```json
 {
-  "id": "e6d46fe0-10a6-4db3-98b7-fc82d6c23e5c",
+  "id": "4b59d528-6c22-430f-8fc7-61f44b5e716b",
   "qualifiedLinks": {},
-  "batchId": "8acc89bd-8519-4231-9551-0418b4a60217",
+  "batchId": "f73812c1-3e39-46c7-a6f5-f83f5e7508c6",
   "index": 0,
-  "valueDate": 20230703120920,
+  "valueDate": 20230328100138,
   "openingDate": 20220929083400,
-  "created": 1688378960770,
-  "modified": 1688378960770,
-  "author": "6a541dfb-40d9-41f5-ba76-e3a5e277813f",
-  "responsible": "e2b6e873-035b-4964-885b-5a90e99c43b4",
+  "created": 1679997698795,
+  "modified": 1679997698795,
+  "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
+  "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
   "comment": "This is a comment",
   "identifiers": [],
   "healthcareElementIds": {},
@@ -135,20 +133,18 @@ const dataSample = await api.dataSampleApi.getDataSample(createdDataSample.id!)
   "codes": {},
   "labels": {},
   "systemMetaData": {
-    "encryptedSelf": "7G//2M8dtSUlqN8COVGwI7ePy3PVwXqf58FtzTqVm56H7Le+BATaW2/dlzaAjqXnzGjBPBadZ3ZBHuVu49Sf3juFZJoVw6maj2d4PpIOz3i7bYYpO5/IH4JSROT/uDn/Ix30oGJSfHfrctx5FeMSig==",
     "secretForeignKeys": [
-      "e09ea1ef-ac34-4c5e-8421-2194fc484da4"
+      "daf17f76-fc81-470b-b0b8-4918f2cc383f"
     ],
     "cryptedForeignKeys": {
-      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
     },
     "delegations": {
-      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
     },
     "encryptionKeys": {
-      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
-    },
-    "publicKeysForOaepWithSha256": {}
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+    }
   }
 }
 ```
@@ -166,7 +162,7 @@ If you linked the DataSample at the wrong patient, you have to delete the first 
 
 :::
 
-<!-- file://code-samples/how-to/datasamples/index.mts snippet:update a dataSample-->
+<!-- file://code-samples/{{sdk}}/how-to/datasamples/index.mts snippet:update a dataSample-->
 ```typescript
 const updatedDataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
   patient.id!,
@@ -180,22 +176,22 @@ const updatedDataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
   }),
 )
 ```
-<!-- output://code-samples/how-to/datasamples/updatedDataSample.txt -->
+<!-- output://code-samples/{{sdk}}/how-to/datasamples/updatedDataSample.txt -->
 <details>
 <summary>updatedDataSample</summary>
 
 ```json
 {
-  "id": "e6d46fe0-10a6-4db3-98b7-fc82d6c23e5c",
+  "id": "4b59d528-6c22-430f-8fc7-61f44b5e716b",
   "qualifiedLinks": {},
-  "batchId": "8acc89bd-8519-4231-9551-0418b4a60217",
+  "batchId": "f73812c1-3e39-46c7-a6f5-f83f5e7508c6",
   "index": 0,
-  "valueDate": 20230703120920,
+  "valueDate": 20230328100138,
   "openingDate": 20220929083400,
-  "created": 1688378960770,
-  "modified": 1688378960844,
-  "author": "6a541dfb-40d9-41f5-ba76-e3a5e277813f",
-  "responsible": "e2b6e873-035b-4964-885b-5a90e99c43b4",
+  "created": 1679997698795,
+  "modified": 1679997699523,
+  "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
+  "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
   "comment": "This is a updated comment",
   "identifiers": [],
   "healthcareElementIds": {},
@@ -211,20 +207,18 @@ const updatedDataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
   "codes": {},
   "labels": {},
   "systemMetaData": {
-    "encryptedSelf": "S5QRu97kVFro48tk3tPBxqdiHO9E/PfO9VPtKRu+kZoxXxS4xUiOsWxLxXljPF8EbrdfKSngiRAy6tJSocyeSrNcr5iTd1w60cxOAAME70aj3r3KuADNngwj4YVPHrdMOhGRmiNKskdYjNmCke7S/EFk18itoTWTu0GLM8qH8K8=",
     "secretForeignKeys": [
-      "e09ea1ef-ac34-4c5e-8421-2194fc484da4"
+      "daf17f76-fc81-470b-b0b8-4918f2cc383f"
     ],
     "cryptedForeignKeys": {
-      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
     },
     "delegations": {
-      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
     },
     "encryptionKeys": {
-      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
-    },
-    "publicKeysForOaepWithSha256": {}
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+    }
   }
 }
 ```
@@ -234,16 +228,16 @@ const updatedDataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
 
 To delete a DataSample, you can use the `deleteDataSample` method on the `DataSampleApi`. This method takes one parameter: the DataSample's id.
 
-<!-- file://code-samples/how-to/datasamples/index.mts snippet:delete a dataSample-->
+<!-- file://code-samples/{{sdk}}/how-to/datasamples/index.mts snippet:delete a dataSample-->
 ```typescript
 const deletedDataSample = await api.dataSampleApi.deleteDataSample(updatedDataSample.id!)
 ```
-<!-- output://code-samples/how-to/datasamples/deletedDataSample.txt -->
+<!-- output://code-samples/{{sdk}}/how-to/datasamples/deletedDataSample.txt -->
 <details>
 <summary>deletedDataSample</summary>
 
 ```text
-e6d46fe0-10a6-4db3-98b7-fc82d6c23e5c
+4b59d528-6c22-430f-8fc7-61f44b5e716b
 ```
 </details>
 
@@ -253,7 +247,7 @@ To retrieve a list of DataSamples, we can use the `filterDataSamples` method on 
 
 We can build the filter object using the `DataSampleFilter` builder.
 
-<!-- file://code-samples/how-to/datasamples/index.mts snippet:get a list of dataSamples-->
+<!-- file://code-samples/{{sdk}}/how-to/datasamples/index.mts snippet:get a list of dataSamples-->
 ```typescript
 const filter = await new DataSampleFilter(api)
   .forDataOwner(loggedUser.healthcarePartyId!)
@@ -263,7 +257,7 @@ const filter = await new DataSampleFilter(api)
 
 const filteredDataSamples = await api.dataSampleApi.filterDataSample(filter)
 ```
-<!-- output://code-samples/how-to/datasamples/filteredDataSamples.txt -->
+<!-- output://code-samples/{{sdk}}/how-to/datasamples/filteredDataSamples.txt -->
 <details>
 <summary>filteredDataSamples</summary>
 
@@ -273,16 +267,16 @@ const filteredDataSamples = await api.dataSampleApi.filterDataSample(filter)
   "totalSize": 1,
   "rows": [
     {
-      "id": "e6d46fe0-10a6-4db3-98b7-fc82d6c23e5c",
+      "id": "4b59d528-6c22-430f-8fc7-61f44b5e716b",
       "qualifiedLinks": {},
-      "batchId": "8acc89bd-8519-4231-9551-0418b4a60217",
+      "batchId": "f73812c1-3e39-46c7-a6f5-f83f5e7508c6",
       "index": 0,
-      "valueDate": 20230703120920,
+      "valueDate": 20230328100138,
       "openingDate": 20220929083400,
-      "created": 1688378960770,
-      "modified": 1688378960844,
-      "author": "6a541dfb-40d9-41f5-ba76-e3a5e277813f",
-      "responsible": "e2b6e873-035b-4964-885b-5a90e99c43b4",
+      "created": 1679997698795,
+      "modified": 1679997699523,
+      "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
+      "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
       "comment": "This is a updated comment",
       "identifiers": [],
       "healthcareElementIds": {},
@@ -298,20 +292,18 @@ const filteredDataSamples = await api.dataSampleApi.filterDataSample(filter)
       "codes": {},
       "labels": {},
       "systemMetaData": {
-        "encryptedSelf": "S5QRu97kVFro48tk3tPBxqdiHO9E/PfO9VPtKRu+kZoxXxS4xUiOsWxLxXljPF8EbrdfKSngiRAy6tJSocyeSrNcr5iTd1w60cxOAAME70aj3r3KuADNngwj4YVPHrdMOhGRmiNKskdYjNmCke7S/EFk18itoTWTu0GLM8qH8K8=",
         "secretForeignKeys": [
-          "e09ea1ef-ac34-4c5e-8421-2194fc484da4"
+          "daf17f76-fc81-470b-b0b8-4918f2cc383f"
         ],
         "cryptedForeignKeys": {
-          "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
+          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
         },
         "delegations": {
-          "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
+          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
         },
         "encryptionKeys": {
-          "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
-        },
-        "publicKeysForOaepWithSha256": {}
+          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+        }
       }
     }
   ],
@@ -322,11 +314,11 @@ const filteredDataSamples = await api.dataSampleApi.filterDataSample(filter)
 
 ### Filter builder
 
-To create a filter, we can use the [`DataSampleFilter`](/sdks/references/filters/DataSampleFilter#methods) builder methods. This builder allows us to create complex filter object.
+To create a filter, we can use the [`DataSampleFilter`](/{{sdk}}/references/filters/DataSampleFilter#methods) builder methods. This builder allows us to create complex filter object.
 
 In the example above, we created the filter this way:
 
-<!-- file://code-samples/how-to/datasamples/index.mts snippet:filter builder-->
+<!-- file://code-samples/{{sdk}}/how-to/datasamples/index.mts snippet:filter builder-->
 ```typescript
 const dataSampleFilter = new DataSampleFilter(api)
   .forDataOwner(loggedUser.healthcarePartyId!)
@@ -334,7 +326,7 @@ const dataSampleFilter = new DataSampleFilter(api)
   .forPatients([patient])
   .build()
 ```
-<!-- output://code-samples/how-to/datasamples/dataSampleFilter.txt -->
+<!-- output://code-samples/{{sdk}}/how-to/datasamples/dataSampleFilter.txt -->
 <details>
 <summary>dataSampleFilter</summary>
 
@@ -353,7 +345,7 @@ The resulting filter object will create a filter that allows us to get all `Data
 
 In some circumstances, you might want to get a list of DataSample ids instead of the DataSamples themselves. To do so, you can use the `matchDataSample` method on the `DataSampleApi`. This method takes one parameter: the filter object.
 
-<!-- file://code-samples/how-to/datasamples/index.mts snippet:get a list of dataSamples ids-->
+<!-- file://code-samples/{{sdk}}/how-to/datasamples/index.mts snippet:get a list of dataSamples ids-->
 ```typescript
 const matchFilter = await new DataSampleFilter(api)
   .forDataOwner(loggedUser.healthcarePartyId!)
@@ -362,13 +354,13 @@ const matchFilter = await new DataSampleFilter(api)
 
 const matchedDataSampleIds = await api.dataSampleApi.matchDataSample(matchFilter)
 ```
-<!-- output://code-samples/how-to/datasamples/matchedDataSampleIds.txt -->
+<!-- output://code-samples/{{sdk}}/how-to/datasamples/matchedDataSampleIds.txt -->
 <details>
 <summary>matchedDataSampleIds</summary>
 
 ```text
 [
-  "e6d46fe0-10a6-4db3-98b7-fc82d6c23e5c"
+  "4b59d528-6c22-430f-8fc7-61f44b5e716b"
 ]
 ```
 </details>

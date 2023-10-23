@@ -182,8 +182,8 @@ ___
 Service that allows a Data Owner to share all the data of a Patient with the patient itself.
 This means this service is sharing :
 - The information of the patient;
-- All the data samples linked to the patient;
-- All the healthcare elements linked to the patient;
+- All the {{services}} linked to the patient;
+- All the {{healthcareElements}} linked to the patient;
 
 #### Parameters
 

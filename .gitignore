@@ -7,6 +7,9 @@
 # Generated files
 .docusaurus
 .cache-loader
+/medtech-sdk
+/ehr-lite-sdk
+
 
 # Misc
 .DS_Store

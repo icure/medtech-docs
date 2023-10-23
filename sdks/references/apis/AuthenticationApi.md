@@ -89,7 +89,7 @@ Provide at least one authentication tool (email and/or phoneNumber) to start the
 | `phoneNumber?` | `string` | The phone number to use to authenticate the user |
 | `firstName?` | `string` | The firstname of the user to authenticate (Mandatory for registration only) |
 | `lastName?` | `string` | The lastname of the user to authenticate (Mandatory for registration only) |
-| `healthcareProfessionalId?` | `string` | The id of the healthcare professional inviting the user to register. Use the id of the hcp in charge of the database where you want to add this new user. (Mandatory for registration only) |
+| `healthcareProfessionalId?` | `string` | The id of the {{hcp}} inviting the user to register. Use the id of the hcp in charge of the database where you want to add this new user. (Mandatory for registration only) |
 | `bypassTokenCheck?` | `boolean` | Prevent the token check during the validation process. Activates this flag **ONLY** for dedicated use cases and users, like the submission on the Apple / Google Store. (false by default) |
 | `validationCodeLength?` | `number` | The length of the validation code to send to the user. (6 by default) |
 | `recaptchaType?` | [`RecaptchaType`](../modules#recaptchatype) | The type of ReCAPTCHA you used during your authentication flow. Can either be Google reCAPTCHA v3 [https://developers.google.com/recaptcha/docs/v3](https://developers.google.com/recaptcha/docs/v3) or the * friendly-captcha [https://friendlycaptcha.com/](https://friendlycaptcha.com/). Use the friendly-recaptcha if you would like to avoid tracking solution of Google reCAPTCHA. |

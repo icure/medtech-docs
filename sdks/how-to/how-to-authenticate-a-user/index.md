@@ -25,7 +25,7 @@ Make sure to have the following elements in your possession:
 - The iCure reCAPTCHA v3 SiteKey
 - Your `msgGtwSpecId`
 - Your `patientAuthProcessByEmailId` and/or `patientAuthProcessBySmsId` identifiers to authenticate your patient users
-- Your `hcpAuthProcessByEmailId` and/or `hcpAuthProcessBySmsId` identifiers to authenticate your healthcare professionals users
+- Your `hcpAuthProcessByEmailId` and/or `hcpAuthProcessBySmsId` identifiers to authenticate your {{hcps}} users
 
 :::info
 
@@ -42,7 +42,7 @@ During this procedure, Daenaerys is not known by iCure system yet. Therefore, yo
 You will have to create an `AnonymousMedTechApi` instead.
 
 ### Init AnonymousMedTechApi
-<!-- file://code-samples/how-to/authenticate-user/index.mts snippet:Instantiate AnonymousMedTech API-->
+<!-- file://code-samples/{{sdk}}/how-to/authenticate-user/index.mts snippet:Instantiate AnonymousMedTech API-->
 ```typescript
 const msgGtwUrl = process.env.ICURE_MSG_GTW_URL
 const specId = process.env.SPEC_ID
@@ -61,7 +61,7 @@ const anonymousApi = await new AnonymousMedTechApiBuilder()
   .build()
 ```
 
-The [AnonymousMedTechApi](/sdks/references/entrypoints/AnonymousMedTechApi) asks you to provide multiple information. Here 
+The [AnonymousMedTechApi](/{{sdk}}/references/entrypoints/AnonymousMedTechApi) asks you to provide multiple information. Here 
 are their details :
 
 | Argument             | Description                                                                                      |
@@ -72,7 +72,7 @@ are their details :
 | authProcessByEmailId | Identifier of the authentication by email process. See next section to know more about it        |
 | authProcessBySmsId   | Identifier of the authentication by SMS process. See next section to know more about it          |
 
-You can learn about all the options you have when instantiating the MedTech API and the AnonymousMedTech API in the [Instantiation How-To](/sdks/how-to/how-to-instantiate-the-medtech-sdk). 
+You can learn about all the options you have when instantiating the MedTech API and the AnonymousMedTech API in the [Instantiation How-To](/{{sdk}}/how-to/how-to-instantiate-the-medtech-sdk). 
 
 Since Daenaerys is a patient, you will have to provide the `patientAuthProcessByEmailId` as a 
 authProcessByEmailId or `patientAuthProcessBySmsId` as a authProcessBySmsId. 
@@ -87,12 +87,12 @@ authProcessByEmailId or `hcpAuthProcessByEmailId` as authProcessBySmsId.
 :::info
 
 On node.js or React Native, two extra parameters are required to set the way the SDK will handle the internal storage of keys and additional data.
-The `withStorage` method allows you to provide a custom implementation of the [Storage](/sdks/references/interfaces/StorageFacade) interface.
+The `withStorage` method allows you to provide a custom implementation of the [Storage](/{{sdk}}/references/interfaces/StorageFacade) interface.
 This implementation is responsible for storing data in platform specific storage facilities.
-The `withKeyStorage` method allows you to provide a custom implementation of the [KeyStorage](/sdks/references/interfaces/KeyStorageFacade) interface.
+The `withKeyStorage` method allows you to provide a custom implementation of the [KeyStorage](/{{sdk}}/references/interfaces/KeyStorageFacade) interface.
 This implementation is responsible for storing cryptographic keys in platform specific secure storage facilities.
 
-You can find more information about this in the [AnonymousMedTechApiBuilder](/sdks/references/builders/AnonymousMedTechApiBuilder) documentation.
+You can find more information about this in the [AnonymousMedTechApiBuilder](/{{sdk}}/references/builders/AnonymousMedTechApiBuilder) documentation.
 
 In the browser, default implementations are used that store data and keys in the browser's local storage.
 
@@ -115,7 +115,7 @@ Also, do not forget to contact the iCure team to get our ReCAPTCHA SiteKey that 
 As an alternative, you can use [FriendlyCaptcha](https://friendlycaptcha.com/). In this case, the `recaptchaType` property
 of the `startAuthentication` method should be `"friendly-captcha"`.
 
-<!-- file://code-samples/how-to/authenticate-user/index.mts snippet:Start Authentication Process By Email-->
+<!-- file://code-samples/{{sdk}}/how-to/authenticate-user/index.mts snippet:Start Authentication Process By Email-->
 ```typescript
 const authProcess = await anonymousApi.authenticationApi.startAuthentication(
   recaptcha,
@@ -126,14 +126,14 @@ const authProcess = await anonymousApi.authenticationApi.startAuthentication(
   masterHcpId,
 )
 ```
-<!-- output://code-samples/how-to/authenticate-user/authProcess.txt -->
+<!-- output://code-samples/{{sdk}}/how-to/authenticate-user/authProcess.txt -->
 <details>
 <summary>authProcess</summary>
 
 ```json
 {
-  "requestId": "44fb6134-fea0-43cd-b44c-6135a7ba5087",
-  "login": "h498i6mg3-dt@got.com",
+  "requestId": "8785543d-490c-44d4-95e9-ab4d97edf888",
+  "login": "1iu03ja0a-dt@got.com",
   "bypassTokenCheck": false
 }
 ```
@@ -144,7 +144,7 @@ As an output, you receive an `AuthenticationProcess` object, which you will need
 :::info
 
 The `masterHcpId` represents the identifier of the dataOwner that will be responsible of Daenaerys user creation.
-This `masterHcpId` is optional for healthcare professionals registration but mandatory for patients. 
+This `masterHcpId` is optional for {{hcps}} registration but mandatory for patients. 
 
 It's good to know that after their registration, user will share all their future data with this responsible. The user may decide to stop
 sharing their data with this responsible by using the `userApi.stopSharingDataWith` service. For more information, 
@@ -174,7 +174,7 @@ by providing two arguments:
 This method will also generate the public and private key for the user, saving them in the `keyStorage` of the 
 newly created MedTechAPI.
  
-<!-- file://code-samples/how-to/authenticate-user/index.mts snippet:Complete authentication process-->
+<!-- file://code-samples/{{sdk}}/how-to/authenticate-user/index.mts snippet:Complete authentication process-->
 ```typescript
 const authenticationResult = await anonymousApi.authenticationApi.completeAuthentication(
   authProcess!,
@@ -199,7 +199,7 @@ As a result, you receive :
 
 Make sure to save these elements to be able to authenticate Daenaerys again when she'll come back on your app.
 
-<!-- file://code-samples/how-to/authenticate-user/index.mts snippet:Save credentials-->
+<!-- file://code-samples/{{sdk}}/how-to/authenticate-user/index.mts snippet:Save credentials-->
 ```typescript
 // saveSecurely does not exist: Use your own way of storing the following data securely
 // One option is to put these elements into the localStorage
@@ -214,7 +214,7 @@ saveSecurely(
 
 Now that her authentication is completed, Daenaerys may manage data with iCure.  
 
-<!-- file://code-samples/how-to/authenticate-user/index.mts snippet:Create encrypted data-->
+<!-- file://code-samples/{{sdk}}/how-to/authenticate-user/index.mts snippet:Create encrypted data-->
 ```typescript
 const createdDataSample = await authenticatedApi.dataSampleApi.createOrModifyDataSampleFor(
   loggedUser.patientId,
@@ -226,22 +226,22 @@ const createdDataSample = await authenticatedApi.dataSampleApi.createOrModifyDat
   }),
 )
 ```
-<!-- output://code-samples/how-to/authenticate-user/createdDataSample.txt -->
+<!-- output://code-samples/{{sdk}}/how-to/authenticate-user/createdDataSample.txt -->
 <details>
 <summary>createdDataSample</summary>
 
 ```json
 {
-  "id": "df31038e-bf10-4117-9d1f-cc496de3257c",
+  "id": "c4b044a9-5c68-4fc8-b2e2-0cb94cdb3f56",
   "qualifiedLinks": {},
-  "batchId": "7c2a20bc-69a5-4dc6-b5b8-376405816eb7",
+  "batchId": "ab12417b-e415-488b-a0be-295387d5f993",
   "index": 0,
-  "valueDate": 20230703120918,
+  "valueDate": 20230328100113,
   "openingDate": 20220929083400,
-  "created": 1688378958179,
-  "modified": 1688378958179,
-  "author": "059e61dc-6191-4972-8463-7c1f4c86b888",
-  "responsible": "e972645d-6cf7-4927-97cf-dfd5684a651d",
+  "created": 1679997673343,
+  "modified": 1679997673343,
+  "author": "d4ed8d59-bf6a-42cb-9d25-25f861b56f28",
+  "responsible": "df18183f-fabf-4f13-b204-0650dc68c7c6",
   "comment": "This is a comment",
   "identifiers": [],
   "healthcareElementIds": {},
@@ -257,23 +257,21 @@ const createdDataSample = await authenticatedApi.dataSampleApi.createOrModifyDat
   "codes": {},
   "labels": {},
   "systemMetaData": {
-    "encryptedSelf": "6Q8+EVdlpCw+G56bYT4uJQs0nIEmo5gv20hlUXLxbN1CEhROjB24lDmmSKZu9OQPSRJfC6CXEsxOSpbuFoEXaqgsYHOH8YwUrtVerSzCjIbji1yAaHcTTSRd4UYjCgMZip2oJgRUHHCDkACT89SrzQ==",
     "secretForeignKeys": [
-      "e8a10347-4881-43bd-b02e-975db042403d"
+      "3fa16d0e-4d39-4f4b-a412-439bdf100f02"
     ],
     "cryptedForeignKeys": {
-      "e972645d-6cf7-4927-97cf-dfd5684a651d": {},
-      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
+      "df18183f-fabf-4f13-b204-0650dc68c7c6": {},
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
     },
     "delegations": {
-      "e972645d-6cf7-4927-97cf-dfd5684a651d": {},
-      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
+      "df18183f-fabf-4f13-b204-0650dc68c7c6": {},
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
     },
     "encryptionKeys": {
-      "e972645d-6cf7-4927-97cf-dfd5684a651d": {},
-      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
-    },
-    "publicKeysForOaepWithSha256": {}
+      "df18183f-fabf-4f13-b204-0650dc68c7c6": {},
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+    }
   }
 }
 ```
@@ -286,7 +284,7 @@ Each time you complete the registration or login process, you can save the crede
 in a secured place.
 We symbolised it through the `saveSecurely` method.
 
-<!-- file://code-samples/how-to/authenticate-user/index.mts snippet:Save credentials-->
+<!-- file://code-samples/{{sdk}}/how-to/authenticate-user/index.mts snippet:Save credentials-->
 ```typescript
 // saveSecurely does not exist: Use your own way of storing the following data securely
 // One option is to put these elements into the localStorage
@@ -300,7 +298,7 @@ saveSecurely(
 ```
 
 The first thing you have to do is to retrieve Daenaerys credentials and her RSA Keypair
-<!-- file://code-samples/how-to/authenticate-user/index.mts snippet:Get back credentials-->
+<!-- file://code-samples/{{sdk}}/how-to/authenticate-user/index.mts snippet:Get back credentials-->
 ```typescript
 // getBackCredentials does not exist: Use your own way of storing the following data securely
 // One option is to get them back from the localStorage
@@ -308,7 +306,7 @@ const { login, token, pubKey, privKey } = getBackCredentials()
 ```
 
 And then, initialise a MedTechApi, authenticating Daenaerys directly.
-<!-- file://code-samples/how-to/authenticate-user/index.mts snippet:Instantiate back a MedTechApi-->
+<!-- file://code-samples/{{sdk}}/how-to/authenticate-user/index.mts snippet:Instantiate back a MedTechApi-->
 ```typescript
 const reInstantiatedApi = await new MedTechApiBuilder()
   .withICureBaseUrl(iCureUrl)
@@ -325,34 +323,34 @@ explicitly through the `.withCryptoStrategies` method of the builder.
 
 :::info
 
-You can learn more about the Crypto Strategies [here](/sdks/explanations/crypto-strategies/crypto-strategies).
+You can learn more about the Crypto Strategies [here](/{{sdk}}/explanations/crypto-strategies/crypto-strategies).
 
 :::
 
 Daenaerys can finally manage her data again.
-<!-- file://code-samples/how-to/authenticate-user/index.mts snippet:Get back encrypted data-->
+<!-- file://code-samples/{{sdk}}/how-to/authenticate-user/index.mts snippet:Get back encrypted data-->
 ```typescript
 const foundDataSampleAfterInstantiatingApi = await reInstantiatedApi.dataSampleApi.getDataSample(
   createdDataSample.id,
 )
 ```
 
-<!-- output://code-samples/how-to/authenticate-user/foundDataSampleAfterInstantiatingApi.txt -->
+<!-- output://code-samples/{{sdk}}/how-to/authenticate-user/foundDataSampleAfterInstantiatingApi.txt -->
 <details>
 <summary>foundDataSampleAfterInstantiatingApi</summary>
 
 ```json
 {
-  "id": "df31038e-bf10-4117-9d1f-cc496de3257c",
+  "id": "c4b044a9-5c68-4fc8-b2e2-0cb94cdb3f56",
   "qualifiedLinks": {},
-  "batchId": "7c2a20bc-69a5-4dc6-b5b8-376405816eb7",
+  "batchId": "ab12417b-e415-488b-a0be-295387d5f993",
   "index": 0,
-  "valueDate": 20230703120918,
+  "valueDate": 20230328100113,
   "openingDate": 20220929083400,
-  "created": 1688378958179,
-  "modified": 1688378958179,
-  "author": "059e61dc-6191-4972-8463-7c1f4c86b888",
-  "responsible": "e972645d-6cf7-4927-97cf-dfd5684a651d",
+  "created": 1679997673343,
+  "modified": 1679997673343,
+  "author": "d4ed8d59-bf6a-42cb-9d25-25f861b56f28",
+  "responsible": "df18183f-fabf-4f13-b204-0650dc68c7c6",
   "comment": "This is a comment",
   "identifiers": [],
   "healthcareElementIds": {},
@@ -368,23 +366,21 @@ const foundDataSampleAfterInstantiatingApi = await reInstantiatedApi.dataSampleA
   "codes": {},
   "labels": {},
   "systemMetaData": {
-    "encryptedSelf": "6Q8+EVdlpCw+G56bYT4uJQs0nIEmo5gv20hlUXLxbN1CEhROjB24lDmmSKZu9OQPSRJfC6CXEsxOSpbuFoEXaqgsYHOH8YwUrtVerSzCjIbji1yAaHcTTSRd4UYjCgMZip2oJgRUHHCDkACT89SrzQ==",
     "secretForeignKeys": [
-      "e8a10347-4881-43bd-b02e-975db042403d"
+      "3fa16d0e-4d39-4f4b-a412-439bdf100f02"
     ],
     "cryptedForeignKeys": {
-      "e972645d-6cf7-4927-97cf-dfd5684a651d": {},
-      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
+      "df18183f-fabf-4f13-b204-0650dc68c7c6": {},
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
     },
     "delegations": {
-      "e972645d-6cf7-4927-97cf-dfd5684a651d": {},
-      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
+      "df18183f-fabf-4f13-b204-0650dc68c7c6": {},
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
     },
     "encryptionKeys": {
-      "e972645d-6cf7-4927-97cf-dfd5684a651d": {},
-      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
-    },
-    "publicKeysForOaepWithSha256": {}
+      "df18183f-fabf-4f13-b204-0650dc68c7c6": {},
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+    }
   }
 }
 ```
@@ -397,7 +393,7 @@ This flow is similar to the one of the registration phase.
 
 As Daenaerys is not authenticated anymore, you have to create a new AnonymousMedTechApi instance. 
 
-<!-- file://code-samples/how-to/authenticate-user/index.mts snippet:Login-->
+<!-- file://code-samples/{{sdk}}/how-to/authenticate-user/index.mts snippet:Login-->
 ```typescript
 const anonymousApiForLogin = await new AnonymousMedTechApiBuilder()
   .withICureBaseUrl(iCureUrl)
@@ -420,7 +416,7 @@ Daenaerys then receives a new validation code by email.
 Since you already created an RSA keypair for her, you just need to retrieve it from where you stored it previously
 and provide it to the `completeAuthentication` method.
 
-<!-- file://code-samples/how-to/authenticate-user/index.mts snippet:Complete login authentication process-->
+<!-- file://code-samples/{{sdk}}/how-to/authenticate-user/index.mts snippet:Complete login authentication process-->
 ```typescript
 const loginResult = await anonymousApiForLogin.authenticationApi.completeAuthentication(
   authProcessLogin!,
@@ -435,7 +431,7 @@ console.log(`The token of your user will change: ***\${loginResult.token}***`)
 ```
 
 Do not forget to save these new credentials :
-<!-- file://code-samples/how-to/authenticate-user/index.mts snippet:Save credentials-->
+<!-- file://code-samples/{{sdk}}/how-to/authenticate-user/index.mts snippet:Save credentials-->
 ```typescript
 // saveSecurely does not exist: Use your own way of storing the following data securely
 // One option is to put these elements into the localStorage
@@ -457,12 +453,12 @@ in a safe place in their filesystem, possibly encrypting it with a password.
 
 Make sure your users understand they should never share this file with anyone.
 
-For more information check the In-Depth Explanation [What happens if my user loses his private key ?](sdks/explanations)  
+For more information check the In-Depth Explanation [What happens if my user loses his private key ?]({{sdk}}/explanations)  
 
 :::
 
 And Daenaerys may manage her data again :
-<!-- file://code-samples/how-to/authenticate-user/index.mts snippet:Access back encrypted data-->
+<!-- file://code-samples/{{sdk}}/how-to/authenticate-user/index.mts snippet:Access back encrypted data-->
 ```typescript
 const loggedUserApi = loginResult.medTechApi
 
@@ -470,22 +466,22 @@ const foundDataSampleAfterLogin = await loggedUserApi.dataSampleApi.getDataSampl
   createdDataSample.id,
 )
 ```
-<!-- output://code-samples/how-to/authenticate-user/foundDataSampleAfterLogin.txt -->
+<!-- output://code-samples/{{sdk}}/how-to/authenticate-user/foundDataSampleAfterLogin.txt -->
 <details>
 <summary>foundDataSampleAfterLogin</summary>
 
 ```json
 {
-  "id": "df31038e-bf10-4117-9d1f-cc496de3257c",
+  "id": "c4b044a9-5c68-4fc8-b2e2-0cb94cdb3f56",
   "qualifiedLinks": {},
-  "batchId": "7c2a20bc-69a5-4dc6-b5b8-376405816eb7",
+  "batchId": "ab12417b-e415-488b-a0be-295387d5f993",
   "index": 0,
-  "valueDate": 20230703120918,
+  "valueDate": 20230328100113,
   "openingDate": 20220929083400,
-  "created": 1688378958179,
-  "modified": 1688378958179,
-  "author": "059e61dc-6191-4972-8463-7c1f4c86b888",
-  "responsible": "e972645d-6cf7-4927-97cf-dfd5684a651d",
+  "created": 1679997673343,
+  "modified": 1679997673343,
+  "author": "d4ed8d59-bf6a-42cb-9d25-25f861b56f28",
+  "responsible": "df18183f-fabf-4f13-b204-0650dc68c7c6",
   "comment": "This is a comment",
   "identifiers": [],
   "healthcareElementIds": {},
@@ -501,23 +497,21 @@ const foundDataSampleAfterLogin = await loggedUserApi.dataSampleApi.getDataSampl
   "codes": {},
   "labels": {},
   "systemMetaData": {
-    "encryptedSelf": "6Q8+EVdlpCw+G56bYT4uJQs0nIEmo5gv20hlUXLxbN1CEhROjB24lDmmSKZu9OQPSRJfC6CXEsxOSpbuFoEXaqgsYHOH8YwUrtVerSzCjIbji1yAaHcTTSRd4UYjCgMZip2oJgRUHHCDkACT89SrzQ==",
     "secretForeignKeys": [
-      "e8a10347-4881-43bd-b02e-975db042403d"
+      "3fa16d0e-4d39-4f4b-a412-439bdf100f02"
     ],
     "cryptedForeignKeys": {
-      "e972645d-6cf7-4927-97cf-dfd5684a651d": {},
-      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
+      "df18183f-fabf-4f13-b204-0650dc68c7c6": {},
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
     },
     "delegations": {
-      "e972645d-6cf7-4927-97cf-dfd5684a651d": {},
-      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
+      "df18183f-fabf-4f13-b204-0650dc68c7c6": {},
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
     },
     "encryptionKeys": {
-      "e972645d-6cf7-4927-97cf-dfd5684a651d": {},
-      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
-    },
-    "publicKeysForOaepWithSha256": {}
+      "df18183f-fabf-4f13-b204-0650dc68c7c6": {},
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
+    }
   }
 }
 ```

@@ -30,6 +30,7 @@ nvm use 18
 Install dependencies
 
 ```bash
+
 yarn
 ```
 

@@ -86,11 +86,12 @@
   resolved "https://registry.yarnpkg.com/@humanwhocodes/object-schema/-/object-schema-1.2.1.tgz#b520529ec21d8e5945a1851dfd1c32e94e39ff45"
   integrity sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==
 
-"@icure/api@7.0.0-beta.4":
-  version "7.0.0-beta.4"
-  resolved "https://registry.yarnpkg.com/@icure/api/-/api-7.0.0-beta.4.tgz#12094a977b4f363d58ab0689b28ed02686729a6c"
-  integrity sha512-UhdMXksyDOtcdLBeSKwDY7z1eZaGZbItp/vX+ZavVNwYT57n+BL4qykuow48zgvrft+tun9ONTP2eFHnnzHT2A==
+"@icure/api@7.1.8":
+  version "7.1.8"
+  resolved "https://registry.yarnpkg.com/@icure/api/-/api-7.1.8.tgz#2883b18b0f7732e8cdf3ceea0bafd7de212272b5"
+  integrity sha512-yp+m3//jA/X4MFlkIrEqrbaWHMfZcwJ1/Dp93MI+iF6O/G+1szAPNTxbmordITOG/3AceT5dJHJL2CXP1MKbNQ==
   dependencies:
+    browser-or-node "^2.1.1"
     date-fns "^2.23.0"
     libphonenumber-js "^1.7.18"
     lodash "^4.17.21"
@@ -98,13 +99,30 @@
     text-encoding "^0.7.0"
     uuid "^8.3.2"
     uuid-encoder "^1.1.0"
+    ws "^8.13.0"
 
-"@icure/medical-device-sdk@^2.3.1":
-  version "2.3.1"
-  resolved "https://registry.yarnpkg.com/@icure/medical-device-sdk/-/medical-device-sdk-2.3.1.tgz#541bc2f4a9f3d7093ffc5a82aaa261711099eb03"
-  integrity sha512-HxY9FvCiW8NX0WdPOrVd6VWstFfahfKGwKXnMKu2z0oFGaU/Its2O7Bcl9KwnJ+WiM1AImYTZHIutefeK7KpyA==
+"@icure/api@7.1.9":
+  version "7.1.9"
+  resolved "https://registry.yarnpkg.com/@icure/api/-/api-7.1.9.tgz#8bbd9c94f0b05c7540dc33fa2888671499376c05"
+  integrity sha512-Aa2ftz4HGLP51FvxZUv1hySTws2FeF3oG2PgPJXPgTFEW3LWeSGR/XdW0jmHed4M7XaipXYEhZyzOov79qYcag==
   dependencies:
-    "@icure/api" "7.0.0-beta.4"
+    browser-or-node "^2.1.1"
+    date-fns "^2.23.0"
+    libphonenumber-js "^1.7.18"
+    lodash "^4.17.21"
+    moment "^2.22.1"
+    text-encoding "^0.7.0"
+    uuid "^8.3.2"
+    uuid-encoder "^1.1.0"
+    ws "^8.13.0"
+
+"@icure/medical-device-sdk@^3.0.3":
+  version "3.0.3"
+  resolved "https://registry.yarnpkg.com/@icure/medical-device-sdk/-/medical-device-sdk-3.0.3.tgz#c442ea085aa231cfb95629cbdf582906de4e7b4f"
+  integrity sha512-pu61LPwB/B4l+JPMIvwcPEu8cOaLq3tqltFvhEVsmkTxAdWhV9gujzf8JcfkZT2Y0vUKylZhy3vVI2DUAgp/Zg==
+  dependencies:
+    "@icure/api" "7.1.8"
+    "@icure/typescript-common" "1.1.1"
     browser-or-node "^2.1.1"
     date-fns "^2.28.0"
     es6-promise "^4.2.4"
@@ -112,6 +130,15 @@
     node-jq "^2.3.3"
     uuid "^8.3.2"
     ws "^8.13.0"
+
+"@icure/typescript-common@1.1.1":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@icure/typescript-common/-/typescript-common-1.1.1.tgz#76dc0f18adb6e269aa295ddb4adf8588b086ac8f"
+  integrity sha512-TrcVNq2THFTiO1merhL5lxOU+WWPUP+wo3R44JXkxE/nc4Q0ho0az17j9twt6k63+dQYEmgq0zVvQw31z6pthA==
+  dependencies:
+    "@icure/api" "7.1.8"
+    reflect-metadata "^0.1.13"
+    uuid "^9.0.0"
 
 "@nodelib/fs.scandir@2.1.5":
   version "2.1.5"
@@ -2369,6 +2396,11 @@ readable-stream@^2.3.0, readable-stream@^2.3.5:
     string_decoder "~1.1.1"
     util-deprecate "~1.0.1"
 
+reflect-metadata@^0.1.13:
+  version "0.1.13"
+  resolved "https://registry.yarnpkg.com/reflect-metadata/-/reflect-metadata-0.1.13.tgz#67ae3ca57c972a2aa1642b10fe363fe32d49dc08"
+  integrity sha512-Ts1Y/anZELhSsjMcU605fU9RE4Oi3p5ORujwbIKXfWa+0Zxs510Qrmrce5/Jowq3cHSZSJqBjypxmHarc+vEWg==
+
 regenerator-runtime@^0.13.11:
   version "0.13.11"
   resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.13.11.tgz#f6dca3e7ceec20590d07ada785636a90cdca17f9"
@@ -2918,6 +2950,11 @@ uuid@^8.3.2:
   version "8.3.2"
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-8.3.2.tgz#80d5b5ced271bb9af6c445f21a1a04c606cefbe2"
   integrity sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==
+
+uuid@^9.0.0:
+  version "9.0.0"
+  resolved "https://registry.yarnpkg.com/uuid/-/uuid-9.0.0.tgz#592f550650024a38ceb0c562f2f6aa435761efb5"
+  integrity sha512-MXcSTerfPa4uqyzStbRoTgt5XIe3x5+42+q1sDuy3R5MDk66URdLMOZe5aPX/SQd+kuYAh0FdP/pO28IkQyTeg==
 
 webidl-conversions@^3.0.0:
   version "3.0.1"

@@ -6,7 +6,7 @@ tags:
 ---
 # Notification
 
-A Notification is a request by a [Data Owner](/sdks/glossary#data-owner) for a Healthcare Professional to perform a 
+A Notification is a request by a [Data Owner](/{{sdk}}/glossary#data-owner) for a Healthcare Professional to perform a 
 particular action, such as sharing a piece of information.  
 Since the Notification is encrypted, only the responsible Healthcare Professional can see its content.
 
@@ -25,10 +25,10 @@ A Healthcare Professional can modify a Notification shared with them.
 
 ### A Doctor Receives a Data Sharing Request
 
-After a visit, a Doctor register the symptoms the Patient is experiencing (fatigue) as a new Data Sample.  
+After a visit, a Doctor register the symptoms the Patient is experiencing (fatigue) as a new {{Service}}.  
 Then, they add the diagnosis (hay fever) as associated Healthcare Element.
 
-<!-- file://code-samples/explanation/notification/index.mts snippet:doctor shares medical data-->
+<!-- file://code-samples/{{sdk}}/explanation/notification/index.mts snippet:doctor shares medical data-->
 ```typescript
 const healthcareElement = await api.healthcareElementApi.createOrModifyHealthcareElement(
   new HealthcareElement({
@@ -64,7 +64,7 @@ const dataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
   }),
 )
 ```
-<!-- output://code-samples/explanation/notification/healthcareElement.txt -->
+<!-- output://code-samples/{{sdk}}/explanation/notification/healthcareElement.txt -->
 <details>
 <summary>healthcareElement</summary>
 
@@ -102,7 +102,7 @@ const dataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
 ```
 </details>
 
-<!-- output://code-samples/explanation/notification/dataSample.txt -->
+<!-- output://code-samples/{{sdk}}/explanation/notification/dataSample.txt -->
 <details>
 <summary>dataSample</summary>
 
@@ -151,7 +151,7 @@ const dataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
 
 Then, the Patient sends a Notification to the doctor to ask for access to the data.
 
-<!-- file://code-samples/explanation/notification/index.mts snippet:patient sends notification-->
+<!-- file://code-samples/{{sdk}}/explanation/notification/index.mts snippet:patient sends notification-->
 ```typescript
 const notification = await patientApi.notificationApi.createOrModifyNotification(
   new Notification({
@@ -164,7 +164,7 @@ const notification = await patientApi.notificationApi.createOrModifyNotification
   user.healthcarePartyId,
 )
 ```
-<!-- output://code-samples/explanation/notification/notification.txt -->
+<!-- output://code-samples/{{sdk}}/explanation/notification/notification.txt -->
 <details>
 <summary>notification</summary>
 
@@ -198,7 +198,7 @@ const notification = await patientApi.notificationApi.createOrModifyNotification
 
 After that, the Doctor receives a notification from the Patient and shares the data with them.
 
-<!-- file://code-samples/explanation/notification/index.mts snippet:doctor receives notification-->
+<!-- file://code-samples/{{sdk}}/explanation/notification/index.mts snippet:doctor receives notification-->
 ```typescript
 const newNotifications = await api.notificationApi.getPendingNotificationsAfter()
 const newPatientNotifications = newNotifications.filter(
@@ -213,7 +213,7 @@ if (!!newPatientNotifications && newPatientNotifications.length > 0) {
   await api.notificationApi.updateNotificationStatus(newPatientNotifications[0], 'completed')
 }
 ```
-<!-- output://code-samples/explanation/notification/newPatientNotifications.txt -->
+<!-- output://code-samples/{{sdk}}/explanation/notification/newPatientNotifications.txt -->
 <details>
 <summary>newPatientNotifications</summary>
 

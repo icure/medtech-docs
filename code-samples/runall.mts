@@ -68,6 +68,8 @@ if (
   }
 }
 
-;[`quick-start`, `how-to`, `explanation`, `tutorial`].forEach((module) => {
-  scanAndRunRecursively(`${cwd}/${module}`, additionalEnvs)
-})
+;['ehr-lite-sdk', 'medtech-sdk'].forEach((sdk) =>
+  [`quick-start`, `how-to`, `explanation`, `tutorial`].forEach((module) => {
+    scanAndRunRecursively(`${cwd}/${sdk}/${module}`, additionalEnvs)
+  }),
+)

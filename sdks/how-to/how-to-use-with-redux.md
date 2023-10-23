@@ -20,95 +20,80 @@ convert all the models in the hierarchy to plain JS objects.
 
 The constructor of the Model Classes now converts back those pojos to the full class Hierarchy.
 
-<!-- file://code-samples/how-to/how-to-use-with-redux/index.mts snippet:marshal and unmarshal the currently logged user-->
+<!-- file://code-samples/{{sdk}}/how-to/how-to-use-with-redux/index.mts snippet:marshal and unmarshal the currently logged user-->
 ```typescript
 const user = await api.userApi.getLoggedUser()
 const marshalledUser = user.marshal()
 const unmarshalledUser = new User(marshalledUser)
 ```
-<!-- output://code-samples/how-to/how-to-use-with-redux/user.txt -->
+<!-- output://code-samples/{{sdk}}/how-to/how-to-use-with-redux/user.txt -->
 <details>
 <summary>user</summary>
 
 ```json
 {
-  "id": "6a541dfb-40d9-41f5-ba76-e3a5e277813f",
-  "rev": "92-9c12127732099e963f9ba1d6c7862773",
-  "created": 1688371977279,
+  "id": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
+  "rev": "86-1fba3882618770a9fb28f85d94c77254",
+  "created": 1679919731079,
   "name": "Master HCP",
-  "login": "master@e2b6e8.icure",
+  "login": "master@b16baa.icure",
   "groupId": "ic-e2etest-medtech-docs",
-  "healthcarePartyId": "e2b6e873-035b-4964-885b-5a90e99c43b4",
-  "email": "master@e2b6e8.icure",
+  "healthcarePartyId": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
+  "email": "master@b16baa.icure",
   "properties": {},
   "roles": {},
   "sharingDataWith": {
     "medicalInformation": {}
   },
-  "authenticationTokens": {
-    "c1284f05-cca6-444e-bdac-3cd134d54e6b": {
-      "creationTime": 1688371977378,
-      "validity": 86400
-    }
-  }
+  "authenticationTokens": {}
 }
 ```
 </details>
 
-<!-- output://code-samples/how-to/how-to-use-with-redux/marshalledUser.txt -->
+<!-- output://code-samples/{{sdk}}/how-to/how-to-use-with-redux/marshalledUser.txt -->
 <details>
 <summary>marshalledUser</summary>
 
 ```json
 {
-  "id": "6a541dfb-40d9-41f5-ba76-e3a5e277813f",
-  "rev": "92-9c12127732099e963f9ba1d6c7862773",
-  "created": 1688371977279,
+  "id": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
+  "rev": "86-1fba3882618770a9fb28f85d94c77254",
+  "created": 1679919731079,
   "name": "Master HCP",
-  "login": "master@e2b6e8.icure",
+  "login": "master@b16baa.icure",
   "groupId": "ic-e2etest-medtech-docs",
-  "healthcarePartyId": "e2b6e873-035b-4964-885b-5a90e99c43b4",
-  "email": "master@e2b6e8.icure",
+  "healthcarePartyId": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
+  "email": "master@b16baa.icure",
   "properties": [],
   "roles": [],
   "sharingDataWith": {
     "medicalInformation": []
   },
-  "authenticationTokens": {
-    "c1284f05-cca6-444e-bdac-3cd134d54e6b": {
-      "creationTime": 1688371977378,
-      "validity": 86400
-    }
-  }
+  "authenticationTokens": {}
 }
 ```
 </details>
 
-<!-- output://code-samples/how-to/how-to-use-with-redux/unmarshalledUser.txt -->
+<!-- output://code-samples/{{sdk}}/how-to/how-to-use-with-redux/unmarshalledUser.txt -->
 <details>
 <summary>unmarshalledUser</summary>
 
 ```json
 {
-  "id": "6a541dfb-40d9-41f5-ba76-e3a5e277813f",
-  "rev": "92-9c12127732099e963f9ba1d6c7862773",
-  "created": 1688371977279,
+  "id": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
+  "rev": "86-1fba3882618770a9fb28f85d94c77254",
+  "created": 1679919731079,
   "name": "Master HCP",
-  "login": "master@e2b6e8.icure",
+  "login": "master@b16baa.icure",
   "groupId": "ic-e2etest-medtech-docs",
-  "healthcarePartyId": "e2b6e873-035b-4964-885b-5a90e99c43b4",
-  "email": "master@e2b6e8.icure",
+  "healthcarePartyId": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
+  "email": "master@b16baa.icure",
   "properties": {},
   "roles": {},
   "sharingDataWith": {
     "medicalInformation": {}
   },
-  "authenticationTokens": {
-    "c1284f05-cca6-444e-bdac-3cd134d54e6b": {
-      "creationTime": 1688371977378,
-      "validity": 86400
-    }
-  }
+  "authenticationTokens": {}
 }
 ```
 </details>

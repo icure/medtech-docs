@@ -2,7 +2,7 @@
 
 # Class: Content
 
-Information contained in the data sample (Measure, number, ...). Content is localized, using ISO language code as key
+Information contained in the {{service}} (Measure, number, ...). Content is localized, using ISO language code as key
 
 ## Table of contents
 

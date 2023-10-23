@@ -60,9 +60,9 @@ const sidebarsSDK = {
                         {
                             'Chapter 3 - DataSample': [
                                 'tutorial/petra/chapter-03/setup',
-                                'tutorial/petra/chapter-03/datasample-api',
+                                'tutorial/petra/chapter-03/service-api',
                                 'tutorial/petra/chapter-03/calendar',
-                                'tutorial/petra/chapter-03/datasample-modal',
+                                'tutorial/petra/chapter-03/service-modal',
                                 'tutorial/petra/chapter-03/history',
                             ],
                         },
@@ -72,7 +72,7 @@ const sidebarsSDK = {
                                 'tutorial/petra/chapter-04/header',
                                 'tutorial/petra/chapter-04/modify-user',
                                 'tutorial/petra/chapter-04/user-api',
-                                'tutorial/petra/chapter-04/healthcareprofessional-api',
+                                'tutorial/petra/chapter-04/hcp-api',
                                 'tutorial/petra/chapter-04/sharing',
                                 'tutorial/petra/chapter-04/logout',
                             ],
@@ -214,9 +214,9 @@ const sidebarsSDK = {
                     },
                     items: [
                         'explanations/data-model/data-model-coding',
-                        'explanations/data-model/data-model-data-sample',
+                        'explanations/data-model/data-model-service',
                         'explanations/data-model/data-model-healthcare-element',
-                        'explanations/data-model/data-model-healthcare-professional',
+                        'explanations/data-model/data-model-hcp',
                         'explanations/data-model/data-model-medical-device',
                         'explanations/data-model/data-model-notification',
                         'explanations/data-model/data-model-patient',

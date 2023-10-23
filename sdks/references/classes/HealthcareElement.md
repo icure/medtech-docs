@@ -66,7 +66,7 @@ ___
 
 • `Optional` **closingDate**: `number`
 
-The date (unix epoch in ms) marking the end of the healthcare element.
+The date (unix epoch in ms) marking the end of the {{healthcareElement}}.
 
 #### Defined in
 
@@ -108,7 +108,7 @@ ___
 
 • `Optional` **description**: `string`
 
-Description of the healthcare element.
+Description of the {{healthcareElement}}.
 
 #### Defined in
 
@@ -130,7 +130,7 @@ ___
 
 • `Optional` **healthcareElementId**: `string`
 
-The logical id of the healthcare element, used to link together different versions of the same healthcare element. We encourage using either a v4 UUID or a HL7 Id.
+The logical id of the {{healthcareElement}}, used to link together different versions of the same {{healthcareElement}}. We encourage using either a v4 UUID or a HL7 Id.
 
 #### Defined in
 
@@ -142,7 +142,7 @@ ___
 
 • `Optional` **id**: `string`
 
-The Id of the healthcare element. We encourage using either a v4 UUID or a HL7 Id.
+The Id of the {{healthcareElement}}. We encourage using either a v4 UUID or a HL7 Id.
 
 #### Defined in
 
@@ -206,7 +206,7 @@ ___
 
 • `Optional` **openingDate**: `number`
 
-The date (unix epoch in ms) of the start of the healthcare element.
+The date (unix epoch in ms) of the start of the {{healthcareElement}}.
 
 #### Defined in
 
@@ -228,7 +228,7 @@ ___
 
 • `Optional` **rev**: `string`
 
-The revision of the healthcare element in the database, used for conflict management / optimistic locking.
+The revision of the {{healthcareElement}} in the database, used for conflict management / optimistic locking.
 
 #### Defined in
 
@@ -250,7 +250,7 @@ ___
 
 • `Optional` **valueDate**: `number`
 
-The date (unix epoch in ms) when the healthcare element is noted to have started and also closes on the same date
+The date (unix epoch in ms) when the {{healthcareElement}} is noted to have started and also closes on the same date
 
 #### Defined in
 

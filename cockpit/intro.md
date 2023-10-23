@@ -6,7 +6,7 @@ sidebar_position: 1
 
 ## What is iCure ?
 
-*iCure* is a trustable service ensuring the privacy of your patient medical data thanks to [end-to-end encryption](/sdks/explanations/encryption/introduction),
+*iCure* is a trustable service ensuring the privacy of your patient medical data thanks to [end-to-end encryption](../ehr-lite-sdk/explanations/encryption/introduction),
 meaning your users are the only ones who decide who can access their data.
 
 iCure helps you to manage the encrypted data by providing a series of easy-to-use tools :
@@ -14,7 +14,7 @@ iCure helps you to manage the encrypted data by providing a series of easy-to-us
   rules you defined in your solution.
 - The [**iCure Cockpit Web Portal**](../cockpit/intro) allows you to create your solutions, your databases and
   your admin users in your iCure environment.
-- The **iCure Client SDKs** takes care of the [end-to-end encryption / decryption](/sdks/explanations/encryption/introduction)
+- The **iCure Client SDKs** takes care of the [end-to-end encryption / decryption](../ehr-lite-sdk/explanations/encryption/introduction)
   of your data and proposes you a series of easy-to-use medical-oriented services.
 - The **Interoperability components** helps you to connect with external services by mapping the iCure Data Model to
   standard models like FHIR.

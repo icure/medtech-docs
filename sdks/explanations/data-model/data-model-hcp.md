@@ -3,13 +3,13 @@ slug: healthcare-professional
 tags:
     - data model
     - data owner
-    - healthcare professional
+    - {{hcp}}
 ---
 # Healthcare Professional
 
 A Healthcare Professional is an actor that can manage and is responsible for Patients, Medical Devices and other 
 Healthcare Professionals.  
-As [Data Owners](/sdks/glossary#data-owner) they can create medical information and share it with other Data Owners.
+As [Data Owners](/{{sdk}}/glossary#data-owner) they can create medical information and share it with other Data Owners.
 Other Data Owner can decide to share their medical information with them.
 
 ## When Should I Use a Healthcare Professional?
@@ -22,8 +22,8 @@ medical data, and treatments, in your application.
 A Healthcare Professional can:
 - create Users for other Patients, Medical Devices, and Healthcare Professionals.  
 - manage other Users, by changing their passwords or deactivating them.  
-- create Data Samples and Healthcare Elements for Patients.  
-- share Data Samples and Healthcare Elements with other Data Owners.  
+- create {{Services}} and {{HealthcareElements}} for Patients.  
+- share {{Services}} and {{HealthcareElements}} with other Data Owners.  
 - create Notifications and  update the ones shared with them.
 
 ## Examples
@@ -33,25 +33,25 @@ A Healthcare Professional can:
 A Doctor (Healthcare Professional) visits for the first time a Patient. After the visit, they invite the patient
 to the iCure platform.
 
-<!-- file://code-samples/explanation/doctor-invites-a-patient/index.mts snippet:doctor invites user-->
+<!-- file://code-samples/{{sdk}}/explanation/doctor-invites-a-patient/index.mts snippet:doctor invites user-->
 ```typescript
 const messageFactory = new ICureRegistrationEmail(hcp, 'test', 'iCure', existingPatient)
 const createdUser = await api.userApi.createAndInviteUser(existingPatient, messageFactory)
 ```
-<!-- output://code-samples/explanation/doctor-invites-a-patient/createdUser.txt -->
+<!-- output://code-samples/{{sdk}}/explanation/doctor-invites-a-patient/createdUser.txt -->
 <details>
 <summary>createdUser</summary>
 
 ```json
 {
-  "id": "cfee7e51-7fb3-4e66-9348-26dcbf869dac",
-  "rev": "1-ce781b826cbf86448aa0e9d2c8993e01",
-  "created": 1688378942543,
-  "name": "6e1ed36a@icure.com",
-  "login": "6e1ed36a@icure.com",
+  "id": "ccdbc448-d077-4e56-b6ba-c4402e2c2b69",
+  "rev": "1-dec65f6eeea486564c3ec2cd171a0331",
+  "created": 1679997648117,
+  "name": "46d07176@icure.com",
+  "login": "46d07176@icure.com",
   "groupId": "ic-e2etest-medtech-docs",
-  "patientId": "286a2ae5-aff2-4e81-a9a9-e9ebc9d1941e",
-  "email": "6e1ed36a@icure.com",
+  "patientId": "5c0dbd86-9f09-4ab9-8a94-6d5d1a37ca91",
+  "email": "46d07176@icure.com",
   "properties": {},
   "roles": {},
   "sharingDataWith": {},
@@ -62,10 +62,10 @@ const createdUser = await api.userApi.createAndInviteUser(existingPatient, messa
 
 ### A Doctor Registering a Visit and Sharing the Outcome with the Patient
 
-After a visit, a Doctor register the symptoms the Patient is experiencing (fatigue) as a new Data Sample.  
+After a visit, a Doctor register the symptoms the Patient is experiencing (fatigue) as a new {{Service}}.  
 Then, they add the diagnosis (hay fever) as associated Healthcare Element.
 
-<!-- file://code-samples/explanation/doctor-shares-data-with-patient/index.mts snippet:doctor shares medical data-->
+<!-- file://code-samples/{{sdk}}/explanation/doctor-shares-data-with-patient/index.mts snippet:doctor shares medical data-->
 ```typescript
 const healthcareElement = await api.healthcareElementApi.createOrModifyHealthcareElement(
   new HealthcareElement({
@@ -101,60 +101,60 @@ const dataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
   }),
 )
 ```
-<!-- output://code-samples/explanation/doctor-shares-data-with-patient/healthcareElement.txt -->
+<!-- output://code-samples/{{sdk}}/explanation/doctor-shares-data-with-patient/healthcareElement.txt -->
 <details>
 <summary>healthcareElement</summary>
 
 ```json
 {
-  "id": "81b03963-bf41-4ea9-bee2-18cb64f8a5d0",
-  "rev": "1-a68177aac5893ec916446e0489cf4e9f",
-  "created": 1688378943488,
-  "modified": 1688378943488,
-  "author": "6a541dfb-40d9-41f5-ba76-e3a5e277813f",
-  "responsible": "e2b6e873-035b-4964-885b-5a90e99c43b4",
-  "healthcareElementId": "81b03963-bf41-4ea9-bee2-18cb64f8a5d0",
-  "valueDate": 20230703120903,
-  "openingDate": 20230703120903,
+  "id": "90204e83-14a1-48f5-9e9f-5633d0f0c42a",
+  "rev": "1-a3fc371acc6ffbd2c0da58729fe70491",
+  "created": 1679997660649,
+  "modified": 1679997660649,
+  "author": "731d1e22-37e9-4e0f-8d4d-f5ad2b7f18c4",
+  "responsible": "fa2f6b0f-dabd-4943-84f6-35ad63a860cb",
+  "healthcareElementId": "90204e83-14a1-48f5-9e9f-5633d0f0c42a",
+  "valueDate": 20230328100100,
+  "openingDate": 20230328100100,
   "description": "My diagnosis is that the patient has Hay Fever",
   "identifiers": [],
   "codes": {},
   "labels": {},
   "systemMetaData": {
     "secretForeignKeys": [
-      "c52b89c3-d70f-4823-9fd9-a97f946ce1fd"
+      "ce1568d1-d1d5-4c0a-b05b-18efed77163d"
     ],
     "cryptedForeignKeys": {
-      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
+      "fa2f6b0f-dabd-4943-84f6-35ad63a860cb": {}
     },
     "delegations": {
-      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
+      "fa2f6b0f-dabd-4943-84f6-35ad63a860cb": {}
     },
     "encryptionKeys": {
-      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
+      "fa2f6b0f-dabd-4943-84f6-35ad63a860cb": {}
     },
-    "encryptedSelf": "HLu9rC/lCUhceyiBFODQk0CajB1Qo3mG3bhF2Q1AWVBkbczQLIe725XYUBQ5f4s4AwyNVK7lloI2ynx0bes7T9oylPtAIE/lWiupJ1XJ/z8="
+    "encryptedSelf": "mN6jtZ0AihLZ4tuim6ozcUZeIcQgyiYo+4ms07l4AJSBn+iiD3jngc/Z+4gEM+GWNXz7n3pzJ49Q+O6SmGqX6zUChPnNvgPZ/HniMuQ6qdY="
   }
 }
 ```
 </details>
 
-<!-- output://code-samples/explanation/doctor-shares-data-with-patient/dataSample.txt -->
+<!-- output://code-samples/{{sdk}}/explanation/doctor-shares-data-with-patient/dataSample.txt -->
 <details>
 <summary>dataSample</summary>
 
 ```json
 {
-  "id": "d2e3a7c6-6074-4cb9-b634-3ca4058c3b5a",
+  "id": "53026d1a-4ed1-44c6-a4f4-9b264fb15822",
   "qualifiedLinks": {},
-  "batchId": "4b0ed737-9569-4f3a-b710-594415bf6ff2",
+  "batchId": "649a6fb6-1d2b-42a1-9d61-74d118ffe049",
   "index": 0,
-  "valueDate": 20230703120903,
-  "openingDate": 20230703120903,
-  "created": 1688378943529,
-  "modified": 1688378943529,
-  "author": "6a541dfb-40d9-41f5-ba76-e3a5e277813f",
-  "responsible": "e2b6e873-035b-4964-885b-5a90e99c43b4",
+  "valueDate": 20230328100101,
+  "openingDate": 20230328100101,
+  "created": 1679997661282,
+  "modified": 1679997661282,
+  "author": "731d1e22-37e9-4e0f-8d4d-f5ad2b7f18c4",
+  "responsible": "fa2f6b0f-dabd-4943-84f6-35ad63a860cb",
   "identifiers": [],
   "healthcareElementIds": {},
   "canvasesIds": {},
@@ -169,20 +169,18 @@ const dataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
   "codes": {},
   "labels": {},
   "systemMetaData": {
-    "encryptedSelf": "dctsYBHtQqHIvFgTMMLkqcHwnpWZ8yxrBruEZSS/ZQkjP2ZV+GFmfSntGhpk8o+8V+GBWpKzMZzmWReSo4F90Ox2V1V+DwD9+OSeLqy7sq8JyimQKs/Xui4R39mvOqaCseboJx8llhOMu58Yao/ABGOk2aRibxOj/DvRwiNHcP0=",
     "secretForeignKeys": [
-      "c52b89c3-d70f-4823-9fd9-a97f946ce1fd"
+      "ce1568d1-d1d5-4c0a-b05b-18efed77163d"
     ],
     "cryptedForeignKeys": {
-      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
+      "fa2f6b0f-dabd-4943-84f6-35ad63a860cb": {}
     },
     "delegations": {
-      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
+      "fa2f6b0f-dabd-4943-84f6-35ad63a860cb": {}
     },
     "encryptionKeys": {
-      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
-    },
-    "publicKeysForOaepWithSha256": {}
+      "fa2f6b0f-dabd-4943-84f6-35ad63a860cb": {}
+    }
   }
 }
 ```
@@ -190,7 +188,7 @@ const dataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
 
 After that, the Doctor checks if there are new Notifications from the Patient and shares the data with them.
 
-<!-- file://code-samples/explanation/doctor-shares-data-with-patient/index.mts snippet:doctor receives notification-->
+<!-- file://code-samples/{{sdk}}/explanation/doctor-shares-data-with-patient/index.mts snippet:doctor receives notification-->
 ```typescript
 const newNotifications = await api.notificationApi.getPendingNotificationsAfter()
 const newPatientNotifications = newNotifications.filter(
@@ -205,19 +203,19 @@ if (!!newPatientNotifications && newPatientNotifications.length > 0) {
   await api.notificationApi.updateNotificationStatus(newPatientNotifications[0], 'completed')
 }
 ```
-<!-- output://code-samples/explanation/doctor-shares-data-with-patient/newPatientNotifications.txt -->
+<!-- output://code-samples/{{sdk}}/explanation/doctor-shares-data-with-patient/newPatientNotifications.txt -->
 <details>
 <summary>newPatientNotifications</summary>
 
 ```text
 [
   {
-    "id": "21f14c4b-92f7-4a3a-8ab2-1bc83441710e",
-    "rev": "1-65b155cc47e6a73808d6f2f45d36c04b",
-    "created": 1688378943614,
-    "modified": 1688378943614,
-    "author": "9bcfa0be-af9a-4d3e-a3da-321270563e24",
-    "responsible": "d8df1f2b-938c-46c0-a85c-015117142cc6",
+    "id": "bb9ecb0a-7ccb-46c6-93f6-819b93590f8e",
+    "rev": "1-a020a2fffee07382ba131351377ee192",
+    "created": 1679997661848,
+    "modified": 1679997661848,
+    "author": "68a4f7d3-aa5d-43ff-95a1-ba14675397ca",
+    "responsible": "3238dd4f-be09-4375-bb5b-0bf9d737ac94",
     "status": "completed",
     "identifiers": [],
     "properties": [],
@@ -226,14 +224,13 @@ if (!!newPatientNotifications && newPatientNotifications.length > 0) {
       "secretForeignKeys": [],
       "cryptedForeignKeys": {},
       "delegations": {
-        "d8df1f2b-938c-46c0-a85c-015117142cc6": {},
-        "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
+        "3238dd4f-be09-4375-bb5b-0bf9d737ac94": {},
+        "fa2f6b0f-dabd-4943-84f6-35ad63a860cb": {}
       },
       "encryptionKeys": {
-        "d8df1f2b-938c-46c0-a85c-015117142cc6": {},
-        "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
-      },
-      "encryptedSelf": "Fm064ir2QPytWbI5RiCmg4t1kzNnf6YAodkKog2gAwg="
+        "3238dd4f-be09-4375-bb5b-0bf9d737ac94": {},
+        "fa2f6b0f-dabd-4943-84f6-35ad63a860cb": {}
+      }
     }
   }
 ]
@@ -245,7 +242,7 @@ if (!!newPatientNotifications && newPatientNotifications.length > 0) {
 A Doctor (Healthcare Professional) discovers that their Patient is pregnant. Therefore, they update her condition in the
 application.
 
-<!-- file://code-samples/explanation/doctor-creates-he/index.mts snippet:doctor can create HE-->
+<!-- file://code-samples/{{sdk}}/explanation/doctor-creates-he/index.mts snippet:doctor can create HE-->
 ```typescript
 const healthcareElement = await api.healthcareElementApi.createOrModifyHealthcareElement(
   new HealthcareElement({
@@ -263,39 +260,39 @@ const healthcareElement = await api.healthcareElementApi.createOrModifyHealthcar
   patient.id,
 )
 ```
-<!-- output://code-samples/explanation/doctor-creates-he/healthcareElement.txt -->
+<!-- output://code-samples/{{sdk}}/explanation/doctor-creates-he/healthcareElement.txt -->
 <details>
 <summary>healthcareElement</summary>
 
 ```json
 {
-  "id": "68a213d2-23b2-4d95-b1df-1de467b403fb",
-  "rev": "1-996c06c7fea838b2b47eac0d6843a008",
-  "created": 1688378941768,
-  "modified": 1688378941768,
-  "author": "6a541dfb-40d9-41f5-ba76-e3a5e277813f",
-  "responsible": "e2b6e873-035b-4964-885b-5a90e99c43b4",
-  "healthcareElementId": "68a213d2-23b2-4d95-b1df-1de467b403fb",
-  "valueDate": 20230703120901,
-  "openingDate": 1688378941744,
+  "id": "7eb81d0e-b11a-4886-b5cc-fcc64d482d7b",
+  "rev": "1-5b29be8c488d2acf731454dfc15cc995",
+  "created": 1679997646588,
+  "modified": 1679997646588,
+  "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
+  "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
+  "healthcareElementId": "7eb81d0e-b11a-4886-b5cc-fcc64d482d7b",
+  "valueDate": 20230328100046,
+  "openingDate": 1679997646130,
   "description": "The patient is pregnant",
   "identifiers": [],
   "codes": {},
   "labels": {},
   "systemMetaData": {
     "secretForeignKeys": [
-      "c52b89c3-d70f-4823-9fd9-a97f946ce1fd"
+      "4742a08d-bbc1-4ed1-a758-f0a605529bf1"
     ],
     "cryptedForeignKeys": {
-      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
     },
     "delegations": {
-      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
     },
     "encryptionKeys": {
-      "e2b6e873-035b-4964-885b-5a90e99c43b4": {}
+      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
     },
-    "encryptedSelf": "wizUUK7TJRTq7OdWIi4U93InI+ZW/XG+dTtRL/8M9zcg58+bC76VAWO3XHWXzuZB3zO1Ap+QiYdGH0DTLPUU3Q=="
+    "encryptedSelf": "XXqVThq9xvjrtWx93heJcf56BCgZtIxTX5gEuuhQYH9HZ95RCaWOYLABjfYt7ZdPCP6oKjduxv+uPzHFgUiK8w=="
   }
 }
 ```
