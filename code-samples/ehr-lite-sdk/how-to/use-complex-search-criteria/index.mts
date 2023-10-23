@@ -1,21 +1,16 @@
 import 'isomorphic-fetch'
-import {
-  host,
-  initLocalStorage,
-  initMedTechApi,
-  msgGtwUrl,
-  output,
-  signUpUserUsingEmail,
-  specId,
-} from '../../utils/index.mjs'
-import { FilterComposition, Patient, PatientFilter } from '@icure/medical-device-sdk'
-import { expect } from 'chai'
+import {host, initLocalStorage, msgGtwUrl, output, specId,} from '../../../utils/index.mjs'
+import {expect} from 'chai'
 import process from 'process'
+import {initEHRLiteApi, signUpUserUsingEmail} from "../../utils/index.mjs";
+import {Patient, PatientFilter} from "@icure/ehr-lite-sdk";
+import {GenderEnum} from "@icure/ehr-lite-sdk/models/enums/Gender.enum";
+import { FilterComposition } from "@icure/typescript-common";
 
 initLocalStorage()
 
-const masterApi = await initMedTechApi(true)
-const masterUser = await masterApi.userApi.getLoggedUser()
+const masterApi = await initEHRLiteApi(true)
+const masterUser = await masterApi.userApi.getLogged()
 
 const { api } = await signUpUserUsingEmail(
   host,
@@ -24,46 +19,39 @@ const { api } = await signUpUserUsingEmail(
   process.env.AUTH_BY_EMAIL_HCP_PROCESS_ID,
   masterUser.healthcarePartyId!,
 )
-const user = await api.userApi.getLoggedUser()
+const user = await api.userApi.getLogged()
 const healthcarePartyId = user.healthcarePartyId!
 
-const now = new Date()
-
-function getYear(dateOfBirth?: number) {
-  expect(!!dateOfBirth).to.be.true
-  return Math.floor(dateOfBirth! / 10000)
-}
-
-await api.patientApi.createOrModifyPatient(
+await api.patientApi.createOrModify(
   new Patient({
     firstName: 'Arthur',
     lastName: 'Dent',
-    gender: 'male',
+    gender: GenderEnum.MALE,
     dateOfBirth: parseInt(`19520101`),
   }),
 )
 
-await api.patientApi.createOrModifyPatient(
+await api.patientApi.createOrModify(
   new Patient({
     firstName: 'Trillian',
     lastName: 'Astra',
-    gender: 'female',
+    gender: GenderEnum.FEMALE,
     dateOfBirth: parseInt(`19520101`),
   }),
 )
 
-await api.patientApi.createOrModifyPatient(
+await api.patientApi.createOrModify(
   new Patient({
     firstName: 'Zaphod',
     lastName: 'Beeblebrox',
-    gender: 'indeterminate',
+    gender: GenderEnum.INDETERMINATE,
     dateOfBirth: parseInt(`19420101`),
   }),
 )
 
 //tech-doc: filter patients for hcp
 const patientsForHcpFilter = await new PatientFilter(api).forDataOwner(healthcarePartyId).build()
-const patientsForHcp = await api.patientApi.filterPatients(patientsForHcpFilter)
+const patientsForHcp = await api.patientApi.filterBy(patientsForHcpFilter)
 //tech-doc: end
 output({ patientsForHcpFilter, patientsForHcp })
 
@@ -79,7 +67,7 @@ const ageGenderFilter = await new PatientFilter(api)
   .byGenderEducationProfession('female')
   .build()
 
-const ageGenderPatients = await api.patientApi.filterPatients(ageGenderFilter)
+const ageGenderPatients = await api.patientApi.filterBy(ageGenderFilter)
 //tech-doc: end
 output({ ageGenderFilter, ageGenderPatients })
 
@@ -97,7 +85,7 @@ const ageGenderSortedFilter = await new PatientFilter(api)
   .byGenderEducationProfession('female')
   .build()
 
-const ageGenderSortedPatients = await api.patientApi.filterPatients(ageGenderFilter)
+const ageGenderSortedPatients = await api.patientApi.filterBy(ageGenderFilter)
 //tech-doc: end
 output({ ageGenderSortedFilter, ageGenderSortedPatients })
 
@@ -116,7 +104,7 @@ const filterByGender = await new PatientFilter(api)
 
 const filterByGenderAndAge = FilterComposition.intersection(filterByAge, filterByGender)
 
-const ageGenderExplicitPatients = await api.patientApi.filterPatients(filterByGenderAndAge)
+const ageGenderExplicitPatients = await api.patientApi.filterBy(filterByGenderAndAge)
 //tech-doc: end
 output({ filterByGenderAndAge, ageGenderExplicitPatients })
 
@@ -140,7 +128,7 @@ const filterIndeterminate = await new PatientFilter(api)
 
 const filterFemaleOrIndeterminate = FilterComposition.union(filterFemales, filterIndeterminate)
 
-const unionFilterPatients = await api.patientApi.filterPatients(filterFemaleOrIndeterminate)
+const unionFilterPatients = await api.patientApi.filterBy(filterFemaleOrIndeterminate)
 //tech-doc: end
 output({ filterFemaleOrIndeterminate, unionFilterPatients })
 
