@@ -33,6 +33,7 @@
     "@icure/api": "7.1.13",
     "@icure/medical-device-sdk": "^3.0.3",
     "@icure/ehr-lite-sdk": "1.0.2",
+    "@icure/test-setup": "^0.0.61",
     "isomorphic-fetch": "^3.0.0",
     "node-fetch": "^2.6.1",
     "node-localstorage": "^2.2.1",

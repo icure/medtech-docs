@@ -24,7 +24,7 @@ const hcp2User = await hcp2Api.userApi.getLogged()
 const pUser = await pApi.userApi.getLogged()
 await hcp1Api.patientApi.giveAccessTo(
   await hcp1Api.patientApi.get(pUser.patientId),
-  hcp2User.healthcarePartyId!,
+  hcp2User.healthcarePartyId,
 )
 
 expect(hcp1User.email).to.equal(userName)

@@ -104,11 +104,11 @@ const authProcess = await anonymousApi.authenticationApi.startAuthentication(
 //tech-doc: STOP HERE
 output({ authProcess })
 
-const validationCode = (await getLastEmail(userEmail)).subject!
+const validationCode = (await getLastEmail(userEmail)).subject as string
 
 //tech-doc: Complete authentication process
 const authenticationResult = await anonymousApi.authenticationApi.completeAuthentication(
-  authProcess!,
+  authProcess,
   validationCode,
 )
 
@@ -196,11 +196,11 @@ const authProcessLogin = await anonymousApiForLogin.authenticationApi.startAuthe
   userEmail, // The email address used for user registration
 )
 //tech-doc: STOP HERE
-const validationCodeForLogin = (await getLastEmail(userEmail)).subject!
+const validationCodeForLogin = (await getLastEmail(userEmail)).subject as string
 
 //tech-doc: Complete login authentication process
 const loginResult = await anonymousApiForLogin.authenticationApi.completeAuthentication(
-  authProcessLogin!,
+  authProcessLogin,
   validationCodeForLogin,
 )
 
@@ -251,11 +251,11 @@ const loginProcess = await anonymousMedTechApi.authenticationApi.startAuthentica
   userEmail,
 )
 
-const newValidationCode = (await getLastEmail(userEmail)).subject!
+const newValidationCode = (await getLastEmail(userEmail)).subject as string
 
 //tech-doc: Complete user lost key authentication
 const loginAuthResult = await anonymousMedTechApi.authenticationApi.completeAuthentication(
-  loginProcess!,
+  loginProcess,
   newValidationCode,
 )
 //tech-doc: STOP HERE
@@ -285,7 +285,7 @@ output({ newlyCreatedObservation })
 expect(newlyCreatedObservation).to.not.be.undefined //skip
 
 // Can access previous ones but cannot decrypt them
-const oldCreatedObservation = await loginAuthResult.api.observationApi.get(createdObservation.id!)
+const oldCreatedObservation = await loginAuthResult.api.observationApi.get(createdObservation.id)
 expect(Object.entries(oldCreatedObservation.localContent ?? {})).to.be.empty
 
 // When the delegate gave him access back
@@ -314,18 +314,18 @@ const daenaerysNotification = hcpNotifications.find(
 expect(daenaerysNotification).to.not.be.undefined //skip
 
 //tech-doc: Give access back to a user with their new key
-const daenaerysPatientId = Array.from(daenaerysNotification!.properties ?? []).find(
+const daenaerysPatientId = Array.from(daenaerysNotification.properties ?? []).find(
   (prop) => prop.id == 'dataOwnerConcernedId',
 )
 expect(daenaerysPatientId).to.not.be.undefined //skip
-const daenaerysPatientPubKey = Array.from(daenaerysNotification!.properties ?? []).find(
+const daenaerysPatientPubKey = Array.from(daenaerysNotification.properties ?? []).find(
   (prop) => prop.id == 'dataOwnerConcernedPubKey',
 )
 expect(daenaerysPatientPubKey).to.not.be.undefined //skip
 
 await hcpApi.dataOwnerApi.giveAccessBackTo(
-  daenaerysPatientId!.typedValue!.stringValue!,
-  daenaerysPatientPubKey!.typedValue!.stringValue!,
+  daenaerysPatientId.typedValue.stringValue,
+  daenaerysPatientPubKey.typedValue.stringValue,
 )
 //tech-doc: STOP HERE
 output({ daenaerysPatientId, daenaerysPatientPubKey })

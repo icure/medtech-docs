@@ -88,12 +88,12 @@ const authProcess = await anonymousApi.authenticationApi.startAuthentication(
 //tech-doc: STOP HERE
 output({ authProcess })
 
-const validationCode = (await getLastSMS(userPhoneNumber)).message!
+const validationCode = (await getLastSMS(userPhoneNumber)).message as string
 console.log('SMS Validation code for number', userPhoneNumber, ' is ', validationCode)
 
 //tech-doc: Complete authentication process
 const authenticationResult = await anonymousApi.authenticationApi.completeAuthentication(
-  authProcess!,
+  authProcess,
   validationCode,
 )
 
@@ -156,12 +156,12 @@ const authProcessLogin = await anonymousApiForLogin.authenticationApi.startAuthe
 )
 //tech-doc: STOP HERE
 
-const validationCodeForLogin = (await getLastSMS(userPhoneNumber)).message!
+const validationCodeForLogin = (await getLastSMS(userPhoneNumber)).message as string
 console.log('SMS Validation code is ', validationCodeForLogin)
 
 //tech-doc: Complete login authentication process
 const loginResult = await anonymousApiForLogin.authenticationApi.completeAuthentication(
-  authProcessLogin!,
+  authProcessLogin,
   validationCodeForLogin,
 )
 

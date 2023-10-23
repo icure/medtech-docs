@@ -108,7 +108,7 @@ const apiAsPatient = authenticationResult.api
 //tech-doc: get patient details
 const patientUser = await apiAsPatient.userApi.getLogged()
 // apiAsPatient.patientApi.getPatient would fail
-const patientDetails = await apiAsPatient.patientApi.getAndTryDecrypt(patientUser.patientId!)
+const patientDetails = await apiAsPatient.patientApi.getAndTryDecrypt(patientUser.patientId)
 //tech-doc: STOP HERE
 output({ patientDetails })
 patientDetails.patient.personalStatus = PatientPersonalStatusEnum.COMPLICATED

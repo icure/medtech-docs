@@ -3,8 +3,8 @@ import * as fs from 'fs'
 import * as process from 'process'
 import { execSync } from 'child_process'
 import * as Process from 'process'
-import { getEnvVariables } from '@icure/test-setup/types'
-import { TestEnvironmentBuilder } from '@icure/test-setup/builder'
+import { getEnvVariables } from '@icure/test-setup/types.js'
+import { TestEnvironmentBuilder } from '@icure/test-setup/builder.js'
 
 const cwd = process.cwd()
 if (!cwd.endsWith('/code-samples')) {
