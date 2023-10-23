@@ -7,32 +7,27 @@ import {
   initMedTechApi,
   msgGtwUrl,
   output,
-  password,
-  privKey,
   specId,
-  userName,
-} from '../../utils/index.mjs'
+} from '../../../utils/index.mjs'
 import { hex2ua, sleep } from '@icure/api'
 import { assert, expect } from 'chai'
 import { v4 as uuid } from 'uuid'
 import {
   Address,
-  AnonymousMedTechApiBuilder,
+  AnonymousMedTechApi,
   CodingReference,
   Content,
   DataSample,
   HealthcareElement,
   HealthcareElementFilter,
-  ICureRegistrationEmail,
-  medTechApi,
   Patient,
-  SimpleMedTechCryptoStrategies,
+  SimpleCryptoStrategies,
   Telecom,
 } from '@icure/medical-device-sdk'
 
 import { webcrypto } from 'crypto'
-import { NotificationTypeEnum } from '@icure/medical-device-sdk/src/models/Notification.js'
-import { getLastEmail } from '../../utils/msgGtw.mjs'
+import { mapOf, NotificationTypeEnum } from '@icure/typescript-common'
+import { getLastEmail } from '../../../utils/msgGtw.mjs'
 
 initLocalStorage()
 
@@ -82,22 +77,13 @@ const dataSample = apiAsDoctor.dataSampleApi.createOrModifyDataSampleFor(
   patient.id,
   new DataSample({
     labels: new Set([new CodingReference({ type: 'IC-TEST', code: 'TEST' })]),
-    content: { en: new Content({ stringValue: 'Hello world' }) },
+    content: mapOf({ en: new Content({ stringValue: 'Hello world' }) }),
   }),
 )
 assert(!!dataSample)
 
-//tech-doc: instantiate a message factory
-const messageFactory = new ICureRegistrationEmail(
-  hcp,
-  'URL_WHERE_TO_LOGIN',
-  'SOLUTION_NAME',
-  patient,
-)
-//tech-doc: STOP HERE
-
 //tech-doc: doctor invites user
-await apiAsDoctor.userApi.createAndInviteUser(patient, messageFactory, 3600)
+await apiAsDoctor.userApi.createAndInviteUser(patient, 3600)
 //tech-doc: STOP HERE
 
 const loginAndPasswordRegex = new RegExp(': ([^ &]+) & (.+)')
@@ -109,14 +95,14 @@ const patientToken = loginAndPassword[2]
 await sleep(5000)
 
 //tech-doc: user logs in
-const anonymousMedTechApi = await new AnonymousMedTechApiBuilder()
+const anonymousMedTechApi = await new AnonymousMedTechApi.Builder()
   .withICureBaseUrl(host)
   .withMsgGwUrl(msgGtwUrl)
   .withMsgGwSpecId(specId)
   .withCrypto(webcrypto as any)
   .withAuthProcessByEmailId(authProcessId)
   .withAuthProcessBySmsId(authProcessId)
-  .withCryptoStrategies(new SimpleMedTechCryptoStrategies([]))
+  .withCryptoStrategies(new SimpleCryptoStrategies([]))
   .build()
 
 const authenticationResult =
@@ -124,7 +110,7 @@ const authenticationResult =
     patientUsername,
     patientToken,
   )
-const apiAsPatient = authenticationResult.medTechApi
+const apiAsPatient = authenticationResult.api
 //tech-doc: STOP HERE
 
 //tech-doc: get patient details
@@ -134,10 +120,10 @@ const patientDetails = await apiAsPatient.patientApi.getPatientAndTryDecrypt(pat
 //tech-doc: STOP HERE
 output({ patientDetails })
 //tech-doc: modify patient details
-patientDetails.companyName = 'iCure'
+patientDetails.patient.companyName = 'iCure'
 // patientDetails.note = 'This would make modify fail'
-const modifiedPatientDetails = await apiAsPatient.patientApi.modifyPotentiallyEncryptedPatient(
-  patientDetails,
+const modifiedPatientDetails = await apiAsPatient.patientApi.createOrModifyPatient(
+  patientDetails.patient,
 )
 //tech-doc: STOP HERE
 output({ modifiedPatientDetails })
@@ -164,7 +150,6 @@ const sharedHealthcareElement = await apiAsPatient.healthcareElementApi.giveAcce
   hcp.id,
 )
 // The doctor can now access the healthcare element
-apiAsDoctor.cryptoApi.emptyHcpCache(hcp.id)
 console.log(await apiAsDoctor.healthcareElementApi.getHealthcareElement(newHealthcareElement.id!)) // HealthcareElement...
 //tech-doc: STOP HERE
 output({ newHealthcareElement, sharedHealthcareElement })

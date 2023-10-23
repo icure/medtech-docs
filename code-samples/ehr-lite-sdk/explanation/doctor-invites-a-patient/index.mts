@@ -5,7 +5,7 @@ import { v4 as uuid } from 'uuid'
 import { initLocalStorage, output } from '../../../utils/index.mjs'
 import { ContactPoint, Location, Patient } from '@icure/ehr-lite-sdk'
 import { LocationAddressTypeEnum } from '@icure/ehr-lite-sdk/models/enums/LocationAddressType.enum'
-import {ContactPointTelecomTypeEnum} from "@icure/ehr-lite-sdk/models/enums/ContactPointTelecomType.enum";
+import { ContactPointTelecomTypeEnum } from '@icure/ehr-lite-sdk/models/enums/ContactPointTelecomType.enum'
 
 initLocalStorage()
 

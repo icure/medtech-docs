@@ -1,15 +1,22 @@
-import {initLocalStorage, output} from '../../../utils/index.mjs'
-import {expect} from 'chai'
+import { initLocalStorage, output } from '../../../utils/index.mjs'
+import { expect } from 'chai'
 //tech-doc: instantiate the api with existing keys
 import 'isomorphic-fetch'
-import {webcrypto} from 'crypto'
+import { webcrypto } from 'crypto'
 //tech-doc: create your first patient
-import {EHRLiteApi, LocalComponent, Observation, Patient, CodingReference, ObservationFilter} from '@icure/ehr-lite-sdk'
+import {
+  EHRLiteApi,
+  LocalComponent,
+  Observation,
+  Patient,
+  CodingReference,
+  ObservationFilter,
+} from '@icure/ehr-lite-sdk'
 //tech-doc: create your patient first medical data
 //tech-doc: Find your patient medical data following some criteria
-import {SimpleEHRLiteCryptoStrategies} from "@icure/ehr-lite-sdk/services/EHRLiteCryptoStrategies";
-import {GenderEnum} from "@icure/ehr-lite-sdk/models/enums/Gender.enum";
-import {mapOf} from "@icure/typescript-common";
+import { SimpleEHRLiteCryptoStrategies } from '@icure/ehr-lite-sdk/services/EHRLiteCryptoStrategies'
+import { GenderEnum } from '@icure/ehr-lite-sdk/models/enums/Gender.enum'
+import { mapOf } from '@icure/typescript-common'
 
 initLocalStorage()
 
@@ -54,7 +61,7 @@ const createdPatient = await api.patientApi.createOrModify(
   new Patient({
     firstName: 'John',
     lastName: 'Snow',
-    gender: GenderEnum.MALE
+    gender: GenderEnum.MALE,
   }),
 )
 console.log(`Your new patient id : ${createdPatient.id}`)
@@ -76,7 +83,7 @@ const createdData = await api.observationApi.createOrModifyManyFor(johnSnow.id, 
   new Observation({
     tags: new Set([new CodingReference({ type: 'LOINC', code: '8302-2', version: '2' })]),
     localContent: mapOf({ en: new LocalComponent({ numberValue: 187 }) }),
-    valueDate: 20220203111034
+    valueDate: 20220203111034,
   }),
 ])
 //tech-doc: STOP HERE

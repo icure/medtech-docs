@@ -6,7 +6,7 @@ import {
   Patient,
 } from '@icure/medical-device-sdk'
 import { sleep } from '@icure/api'
-import { initLocalStorage, output, initMedTechApi } from '../../utils/index.mjs'
+import { initLocalStorage, output, initMedTechApi } from '../../../utils/index.mjs'
 import 'isomorphic-fetch'
 
 initLocalStorage()

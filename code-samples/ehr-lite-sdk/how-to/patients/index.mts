@@ -1,14 +1,14 @@
 import 'isomorphic-fetch'
 import * as console from 'console'
 
-import {initLocalStorage, output} from '../../../utils/index.mjs'
-import {expect} from 'chai'
-import {initEHRLiteApi} from "@site/code-samples/ehr-lite-sdk/utils/index.mjs";
-import {HumanName, Patient, Annotation} from "@icure/ehr-lite-sdk";
-import {GenderEnum} from "@icure/ehr-lite-sdk/models/enums/Gender.enum";
-import {HumanNameUseEnum} from "@icure/ehr-lite-sdk/models/enums/HumanNameUse.enum";
-import {mapOf} from "@icure/typescript-common";
-import {PatientFilter} from "@icure/typescript-common";
+import { initLocalStorage, output } from '../../../utils/index.mjs'
+import { expect } from 'chai'
+import { initEHRLiteApi } from '@site/code-samples/ehr-lite-sdk/utils/index.mjs'
+import { HumanName, Patient, Annotation } from '@icure/ehr-lite-sdk'
+import { GenderEnum } from '@icure/ehr-lite-sdk/models/enums/Gender.enum'
+import { HumanNameUseEnum } from '@icure/ehr-lite-sdk/models/enums/HumanNameUse.enum'
+import { mapOf } from '@icure/typescript-common'
+import { PatientFilter } from '@icure/typescript-common'
 
 initLocalStorage()
 
@@ -47,9 +47,11 @@ const updatedPatient = await api.patientApi.createOrModify(
     ...createdPatient,
     // highlight-start
     modified: undefined,
-    notes: [new Annotation({
-        markdown: mapOf({en: 'Good news everyone!'})
-    })],
+    notes: [
+      new Annotation({
+        markdown: mapOf({ en: 'Good news everyone!' }),
+      }),
+    ],
     // highlight-end
   }),
 )

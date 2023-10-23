@@ -20,7 +20,8 @@ import { getLastEmail } from '../../../utils/msgGtw.mjs'
 import { LocationAddressTypeEnum } from '@icure/ehr-lite-sdk/models/enums/LocationAddressType.enum'
 import { CodingReference, mapOf, NotificationTypeEnum } from '@icure/typescript-common'
 import { SimpleEHRLiteCryptoStrategies } from '@icure/ehr-lite-sdk/services/EHRLiteCryptoStrategies'
-import {ContactPointTelecomTypeEnum} from "@icure/ehr-lite-sdk/models/enums/ContactPointTelecomType.enum";
+import { ContactPointTelecomTypeEnum } from '@icure/ehr-lite-sdk/models/enums/ContactPointTelecomType.enum'
+import { PatientPersonalStatusEnum } from '@icure/ehr-lite-sdk/models/enums/PatientPersonalStatus.enum'
 
 initLocalStorage()
 
@@ -110,6 +111,11 @@ const patientUser = await apiAsPatient.userApi.getLogged()
 const patientDetails = await apiAsPatient.patientApi.getAndTryDecrypt(patientUser.patientId!)
 //tech-doc: STOP HERE
 output({ patientDetails })
+patientDetails.patient.personalStatus = PatientPersonalStatusEnum.COMPLICATED
+// patientDetails.note = 'This would make modify fail'
+const modifiedPatientDetails = await apiAsPatient.patientApi.createOrModify(patientDetails.patient)
+//tech-doc: STOP HERE
+output({ modifiedPatientDetails })
 
 //tech-doc: create healthcare element
 const newCondition = await apiAsPatient.conditionApi.createOrModify(
@@ -125,7 +131,7 @@ const newCondition = await apiAsPatient.conditionApi.createOrModify(
     ]),
     openingDate: new Date('2019-10-12').getTime(),
   }),
-  patientDetails.patient.id,
+  modifiedPatientDetails.id,
 )
 const sharedCondition = await apiAsPatient.conditionApi.giveAccessTo(newCondition, hcp.id)
 // The doctor can now access the healthcare element
@@ -142,7 +148,7 @@ const notFoundHEs = await apiAsDoctor.conditionApi.filterBy(filterForHcpWithoutA
 console.log(notFoundHEs.rows.find((x) => x.id == newCondition.id)) // undefined
 expect(notFoundHEs.rows.find((x) => x.id == newCondition.id)).to.be.undefined //skip
 // The patient shares his secret foreign key with the doctor
-await apiAsPatient.patientApi.giveAccessTo(patientDetails.patient, hcp.id)
+await apiAsPatient.patientApi.giveAccessTo(modifiedPatientDetails, hcp.id)
 // The doctor can now also find the healthcare element
 const filterForHcpWithAccessByPatient = await new ConditionFilter(apiAsDoctor)
   .forDataOwner(hcp.id)

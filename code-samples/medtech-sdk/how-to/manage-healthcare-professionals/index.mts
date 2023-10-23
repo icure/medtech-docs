@@ -5,7 +5,7 @@ import {
   HealthcareProfessionalFilter,
   Telecom,
 } from '@icure/medical-device-sdk'
-import { initLocalStorage, initMedTechApi, output } from '../../utils/index.mjs'
+import { initLocalStorage, initMedTechApi, output } from '../../../utils/index.mjs'
 import 'isomorphic-fetch'
 import { expect } from 'chai'
 

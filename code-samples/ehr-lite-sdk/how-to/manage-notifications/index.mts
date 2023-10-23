@@ -1,12 +1,12 @@
 import 'isomorphic-fetch'
 import { NotificationFilter } from '@icure/medical-device-sdk'
-import {
-  initLocalStorage,
-  output,
-} from '../../../utils/index.mjs'
+import { initLocalStorage, output } from '../../../utils/index.mjs'
 import { assert, expect } from 'chai'
-import {initEHRLiteApi, initPatientEHRLiteApi} from "@site/code-samples/ehr-lite-sdk/utils/index.mjs";
-import { Notification, NotificationTypeEnum } from "@icure/typescript-common";
+import {
+  initEHRLiteApi,
+  initPatientEHRLiteApi,
+} from '@site/code-samples/ehr-lite-sdk/utils/index.mjs'
+import { Notification, NotificationTypeEnum } from '@icure/typescript-common'
 
 initLocalStorage()
 
@@ -37,9 +37,7 @@ const createdNotification = await patientApi.notificationApi.createOrModify(
   practitioner.id,
 )
 
-const retrievedNotification = await patientApi.notificationApi.get(
-  createdNotification.id,
-)
+const retrievedNotification = await patientApi.notificationApi.get(createdNotification.id)
 //tech-doc: STOP HERE
 output({ createdNotification, retrievedNotification })
 
@@ -60,11 +58,7 @@ output({ afterDateFilter })
 expect(!!afterDateFilter).to.eq(true)
 
 //tech-doc: gets the first page of results
-const notificationsFirstPage = await api.notificationApi.filterBy(
-  afterDateFilter,
-  undefined,
-  10,
-)
+const notificationsFirstPage = await api.notificationApi.filterBy(afterDateFilter, undefined, 10)
 //tech-doc: STOP HERE
 output({ notificationsFirstPage })
 
@@ -132,10 +126,7 @@ const notificationToUpdate = await api.notificationApi.createOrModify(
   practitioner.id,
 )
 
-const updatedNotification = await api.notificationApi.updateStatus(
-  notificationToUpdate,
-  'ongoing',
-)
+const updatedNotification = await api.notificationApi.updateStatus(notificationToUpdate, 'ongoing')
 //tech-doc: STOP HERE
 output({ notificationToUpdate, updatedNotification })
 

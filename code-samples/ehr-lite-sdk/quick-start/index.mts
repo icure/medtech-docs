@@ -7,8 +7,8 @@ initLocalStorage()
 import 'isomorphic-fetch'
 import { webcrypto } from 'crypto'
 import * as process from 'process'
-import {EHRLiteApi} from "@icure/ehr-lite-sdk";
-import {SimpleEHRLiteCryptoStrategies} from "@icure/ehr-lite-sdk/services/EHRLiteCryptoStrategies";
+import { EHRLiteApi } from '@icure/ehr-lite-sdk'
+import { SimpleEHRLiteCryptoStrategies } from '@icure/ehr-lite-sdk/services/EHRLiteCryptoStrategies'
 
 export const host = process.env.ICURE_URL ?? 'https://kraken.icure.cloud'
 export const username = process.env.ICURE_USER_NAME

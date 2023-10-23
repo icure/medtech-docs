@@ -1,22 +1,23 @@
 import 'isomorphic-fetch'
-import { initLocalStorage, initMedTechApi, output, password } from '../../utils/index.mjs'
+import { initMedTechApi, output, password } from '../../../utils/index.mjs'
 import {
-  AnonymousMedTechApiBuilder,
-  MedTechApiBuilder,
   DataSample,
   CodingReference,
   medTechApi,
   Content,
+  SimpleCryptoStrategies,
+  MedTechApi,
+  AnonymousMedTechApi,
 } from '@icure/medical-device-sdk'
 import { webcrypto } from 'crypto'
 import * as process from 'process'
-import { getLastEmail } from '../../utils/msgGtw.mjs'
+import { getLastEmail } from '../../../utils/msgGtw.mjs'
 import { expect, use as chaiUse } from 'chai'
 import { NotificationTypeEnum } from '@icure/medical-device-sdk/src/models/Notification.js'
-import { SimpleMedTechCryptoStrategies } from '@icure/medical-device-sdk'
 import { username } from '../../quick-start/index.mjs'
 import chaiAsPromised from 'chai-as-promised'
-import { MemoryKeyStorage, MemoryStorage } from '../../utils/memoryStorage.mjs'
+import { MemoryKeyStorage, MemoryStorage } from '../../../utils/memoryStorage.mjs'
+import { mapOf } from '@icure/typescript-common'
 chaiUse(chaiAsPromised)
 
 const cachedInfo = {} as { [key: string]: string }
@@ -55,12 +56,12 @@ function getBackCredentials(): {
 
 //tech-doc: Get master Hcp Id
 const iCureUrl = process.env.ICURE_URL
-const masterHcpApi = await medTechApi()
+const masterHcpApi = await new MedTechApi.Builder()
   .withICureBaseUrl(iCureUrl)
   .withUserName(username)
   .withPassword(password)
   .withCrypto(webcrypto as any)
-  .withCryptoStrategies(new SimpleMedTechCryptoStrategies([]))
+  .withCryptoStrategies(new SimpleCryptoStrategies([]))
   .withStorage(new MemoryStorage()) //skip
   .withKeyStorage(new MemoryKeyStorage()) //skip
   .build()
@@ -79,14 +80,14 @@ const authProcessByEmailId = process.env.AUTH_BY_EMAIL_PROCESS_ID
 const authProcessBySmsId = process.env.AUTH_BY_SMS_PROCESS_ID
 const recaptcha = process.env.RECAPTCHA
 
-const anonymousApi = await new AnonymousMedTechApiBuilder()
+const anonymousApi = await new AnonymousMedTechApi.Builder()
   .withICureBaseUrl(iCureUrl)
   .withCrypto(webcrypto as any)
   .withMsgGwUrl(msgGtwUrl)
   .withMsgGwSpecId(specId)
   .withAuthProcessByEmailId(authProcessByEmailId)
   .withAuthProcessBySmsId(authProcessBySmsId)
-  .withCryptoStrategies(new SimpleMedTechCryptoStrategies([]))
+  .withCryptoStrategies(new SimpleCryptoStrategies([]))
   .withStorage(memoryStorage) //skip
   .withKeyStorage(memoryKeyStorage) //skip
   .build()
@@ -149,7 +150,7 @@ const createdDataSample = await authenticatedApi.dataSampleApi.createOrModifyDat
   loggedUser.patientId,
   new DataSample({
     labels: new Set([new CodingReference({ type: 'IC-TEST', code: 'TEST' })]),
-    content: { en: new Content({ stringValue: 'Hello world' }) },
+    content: mapOf({ en: new Content({ stringValue: 'Hello world' }) }),
     openingDate: 20220929083400,
     comment: 'This is a comment',
   }),
@@ -164,14 +165,12 @@ const { login, token, pubKey, privKey } = getBackCredentials()
 //tech-doc: STOP HERE
 
 //tech-doc: Instantiate back a MedTechApi
-const reInstantiatedApi = await new MedTechApiBuilder()
+const reInstantiatedApi = await new MedTechApi.Builder()
   .withICureBaseUrl(iCureUrl)
   .withUserName(login)
   .withPassword(token)
   .withCrypto(webcrypto as any)
-  .withCryptoStrategies(
-    new SimpleMedTechCryptoStrategies([{ publicKey: pubKey, privateKey: privKey }]),
-  )
+  .withCryptoStrategies(new SimpleCryptoStrategies([{ publicKey: pubKey, privateKey: privKey }]))
   .withStorage(memoryStorage) //skip
   .withKeyStorage(memoryKeyStorage) //skip
   .build()
@@ -185,14 +184,14 @@ const foundDataSampleAfterInstantiatingApi = await reInstantiatedApi.dataSampleA
 output({ foundDataSampleAfterInstantiatingApi })
 
 //tech-doc: Login
-const anonymousApiForLogin = await new AnonymousMedTechApiBuilder()
+const anonymousApiForLogin = await new AnonymousMedTechApi.Builder()
   .withICureBaseUrl(iCureUrl)
   .withCrypto(webcrypto as any)
   .withMsgGwUrl(msgGtwUrl)
   .withMsgGwSpecId(specId)
   .withAuthProcessByEmailId(authProcessByEmailId)
   .withAuthProcessBySmsId(authProcessBySmsId)
-  .withCryptoStrategies(new SimpleMedTechCryptoStrategies([]))
+  .withCryptoStrategies(new SimpleCryptoStrategies([]))
   .withStorage(memoryStorage) //skip
   .withKeyStorage(memoryKeyStorage) //skip
   .build()
@@ -242,14 +241,14 @@ cachedInfo['privKey'] = undefined
 await memoryKeyStorage.clear()
 
 // User lost his key and logs back
-const anonymousMedTechApi = await new AnonymousMedTechApiBuilder()
+const anonymousMedTechApi = await new AnonymousMedTechApi.Builder()
   .withICureBaseUrl(iCureUrl)
   .withMsgGwUrl(msgGtwUrl)
   .withMsgGwSpecId(specId)
   .withCrypto(webcrypto as any)
   .withAuthProcessByEmailId(authProcessByEmailId)
   .withAuthProcessBySmsId(authProcessBySmsId)
-  .withCryptoStrategies(new SimpleMedTechCryptoStrategies([]))
+  .withCryptoStrategies(new SimpleCryptoStrategies([]))
   .withStorage(new MemoryStorage()) //skip
   .withKeyStorage(new MemoryKeyStorage()) //skip
   .build()
@@ -284,7 +283,7 @@ const newlyCreatedDataSample =
     foundUser.patientId,
     new DataSample({
       labels: new Set([new CodingReference({ type: 'IC-TEST', code: 'TEST' })]),
-      content: { en: new Content({ stringValue: 'Hello world' }) },
+      content: mapOf({ en: new Content({ stringValue: 'Hello world' }) }),
       openingDate: 20220929083400,
       comment: 'This is a comment',
     }),
@@ -318,17 +317,19 @@ expect(hcpNotifications.length).to.be.greaterThan(0)
 const daenaerysNotification = hcpNotifications.find(
   (notif) =>
     notif.type === NotificationTypeEnum.KEY_PAIR_UPDATE &&
-    notif.properties?.find((prop) => prop.typedValue?.stringValue == daenaerysId) != undefined,
+    Array.from(notif.properties ?? []).find(
+      (prop) => prop.typedValue?.stringValue == daenaerysId,
+    ) != undefined,
 )
 
 expect(daenaerysNotification).to.not.be.undefined //skip
 
 //tech-doc: Give access back to a user with their new key
-const daenaerysPatientId = daenaerysNotification!.properties?.find(
+const daenaerysPatientId = Array.from(daenaerysNotification!.properties ?? []).find(
   (prop) => prop.id == 'dataOwnerConcernedId',
 )
 expect(daenaerysPatientId).to.not.be.undefined //skip
-const daenaerysPatientPubKey = daenaerysNotification!.properties?.find(
+const daenaerysPatientPubKey = Array.from(daenaerysNotification!.properties ?? []).find(
   (prop) => prop.id == 'dataOwnerConcernedPubKey',
 )
 expect(daenaerysPatientPubKey).to.not.be.undefined //skip

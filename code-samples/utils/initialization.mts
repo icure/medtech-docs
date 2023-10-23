@@ -1,7 +1,12 @@
 import os from 'os'
 import console from 'console'
 import { LocalStorage } from 'node-localstorage'
-import { AnonymousMedTechApi, medTechApi, MedTechApi, User } from '@icure/medical-device-sdk'
+import {
+  AnonymousMedTechApi,
+  MedTechApi,
+  SimpleMedTechCryptoStrategies,
+  User,
+} from '@icure/medical-device-sdk'
 import {
   authProcessId,
   host,
@@ -22,7 +27,6 @@ import { hex2ua, jwk2spki, pkcs8ToJwk } from '@icure/api'
 import { assert } from 'chai'
 import { v4 as uuid } from 'uuid'
 import { getLastEmail } from './msgGtw.mjs'
-import { SimpleCryptoStrategies } from '@icure/medical-device-sdk'
 
 export function initLocalStorage() {
   const tmp = os.tmpdir()
@@ -49,12 +53,12 @@ async function initAnyMedTechApi(
   privatekey: string,
   initcrypto: boolean | undefined,
 ): Promise<MedTechApi> {
-  const api = await medTechApi()
+  const api = await new MedTechApi.Builder()
     .withICureBaseUrl(host)
     .withUserName(username)
     .withPassword(password)
     .withCrypto(webcrypto as any)
-    .withCryptoStrategies(new SimpleCryptoStrategies([]))
+    .withCryptoStrategies(new SimpleMedTechCryptoStrategies([]))
     .withMsgGwUrl(msgGtwUrl)
     .withMsgGwSpecId(specId)
     .withAuthProcessByEmailId(authProcessId)
@@ -73,13 +77,15 @@ async function initAnyMedTechApi(
     ].find((x) => x === publicKeyFromPrivateKey)
 
     if (!!foundPublicKey) {
-      return await medTechApi()
+      return await new MedTechApi.Builder()
         .withICureBaseUrl(host)
         .withUserName(username)
         .withPassword(password)
         .withCrypto(webcrypto as any)
         .withCryptoStrategies(
-          new SimpleCryptoStrategies([{ privateKey: privatekey, publicKey: foundPublicKey }]),
+          new SimpleMedTechCryptoStrategies([
+            { privateKey: privatekey, publicKey: foundPublicKey },
+          ]),
         )
         .withMsgGwUrl(msgGtwUrl)
         .withMsgGwSpecId(specId)

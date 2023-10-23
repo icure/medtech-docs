@@ -1,18 +1,21 @@
 import 'isomorphic-fetch'
-import { CodingReference, Content, DataSample, HealthcareElement } from '@icure/medical-device-sdk'
+import {
+  CodingReference,
+  Content,
+  DataSample,
+  HealthcareElement,
+  Notification,
+} from '@icure/medical-device-sdk'
 import {
   initLocalStorage,
   initMedTechApi,
   initPatientMedTechApi,
   output,
   patientId,
-} from '../../utils/index.mjs'
+} from '../../../utils/index.mjs'
 import { expect } from 'chai'
-import {
-  Notification,
-  NotificationTypeEnum,
-} from '@icure/medical-device-sdk/src/models/Notification.js'
 import { v4 as uuid } from 'uuid'
+import { mapOf, NotificationTypeEnum } from '@icure/typescript-common'
 
 initLocalStorage()
 
@@ -43,11 +46,11 @@ expect(healthcareElement.description).to.eq('My diagnosis is that the patient ha
 const dataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
   patient.id,
   new DataSample({
-    content: {
+    content: mapOf({
       en: new Content({
         stringValue: 'The patient has fatigue',
       }),
-    },
+    }),
     codes: new Set([
       new CodingReference({
         id: 'SNOMEDCT|84229001|20020131',

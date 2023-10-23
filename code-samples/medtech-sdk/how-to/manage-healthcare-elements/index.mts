@@ -11,7 +11,7 @@ import {
   initMedTechApi,
   initPatientMedTechApi,
   output,
-} from '../../utils/index.mjs'
+} from '../../../utils/index.mjs'
 import { expect } from 'chai'
 
 initLocalStorage()

@@ -1,6 +1,6 @@
 import 'isomorphic-fetch'
-import { ICureRegistrationEmail, Patient, Address, Telecom } from '@icure/medical-device-sdk'
-import { initLocalStorage, initMedTechApi, output } from '../../utils/index.mjs'
+import { Patient, Address, Telecom } from '@icure/medical-device-sdk'
+import { initLocalStorage, initMedTechApi, output } from '../../../utils/index.mjs'
 import { expect } from 'chai'
 import { v4 as uuid } from 'uuid'
 
@@ -47,8 +47,7 @@ const existingPatient = await api.patientApi.createOrModifyPatient(
 expect(!!existingPatient).to.eq(true) //skip
 
 //tech-doc: doctor invites user
-const messageFactory = new ICureRegistrationEmail(hcp, 'test', 'iCure', existingPatient)
-const createdUser = await api.userApi.createAndInviteUser(existingPatient, messageFactory)
+const createdUser = await api.userApi.createAndInviteUser(existingPatient)
 //tech-doc: STOP HERE
 output({ createdUser })
 expect(createdUser.patientId).to.eq(existingPatient.id)

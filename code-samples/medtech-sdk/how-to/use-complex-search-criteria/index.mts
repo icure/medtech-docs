@@ -7,10 +7,11 @@ import {
   output,
   signUpUserUsingEmail,
   specId,
-} from '../../utils/index.mjs'
-import { FilterComposition, Patient, PatientFilter } from '@icure/medical-device-sdk'
+} from '../../../utils/index.mjs'
+import { Patient, PatientFilter } from '@icure/medical-device-sdk'
 import { expect } from 'chai'
 import process from 'process'
+import { FilterComposition } from '@icure/typescript-common'
 
 initLocalStorage()
 
@@ -26,13 +27,6 @@ const { api } = await signUpUserUsingEmail(
 )
 const user = await api.userApi.getLoggedUser()
 const healthcarePartyId = user.healthcarePartyId!
-
-const now = new Date()
-
-function getYear(dateOfBirth?: number) {
-  expect(!!dateOfBirth).to.be.true
-  return Math.floor(dateOfBirth! / 10000)
-}
 
 await api.patientApi.createOrModifyPatient(
   new Patient({

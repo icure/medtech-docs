@@ -7,9 +7,9 @@ import {
   Measure,
 } from '@icure/medical-device-sdk'
 import 'isomorphic-fetch'
-import * as console from 'console'
 
-import { initLocalStorage, initMedTechApi, output } from '../../utils/index.mjs'
+import { initLocalStorage, initMedTechApi, output } from '../../../utils/index.mjs'
+import { mapOf } from '@icure/typescript-common'
 
 initLocalStorage()
 
@@ -31,34 +31,30 @@ const oneHourMeanDataSample = new DataSample({
   labels: new Set([new CodingReference({ type: 'LOINC', code: '41920-0', version: '2.73' })]),
   comment: 'Heart rate 1 hour mean',
   openingDate: 20220929083400,
-  content: {
+  content: mapOf({
     en: new Content({
       measureValue: new Measure({
         value: 72,
         unit: '{beats}/min',
-        unitCodes: new Set([
-          new CodingReference({ type: 'UCUM', code: '{beats}/min', version: '1.2' }),
-        ]),
+        unitCodes: [new CodingReference({ type: 'UCUM', code: '{beats}/min', version: '1.2' })],
       }),
     }),
-  },
+  }),
 })
 //tech-doc: create children dataSample eight hour mean
 const eightHourMeanDataSample = new DataSample({
   labels: new Set([new CodingReference({ type: 'LOINC', code: '41921-8', version: '2.73' })]),
   comment: 'Heart rate 8 hour mean',
   openingDate: 20220929083400,
-  content: {
+  content: mapOf({
     en: new Content({
       measureValue: new Measure({
         value: 63,
         unit: '{beats}/min',
-        unitCodes: new Set([
-          new CodingReference({ type: 'UCUM', code: '{beats}/min', version: '1.2' }),
-        ]),
+        unitCodes: [new CodingReference({ type: 'UCUM', code: '{beats}/min', version: '1.2' })],
       }),
     }),
-  },
+  }),
 })
 //tech-doc: STOP HERE
 output({ oneHourMeanDataSample, eightHourMeanDataSample })
@@ -68,7 +64,7 @@ const temperaturesDataSample = new DataSample({
   labels: new Set([new CodingReference({ type: 'LOINC', code: '8310-5', version: '2.73' })]),
   comment: 'Body temperature',
   openingDate: 20220929083400,
-  content: {
+  content: mapOf({
     en: new Content({
       // highlight-start
       timeSeries: new TimeSeries({
@@ -80,7 +76,7 @@ const temperaturesDataSample = new DataSample({
       }),
       // highlight-end
     }),
-  },
+  }),
 })
 //tech-doc: STOP HERE
 output({ temperaturesDataSample })
@@ -95,7 +91,7 @@ const meanHeartRateDataSample = new DataSample({
     // highlight-end
   ]),
   openingDate: 20220929083400,
-  content: {
+  content: mapOf({
     en: new Content({
       compoundValue: [
         // highlight-start
@@ -105,7 +101,7 @@ const meanHeartRateDataSample = new DataSample({
         // highlight-end
       ],
     }),
-  },
+  }),
 })
 
 const createdDataSample = await api.dataSampleApi.createOrModifyDataSampleFor(

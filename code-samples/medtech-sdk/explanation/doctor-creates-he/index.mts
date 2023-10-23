@@ -1,6 +1,6 @@
 import 'isomorphic-fetch'
 import { CodingReference, HealthcareElement } from '@icure/medical-device-sdk'
-import { initLocalStorage, initMedTechApi, output, patientId } from '../../utils/index.mjs'
+import { initLocalStorage, initMedTechApi, output, patientId } from '../../../utils/index.mjs'
 import { expect } from 'chai'
 
 initLocalStorage()

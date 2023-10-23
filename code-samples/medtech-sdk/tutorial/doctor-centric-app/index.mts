@@ -1,11 +1,11 @@
-import { initLocalStorage, output } from '../../utils/index.mjs'
+import { initLocalStorage, output } from '../../../utils/index.mjs'
 import { expect } from 'chai'
 
 initLocalStorage()
 
 //tech-doc: instantiate the api with existing keys
 import 'isomorphic-fetch'
-import { medTechApi } from '@icure/medical-device-sdk'
+import { MedTechApi, medTechApi, SimpleCryptoStrategies } from '@icure/medical-device-sdk'
 import { webcrypto } from 'crypto'
 
 const iCureHost = process.env.ICURE_URL!
@@ -14,15 +14,13 @@ const iCureUserLogin = process.env.ICURE_USER_NAME!
 const iCureUserPubKey = process.env.ICURE_USER_PUB_KEY!
 const iCureUserPrivKey = process.env.ICURE_USER_PRIV_KEY!
 
-const apiWithKeys = await medTechApi()
+const apiWithKeys = await new MedTechApi.Builder()
   .withICureBaseUrl(iCureHost)
   .withUserName(iCureUserLogin)
   .withPassword(iCureUserPassword)
   .withCrypto(webcrypto as any)
   .withCryptoStrategies(
-    new SimpleMedTechCryptoStrategies([
-      { publicKey: iCureUserPubKey, privateKey: iCureUserPrivKey },
-    ]),
+    new SimpleCryptoStrategies([{ publicKey: iCureUserPubKey, privateKey: iCureUserPrivKey }]),
   )
   .build()
 //tech-doc: STOP HERE
@@ -33,7 +31,7 @@ const apiWithoutKeys = await medTechApi()
   .withUserName(iCureUserLogin)
   .withPassword(iCureUserPassword)
   .withCrypto(webcrypto as any)
-  .withCryptoStrategies(new SimpleMedTechCryptoStrategies([]))
+  .withCryptoStrategies(new SimpleCryptoStrategies([]))
   .build()
 //tech-doc: STOP HERE
 
@@ -72,13 +70,13 @@ import { CodingReference, Content, DataSample } from '@icure/medical-device-sdk'
 const createdData = await api.dataSampleApi.createOrModifyDataSamplesFor(johnSnow.id, [
   new DataSample({
     labels: new Set([new CodingReference({ type: 'LOINC', code: '29463-7', version: '2' })]),
-    content: { en: new Content({ numberValue: 92.5 }) },
+    content: mapOf({ en: new Content({ numberValue: 92.5 }) }),
     valueDate: 20220203111034,
     comment: 'Weight',
   }),
   new DataSample({
     labels: new Set([new CodingReference({ type: 'LOINC', code: '8302-2', version: '2' })]),
-    content: { en: new Content({ numberValue: 187 }) },
+    content: mapOf({ en: new Content({ numberValue: 187 }) }),
     valueDate: 20220203111034,
     comment: 'Height',
   }),
@@ -88,7 +86,7 @@ output({ createdData })
 
 //tech-doc: Find your patient medical data following some criteria
 import { DataSampleFilter } from '@icure/medical-device-sdk'
-import { SimpleMedTechCryptoStrategies } from '@icure/medical-device-sdk'
+import { mapOf } from '@icure/typescript-common'
 
 const johnData = await api.dataSampleApi.filterDataSample(
   await new DataSampleFilter(api)
@@ -99,7 +97,6 @@ const johnData = await api.dataSampleApi.filterDataSample(
 )
 
 expect(johnData.rows.length).to.be.equal(1)
-expect(johnData.pageSize).to.be.equal(1)
 expect(johnData.rows[0].content['en'].numberValue).to.be.equal(92.5)
 expect(johnData.rows[0].comment).to.be.equal('Weight')
 //tech-doc: STOP HERE

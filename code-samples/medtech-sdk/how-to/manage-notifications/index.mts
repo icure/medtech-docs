@@ -1,16 +1,13 @@
 import 'isomorphic-fetch'
-import { NotificationFilter } from '@icure/medical-device-sdk'
+import { NotificationFilter, Notification } from '@icure/medical-device-sdk'
 import {
   initLocalStorage,
   initMedTechApi,
   output,
   initPatientMedTechApi,
-} from '../../utils/index.mjs'
+} from '../../../utils/index.mjs'
 import { assert, expect } from 'chai'
-import {
-  Notification,
-  NotificationTypeEnum,
-} from '@icure/medical-device-sdk/src/models/Notification.js'
+import { NotificationTypeEnum } from '@icure/typescript-common'
 
 initLocalStorage()
 

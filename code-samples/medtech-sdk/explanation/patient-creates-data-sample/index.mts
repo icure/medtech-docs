@@ -4,7 +4,7 @@ import {
   DataSample,
   HealthcareElement,
   medTechApi,
-  SimpleMedTechCryptoStrategies,
+  SimpleCryptoStrategies,
 } from '@icure/medical-device-sdk'
 import { webcrypto } from 'crypto'
 import {
@@ -14,7 +14,8 @@ import {
   patientId,
   patientPassword,
   patientUserName,
-} from '../../utils/index.mjs'
+} from '../../../utils/index.mjs'
+import { mapOf } from '@icure/typescript-common'
 
 initLocalStorage()
 
@@ -24,7 +25,7 @@ const api = await medTechApi()
   .withUserName(patientUserName)
   .withPassword(patientPassword)
   .withCrypto(webcrypto as any)
-  .withCryptoStrategies(new SimpleMedTechCryptoStrategies([]))
+  .withCryptoStrategies(new SimpleCryptoStrategies([]))
   .build()
 //tech-doc: STOP HERE
 
@@ -40,11 +41,11 @@ const healthcareElement = await api.healthcareElementApi.createOrModifyHealthcar
 const dataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
   patient.id,
   new DataSample({
-    content: {
+    content: mapOf({
       en: new Content({
         stringValue: 'I have a headache',
       }),
-    },
+    }),
     healthcareElementIds: new Set([healthcareElement.id]),
   }),
 )

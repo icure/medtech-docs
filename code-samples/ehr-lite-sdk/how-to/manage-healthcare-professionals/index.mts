@@ -2,9 +2,9 @@ import { initLocalStorage, output } from '../../../utils/index.mjs'
 import 'isomorphic-fetch'
 import { expect } from 'chai'
 import { initEHRLiteApi } from '@site/code-samples/ehr-lite-sdk/utils/index.mjs'
-import {Practitioner, Location, ContactPoint, PractitionerFilter} from "@icure/ehr-lite-sdk";
-import {CodingReference} from "@icure/typescript-common";
-import {ContactPointTelecomTypeEnum} from "@icure/ehr-lite-sdk/models/enums/ContactPointTelecomType.enum";
+import { Practitioner, Location, ContactPoint, PractitionerFilter } from '@icure/ehr-lite-sdk'
+import { CodingReference } from '@icure/typescript-common'
+import { ContactPointTelecomTypeEnum } from '@icure/ehr-lite-sdk/models/enums/ContactPointTelecomType.enum'
 
 initLocalStorage()
 
@@ -29,9 +29,7 @@ const practitioner: Practitioner = new Practitioner({
   ],
 })
 
-const createdPractitioner = await api.practitionerApi.createOrModify(
-  practitioner,
-)
+const createdPractitioner = await api.practitionerApi.createOrModify(practitioner)
 
 //tech-doc: STOP HERE
 output({ createdHcp: createdPractitioner, healthcareProfessional: practitioner })

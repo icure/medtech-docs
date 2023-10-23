@@ -1,16 +1,15 @@
 import 'isomorphic-fetch'
-import {
-    userName,
-    userName2,
-    patientUserName,
-    initLocalStorage,
-} from '../../../utils/index.mjs'
+import { userName, userName2, patientUserName, initLocalStorage } from '../../../utils/index.mjs'
 import { expect, use as chaiUse } from 'chai'
 import chaiAsPromised from 'chai-as-promised'
-import {initEHRLiteApi, initEHRLiteApi2, initPatientEHRLiteApi} from "@site/code-samples/ehr-lite-sdk/utils/index.mjs";
-import {Patient, Annotation, Condition, Observation, LocalComponent} from "@icure/ehr-lite-sdk";
-import {mapOf} from "@icure/typescript-common";
-import {CodingReference} from "@icure/ehr-lite-sdk";
+import {
+  initEHRLiteApi,
+  initEHRLiteApi2,
+  initPatientEHRLiteApi,
+} from '@site/code-samples/ehr-lite-sdk/utils/index.mjs'
+import { Patient, Annotation, Condition, Observation, LocalComponent } from '@icure/ehr-lite-sdk'
+import { mapOf } from '@icure/typescript-common'
+import { CodingReference } from '@icure/ehr-lite-sdk'
 chaiUse(chaiAsPromised)
 
 initLocalStorage()
@@ -31,9 +30,11 @@ const patient = await hcp1Api.patientApi.createOrModify(
   new Patient({
     firstName: 'John',
     lastName: 'Snow',
-    notes: [new Annotation({
-        markdown: mapOf({en : note})
-    })]
+    notes: [
+      new Annotation({
+        markdown: mapOf({ en: note }),
+      }),
+    ],
   }),
 )
 //tech-doc: end
@@ -77,10 +78,7 @@ expect(
 await expect(hcp2Api.conditionApi.get(condition.id)).to.be.rejected //skip //skip
 await expect(pApi.conditionApi.get(condition.id)).to.be.rejected //skip
 // hcp1 shares `healthcareElement` with p
-await hcp1Api.conditionApi.giveAccessTo(
-  condition,
-  hcp1Api.dataOwnerApi.getDataOwnerIdOf(pUser),
-)
+await hcp1Api.conditionApi.giveAccessTo(condition, hcp1Api.dataOwnerApi.getDataOwnerIdOf(pUser))
 //tech-doc: end
 console.log('Share HE with another HCP')
 
@@ -91,15 +89,9 @@ await pApi.conditionApi.giveAccessTo(
   pApi.dataOwnerApi.getDataOwnerIdOf(hcp2User),
 )
 //tech-doc: end
-expect(
-  (await hcp1Api.conditionApi.get(condition.id)).description,
-).to.equal(description)
-expect(
-  (await hcp2Api.conditionApi.get(condition.id)).description,
-).to.equal(description)
-expect(
-  (await pApi.conditionApi.get(condition.id)).description,
-).to.equal(description)
+expect((await hcp1Api.conditionApi.get(condition.id)).description).to.equal(description)
+expect((await hcp2Api.conditionApi.get(condition.id)).description).to.equal(description)
+expect((await pApi.conditionApi.get(condition.id)).description).to.equal(description)
 
 //tech-doc: create and share a data sample
 // p creates a data sample
@@ -109,7 +101,7 @@ const observation = await pApi.observationApi.createOrModifyFor(
   new Observation({
     tags: new Set([new CodingReference({ type: 'IC-TEST', code: 'TEST' })]),
     localContent: mapOf({ en: new LocalComponent({ stringValue: contentString }) }),
-    openingDate: 20220929083400
+    openingDate: 20220929083400,
   }),
 )
 expect((await pApi.observationApi.get(observation.id)).localContent['en'].stringValue).to.equal(
@@ -126,12 +118,12 @@ await hcp1Api.observationApi.giveAccessTo(
   hcp1Api.dataOwnerApi.getDataOwnerIdOf(hcp2User),
 )
 //tech-doc: end
-expect(
-  (await hcp1Api.observationApi.get(observation.id)).localContent['en'].stringValue,
-).to.equal(contentString)
-expect(
-  (await hcp2Api.observationApi.get(observation.id)).localContent['en'].stringValue,
-).to.equal(contentString)
+expect((await hcp1Api.observationApi.get(observation.id)).localContent['en'].stringValue).to.equal(
+  contentString,
+)
+expect((await hcp2Api.observationApi.get(observation.id)).localContent['en'].stringValue).to.equal(
+  contentString,
+)
 expect((await pApi.observationApi.get(observation.id)).localContent['en'].stringValue).to.equal(
   contentString,
 )

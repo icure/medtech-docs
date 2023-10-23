@@ -1,10 +1,10 @@
-import {User, UserFilter} from '@icure/medical-device-sdk'
-import {initLocalStorage, output} from '../../../utils/index.mjs'
-import {initEHRLiteApi} from "../../utils/index.mjs";
+import { User, UserFilter } from '@icure/medical-device-sdk'
+import { initLocalStorage, output } from '../../../utils/index.mjs'
+import { initEHRLiteApi } from '../../utils/index.mjs'
 import 'isomorphic-fetch'
-import {expect} from 'chai'
-import { Patient, Location, ContactPoint} from '@icure/ehr-lite-sdk'
-import {ContactPointTelecomTypeEnum} from "@icure/ehr-lite-sdk/models/enums/ContactPointTelecomType.enum";
+import { expect } from 'chai'
+import { Patient, Location, ContactPoint } from '@icure/ehr-lite-sdk'
+import { ContactPointTelecomTypeEnum } from '@icure/ehr-lite-sdk/models/enums/ContactPointTelecomType.enum'
 
 initLocalStorage()
 
@@ -35,9 +35,7 @@ const token = await api.userApi.createToken(createdUser.id, 3600)
 output({ token })
 
 const loggedUser = await api.userApi.getLogged()
-const loggedPractitioner = await api.practitionerApi.get(
-  loggedUser.healthcarePartyId,
-)
+const loggedPractitioner = await api.practitionerApi.get(loggedUser.healthcarePartyId)
 
 if (
   !loggedPractitioner.addresses.find((a) =>

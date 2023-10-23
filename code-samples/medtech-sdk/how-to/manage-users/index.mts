@@ -1,5 +1,5 @@
 import { UserFilter } from '@icure/medical-device-sdk'
-import { output, initLocalStorage, initMedTechApi } from '../../utils/index.mjs'
+import { output, initLocalStorage, initMedTechApi } from '../../../utils/index.mjs'
 import 'isomorphic-fetch'
 import { expect } from 'chai'
 
@@ -9,7 +9,6 @@ const api = await initMedTechApi(true)
 
 //tech-doc: Create a user
 import { User } from '@icure/medical-device-sdk'
-import { ICureRegistrationEmail } from '@icure/medical-device-sdk'
 
 //4 random characters to guarantee login uniqueness
 const uniqueId = Math.random().toString(36).substring(4)
@@ -80,15 +79,7 @@ const patientToCreate = new Patient({
 })
 const createdPatient = await api.patientApi.createOrModifyPatient(patientToCreate)
 
-const createdPatientUser = await api.userApi.createAndInviteUser(
-  createdPatient,
-  new ICureRegistrationEmail(
-    loggedHcp,
-    'https://myapplication.care/login',
-    'My application',
-    createdPatient,
-  ),
-)
+const createdPatientUser = await api.userApi.createAndInviteUser(createdPatient)
 
 //tech-doc: STOP HERE
 output({ createdPatient, createdPatientUser })

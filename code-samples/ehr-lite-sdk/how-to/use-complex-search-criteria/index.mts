@@ -1,11 +1,11 @@
 import 'isomorphic-fetch'
-import {host, initLocalStorage, msgGtwUrl, output, specId,} from '../../../utils/index.mjs'
-import {expect} from 'chai'
+import { host, initLocalStorage, msgGtwUrl, output, specId } from '../../../utils/index.mjs'
+import { expect } from 'chai'
 import process from 'process'
-import {initEHRLiteApi, signUpUserUsingEmail} from "../../utils/index.mjs";
-import {Patient, PatientFilter} from "@icure/ehr-lite-sdk";
-import {GenderEnum} from "@icure/ehr-lite-sdk/models/enums/Gender.enum";
-import { FilterComposition } from "@icure/typescript-common";
+import { initEHRLiteApi, signUpUserUsingEmail } from '../../utils/index.mjs'
+import { Patient, PatientFilter } from '@icure/ehr-lite-sdk'
+import { GenderEnum } from '@icure/ehr-lite-sdk/models/enums/Gender.enum'
+import { FilterComposition } from '@icure/typescript-common'
 
 initLocalStorage()
 

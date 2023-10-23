@@ -1,9 +1,15 @@
 import { sleep } from '@icure/api'
 import { initLocalStorage, output } from '../../../utils/index.mjs'
 import 'isomorphic-fetch'
-import {initEHRLiteApi} from "../../utils/index.mjs";
-import {Observation, ObservationFilter, Patient, CodingReference, LocalComponent} from "@icure/ehr-lite-sdk";
-import {mapOf} from "@icure/typescript-common";
+import { initEHRLiteApi } from '../../utils/index.mjs'
+import {
+  Observation,
+  ObservationFilter,
+  Patient,
+  CodingReference,
+  LocalComponent,
+} from '@icure/ehr-lite-sdk'
+import { mapOf } from '@icure/typescript-common'
 
 initLocalStorage()
 
@@ -36,7 +42,7 @@ const connection = (
 const patient = await api.patientApi.createOrModify(
   new Patient({
     firstName: 'John',
-    lastName: 'Snow'
+    lastName: 'Snow',
   }),
 )
 //tech-doc: STOP HERE

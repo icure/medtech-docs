@@ -1,15 +1,15 @@
 import 'isomorphic-fetch'
-import { initLocalStorage, output, password } from '../../utils/index.mjs'
+import { initLocalStorage, output, password } from '../../../utils/index.mjs'
 import {
-  Patient,
+  AnonymousMedTechApi,
   AnonymousMedTechApiBuilder,
-  MedTechApiBuilder,
-  medTechApi,
+  MedTechApi,
+  Patient,
+  SimpleCryptoStrategies,
 } from '@icure/medical-device-sdk'
 import { webcrypto } from 'crypto'
 import * as process from 'process'
-import { getLastSMS } from '../../utils/msgGtw.mjs'
-import { SimpleMedTechCryptoStrategies } from '@icure/medical-device-sdk'
+import { getLastSMS } from '../../../utils/msgGtw.mjs'
 import { username } from '../../quick-start/index.mjs'
 
 const cachedInfo = {} as { [key: string]: string }
@@ -50,12 +50,12 @@ initLocalStorage()
 //tech-doc: Get master Hcp Id
 const iCureUrl = process.env.ICURE_URL
 
-const masterHcpApi = await medTechApi()
+const masterHcpApi = await new MedTechApi.Builder()
   .withICureBaseUrl(iCureUrl)
   .withUserName(username)
   .withPassword(password)
   .withCrypto(webcrypto as any)
-  .withCryptoStrategies(new SimpleMedTechCryptoStrategies([]))
+  .withCryptoStrategies(new SimpleCryptoStrategies([]))
   .build()
 const masterUser = await masterHcpApi.userApi.getLoggedUser()
 const masterHcpId = masterHcpApi.dataOwnerApi.getDataOwnerIdOf(masterUser)
@@ -69,13 +69,13 @@ const authProcessByEmailId = process.env.AUTH_BY_EMAIL_HCP_PROCESS_ID
 const authProcessBySmsId = process.env.AUTH_BY_SMS_HCP_PROCESS_ID
 const recaptcha = process.env.RECAPTCHA
 
-const anonymousApi = await new AnonymousMedTechApiBuilder()
+const anonymousApi = await new AnonymousMedTechApi.Builder()
   .withICureBaseUrl(iCureUrl)
   .withCrypto(webcrypto as any)
   .withMsgGwUrl(msgGtwUrl)
   .withMsgGwSpecId(specId)
   .withAuthProcessBySmsId(authProcessBySmsId)
-  .withCryptoStrategies(new SimpleMedTechCryptoStrategies([]))
+  .withCryptoStrategies(new SimpleCryptoStrategies([]))
   .build()
 //tech-doc: STOP HERE
 
@@ -128,14 +128,12 @@ output({ createdPatient })
 // One option is to get them back from the localStorage
 const { login, token, pubKey, privKey } = getBackCredentials()
 
-const reInstantiatedApi = await new MedTechApiBuilder()
+const reInstantiatedApi = await new MedTechApi.Builder()
   .withICureBaseUrl(iCureUrl)
   .withUserName(login)
   .withPassword(token)
   .withCrypto(webcrypto as any)
-  .withCryptoStrategies(
-    new SimpleMedTechCryptoStrategies([{ publicKey: pubKey, privateKey: privKey }]),
-  )
+  .withCryptoStrategies(new SimpleCryptoStrategies([{ publicKey: pubKey, privateKey: privKey }]))
   .build()
 
 const foundPatientAfterInstantiatingApi = await reInstantiatedApi.patientApi.getPatient(
@@ -145,14 +143,14 @@ const foundPatientAfterInstantiatingApi = await reInstantiatedApi.patientApi.get
 output({ foundPatientAfterInstantiatingApi })
 
 //tech-doc: Login by SMS
-const anonymousApiForLogin = await new AnonymousMedTechApiBuilder()
+const anonymousApiForLogin = await new AnonymousMedTechApi.Builder()
   .withICureBaseUrl(iCureUrl)
   .withCrypto(webcrypto as any)
   .withMsgGwUrl(msgGtwUrl)
   .withMsgGwSpecId(specId)
   .withAuthProcessByEmailId(authProcessByEmailId)
   .withAuthProcessBySmsId(authProcessBySmsId)
-  .withCryptoStrategies(new SimpleMedTechCryptoStrategies([]))
+  .withCryptoStrategies(new SimpleCryptoStrategies([]))
   .build()
 
 const authProcessLogin = await anonymousApiForLogin.authenticationApi.startAuthentication(

@@ -8,10 +8,11 @@ import {
   initMedTechApi2,
   initPatientMedTechApi,
   output,
-} from '../../utils/index.mjs'
+} from '../../../utils/index.mjs'
 import { expect, use as chaiUse } from 'chai'
 import { CodingReference, Content, DataSample, Patient } from '@icure/medical-device-sdk'
 import chaiAsPromised from 'chai-as-promised'
+import { mapOf } from '@icure/typescript-common'
 chaiUse(chaiAsPromised)
 
 initLocalStorage()
@@ -53,7 +54,7 @@ const dataSample = await hcp1Api.dataSampleApi.createOrModifyDataSampleFor(
   patient.id,
   new DataSample({
     labels: new Set([new CodingReference({ type: 'IC-TEST', code: 'TEST' })]),
-    content: { en: new Content({ stringValue: contentString }) },
+    content: mapOf({ en: new Content({ stringValue: contentString }) }),
   }),
 )
 const dataSample1 = await hcp1Api.dataSampleApi.getDataSample(dataSample.id)
@@ -77,7 +78,7 @@ const existingDataSample = await hcp1Api.dataSampleApi.createOrModifyDataSampleF
   patient.id,
   new DataSample({
     labels: new Set([new CodingReference({ type: 'IC-TEST', code: 'TEST' })]),
-    content: { en: new Content({ stringValue: existingContent }) },
+    content: mapOf({ en: new Content({ stringValue: existingContent }) }),
   }),
 )
 expect(
@@ -95,7 +96,7 @@ const dataSampleNotOnModify = await hcp1Api.dataSampleApi.createOrModifyDataSamp
   patient.id,
   new DataSample({
     ...existingDataSample,
-    content: { en: new Content({ stringValue: contentNotOnModify }) },
+    content: mapOf({ en: new Content({ stringValue: contentNotOnModify }) }),
   }),
 )
 //tech-doc: end
@@ -111,7 +112,7 @@ const dataSampleNotSharedBy2 = await hcp2Api.dataSampleApi.createOrModifyDataSam
   patient.id,
   new DataSample({
     labels: new Set([new CodingReference({ type: 'IC-TEST', code: 'TEST' })]),
-    content: { en: new Content({ stringValue: contentNotSharedBy2 }) },
+    content: mapOf({ en: new Content({ stringValue: contentNotSharedBy2 }) }),
   }),
 )
 //tech-doc: end
@@ -136,7 +137,7 @@ const dataSampleNotSharedAnymore = await hcp1Api.dataSampleApi.createOrModifyDat
   patient.id,
   new DataSample({
     labels: new Set([new CodingReference({ type: 'IC-TEST', code: 'TEST' })]),
-    content: { en: new Content({ stringValue: contentNotSharedAnymore }) },
+    content: mapOf({ en: new Content({ stringValue: contentNotSharedAnymore }) }),
   }),
 )
 //tech-doc: end
@@ -164,7 +165,7 @@ const dataSampleNoChaining = await hcp1Api.dataSampleApi.createOrModifyDataSampl
   patient.id,
   new DataSample({
     labels: new Set([new CodingReference({ type: 'IC-TEST', code: 'TEST' })]),
-    content: { en: new Content({ stringValue: contentNoChaining }) },
+    content: mapOf({ en: new Content({ stringValue: contentNoChaining }) }),
   }),
 )
 //tech-doc: end
