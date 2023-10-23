@@ -42,7 +42,7 @@ const AppsList: (code: string) => AppItem[] = (code) => [
   {
     title: 'Boilerplate App',
     imgPath: '/img/code.jpg',
-    description: 'Use our template to start up your project integrating our MedTech SDK. You will be ready to try the functionalities of our APIs in a matter of minutes.',
+    description: 'Use our template to start up your project integrating our MedTech or EHR-Lite SDK. You will be ready to try the functionalities of our APIs in a matter of minutes.',
     button: {
       title: 'Quick start',
       link: '/ehr-lite-sdk/quick-start',
@@ -65,7 +65,7 @@ const DocsList: () => DocItem[] = () => [
   {
     title: 'EHR Lite SDK Docs',
     description:
-      'The EHR Lite SDK provides you a series of services and functionalities focused on creating EHR solutions, collecting patient data, and store it encrypted in our cloud or on your premises.',
+      'The EHR Lite SDK provides you with a series of services and functionalities focused on creating EHR solutions, collecting patient data, and store it encrypted in our cloud or on your premises. Do not be fooled by the Lite in the title, the EHR lite SDK provides you with the full power of iCure, packaged in a startup friendly set of tools for building innovative Electronic Health Records solutions.',
     button: {
       title: 'Explore the SDK Docs',
       link: '/ehr-lite-sdk/intro',
@@ -119,6 +119,11 @@ This is post init script
     0,
     300,
   ],
+  [
+    `🚀🚀🚀🚀 Turbo charging your medical solution development environment`,
+    10,
+    300,
+  ],
 ] as [string, number, number][]
 
 export default function Home(): JSX.Element {
@@ -151,8 +156,13 @@ export default function Home(): JSX.Element {
           <section className={`${styles.homePage__intro} ${styles.container}`}>
             <h1>{`${siteConfig.title}`}</h1>
             <p>
-              iCure is a <strong>trustable</strong> service ensuring the <strong>privacy</strong> of your patient <strong>medical data</strong> thanks to{' '}
-              <strong>end-to-end encryption</strong>, that empowers your users to decide who can access their data.
+              iCure is a <strong>SaaS</strong> solution that helps you launch your fully compliant medical solution faster and cheaper... in months, not years.
+              iCure ensures the <strong>privacy</strong> of your patient <strong>medical data</strong> thanks to{' '}
+              <strong>trustable end-to-end encryption</strong>, that empowers your users to decide who can access their data.
+            </p>
+            <p>
+              iCure accelerates your development cycle, simplifies secure sharing of medical information and makes your app standards ready.
+              Whether you need to speak FHIR, LOINC, SNOMED CT our IHE XDS or whether you do not even know what those acronyms mean, we make sure that your project will thrive in an interoperable Healthcare ICT environment.
             </p>
           </section>
 
@@ -178,7 +188,7 @@ export default function Home(): JSX.Element {
           {DocsList().map((element, index) => {
             const { title, description, button } = element
             return (
-              <section key={`docs-section-${index}`} className={`${styles.homePage__docsCard} ${styles.container}`}>
+              <section key={`docs-section-${index}`} className={`${styles.homePage__docsCard} ${styles.container} ${index % 2 !== 0 && styles.homePage__docsContainerReverse}`}>
                 <div className={styles.homePage__docsCard__content}>
                   <h2>{title}</h2>
                   <p>{description}</p>
