@@ -1,19 +1,19 @@
 ---
-slug: how-to-instantiate-the-medtech-sdk
-description: Learn the various option you have to instantiate the MedTech SDK
+slug: how-to-instantiate-the-sdk
+description: Learn the various option you have to instantiate the {{SdkName}}
 tags:
 - API
 - SDK
 ---
-# Instantiate the MedTech SDK using the asynchronous DSL
-You can obtain an instance of the MedTech SDK by either using the [MedTechApiBuilder]({{sdk}}/references/entrypoints/MedTechApi.md) or the 
-[AnonymousMedTechApiBuilder]({{sdk}}/references/entrypoints/AnonymousMedTechApi.md). You should use the former when you have
+# Instantiate the {{SdkName}} using the asynchronous DSL
+You can obtain an instance of the MedTech SDK by either using the [{{CodeSdkName}}ApiBuilder]({{sdk}}/references/entrypoints/MedTechApi.md) or the 
+[Anonymous{{CodeSdkName}}ApiBuilder]({{sdk}}/references/entrypoints/AnonymousMedTechApi.md). You should use the former when you have
 the username and the password of the user you want to authenticate and the latter when you want to register a new user 
 or generate a temporary authentication token for an existing user. All these procedures are described more in details in 
 the [user authentication how to]({{sdk}}/how-to/how-to-authenticate-a-user/index.md).
 
-## Instantiate the SDK using the MedTechAPiBuilder
-The following code snippet shows an example of the MedTech SDK instantiation using the `MedTechApiBuilder` with all the 
+## Instantiate the SDK using the {{CodeSdkName}}ApiBuilder
+The following code snippet shows an example of the MedTech SDK instantiation using the `{{CodeSdkName}}ApiBuilder` with all the 
 available options.
 
 <!-- file://code-samples/{{sdk}}/how-to/instantiate-the-medtech-sdk/index.mts snippet:doctor can create api-->
@@ -45,8 +45,8 @@ const api = await medTechApi()
 * `.withStorage(storage)`: an object that implements the [StorageFacade]({{sdk}}/references/entrypoints/MedTechApi.md) interface. Will be used to store locally the private key of the user through the key storage. By default, it will use an implementation based on the browser local storage, so you must implement a custom version if your app is based on NodeJS or React Native.
 * `.withKeyStorage(keyStorage)`: an object that implements the [KeyStorageFacade]({{sdk}}/references/interfaces/KeyStorageFacade.md) interface. Will be used to store locally the private key of the user. By default, it will use an implementation based on the default local storage.
 
-## Instantiate the SDK using the AnonymousMedTechApiBuilder
-The following code snippet shows an example of the MedTech SDK instantiation using the `AnonymousMedTechApiBuilder` with all the
+## Instantiate the SDK using the Anonymous{{CodeSdkName}}ApiBuilder
+The following code snippet shows an example of the MedTech SDK instantiation using the `Anonymous{{CodeSdkName}}ApiBuilder` with all the
 available options.
 
 <!-- file://code-samples/{{sdk}}/how-to/instantiate-the-medtech-sdk/index.mts snippet:doctor can create anonymous api-->

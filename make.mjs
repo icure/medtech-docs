@@ -45,6 +45,7 @@ walk("./sdks", "./medtech-sdk", {
     sdk: 'medtech-sdk',
     ...flavours('sdkName', 'medtech sdk'),
     SdkName: 'Medtech SDK',
+    CodeSdkName: 'MedTech',
     medtech: true
 });
 
@@ -55,5 +56,6 @@ walk("./sdks", "./ehr-lite-sdk", {
     sdk: 'ehr-lite-sdk',
     ...flavours('sdkName', 'ehr lite sdk'),
     SdkName: 'Ehr Lite SDK',
+    CodeSdkName: 'EhrLite',
     ehrlite: true
 });
