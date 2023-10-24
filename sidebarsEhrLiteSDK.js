@@ -224,7 +224,7 @@ const sidebarsSDK = {
                     ],
                 },
                 'explanations/encryption/introduction',
-                'explanations/crypto-strategies/index'
+                'explanations/crypto-strategies',
                 /* TODO: when we make more encryption docs we need to replace explanations/encryption/introduction with this
                  *  and update the introduction document to become again "introduction"
                 {

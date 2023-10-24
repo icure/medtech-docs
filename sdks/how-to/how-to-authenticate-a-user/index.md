@@ -61,8 +61,8 @@ const anonymousApi = await new AnonymousMedTechApiBuilder()
   .build()
 ```
 
-The [AnonymousMedTechApi](/{{sdk}}/references/entrypoints/AnonymousMedTechApi) asks you to provide multiple information. Here 
-are their details :
+The [Anonymous{{CodeSdkName}}Builder](/{{sdk}}/references/entrypoints/AnonymousMedTechApi) asks you to provide multiple information. You will learn more about them in
+the Here are some details [Instantiation How-To](/{{sdk}}/how-to/how-to-instantiate-the-medtech-sdk), but for now, here is a quick summary:
 
 | Argument             | Description                                                                                      |
 |----------------------|--------------------------------------------------------------------------------------------------|
@@ -71,8 +71,7 @@ are their details :
 | msgGtwSpecId         | Your iCure Message Gateway Identifier. See next section to know more about it                    |
 | authProcessByEmailId | Identifier of the authentication by email process. See next section to know more about it        |
 | authProcessBySmsId   | Identifier of the authentication by SMS process. See next section to know more about it          |
-
-You can learn about all the options you have when instantiating the MedTech API and the AnonymousMedTech API in the [Instantiation How-To](/{{sdk}}/how-to/how-to-instantiate-the-medtech-sdk). 
+| cryptoStrategies     | Customizes cryptographical operations. For now you can use the provided `Simple` implementation. |
 
 Since Daenaerys is a patient, you will have to provide the `patientAuthProcessByEmailId` as a 
 authProcessByEmailId or `patientAuthProcessBySmsId` as a authProcessBySmsId. 
