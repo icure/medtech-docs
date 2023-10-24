@@ -5,7 +5,7 @@ import { assert } from 'chai'
 import { v4 as uuid } from 'uuid'
 import { getLastEmail } from '../../utils/msgGtw.mjs'
 import { AnonymousEHRLiteApi, EHRLiteApi } from '@icure/ehr-lite-sdk'
-import { SimpleEHRLiteCryptoStrategies } from '@icure/ehr-lite-sdk/services/EHRLiteCryptoStrategies'
+import { SimpleEHRLiteCryptoStrategies } from '@icure/ehr-lite-sdk/services/EHRLiteCryptoStrategies.js'
 import {
   authProcessId,
   host,

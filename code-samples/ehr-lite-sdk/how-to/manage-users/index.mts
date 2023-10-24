@@ -3,8 +3,9 @@ import { initLocalStorage, output } from '../../../utils/index.mjs'
 import { initEHRLiteApi } from '../../utils/index.mjs'
 import 'isomorphic-fetch'
 import { expect } from 'chai'
-import { Patient, Location, ContactPoint } from '@icure/ehr-lite-sdk'
+import { ContactPoint, Location, Patient } from '@icure/ehr-lite-sdk'
 import { ContactPointTelecomTypeEnum } from '@icure/ehr-lite-sdk/models/enums/ContactPointTelecomType.enum'
+import { LocationAddressTypeEnum } from '@icure/ehr-lite-sdk/models/enums/LocationAddressType.enum'
 
 initLocalStorage()
 
@@ -60,7 +61,7 @@ const patientToCreate = new Patient({
   lastName: 'Poquelin',
   addresses: [
     new Location({
-      addressType: 'home',
+      addressType: LocationAddressTypeEnum.HOME,
       telecoms: [
         new ContactPoint({
           system: ContactPointTelecomTypeEnum.EMAIL,

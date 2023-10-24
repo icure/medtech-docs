@@ -5,7 +5,7 @@ initLocalStorage()
 
 //tech-doc: instantiate the api with existing keys
 import 'isomorphic-fetch'
-import { MedTechApi, medTechApi, SimpleCryptoStrategies } from '@icure/medical-device-sdk'
+import { MedTechApi, medTechApi } from '@icure/medical-device-sdk'
 import { webcrypto } from 'crypto'
 
 const iCureHost = process.env.ICURE_URL!
@@ -20,7 +20,9 @@ const apiWithKeys = await new MedTechApi.Builder()
   .withPassword(iCureUserPassword)
   .withCrypto(webcrypto as any)
   .withCryptoStrategies(
-    new SimpleCryptoStrategies([{ publicKey: iCureUserPubKey, privateKey: iCureUserPrivKey }]),
+    new SimpleMedTechCryptoStrategies([
+      { publicKey: iCureUserPubKey, privateKey: iCureUserPrivKey },
+    ]),
   )
   .build()
 //tech-doc: STOP HERE
@@ -31,7 +33,7 @@ const apiWithoutKeys = await medTechApi()
   .withUserName(iCureUserLogin)
   .withPassword(iCureUserPassword)
   .withCrypto(webcrypto as any)
-  .withCryptoStrategies(new SimpleCryptoStrategies([]))
+  .withCryptoStrategies(new SimpleMedTechCryptoStrategies([]))
   .build()
 //tech-doc: STOP HERE
 
@@ -87,6 +89,7 @@ output({ createdData })
 //tech-doc: Find your patient medical data following some criteria
 import { DataSampleFilter } from '@icure/medical-device-sdk'
 import { mapOf } from '@icure/typescript-common'
+import { SimpleMedTechCryptoStrategies } from '@icure/medical-device-sdk/src/services/MedTechCryptoStrategies.js'
 
 const johnData = await api.dataSampleApi.filterDataSample(
   await new DataSampleFilter(api)

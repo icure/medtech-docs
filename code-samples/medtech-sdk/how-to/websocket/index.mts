@@ -8,6 +8,7 @@ import {
 import { sleep } from '@icure/api'
 import { initLocalStorage, output, initMedTechApi } from '../../../utils/index.mjs'
 import 'isomorphic-fetch'
+import { mapOf } from '@icure/typescript-common'
 
 initLocalStorage()
 
@@ -52,7 +53,7 @@ const dataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
   patient.id!,
   new DataSample({
     labels: new Set([new CodingReference({ type: 'IC-TEST', code: 'TEST' })]),
-    content: { en: new Content({ stringValue: 'Hello world' }) },
+    content: mapOf({ en: new Content({ stringValue: 'Hello world' }) }),
   }),
 )
 //tech-doc: STOP HERE

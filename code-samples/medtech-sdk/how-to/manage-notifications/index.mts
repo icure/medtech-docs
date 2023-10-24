@@ -1,13 +1,15 @@
 import 'isomorphic-fetch'
-import { NotificationFilter, Notification } from '@icure/medical-device-sdk'
+import { Notification, NotificationFilter } from '@icure/medical-device-sdk'
 import {
   initLocalStorage,
   initMedTechApi,
-  output,
   initPatientMedTechApi,
+  output,
 } from '../../../utils/index.mjs'
 import { assert, expect } from 'chai'
 import { NotificationTypeEnum } from '@icure/typescript-common'
+import { MaintenanceTask } from '@icure/api'
+import StatusEnum = MaintenanceTask.StatusEnum
 
 initLocalStorage()
 
@@ -20,7 +22,7 @@ const hcp = await api.healthcareProfessionalApi.getHealthcareProfessional(user.h
 //tech-doc: create a notification as patient
 const accessNotification = await patientApi.notificationApi.createOrModifyNotification(
   new Notification({
-    type: NotificationTypeEnum.KEY_PAIR_UPDATE,
+    type: NotificationTypeEnum.KeyPairUpdate,
   }),
   hcp.id,
 )
@@ -28,12 +30,12 @@ const accessNotification = await patientApi.notificationApi.createOrModifyNotifi
 output({ accessNotification })
 
 expect(!!accessNotification).to.eq(true)
-expect(accessNotification.type).to.eq(NotificationTypeEnum.KEY_PAIR_UPDATE)
+expect(accessNotification.type).to.eq(NotificationTypeEnum.KeyPairUpdate)
 
 //tech-doc: creates a notification, then retrieves it
 const createdNotification = await patientApi.notificationApi.createOrModifyNotification(
   new Notification({
-    type: NotificationTypeEnum.OTHER,
+    type: NotificationTypeEnum.Other,
   }),
   hcp.id,
 )
@@ -87,7 +89,7 @@ output({ notificationsSecondPage })
 expect(!!notificationsSecondPage).to.eq(true)
 expect(notificationsSecondPage.rows.length).to.gt(0)
 notificationsSecondPage.rows.forEach((notification) => {
-  assert(notification.created! >= startTimestamp)
+  assert(notification.created >= startTimestamp)
 })
 
 //tech-doc: gets the pending notifications
@@ -98,18 +100,18 @@ output({ pendingNotifications })
 expect(!!pendingNotifications).to.eq(true)
 expect(pendingNotifications.length).to.gt(0)
 pendingNotifications.forEach((notification) => {
-  assert(notification.status! === 'pending')
+  assert(notification.status === 'pending')
 })
 
 //tech-doc: modifies a notification
 const newNotification = await api.notificationApi.createOrModifyNotification(
   new Notification({
-    type: NotificationTypeEnum.KEY_PAIR_UPDATE,
+    type: NotificationTypeEnum.KeyPairUpdate,
   }),
   hcp.id,
 )
 
-const notificationToModify = new Notification({ ...newNotification, status: 'ongoing' })
+const notificationToModify = new Notification({ ...newNotification, status: StatusEnum.Ongoing })
 
 const modifiedNotification = await api.notificationApi.createOrModifyNotification(
   notificationToModify,
@@ -127,15 +129,15 @@ expect(modifiedNotification.status).to.eq('ongoing')
 //tech-doc: updates notification status
 const notificationToUpdate = await api.notificationApi.createOrModifyNotification(
   new Notification({
-    type: NotificationTypeEnum.KEY_PAIR_UPDATE,
-    status: 'pending',
+    type: NotificationTypeEnum.KeyPairUpdate,
+    status: StatusEnum.Pending,
   }),
   hcp.id,
 )
 
 const updatedNotification = await api.notificationApi.updateNotificationStatus(
   notificationToUpdate,
-  'ongoing',
+  StatusEnum.Ongoing,
 )
 //tech-doc: STOP HERE
 output({ notificationToUpdate, updatedNotification })
@@ -148,7 +150,7 @@ expect(updatedNotification.status).to.eq('ongoing')
 //tech-doc: deletes a notification
 const notificationToDelete = await api.notificationApi.createOrModifyNotification(
   new Notification({
-    type: NotificationTypeEnum.KEY_PAIR_UPDATE,
+    type: NotificationTypeEnum.KeyPairUpdate,
   }),
   hcp.id,
 )

@@ -5,7 +5,6 @@ import {
   CodingReference,
   medTechApi,
   Content,
-  SimpleCryptoStrategies,
   MedTechApi,
   AnonymousMedTechApi,
 } from '@icure/medical-device-sdk'
@@ -13,11 +12,12 @@ import { webcrypto } from 'crypto'
 import * as process from 'process'
 import { getLastEmail } from '../../../utils/msgGtw.mjs'
 import { expect, use as chaiUse } from 'chai'
-import { NotificationTypeEnum } from '@icure/medical-device-sdk/src/models/Notification.js'
+import { NotificationTypeEnum } from '@icure/typescript-common'
 import { username } from '../../quick-start/index.mjs'
 import chaiAsPromised from 'chai-as-promised'
 import { MemoryKeyStorage, MemoryStorage } from '../../../utils/memoryStorage.mjs'
 import { mapOf } from '@icure/typescript-common'
+import { SimpleMedTechCryptoStrategies } from '@icure/medical-device-sdk/src/services/MedTechCryptoStrategies.js'
 chaiUse(chaiAsPromised)
 
 const cachedInfo = {} as { [key: string]: string }
@@ -61,7 +61,7 @@ const masterHcpApi = await new MedTechApi.Builder()
   .withUserName(username)
   .withPassword(password)
   .withCrypto(webcrypto as any)
-  .withCryptoStrategies(new SimpleCryptoStrategies([]))
+  .withCryptoStrategies(new SimpleMedTechCryptoStrategies([]))
   .withStorage(new MemoryStorage()) //skip
   .withKeyStorage(new MemoryKeyStorage()) //skip
   .build()
@@ -87,7 +87,7 @@ const anonymousApi = await new AnonymousMedTechApi.Builder()
   .withMsgGwSpecId(specId)
   .withAuthProcessByEmailId(authProcessByEmailId)
   .withAuthProcessBySmsId(authProcessBySmsId)
-  .withCryptoStrategies(new SimpleCryptoStrategies([]))
+  .withCryptoStrategies(new SimpleMedTechCryptoStrategies([]))
   .withStorage(memoryStorage) //skip
   .withKeyStorage(memoryKeyStorage) //skip
   .build()
@@ -126,7 +126,15 @@ console.log(`Your initialised MedTechAPI: ***\${authenticatedApi}***`)
 console.log(`RSA key pairs of your new user: ***\${authenticationResult.keyPairs}***`)
 console.log(`Token created to authenticate your new user: ***\${authenticationResult.token}***`)
 //tech-doc: STOP HERE
-output({ authenticationResult })
+output({
+  authenticationResult: {
+    api: 'AN_INSTANCE_OF_MEDTECH_LITE_API',
+    groupId: authenticationResult.groupId,
+    userId: authenticationResult.userId,
+    keyPairs: authenticationResult.keyPairs,
+    token: authenticationResult.token,
+  },
+})
 
 //tech-doc: Save credentials
 // saveSecurely does not exist: Use your own way of storing the following data securely
@@ -170,7 +178,9 @@ const reInstantiatedApi = await new MedTechApi.Builder()
   .withUserName(login)
   .withPassword(token)
   .withCrypto(webcrypto as any)
-  .withCryptoStrategies(new SimpleCryptoStrategies([{ publicKey: pubKey, privateKey: privKey }]))
+  .withCryptoStrategies(
+    new SimpleMedTechCryptoStrategies([{ publicKey: pubKey, privateKey: privKey }]),
+  )
   .withStorage(memoryStorage) //skip
   .withKeyStorage(memoryKeyStorage) //skip
   .build()
@@ -191,7 +201,7 @@ const anonymousApiForLogin = await new AnonymousMedTechApi.Builder()
   .withMsgGwSpecId(specId)
   .withAuthProcessByEmailId(authProcessByEmailId)
   .withAuthProcessBySmsId(authProcessBySmsId)
-  .withCryptoStrategies(new SimpleCryptoStrategies([]))
+  .withCryptoStrategies(new SimpleMedTechCryptoStrategies([]))
   .withStorage(memoryStorage) //skip
   .withKeyStorage(memoryKeyStorage) //skip
   .build()
@@ -215,7 +225,15 @@ console.log(`Your new initialised MedTechAPI: ***\${loginResult.medTechApi}***`)
 console.log(`RSA key pairs of your user stays the same: ***\${loginResult.keyPairs}***`)
 console.log(`The token of your user will change: ***\${loginResult.token}***`)
 //tech-doc: STOP HERE
-output({ loginResult })
+output({
+  loginResult: {
+    api: 'AN_INSTANCE_OF_MEDTECH_LITE_API',
+    groupId: authenticationResult.groupId,
+    userId: authenticationResult.userId,
+    keyPairs: authenticationResult.keyPairs,
+    token: authenticationResult.token,
+  },
+})
 
 //tech-doc: Access back encrypted data
 const loggedUserApi = loginResult.medTechApi
@@ -248,7 +266,7 @@ const anonymousMedTechApi = await new AnonymousMedTechApi.Builder()
   .withCrypto(webcrypto as any)
   .withAuthProcessByEmailId(authProcessByEmailId)
   .withAuthProcessBySmsId(authProcessBySmsId)
-  .withCryptoStrategies(new SimpleCryptoStrategies([]))
+  .withCryptoStrategies(new SimpleMedTechCryptoStrategies([]))
   .withStorage(new MemoryStorage()) //skip
   .withKeyStorage(new MemoryKeyStorage()) //skip
   .build()
@@ -258,11 +276,11 @@ const loginProcess = await anonymousMedTechApi.authenticationApi.startAuthentica
   userEmail,
 )
 
-const newValidationCode = (await getLastEmail(userEmail)).subject!
+const newValidationCode = (await getLastEmail(userEmail)).subject
 
 //tech-doc: Complete user lost key authentication
 const loginAuthResult = await anonymousMedTechApi.authenticationApi.completeAuthentication(
-  loginProcess!,
+  loginProcess,
   newValidationCode,
 )
 //tech-doc: STOP HERE
@@ -308,7 +326,7 @@ const startTimestamp = new Date().getTime() - 100000
 //tech-doc: Data owner gets all their pending notifications
 const hcpNotifications = await hcpApi.notificationApi
   .getPendingNotificationsAfter(startTimestamp)
-  .then((notifs) => notifs.filter((notif) => notif.type === NotificationTypeEnum.KEY_PAIR_UPDATE))
+  .then((notifs) => notifs.filter((notif) => notif.type === NotificationTypeEnum.KeyPairUpdate))
 //tech-doc: STOP HERE
 output({ hcpNotifications })
 
@@ -316,7 +334,7 @@ expect(hcpNotifications.length).to.be.greaterThan(0)
 
 const daenaerysNotification = hcpNotifications.find(
   (notif) =>
-    notif.type === NotificationTypeEnum.KEY_PAIR_UPDATE &&
+    notif.type === NotificationTypeEnum.KeyPairUpdate &&
     Array.from(notif.properties ?? []).find(
       (prop) => prop.typedValue?.stringValue == daenaerysId,
     ) != undefined,

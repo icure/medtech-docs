@@ -2,11 +2,7 @@ import 'isomorphic-fetch'
 import { userName, userName2, patientUserName, initLocalStorage } from '../../../utils/index.mjs'
 import { expect, use as chaiUse } from 'chai'
 import chaiAsPromised from 'chai-as-promised'
-import {
-  initEHRLiteApi,
-  initEHRLiteApi2,
-  initPatientEHRLiteApi,
-} from '@site/code-samples/ehr-lite-sdk/utils/index.mjs'
+import { initEHRLiteApi, initEHRLiteApi2, initPatientEHRLiteApi } from '../../utils/index.mjs'
 import { Patient, Annotation, Condition, Observation, LocalComponent } from '@icure/ehr-lite-sdk'
 import { mapOf } from '@icure/typescript-common'
 import { CodingReference } from '@icure/ehr-lite-sdk'
@@ -39,7 +35,7 @@ const patient = await hcp1Api.patientApi.createOrModify(
 )
 //tech-doc: end
 expect((await hcp1Api.patientApi.get(patient.id)).notes[0].markdown['en']).to.equal(note)
-expect(pApi.patientApi.getPatient(patient.id)).to.be.rejected
+expect(pApi.patientApi.get(patient.id)).to.be.rejected
 //tech-doc: share a patient
 // hcp1 shares the information of `patient` with hcp2
 const updatedPatient = await hcp1Api.patientApi.giveAccessTo(

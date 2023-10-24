@@ -1,11 +1,17 @@
 import 'isomorphic-fetch'
 import { initEHRLiteApi, initPatientEHRLiteApi, patientId } from '../../utils/index.mjs'
 import { expect } from 'chai'
-import { mapOf, Notification, NotificationTypeEnum } from '@icure/typescript-common'
+import {
+  CodingReference,
+  mapOf,
+  Notification,
+  NotificationTypeEnum,
+} from '@icure/typescript-common'
 import { v4 as uuid } from 'uuid'
 import { initLocalStorage, output } from '../../../utils/index.mjs'
 import { Condition, LocalComponent, Observation } from '@icure/ehr-lite-sdk'
-import { CodingReference } from '@icure/typescript-common'
+import { MaintenanceTask } from '@icure/api'
+import StatusEnum = MaintenanceTask.StatusEnum
 
 initLocalStorage()
 
@@ -60,10 +66,10 @@ output({ healthcareElement: condition, dataSample: observation })
 const notification = await patientApi.notificationApi.createOrModify(
   new Notification({
     id: uuid(),
-    status: 'pending',
+    status: StatusEnum.Pending,
     author: patientUser.id,
     responsible: patientUser.patientId,
-    type: NotificationTypeEnum.OTHER,
+    type: NotificationTypeEnum.Other,
   }),
   user.healthcarePartyId,
 )
@@ -74,14 +80,16 @@ output({ notification })
 const newNotifications = await api.notificationApi.getPendingAfter()
 const newPatientNotifications = newNotifications.filter(
   (notification) =>
-    notification.type === NotificationTypeEnum.OTHER &&
+    notification.type === NotificationTypeEnum.Other &&
     notification.responsible === patientUser.patientId,
 )
 
+console.log('BEFORE SHARING')
 if (!!newPatientNotifications && newPatientNotifications.length > 0) {
+  console.log('SHARING')
   await api.conditionApi.giveAccessTo(condition, patient.id)
   await api.observationApi.giveAccessTo(observation, patient.id)
-  await api.notificationApi.updateStatus(newPatientNotifications[0], 'completed')
+  await api.notificationApi.updateStatus(newPatientNotifications[0], StatusEnum.Completed)
 }
 //tech-doc: STOP HERE
 output({ newPatientNotifications })

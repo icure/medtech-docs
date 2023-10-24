@@ -2,7 +2,7 @@ import 'isomorphic-fetch'
 import { webcrypto } from 'crypto'
 import { host, patientId, patientPassword, patientUserName } from '../../utils/index.mjs'
 import { initLocalStorage, output } from '../../../utils/index.mjs'
-import { SimpleEHRLiteCryptoStrategies } from '@icure/ehr-lite-sdk/services/EHRLiteCryptoStrategies'
+import { SimpleEHRLiteCryptoStrategies } from '@icure/ehr-lite-sdk/services/EHRLiteCryptoStrategies.js'
 import { Condition, EHRLiteApi, LocalComponent, Observation } from '@icure/ehr-lite-sdk'
 import { mapOf } from '@icure/typescript-common'
 

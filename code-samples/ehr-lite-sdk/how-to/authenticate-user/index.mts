@@ -9,11 +9,12 @@ import { username } from '../../quick-start/index.mjs'
 import chaiAsPromised from 'chai-as-promised'
 import { MemoryKeyStorage, MemoryStorage } from '../../../utils/memoryStorage.mjs'
 import { AnonymousEHRLiteApi, EHRLiteApi, LocalComponent, Observation } from '@icure/ehr-lite-sdk'
-import { SimpleEHRLiteCryptoStrategies } from '@icure/ehr-lite-sdk/services/EHRLiteCryptoStrategies'
+import { SimpleEHRLiteCryptoStrategies } from '@icure/ehr-lite-sdk/services/EHRLiteCryptoStrategies.js'
 import { CodingReference, mapOf, NotificationTypeEnum } from '@icure/typescript-common'
 chaiUse(chaiAsPromised)
 
 const cachedInfo = {} as { [key: string]: string }
+let cachedKeys: { privateKey: string; publicKey: string }[] = []
 const uniqueId = Math.random().toString(36).substring(4)
 const userEmail = `${uniqueId}-dt@got.com`
 
@@ -29,21 +30,18 @@ function saveSecurely(
   cachedInfo['token'] = userToken
   cachedInfo['userId'] = userId
   cachedInfo['groupId'] = groupId
-  cachedInfo['pubKey'] = keyPairs[0].publicKey
-  cachedInfo['privKey'] = keyPairs[0].privateKey
+  cachedKeys = keyPairs
 }
 
 function getBackCredentials(): {
   login?: string
   token?: string
-  pubKey?: string
-  privKey?: string
+  keys: { privateKey: string; publicKey: string }[]
 } {
   return {
     login: cachedInfo['login'],
     token: cachedInfo['token'],
-    pubKey: cachedInfo['pubKey'],
-    privKey: cachedInfo['privKey'],
+    keys: cachedKeys,
   }
 }
 
@@ -120,7 +118,15 @@ console.log(`Your initialised MedTechAPI: ***\${authenticatedApi}***`)
 console.log(`RSA key pairs of your new user: ***\${authenticationResult.keyPairs}***`)
 console.log(`Token created to authenticate your new user: ***\${authenticationResult.token}***`)
 //tech-doc: STOP HERE
-output({ authenticationResult })
+output({
+  authenticationResult: {
+    api: 'AN_INSTANCE_OF_EHR_LITE_API',
+    groupId: authenticationResult.groupId,
+    userId: authenticationResult.userId,
+    keyPairs: authenticationResult.keyPairs,
+    token: authenticationResult.token,
+  },
+})
 
 //tech-doc: Save credentials
 // saveSecurely does not exist: Use your own way of storing the following data securely
@@ -154,7 +160,7 @@ output({ createdObservation })
 //tech-doc: Get back credentials
 // getBackCredentials does not exist: Use your own way of storing the following data securely
 // One option is to get them back from the localStorage
-const { login, token, pubKey, privKey } = getBackCredentials()
+const { login, token, keys } = getBackCredentials()
 //tech-doc: STOP HERE
 
 //tech-doc: Instantiate back a MedTechApi
@@ -163,9 +169,7 @@ const reInstantiatedApi = await new EHRLiteApi.Builder()
   .withUserName(login)
   .withPassword(token)
   .withCrypto(webcrypto as any)
-  .withCryptoStrategies(
-    new SimpleEHRLiteCryptoStrategies([{ publicKey: pubKey, privateKey: privKey }]),
-  )
+  .withCryptoStrategies(new SimpleEHRLiteCryptoStrategies(keys))
   .withStorage(memoryStorage) //skip
   .withKeyStorage(memoryKeyStorage) //skip
   .build()
@@ -210,7 +214,15 @@ console.log(`Your new initialised MedTechAPI: ***\${loginResult.medTechApi}***`)
 console.log(`RSA key pairs of your user stays the same: ***\${loginResult.keyPairs}***`)
 console.log(`The token of your user will change: ***\${loginResult.token}***`)
 //tech-doc: STOP HERE
-output({ loginResult })
+output({
+  loginResult: {
+    api: 'AN_INSTANCE_OF_EHR_LITE_API',
+    groupId: authenticationResult.groupId,
+    userId: authenticationResult.userId,
+    keyPairs: authenticationResult.keyPairs,
+    token: authenticationResult.token,
+  },
+})
 
 //tech-doc: Access back encrypted data
 const loggedUserApi = loginResult.api
@@ -297,7 +309,7 @@ const startTimestamp = new Date().getTime() - 100000
 //tech-doc: Data owner gets all their pending notifications
 const hcpNotifications = await hcpApi.notificationApi
   .getPendingAfter(startTimestamp)
-  .then((notifs) => notifs.filter((notif) => notif.type === NotificationTypeEnum.KEY_PAIR_UPDATE))
+  .then((notifs) => notifs.filter((notif) => notif.type === NotificationTypeEnum.KeyPairUpdate))
 //tech-doc: STOP HERE
 output({ hcpNotifications })
 
@@ -305,7 +317,7 @@ expect(hcpNotifications.length).to.be.greaterThan(0)
 
 const daenaerysNotification = hcpNotifications.find(
   (notif) =>
-    notif.type === NotificationTypeEnum.KEY_PAIR_UPDATE &&
+    notif.type === NotificationTypeEnum.KeyPairUpdate &&
     Array.from(notif.properties ?? []).find(
       (prop) => prop.typedValue?.stringValue == daenaerysId,
     ) != undefined,
@@ -333,7 +345,7 @@ output({ daenaerysPatientId, daenaerysPatientPubKey })
 // Then
 const updatedApi = await new EHRLiteApi.Builder(loginAuthResult.api).build()
 
-const previousObservation = await updatedApi.observationApi.get(createdObservation.id!)
+const previousObservation = await updatedApi.observationApi.get(createdObservation.id)
 expect(previousObservation).to.not.be.undefined //skip
 //tech-doc: STOP HERE
 

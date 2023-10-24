@@ -21,7 +21,7 @@ const user = await api.userApi.getLoggedUser()
 
 const patientApi = await initPatientMedTechApi(true)
 const tmpPatient = await patientApi.patientApi.getPatient(patientId)
-await patientApi.patientApi.giveAccessTo(tmpPatient, user.healthcarePartyId!)
+await patientApi.patientApi.giveAccessTo(tmpPatient, user.healthcarePartyId)
 
 const patient = await api.patientApi.getPatient(patientId)
 

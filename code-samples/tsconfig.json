@@ -13,8 +13,8 @@
     "skipLibCheck": true
   },
   "include": [
-	  "ehr-lite-sdk/**/*.mts",
-	  "medtech-sdk/**/*.mts",
+    "ehr-lite-sdk/**/*.mts",
+    "medtech-sdk/**/*.mts",
     "runall.mts"
   ]
 }

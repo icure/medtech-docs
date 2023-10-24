@@ -1,16 +1,11 @@
 import 'isomorphic-fetch'
 import { initLocalStorage, output, password } from '../../../utils/index.mjs'
-import {
-  AnonymousMedTechApi,
-  AnonymousMedTechApiBuilder,
-  MedTechApi,
-  Patient,
-  SimpleCryptoStrategies,
-} from '@icure/medical-device-sdk'
+import { AnonymousMedTechApi, MedTechApi, Patient } from '@icure/medical-device-sdk'
 import { webcrypto } from 'crypto'
 import * as process from 'process'
 import { getLastSMS } from '../../../utils/msgGtw.mjs'
 import { username } from '../../quick-start/index.mjs'
+import { SimpleMedTechCryptoStrategies } from '@icure/medical-device-sdk/src/services/MedTechCryptoStrategies.js'
 
 const cachedInfo = {} as { [key: string]: string }
 const userPhoneNumber = `+24${Math.floor(Math.random() * 1000000000)}`
@@ -55,7 +50,7 @@ const masterHcpApi = await new MedTechApi.Builder()
   .withUserName(username)
   .withPassword(password)
   .withCrypto(webcrypto as any)
-  .withCryptoStrategies(new SimpleCryptoStrategies([]))
+  .withCryptoStrategies(new SimpleMedTechCryptoStrategies([]))
   .build()
 const masterUser = await masterHcpApi.userApi.getLoggedUser()
 const masterHcpId = masterHcpApi.dataOwnerApi.getDataOwnerIdOf(masterUser)
@@ -75,7 +70,7 @@ const anonymousApi = await new AnonymousMedTechApi.Builder()
   .withMsgGwUrl(msgGtwUrl)
   .withMsgGwSpecId(specId)
   .withAuthProcessBySmsId(authProcessBySmsId)
-  .withCryptoStrategies(new SimpleCryptoStrategies([]))
+  .withCryptoStrategies(new SimpleMedTechCryptoStrategies([]))
   .build()
 //tech-doc: STOP HERE
 
@@ -91,12 +86,12 @@ const authProcess = await anonymousApi.authenticationApi.startAuthentication(
 //tech-doc: STOP HERE
 output({ authProcess })
 
-const validationCode = (await getLastSMS(userPhoneNumber)).message!
+const validationCode = (await getLastSMS(userPhoneNumber)).message
 console.log('SMS Validation code for number', userPhoneNumber, ' is ', validationCode)
 
 //tech-doc: Complete authentication process
 const authenticationResult = await anonymousApi.authenticationApi.completeAuthentication(
-  authProcess!,
+  authProcess,
   validationCode,
 )
 
@@ -133,7 +128,9 @@ const reInstantiatedApi = await new MedTechApi.Builder()
   .withUserName(login)
   .withPassword(token)
   .withCrypto(webcrypto as any)
-  .withCryptoStrategies(new SimpleCryptoStrategies([{ publicKey: pubKey, privateKey: privKey }]))
+  .withCryptoStrategies(
+    new SimpleMedTechCryptoStrategies([{ publicKey: pubKey, privateKey: privKey }]),
+  )
   .build()
 
 const foundPatientAfterInstantiatingApi = await reInstantiatedApi.patientApi.getPatient(
@@ -150,7 +147,7 @@ const anonymousApiForLogin = await new AnonymousMedTechApi.Builder()
   .withMsgGwSpecId(specId)
   .withAuthProcessByEmailId(authProcessByEmailId)
   .withAuthProcessBySmsId(authProcessBySmsId)
-  .withCryptoStrategies(new SimpleCryptoStrategies([]))
+  .withCryptoStrategies(new SimpleMedTechCryptoStrategies([]))
   .build()
 
 const authProcessLogin = await anonymousApiForLogin.authenticationApi.startAuthentication(
@@ -160,12 +157,12 @@ const authProcessLogin = await anonymousApiForLogin.authenticationApi.startAuthe
 )
 //tech-doc: STOP HERE
 
-const validationCodeForLogin = (await getLastSMS(userPhoneNumber)).message!
+const validationCodeForLogin = (await getLastSMS(userPhoneNumber)).message
 console.log('SMS Validation code is ', validationCodeForLogin)
 
 //tech-doc: Complete login authentication process
 const loginResult = await anonymousApiForLogin.authenticationApi.completeAuthentication(
-  authProcessLogin!,
+  authProcessLogin,
   validationCodeForLogin,
 )
 

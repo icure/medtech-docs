@@ -2,7 +2,7 @@ import 'isomorphic-fetch'
 import { host, initLocalStorage, password, userName } from '../../../utils/index.mjs'
 import { webcrypto } from 'crypto'
 import { EHRLiteApi } from '@icure/ehr-lite-sdk'
-import { SimpleEHRLiteCryptoStrategies } from '@icure/ehr-lite-sdk/services/EHRLiteCryptoStrategies'
+import { SimpleEHRLiteCryptoStrategies } from '@icure/ehr-lite-sdk/services/EHRLiteCryptoStrategies.js'
 
 initLocalStorage()
 

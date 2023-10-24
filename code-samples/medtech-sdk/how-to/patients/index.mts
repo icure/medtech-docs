@@ -59,7 +59,7 @@ expect(updatedPatient.modified).to.be.greaterThan(updatedPatient.created)
 expect(updatedPatient.rev).to.not.equal(createdPatient.rev)
 
 //tech-doc: get a patient
-const patient = await api.patientApi.getPatient(updatedPatient.id!)
+const patient = await api.patientApi.getPatient(updatedPatient.id)
 //tech-doc: STOP HERE
 output({ patient })
 
@@ -69,7 +69,7 @@ expect(JSON.stringify(patient)).to.equal(JSON.stringify(updatedPatient))
 
 //tech-doc: get a list of patient
 const filter = await new PatientFilter(api)
-  .forDataOwner(loggedUser.healthcarePartyId!)
+  .forDataOwner(loggedUser.healthcarePartyId)
   .dateOfBirthBetween(28000101, 29000101)
   .build()
 

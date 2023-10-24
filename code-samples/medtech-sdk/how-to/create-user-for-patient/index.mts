@@ -9,7 +9,7 @@ import {
   output,
   specId,
 } from '../../../utils/index.mjs'
-import { hex2ua, sleep } from '@icure/api'
+import { MaintenanceTask, sleep } from '@icure/api'
 import { assert, expect } from 'chai'
 import { v4 as uuid } from 'uuid'
 import {
@@ -21,13 +21,14 @@ import {
   HealthcareElement,
   HealthcareElementFilter,
   Patient,
-  SimpleCryptoStrategies,
   Telecom,
 } from '@icure/medical-device-sdk'
 
 import { webcrypto } from 'crypto'
 import { mapOf, NotificationTypeEnum } from '@icure/typescript-common'
 import { getLastEmail } from '../../../utils/msgGtw.mjs'
+import { SimpleMedTechCryptoStrategies } from '@icure/medical-device-sdk/src/services/MedTechCryptoStrategies.js'
+import StatusEnum = MaintenanceTask.StatusEnum
 
 initLocalStorage()
 
@@ -102,7 +103,7 @@ const anonymousMedTechApi = await new AnonymousMedTechApi.Builder()
   .withCrypto(webcrypto as any)
   .withAuthProcessByEmailId(authProcessId)
   .withAuthProcessBySmsId(authProcessId)
-  .withCryptoStrategies(new SimpleCryptoStrategies([]))
+  .withCryptoStrategies(new SimpleMedTechCryptoStrategies([]))
   .build()
 
 const authenticationResult =
@@ -183,7 +184,7 @@ output({ notFoundHEs, foundHEs })
 const newNotifications = await apiAsDoctor.notificationApi.getPendingNotificationsAfter()
 const patientNotification = newNotifications.filter(
   (notification) =>
-    notification.type === NotificationTypeEnum.NEW_USER_OWN_DATA_ACCESS &&
+    notification.type === NotificationTypeEnum.NewUserOwnDataAccess &&
     notification.responsible === patient.id,
 )[0]
 //tech-doc: STOP HERE
@@ -193,13 +194,13 @@ expect(!!patientNotification).to.eq(true)
 //tech-doc: notification set ongoing
 const ongoingStatusUpdate = await apiAsDoctor.notificationApi.updateNotificationStatus(
   patientNotification,
-  'ongoing',
+  StatusEnum.Ongoing,
 )
 //tech-doc: STOP HERE
 output({ ongoingStatusUpdate })
 
 expect(!!ongoingStatusUpdate).to.eq(true)
-expect(ongoingStatusUpdate?.status).to.eq('ongoing')
+expect(ongoingStatusUpdate?.status).to.eq(MaintenanceTask.StatusEnum.Ongoing)
 
 //tech-doc: data sharing
 const sharedData = await apiAsDoctor.patientApi.giveAccessToAllDataOf(patient.id)
@@ -214,7 +215,7 @@ expect(sharedData.statuses.dataSamples?.modified).to.eq(1)
 //tech-doc: completed status
 const completedStatusUpdate = await apiAsDoctor.notificationApi.updateNotificationStatus(
   ongoingStatusUpdate,
-  'completed',
+  StatusEnum.Completed,
 )
 //tech-doc: STOP HERE
 output({ completedStatusUpdate })

@@ -5,7 +5,7 @@ import { webcrypto } from 'crypto'
 import * as process from 'process'
 import { expect } from 'chai'
 import { EHRLiteApi } from '@icure/ehr-lite-sdk'
-import { SimpleEHRLiteCryptoStrategies } from '@icure/ehr-lite-sdk/services/EHRLiteCryptoStrategies'
+import { SimpleEHRLiteCryptoStrategies } from '@icure/ehr-lite-sdk/services/EHRLiteCryptoStrategies.js'
 import { User } from '@icure/ehr-lite-sdk'
 
 initLocalStorage() //skip

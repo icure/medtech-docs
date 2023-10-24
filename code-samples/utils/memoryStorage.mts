@@ -49,4 +49,14 @@ export class MemoryKeyStorage implements KeyStorageFacade {
   ): Promise<void> {
     this.data.set(key, keyPair)
   }
+
+  async storePrivateKey(key: string, privateKey: JsonWebKey): Promise<void> {
+    const keys = this.data.get(key)
+    this.data.set(key, { ...keys, privateKey })
+  }
+
+  async storePublicKey(key: string, publicKey: JsonWebKey): Promise<void> {
+    const keys = this.data.get(key)
+    this.data.set(key, { ...keys, publicKey })
+  }
 }

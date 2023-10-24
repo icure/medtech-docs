@@ -24,7 +24,7 @@ const connection = (
   await api.observationApi.subscribeToEvents(
     ['CREATE'], // Event types to listen to
     await new ObservationFilter(api)
-      .forDataOwner(loggedUser.healthcarePartyId!)
+      .forDataOwner(loggedUser.healthcarePartyId)
       .byLabelCodeDateFilter('IC-TEST', 'TEST')
       .build(),
     async (ds) => {
@@ -50,7 +50,7 @@ output({ patient })
 
 //tech-doc: create a dataSample for websocket
 const dataSample = await api.observationApi.createOrModifyFor(
-  patient.id!,
+  patient.id,
   new Observation({
     tags: new Set([new CodingReference({ type: 'IC-TEST', code: 'TEST' })]),
     localContent: mapOf({ en: new LocalComponent({ stringValue: 'Hello world' }) }),

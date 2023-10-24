@@ -2,11 +2,10 @@ import 'isomorphic-fetch'
 import { NotificationFilter } from '@icure/medical-device-sdk'
 import { initLocalStorage, output } from '../../../utils/index.mjs'
 import { assert, expect } from 'chai'
-import {
-  initEHRLiteApi,
-  initPatientEHRLiteApi,
-} from '@site/code-samples/ehr-lite-sdk/utils/index.mjs'
+import { initEHRLiteApi, initPatientEHRLiteApi } from '../../utils/index.mjs'
 import { Notification, NotificationTypeEnum } from '@icure/typescript-common'
+import { MaintenanceTask } from '@icure/api'
+import StatusEnum = MaintenanceTask.StatusEnum
 
 initLocalStorage()
 
@@ -19,7 +18,7 @@ const practitioner = await api.practitionerApi.get(user.healthcarePartyId)
 //tech-doc: create a notification as patient
 const accessNotification = await patientApi.notificationApi.createOrModify(
   new Notification({
-    type: NotificationTypeEnum.KEY_PAIR_UPDATE,
+    type: NotificationTypeEnum.KeyPairUpdate,
   }),
   practitioner.id,
 )
@@ -27,12 +26,12 @@ const accessNotification = await patientApi.notificationApi.createOrModify(
 output({ accessNotification })
 
 expect(!!accessNotification).to.eq(true)
-expect(accessNotification.type).to.eq(NotificationTypeEnum.KEY_PAIR_UPDATE)
+expect(accessNotification.type).to.eq(NotificationTypeEnum.KeyPairUpdate)
 
 //tech-doc: creates a notification, then retrieves it
 const createdNotification = await patientApi.notificationApi.createOrModify(
   new Notification({
-    type: NotificationTypeEnum.OTHER,
+    type: NotificationTypeEnum.Other,
   }),
   practitioner.id,
 )
@@ -97,12 +96,15 @@ pendingNotifications.forEach((notification) => {
 //tech-doc: modifies a notification
 const newNotification = await api.notificationApi.createOrModify(
   new Notification({
-    type: NotificationTypeEnum.KEY_PAIR_UPDATE,
+    type: NotificationTypeEnum.KeyPairUpdate,
   }),
   practitioner.id,
 )
 
-const notificationToModify = new Notification({ ...newNotification, status: 'ongoing' })
+const notificationToModify = new Notification({
+  ...newNotification,
+  status: MaintenanceTask.StatusEnum.Ongoing,
+})
 
 const modifiedNotification = await api.notificationApi.createOrModify(
   notificationToModify,
@@ -120,13 +122,16 @@ expect(modifiedNotification.status).to.eq('ongoing')
 //tech-doc: updates notification status
 const notificationToUpdate = await api.notificationApi.createOrModify(
   new Notification({
-    type: NotificationTypeEnum.KEY_PAIR_UPDATE,
-    status: 'pending',
+    type: NotificationTypeEnum.KeyPairUpdate,
+    status: StatusEnum.Pending,
   }),
   practitioner.id,
 )
 
-const updatedNotification = await api.notificationApi.updateStatus(notificationToUpdate, 'ongoing')
+const updatedNotification = await api.notificationApi.updateStatus(
+  notificationToUpdate,
+  StatusEnum.Ongoing,
+)
 //tech-doc: STOP HERE
 output({ notificationToUpdate, updatedNotification })
 
@@ -138,7 +143,7 @@ expect(updatedNotification.status).to.eq('ongoing')
 //tech-doc: deletes a notification
 const notificationToDelete = await api.notificationApi.createOrModify(
   new Notification({
-    type: NotificationTypeEnum.KEY_PAIR_UPDATE,
+    type: NotificationTypeEnum.KeyPairUpdate,
   }),
   practitioner.id,
 )

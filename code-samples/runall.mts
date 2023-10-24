@@ -5,12 +5,21 @@ import { execSync } from 'child_process'
 import * as Process from 'process'
 import { getEnvVariables } from '@icure/test-setup/types.js'
 import { TestEnvironmentBuilder } from '@icure/test-setup/builder.js'
+import os from 'os'
+import { LocalStorage } from 'node-localstorage'
+import console from 'console'
+import { IccAuthApi, IccHcpartyApi, JwtAuthenticationProvider } from '@icure/api'
+import { DataOwnerTypeEnum, domainTypeTag } from '@icure/ehr-lite-sdk'
 
 const cwd = process.cwd()
 if (!cwd.endsWith('/code-samples')) {
   throw Error('Please run this script from the code samples directory')
 }
-function scanAndRunRecursively(dir: string, additionalEnvs: { [key: string]: string }) {
+function scanAndRunRecursively(
+  dir: string,
+  additionalEnvs: { [key: string]: string },
+  executeSingle: string,
+) {
   fs.readdir(dir, (err, files) => {
     if (err) {
       throw err
@@ -19,27 +28,30 @@ function scanAndRunRecursively(dir: string, additionalEnvs: { [key: string]: str
       const fullpath = `${dir}/${filename}`
       if (filename !== 'node_modules') {
         if (fs.lstatSync(fullpath).isDirectory()) {
-          scanAndRunRecursively(fullpath, additionalEnvs)
+          scanAndRunRecursively(fullpath, additionalEnvs, executeSingle)
         } else if (
           (filename === 'index.js' || filename === 'index.mjs') &&
           fs.lstatSync(fullpath).isFile()
         ) {
-          const relative = '.' + fullpath.slice(cwd.length)
-          console.log(`Running ${relative}`)
-          execSync(`node ${relative}`, {
-            env: {
-              ...Process.env,
-              ...additionalEnvs,
-              SCRIPT_ROOT: fullpath.replace(/(.+)\/.+/, '$1'),
-            },
-            stdio: 'inherit',
-          })
+          if (executeSingle === 'all' || fullpath.includes(`/${executeSingle}/`)) {
+            const relative = '.' + fullpath.slice(cwd.length)
+            console.log(`Running ${relative}`)
+            execSync(`node ${relative}`, {
+              env: {
+                ...Process.env,
+                ...additionalEnvs,
+                SCRIPT_ROOT: fullpath.replace(/(.+)\/.+/, '$1'),
+              },
+              stdio: 'inherit',
+            })
+          }
         }
       }
     })
   })
 }
 
+const singleTest = process.env.TEST ?? 'all'
 export const hcp1Username =
   process.env.ICURE_TS_TEST_HCP_USER ?? `hcp1.${new Date().getTime()}@icure.com`
 export const hcp2Username =
@@ -48,6 +60,10 @@ export const hcp3Username =
   process.env.ICURE_TS_TEST_HCP_3_USER ?? `hcp3.${new Date().getTime()}@icure.com`
 export const patUsername =
   process.env.ICURE_TS_TEST_PAT_USER ?? `patient.${new Date().getTime()}@icure.com`
+
+const tmp = os.tmpdir()
+;(global as any).localStorage = new LocalStorage(tmp, 5 * 1024 * 1024 * 1024)
+;(global as any).Storage = ''
 
 let env = getEnvVariables()
 const scratchDir = 'test/scratch'
@@ -77,6 +93,7 @@ const additionalEnvs = {
   AUTH_BY_EMAIL_HCP_PROCESS_ID: env.hcpAuthProcessId,
   AUTH_BY_EMAIL_PROCESS_ID: env.patAuthProcessId,
   AUTH_BY_SMS_HCP_PROCESS_ID: env.hcpAuthProcessId,
+  AUTH_BY_SMS_PRACTITIONER_PROCESS_ID: env.hcpAuthProcessId.replace('hcp', 'practitioner'),
   AUTH_BY_SMS_PROCESS_ID: env.patAuthProcessId,
   AUTH_PROCESS_ID: env.patAuthProcessId,
   ICURE_MSG_GTW_URL: env.msgGtwUrl,
@@ -96,8 +113,34 @@ const additionalEnvs = {
   ICURE_PATIENT_PRIV_KEY: env.dataOwnerDetails[patUsername].privateKey,
 }
 
+const api = new IccHcpartyApi(
+  env.iCureUrl,
+  {},
+  new JwtAuthenticationProvider(
+    new IccAuthApi(env.iCureUrl, {}),
+    env.masterHcp.user,
+    env.masterHcp.password,
+  ),
+)
+
+const practitionerStub = domainTypeTag(DataOwnerTypeEnum.PRACTITIONER)
+
+const masterHcp = await api.getHealthcareParty(env.masterHcp.dataOwnerId)
+await api.modifyHealthcareParty({
+  ...masterHcp,
+  tags: [practitionerStub],
+})
+
+for (const hcpId of [hcp1Username, hcp2Username, hcp3Username]) {
+  const hcp = await api.getHealthcareParty(env.dataOwnerDetails[hcpId].dataOwnerId)
+  await api.modifyHealthcareParty({
+    ...hcp,
+    tags: [practitionerStub],
+  })
+}
+
 ;['ehr-lite-sdk', 'medtech-sdk'].forEach((sdk) =>
   [`quick-start`, `how-to`, `explanation`, `tutorial`].forEach((module) => {
-    scanAndRunRecursively(`${cwd}/${sdk}/${module}`, additionalEnvs)
+    scanAndRunRecursively(`${cwd}/${sdk}/${module}`, additionalEnvs, singleTest)
   }),
 )

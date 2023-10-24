@@ -4,12 +4,12 @@ import { webcrypto } from 'crypto'
 import { initLocalStorage } from '../../../utils/index.mjs'
 import { MemoryStorage, MemoryKeyStorage } from '../../../utils/memoryStorage.mjs'
 import { AnonymousEHRLiteApi, EHRLiteApi } from '@icure/ehr-lite-sdk'
-import { SimpleEHRLiteCryptoStrategies } from '@icure/ehr-lite-sdk/services/EHRLiteCryptoStrategies'
+import { SimpleEHRLiteCryptoStrategies } from '@icure/ehr-lite-sdk/services/EHRLiteCryptoStrategies.js'
 
 initLocalStorage()
 
 const storage = new MemoryStorage()
-const keyStorage = new MemoryKeyStorage(storage)
+const keyStorage = new MemoryKeyStorage()
 const authProcessEmailId = 'AUTH_PROCESS_EMAIL_ID'
 const authProcessSMSId = 'AUTH_PROCESS_SMS_ID'
 

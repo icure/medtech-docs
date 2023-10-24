@@ -1,7 +1,8 @@
 import 'isomorphic-fetch'
 import { host, initLocalStorage, password, userName } from '../../../utils/index.mjs'
 import { webcrypto } from 'crypto'
-import { MedTechApi, SimpleCryptoStrategies } from '@icure/medical-device-sdk'
+import { MedTechApi } from '@icure/medical-device-sdk'
+import { SimpleMedTechCryptoStrategies } from '@icure/medical-device-sdk/src/services/MedTechCryptoStrategies.js'
 
 initLocalStorage()
 
@@ -11,6 +12,6 @@ const medtechApi = await new MedTechApi.Builder()
   .withUserName(userName)
   .withPassword(password)
   .withCrypto(webcrypto as any)
-  .withCryptoStrategies(new SimpleCryptoStrategies([]))
+  .withCryptoStrategies(new SimpleMedTechCryptoStrategies([]))
   .build()
 //tech-doc: end

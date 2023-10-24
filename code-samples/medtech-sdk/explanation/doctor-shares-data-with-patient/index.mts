@@ -16,6 +16,8 @@ import {
 import { expect } from 'chai'
 import { v4 as uuid } from 'uuid'
 import { mapOf, NotificationTypeEnum } from '@icure/typescript-common'
+import { MaintenanceTask } from '@icure/api'
+import StatusEnum = MaintenanceTask.StatusEnum
 
 initLocalStorage()
 
@@ -70,10 +72,10 @@ output({ healthcareElement, dataSample })
 const notification = await patientApi.notificationApi.createOrModifyNotification(
   new Notification({
     id: uuid(),
-    status: 'pending',
+    status: StatusEnum.Pending,
     author: patientUser.id,
     responsible: patientUser.patientId,
-    type: NotificationTypeEnum.OTHER,
+    type: NotificationTypeEnum.Other,
   }),
   user.healthcarePartyId,
 )
@@ -84,14 +86,17 @@ output({ notification })
 const newNotifications = await api.notificationApi.getPendingNotificationsAfter()
 const newPatientNotifications = newNotifications.filter(
   (notification) =>
-    notification.type === NotificationTypeEnum.OTHER &&
+    notification.type === NotificationTypeEnum.Other &&
     notification.responsible === patientUser.patientId,
 )
 
 if (!!newPatientNotifications && newPatientNotifications.length > 0) {
   await api.healthcareElementApi.giveAccessTo(healthcareElement, patient.id)
   await api.dataSampleApi.giveAccessTo(dataSample, patient.id)
-  await api.notificationApi.updateNotificationStatus(newPatientNotifications[0], 'completed')
+  await api.notificationApi.updateNotificationStatus(
+    newPatientNotifications[0],
+    StatusEnum.Completed,
+  )
 }
 //tech-doc: STOP HERE
 output({ newPatientNotifications })

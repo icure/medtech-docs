@@ -4,7 +4,7 @@ import { expect } from 'chai'
 import process from 'process'
 import { initEHRLiteApi, signUpUserUsingEmail } from '../../utils/index.mjs'
 import { Patient, PatientFilter } from '@icure/ehr-lite-sdk'
-import { GenderEnum } from '@icure/ehr-lite-sdk/models/enums/Gender.enum'
+import { GenderEnum } from '@icure/ehr-lite-sdk/models/enums/Gender.enum.js'
 import { FilterComposition } from '@icure/typescript-common'
 
 initLocalStorage()
@@ -17,10 +17,10 @@ const { api } = await signUpUserUsingEmail(
   msgGtwUrl,
   specId,
   process.env.AUTH_BY_EMAIL_HCP_PROCESS_ID,
-  masterUser.healthcarePartyId!,
+  masterUser.healthcarePartyId,
 )
 const user = await api.userApi.getLogged()
-const healthcarePartyId = user.healthcarePartyId!
+const healthcarePartyId = user.healthcarePartyId
 
 await api.patientApi.createOrModify(
   new Patient({
@@ -62,7 +62,7 @@ patientsForHcp.rows.forEach((p) => {
 
 //tech-doc: filter patients with implicit intersection filter
 const ageGenderFilter = await new PatientFilter(api)
-  .forDataOwner(user.healthcarePartyId!)
+  .forDataOwner(user.healthcarePartyId)
   .dateOfBirthBetween(19511211, 19520203)
   .byGenderEducationProfession('female')
   .build()
@@ -80,7 +80,7 @@ ageGenderPatients.rows.forEach((p) => {
 
 //tech-doc: filter patients with implicit intersection filter with sorting
 const ageGenderSortedFilter = await new PatientFilter(api)
-  .forDataOwner(user.healthcarePartyId!)
+  .forDataOwner(user.healthcarePartyId)
   .sort.dateOfBirthBetween(19391211, 19520203)
   .byGenderEducationProfession('female')
   .build()
@@ -93,12 +93,12 @@ expect(ageGenderSortedPatients.rows.length).to.be.greaterThan(0)
 
 //tech-doc: filter patients with explicit intersection filter
 const filterByAge = await new PatientFilter(api)
-  .forDataOwner(user.healthcarePartyId!)
+  .forDataOwner(user.healthcarePartyId)
   .dateOfBirthBetween(19511211, 19520203)
   .build()
 
 const filterByGender = await new PatientFilter(api)
-  .forDataOwner(user.healthcarePartyId!)
+  .forDataOwner(user.healthcarePartyId)
   .byGenderEducationProfession('female')
   .build()
 
@@ -117,12 +117,12 @@ ageGenderExplicitPatients.rows.forEach((p) => {
 
 //tech-doc: filter patients with union filter
 const filterFemales = await new PatientFilter(api)
-  .forDataOwner(user.healthcarePartyId!)
+  .forDataOwner(user.healthcarePartyId)
   .byGenderEducationProfession('female')
   .build()
 
 const filterIndeterminate = await new PatientFilter(api)
-  .forDataOwner(user.healthcarePartyId!)
+  .forDataOwner(user.healthcarePartyId)
   .byGenderEducationProfession('indeterminate')
   .build()
 

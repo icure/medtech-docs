@@ -14,8 +14,8 @@ import {
 } from '@icure/ehr-lite-sdk'
 //tech-doc: create your patient first medical data
 //tech-doc: Find your patient medical data following some criteria
-import { SimpleEHRLiteCryptoStrategies } from '@icure/ehr-lite-sdk/services/EHRLiteCryptoStrategies'
-import { GenderEnum } from '@icure/ehr-lite-sdk/models/enums/Gender.enum'
+import { SimpleEHRLiteCryptoStrategies } from '@icure/ehr-lite-sdk/services/EHRLiteCryptoStrategies.js'
+import { GenderEnum } from '@icure/ehr-lite-sdk/models/enums/Gender.enum.js'
 import { mapOf } from '@icure/typescript-common'
 
 initLocalStorage()
@@ -97,6 +97,7 @@ const johnData = await api.observationApi.filterBy(
     .build(),
 )
 
+console.log(johnData)
 expect(johnData.rows.length).to.be.equal(1)
 expect(johnData.rows[0].localContent['en'].numberValue).to.be.equal(92.5)
 //tech-doc: STOP HERE

@@ -1,12 +1,7 @@
 import os from 'os'
 import console from 'console'
 import { LocalStorage } from 'node-localstorage'
-import {
-  AnonymousMedTechApi,
-  MedTechApi,
-  SimpleMedTechCryptoStrategies,
-  User,
-} from '@icure/medical-device-sdk'
+import { AnonymousMedTechApi, MedTechApi, User } from '@icure/medical-device-sdk'
 import {
   authProcessId,
   host,
@@ -27,10 +22,10 @@ import { hex2ua, jwk2spki, pkcs8ToJwk } from '@icure/api'
 import { assert } from 'chai'
 import { v4 as uuid } from 'uuid'
 import { getLastEmail } from './msgGtw.mjs'
+import { SimpleMedTechCryptoStrategies } from '@icure/medical-device-sdk/src/services/MedTechCryptoStrategies.js'
 
 export function initLocalStorage() {
   const tmp = os.tmpdir()
-  console.log('Saving keys in ' + tmp)
   ;(global as any).localStorage = new LocalStorage(tmp, 5 * 1024 * 1024 * 1024)
   ;(global as any).Storage = ''
 }
@@ -111,7 +106,7 @@ export async function signUpUserUsingEmail(
     .withCrypto(webcrypto as any)
     .withAuthProcessByEmailId(authProcessId)
     .withAuthProcessBySmsId(authProcessId)
-    .withCryptoStrategies(new SimpleCryptoStrategies([]))
+    .withCryptoStrategies(new SimpleMedTechCryptoStrategies([]))
 
   const anonymousMedTechApi = await builder.build()
 
@@ -129,7 +124,7 @@ export async function signUpUserUsingEmail(
   )
 
   const emails = await getLastEmail(email)
-  const subjectCode = emails.subject!
+  const subjectCode = emails.subject
 
   const result = await anonymousMedTechApi.authenticationApi.completeAuthentication(
     process,
@@ -143,8 +138,8 @@ export async function signUpUserUsingEmail(
   const foundUser = await result.medTechApi.userApi.getLoggedUser()
 
   assert(result)
-  assert(result!.token != null)
-  assert(result!.userId != null)
+  assert(result.token !== null)
+  assert(result.userId !== null)
 
   return { api: result.medTechApi, user: foundUser, token: result.token }
 }

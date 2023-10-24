@@ -1,10 +1,11 @@
 //tech-doc: instantiate the api
 import 'isomorphic-fetch'
-import { MedTechApi, medTechApi, SimpleCryptoStrategies, User } from '@icure/medical-device-sdk'
+import { MedTechApi, User } from '@icure/medical-device-sdk'
 import { webcrypto } from 'crypto'
 import * as process from 'process'
 import { initLocalStorage, output } from '../../../utils/index.mjs'
 import { expect } from 'chai'
+import { SimpleMedTechCryptoStrategies } from '@icure/medical-device-sdk/src/services/MedTechCryptoStrategies.js'
 
 initLocalStorage() //skip
 
@@ -17,7 +18,7 @@ const api = await new MedTechApi.Builder()
   .withUserName(username)
   .withPassword(password)
   .withCrypto(webcrypto as any)
-  .withCryptoStrategies(new SimpleCryptoStrategies([]))
+  .withCryptoStrategies(new SimpleMedTechCryptoStrategies([]))
   .build()
 
 //tech-doc: marshal and unmarshal the currently logged user

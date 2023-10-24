@@ -1,10 +1,7 @@
 import 'isomorphic-fetch'
 import { initLocalStorage, output, patientId } from '../../../utils/index.mjs'
 import { expect } from 'chai'
-import {
-  initEHRLiteApi,
-  initPatientEHRLiteApi,
-} from '@site/code-samples/ehr-lite-sdk/utils/index.mjs'
+import { initEHRLiteApi, initPatientEHRLiteApi } from '../../utils/index.mjs'
 import { Condition, ConditionFilter, Patient } from '@icure/ehr-lite-sdk'
 import { CodingReference } from '@icure/medical-device-sdk'
 

@@ -2,7 +2,7 @@ import { sleep } from '@icure/api'
 import 'isomorphic-fetch'
 
 import { initLocalStorage, output } from '../../../utils/index.mjs'
-import { initEHRLiteApi } from '@site/code-samples/ehr-lite-sdk/utils/index.mjs'
+import { initEHRLiteApi } from '../../utils/index.mjs'
 import { LocalComponent, Observation, ObservationFilter, Patient } from '@icure/ehr-lite-sdk'
 import { CodingReference, mapOf } from '@icure/typescript-common'
 
@@ -24,7 +24,7 @@ output({ patient })
 
 //tech-doc: create a dataSample
 const createdObservation = await api.observationApi.createOrModifyFor(
-  patient.id!,
+  patient.id,
   new Observation({
     tags: new Set([new CodingReference({ type: 'IC-TEST', code: 'TEST' })]),
     localContent: mapOf({ en: new LocalComponent({ stringValue: 'Hello world' }) }),
@@ -35,13 +35,13 @@ const createdObservation = await api.observationApi.createOrModifyFor(
 output({ createdObservation: createdObservation })
 
 //tech-doc: get a dataSample
-const dataSample = await api.observationApi.get(createdObservation.id!)
+const dataSample = await api.observationApi.get(createdObservation.id)
 //tech-doc: STOP HERE
 output({ dataSample })
 
 //tech-doc: update a dataSample
 const updatedObservation = await api.observationApi.createOrModifyFor(
-  patient.id!,
+  patient.id,
   new Observation({
     ...createdObservation,
     // highlight-start
@@ -56,7 +56,7 @@ await sleep(5000)
 
 //tech-doc: get a list of dataSamples
 const filter = await new ObservationFilter(api)
-  .forDataOwner(loggedUser.healthcarePartyId!)
+  .forDataOwner(loggedUser.healthcarePartyId)
   .byLabelCodeDateFilter('IC-TEST', 'TEST')
   .forPatients([patient])
   .build()
@@ -67,7 +67,7 @@ output({ filteredObservations })
 
 //tech-doc: get a list of dataSamples ids
 const matchFilter = await new ObservationFilter(api)
-  .forDataOwner(loggedUser.healthcarePartyId!)
+  .forDataOwner(loggedUser.healthcarePartyId)
   .forPatients([patient])
   .build()
 
@@ -77,13 +77,13 @@ output({ matchedObservationIds })
 
 // THIS SHOULD WORK, BUT DOESN'T (We need to merge the PR about RSocket)
 //tech-doc: delete a dataSample
-const deletedObservation = await api.observationApi.delete(updatedObservation.id!)
+const deletedObservation = await api.observationApi.delete(updatedObservation.id)
 //tech-doc: STOP HERE
 output({ deletedObservation })
 
 //tech-doc: filter builder
 const dataSampleFilter = new ObservationFilter(api)
-  .forDataOwner(loggedUser.healthcarePartyId!)
+  .forDataOwner(loggedUser.healthcarePartyId)
   .byLabelCodeDateFilter('IC-TEST', 'TEST')
   .forPatients([patient])
   .build()
