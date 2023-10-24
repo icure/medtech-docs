@@ -11,6 +11,7 @@ import {
   Patient,
   CodingReference,
   ObservationFilter,
+  Component,
 } from '@icure/ehr-lite-sdk'
 //tech-doc: create your patient first medical data
 //tech-doc: Find your patient medical data following some criteria
@@ -77,12 +78,12 @@ output({ johnSnow })
 const createdData = await api.observationApi.createOrModifyManyFor(johnSnow.id, [
   new Observation({
     tags: new Set([new CodingReference({ type: 'LOINC', code: '29463-7', version: '2' })]),
-    localContent: mapOf({ en: new LocalComponent({ numberValue: 92.5 }) }),
+    component: new Component({ numberValue: 92.5 }),
     valueDate: 20220203111034,
   }),
   new Observation({
     tags: new Set([new CodingReference({ type: 'LOINC', code: '8302-2', version: '2' })]),
-    localContent: mapOf({ en: new LocalComponent({ numberValue: 187 }) }),
+    component: new Component({ numberValue: 187 }),
     valueDate: 20220203111034,
   }),
 ])
@@ -97,15 +98,14 @@ const johnData = await api.observationApi.filterBy(
     .build(),
 )
 
-console.log(johnData)
 expect(johnData.rows.length).to.be.equal(1)
-expect(johnData.rows[0].localContent['en'].numberValue).to.be.equal(92.5)
+expect(johnData.rows[0].component.numberValue).to.be.equal(92.5)
 //tech-doc: STOP HERE
 output({ johnData })
 
 //tech-doc: get specific medical data information
 const johnWeight = await api.observationApi.get(johnData.rows[0].id)
 expect(johnData.rows[0].id).to.be.equal(johnWeight.id)
-expect(johnWeight.localContent['en'].numberValue).to.be.equal(92.5)
+expect(johnWeight.component.numberValue).to.be.equal(92.5)
 //tech-doc: STOP HERE
 output({ johnWeight })

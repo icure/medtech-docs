@@ -1,5 +1,6 @@
 import 'isomorphic-fetch'
-import { initEHRLiteApi, initPatientEHRLiteApi, patientId } from '../../utils/index.mjs'
+import { initEHRLiteApi, initPatientEHRLiteApi } from '../../utils/index.mjs'
+import { patientId } from '../../../utils/index.mjs'
 import { expect } from 'chai'
 import {
   CodingReference,

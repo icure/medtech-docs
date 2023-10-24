@@ -100,7 +100,7 @@ const johnData = await api.dataSampleApi.filterDataSample(
 )
 
 expect(johnData.rows.length).to.be.equal(1)
-expect(johnData.rows[0].content['en'].numberValue).to.be.equal(92.5)
+expect(johnData.rows[0].content.get('en').numberValue).to.be.equal(92.5)
 expect(johnData.rows[0].comment).to.be.equal('Weight')
 //tech-doc: STOP HERE
 output({ johnData })
@@ -108,7 +108,7 @@ output({ johnData })
 //tech-doc: get specific medical data information
 const johnWeight = await api.dataSampleApi.getDataSample(johnData.rows[0].id)
 expect(johnData.rows[0].id).to.be.equal(johnWeight.id)
-expect(johnWeight.content['en'].numberValue).to.be.equal(92.5)
+expect(johnWeight.content.get('en').numberValue).to.be.equal(92.5)
 expect(johnWeight.comment).to.be.equal('Weight')
 //tech-doc: STOP HERE
 output({ johnWeight })

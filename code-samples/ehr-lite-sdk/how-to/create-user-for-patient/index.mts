@@ -1,6 +1,7 @@
 import 'isomorphic-fetch'
 
-import { authProcessId, host, initEHRLiteApi, msgGtwUrl, specId } from '../../utils/index.mjs'
+import { initEHRLiteApi } from '../../utils/index.mjs'
+import { host, authProcessId, msgGtwUrl, specId } from '../../../utils/index.mjs'
 import { initLocalStorage, output } from '../../../utils/index.mjs'
 import {
   AnonymousEHRLiteApi,

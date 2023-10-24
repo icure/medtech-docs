@@ -1,6 +1,7 @@
 import 'isomorphic-fetch'
 import { CodingReference, mapOf } from '@icure/typescript-common'
-import { initEHRLiteApi, patientId } from '../../utils/index.mjs'
+import { initEHRLiteApi } from '../../utils/index.mjs'
+import { patientId } from '../../../utils/index.mjs'
 import { expect } from 'chai'
 import { initLocalStorage, output } from '../../../utils/index.mjs'
 import { Condition, LocalComponent, Observation } from '@icure/ehr-lite-sdk'

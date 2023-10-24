@@ -1,5 +1,5 @@
 import 'isomorphic-fetch'
-import { host, msgGtwUrl, password, specId, userName } from '../../utils/index.mjs'
+import { host, msgGtwUrl, password, specId, userName } from '../../../utils/index.mjs'
 import { webcrypto } from 'crypto'
 import { initLocalStorage } from '../../../utils/index.mjs'
 import { MemoryStorage, MemoryKeyStorage } from '../../../utils/memoryStorage.mjs'

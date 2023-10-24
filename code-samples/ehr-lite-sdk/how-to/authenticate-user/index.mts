@@ -1,5 +1,6 @@
 import 'isomorphic-fetch'
-import { initEHRLiteApi, password } from '../../utils/index.mjs'
+import { initEHRLiteApi } from '../../utils/index.mjs'
+import { password } from '../../../utils/index.mjs'
 import { output } from '../../../utils/index.mjs'
 import { webcrypto } from 'crypto'
 import * as process from 'process'
@@ -241,8 +242,7 @@ cachedInfo['login'] = undefined
 cachedInfo['token'] = undefined
 cachedInfo['userId'] = undefined
 cachedInfo['groupId'] = undefined
-cachedInfo['pubKey'] = undefined
-cachedInfo['privKey'] = undefined
+cachedKeys = []
 await memoryKeyStorage.clear()
 
 // User lost his key and logs back
@@ -282,7 +282,7 @@ saveSecurely(
   loginAuthResult.keyPairs,
 )
 
-//tech-doc: User can create new data after loosing their key
+//tech-doc: User can create new data after losing their key
 const newlyCreatedObservation = await loginAuthResult.api.observationApi.createOrModifyFor(
   foundUser.patientId,
   new Observation({
@@ -296,10 +296,9 @@ output({ newlyCreatedObservation })
 
 expect(newlyCreatedObservation).to.not.be.undefined //skip
 
-// Can access previous ones but cannot decrypt them
-const oldCreatedObservation = await loginAuthResult.api.observationApi.get(createdObservation.id)
-expect(Object.entries(oldCreatedObservation.localContent ?? {})).to.be.empty
-
+// Cannot access previous ones
+const retrieveOldObservationPromise = loginAuthResult.api.observationApi.get(createdObservation.id)
+await expect(retrieveOldObservationPromise).to.be.rejected
 // When the delegate gave him access back
 // Hcp checks dedicated notification
 const hcpApi = await initEHRLiteApi(true)
@@ -342,10 +341,10 @@ await hcpApi.dataOwnerApi.giveAccessBackTo(
 //tech-doc: STOP HERE
 output({ daenaerysPatientId, daenaerysPatientPubKey })
 
-// Then
-const updatedApi = await new EHRLiteApi.Builder(loginAuthResult.api).build()
+// Then after reloading the user key cache
+await loginAuthResult.api.cryptoApi.forceReload()
 
-const previousObservation = await updatedApi.observationApi.get(createdObservation.id)
+const previousObservation = await loginAuthResult.api.observationApi.get(createdObservation.id)
 expect(previousObservation).to.not.be.undefined //skip
 //tech-doc: STOP HERE
 

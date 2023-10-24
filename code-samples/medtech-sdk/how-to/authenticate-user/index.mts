@@ -21,6 +21,7 @@ import { SimpleMedTechCryptoStrategies } from '@icure/medical-device-sdk/src/ser
 chaiUse(chaiAsPromised)
 
 const cachedInfo = {} as { [key: string]: string }
+let cachedKeys: { privateKey: string; publicKey: string }[] = []
 const uniqueId = Math.random().toString(36).substring(4)
 const userEmail = `${uniqueId}-dt@got.com`
 
@@ -36,21 +37,18 @@ function saveSecurely(
   cachedInfo['token'] = userToken
   cachedInfo['userId'] = userId
   cachedInfo['groupId'] = groupId
-  cachedInfo['pubKey'] = keyPairs[0].publicKey
-  cachedInfo['privKey'] = keyPairs[0].privateKey
+  cachedKeys = keyPairs
 }
 
 function getBackCredentials(): {
-  login?: string
+  login: string
   token?: string
-  pubKey?: string
-  privKey?: string
+  keys: { privateKey: string; publicKey: string }[]
 } {
   return {
     login: cachedInfo['login'],
     token: cachedInfo['token'],
-    pubKey: cachedInfo['pubKey'],
-    privKey: cachedInfo['privKey'],
+    keys: cachedKeys,
   }
 }
 
@@ -169,7 +167,7 @@ output({ createdDataSample })
 //tech-doc: Get back credentials
 // getBackCredentials does not exist: Use your own way of storing the following data securely
 // One option is to get them back from the localStorage
-const { login, token, pubKey, privKey } = getBackCredentials()
+const { login, token, keys } = getBackCredentials()
 //tech-doc: STOP HERE
 
 //tech-doc: Instantiate back a MedTechApi
@@ -178,9 +176,7 @@ const reInstantiatedApi = await new MedTechApi.Builder()
   .withUserName(login)
   .withPassword(token)
   .withCrypto(webcrypto as any)
-  .withCryptoStrategies(
-    new SimpleMedTechCryptoStrategies([{ publicKey: pubKey, privateKey: privKey }]),
-  )
+  .withCryptoStrategies(new SimpleMedTechCryptoStrategies(keys))
   .withStorage(memoryStorage) //skip
   .withKeyStorage(memoryKeyStorage) //skip
   .build()
@@ -254,8 +250,7 @@ cachedInfo['login'] = undefined
 cachedInfo['token'] = undefined
 cachedInfo['userId'] = undefined
 cachedInfo['groupId'] = undefined
-cachedInfo['pubKey'] = undefined
-cachedInfo['privKey'] = undefined
+cachedKeys = []
 await memoryKeyStorage.clear()
 
 // User lost his key and logs back
@@ -295,7 +290,7 @@ saveSecurely(
   loginAuthResult.keyPairs,
 )
 
-//tech-doc: User can create new data after loosing their key
+//tech-doc: User can create new data after losing their key
 const newlyCreatedDataSample =
   await loginAuthResult.medTechApi.dataSampleApi.createOrModifyDataSampleFor(
     foundUser.patientId,
@@ -311,11 +306,9 @@ output({ newlyCreatedDataSample })
 
 expect(newlyCreatedDataSample).to.not.be.undefined //skip
 
-// Can access previous ones but cannot decrypt them
-const oldCreatedDataSample = await loginAuthResult.medTechApi.dataSampleApi.getDataSample(
-  createdDataSample.id!,
-)
-expect(Object.entries(oldCreatedDataSample.content ?? {})).to.be.empty
+// Cannot access previous ones
+const retrieveOldObservationPromise = loginAuthResult.api.dataSampleApi.get(createdDataSample.id)
+await expect(retrieveOldObservationPromise).to.be.rejected
 
 // When the delegate gave him access back
 // Hcp checks dedicated notification

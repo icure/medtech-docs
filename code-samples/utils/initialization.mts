@@ -1,5 +1,4 @@
 import os from 'os'
-import console from 'console'
 import { LocalStorage } from 'node-localstorage'
 import { AnonymousMedTechApi, MedTechApi, User } from '@icure/medical-device-sdk'
 import {

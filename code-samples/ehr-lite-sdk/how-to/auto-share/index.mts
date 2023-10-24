@@ -1,12 +1,6 @@
 import 'isomorphic-fetch'
-import {
-  userName,
-  userName2,
-  patientUserName,
-  initEHRLiteApi,
-  initEHRLiteApi2,
-  initPatientEHRLiteApi,
-} from '../../utils/index.mjs'
+import { initEHRLiteApi, initEHRLiteApi2, initPatientEHRLiteApi } from '../../utils/index.mjs'
+import { userName, userName2, patientUserName } from '../../../utils/index.mjs'
 import { expect, use as chaiUse } from 'chai'
 import chaiAsPromised from 'chai-as-promised'
 import { initLocalStorage, output } from '../../../utils/index.mjs'
@@ -15,9 +9,13 @@ import { CodingReference, mapOf } from '@icure/typescript-common'
 chaiUse(chaiAsPromised)
 
 initLocalStorage()
+console.log('Storage')
 const hcp1Api = await initEHRLiteApi(true)
-const hcp2Api = await initEHRLiteApi2(true)
+console.log('HCP1')
 const pApi = await initPatientEHRLiteApi(true)
+console.log('PAT')
+const hcp2Api = await initEHRLiteApi2(true)
+console.log('HCP2')
 
 const hcp1User = await hcp1Api.userApi.getLogged()
 const hcp2User = await hcp2Api.userApi.getLogged()

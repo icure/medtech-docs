@@ -1,5 +1,5 @@
 import 'isomorphic-fetch'
-import { password } from '../../utils/index.mjs'
+import { password } from '../../../utils/index.mjs'
 import { webcrypto } from 'crypto'
 import * as process from 'process'
 import { getLastSMS } from '../../../utils/msgGtw.mjs'
