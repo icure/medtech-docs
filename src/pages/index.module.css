@@ -67,6 +67,13 @@ $xxl: 1400px;
   line-height: 30px;
 }
 
+@media screen and (max-width: 992px) {
+  .homePage__intro p  {
+    font-size: 14px;
+    line-height: 21px;
+  }
+}
+
 /* mobile */
 @media screen and (max-width: 576px) {
   .homePage__intro {
@@ -96,10 +103,6 @@ $xxl: 1400px;
 @media screen and (max-width: 992px) {
   .homePage__intro {
     gap: 16px;
-  }
-  .homePage__intro p {
-    font-size: 14px;
-    line-height: 24px;
   }
 }
 
@@ -175,6 +178,7 @@ $xxl: 1400px;
 
   .homePage__appsCard__contentWrap {
     width: 100%;
+    max-width: none;
     flex-direction: column;
     padding-top: 24px;
   }
@@ -185,8 +189,6 @@ $xxl: 1400px;
   }
 
   .homePage__appsCard__content p {
-    font-size: 14px;
-    line-height: 21px;
     margin-bottom: 12px;
   }
 
@@ -240,12 +242,6 @@ $xxl: 1400px;
   font-weight: 600;
 }
 
-.homePage__docsContainerReverse {
-  flex-direction: row-reverse;
-  padding-bottom: 0;
-  padding-top: 56px;
-}
-
 /* tablet */
 @media screen and (max-width: 992px) {
   .homePage__docsCard {
@@ -256,9 +252,7 @@ $xxl: 1400px;
   }
 
   .homePage__docsCard__content p {
-    font-size: 14px;
     margin-bottom: 12px;
-    line-height: 21px;
   }
 
   .homePage__docsCard a {
