@@ -43,17 +43,17 @@ Each user can be related to a Patient, a Healthcare Professional, or a Medical D
 ## Medical Data Entities
 This section describes the different medical data types managed by the iCure platform.
 
-### [{{Service}}](/{{sdk}}/explanations/data-model/data-sample)
+### [{{Service}}](/{{sdk}}/explanations/data-model/service)
 A {{Service}} is a piece of medical information acquired at a certain point of time.
 It can be created by a Data Owner, and its encrypted data can be shared with other Data Owners.
 
-### [{{{{HealthcareElementNoSpace}}}}](/{{sdk}}/explanations/data-model/healthcare-element)
-A {{{{HealthcareElementNoSpace}}}} is a piece of medical information that can provide a context to a set of medical measurements.
+### [{{HealthcareElement}}](/{{sdk}}/explanations/data-model/healthcare-element)
+A {{HealthcareElementNoSpace}} is a piece of medical information that can provide a context to a set of medical measurements.
 It can be associated to Patients and {{Services}} and, as such, it is encrypted.
 
 ### [Coding](/{{sdk}}/explanations/data-model/coding)
 A Coding represents a code of a [Terminology](/{{sdk}}/glossary#terminologies) (such as SNOMED CT or LOINC).
-It is used by {{Services}} and {{{{{{HealthcareElementNoSpace}}sNoSpace}}}} to describe the different pieces of medical information.
+It is used by {{Services}} and {{HealthcareElementNoSpace}} to describe the different pieces of medical information.
 
 ## Support Entities
 This section describes all the entities used in the several data management processes of the iCure platform.

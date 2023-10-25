@@ -10,7 +10,7 @@ function walk(src, dst, view) {
         if (fs.statSync(fullPathSrc).isDirectory()) {
             walk(fullPathSrc, fullPathDst, view)
         } else {
-            if (f.endsWith(".md")) {
+            if (f.endsWith(".md")||f.endsWith(".mdx")) {
                 try {
                     console.log("Generating file", fullPathSrc)
                     fs.writeFileSync(fullPathDst, Mustache.render(fs.readFileSync(fullPathSrc, {
@@ -42,9 +42,10 @@ walk("./sdks", "./medtech-sdk", {
     ...flavours('serviceNoSpace', 'dataSample'),
     ...flavours('hcpNoSpace', 'healthcareProfessional'),
     ...flavours('healthcareElementNoSpace', 'healthcareElement'),
-    ...flavours('sdk', 'medtech-sdk'),
+    sdk: 'medtech-sdk',
     ...flavours('sdkName', 'medtech sdk'),
     SdkName: 'Medtech SDK',
+    CodeSdkName: 'MedTech',
     medtech: true
 });
 
@@ -52,8 +53,9 @@ walk("./sdks", "./ehr-lite-sdk", {
     ...flavours('service', 'observation'),
     ...flavours('hcp', 'practitioner'),
     ...flavours('healthcareElement', 'condition'),
-    ...flavours('sdk', 'ehr-lite-sdk'),
+    sdk: 'ehr-lite-sdk',
     ...flavours('sdkName', 'ehr lite sdk'),
     SdkName: 'Ehr Lite SDK',
+    CodeSdkName: 'EhrLite',
     ehrlite: true
 });

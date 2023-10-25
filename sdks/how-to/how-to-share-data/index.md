@@ -4,13 +4,75 @@ slug: how-to-share-data
 
 # Sharing data between data owners
 
-In iCure it is possible to allow multiple data owners to access specific instances of `Patient`, `DataSample` and 
-`HealthcareElement`.
+One of the core features of iCure is data sharing. 
 
-By default, the data owner who creates an entity is the only one that has access to it. 
-However, it is possible for the creator to share the entity with others by using the `giveAccessTo` methods in the 
-respective apis.
+By default, patients information and medical data (`Patient`, `DataSample` and `HealthcareElement`) are accessible only
+to the data owner who created the data.
+
+However, it is possible for a data owner to share an entity he created with any other data owner (`delegate`) by using 
+the `giveAccessTo` method of the api for that entity.
 This allows selected data owners to retrieve the entity and decrypt its content.
+
+:::note
+
+Admins may be able to access some data even if it is not shared with them, but they will not be able to read the 
+encrypted content of the entity.
+
+:::
+
+## Entity-level sharing
+
+When you share an iCure entity with a delegate data owner, you are giving them access only to that specific entity, and 
+not to any other entity that could be related to it. A data owner can share each entity he creates with a completely 
+different set of delegate data owners.
+
+For example if Dr Bob visits patient Charlie and creates two `DataSample`s *md1* and *md2*, he can decide to share
+only *md1* with Dr Alice and not *md2* nor the `Patient` information of Charlie.
+
+In some applications you may need to always share data created by a data owner with another specific data owner (for
+example a patient may want to share all their data with their doctor). iCure provides a way to do this using the
+[automatic sharing feature](how-to-share-data-automatically.md).
+
+## Modifying shared data
+
+A data owner can modify any entity that has been shared with him through the appropriate entity-specific api methods, 
+and the other data owners with access to the original entity will be able to see the changes. 
+There is no need to re-share the entity after a modification.
+
+## Recovering of shared data
+
+`Patient`s, `HealthcareElement`s and `DataSample`s are encrypted end-to-end.
+This means that if a data owner loses their private key they will not be able to access the encrypted entities
+anymore, and not even iCure can help to recover this data, since iCure can never access the encrypted content of
+entities.
+There are various mechanisms in place to mitigate this issue, and data sharing is central to one of them.
+
+If Alice has shared an entity with Bob both Alice and Bob can access the encrypted content of the entity.
+This means that if Alice loses her private key she can ask Bob to share with her all entities she shared with him in
+the past, allowing her to regain access to these entities ([related how-to](../how-to-authenticate-a-user/my-user-lost-their-key.md)).
+
+On the contrary, if Alice never shared the entity with any other data owner and she loses her private key, no one will
+be able to access the content of the entity anymore.
+
+You can learn more about how this and other data recovery methods in iCure work by heading to the
+[Explanations](../../explanations)
+
+## Non-revokeable sharing
+
+Currently, the iCure SDK does not allow to easily revoke access to a shared entity, so you will have to be careful when 
+sharing data and ensure that you're actually sharing data with the people you intend to.
+
+The only way you can achieve something similar to revoking access to an entity is by the following process:
+
+1. Create a copy of the entity
+2. Share the copy with all delegates of the original entity EXCEPT for the data owner for which you want to revoke access
+3. Delete the original entity
+
+This will ensure that data owner with revoked access will not be able to access the entity anymore and will not be able
+to read any updated version of the entity. However, you should still consider the last version before the revoke as
+compromised, since the data owner may have already read the entity before his access was revoked.
+
+## Examples
 
 :::note
 
@@ -21,7 +83,7 @@ The api we use are `hcp1Api` and `hcp2Api` to act as two different healthcare pr
 
 :::
 
-## Sharing data with other users
+### Sharing data with other users
 
 First create a new entity, in this example `hcp1` creates a patient:
 
@@ -72,7 +134,7 @@ relative.
 
 :::
 
-## Sharing data created by someone else
+### Sharing data created by someone else
 
 Users are allowed to share any entity to which they have access, even if they were not the original creators.
 In this example `hcp1` creates a {{healthcareElement}} and shares it with `p`.
@@ -115,7 +177,7 @@ await pApi.healthcareElementApi.giveAccessTo(
 )
 ```
 
-## Sharing data as a patient
+### Sharing data as a patient
 
 Patient data owners can create entities and share them with other data owners.
 In this example `p` creates a {{service}} and shares it with `hcp1`, then `hcp1` shares it also with `hcp2`. 
@@ -142,18 +204,3 @@ await hcp1Api.dataSampleApi.giveAccessTo(
   hcp1Api.dataOwnerApi.getDataOwnerIdOf(hcp2User),
 )
 ```
-
-## Recovering shared data
-
-`Patient`s, `HealthcareElement`s and `DataSample`s are encrypted end-to-end. 
-This means that if a data owner loses their private key they will not be able to access the encrypted entities 
-anymore, and not even iCure can help to recover this data, since iCure can never access the encrypted content of 
-entities.
-There are various mechanisms in place to mitigate this issue, and data sharing is central to one of them. 
-
-If Alice has shared an entity with Bob both Alice and Bob can access the encrypted content of the entity.
-This means that if Alice loses her private key she can ask Bob to share with her all entities she shared with him in
-the past, allowing her to regain access to these entities.
-
-You can learn more about how this and other data recovery methods in iCure work by heading to the 
-[Explanations](../explanations)

@@ -72,7 +72,7 @@ are their details :
 | authProcessByEmailId | Identifier of the authentication by email process. See next section to know more about it        |
 | authProcessBySmsId   | Identifier of the authentication by SMS process. See next section to know more about it          |
 
-You can learn about all the options you have when instantiating the MedTech API and the AnonymousMedTech API in the [Instantiation How-To](/{{sdk}}/how-to/how-to-instantiate-the-medtech-sdk). 
+You can learn about all the options you have when instantiating the MedTech API and the AnonymousMedTech API in the [Instantiation How-To](/{{sdk}}/how-to/how-to-instantiate-the-sdk). 
 
 Since Daenaerys is a patient, you will have to provide the `patientAuthProcessByEmailId` as a 
 authProcessByEmailId or `patientAuthProcessBySmsId` as a authProcessBySmsId. 
@@ -148,7 +148,7 @@ This `masterHcpId` is optional for {{hcps}} registration but mandatory for patie
 
 It's good to know that after their registration, user will share all their future data with this responsible. The user may decide to stop
 sharing their data with this responsible by using the `userApi.stopSharingDataWith` service. For more information, 
-go to the [How-to: Automatically share data with other data owners](../how-to-share-data-automatically).
+go to the [How-to: Automatically share data with other data owners](../how-to-share-data/how-to-share-data-automatically.md).
 
 :::
 
