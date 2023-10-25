@@ -156,13 +156,12 @@ export default function Home(): JSX.Element {
           <section className={`${styles.homePage__intro} ${styles.container}`}>
             <h1>{`${siteConfig.title}`}</h1>
             <p>
-              iCure is a <strong>SaaS</strong> solution that helps you launch your fully compliant medical solution faster and cheaper... in months, not years.
-              iCure ensures the <strong>privacy</strong> of your patient <strong>medical data</strong> thanks to{' '}
-              <strong>trustable end-to-end encryption</strong>, that empowers your users to decide who can access their data.
+              iCure is a <strong>SaaS</strong> solution that helps you launch your fully compliant medical solution faster and cheaper in months, not years.
+              iCure ensures the <strong>privacy</strong> of your patient <strong>medical data</strong> thanks to <strong>trustable end-to-end encryption</strong>, that empowers your users to decide who can access their data.
             </p>
             <p>
-              iCure accelerates your development cycle, simplifies secure sharing of medical information and makes your app standards ready.
-              Whether you need to speak FHIR, LOINC, SNOMED CT our IHE XDS or whether you do not even know what those acronyms mean, we make sure that your project will thrive in an interoperable Healthcare ICT environment.
+              iCure <strong>accelerates</strong> development cycle, <strong>simplifies</strong> secure sharing of medical information and makes the app <strong>standards ready. </strong>
+              Whether you need to speak FHIR, LOINC, SNOMED CT, IHE XDS or whether you do not even know what those acronyms mean, we make sure that your solution will thrive in an <strong>interoperable</strong> Healthcare ICT environment.
             </p>
           </section>
 
@@ -188,14 +187,14 @@ export default function Home(): JSX.Element {
           {DocsList().map((element, index) => {
             const { title, description, button } = element
             return (
-              <section key={`docs-section-${index}`} className={`${styles.homePage__docsCard} ${styles.container} ${index % 2 !== 0 && styles.homePage__docsContainerReverse}`}>
+              <section key={`docs-section-${index}`} className={`${styles.homePage__docsCard} ${styles.container} `}>
                 <div className={styles.homePage__docsCard__content}>
                   <h2>{title}</h2>
                   <p>{description}</p>
                 </div>
-                <Link to={button.link} className={styles.primaryBtn}>
+                <a href={button.link} >
                   {button.title}
-                </Link>
+                </a>
               </section>
             )
           })}
