@@ -98,9 +98,11 @@ if (!!newPatientNotifications && newPatientNotifications.length > 0) {
     StatusEnum.Completed,
   )
 }
+
+await patientApi.cryptoApi.forceReload()
+const fetchedHE = await patientApi.healthcareElementApi.getHealthcareElement(healthcareElement.id)
+const fetchedDS = await patientApi.dataSampleApi.getDataSample(dataSample.id)
 //tech-doc: STOP HERE
 output({ newPatientNotifications })
-const fetchedHE = await patientApi.healthcareElementApi.getHealthcareElement(healthcareElement.id)
 expect(fetchedHE.id).to.eq(healthcareElement.id)
-const fetchedDS = await patientApi.dataSampleApi.getDataSample(dataSample.id)
 expect(fetchedDS.id).to.eq(dataSample.id)

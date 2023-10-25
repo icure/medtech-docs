@@ -12,14 +12,17 @@ import {
   msgGtwUrl,
   password,
   password2,
+  password3,
   patientPassword,
   patientPrivKey,
   patientUserName,
   privKey,
   privKey2,
+  privKey3,
   specId,
   userName,
   userName2,
+  userName3,
 } from '../../utils/endpoint.mjs'
 
 export async function initEHRLiteApi(initCrypto?: boolean): Promise<EHRLiteApi> {
@@ -28,6 +31,10 @@ export async function initEHRLiteApi(initCrypto?: boolean): Promise<EHRLiteApi> 
 
 export async function initEHRLiteApi2(initCrypto?: boolean): Promise<EHRLiteApi> {
   return await initAnyEHRApi(userName2, password2, privKey2, initCrypto)
+}
+
+export async function initEHRLiteApi3(initCrypto?: boolean): Promise<EHRLiteApi> {
+  return await initAnyEHRApi(userName3, password3, privKey3, initCrypto)
 }
 
 export async function initPatientEHRLiteApi(initCrypto?: boolean): Promise<EHRLiteApi> {

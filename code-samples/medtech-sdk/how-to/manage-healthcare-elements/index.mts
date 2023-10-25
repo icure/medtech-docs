@@ -1,6 +1,6 @@
 import 'isomorphic-fetch'
 import {
-  CodingReference,
+  CodingReference, DataSample,
   HealthcareElement,
   HealthcareElementFilter,
   Patient,
@@ -13,6 +13,7 @@ import {
   output,
 } from '../../../utils/index.mjs'
 import { expect } from 'chai'
+import { Condition } from '@icure/ehr-lite-sdk';
 
 initLocalStorage()
 
@@ -127,6 +128,7 @@ output({ sharedHealthcareElement })
 
 expect(!!sharedHealthcareElement).to.eq(true)
 expect(sharedHealthcareElement.id).to.eq(healthcareElement.id)
+await patientApi.cryptoApi.forceReload()
 const retrievedHE = await patientApi.healthcareElementApi.getHealthcareElement(healthcareElement.id)
 expect(retrievedHE.id).to.eq(healthcareElement.id)
 
@@ -157,7 +159,6 @@ const modificationResult = await api.healthcareElementApi.createOrModifyHealthca
   modifiedHealthcareElement,
   patient.id,
 )
-console.log(modificationResult)
 //tech-doc: STOP HERE
 output({ yetAnotherHealthcareElement, modifiedHealthcareElement, modificationResult })
 expect(modificationResult.id).to.eq(yetAnotherHealthcareElement.id)
@@ -178,6 +179,16 @@ await api.healthcareElementApi.createOrModifyHealthcareElement(
   }),
   existingPatient.id,
 )
+
+for (let i = 0; i < 10; i++) {
+  await api.healthcareElementApi.createOrModifyHealthcareElement(
+    new HealthcareElement({
+      description: `Healthcare Element ${i}`,
+      openingDate: new Date('2019-10-12').getTime(),
+    }),
+    patient.id,
+  )
+}
 
 //tech-doc: create HE filter
 const healthcareElementFilter = await new HealthcareElementFilter(api)
