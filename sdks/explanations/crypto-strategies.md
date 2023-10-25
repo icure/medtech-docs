@@ -68,23 +68,23 @@ link in the medical data.
 But why do we need to hide the link between medical data and patients, if the medical data itself is encrypted?
 
 The reason is that actually you can't encrypt all data in iCure: while most details of medical data are encrypted, your
-application may need to use tags to organise data. If you want to search for data having some specific tag, then these
-tags need to be readable by the iCure server, and therefore they must be unencrypted.
+application may need to use tags or codes to organise data. If you want to search for data having some specific tag/code,
+then these values need to be readable by the iCure server, and therefore they must be unencrypted.
 
 
-Therefore, depending on the kind of tags you use in your application, having a clear link between medical data and
+Therefore, depending on the kind of tags/codes you use in your application, having a clear link between medical data and
 patient could be detrimental to the privacy of your users.
 
 {{#medtech}}
 For example, suppose you are developing a medical device that reads various vital sign of your users, analyzes them and
 then determines the chances of the user suffering a certain health issue in the future. In this case the vitals reading
-will be encrypted, but maybe you want to be able to easily find the users with high risk, so you add a tag with the risk
-class to the entity.
+will be encrypted, but maybe you want to be able to easily find the users with high risk, so you add a code with the
+risk class to the entity.
 {{/medtech}}
 {{#ehrlite}}
 For example, suppose you are developing an EHR application, and you want to be able to group the observations/condition
 by the kind of disease that was identified. For this purpose you add SNOMED CT codes such as blood disease (414022008)
-or hearth disease (56265001) to the entities' tags. In this case the details of the observations/conditions will be
+or hearth disease (56265001) to the entities' codes. In this case the details of the observations/conditions will be
 encrypted, but the SNOMED CT codes will be stored in clear.
 {{/ehrlite}}
 
@@ -113,9 +113,9 @@ access control.
 Access control for *explicit* data owners is straightforward: is there a delegation for you? If yes, then you have
 access, otherwise you don't.
 
-For *anonymous* data owners, instead, the access control is more complex, since in order to protect the data owners'
+For *anonymous* data owners, the access control is more complex, since in order to protect the data owners'
 privacy the iCure server can't know or decrypt in any way the ids of *anonymous* data owners with access to the entity.
-The solution we use in iCure consists in basically using a special password in the delegation that only the delegator or
+The solution we use in iCure consists in using a special password in the delegation that only the delegator or
 delegate of the delegation know. We call this password an *access control key* (AC key).
 
 :::info
