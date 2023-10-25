@@ -28,9 +28,11 @@ When a user shares an entity with another user the iCure SDK will create some "s
 - decryption of the entity on the client side.
 - access control on the server side.
 
-In iCure we call this kind of metadata a delegation and each delegation is from a *delegator* to a *delegate*. Both
-delegator and delegate are data owners in your application (e.g. patients or {{hcps}}), and either of them can be
-*explicit* or *anonymous*.
+In iCure we call this kind of metadata a delegation and each delegation is from a *delegator* (the user sharing the
+data) to a *delegate* (the user gaining access to the data through the delegation).
+Both delegator and delegate are data owners in your application (e.g. patients or {{hcps}}), and either of them can be
+*explicit* or *anonymous*. You can configure which data owners will be anonymous or explicit by implementing the
+`dataOwnerRequiresAnonymousDelegation` method in the `CryptoStrategies`.
 
 :::info
 
@@ -145,9 +147,10 @@ this cache is refreshed through the `cryptoApi.forceReload` method.
 
 The amount of AC keys that an anonymous data owner will use is proportional to the number of data owners involved in a
 sharing relationship with him (as delegator or as delegate, regardless of the explicit/anonymous nature of the other
-data owner). Additionally, this number will increase if the user has to create multiple key pairs due to reasons that
-will be explained in the key verification section.
-<!-- TODO link -->
+data owner).
+Additionally, this number is also proportional to the number of key pairs that the data owner has: if the data owner
+loses key pairs and creates new one he will have to create new AC keys. As a security measure this is the case even if
+the data owner has regained access to his old data through the give-access-back mechanism.
 
 Although there is no theoretical limit to the number of AC keys that a user can have, there is a practical limit due to
 the need for a cache of all AC keys on the client side and having to send all the keys on most requests.
@@ -157,13 +160,32 @@ On the contrary in some applications HCP users will have to share data with thou
 users (e.g. a general practitioner sharing prescriptions directly with the patient), and therefore they are not good
 candidates for anonymous data owners.
 
-### Further details and implementation suggestions.
+:::note
 
-+ Devices
-+ Not when a lot of keys are created
-+ What is not protected: doctors with access to patients
-+ Change later not supported
-+ Important to have the same configuration across all instances of your app
+Since the amount of AC keys is also proportional to the number of key pairs of data owners, you should avoid creating
+new key-pairs and instead try to recover the old ones whenever possible.
+
+You can learn more about key recovery in the [key recovery and verification](#key-recovery-and-verification) section.
+
+:::
+
+### Implementation recommendations
+
+- Our recommendation is to have {{hcps}} as explicit data owners and patients as anonymous data owners. {{#medtech}}For
+  medical devices it depends on your application: if a device is associated only a few patients (i.e. it is easy to draw
+  a connection from a device to a patient) it should be anonymous; on the contrary, if the device can't be easily
+  associated to patients it should be explicit. {{/medtech}}
+- The implementation of the `dataOwnerRequiresAnonymousDelegation` method must be consistent across all instances of
+  your application, otherwise data owners may not be able to access all their data. This must be the case also if you
+  offer different types of applications for {{hcps}} and patients that use the same database.
+- Changing the *explicit* or *anonymous* nature of data owners would require to change all the data of the affected data
+  owners, and particularly in case of migration from *anonymous* to *explicit* data owners also access to the key-pairs
+  of said data owners. This operation is not officially supported by the iCure SDK, therefore, you should carefully
+  which data owners should be *anonymous* and which should be *explicit* before releasing your application.
+
+<!-- TODO Link between anonymous patient and explicit hcp is not encrypted. Usually this is not a problem, but in case
+of a clinic with different types of specialists it could be. Solution: general "receptionist" creating the patient and
+sharing with the organisation. Do we need to add some more details about this? -->
 
 ## Key Recovery and Verification
 
