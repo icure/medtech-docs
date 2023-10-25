@@ -11,7 +11,7 @@ import {
 import { v4 as uuid } from 'uuid'
 import { initLocalStorage, output } from '../../../utils/index.mjs'
 import { Condition, LocalComponent, Observation } from '@icure/ehr-lite-sdk'
-import { MaintenanceTask } from '@icure/api'
+import { MaintenanceTask, sleep } from '@icure/api'
 import StatusEnum = MaintenanceTask.StatusEnum
 
 initLocalStorage()
@@ -85,16 +85,17 @@ const newPatientNotifications = newNotifications.filter(
     notification.responsible === patientUser.patientId,
 )
 
-console.log('BEFORE SHARING')
 if (!!newPatientNotifications && newPatientNotifications.length > 0) {
-  console.log('SHARING')
   await api.conditionApi.giveAccessTo(condition, patient.id)
   await api.observationApi.giveAccessTo(observation, patient.id)
   await api.notificationApi.updateStatus(newPatientNotifications[0], StatusEnum.Completed)
 }
+
+await patientApi.cryptoApi.forceReload() // Necessary only if this is the first time that HCP shares data with patient
+const fetchedCondition = await patientApi.conditionApi.get(condition.id)
+const fetchedObservation = await patientApi.observationApi.get(observation.id)
 //tech-doc: STOP HERE
+
 output({ newPatientNotifications })
-const fetchedHE = await patientApi.conditionApi.get(condition.id)
-expect(fetchedHE.id).to.eq(condition.id)
-const fetchedDS = await patientApi.observationApi.get(observation.id)
-expect(fetchedDS.id).to.eq(observation.id)
+expect(fetchedCondition.id).to.eq(condition.id)
+expect(fetchedObservation.id).to.eq(observation.id)

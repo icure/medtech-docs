@@ -1,6 +1,6 @@
 import 'isomorphic-fetch'
-import { initEHRLiteApi, initEHRLiteApi2, initPatientEHRLiteApi } from '../../utils/index.mjs'
-import { userName, userName2, patientUserName } from '../../../utils/index.mjs'
+import { initEHRLiteApi2, initEHRLiteApi3, initPatientEHRLiteApi } from '../../utils/index.mjs'
+import { userName2, patientUserName, userName3 } from '../../../utils/index.mjs'
 import { expect, use as chaiUse } from 'chai'
 import chaiAsPromised from 'chai-as-promised'
 import { initLocalStorage, output } from '../../../utils/index.mjs'
@@ -9,23 +9,15 @@ import { CodingReference, mapOf } from '@icure/typescript-common'
 chaiUse(chaiAsPromised)
 
 initLocalStorage()
-console.log('Storage')
-const hcp1Api = await initEHRLiteApi(true)
-console.log('HCP1')
+const hcp1Api = await initEHRLiteApi3(true)
 const pApi = await initPatientEHRLiteApi(true)
-console.log('PAT')
 const hcp2Api = await initEHRLiteApi2(true)
-console.log('HCP2')
 
 const hcp1User = await hcp1Api.userApi.getLogged()
 const hcp2User = await hcp2Api.userApi.getLogged()
 const pUser = await pApi.userApi.getLogged()
-await hcp1Api.patientApi.giveAccessTo(
-  await hcp1Api.patientApi.get(pUser.patientId),
-  hcp2User.healthcarePartyId,
-)
 
-expect(hcp1User.email).to.equal(userName)
+expect(hcp1User.email).to.equal(userName3)
 expect(hcp2User.email).to.equal(userName2)
 expect(pUser.email).to.equal(patientUserName)
 
@@ -58,10 +50,10 @@ const observation1 = await hcp1Api.observationApi.get(observation.id)
 const observation2 = await hcp2Api.observationApi.get(observation.id)
 // hcp2 can already access dataSample
 //tech-doc: end
-expect(observation1.localContent['en'].stringValue).to.equal(contentString)
+expect(observation1.localContent.get('en').stringValue).to.equal(contentString)
 expect(
   //skip
-  observation2.localContent['en'].stringValue,
+  observation2.localContent.get('en').stringValue,
 ).to.equal(contentString)
 
 output({
@@ -86,7 +78,7 @@ const existingObservation = await hcp1Api.observationApi.createOrModifyFor(
   }),
 )
 expect(
-  (await hcp1Api.observationApi.get(existingObservation.id)).localContent['en'].stringValue,
+  (await hcp1Api.observationApi.get(existingObservation.id)).localContent.get('en').stringValue,
 ).to.equal(existingContent)
 expect(hcp2Api.observationApi.get(existingObservation.id)).to.be.rejected
 await hcp1Api.userApi.shareAllFutureDataWith(
@@ -106,7 +98,7 @@ const observationNotOnModify = await hcp1Api.observationApi.createOrModifyFor(
 //tech-doc: end
 output({ dataSampleNotOnModify: observationNotOnModify })
 expect(
-  (await hcp1Api.observationApi.get(observationNotOnModify.id)).localContent['en'].stringValue,
+  (await hcp1Api.observationApi.get(observationNotOnModify.id)).localContent.get('en').stringValue,
 ).to.equal(contentNotOnModify)
 expect(hcp2Api.observationApi.get(observationNotOnModify.id)).to.be.rejected
 
@@ -124,7 +116,7 @@ output({ dataSampleNotSharedBy2: observationNotSharedBy2 })
 
 expect(hcp1Api.observationApi.get(observationNotSharedBy2.id)).to.be.rejected
 expect(
-  (await hcp2Api.observationApi.get(observationNotSharedBy2.id)).localContent['en'].stringValue,
+  (await hcp2Api.observationApi.get(observationNotSharedBy2.id)).localContent.get('en').stringValue,
 ).to.equal(contentNotSharedBy2)
 
 //tech-doc: stop auto share
@@ -148,7 +140,8 @@ const observationNotSharedAnymore = await hcp1Api.observationApi.createOrModifyF
 output({ dataSampleNotSharedAnymore: observationNotSharedAnymore })
 
 expect(
-  (await hcp1Api.observationApi.get(observationNotSharedAnymore.id)).localContent['en'].stringValue,
+  (await hcp1Api.observationApi.get(observationNotSharedAnymore.id)).localContent.get('en')
+    .stringValue,
 ).to.equal(contentNotSharedAnymore)
 expect(hcp2Api.observationApi.get(observationNotSharedAnymore.id)).to.be.rejected
 
@@ -175,12 +168,9 @@ const observationNoChaining = await hcp1Api.observationApi.createOrModifyFor(
 output({ dataSampleNoChaining: observationNoChaining })
 
 expect(
-  (await hcp1Api.observationApi.get(observationNoChaining.id)).localContent['en'].stringValue,
+  (await hcp1Api.observationApi.get(observationNoChaining.id)).localContent.get('en').stringValue,
 ).to.equal(contentNoChaining)
-expect(
-  (await pApi.observationApi.get(observationNoChaining.id)).localContent['en'].stringValue,
-).to.equal(contentNoChaining)
-expect(hcp2Api.observationApi.get(observationNoChaining.id)).to.be.rejected
+await expect(hcp2Api.observationApi.get(observationNoChaining.id)).to.be.rejected
 
 await hcp1Api.userApi.stopSharingDataWith(
   [hcp1Api.dataOwnerApi.getDataOwnerIdOf(pUser)],

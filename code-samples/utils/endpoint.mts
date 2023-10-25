@@ -28,6 +28,10 @@ export const patientPrivKey = requireDefined(
   process.env.ICURE_PATIENT_PRIV_KEY,
   'ICURE_PATIENT_PRIV_KEY',
 )
-export const password2 = requireDefined(process.env.ICURE_USER2_NAME, 'ICURE_USER2_NAME')
-export const userName2 = requireDefined(process.env.ICURE_USER2_PASSWORD, 'ICURE_USER2_PASSWORD')
+export const userName2 = requireDefined(process.env.ICURE_USER2_NAME, 'ICURE_USER2_NAME')
+export const password2 = requireDefined(process.env.ICURE_USER2_PASSWORD, 'ICURE_USER2_PASSWORD')
 export const privKey2 = requireDefined(process.env.ICURE_USER2_PRIV_KEY, 'ICURE_USER2_PRIV_KEY')
+
+export const userName3 = requireDefined(process.env.ICURE_USER3_NAME, 'ICURE_USER3_NAME')
+export const password3 = requireDefined(process.env.ICURE_USER3_PASSWORD, 'ICURE_USER3_PASSWORD')
+export const privKey3 = requireDefined(process.env.ICURE_USER3_PRIV_KEY, 'ICURE_USER3_PRIV_KEY')

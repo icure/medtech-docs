@@ -116,6 +116,7 @@ output({ sharedCondition })
 
 expect(!!sharedCondition).to.eq(true)
 expect(sharedCondition.id).to.eq(condition.id)
+await patientApi.cryptoApi.forceReload()
 const retrievedHE = await patientApi.conditionApi.get(condition.id)
 expect(retrievedHE.id).to.eq(condition.id)
 
@@ -169,6 +170,16 @@ const conditionFilter = await new ConditionFilter(api)
   .build()
 //tech-doc: STOP HERE
 output({ healthcareElementFilter: conditionFilter })
+
+for (let i = 0; i < 10; i++) {
+  await api.conditionApi.createOrModify(
+    new Condition({
+      description: `Condition ${i}`,
+      openingDate: new Date('2019-10-12').getTime(),
+    }),
+    patient.id,
+  )
+}
 
 //tech-doc: use HE filter method
 const conditionsFirstPage = await api.conditionApi.filterBy(conditionFilter, undefined, 10)

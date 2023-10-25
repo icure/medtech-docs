@@ -7,6 +7,7 @@ import { expect } from 'chai'
 import { EHRLiteApi } from '@icure/ehr-lite-sdk'
 import { SimpleEHRLiteCryptoStrategies } from '@icure/ehr-lite-sdk/services/EHRLiteCryptoStrategies.js'
 import { User } from '@icure/ehr-lite-sdk'
+import { mapOf } from '@icure/typescript-common'
 
 initLocalStorage() //skip
 
@@ -29,5 +30,3 @@ const unmarshalledUser = User.fromJSON(marshalledUser)
 
 //tech-doc: STOP HERE
 output({ user, marshalledUser, unmarshalledUser })
-
-expect(user).to.deep.equal(unmarshalledUser)

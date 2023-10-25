@@ -18,11 +18,11 @@ import { assert, expect } from 'chai'
 import { v4 as uuid } from 'uuid'
 import { webcrypto } from 'crypto'
 import { getLastEmail } from '../../../utils/msgGtw.mjs'
-import { LocationAddressTypeEnum } from '@icure/ehr-lite-sdk/models/enums/LocationAddressType.enum'
+import { LocationAddressTypeEnum } from '@icure/ehr-lite-sdk/models/enums/LocationAddressType.enum.js'
 import { CodingReference, mapOf, NotificationTypeEnum } from '@icure/typescript-common'
 import { SimpleEHRLiteCryptoStrategies } from '@icure/ehr-lite-sdk/services/EHRLiteCryptoStrategies.js'
-import { ContactPointTelecomTypeEnum } from '@icure/ehr-lite-sdk/models/enums/ContactPointTelecomType.enum'
-import { PatientPersonalStatusEnum } from '@icure/ehr-lite-sdk/models/enums/PatientPersonalStatus.enum'
+import { ContactPointTelecomTypeEnum } from '@icure/ehr-lite-sdk/models/enums/ContactPointTelecomType.enum.js'
+import { PatientPersonalStatusEnum } from '@icure/ehr-lite-sdk/models/enums/PatientPersonalStatus.enum.js'
 
 initLocalStorage()
 

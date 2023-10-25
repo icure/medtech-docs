@@ -7,14 +7,17 @@ import {
   msgGtwUrl,
   password,
   password2,
+  password3,
   patientPassword,
   patientPrivKey,
   patientUserName,
   privKey,
   privKey2,
+  privKey3,
   specId,
   userName,
   userName2,
+  userName3,
 } from './endpoint.mjs'
 import { webcrypto } from 'crypto'
 import { hex2ua, jwk2spki, pkcs8ToJwk } from '@icure/api'
@@ -35,6 +38,10 @@ export async function initMedTechApi(initCrypto?: boolean): Promise<MedTechApi> 
 
 export async function initMedTechApi2(initCrypto?: boolean): Promise<MedTechApi> {
   return await initAnyMedTechApi(userName2, password2, privKey2, initCrypto)
+}
+
+export async function initMedTechApi3(initCrypto?: boolean): Promise<MedTechApi> {
+  return await initAnyMedTechApi(userName3, password3, privKey3, initCrypto)
 }
 
 export async function initPatientMedTechApi(initCrypto?: boolean): Promise<MedTechApi> {
