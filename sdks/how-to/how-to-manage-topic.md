@@ -32,7 +32,7 @@ An `ADMIN` is a user who has access to the `Topic` and can write messages. They 
 
 An `OWNER` is a user who has access to the `Topic` and can write messages. They can also read messages from other participants. Additionally, they can add or remove participants to/from the `Topic` and change the roles of other participants.
 
-There is a special aspect to the `OWNER` role. The user who creates the `Topic` is automatically assigned the `OWNER` role. The `OWNER` is the only level of participant who cannot leave the `Topic`. They must assign the `OWNER` role to another participant in order to leave the `Topic`.
+There is a special aspect to the `OWNER` role. The user who creates the `Topic` have to be assigned with the `OWNER` role. The `OWNER` is the only level of participant who cannot leave the `Topic`. They must assign the `OWNER` role to another participant in order to leave the `Topic`.
 
 ## Creating a Topic
 
@@ -61,7 +61,7 @@ To add a participant to a `Topic`, you must use the `addParticipant` function. T
 
 <!-- file://code-samples/{{sdk}}/how-to/manage-topics/index.mts snippet:add participant to topic-->
 
-<!-- output://code-samples/{{sdk}}/how-to/manage-topics/updatedTopic.txt -->
+<!-- output://code-samples/{{sdk}}/how-to/manage-topics/updatedTopicWithNewParticipant.txt -->
 
 You'll also need to manually share access to the different entities referenced in the `Topic`:
 
@@ -76,7 +76,7 @@ To remove a participant from a `Topic`, you must use the `removeParticipant` fun
 
 <!-- file://code-samples/{{sdk}}/how-to/manage-topics/index.mts snippet:remove participant from topic-->
 
-<!-- output://code-samples/{{sdk}}/how-to/manage-topics/updatedTopic2.txt -->
+<!-- output://code-samples/{{sdk}}/how-to/manage-topics/updatedTopicWithRemovedParticipant.txt -->
 
 #### Leaving a Topic
 
@@ -86,7 +86,7 @@ To leave a `Topic`, you can use the `removeParticipant` function. However, there
 
 <!-- file://code-samples/{{sdk}}/how-to/manage-topics/index.mts snippet:leave topic-->
 
-<!-- output://code-samples/{{sdk}}/how-to/manage-topics/updatedTopic3.txt -->
+<!-- output://code-samples/{{sdk}}/how-to/manage-topics/updatedTopicThatHaveBeenLeftByUser2.txt -->
 
 :::info
 

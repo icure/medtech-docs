@@ -1,7 +1,18 @@
 import 'isomorphic-fetch'
 import { initLocalStorage, output } from '../../../utils/index.mjs'
 import { initEHRLiteApi, initEHRLiteApi2 } from '../../utils/index.mjs'
-import { Annotation, Component, Condition, Observation, Patient, TopicRole, CodingReference, Measure, TopicFilter } from '@icure/ehr-lite-sdk'
+import {
+  Annotation,
+  Component,
+  Condition,
+  Observation,
+  Patient,
+  TopicRole,
+  CodingReference,
+  Measure,
+  TopicFilter,
+  Topic,
+} from '@icure/ehr-lite-sdk'
 
 initLocalStorage()
 
@@ -14,60 +25,79 @@ const user2 = await api2.userApi.getLogged()
 const user1DataOwnerId = api.dataOwnerApi.getDataOwnerIdOf(user1)
 const user2DataOwnerId = api2.dataOwnerApi.getDataOwnerIdOf(user2)
 
-// tech-doc: create topic
+const newPatientInstance = async () =>
+  await api.patientApi.createOrModify(
+    new Patient({
+      firstName: 'Bender',
+      lastName: 'Bending Rodríguez',
+    }),
+  )
 
-const patient = await api.patientApi.createOrModify(
-  new Patient({
-    firstName: 'Bender',
-    lastName: 'Bending Rodríguez',
-  }),
-)
+const newObservationInstance = async (patient: Patient) => {
+  return await api.observationApi.createOrModifyFor(
+    patient.id!,
+    new Observation({
+      component: new Component({
+        measureValue: new Measure({
+          value: 75,
+          unit: '°C',
+          unitCodes: [
+            new CodingReference({
+              type: 'UCUM',
+              code: 'Cel',
+              version: '2.1',
+            }),
+          ],
+        }),
+      }),
+    }),
+  )
+}
+
+const newConditionInstance = async (patient: Patient) => {
+  return await api.conditionApi.createOrModify(
+    new Condition({
+      notes: [
+        new Annotation({
+          markdown: new Map([
+            ['en', 'The patient has been diagnosed African Hydraulic Fever'],
+            ['fr', 'Le patient a été diagnostiqué fièvre hydraulique africaine'],
+          ]),
+        }),
+      ],
+    }),
+    patient.id!,
+  )
+}
+
+// tech-doc: create topic
 
 const participants = [
   {
     participant: user1DataOwnerId,
+    role: TopicRole.OWNER,
+  },
+  {
+    participant: user2DataOwnerId,
     role: TopicRole.PARTICIPANT,
   },
 ]
 
-const condtition = await api.conditionApi.createOrModify(
-  new Condition({
-    notes: [
-      new Annotation({
-        markdown: new Map([
-          ['en', 'The patient has been diagnosed African Hydraulic Fever'],
-          ['fr', 'Le patient a été diagnostiqué fièvre hydraulique africaine'],
-        ]),
-      }),
-    ],
-  })
-)
+const patient = await newPatientInstance()
+const condtition = await newConditionInstance(patient)
+const observation = await newObservationInstance(patient)
 
-const observation = await api2.observationApi.createOrModifyFor(
-  patient.id!,
-  new Observation({
-    component: new Component({
-      measureValue: new Measure({
-        value: 75,
-        unit: '°C',
-        unitCodes: [
-          new CodingReference({
-            type: 'UCUM',
-            code: 'Cel',
-            version: '2.1',
-          })
-        ]
-      })
-    })
-  }),
-)
+const sharedPatient = await api.patientApi.giveAccessTo(patient, user2DataOwnerId)
+const sharedCondition = await api.conditionApi.giveAccessTo(condtition, user2DataOwnerId)
+const sharedObservation = await api.observationApi.giveAccessTo(observation, user2DataOwnerId)
+
 // highlight-start
 const newTopic = await api.topicApi.create(
   participants,
   'Topic name',
-  patient,
-  new Set([condtition]), // This could also be a Set of Condition ids
-  new Set([observation]), // This could also be a Set of Observation ids
+  sharedPatient,
+  new Set([sharedCondition]), // This could also be a Set of Condition ids
+  new Set([sharedObservation]), // This could also be a Set of Observation ids
   undefined, // Tags
   undefined, // Codes
 )
@@ -77,15 +107,25 @@ output({
   newTopic,
 })
 
-const topic = await api.topicApi.create(
-  [],
-  'Topic name',
-  patient,
-  new Set([condtition]),
-  new Set([observation]),
-)
-
 // tech-doc: add participant to topic
+
+// Initial context
+const patient2: Patient = await newPatientInstance()
+const condition2: Condition = await newConditionInstance(patient)
+const observation2: Observation = await newObservationInstance(patient)
+
+const topicToAddNewParticipant: Topic = await api.topicApi.create(
+  [
+    {
+      participant: user1DataOwnerId,
+      role: TopicRole.OWNER,
+    },
+  ],
+  'Topic name',
+  patient2,
+  new Set([condition2]),
+  new Set([observation2]),
+)
 
 const newParticipant = {
   ref: user2DataOwnerId,
@@ -93,20 +133,23 @@ const newParticipant = {
 }
 
 // highlight-start
-const updatedTopic = await api.topicApi.addParticipant(topic, newParticipant)
+const updatedTopicWithNewParticipant = await api.topicApi.addParticipant(
+  topicToAddNewParticipant,
+  newParticipant,
+)
 // highlight-end
 
 // tech-doc: STOP HERE
 
 output({
-  updatedTopic,
+  updatedTopicWithNewParticipant,
 })
 
 // tech-doc: share linked health element and service with the new participant
 
-const updatedPatient = await api.patientApi.giveAccessTo(patient, user2DataOwnerId)
-const updatedCondition = await api.conditionApi.giveAccessTo(condtition, user2DataOwnerId)
-const updatedObservation = await api2.observationApi.giveAccessTo(observation, user2DataOwnerId)
+const updatedPatient = await api.patientApi.giveAccessTo(patient2, user2DataOwnerId)
+const updatedCondition = await api.conditionApi.giveAccessTo(condition2, user2DataOwnerId)
+const updatedObservation = await api.observationApi.giveAccessTo(observation2, user2DataOwnerId)
 
 // tech-doc: STOP HERE
 
@@ -115,38 +158,55 @@ const updatedObservation = await api2.observationApi.giveAccessTo(observation, u
 const participantToRemove = user2DataOwnerId
 
 // highlight-start
-const updatedTopic2 = await api.topicApi.removeParticipant(topic, participantToRemove)
+const updatedTopicWithRemovedParticipant = await api.topicApi.removeParticipant(
+  updatedTopicWithNewParticipant,
+  participantToRemove,
+)
 // highlight-end
 // tech-doc: STOP HERE
 
 output({
-  updatedTopic2,
+  updatedTopicWithRemovedParticipant,
 })
 
 // tech-doc: leave topic
 
-const updatedTopic3 = await api.topicApi.leave(topic)
+const topicThatWillBeLeft = await api.topicApi.create(participants, 'Topic that will be left')
 
+// highlight-start
+const updatedTopicThatHaveBeenLeftByUser2 = await api2.topicApi.leave(topicThatWillBeLeft) // user2 leaves the topic
+// highlight-end
 // tech-doc: STOP HERE
 
 output({
-  updatedTopic3,
+  updatedTopicThatHaveBeenLeftByUser2,
 })
 
 // tech-doc: add observations to topic
 
+const patient3: Patient = await newPatientInstance()
+
 const topicToShareServices = await api.topicApi.create(
   participants,
   'Topic to share services',
-  patient, // Patient created on the create topic step
+  patient3,
 )
 
-const observations = [observation] // Observation created on the create topic step
+const observations = [await newObservationInstance(patient3)]
 
-const sharedObservations = await api.observationApi.giveAccessToMany(observations, user2DataOwnerId)
+const sharedObservations = [
+  ...(await Promise.all(
+    participants.map(async ({ participant: dataOwnerId }) => {
+      return await api.observationApi.giveAccessToMany(observations, dataOwnerId)
+    }),
+  )),
+].flat()
 
 // highlight-start
-const topicWithNewlySharedObs = await api.topicApi.addObservations(topicToShareServices, sharedObservations)
+const topicWithNewlySharedObs = await api.topicApi.addObservations(
+  topicToShareServices,
+  sharedObservations,
+)
 // highlight-end
 
 // tech-doc: STOP HERE
@@ -157,7 +217,10 @@ output({
 
 // tech-doc: remove observations from topic
 
-const topicWithRemovedObs = await api.topicApi.removeObservations(topicWithNewlySharedObs, sharedObservations)
+const topicWithRemovedObs = await api.topicApi.removeObservations(
+  topicWithNewlySharedObs,
+  sharedObservations,
+)
 
 // tech-doc: STOP HERE
 
@@ -173,10 +236,14 @@ const topicToShareHealthElements = await api.topicApi.create(
   patient, // Patient created on the create topic step
 )
 
-const sharedCondition = await api.conditionApi.giveAccessTo(condtition, user2DataOwnerId)
+const condition3 = await newConditionInstance(patient)
+const newlySharedCondition = await api.conditionApi.giveAccessTo(condition3, user2DataOwnerId)
 
 // highlight-start
-const topicWithNewlySharedConditions = await api.topicApi.addConditions(topicToShareHealthElements, [sharedCondition])
+const topicWithNewlySharedConditions = await api.topicApi.addConditions(
+  topicToShareHealthElements,
+  [newlySharedCondition],
+)
 // highlight-end
 
 // tech-doc: STOP HERE
@@ -185,10 +252,12 @@ output({
   topicWithNewlySharedConditions,
 })
 
-
 // tech-doc: remove conditions from topic
 
-const topicWithRemovedConditions = await api.topicApi.removeConditions(topicWithNewlySharedConditions, [sharedCondition])
+const topicWithRemovedConditions = await api.topicApi.removeConditions(
+  topicWithNewlySharedConditions,
+  [newlySharedCondition],
+)
 
 // tech-doc: STOP HERE
 
@@ -198,7 +267,9 @@ output({
 
 // tech-doc: get topic by id
 
-const topicId = topic.id!
+const topicToBeFetched = await api.topicApi.create(participants, 'Topic to be fetched')
+
+const topicId = topicToBeFetched.id!
 
 // highlight-start
 const topicById = await api.topicApi.get(topicId)
@@ -207,7 +278,7 @@ const topicById = await api.topicApi.get(topicId)
 // tech-doc: STOP HERE
 
 output({
-  topicById
+  topicById,
 })
 
 // tech-doc: get topics using filter
