@@ -49,6 +49,9 @@ To create a `Topic`, you must use the `create` function. To do this, you will ne
 <!-- file://code-samples/{{sdk}}/how-to/manage-topics/index.mts snippet:create topic-->
 
 <!-- output://code-samples/{{sdk}}/how-to/manage-topics/newTopic.txt -->
+<details>
+<summary>newTopic</summary>
+</details>
 
 ## Managing Participants
 
@@ -62,6 +65,9 @@ To add a participant to a `Topic`, you must use the `addParticipant` function. T
 <!-- file://code-samples/{{sdk}}/how-to/manage-topics/index.mts snippet:add participant to topic-->
 
 <!-- output://code-samples/{{sdk}}/how-to/manage-topics/updatedTopicWithNewParticipant.txt -->
+<details>
+<summary>updatedTopicWithNewParticipant</summary>
+</details>
 
 You'll also need to manually share access to the different entities referenced in the `Topic`:
 
@@ -77,6 +83,10 @@ To remove a participant from a `Topic`, you must use the `removeParticipant` fun
 <!-- file://code-samples/{{sdk}}/how-to/manage-topics/index.mts snippet:remove participant from topic-->
 
 <!-- output://code-samples/{{sdk}}/how-to/manage-topics/updatedTopicWithRemovedParticipant.txt -->
+<details>
+<summary>updatedTopicWithRemovedParticipant</summary>
+</details>
+
 
 #### Leaving a Topic
 
@@ -87,6 +97,9 @@ To leave a `Topic`, you can use the `removeParticipant` function. However, there
 <!-- file://code-samples/{{sdk}}/how-to/manage-topics/index.mts snippet:leave topic-->
 
 <!-- output://code-samples/{{sdk}}/how-to/manage-topics/updatedTopicThatHaveBeenLeftByUser2.txt -->
+<details>
+<summary>updatedTopicThatHaveBeenLeftByUser2</summary>
+</details>
 
 :::info
 
@@ -108,6 +121,9 @@ To add `Observations` to a `Topic`, you must use the `addObservations` function.
 <!-- file://code-samples/{{sdk}}/how-to/manage-topics/index.mts snippet:add observations to topic-->
 
 <!-- output://code-samples/{{sdk}}/how-to/manage-topics/topicWithNewlySharedObs.txt -->
+<details>
+<summary>topicWithNewlySharedObs</summary>
+</details>
 
 As you can see, you will need to manually share access to the `Observations` with the `Topic` participants before being able to add them to the `Topic`.
 
@@ -121,6 +137,10 @@ To remove `Observations` from a `Topic`, you must use the `removeObservations` f
 <!-- file://code-samples/{{sdk}}/how-to/manage-topics/index.mts snippet:remove observations from topic-->
 
 <!-- output://code-samples/{{sdk}}/how-to/manage-topics/topicWithRemovedObs.txt -->
+<details>
+<summary>topicWithRemovedObs</summary>
+</details>
+
 
 :::warning
 
@@ -138,6 +158,10 @@ To add `Conditions` to a `Topic`, you must use the `addConditions` function. You
 <!-- file://code-samples/{{sdk}}/how-to/manage-topics/index.mts snippet:add conditions to topic-->
 
 <!-- output://code-samples/{{sdk}}/how-to/manage-topics/topicWithNewlySharedConditions.txt -->
+<details>
+<summary>topicWithNewlySharedConditions</summary>
+</details>
+
 
 As you can see, you will need to manually share access to the `Conditions` with the `Topic` participants before being able to add them to the `Topic`.
 
@@ -151,6 +175,9 @@ To remove `Conditions` from a `Topic`, you must use the `removeConditions` funct
 <!-- file://code-samples/{{sdk}}/how-to/manage-topics/index.mts snippet:remove conditions from topic-->
 
 <!-- output://code-samples/{{sdk}}/how-to/manage-topics/topicWithRemovedConditions.txt -->
+<details>
+<summary>topicWithRemovedConditions</summary>
+</details>
 
 :::warning
 
@@ -169,6 +196,9 @@ Pour obtenir un `Topic` par son ID, vous devez utiliser la fonction `get`. Pour 
 <!-- file://code-samples/{{sdk}}/how-to/manage-topics/index.mts snippet:get topic by id-->
 
 <!-- output://code-samples/{{sdk}}/how-to/manage-topics/topicById.txt -->
+<details>
+<summary>topicById</summary>
+</details>
 
 ### Filtrer les Topics
 
@@ -181,6 +211,9 @@ Vous pouvez utiliser le builder `TopicFilter` pour construire votre filtre.
 <!-- file://code-samples/{{sdk}}/how-to/manage-topics/index.mts snippet:get topics using filter-->
 
 <!-- output://code-samples/{{sdk}}/how-to/manage-topics/paginatedList.txt -->
+<details>
+<summary>paginatedList</summary>
+</details>
 
 #### Obtenir les identifiants des Topics filtrés
 
@@ -191,3 +224,6 @@ Vous pouvez également uniquement obtenir les identifiants en appliquant le mêm
 <!-- file://code-samples/{{sdk}}/how-to/manage-topics/index.mts snippet:get topic ids using match-->
 
 <!-- output://code-samples/{{sdk}}/how-to/manage-topics/topicIds.txt -->
+<details>
+<summary>topicIds</summary>
+</details>

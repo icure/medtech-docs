@@ -32,7 +32,7 @@ const newCondition = new Condition({
 
 const condition = await api.conditionApi.createOrModify(newCondition, patient.id)
 //tech-doc: STOP HERE
-output({ newCondition, healthcareElement: condition })
+output({ newHealthcareElement: newCondition, healthcareElement: condition })
 
 expect(!!condition).to.eq(true)
 expect(condition.description).to.eq('The patient has been diagnosed Pararibulitis')
@@ -102,7 +102,7 @@ const followUpCondition = await api.conditionApi.createOrModify(
   patient.id,
 )
 //tech-doc: STOP HERE
-output({ startCondition, followUpCondition })
+output({ startHealthcareElement: startCondition, followUpHealthcareElement: followUpCondition })
 
 expect(!!startCondition).to.eq(true)
 expect(startCondition.description).to.eq('The patient has been diagnosed Pararibulitis')
@@ -112,7 +112,7 @@ expect(followUpCondition.description).to.eq('The patient recovered')
 //tech-doc: HE sharing with data owner
 const sharedCondition = await api.conditionApi.giveAccessTo(condition, patient.id)
 //tech-doc: STOP HERE
-output({ sharedCondition })
+output({ sharedHealthcareElement: sharedCondition })
 
 expect(!!sharedCondition).to.eq(true)
 expect(sharedCondition.id).to.eq(condition.id)
@@ -123,7 +123,7 @@ expect(retrievedHE.id).to.eq(condition.id)
 //tech-doc: retrieve a HE as data owner
 const retrievedCondition = await api.conditionApi.get(condition.id)
 //tech-doc: STOP HERE
-output({ retrievedCondition })
+output({ retrievedHealthcareElement: retrievedCondition })
 
 expect(retrievedCondition.id).to.eq(condition.id)
 
@@ -142,9 +142,12 @@ const modifiedCondition = new Condition({
 })
 
 const modificationResult = await api.conditionApi.createOrModify(modifiedCondition, patient.id)
-console.log(modificationResult)
 //tech-doc: STOP HERE
-output({ yetAnotherCondition, modifiedCondition, modificationResult })
+output({
+  yetAnotherHealthcareElement: yetAnotherCondition,
+  modifiedHealthcareElement: modifiedCondition,
+  modificationResult,
+})
 expect(modificationResult.id).to.eq(yetAnotherCondition.id)
 expect(modificationResult.description).to.eq('I can change and I can add')
 expect(modificationResult.openingDate).to.eq(new Date('2019-10-12').getTime())
@@ -221,6 +224,9 @@ const conditionsToDelete = await api.conditionApi.createOrModify(
 
 const deletedCondition = await api.conditionApi.delete(conditionsToDelete.id)
 //tech-doc: STOP HERE
-output({ healthcareElementToDelete: conditionsToDelete, deletedCondition })
+output({
+  healthcareElementToDelete: conditionsToDelete,
+  deletedHealthcareElement: deletedCondition,
+})
 
 expect(deletedCondition).not.to.be.undefined

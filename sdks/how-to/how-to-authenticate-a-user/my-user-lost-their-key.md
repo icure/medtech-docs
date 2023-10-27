@@ -257,16 +257,6 @@ await hcpApi.dataOwnerApi.giveAccessBackTo(
 ```
 </details>
 
-<!-- output://code-samples/{{sdk}}/how-to/authenticate-user/accessBack.txt -->
-<details>
-<summary>accessBack</summary>
-
-```text
-true
-```
-</details>
-
-
 After restarting her app, Daenaerys will be able to access her previous data back. 
 
 :::tip 

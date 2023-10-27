@@ -30,6 +30,6 @@ const condition = await api.conditionApi.createOrModify(
 )
 
 //tech-doc: STOP HERE
-output({ condition: condition, patient })
+output({ healthcareElement: condition, patient })
 expect(!!condition).to.eq(true) //skip
 expect(condition.description).to.eq('The patient is pregnant') //skip

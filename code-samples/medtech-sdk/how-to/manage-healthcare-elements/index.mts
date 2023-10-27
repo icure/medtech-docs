@@ -1,7 +1,6 @@
 import 'isomorphic-fetch'
 import {
   CodingReference,
-  DataSample,
   HealthcareElement,
   HealthcareElementFilter,
   Patient,
@@ -14,7 +13,6 @@ import {
   output,
 } from '../../../utils/index.mjs'
 import { expect } from 'chai'
-import { Condition } from '@icure/ehr-lite-sdk'
 
 initLocalStorage()
 
