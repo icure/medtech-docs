@@ -4,7 +4,7 @@ import { expect } from 'chai'
 import { initEHRLiteApi } from '../../utils/index.mjs'
 import { Practitioner, Location, ContactPoint, PractitionerFilter } from '@icure/ehr-lite-sdk'
 import { CodingReference } from '@icure/typescript-common'
-import { ContactPointTelecomTypeEnum } from '@icure/ehr-lite-sdk/models/enums/ContactPointTelecomType.enum'
+import { ContactPointTelecomTypeEnum } from '@icure/ehr-lite-sdk/models/enums/ContactPointTelecomType.enum.js'
 
 initLocalStorage()
 

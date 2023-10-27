@@ -34,7 +34,7 @@ const patient = await hcp1Api.patientApi.createOrModify(
   }),
 )
 //tech-doc: end
-expect((await hcp1Api.patientApi.get(patient.id)).notes[0].markdown['en']).to.equal(note)
+expect((await hcp1Api.patientApi.get(patient.id)).notes[0].markdown.get('en')).to.equal(note)
 expect(pApi.patientApi.get(patient.id)).to.be.rejected
 //tech-doc: share a patient
 // hcp1 shares the information of `patient` with hcp2
@@ -45,9 +45,9 @@ const updatedPatient = await hcp1Api.patientApi.giveAccessTo(
 // hcp1 shares the information of `patient` with p (a different patient that is also a data owner)
 await hcp1Api.patientApi.giveAccessTo(updatedPatient, hcp1Api.dataOwnerApi.getDataOwnerIdOf(pUser))
 //tech-doc: end
-expect((await hcp1Api.patientApi.get(patient.id)).notes[0].markdown['en']).to.equal(note)
-expect((await hcp2Api.patientApi.get(patient.id)).notes[0].markdown['en']).to.equal(note)
-expect((await pApi.patientApi.get(patient.id)).notes[0].markdown['en']).to.equal(note)
+expect((await hcp1Api.patientApi.get(patient.id)).notes[0].markdown.get('en')).to.equal(note)
+expect((await hcp2Api.patientApi.get(patient.id)).notes[0].markdown.get('en')).to.equal(note)
+expect((await pApi.patientApi.get(patient.id)).notes[0].markdown.get('en')).to.equal(note)
 
 //tech-doc: create a healthcare element
 // hcp1 creates a new healthcare element
@@ -100,12 +100,11 @@ const observation = await pApi.observationApi.createOrModifyFor(
     openingDate: 20220929083400,
   }),
 )
-expect((await pApi.observationApi.get(observation.id)).localContent['en'].stringValue).to.equal(
+expect((await pApi.observationApi.get(observation.id)).localContent.get('en').stringValue).to.equal(
   //skip
   contentString, //skip
 ) //skip
-expect(hcp1Api.observationApi.get(observation.id)).to.be.rejected //skip
-expect(hcp1Api.observationApi.get(observation.id)).to.be.rejected //skip
+expect(hcp2Api.observationApi.get(observation.id)).to.be.rejected //skip
 // p shares the data sample with hcp1
 await pApi.observationApi.giveAccessTo(observation, pApi.dataOwnerApi.getDataOwnerIdOf(hcp1User))
 // hcp1 shares the data sample with hcp2
@@ -114,12 +113,12 @@ await hcp1Api.observationApi.giveAccessTo(
   hcp1Api.dataOwnerApi.getDataOwnerIdOf(hcp2User),
 )
 //tech-doc: end
-expect((await hcp1Api.observationApi.get(observation.id)).localContent['en'].stringValue).to.equal(
-  contentString,
-)
-expect((await hcp2Api.observationApi.get(observation.id)).localContent['en'].stringValue).to.equal(
-  contentString,
-)
-expect((await pApi.observationApi.get(observation.id)).localContent['en'].stringValue).to.equal(
+expect(
+  (await hcp1Api.observationApi.get(observation.id)).localContent.get('en').stringValue,
+).to.equal(contentString)
+expect(
+  (await hcp2Api.observationApi.get(observation.id)).localContent.get('en').stringValue,
+).to.equal(contentString)
+expect((await pApi.observationApi.get(observation.id)).localContent.get('en').stringValue).to.equal(
   contentString,
 )

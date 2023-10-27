@@ -23,7 +23,7 @@ const connection = (
   await api.dataSampleApi.subscribeToDataSampleEvents(
     ['CREATE'], // Event types to listen to
     await new DataSampleFilter(api)
-      .forDataOwner(loggedUser.healthcarePartyId!)
+      .forDataOwner(loggedUser.healthcarePartyId)
       .byLabelCodeDateFilter('IC-TEST', 'TEST')
       .build(),
     async (ds) => {
@@ -50,7 +50,7 @@ output({ patient })
 
 //tech-doc: create a dataSample for websocket
 const dataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
-  patient.id!,
+  patient.id,
   new DataSample({
     labels: new Set([new CodingReference({ type: 'IC-TEST', code: 'TEST' })]),
     content: mapOf({ en: new Content({ stringValue: 'Hello world' }) }),

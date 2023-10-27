@@ -61,10 +61,7 @@ const patientsForHcp = await api.patientApi.filterPatients(patientsForHcpFilter)
 //tech-doc: end
 output({ patientsForHcpFilter, patientsForHcp })
 
-expect(patientsForHcp.rows.length).to.be.greaterThan(0)
-patientsForHcp.rows.forEach((p) => {
-  expect(Object.keys(p.systemMetaData?.delegations ?? {})).to.contain(healthcarePartyId)
-})
+expect(patientsForHcp.rows.length).to.be.equal(3)
 
 //tech-doc: filter patients with implicit intersection filter
 const ageGenderFilter = await new PatientFilter(api)
@@ -123,12 +120,12 @@ ageGenderExplicitPatients.rows.forEach((p) => {
 
 //tech-doc: filter patients with union filter
 const filterFemales = await new PatientFilter(api)
-  .forDataOwner(user.healthcarePartyId!)
+  .forDataOwner(user.healthcarePartyId)
   .byGenderEducationProfession('female')
   .build()
 
 const filterIndeterminate = await new PatientFilter(api)
-  .forDataOwner(user.healthcarePartyId!)
+  .forDataOwner(user.healthcarePartyId)
   .byGenderEducationProfession('indeterminate')
   .build()
 

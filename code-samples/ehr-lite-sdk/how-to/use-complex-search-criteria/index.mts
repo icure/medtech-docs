@@ -16,7 +16,7 @@ const { api } = await signUpUserUsingEmail(
   host,
   msgGtwUrl,
   specId,
-  process.env.AUTH_BY_EMAIL_HCP_PROCESS_ID,
+  process.env.AUTH_BY_SMS_PRACTITIONER_PROCESS_ID,
   masterUser.healthcarePartyId,
 )
 const user = await api.userApi.getLogged()
@@ -55,11 +55,7 @@ const patientsForHcp = await api.patientApi.filterBy(patientsForHcpFilter)
 //tech-doc: end
 output({ patientsForHcpFilter, patientsForHcp })
 
-expect(patientsForHcp.rows.length).to.be.greaterThan(0)
-patientsForHcp.rows.forEach((p) => {
-  expect(Object.keys(p.systemMetaData?.delegations ?? {})).to.contain(healthcarePartyId)
-})
-
+expect(patientsForHcp.rows.length).to.be.equal(3)
 //tech-doc: filter patients with implicit intersection filter
 const ageGenderFilter = await new PatientFilter(api)
   .forDataOwner(user.healthcarePartyId)

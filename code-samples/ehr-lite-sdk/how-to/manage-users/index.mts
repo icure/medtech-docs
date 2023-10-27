@@ -4,8 +4,8 @@ import { initEHRLiteApi } from '../../utils/index.mjs'
 import 'isomorphic-fetch'
 import { expect } from 'chai'
 import { ContactPoint, Location, Patient } from '@icure/ehr-lite-sdk'
-import { ContactPointTelecomTypeEnum } from '@icure/ehr-lite-sdk/models/enums/ContactPointTelecomType.enum'
-import { LocationAddressTypeEnum } from '@icure/ehr-lite-sdk/models/enums/LocationAddressType.enum'
+import { ContactPointTelecomTypeEnum } from '@icure/ehr-lite-sdk/models/enums/ContactPointTelecomType.enum.js'
+import { LocationAddressTypeEnum } from '@icure/ehr-lite-sdk/models/enums/LocationAddressType.enum.js'
 
 initLocalStorage()
 
