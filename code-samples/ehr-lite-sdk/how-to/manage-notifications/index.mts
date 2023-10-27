@@ -56,6 +56,15 @@ output({ afterDateFilter })
 
 expect(!!afterDateFilter).to.eq(true)
 
+for (let i = 0; i < 10; i++) {
+  await api.notificationApi.createOrModify(
+    new Notification({
+      type: NotificationTypeEnum.Other,
+    }),
+    practitioner.id,
+  )
+}
+
 //tech-doc: gets the first page of results
 const notificationsFirstPage = await api.notificationApi.filterBy(afterDateFilter, undefined, 10)
 //tech-doc: STOP HERE

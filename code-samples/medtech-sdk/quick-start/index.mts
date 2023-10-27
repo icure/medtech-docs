@@ -7,7 +7,7 @@ initLocalStorage()
 import 'isomorphic-fetch'
 import { webcrypto } from 'crypto'
 import * as process from 'process'
-import { MedTechApi, SimpleCryptoStrategies } from '@icure/medical-device-sdk'
+import { MedTechApi } from '@icure/medical-device-sdk'
 import { SimpleMedTechCryptoStrategies } from '@icure/medical-device-sdk/src/services/MedTechCryptoStrategies.js'
 
 export const host = process.env.ICURE_URL ?? 'https://kraken.icure.cloud'

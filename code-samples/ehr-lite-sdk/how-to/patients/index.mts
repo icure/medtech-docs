@@ -6,7 +6,7 @@ import { expect } from 'chai'
 import { initEHRLiteApi } from '../../utils/index.mjs'
 import { HumanName, Patient, Annotation, PatientFilter } from '@icure/ehr-lite-sdk'
 import { GenderEnum } from '@icure/ehr-lite-sdk/models/enums/Gender.enum.js'
-import { HumanNameUseEnum } from '@icure/ehr-lite-sdk/models/enums/HumanNameUse.enum'
+import { HumanNameUseEnum } from '@icure/ehr-lite-sdk/models/enums/HumanNameUse.enum.js'
 import { mapOf } from '@icure/typescript-common'
 
 initLocalStorage()
@@ -57,9 +57,7 @@ const updatedPatient = await api.patientApi.createOrModify(
 //tech-doc: STOP HERE
 output({ updatedPatient })
 
-console.log('Update: ', JSON.stringify(updatedPatient))
-
-expect(updatedPatient.notes[0].markdown['en']).to.equal('Good news everyone!')
+expect(updatedPatient.notes[0].markdown.get('en')).to.equal('Good news everyone!')
 expect(updatedPatient.modified).to.not.be.undefined
 expect(updatedPatient.modified).to.be.greaterThan(updatedPatient.created)
 expect(updatedPatient.rev).to.not.equal(createdPatient.rev)

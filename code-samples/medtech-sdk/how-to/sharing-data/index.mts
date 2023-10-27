@@ -118,12 +118,13 @@ const dataSample = await pApi.dataSampleApi.createOrModifyDataSampleFor(
     comment: 'This is a comment',
   }),
 )
-expect((await pApi.dataSampleApi.getDataSample(dataSample.id)).content['en'].stringValue).to.equal(
+expect(
+  (await pApi.dataSampleApi.getDataSample(dataSample.id)).content.get('en').stringValue,
+).to.equal(
   //skip
   contentString, //skip
 ) //skip
-expect(hcp1Api.dataSampleApi.getDataSample(dataSample.id)).to.be.rejected //skip
-expect(hcp1Api.dataSampleApi.getDataSample(dataSample.id)).to.be.rejected //skip
+expect(hcp2Api.dataSampleApi.getDataSample(dataSample.id)).to.be.rejected //skip
 // p shares the data sample with hcp1
 await pApi.dataSampleApi.giveAccessTo(dataSample, pApi.dataOwnerApi.getDataOwnerIdOf(hcp1User))
 // hcp1 shares the data sample with hcp2
@@ -133,11 +134,11 @@ await hcp1Api.dataSampleApi.giveAccessTo(
 )
 //tech-doc: end
 expect(
-  (await hcp1Api.dataSampleApi.getDataSample(dataSample.id)).content['en'].stringValue,
+  (await hcp1Api.dataSampleApi.getDataSample(dataSample.id)).content.get('en').stringValue,
 ).to.equal(contentString)
 expect(
-  (await hcp2Api.dataSampleApi.getDataSample(dataSample.id)).content['en'].stringValue,
+  (await hcp2Api.dataSampleApi.getDataSample(dataSample.id)).content.get('en').stringValue,
 ).to.equal(contentString)
-expect((await pApi.dataSampleApi.getDataSample(dataSample.id)).content['en'].stringValue).to.equal(
-  contentString,
-)
+expect(
+  (await pApi.dataSampleApi.getDataSample(dataSample.id)).content.get('en').stringValue,
+).to.equal(contentString)
