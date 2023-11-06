@@ -100,7 +100,6 @@ const newTopic = await api.topicApi.create(
   undefined, // Codes
 )
 //tech-doc: STOP HERE
-
 output({
   newTopic: JSON.stringify(newTopic, null, 2),
 })
