@@ -70,8 +70,7 @@ const newConditionInstance = async (patient: Patient) => {
   )
 }
 
-// tech-doc: create topic
-
+//tech-doc: create topic
 const participants = [
   {
     participant: user1DataOwnerId,
@@ -91,7 +90,6 @@ const sharedPatient = await api.patientApi.giveAccessTo(patient, user2DataOwnerI
 const sharedCondition = await api.conditionApi.giveAccessTo(condtition, user2DataOwnerId)
 const sharedObservation = await api.observationApi.giveAccessTo(observation, user2DataOwnerId)
 
-// highlight-start
 const newTopic = await api.topicApi.create(
   participants,
   'Topic name',
@@ -101,14 +99,13 @@ const newTopic = await api.topicApi.create(
   undefined, // Tags
   undefined, // Codes
 )
-// highlight-end
-// tech-doc: STOP HERE
+//tech-doc: STOP HERE
+
 output({
-  newTopic,
+  newTopic: JSON.stringify(newTopic, null, 2),
 })
 
-// tech-doc: add participant to topic
-
+//tech-doc: add participant to topic
 // Initial context
 const patient2: Patient = await newPatientInstance()
 const condition2: Condition = await newConditionInstance(patient)
@@ -132,58 +129,46 @@ const newParticipant = {
   role: TopicRole.PARTICIPANT,
 }
 
-// highlight-start
 const updatedTopicWithNewParticipant = await api.topicApi.addParticipant(
   topicToAddNewParticipant,
   newParticipant,
 )
-// highlight-end
-
-// tech-doc: STOP HERE
+//tech-doc: STOP HERE
 
 output({
   updatedTopicWithNewParticipant,
 })
 
-// tech-doc: share linked health element and service with the new participant
-
+//tech-doc: share linked health element and service with the new participant
 const updatedPatient = await api.patientApi.giveAccessTo(patient2, user2DataOwnerId)
 const updatedCondition = await api.conditionApi.giveAccessTo(condition2, user2DataOwnerId)
 const updatedObservation = await api.observationApi.giveAccessTo(observation2, user2DataOwnerId)
+//tech-doc: STOP HERE
 
-// tech-doc: STOP HERE
-
-// tech-doc: remove participant from topic
-
+//tech-doc: remove participant from topic
 const participantToRemove = user2DataOwnerId
 
-// highlight-start
 const updatedTopicWithRemovedParticipant = await api.topicApi.removeParticipant(
   updatedTopicWithNewParticipant,
   participantToRemove,
 )
-// highlight-end
-// tech-doc: STOP HERE
+//tech-doc: STOP HERE
 
 output({
   updatedTopicWithRemovedParticipant,
 })
 
-// tech-doc: leave topic
-
+//tech-doc: leave topic
 const topicThatWillBeLeft = await api.topicApi.create(participants, 'Topic that will be left')
 
-// highlight-start
 const updatedTopicThatHaveBeenLeftByUser2 = await api2.topicApi.leave(topicThatWillBeLeft) // user2 leaves the topic
-// highlight-end
-// tech-doc: STOP HERE
+//tech-doc: STOP HERE
 
 output({
   updatedTopicThatHaveBeenLeftByUser2,
 })
 
-// tech-doc: add observations to topic
-
+//tech-doc: add observations to topic
 const patient3: Patient = await newPatientInstance()
 
 const topicToShareServices = await api.topicApi.create(
@@ -202,34 +187,28 @@ const sharedObservations = [
   )),
 ].flat()
 
-// highlight-start
 const topicWithNewlySharedObs = await api.topicApi.addObservations(
   topicToShareServices,
   sharedObservations,
 )
-// highlight-end
-
-// tech-doc: STOP HERE
+//tech-doc: STOP HERE
 
 output({
   topicWithNewlySharedObs,
 })
 
-// tech-doc: remove observations from topic
-
+//tech-doc: remove observations from topic
 const topicWithRemovedObs = await api.topicApi.removeObservations(
   topicWithNewlySharedObs,
   sharedObservations,
 )
-
-// tech-doc: STOP HERE
+//tech-doc: STOP HERE
 
 output({
   topicWithRemovedObs,
 })
 
-// tech-doc: add conditions to topic
-
+//tech-doc: add conditions to topic
 const topicToShareHealthElements = await api.topicApi.create(
   participants,
   'Topic to share health elements',
@@ -239,65 +218,52 @@ const topicToShareHealthElements = await api.topicApi.create(
 const condition3 = await newConditionInstance(patient)
 const newlySharedCondition = await api.conditionApi.giveAccessTo(condition3, user2DataOwnerId)
 
-// highlight-start
 const topicWithNewlySharedConditions = await api.topicApi.addConditions(
   topicToShareHealthElements,
   [newlySharedCondition],
 )
-// highlight-end
-
-// tech-doc: STOP HERE
+//tech-doc: STOP HERE
 
 output({
   topicWithNewlySharedConditions,
 })
 
-// tech-doc: remove conditions from topic
-
+//tech-doc: remove conditions from topic
 const topicWithRemovedConditions = await api.topicApi.removeConditions(
   topicWithNewlySharedConditions,
   [newlySharedCondition],
 )
-
-// tech-doc: STOP HERE
+//tech-doc: STOP HERE
 
 output({
   topicWithRemovedConditions,
 })
 
-// tech-doc: get topic by id
-
+//tech-doc: get topic by id
 const topicToBeFetched = await api.topicApi.create(participants, 'Topic to be fetched')
 
 const topicId = topicToBeFetched.id!
 
-// highlight-start
 const topicById = await api.topicApi.get(topicId)
-// highlight-end
-
-// tech-doc: STOP HERE
+//tech-doc: STOP HERE
 
 output({
   topicById,
 })
 
-// tech-doc: get topics using filter
-
+//tech-doc: get topics using filter
 const filter = await new TopicFilter(api).forSelf().byParticipant(user1DataOwnerId).build()
 
 const paginatedList = await api.topicApi.filterBy(filter)
-
-// tech-doc: STOP HERE
+//tech-doc: STOP HERE
 
 output({
   paginatedList,
 })
 
-// tech-doc: get topic ids using match
-
+//tech-doc: get topic ids using match
 const topicIds = await api.topicApi.matchBy(filter)
-
-// tech-doc: STOP HERE
+//tech-doc: STOP HERE
 
 output({
   topicIds,

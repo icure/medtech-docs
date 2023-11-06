@@ -7,7 +7,7 @@ tags:
   - Messaging
   - Channel
 ---
-
+{{#ehrlite}}
 # Handling topics
 
 In this section, we will learn how to manage Topics. A `Topic` is similar to a chat channel and establishes the link between the `activeParticipants` involved in the text exchange. A `Topic` can reference a `Patient`, one or more `Observation`(s) (optional), and/or one or more `Condition`(s) (optional).
@@ -47,6 +47,8 @@ To create a `Topic`, you must use the `create` function. To do this, you will ne
 - `codes`, the `Codes` related to the `Topic`. Optional.
 
 <!-- file://code-samples/{{sdk}}/how-to/manage-topics/index.mts snippet:create topic-->
+```typescript
+```
 
 <!-- output://code-samples/{{sdk}}/how-to/manage-topics/newTopic.txt -->
 <details>
@@ -63,6 +65,8 @@ To add a participant to a `Topic`, you must use the `addParticipant` function. T
 - `participant`, a reference to the participant you want to add to the `Topic`, along with their role.
 
 <!-- file://code-samples/{{sdk}}/how-to/manage-topics/index.mts snippet:add participant to topic-->
+```typescript
+```
 
 <!-- output://code-samples/{{sdk}}/how-to/manage-topics/updatedTopicWithNewParticipant.txt -->
 <details>
@@ -72,6 +76,8 @@ To add a participant to a `Topic`, you must use the `addParticipant` function. T
 You'll also need to manually share access to the different entities referenced in the `Topic`:
 
 <!-- file://code-samples/{{sdk}}/how-to/manage-topics/index.mts snippet:share linked health element and service with the new participant-->
+```typescript
+```
 
 ### Removing a Participant
 
@@ -81,6 +87,8 @@ To remove a participant from a `Topic`, you must use the `removeParticipant` fun
 - `participant`, a reference to the participant you want to remove from the `Topic`.
 
 <!-- file://code-samples/{{sdk}}/how-to/manage-topics/index.mts snippet:remove participant from topic-->
+```typescript
+```
 
 <!-- output://code-samples/{{sdk}}/how-to/manage-topics/updatedTopicWithRemovedParticipant.txt -->
 <details>
@@ -95,6 +103,8 @@ To leave a `Topic`, you can use the `removeParticipant` function. However, there
 - `topic`, a reference to the `Topic` you wish to leave.
 
 <!-- file://code-samples/{{sdk}}/how-to/manage-topics/index.mts snippet:leave topic-->
+```typescript
+```
 
 <!-- output://code-samples/{{sdk}}/how-to/manage-topics/updatedTopicThatHaveBeenLeftByUser2.txt -->
 <details>
@@ -119,6 +129,8 @@ To add `Observations` to a `Topic`, you must use the `addObservations` function.
 - `observations`, a list of references to the `Observations` you want to add to the `Topic`.
 
 <!-- file://code-samples/{{sdk}}/how-to/manage-topics/index.mts snippet:add observations to topic-->
+```typescript
+```
 
 <!-- output://code-samples/{{sdk}}/how-to/manage-topics/topicWithNewlySharedObs.txt -->
 <details>
@@ -135,6 +147,8 @@ To remove `Observations` from a `Topic`, you must use the `removeObservations` f
 - `observations`, a list of references to the `Observations` you want to remove from the `Topic`.
 
 <!-- file://code-samples/{{sdk}}/how-to/manage-topics/index.mts snippet:remove observations from topic-->
+```typescript
+```
 
 <!-- output://code-samples/{{sdk}}/how-to/manage-topics/topicWithRemovedObs.txt -->
 <details>
@@ -156,6 +170,8 @@ To add `Conditions` to a `Topic`, you must use the `addConditions` function. You
 - `conditions`, a list of references to the `Conditions` you want to add to the `Topic`.
 
 <!-- file://code-samples/{{sdk}}/how-to/manage-topics/index.mts snippet:add conditions to topic-->
+```typescript
+```
 
 <!-- output://code-samples/{{sdk}}/how-to/manage-topics/topicWithNewlySharedConditions.txt -->
 <details>
@@ -173,6 +189,8 @@ To remove `Conditions` from a `Topic`, you must use the `removeConditions` funct
 - `conditions`, a list of references to the `Conditions` you want to remove from the `Topic`.
 
 <!-- file://code-samples/{{sdk}}/how-to/manage-topics/index.mts snippet:remove conditions from topic-->
+```typescript
+```
 
 <!-- output://code-samples/{{sdk}}/how-to/manage-topics/topicWithRemovedConditions.txt -->
 <details>
@@ -185,45 +203,52 @@ The `Conditions` are not deleted from the platform. They are simply unlinked fro
 
 :::
 
-## Obtenir des Topics
+## Retrieving Topics
 
-### Obtenir un Topic par son ID
+### Retrieve a Topic by Its ID
 
-Pour obtenir un `Topic` par son ID, vous devez utiliser la fonction `get`. Pour cela, vous devrez fournir les informations suivantes :
+To retrieve a `Topic` by its ID, you must use the `get` function. For this, you will need to provide the following information:
 
-- `id`, l'ID du `Topic` que vous souhaitez obtenir.
+- `id`, the ID of the `Topic` you wish to retrieve.
 
 <!-- file://code-samples/{{sdk}}/how-to/manage-topics/index.mts snippet:get topic by id-->
+```typescript
+```
 
 <!-- output://code-samples/{{sdk}}/how-to/manage-topics/topicById.txt -->
 <details>
 <summary>topicById</summary>
 </details>
 
-### Filtrer les Topics
+### Filtering Topics
 
-Pour filtrer les `Topics`, vous devez utiliser la fonction `filterBy`. Pour cela, vous devrez fournir les informations suivantes :
+To filter `Topics`, you must use the `filterBy` function. For this, you will need to provide the following information:
 
-- `filter`, un objet de type `Filter<Topic>` qui vous permettra de filtrer les `Topics` selon différents critères.
+- `filter`, an object of type `Filter<Topic>` that will allow you to filter `Topics` based on various criteria.
 
-Vous pouvez utiliser le builder `TopicFilter` pour construire votre filtre.
+You can use the `TopicFilter` builder to construct your filter.
 
 <!-- file://code-samples/{{sdk}}/how-to/manage-topics/index.mts snippet:get topics using filter-->
+```typescript
+```
 
 <!-- output://code-samples/{{sdk}}/how-to/manage-topics/paginatedList.txt -->
 <details>
 <summary>paginatedList</summary>
 </details>
 
-#### Obtenir les identifiants des Topics filtrés
+#### Getting IDs of Filtered Topics
 
-Vous pouvez également uniquement obtenir les identifiants en appliquant le même filtre en faisant un appel sur `matchBy`. Pour cela, vous devrez fournir les informations suivantes :
+You can also just get the IDs by applying the same filter using a call to `matchBy`. For this, you will need to provide the following information:
 
-- `filter`, un objet de type `Filter<Topic>` qui vous permettra de filtrer les `Topics` selon différents critères.
+- `filter`, an object of type `Filter<Topic>` that will allow you to filter `Topics` based on various criteria.
 
 <!-- file://code-samples/{{sdk}}/how-to/manage-topics/index.mts snippet:get topic ids using match-->
+```typescript
+```
 
 <!-- output://code-samples/{{sdk}}/how-to/manage-topics/topicIds.txt -->
 <details>
 <summary>topicIds</summary>
 </details>
+{{/ehrlite}}
