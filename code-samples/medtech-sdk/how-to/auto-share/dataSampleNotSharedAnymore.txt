@@ -1,0 +1,32 @@
+{
+  "id": "68906f42-d1e0-4268-b9ad-4c68fbcab284",
+  "identifiers": [],
+  "batchId": "f6a6808e-be62-4bad-aa88-3c188770b44b",
+  "healthcareElementIds": {},
+  "canvasesIds": {},
+  "content": {},
+  "valueDate": 20231027141028,
+  "openingDate": 20231027141028,
+  "index": 0,
+  "created": 1698415828836,
+  "modified": 1698415828836,
+  "author": "87da0d19-08fa-49dd-9d71-c13e192ecfa9",
+  "responsible": "79196cb4-ad8c-4cf3-887c-62742f42b278",
+  "qualifiedLinks": {},
+  "labels": {},
+  "systemMetaData": {
+    "secretForeignKeys": [
+      "48e40e70-aa2a-4c78-aaa7-27b262f640ac"
+    ],
+    "cryptedForeignKeys": {},
+    "delegations": {},
+    "encryptionKeys": {},
+    "securityMetadata": {
+      "secureDelegations": {},
+      "keysEquivalences": {}
+    },
+    "encryptedSelf": "Y76X1A3H71kUbeCa4XJY30r0B2CnCd38bkvF0SDANC+K4907Sxj8NLY1zyxxhHLB3lP0i9LHqkVWVHKFtER47KzjkYVFEcATfxuFexwK8cyT7s4MwUGBPolPFIR3GdbK62ztsdqagtPTzNLd4v3xBw==",
+    "tags": {}
+  },
+  "codes": {}
+}

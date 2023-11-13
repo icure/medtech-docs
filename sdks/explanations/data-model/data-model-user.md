@@ -31,13 +31,6 @@ the MedTech API.
 
 <!-- file://code-samples/{{sdk}}/explanation/patient-creates-data-sample/index.mts snippet:patient logs in-->
 ```typescript
-const api = await medTechApi()
-  .withICureBaseUrl(host)
-  .withUserName(patientUserName)
-  .withPassword(patientPassword)
-  .withCrypto(webcrypto as any)
-  .withCryptoStrategies(new SimpleMedTechCryptoStrategies([]))
-  .build()
 ```
 
 ### A Doctor Inviting a Patient
@@ -47,6 +40,4 @@ to the iCure platform.
 
 <!-- file://code-samples/{{sdk}}/explanation/doctor-invites-a-patient/index.mts snippet:doctor invites user-->
 ```typescript
-const messageFactory = new ICureRegistrationEmail(hcp, 'test', 'iCure', existingPatient)
-const createdUser = await api.userApi.createAndInviteUser(existingPatient, messageFactory)
 ```

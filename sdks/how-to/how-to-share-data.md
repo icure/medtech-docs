@@ -27,11 +27,6 @@ First create a new entity, in this example `hcp1` creates a patient:
 
 <!-- file://code-samples/{{sdk}}/how-to/sharing-data/index.mts snippet:create a patient-->
 ```typescript
-// hcp1 creates a new patient
-const note = 'Winter is coming'
-const patient = await hcp1Api.patientApi.createOrModifyPatient(
-  new Patient({ firstName: 'John', lastName: 'Snow', note }),
-)
 ```
 
 `hcp1` can now share the newly created patient with other data owners, no matter if they are other healthcare 
@@ -43,13 +38,6 @@ owner with whom the entity will be shared.
 
 <!-- file://code-samples/{{sdk}}/how-to/sharing-data/index.mts snippet:share a patient-->
 ```typescript
-// hcp1 shares the information of `patient` with hcp2
-const updatedPatient = await hcp1Api.patientApi.giveAccessTo(
-  patient,
-  hcp1Api.dataOwnerApi.getDataOwnerIdOf(hcp2User),
-)
-// hcp1 shares the information of `patient` with p (a different patient that is also a data owner)
-await hcp1Api.patientApi.giveAccessTo(updatedPatient, hcp1Api.dataOwnerApi.getDataOwnerIdOf(pUser))
 ```
 
 :::caution
@@ -79,40 +67,12 @@ In this example `hcp1` creates a {{healthcareElement}} and shares it with `p`.
 
 <!-- file://code-samples/{{sdk}}/how-to/sharing-data/index.mts snippet:create a {{healthcareElement}}-->
 ```typescript
-// hcp1 creates a new {{healthcareElement}}
-const description = 'The patient has been diagnosed Pararibulitis'
-const healthcareElement = await hcp1Api.healthcareElementApi.createOrModifyHealthcareElement(
-  new HealthcareElement({
-    description: description,
-    codes: new Set([
-      new CodingReference({
-        id: 'SNOMEDCT|617|20020131',
-        type: 'SNOMEDCT',
-        code: '617',
-        version: '20020131',
-      }),
-    ]),
-    openingDate: new Date('2019-10-12').getTime(),
-  }),
-  patient.id,
-)
-expect(
-// hcp1 shares `healthcareElement` with p
-await hcp1Api.healthcareElementApi.giveAccessTo(
-  healthcareElement,
-  hcp1Api.dataOwnerApi.getDataOwnerIdOf(pUser),
-)
 ```
 
 Now also `p` can share the {{healthcareElement}} with other data owners.
 
 <!-- file://code-samples/{{sdk}}/how-to/sharing-data/index.mts snippet:share a {{healthcareElement}}-->
 ```typescript
-// p retrieves `healthcareElement` and shares it with hcp2
-await pApi.healthcareElementApi.giveAccessTo(
-  await pApi.healthcareElementApi.getHealthcareElement(healthcareElement.id),
-  pApi.dataOwnerApi.getDataOwnerIdOf(hcp2User),
-)
 ```
 
 ## Sharing data as a patient
@@ -122,25 +82,6 @@ In this example `p` creates a {{service}} and shares it with `hcp1`, then `hcp1`
 
 <!-- file://code-samples/{{sdk}}/how-to/sharing-data/index.mts snippet:create and share a {{service}}-->
 ```typescript
-// p creates a {{service}}
-const contentString = 'Hello world'
-const dataSample = await pApi.dataSampleApi.createOrModifyDataSampleFor(
-  patient.id,
-  new DataSample({
-    labels: new Set([new CodingReference({ type: 'IC-TEST', code: 'TEST' })]),
-    content: { en: new Content({ stringValue: contentString }) },
-    openingDate: 20220929083400,
-    comment: 'This is a comment',
-  }),
-)
-expect((await pApi.dataSampleApi.getDataSample(dataSample.id)).content['en'].stringValue).to.equal(
-// p shares the {{service}} with hcp1
-await pApi.dataSampleApi.giveAccessTo(dataSample, pApi.dataOwnerApi.getDataOwnerIdOf(hcp1User))
-// hcp1 shares the {{service}} with hcp2
-await hcp1Api.dataSampleApi.giveAccessTo(
-  await hcp1Api.dataSampleApi.getDataSample(dataSample.id),
-  hcp1Api.dataOwnerApi.getDataOwnerIdOf(hcp2User),
-)
 ```
 
 ## Recovering shared data

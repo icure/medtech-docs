@@ -1,0 +1,14 @@
+{
+  "id": "dab4a392-111c-4ce8-9142-3965556caad5",
+  "rev": "3-dd3db97ca3115162a3663d60d845a7dd",
+  "created": 1698415816728,
+  "name": "Daenerys Targaryen",
+  "properties": {},
+  "roles": {},
+  "login": "arksciiln-dt@got.com",
+  "groupId": "test-group",
+  "patientId": "95c08686-7d02-4caf-ba5b-8fd708ab002a",
+  "sharingDataWith": {},
+  "email": "arksciiln-dt@got.com",
+  "authenticationTokens": {}
+}

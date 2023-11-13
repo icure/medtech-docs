@@ -1,0 +1,19 @@
+{
+  "id": "5f7d11da-ff86-4f57-b4f3-65c489c01501",
+  "rev": "2-36bfc8c433903e8be00bdc706d48da17",
+  "created": 1698415754732,
+  "name": "Master HCP",
+  "properties": [],
+  "roles": [],
+  "login": "master@54b9f2.icure",
+  "groupId": "test-group",
+  "healthcarePartyId": "54b9f244-ce89-4860-b242-028654575a74",
+  "sharingDataWith": {},
+  "email": "master@54b9f2.icure",
+  "authenticationTokens": {
+    "47b9fba8-a10e-488b-bdfa-c33a2871cf33": {
+      "creationTime": 1698415754875,
+      "validity": 86400
+    }
+  }
+}

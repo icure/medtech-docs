@@ -1,0 +1,28 @@
+{
+  "id": "b1fdf3de-516e-43f1-8a6c-1ff4cb103dc7",
+  "rev": "4-816602273ac7f08e555c1af7d3f2582f",
+  "created": 1698415788753,
+  "modified": 1698415788753,
+  "author": "5f7d11da-ff86-4f57-b4f3-65c489c01501",
+  "responsible": "54b9f244-ce89-4860-b242-028654575a74",
+  "tags": {},
+  "codes": {},
+  "descr": "Topic name",
+  "linkedHealthElements": {},
+  "linkedServices": {},
+  "activeParticipants": {},
+  "systemMetadata": {
+    "secretForeignKeys": [
+      "0d83b1e1-0107-404a-be09-d44a33efcfdb"
+    ],
+    "cryptedForeignKeys": {},
+    "delegations": {},
+    "encryptionKeys": {},
+    "securityMetadata": {
+      "secureDelegations": {},
+      "keysEquivalences": {}
+    },
+    "encryptedSelf": "8eDMZv89Ujq6bcUIy4PTCF0EBeUmEB/g5R6u0WQeQbzmZq7bbe3i9EqrigTR/tViA1q/IoU1sJ1eIjlKeI51ck63havZqLgQTEFvEqi9YsEF6URkeNAVuI1XpPR6ffovrMxLW7E25E35AS7vqhQqaWv+hJ+v3yHMZBPhEGvUi26gSAvI9jfv6rycVs5sgPnohgjT4yrQYKoADGMHGlmShEgNSZI+ubLx6Up0pBnoehI=",
+    "tags": {}
+  }
+}

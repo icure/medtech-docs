@@ -1,0 +1,4 @@
+{
+  "healthcarePartyId": "fce6129d-6001-49c1-bd0b-fc22dcc38f0b",
+  "$type": "PatientByHealthcarePartyFilter"
+}

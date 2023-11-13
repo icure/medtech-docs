@@ -36,13 +36,6 @@ First, you will have to change the URL used to instantiate the MedTech API to al
 
 <!-- file://code-samples/{{sdk}}/how-to/migrate-to-premium/index.mts snippet:instantiate the api-->
 ```typescript
-const medtechApi = await medTechApi()
-  .withICureBaseUrl(host)
-  .withUserName(userName)
-  .withPassword(password)
-  .withCrypto(webcrypto as any)
-  .withCryptoStrategies(new SimpleMedTechCryptoStrategies([]))
-  .build()
 ```
 
 ### Access Control

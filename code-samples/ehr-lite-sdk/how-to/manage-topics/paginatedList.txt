@@ -1,0 +1,168 @@
+{
+  "rows": [
+    {
+      "id": "0a4abc8f-f4d8-4a1a-80a4-bb1de64d83bc",
+      "rev": "1-03ad43ccb32df8071136571a8717a533",
+      "created": 1698415788573,
+      "modified": 1698415788573,
+      "author": "5f7d11da-ff86-4f57-b4f3-65c489c01501",
+      "responsible": "54b9f244-ce89-4860-b242-028654575a74",
+      "tags": {},
+      "codes": {},
+      "descr": "Topic name",
+      "linkedHealthElements": {},
+      "linkedServices": {},
+      "activeParticipants": {},
+      "systemMetadata": {
+        "secretForeignKeys": [
+          "20a24ca1-7231-463c-8c49-a515347c238a"
+        ],
+        "cryptedForeignKeys": {},
+        "delegations": {},
+        "encryptionKeys": {},
+        "securityMetadata": {
+          "secureDelegations": {},
+          "keysEquivalences": {}
+        },
+        "encryptedSelf": "yhVOU/5j457ch7vGjT+PpYtlJKD7dzSACDoUY867vsi9FV65/8pkiYjMhwM++H9baWdwcEsQzUBHbYxZYWrrC2WZl3zJOOLqjbWPCVzvA1O2VRjUaQqDzsfsOx/+U+9p6sMK0WYdSN7jiISkh2uJ6SUQj011GJ9641KZ8Ck5hgLS2/gdMCi9eyJGQqheoXLUHjVOBRsfgd5e5V6Jcaa1gUkLBYMdR4Cq1unYqRgQLYM=",
+        "tags": {}
+      }
+    },
+    {
+      "id": "38a83607-b34c-40e8-82c2-0dd0b401c390",
+      "rev": "3-3b14862cf1a5ae431529f1bf9d366e4d",
+      "created": 1698415789047,
+      "modified": 1698415789047,
+      "author": "5f7d11da-ff86-4f57-b4f3-65c489c01501",
+      "responsible": "54b9f244-ce89-4860-b242-028654575a74",
+      "tags": {},
+      "codes": {},
+      "descr": "Topic to share services",
+      "linkedHealthElements": {},
+      "linkedServices": {},
+      "activeParticipants": {},
+      "systemMetadata": {
+        "secretForeignKeys": [
+          "1956cff0-733a-44fd-8efb-5a9ea7164b0a"
+        ],
+        "cryptedForeignKeys": {},
+        "delegations": {},
+        "encryptionKeys": {},
+        "securityMetadata": {
+          "secureDelegations": {},
+          "keysEquivalences": {}
+        },
+        "encryptedSelf": "+Ipb1Y1FKXmmkC5ERLq9sYLjbT9zCOISWdgVrkfmi4q7JTJK7KeOUN81Vmi3iqr40AU1Lp5ydOePGpUoHOBj9ZDLitXhg3XAHWlolFKuRPUR+IUGOL47AgcAMZwPIILUG8bHWqGtGtFolhVgbaSeVA==",
+        "tags": {}
+      }
+    },
+    {
+      "id": "47729fc7-835a-4957-9430-151174e444cf",
+      "rev": "1-3c270f67b427d327d1dd1fbe0d9244dd",
+      "created": 1698415789353,
+      "modified": 1698415789353,
+      "author": "5f7d11da-ff86-4f57-b4f3-65c489c01501",
+      "responsible": "54b9f244-ce89-4860-b242-028654575a74",
+      "tags": {},
+      "codes": {},
+      "descr": "Topic to be fetched",
+      "linkedHealthElements": {},
+      "linkedServices": {},
+      "activeParticipants": {},
+      "systemMetadata": {
+        "secretForeignKeys": [],
+        "cryptedForeignKeys": {},
+        "delegations": {},
+        "encryptionKeys": {},
+        "securityMetadata": {
+          "secureDelegations": {},
+          "keysEquivalences": {}
+        },
+        "encryptedSelf": "KSvp53jkZn+VSmuhkniwDMPrQ1wNjRGns8KiUe3blzHN4xPho3fKj1Kr44mpLn73i7Zl0PByHOGaZn7dDRGS/Q==",
+        "tags": {}
+      }
+    },
+    {
+      "id": "8b0543ee-e263-4a7d-832d-2a423d53bd06",
+      "rev": "3-276713b6ed055b20a6f46b749a1c00c6",
+      "created": 1698415789202,
+      "modified": 1698415789202,
+      "author": "5f7d11da-ff86-4f57-b4f3-65c489c01501",
+      "responsible": "54b9f244-ce89-4860-b242-028654575a74",
+      "tags": {},
+      "codes": {},
+      "descr": "Topic to share health elements",
+      "linkedHealthElements": {},
+      "linkedServices": {},
+      "activeParticipants": {},
+      "systemMetadata": {
+        "secretForeignKeys": [
+          "20a24ca1-7231-463c-8c49-a515347c238a"
+        ],
+        "cryptedForeignKeys": {},
+        "delegations": {},
+        "encryptionKeys": {},
+        "securityMetadata": {
+          "secureDelegations": {},
+          "keysEquivalences": {}
+        },
+        "encryptedSelf": "P1Mmr2Q5Qp9S3Thynv8KeguSK/JQLowoPI7HMOI9ryvN6rzwuHPLIMaFDUEKba5Kn5LUrerOZ7QnLHJ+i+if+A45jyY85Ae1Oi6jbfqBBXW9UlBsbhqCluKD2+NQDUpxA1FlSDaB7hOEDVwmjqvtXQ==",
+        "tags": {}
+      }
+    },
+    {
+      "id": "9874879d-36dd-4594-8e87-3cadf4078c4e",
+      "rev": "2-3b2eb95c3be42f5c47946c7ce2d3b411",
+      "created": 1698415788951,
+      "modified": 1698415788951,
+      "author": "5f7d11da-ff86-4f57-b4f3-65c489c01501",
+      "responsible": "54b9f244-ce89-4860-b242-028654575a74",
+      "tags": {},
+      "codes": {},
+      "descr": "Topic that will be left",
+      "linkedHealthElements": {},
+      "linkedServices": {},
+      "activeParticipants": {},
+      "systemMetadata": {
+        "secretForeignKeys": [],
+        "cryptedForeignKeys": {},
+        "delegations": {},
+        "encryptionKeys": {},
+        "securityMetadata": {
+          "secureDelegations": {},
+          "keysEquivalences": {}
+        },
+        "encryptedSelf": "gpi85V94/GhwG58qoGEDeKuOP8blV0sJQxzuN+U+rc2WZylHBofW8cgmsUE19g8DvGkyr02eFT4QYAPFqVme/Q==",
+        "tags": {}
+      }
+    },
+    {
+      "id": "b1fdf3de-516e-43f1-8a6c-1ff4cb103dc7",
+      "rev": "4-816602273ac7f08e555c1af7d3f2582f",
+      "created": 1698415788753,
+      "modified": 1698415788753,
+      "author": "5f7d11da-ff86-4f57-b4f3-65c489c01501",
+      "responsible": "54b9f244-ce89-4860-b242-028654575a74",
+      "tags": {},
+      "codes": {},
+      "descr": "Topic name",
+      "linkedHealthElements": {},
+      "linkedServices": {},
+      "activeParticipants": {},
+      "systemMetadata": {
+        "secretForeignKeys": [
+          "0d83b1e1-0107-404a-be09-d44a33efcfdb"
+        ],
+        "cryptedForeignKeys": {},
+        "delegations": {},
+        "encryptionKeys": {},
+        "securityMetadata": {
+          "secureDelegations": {},
+          "keysEquivalences": {}
+        },
+        "encryptedSelf": "8eDMZv89Ujq6bcUIy4PTCF0EBeUmEB/g5R6u0WQeQbzmZq7bbe3i9EqrigTR/tViA1q/IoU1sJ1eIjlKeI51ck63havZqLgQTEFvEqi9YsEF6URkeNAVuI1XpPR6ffovrMxLW7E25E35AS7vqhQqaWv+hJ+v3yHMZBPhEGvUi26gSAvI9jfv6rycVs5sgPnohgjT4yrQYKoADGMHGlmShEgNSZI+ubLx6Up0pBnoehI=",
+        "tags": {}
+      }
+    }
+  ]
+}

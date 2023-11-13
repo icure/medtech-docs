@@ -1,0 +1,13 @@
+{
+  "id": "05c83910-1689-4699-9f31-3dc66d60f304",
+  "rev": "1-14c4762b8f4ed1a0baf28be436140350",
+  "created": 1698415786949,
+  "properties": {},
+  "roles": {},
+  "login": "johng9n8f2es",
+  "passwordHash": "*",
+  "groupId": "test-group",
+  "sharingDataWith": {},
+  "email": "johng9n8f2es@hospital.care",
+  "authenticationTokens": {}
+}

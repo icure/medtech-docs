@@ -1,0 +1,31 @@
+{
+  "id": "2783e704-7d38-44d4-96b0-4777f6f75f25",
+  "identifiers": [],
+  "rev": "1-c7fb9ae3ec49e06c2cba80b72eaae64c",
+  "created": 1698416467890,
+  "modified": 1698416467890,
+  "author": "1cd44623-2483-4276-97c1-f2291e70c2f9",
+  "responsible": "8a17be3c-8750-40d5-96ee-36022f877bdc",
+  "bodySite": {},
+  "tags": {},
+  "codes": {},
+  "healthcareElementId": "50aa5797-7557-4b38-98fe-79dd7d05fa3d",
+  "recordedDate": 20231027142107,
+  "openingDate": 1604793600000,
+  "description": "The patient recovered",
+  "notes": [],
+  "systemMetaData": {
+    "secretForeignKeys": [
+      "5e93d7b2-61d3-4757-9618-5da511ba3094"
+    ],
+    "cryptedForeignKeys": {},
+    "delegations": {},
+    "encryptionKeys": {},
+    "securityMetadata": {
+      "secureDelegations": {},
+      "keysEquivalences": {}
+    },
+    "encryptedSelf": "3N/NISzSToaM+Xx9dsPOWqeUyhaEVi6fSHiu8i7GEPfyUP5aZdsQRpzNP2TJHvyu0iT8uNl4uqmx5Cuwkp4Khw==",
+    "tags": {}
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "id": "d65ed853-9251-4605-83b0-19b903f6e735",
+  "identifiers": [],
+  "tags": {},
+  "codes": {},
+  "lastName": "Keats",
+  "firstName": "John",
+  "names": [],
+  "speciality": "Psychiatrist",
+  "addresses": [
+    {
+      "telecoms": [
+        {
+          "system": "email",
+          "value": "jk@hospital.care"
+        }
+      ]
+    }
+  ],
+  "languages": [],
+  "specialityCodes": {},
+  "description": {},
+  "properties": {}
+}

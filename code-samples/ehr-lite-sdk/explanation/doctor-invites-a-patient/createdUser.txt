@@ -1,0 +1,14 @@
+{
+  "id": "48291866-0e11-4074-b1c9-0f5f727dc085",
+  "rev": "1-68e22f1dddf0685ab40d8b2767bccdd4",
+  "created": 1698415806439,
+  "name": "cda9297e@icure.com",
+  "properties": {},
+  "roles": {},
+  "login": "cda9297e@icure.com",
+  "groupId": "test-group",
+  "patientId": "fc611bfb-d571-42e3-ac85-12e683227c1d",
+  "sharingDataWith": {},
+  "email": "cda9297e@icure.com",
+  "authenticationTokens": {}
+}

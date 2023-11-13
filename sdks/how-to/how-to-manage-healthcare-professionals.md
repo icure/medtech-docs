@@ -18,28 +18,6 @@ Pass the `healthcareProfessional` to the createHealthcareProfessional method of 
 
 <!-- file://code-samples/{{sdk}}/how-to/manage-healthcare-professionals/index.mts snippet:Create a {{hcp}}-->
 ```typescript
-const healthcareProfessional: HealthcareProfessional = new HealthcareProfessional({
-  firstName: 'John',
-  lastName: 'Keats',
-  speciality: 'Psychiatrist',
-  codes: new Set([
-    new CodingReference({ type: 'practitioner-specialty', code: healthcareProfessionalCode }),
-  ]),
-  addresses: [
-    new Address({
-      telecoms: [
-        new Telecom({
-          telecomType: 'email',
-          telecomNumber: `jk@hospital.care`,
-        }),
-      ],
-    }),
-  ],
-})
-
-const createdHcp = await api.healthcareProfessionalApi.createOrModifyHealthcareProfessional(
-  healthcareProfessional,
-)
 ```
 
 <!-- output://code-samples/{{sdk}}/how-to/manage-healthcare-professionals/createdHcp.txt -->
@@ -47,46 +25,6 @@ const createdHcp = await api.healthcareProfessionalApi.createOrModifyHealthcareP
 <summary>createdHcp</summary>
 
 ```json
-{
-  "id": "885de220-ed2d-45eb-af8c-70dde427b679",
-  "languages": [],
-  "rev": "1-51f36dc600b3a7814e1fc33ea19b9bda",
-  "name": "Keats John",
-  "lastName": "Keats",
-  "firstName": "John",
-  "speciality": "Psychiatrist",
-  "labels": {},
-  "codes": {},
-  "names": [
-    {
-      "firstNames": [
-        "John"
-      ],
-      "prefix": [],
-      "suffix": [],
-      "lastName": "Keats",
-      "text": "Keats John",
-      "use": "official"
-    }
-  ],
-  "addresses": [
-    {
-      "telecoms": [
-        {
-          "telecomNumber": "jk@hospital.care",
-          "telecomType": "email"
-        }
-      ]
-    }
-  ],
-  "properties": {},
-  "systemMetaData": {
-    "hcPartyKeys": {},
-    "privateKeyShamirPartitions": {},
-    "aesExchangeKeys": {},
-    "transferKeys": {}
-  }
-}
 ```
 </details>
 
@@ -104,46 +42,6 @@ const loadedHcp = await api.healthcareProfessionalApi.getHealthcareProfessional(
 <summary>loadedHcp</summary>
 
 ```json
-{
-  "id": "885de220-ed2d-45eb-af8c-70dde427b679",
-  "languages": [],
-  "rev": "1-51f36dc600b3a7814e1fc33ea19b9bda",
-  "name": "Keats John",
-  "lastName": "Keats",
-  "firstName": "John",
-  "speciality": "Psychiatrist",
-  "labels": {},
-  "codes": {},
-  "names": [
-    {
-      "firstNames": [
-        "John"
-      ],
-      "prefix": [],
-      "suffix": [],
-      "lastName": "Keats",
-      "text": "Keats John",
-      "use": "official"
-    }
-  ],
-  "addresses": [
-    {
-      "telecoms": [
-        {
-          "telecomNumber": "jk@hospital.care",
-          "telecomType": "email"
-        }
-      ]
-    }
-  ],
-  "properties": {},
-  "systemMetaData": {
-    "hcPartyKeys": {},
-    "privateKeyShamirPartitions": {},
-    "aesExchangeKeys": {},
-    "transferKeys": {}
-  }
-}
 ```
 </details>
 
@@ -155,11 +53,6 @@ You can build filters by hand or use the DSL provided by the HealthcareProfessio
 
 <!-- file://code-samples/{{sdk}}/how-to/manage-healthcare-professionals/index.mts snippet:Filter {{hcps}}-->
 ```typescript
-const hcps = await api.healthcareProfessionalApi.filterHealthcareProfessionalBy(
-  await new HealthcareProfessionalFilter(api)
-    .byLabelCodeFilter(undefined, undefined, 'practitioner-specialty', healthcareProfessionalCode)
-    .build(),
-)
 ```
 
 <!-- output://code-samples/{{sdk}}/how-to/manage-healthcare-professionals/hcps.txt -->
@@ -167,53 +60,6 @@ const hcps = await api.healthcareProfessionalApi.filterHealthcareProfessionalBy(
 <summary>hcps</summary>
 
 ```json
-{
-  "pageSize": 1000,
-  "totalSize": 250,
-  "rows": [
-    {
-      "id": "885de220-ed2d-45eb-af8c-70dde427b679",
-      "languages": [],
-      "rev": "1-51f36dc600b3a7814e1fc33ea19b9bda",
-      "name": "Keats John",
-      "lastName": "Keats",
-      "firstName": "John",
-      "speciality": "Psychiatrist",
-      "labels": {},
-      "codes": {},
-      "names": [
-        {
-          "firstNames": [
-            "John"
-          ],
-          "prefix": [],
-          "suffix": [],
-          "lastName": "Keats",
-          "text": "Keats John",
-          "use": "official"
-        }
-      ],
-      "addresses": [
-        {
-          "telecoms": [
-            {
-              "telecomNumber": "jk@hospital.care",
-              "telecomType": "email"
-            }
-          ]
-        }
-      ],
-      "properties": {},
-      "systemMetaData": {
-        "hcPartyKeys": {},
-        "privateKeyShamirPartitions": {},
-        "aesExchangeKeys": {},
-        "transferKeys": {}
-      }
-    }
-  ],
-  "nextKeyPair": {}
-}
 ```
 </details>
 
@@ -223,7 +69,6 @@ The deleteHealthcareProfessional method of the healthcareProfessionalApi allows 
 
 <!-- file://code-samples/{{sdk}}/how-to/manage-healthcare-professionals/index.mts snippet:Delete a {{hcp}}-->
 ```typescript
-const deletedHcp = await api.healthcareProfessionalApi.deleteHealthcareProfessional(createdHcp.id)
 ```
 
 <!-- output://code-samples/{{sdk}}/how-to/manage-healthcare-professionals/deletedHcp.txt -->
@@ -231,6 +76,5 @@ const deletedHcp = await api.healthcareProfessionalApi.deleteHealthcareProfessio
 <summary>deletedHcp</summary>
 
 ```text
-3-ced7d11ed93a65d8d1d32f12358ce9fe
 ```
 </details>

@@ -26,61 +26,12 @@ takes two parameters: the patient's id and the DataSample object.
 
 <!-- file://code-samples/{{sdk}}/how-to/datasamples/index.mts snippet:create a dataSample-->
 ```typescript
-const createdDataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
-  patient.id!,
-  new DataSample({
-    labels: new Set([new CodingReference({ type: 'IC-TEST', code: 'TEST' })]),
-    content: { en: new Content({ stringValue: 'Hello world' }) },
-    openingDate: 20220929083400,
-    comment: 'This is a comment',
-  }),
-)
 ```
 <!-- output://code-samples/{{sdk}}/how-to/datasamples/createdDataSample.txt -->
 <details>
 <summary>createdDataSample</summary>
 
 ```json
-{
-  "id": "4b59d528-6c22-430f-8fc7-61f44b5e716b",
-  "qualifiedLinks": {},
-  "batchId": "f73812c1-3e39-46c7-a6f5-f83f5e7508c6",
-  "index": 0,
-  "valueDate": 20230328100138,
-  "openingDate": 20220929083400,
-  "created": 1679997698795,
-  "modified": 1679997698795,
-  "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
-  "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
-  "comment": "This is a comment",
-  "identifiers": [],
-  "healthcareElementIds": {},
-  "canvasesIds": {},
-  "content": {
-    "en": {
-      "stringValue": "Hello world",
-      "compoundValue": [],
-      "ratio": [],
-      "range": []
-    }
-  },
-  "codes": {},
-  "labels": {},
-  "systemMetaData": {
-    "secretForeignKeys": [
-      "daf17f76-fc81-470b-b0b8-4918f2cc383f"
-    ],
-    "cryptedForeignKeys": {
-      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
-    },
-    "delegations": {
-      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
-    },
-    "encryptionKeys": {
-      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
-    }
-  }
-}
 ```
 </details>
 
@@ -100,53 +51,12 @@ parameter: the DataSample's id.
 
 <!-- file://code-samples/{{sdk}}/how-to/datasamples/index.mts snippet:get a dataSample-->
 ```typescript
-const dataSample = await api.dataSampleApi.getDataSample(createdDataSample.id!)
 ```
 <!-- output://code-samples/{{sdk}}/how-to/datasamples/dataSample.txt -->
 <details>
 <summary>dataSample</summary>
 
 ```json
-{
-  "id": "4b59d528-6c22-430f-8fc7-61f44b5e716b",
-  "qualifiedLinks": {},
-  "batchId": "f73812c1-3e39-46c7-a6f5-f83f5e7508c6",
-  "index": 0,
-  "valueDate": 20230328100138,
-  "openingDate": 20220929083400,
-  "created": 1679997698795,
-  "modified": 1679997698795,
-  "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
-  "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
-  "comment": "This is a comment",
-  "identifiers": [],
-  "healthcareElementIds": {},
-  "canvasesIds": {},
-  "content": {
-    "en": {
-      "stringValue": "Hello world",
-      "compoundValue": [],
-      "ratio": [],
-      "range": []
-    }
-  },
-  "codes": {},
-  "labels": {},
-  "systemMetaData": {
-    "secretForeignKeys": [
-      "daf17f76-fc81-470b-b0b8-4918f2cc383f"
-    ],
-    "cryptedForeignKeys": {
-      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
-    },
-    "delegations": {
-      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
-    },
-    "encryptionKeys": {
-      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
-    }
-  }
-}
 ```
 </details>
 
@@ -164,63 +74,12 @@ If you linked the DataSample at the wrong patient, you have to delete the first 
 
 <!-- file://code-samples/{{sdk}}/how-to/datasamples/index.mts snippet:update a dataSample-->
 ```typescript
-const updatedDataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
-  patient.id!,
-  new DataSample({
-    ...createdDataSample,
-    // highlight-start
-    content: { en: new Content({ stringValue: 'Hello world updated' }) },
-    comment: 'This is a updated comment',
-    modified: undefined,
-    // highlight-end
-  }),
-)
 ```
 <!-- output://code-samples/{{sdk}}/how-to/datasamples/updatedDataSample.txt -->
 <details>
 <summary>updatedDataSample</summary>
 
 ```json
-{
-  "id": "4b59d528-6c22-430f-8fc7-61f44b5e716b",
-  "qualifiedLinks": {},
-  "batchId": "f73812c1-3e39-46c7-a6f5-f83f5e7508c6",
-  "index": 0,
-  "valueDate": 20230328100138,
-  "openingDate": 20220929083400,
-  "created": 1679997698795,
-  "modified": 1679997699523,
-  "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
-  "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
-  "comment": "This is a updated comment",
-  "identifiers": [],
-  "healthcareElementIds": {},
-  "canvasesIds": {},
-  "content": {
-    "en": {
-      "stringValue": "Hello world updated",
-      "compoundValue": [],
-      "ratio": [],
-      "range": []
-    }
-  },
-  "codes": {},
-  "labels": {},
-  "systemMetaData": {
-    "secretForeignKeys": [
-      "daf17f76-fc81-470b-b0b8-4918f2cc383f"
-    ],
-    "cryptedForeignKeys": {
-      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
-    },
-    "delegations": {
-      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
-    },
-    "encryptionKeys": {
-      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
-    }
-  }
-}
 ```
 </details>
 
@@ -230,14 +89,12 @@ To delete a DataSample, you can use the `deleteDataSample` method on the `DataSa
 
 <!-- file://code-samples/{{sdk}}/how-to/datasamples/index.mts snippet:delete a dataSample-->
 ```typescript
-const deletedDataSample = await api.dataSampleApi.deleteDataSample(updatedDataSample.id!)
 ```
 <!-- output://code-samples/{{sdk}}/how-to/datasamples/deletedDataSample.txt -->
 <details>
 <summary>deletedDataSample</summary>
 
 ```text
-4b59d528-6c22-430f-8fc7-61f44b5e716b
 ```
 </details>
 
@@ -249,66 +106,12 @@ We can build the filter object using the `DataSampleFilter` builder.
 
 <!-- file://code-samples/{{sdk}}/how-to/datasamples/index.mts snippet:get a list of dataSamples-->
 ```typescript
-const filter = await new DataSampleFilter(api)
-  .forDataOwner(loggedUser.healthcarePartyId!)
-  .byLabelCodeDateFilter('IC-TEST', 'TEST')
-  .forPatients([patient])
-  .build()
-
-const filteredDataSamples = await api.dataSampleApi.filterDataSample(filter)
 ```
 <!-- output://code-samples/{{sdk}}/how-to/datasamples/filteredDataSamples.txt -->
 <details>
 <summary>filteredDataSamples</summary>
 
 ```json
-{
-  "pageSize": 1,
-  "totalSize": 1,
-  "rows": [
-    {
-      "id": "4b59d528-6c22-430f-8fc7-61f44b5e716b",
-      "qualifiedLinks": {},
-      "batchId": "f73812c1-3e39-46c7-a6f5-f83f5e7508c6",
-      "index": 0,
-      "valueDate": 20230328100138,
-      "openingDate": 20220929083400,
-      "created": 1679997698795,
-      "modified": 1679997699523,
-      "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
-      "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
-      "comment": "This is a updated comment",
-      "identifiers": [],
-      "healthcareElementIds": {},
-      "canvasesIds": {},
-      "content": {
-        "en": {
-          "stringValue": "Hello world updated",
-          "compoundValue": [],
-          "ratio": [],
-          "range": []
-        }
-      },
-      "codes": {},
-      "labels": {},
-      "systemMetaData": {
-        "secretForeignKeys": [
-          "daf17f76-fc81-470b-b0b8-4918f2cc383f"
-        ],
-        "cryptedForeignKeys": {
-          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
-        },
-        "delegations": {
-          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
-        },
-        "encryptionKeys": {
-          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
-        }
-      }
-    }
-  ],
-  "nextKeyPair": {}
-}
 ```
 </details>
 
@@ -320,18 +123,12 @@ In the example above, we created the filter this way:
 
 <!-- file://code-samples/{{sdk}}/how-to/datasamples/index.mts snippet:filter builder-->
 ```typescript
-const dataSampleFilter = new DataSampleFilter(api)
-  .forDataOwner(loggedUser.healthcarePartyId!)
-  .byLabelCodeDateFilter('IC-TEST', 'TEST')
-  .forPatients([patient])
-  .build()
 ```
 <!-- output://code-samples/{{sdk}}/how-to/datasamples/dataSampleFilter.txt -->
 <details>
 <summary>dataSampleFilter</summary>
 
 ```json
-{}
 ```
 </details>
 
@@ -347,20 +144,11 @@ In some circumstances, you might want to get a list of DataSample ids instead of
 
 <!-- file://code-samples/{{sdk}}/how-to/datasamples/index.mts snippet:get a list of dataSamples ids-->
 ```typescript
-const matchFilter = await new DataSampleFilter(api)
-  .forDataOwner(loggedUser.healthcarePartyId!)
-  .forPatients([patient])
-  .build()
-
-const matchedDataSampleIds = await api.dataSampleApi.matchDataSample(matchFilter)
 ```
 <!-- output://code-samples/{{sdk}}/how-to/datasamples/matchedDataSampleIds.txt -->
 <details>
 <summary>matchedDataSampleIds</summary>
 
 ```text
-[
-  "4b59d528-6c22-430f-8fc7-61f44b5e716b"
-]
 ```
 </details>
