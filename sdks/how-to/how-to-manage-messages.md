@@ -44,7 +44,7 @@ To retrieve a `Message`, you must use the `get` function and provide the `Messag
 
 ## Creating a long Message
 
-You're able to send a long Message, a long message is considered a message that is longer than 2000 characters.
+A long `Message` is a message longer than 2000 characters.
 Long Message content are stored in a attachment and the truncated content is stored in the content field of the `Message`.
 
 The process to create a long Message is the same as creating a regular Message. You must provide the following information:
