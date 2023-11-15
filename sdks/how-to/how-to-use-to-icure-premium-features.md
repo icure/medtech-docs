@@ -11,7 +11,7 @@ tags:
 
 :::note
 
-This how-to assumes that until now, you have been using the iCure Medical Device SDK in your application with the open-source
+This how-to assumes that until now, you have been using the {{SdkName}} in your application with the open-source
  version of iCure. You now want to start using the iCure Cloud version, including all premium features.
 
 :::

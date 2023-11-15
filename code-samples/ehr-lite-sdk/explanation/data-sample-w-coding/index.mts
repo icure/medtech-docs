@@ -49,5 +49,5 @@ const observation = await api.observationApi.createOrModifyFor(
 )
 
 //tech-doc: STOP HERE
-output({ condition: condition, observation: observation })
+output({ healthcareElement: condition, dataSample: observation })
 expect(!!observation).to.eq(true) //skip

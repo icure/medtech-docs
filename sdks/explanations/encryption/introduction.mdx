@@ -42,28 +42,40 @@ the confidential data.
 In iCure we also follow this pattern to ensure that we can keep data confidentiality without sacrificing too much in
 terms of performance.
 
-## iCure encryption scheme: objectives {#objectives}
+## iCure encryption scheme: principles {#objectives}
 
-The design of the iCure encryption model is based on the following objectives:
+A good way to understand the way encryption works in iCure is to understand what we want to achieve by using e2e
+encryption for the protection of your data.
+We designed the iCure encryption model based on the following principles:
 
-- Data owners can access the sensitive data that they created or that other data owners shared with them. For this
-purpose each data owner will have a public+private key pair.
+- Each data owner has a personal asymmetric encryption key-pair. Only the data owner itself has access to the private
+  key.
 
-- A data owner should be able to decrypt sensitive data they have access to by knowing only their private key. The full
-decryption process requires multiple steps and uses also other keys, but only the private key is required to start
-the process.
+- A data owner can create data, encrypt its sensitive content, and share that piece of data with other data owners.
 
-- A data owner should not be able to decrypt sensitive data that was not shared with them.
+  - Only data owners that have been granted access to a piece of data are allowed to retrieve it from the iCure server.
 
-- Third parties should not be able to access any kind of sensitive data.
+  - The encrypted content of a piece of data should be decryptable only by the data owners that have been granted access
+    to it.
 
-- Third parties should not be able to infer any relationships between entities that may leak sensitive data. For
-example, third parties should not be able to understand that a certain patient is having frequent doctor visits. This is
-different from the previous objective, which only required third parties to not be able to access sensitive information
-of the patient or the reason of the visits.
+  - Third parties should not be able to decrypt the content of a piece of data not shared with them, even if they could
+    retrieve the encrypted data from iCure's server. These third parties include iCure and other legitimate data owners
+    that have been granted access to the data.
 
-- If a data owner loses access to their private key but shared sensitive data with other data owners they should be able
-to regain access to this data.
+- The only secret required by a data owner in order to decrypt some sensitive data shared with him should be his own
+  private key. The full decryption process may involve other secrets, but they should all be derived only from the
+  private key and non-secret data retrievable from the iCure server.
+
+- It should not be possible to infer sensitive data just by observing the encrypted data. For example, it should not be
+  possible to understand that *patient Charlie* is having frequent doctor visits, not even if the purpose of the visit
+  can't be inferred.
+
+As previously mentioned in iCure we use a combination of symmetric and asymmetric encryption to achieve these goals.
+
+<!-- Diagram of basic encryption and decryption; explain exchangeKeys, and entity-specific encryption key -->
+
+<!-- Explain there are many more layers to encryption in iCure which allow stuff like search all data for a patient,
+and leakproof access control -->
 
 <!-- The following chapters explain how iCure's encryption scheme achieves these objectives. -->
 We will soon update this documentation with more details on how iCure uses these cryptographic algorithms to protect the

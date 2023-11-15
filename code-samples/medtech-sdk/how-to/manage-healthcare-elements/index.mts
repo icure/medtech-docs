@@ -1,7 +1,6 @@
 import 'isomorphic-fetch'
 import {
   CodingReference,
-  DataSample,
   HealthcareElement,
   HealthcareElementFilter,
   Patient,

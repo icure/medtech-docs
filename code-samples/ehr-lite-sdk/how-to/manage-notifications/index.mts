@@ -1,11 +1,11 @@
 import 'isomorphic-fetch'
-import { NotificationFilter } from '@icure/medical-device-sdk'
 import { initLocalStorage, output } from '../../../utils/index.mjs'
 import { assert, expect } from 'chai'
 import { initEHRLiteApi, initPatientEHRLiteApi } from '../../utils/index.mjs'
 import { Notification, NotificationTypeEnum } from '@icure/typescript-common'
 import { MaintenanceTask } from '@icure/api'
 import StatusEnum = MaintenanceTask.StatusEnum
+import { NotificationFilter } from '@icure/ehr-lite-sdk'
 
 initLocalStorage()
 

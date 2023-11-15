@@ -46,8 +46,8 @@ You will have to create an `AnonymousMedTechApi` instead.
 ```typescript
 ```
 
-The [AnonymousMedTechApi](/{{sdk}}/references/entrypoints/AnonymousMedTechApi) asks you to provide multiple information. Here 
-are their details :
+The [Anonymous{{CodeSdkName}}Builder](/{{sdk}}/references/entrypoints/AnonymousMedTechApi) asks you to provide multiple information. You will learn more about them in
+the Here are some details [Instantiation How-To](/{{sdk}}/how-to/how-to-instantiate-the-medtech-sdk), but for now, here is a quick summary:
 
 | Argument             | Description                                                                                      |
 |----------------------|--------------------------------------------------------------------------------------------------|
@@ -56,8 +56,10 @@ are their details :
 | msgGtwSpecId         | Your iCure Message Gateway Identifier. See next section to know more about it                    |
 | authProcessByEmailId | Identifier of the authentication by email process. See next section to know more about it        |
 | authProcessBySmsId   | Identifier of the authentication by SMS process. See next section to know more about it          |
+| cryptoStrategies     | Customizes cryptographical operations. For now you can use the provided `Simple` implementation. |
+=======
 
-You can learn about all the options you have when instantiating the MedTech API and the AnonymousMedTech API in the [Instantiation How-To](/{{sdk}}/how-to/how-to-instantiate-the-medtech-sdk). 
+You can learn about all the options you have when instantiating the MedTech API and the AnonymousMedTech API in the [Instantiation How-To](/{{sdk}}/how-to/how-to-instantiate-the-sdk). 
 
 Since Daenaerys is a patient, you will have to provide the `patientAuthProcessByEmailId` as a 
 authProcessByEmailId or `patientAuthProcessBySmsId` as a authProcessBySmsId. 
@@ -120,7 +122,7 @@ This `masterHcpId` is optional for {{hcps}} registration but mandatory for patie
 
 It's good to know that after their registration, user will share all their future data with this responsible. The user may decide to stop
 sharing their data with this responsible by using the `userApi.stopSharingDataWith` service. For more information, 
-go to the [How-to: Automatically share data with other data owners](../how-to-share-data-automatically).
+go to the [How-to: Automatically share data with other data owners](../how-to-share-data/how-to-share-data-automatically.md).
 
 :::
 

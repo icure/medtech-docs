@@ -12,7 +12,7 @@ authentication and data sharing services.
 
 Therefore, we assume that you're already familiar with : 
 - [The user authentication](index.md)
-- [Data sharing](../how-to-share-data.md) or [Automatically share data with other data owners](../how-to-share-data-automatically.md)
+- [Data sharing](../how-to-share-data) or [Automatically share data with other data owners](../how-to-share-data/how-to-share-data-automatically.md)
 
 At this stage, you should : 
 - Have a patient user
@@ -120,16 +120,6 @@ Let's say Jorah decides to give Daenaerys access back to her previous data using
 ```json
 ```
 </details>
-
-<!-- output://code-samples/{{sdk}}/how-to/authenticate-user/accessBack.txt -->
-<details>
-<summary>accessBack</summary>
-
-```text
-true
-```
-</details>
-
 
 After restarting her app, Daenaerys will be able to access her previous data back. 
 

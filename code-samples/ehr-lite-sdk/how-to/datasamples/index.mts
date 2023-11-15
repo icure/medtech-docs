@@ -32,7 +32,7 @@ const createdObservation = await api.observationApi.createOrModifyFor(
   }),
 )
 //tech-doc: STOP HERE
-output({ createdObservation: createdObservation })
+output({ createdDataSample: createdObservation })
 
 //tech-doc: get a dataSample
 const dataSample = await api.observationApi.get(createdObservation.id)
@@ -51,7 +51,7 @@ const updatedObservation = await api.observationApi.createOrModifyFor(
   }),
 )
 //tech-doc: STOP HERE
-output({ updatedObservation })
+output({ updatedDataSample: updatedObservation })
 await sleep(5000)
 
 //tech-doc: get a list of dataSamples
@@ -63,7 +63,7 @@ const filter = await new ObservationFilter(api)
 
 const filteredObservations = await api.observationApi.filterBy(filter)
 //tech-doc: STOP HERE
-output({ filteredObservations })
+output({ filteredDataSamples: filteredObservations })
 
 //tech-doc: get a list of dataSamples ids
 const matchFilter = await new ObservationFilter(api)
@@ -73,13 +73,13 @@ const matchFilter = await new ObservationFilter(api)
 
 const matchedObservationIds = await api.observationApi.matchBy(matchFilter)
 //tech-doc: STOP HERE
-output({ matchedObservationIds })
+output({ matchedDataSampleIds: matchedObservationIds })
 
 // THIS SHOULD WORK, BUT DOESN'T (We need to merge the PR about RSocket)
 //tech-doc: delete a dataSample
 const deletedObservation = await api.observationApi.delete(updatedObservation.id)
 //tech-doc: STOP HERE
-output({ deletedObservation })
+output({ deletedDataSample: deletedObservation })
 
 //tech-doc: filter builder
 const dataSampleFilter = new ObservationFilter(api)

@@ -1,9 +1,8 @@
-import { User, UserFilter } from '@icure/medical-device-sdk'
 import { initLocalStorage, output } from '../../../utils/index.mjs'
 import { initEHRLiteApi } from '../../utils/index.mjs'
 import 'isomorphic-fetch'
 import { expect } from 'chai'
-import { ContactPoint, Location, Patient } from '@icure/ehr-lite-sdk'
+import { ContactPoint, Location, Patient, User, UserFilter } from '@icure/ehr-lite-sdk'
 import { ContactPointTelecomTypeEnum } from '@icure/ehr-lite-sdk/models/enums/ContactPointTelecomType.enum.js'
 import { LocationAddressTypeEnum } from '@icure/ehr-lite-sdk/models/enums/LocationAddressType.enum.js'
 

@@ -156,7 +156,7 @@ const createdObservation = await authenticatedApi.observationApi.createOrModifyF
   }),
 )
 //tech-doc: STOP HERE
-output({ createdObservation })
+output({ createdDataSample: createdObservation })
 
 //tech-doc: Get back credentials
 // getBackCredentials does not exist: Use your own way of storing the following data securely
@@ -292,7 +292,7 @@ const newlyCreatedObservation = await loginAuthResult.api.observationApi.createO
   }),
 )
 //tech-doc: STOP HERE
-output({ newlyCreatedObservation })
+output({ newlyCreatedDataSample: newlyCreatedObservation })
 
 expect(newlyCreatedObservation).to.not.be.undefined //skip
 

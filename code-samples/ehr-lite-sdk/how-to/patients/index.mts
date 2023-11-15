@@ -4,11 +4,10 @@ import * as console from 'console'
 import { initLocalStorage, output } from '../../../utils/index.mjs'
 import { expect } from 'chai'
 import { initEHRLiteApi } from '../../utils/index.mjs'
-import { HumanName, Patient, Annotation } from '@icure/ehr-lite-sdk'
+import { HumanName, Patient, Annotation, PatientFilter } from '@icure/ehr-lite-sdk'
 import { GenderEnum } from '@icure/ehr-lite-sdk/models/enums/Gender.enum.js'
 import { HumanNameUseEnum } from '@icure/ehr-lite-sdk/models/enums/HumanNameUse.enum.js'
 import { mapOf } from '@icure/typescript-common'
-import { PatientFilter } from '@icure/typescript-common'
 
 initLocalStorage()
 
