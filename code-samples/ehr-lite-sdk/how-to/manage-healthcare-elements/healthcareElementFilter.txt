@@ -1,0 +1,19 @@
+{
+  "filters": [
+    {
+      "healthcarePartyId": "8a17be3c-8750-40d5-96ee-36022f877bdc",
+      "tagType": "ICURE_INTERNAL_FHIR_TYPE",
+      "tagCode": "CONDITION",
+      "$type": "HealthElementByHealthcarePartyTagCodeFilter"
+    },
+    {
+      "healthcarePartyId": "8a17be3c-8750-40d5-96ee-36022f877bdc",
+      "patientSecretForeignKeys": [
+        "5e93d7b2-61d3-4757-9618-5da511ba3094",
+        "66adb7ee-6cce-4e4e-9617-6533e85b1739"
+      ],
+      "$type": "HealthElementByHealthcarePartyPatientFilter"
+    }
+  ],
+  "$type": "IntersectionFilter"
+}

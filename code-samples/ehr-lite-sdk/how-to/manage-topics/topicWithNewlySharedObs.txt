@@ -1,0 +1,28 @@
+{
+  "id": "38a83607-b34c-40e8-82c2-0dd0b401c390",
+  "rev": "2-6c119d13654509773e4f8962f3767a20",
+  "created": 1698415789047,
+  "modified": 1698415789047,
+  "author": "5f7d11da-ff86-4f57-b4f3-65c489c01501",
+  "responsible": "54b9f244-ce89-4860-b242-028654575a74",
+  "tags": {},
+  "codes": {},
+  "descr": "Topic to share services",
+  "linkedHealthElements": {},
+  "linkedServices": {},
+  "activeParticipants": {},
+  "systemMetadata": {
+    "secretForeignKeys": [
+      "1956cff0-733a-44fd-8efb-5a9ea7164b0a"
+    ],
+    "cryptedForeignKeys": {},
+    "delegations": {},
+    "encryptionKeys": {},
+    "securityMetadata": {
+      "secureDelegations": {},
+      "keysEquivalences": {}
+    },
+    "encryptedSelf": "sBQV82l8W8znc1RpgWmLtoBz3yzFRQVQDvc53o2z3lI84DU6vU3vGQYgPrheXMjZfWLX70LrN0yFCHUWQ0q7rClXZq9PNQI5sDcNqLuAoXrQMHNappOL8dvRNoeGERLOWTGcSGJlByFuYQjAu9D7SZ3muSsDX+IT1VujQTLlKXqen50R/iQYLYJ+rxm5ucqsxzXgQULPA06cFA3hdkxFL0NZTiEdViXktUd+RpwX285Qrcpne+jekevrC4+m4FGC",
+    "tags": {}
+  }
+}

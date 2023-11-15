@@ -1,0 +1,9 @@
+{
+  "id": "b284e8e3-8ce2-4990-8124-944b4281727c",
+  "identifiers": [],
+  "content": {},
+  "openingDate": 20220929083400,
+  "qualifiedLinks": {},
+  "labels": {},
+  "codes": {}
+}

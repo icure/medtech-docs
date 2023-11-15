@@ -1,0 +1,64 @@
+[
+  {
+    "id": "420938a7-ab92-40d6-94b0-159ef7c0537e",
+    "identifiers": [],
+    "rev": "1-cac2b4541f9f7aecc2f34f7189e935e4",
+    "created": 1698416467763,
+    "modified": 1698416467763,
+    "author": "1cd44623-2483-4276-97c1-f2291e70c2f9",
+    "responsible": "8a17be3c-8750-40d5-96ee-36022f877bdc",
+    "bodySite": {},
+    "tags": {},
+    "codes": {},
+    "healthcareElementId": "420938a7-ab92-40d6-94b0-159ef7c0537e",
+    "recordedDate": 20231027142107,
+    "openingDate": 1570838400000,
+    "description": "The patient has been diagnosed Pararibulitis",
+    "notes": [],
+    "systemMetaData": {
+      "secretForeignKeys": [
+        "5e93d7b2-61d3-4757-9618-5da511ba3094"
+      ],
+      "cryptedForeignKeys": {},
+      "delegations": {},
+      "encryptionKeys": {},
+      "securityMetadata": {
+        "secureDelegations": {},
+        "keysEquivalences": {}
+      },
+      "encryptedSelf": "Qb0f0+qP9yk8ehKu7srNB5YtRngZVgEewdpgcEyrbifSPzZxwE9bB/K6BfK+K8/wKMO/pWTPAQ8k0IRibBk0gedpBMZ822igZ62Vg1FCxm4=",
+      "tags": {}
+    }
+  },
+  {
+    "id": "7611bb58-c33d-42b1-831d-1cf4d98dfab8",
+    "identifiers": [],
+    "rev": "1-930e055316a286d834a08d096210bf3a",
+    "created": 1698416467763,
+    "modified": 1698416467763,
+    "author": "1cd44623-2483-4276-97c1-f2291e70c2f9",
+    "responsible": "8a17be3c-8750-40d5-96ee-36022f877bdc",
+    "bodySite": {},
+    "tags": {},
+    "codes": {},
+    "healthcareElementId": "7611bb58-c33d-42b1-831d-1cf4d98dfab8",
+    "recordedDate": 20231027142107,
+    "openingDate": 1604793600000,
+    "description": "The patient has also the flu",
+    "notes": [],
+    "systemMetaData": {
+      "secretForeignKeys": [
+        "5e93d7b2-61d3-4757-9618-5da511ba3094"
+      ],
+      "cryptedForeignKeys": {},
+      "delegations": {},
+      "encryptionKeys": {},
+      "securityMetadata": {
+        "secureDelegations": {},
+        "keysEquivalences": {}
+      },
+      "encryptedSelf": "qSocLzPqFba3GCmb5pzWtA4dIsxayJ6jZVNR5YM4i+oTIyQ3rgwMlqxB5XC6m2/41voCCZ3uKL8hFIaHnpuJuw==",
+      "tags": {}
+    }
+  }
+]

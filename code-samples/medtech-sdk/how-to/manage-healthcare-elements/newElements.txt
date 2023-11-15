@@ -1,0 +1,62 @@
+[
+  {
+    "id": "4fb2af88-7556-4b66-a081-2ecf63e1eafc",
+    "identifiers": [],
+    "rev": "1-5c51518a5fd712bd0c97eb0eaa177896",
+    "created": 1698415840445,
+    "modified": 1698415840445,
+    "author": "5f7d11da-ff86-4f57-b4f3-65c489c01501",
+    "responsible": "54b9f244-ce89-4860-b242-028654575a74",
+    "labels": {},
+    "codes": {},
+    "healthcareElementId": "4fb2af88-7556-4b66-a081-2ecf63e1eafc",
+    "valueDate": 20231027141040,
+    "openingDate": 1570838400000,
+    "description": "The patient has been diagnosed Pararibulitis",
+    "notes": [],
+    "systemMetaData": {
+      "secretForeignKeys": [
+        "5719c3b2-466c-4d6e-89b3-6125ec2311ef"
+      ],
+      "cryptedForeignKeys": {},
+      "delegations": {},
+      "encryptionKeys": {},
+      "securityMetadata": {
+        "secureDelegations": {},
+        "keysEquivalences": {}
+      },
+      "encryptedSelf": "s4VGKuBcl9uXJDgpsMsRFwHZkngiWTBBxXgicQq1SKkym3Rb4TbUF7HB+WuF045qNgPdWzYIrLUNSufTzA5GaEaI0VEJ0g2s5TCxU6ma0Ow=",
+      "tags": {}
+    }
+  },
+  {
+    "id": "189930c5-4bc7-4f20-8fa6-0a6a24ea6607",
+    "identifiers": [],
+    "rev": "1-f373d7f7734888cada4853df0346d01f",
+    "created": 1698415840445,
+    "modified": 1698415840445,
+    "author": "5f7d11da-ff86-4f57-b4f3-65c489c01501",
+    "responsible": "54b9f244-ce89-4860-b242-028654575a74",
+    "labels": {},
+    "codes": {},
+    "healthcareElementId": "189930c5-4bc7-4f20-8fa6-0a6a24ea6607",
+    "valueDate": 20231027141040,
+    "openingDate": 1604793600000,
+    "description": "The patient has also the flu",
+    "notes": [],
+    "systemMetaData": {
+      "secretForeignKeys": [
+        "5719c3b2-466c-4d6e-89b3-6125ec2311ef"
+      ],
+      "cryptedForeignKeys": {},
+      "delegations": {},
+      "encryptionKeys": {},
+      "securityMetadata": {
+        "secureDelegations": {},
+        "keysEquivalences": {}
+      },
+      "encryptedSelf": "X5PrbxecHZJd3Nxeljd/qnxcAhl2cQ0CfbXxssHzZnY/39xM4lR+f1wwtA9m6qtbN3s+yhBwWnm4P/d/whJCpw==",
+      "tags": {}
+    }
+  }
+]

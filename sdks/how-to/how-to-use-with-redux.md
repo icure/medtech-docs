@@ -22,31 +22,12 @@ The constructor of the Model Classes now converts back those pojos to the full c
 
 <!-- file://code-samples/{{sdk}}/how-to/how-to-use-with-redux/index.mts snippet:marshal and unmarshal the currently logged user-->
 ```typescript
-const user = await api.userApi.getLoggedUser()
-const marshalledUser = user.marshal()
-const unmarshalledUser = new User(marshalledUser)
 ```
 <!-- output://code-samples/{{sdk}}/how-to/how-to-use-with-redux/user.txt -->
 <details>
 <summary>user</summary>
 
 ```json
-{
-  "id": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
-  "rev": "86-1fba3882618770a9fb28f85d94c77254",
-  "created": 1679919731079,
-  "name": "Master HCP",
-  "login": "master@b16baa.icure",
-  "groupId": "ic-e2etest-medtech-docs",
-  "healthcarePartyId": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
-  "email": "master@b16baa.icure",
-  "properties": {},
-  "roles": {},
-  "sharingDataWith": {
-    "medicalInformation": {}
-  },
-  "authenticationTokens": {}
-}
 ```
 </details>
 
@@ -55,22 +36,6 @@ const unmarshalledUser = new User(marshalledUser)
 <summary>marshalledUser</summary>
 
 ```json
-{
-  "id": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
-  "rev": "86-1fba3882618770a9fb28f85d94c77254",
-  "created": 1679919731079,
-  "name": "Master HCP",
-  "login": "master@b16baa.icure",
-  "groupId": "ic-e2etest-medtech-docs",
-  "healthcarePartyId": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
-  "email": "master@b16baa.icure",
-  "properties": [],
-  "roles": [],
-  "sharingDataWith": {
-    "medicalInformation": []
-  },
-  "authenticationTokens": {}
-}
 ```
 </details>
 
@@ -79,21 +44,5 @@ const unmarshalledUser = new User(marshalledUser)
 <summary>unmarshalledUser</summary>
 
 ```json
-{
-  "id": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
-  "rev": "86-1fba3882618770a9fb28f85d94c77254",
-  "created": 1679919731079,
-  "name": "Master HCP",
-  "login": "master@b16baa.icure",
-  "groupId": "ic-e2etest-medtech-docs",
-  "healthcarePartyId": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
-  "email": "master@b16baa.icure",
-  "properties": {},
-  "roles": {},
-  "sharingDataWith": {
-    "medicalInformation": {}
-  },
-  "authenticationTokens": {}
-}
 ```
 </details>

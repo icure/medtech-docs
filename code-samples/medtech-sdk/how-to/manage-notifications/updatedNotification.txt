@@ -1,0 +1,24 @@
+{
+  "id": "7a55cab5-8180-4bd8-9a76-90238334eaef",
+  "rev": "2-215e1d1e1e0c7ef0b0e2d119505dea53",
+  "status": "ongoing",
+  "created": 1698415837939,
+  "identifiers": [],
+  "modified": 1698415837939,
+  "author": "5f7d11da-ff86-4f57-b4f3-65c489c01501",
+  "responsible": "54b9f244-ce89-4860-b242-028654575a74",
+  "properties": {},
+  "type": "KEY_PAIR_UPDATE",
+  "systemMetaData": {
+    "secretForeignKeys": [],
+    "cryptedForeignKeys": {},
+    "delegations": {},
+    "encryptionKeys": {},
+    "securityMetadata": {
+      "secureDelegations": {},
+      "keysEquivalences": {}
+    },
+    "encryptedSelf": "2KGaB85Scv1wGiZMH7myPcYcGxt+44hVOGCsBfzmZ4a9Z+wZ8CPogoUe1sCUjUxJ",
+    "tags": {}
+  }
+}

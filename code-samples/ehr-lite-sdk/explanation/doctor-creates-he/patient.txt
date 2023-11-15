@@ -1,0 +1,56 @@
+{
+  "id": "e9184a72-894d-4922-a5b6-91956014ce9e",
+  "rev": "7-8ca5d017ac29e86d73331282f4493e86",
+  "identifiers": [],
+  "created": 1698415755355,
+  "modified": 1698415755355,
+  "author": "5f7d11da-ff86-4f57-b4f3-65c489c01501",
+  "responsible": "54b9f244-ce89-4860-b242-028654575a74",
+  "tags": {},
+  "codes": {},
+  "names": [
+    {
+      "family": "f099c5",
+      "given": [
+        "64270c"
+      ],
+      "prefix": [],
+      "suffix": [],
+      "text": "f099c5 64270c",
+      "use": "official"
+    }
+  ],
+  "languages": [],
+  "addresses": [],
+  "gender": "unknown",
+  "birthSex": "unknown",
+  "mergedIds": [],
+  "active": true,
+  "deactivationReason": "none",
+  "personalStatus": "unknown",
+  "notes": [],
+  "relatives": [],
+  "patientPractitioners": [],
+  "patientProfessions": [],
+  "properties": {},
+  "systemMetaData": {
+    "publicKey": "30820122300d06092a864886f70d01010105000382010f003082010a0282010100b520592badf4bf4501b3eb13755efff4775ca5ac370c6fe8da59b2b2400e8c46d8b2212e21eb7323f226a88822b143148bf6cfa3c5880cdd271a0930e2e24804f9d682a19f818605fd32d03710dd545e7bd69576a598e72f5d64f87196295e6ce4922871fab57e85463770573bd42cfeddddddbfcc2334015179b50f133c91685c0eecbbb954ca685faf9b47e645cd193f0d2fe1ddc62794aa06cda626ddfc94fb1ed03d0ac15b88e428e278aadbb387b012d54b5845c07f67f93f77ab1e810c5353ca2f9a7c4659df491805bc9fdd3ee7082acfc248865dc0cff0ae57a1fd78e4a06e05a3bfade9a0922a4132c29cbf6bbe69c171db5ed848f67db064c995cd0203010001",
+    "hcPartyKeys": {},
+    "privateKeyShamirPartitions": {},
+    "secretForeignKeys": [],
+    "cryptedForeignKeys": {},
+    "delegations": {},
+    "encryptionKeys": {},
+    "aesExchangeKeys": {},
+    "transferKeys": {},
+    "securityMetadata": {
+      "secureDelegations": {},
+      "keysEquivalences": {}
+    },
+    "encryptedSelf": "iUU5IuI8qxhSwlH1ihj5eHk/GqkE1pRJtzgGzXAkUQE=",
+    "publicKeysForOaepWithSha256": [],
+    "tags": {}
+  },
+  "firstName": "64270c",
+  "lastName": "f099c5"
+}

@@ -1,0 +1,14 @@
+{
+  "id": "87da0d19-08fa-49dd-9d71-c13e192ecfa9",
+  "rev": "9-39d0b075394e98cf0e50b95214a0baa7",
+  "created": 1698415755489,
+  "name": "hcp1.1698415736513@icure.com",
+  "properties": {},
+  "roles": {},
+  "login": "hcp1.1698415736513@icure.com",
+  "groupId": "test-group",
+  "healthcarePartyId": "79196cb4-ad8c-4cf3-887c-62742f42b278",
+  "sharingDataWith": {},
+  "email": "hcp1.1698415736513@icure.com",
+  "authenticationTokens": {}
+}

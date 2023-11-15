@@ -15,28 +15,6 @@ To create a patient, we can use the `createOrModifyPatient` method on the `Patie
 
 <!-- file://code-samples/{{sdk}}/how-to/patients/index.mts snippet:create a patient-->
 ```typescript
-const createdPatient = await api.patientApi.createOrModifyPatient(
-  new Patient({
-    firstName: 'Hubert',
-    lastName: 'Farnsworth',
-    dateOfBirth: 28410409,
-    birthSex: 'male',
-    gender: 'male',
-    profession: 'CEO/Owner of Planet Express, Lecturer at Mars University',
-    names: [
-      new PersonName({
-        firstNames: ['Hubert', 'J'],
-        lastName: 'Farnsworth',
-        use: 'official',
-      }),
-      new PersonName({
-        firstNames: ['Professor'],
-        use: 'nickname',
-      }),
-    ],
-    nationality: 'American',
-  }),
-)
 ```
 
 <!-- output://code-samples/{{sdk}}/how-to/patients/createdPatient.txt -->
@@ -44,70 +22,6 @@ const createdPatient = await api.patientApi.createOrModifyPatient(
 <summary>createdPatient</summary>
 
 ```json
-{
-  "id": "fb442885-0697-4803-903d-2f8d947bccd1",
-  "languages": [],
-  "active": true,
-  "parameters": {},
-  "rev": "1-a3873fcdbb72acc294023435519b214a",
-  "created": 1679926559766,
-  "modified": 1679926559766,
-  "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
-  "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
-  "firstName": "Hubert",
-  "lastName": "Farnsworth",
-  "dateOfBirth": 28410409,
-  "profession": "CEO/Owner of Planet Express, Lecturer at Mars University",
-  "nationality": "American",
-  "identifiers": [],
-  "labels": {},
-  "codes": {},
-  "names": [
-    {
-      "firstNames": [
-        "Hubert",
-        "J"
-      ],
-      "prefix": [],
-      "suffix": [],
-      "lastName": "Farnsworth",
-      "use": "official"
-    },
-    {
-      "firstNames": [
-        "Professor"
-      ],
-      "prefix": [],
-      "suffix": [],
-      "use": "nickname"
-    }
-  ],
-  "addresses": [],
-  "gender": "male",
-  "birthSex": "male",
-  "mergedIds": {},
-  "deactivationReason": "none",
-  "personalStatus": "unknown",
-  "partnerships": [],
-  "patientHealthCareParties": [],
-  "patientProfessions": [],
-  "properties": {},
-  "systemMetaData": {
-    "hcPartyKeys": {},
-    "privateKeyShamirPartitions": {},
-    "aesExchangeKeys": {},
-    "transferKeys": {},
-    "encryptedSelf": "Yt6LWhGr9/fbyMCNvWd2p/EIExBcvxULXBTN8srkysQ=",
-    "secretForeignKeys": [],
-    "cryptedForeignKeys": {},
-    "delegations": {
-      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
-    },
-    "encryptionKeys": {
-      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
-    }
-  }
-}
 ```
 </details>
 
@@ -117,15 +31,6 @@ To update a patient, we can use the `createOrModifyPatient` method on the `Patie
 
 <!-- file://code-samples/{{sdk}}/how-to/patients/index.mts snippet:update a patient-->
 ```typescript
-const updatedPatient = await api.patientApi.createOrModifyPatient(
-  new Patient({
-    ...createdPatient,
-    // highlight-start
-    modified: undefined,
-    note: 'Good news everyone!',
-    // highlight-end
-  }),
-)
 ```
 
 <!-- output://code-samples/{{sdk}}/how-to/patients/updatedPatient.txt -->
@@ -133,71 +38,6 @@ const updatedPatient = await api.patientApi.createOrModifyPatient(
 <summary>updatedPatient</summary>
 
 ```json
-{
-  "id": "fb442885-0697-4803-903d-2f8d947bccd1",
-  "languages": [],
-  "active": true,
-  "parameters": {},
-  "rev": "2-081c23c9ca40ef5bbbb9915ebb9dd2d3",
-  "created": 1679926559766,
-  "modified": 1679926560030,
-  "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
-  "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
-  "firstName": "Hubert",
-  "lastName": "Farnsworth",
-  "dateOfBirth": 28410409,
-  "profession": "CEO/Owner of Planet Express, Lecturer at Mars University",
-  "note": "Good news everyone!",
-  "nationality": "American",
-  "identifiers": [],
-  "labels": {},
-  "codes": {},
-  "names": [
-    {
-      "firstNames": [
-        "Hubert",
-        "J"
-      ],
-      "prefix": [],
-      "suffix": [],
-      "lastName": "Farnsworth",
-      "use": "official"
-    },
-    {
-      "firstNames": [
-        "Professor"
-      ],
-      "prefix": [],
-      "suffix": [],
-      "use": "nickname"
-    }
-  ],
-  "addresses": [],
-  "gender": "male",
-  "birthSex": "male",
-  "mergedIds": {},
-  "deactivationReason": "none",
-  "personalStatus": "unknown",
-  "partnerships": [],
-  "patientHealthCareParties": [],
-  "patientProfessions": [],
-  "properties": {},
-  "systemMetaData": {
-    "hcPartyKeys": {},
-    "privateKeyShamirPartitions": {},
-    "aesExchangeKeys": {},
-    "transferKeys": {},
-    "encryptedSelf": "sxl//v+/2wVroXbDGGeet+PVTGR7jFrA8I4FaRAfsLdc73AM6cBiKyjO9Ik2ayai",
-    "secretForeignKeys": [],
-    "cryptedForeignKeys": {},
-    "delegations": {
-      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
-    },
-    "encryptionKeys": {
-      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
-    }
-  }
-}
 ```
 </details>
 
@@ -208,7 +48,6 @@ To get a patient, we can use the `getPatient` method on the `PatientApi` object.
 
 <!-- file://code-samples/{{sdk}}/how-to/patients/index.mts snippet:get a patient-->
 ```typescript
-const patient = await api.patientApi.getPatient(updatedPatient.id!)
 ```
 
 <!-- output://code-samples/{{sdk}}/how-to/patients/patient.txt -->
@@ -216,71 +55,6 @@ const patient = await api.patientApi.getPatient(updatedPatient.id!)
 <summary>patient</summary>
 
 ```json
-{
-  "id": "fb442885-0697-4803-903d-2f8d947bccd1",
-  "languages": [],
-  "active": true,
-  "parameters": {},
-  "rev": "2-081c23c9ca40ef5bbbb9915ebb9dd2d3",
-  "created": 1679926559766,
-  "modified": 1679926560030,
-  "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
-  "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
-  "firstName": "Hubert",
-  "lastName": "Farnsworth",
-  "dateOfBirth": 28410409,
-  "profession": "CEO/Owner of Planet Express, Lecturer at Mars University",
-  "note": "Good news everyone!",
-  "nationality": "American",
-  "identifiers": [],
-  "labels": {},
-  "codes": {},
-  "names": [
-    {
-      "firstNames": [
-        "Hubert",
-        "J"
-      ],
-      "prefix": [],
-      "suffix": [],
-      "lastName": "Farnsworth",
-      "use": "official"
-    },
-    {
-      "firstNames": [
-        "Professor"
-      ],
-      "prefix": [],
-      "suffix": [],
-      "use": "nickname"
-    }
-  ],
-  "addresses": [],
-  "gender": "male",
-  "birthSex": "male",
-  "mergedIds": {},
-  "deactivationReason": "none",
-  "personalStatus": "unknown",
-  "partnerships": [],
-  "patientHealthCareParties": [],
-  "patientProfessions": [],
-  "properties": {},
-  "systemMetaData": {
-    "hcPartyKeys": {},
-    "privateKeyShamirPartitions": {},
-    "aesExchangeKeys": {},
-    "transferKeys": {},
-    "encryptedSelf": "sxl//v+/2wVroXbDGGeet+PVTGR7jFrA8I4FaRAfsLdc73AM6cBiKyjO9Ik2ayai",
-    "secretForeignKeys": [],
-    "cryptedForeignKeys": {},
-    "delegations": {
-      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
-    },
-    "encryptionKeys": {
-      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
-    }
-  }
-}
 ```
 </details>
 
@@ -291,7 +65,6 @@ To delete a patient, we can use the `deletePatient` method on the `PatientApi` o
 
 <!-- file://code-samples/{{sdk}}/how-to/patients/index.mts snippet:delete a patient-->
 ```typescript
-const deletedPatientId = await api.patientApi.deletePatient(patient.id!)
 ```
 
 <!-- output://code-samples/{{sdk}}/how-to/patients/deletedPatientId.txt -->
@@ -299,7 +72,6 @@ const deletedPatientId = await api.patientApi.deletePatient(patient.id!)
 <summary>deletedPatientId</summary>
 
 ```text
-fb442885-0697-4803-903d-2f8d947bccd1
 ```
 </details>
 
@@ -309,12 +81,6 @@ To filter patients, we can use the `filterPatients` method on the `PatientApi` o
 
 <!-- file://code-samples/{{sdk}}/how-to/patients/index.mts snippet:get a list of patient-->
 ```typescript
-const filter = await new PatientFilter(api)
-  .forDataOwner(loggedUser.healthcarePartyId!)
-  .dateOfBirthBetween(28000101, 29000101)
-  .build()
-
-const patients = await api.patientApi.filterPatients(filter)
 ```
 
 <!-- output://code-samples/{{sdk}}/how-to/patients/patients.txt -->
@@ -322,77 +88,6 @@ const patients = await api.patientApi.filterPatients(filter)
 <summary>patients</summary>
 
 ```json
-{
-  "pageSize": 1000,
-  "totalSize": 1,
-  "rows": [
-    {
-      "id": "fb442885-0697-4803-903d-2f8d947bccd1",
-      "languages": [],
-      "active": true,
-      "parameters": {},
-      "rev": "2-081c23c9ca40ef5bbbb9915ebb9dd2d3",
-      "created": 1679926559766,
-      "modified": 1679926560030,
-      "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
-      "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
-      "firstName": "Hubert",
-      "lastName": "Farnsworth",
-      "dateOfBirth": 28410409,
-      "profession": "CEO/Owner of Planet Express, Lecturer at Mars University",
-      "nationality": "American",
-      "identifiers": [],
-      "labels": {},
-      "codes": {},
-      "names": [
-        {
-          "firstNames": [
-            "Hubert",
-            "J"
-          ],
-          "prefix": [],
-          "suffix": [],
-          "lastName": "Farnsworth",
-          "use": "official"
-        },
-        {
-          "firstNames": [
-            "Professor"
-          ],
-          "prefix": [],
-          "suffix": [],
-          "use": "nickname"
-        }
-      ],
-      "addresses": [],
-      "gender": "male",
-      "birthSex": "male",
-      "mergedIds": {},
-      "deactivationReason": "none",
-      "personalStatus": "unknown",
-      "partnerships": [],
-      "patientHealthCareParties": [],
-      "patientProfessions": [],
-      "properties": {},
-      "systemMetaData": {
-        "hcPartyKeys": {},
-        "privateKeyShamirPartitions": {},
-        "aesExchangeKeys": {},
-        "transferKeys": {},
-        "encryptedSelf": "sxl//v+/2wVroXbDGGeet+PVTGR7jFrA8I4FaRAfsLdc73AM6cBiKyjO9Ik2ayai",
-        "secretForeignKeys": [],
-        "cryptedForeignKeys": {},
-        "delegations": {
-          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
-        },
-        "encryptionKeys": {
-          "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
-        }
-      }
-    }
-  ],
-  "nextKeyPair": {}
-}
 ```
 </details>
 
@@ -406,10 +101,6 @@ In the example above, we created the filter this way:
 
 <!-- file://code-samples/{{sdk}}/how-to/patients/index.mts snippet:filter builder-->
 ```typescript
-const patientFilter = new PatientFilter(api)
-  .forDataOwner(loggedUser.healthcarePartyId!)
-  .dateOfBirthBetween(28000101, 29000101)
-  .build()
 ```
 
 <!-- output://code-samples/{{sdk}}/how-to/patients/patientFilter.txt -->
@@ -434,13 +125,6 @@ In some circumstances, you might want to get a list of `Patient` ids instead of 
 
 <!-- file://code-samples/{{sdk}}/how-to/patients/index.mts snippet:get a list of patient ids-->
 ```typescript
-const filterForMatch = await new PatientFilter(api)
-  .forDataOwner(loggedUser.healthcarePartyId!)
-
-  .dateOfBirthBetween(28000101, 29000101)
-  .build()
-
-const patientIds = await api.patientApi.matchPatients(filterForMatch)
 ```
 
 <!-- output://code-samples/{{sdk}}/how-to/patients/patientIds.txt -->
@@ -448,9 +132,6 @@ const patientIds = await api.patientApi.matchPatients(filterForMatch)
 <summary>patientIds</summary>
 
 ```text
-[
-  "fb442885-0697-4803-903d-2f8d947bccd1"
-]
 ```
 </details>
 

@@ -1,0 +1,18 @@
+{
+  "rows": [
+    {
+      "id": "70fe24f4-b2ca-4f41-af50-6540baaf6a18",
+      "rev": "2-be198ea05259dc3bc509097846275609",
+      "created": 1698415787141,
+      "name": "argang9n8f2es@moliere.fr",
+      "properties": {},
+      "roles": {},
+      "login": "argang9n8f2es@moliere.fr",
+      "groupId": "test-group",
+      "patientId": "8ae55f31-b3f3-44ac-98df-b7137938b3a3",
+      "sharingDataWith": {},
+      "email": "argang9n8f2es@moliere.fr",
+      "authenticationTokens": {}
+    }
+  ]
+}

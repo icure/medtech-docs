@@ -1,0 +1,77 @@
+{
+  "rows": [
+    {
+      "id": "387f72bd-c081-4d06-9908-79a6a194d622",
+      "rev": "2-11ab0de2eaf6fa2bedd9b026bcb3d07a",
+      "identifiers": [],
+      "created": 1698415794352,
+      "modified": 1698415794375,
+      "author": "5f7d11da-ff86-4f57-b4f3-65c489c01501",
+      "responsible": "54b9f244-ce89-4860-b242-028654575a74",
+      "tags": {},
+      "codes": {},
+      "names": [
+        {
+          "family": "Farnsworth",
+          "given": [
+            "Hubert",
+            "J"
+          ],
+          "prefix": [],
+          "suffix": [],
+          "use": "official"
+        },
+        {
+          "given": [
+            "Professor"
+          ],
+          "prefix": [],
+          "suffix": [],
+          "use": "nickname"
+        }
+      ],
+      "languages": [],
+      "addresses": [],
+      "gender": "male",
+      "birthSex": "male",
+      "mergedIds": [],
+      "active": true,
+      "deactivationReason": "none",
+      "personalStatus": "unknown",
+      "dateOfBirth": 28410409,
+      "profession": "CEO/Owner of Planet Express, Lecturer at Mars University",
+      "notes": [
+        {
+          "id": "6d5bd7a6-9d43-417f-8259-be48fee54db1",
+          "tags": {},
+          "markdown": {},
+          "encryptedSelf": "wXOihj1PGQa52Kc5pijDOpq10vt+konexl6oXx0elEN1DJtrNAnY3B+u0FDiAfmDuHIVFCriz2AWZZnaZ8BzhA=="
+        }
+      ],
+      "nationality": "American",
+      "relatives": [],
+      "patientPractitioners": [],
+      "patientProfessions": [],
+      "properties": {},
+      "systemMetaData": {
+        "hcPartyKeys": {},
+        "privateKeyShamirPartitions": {},
+        "secretForeignKeys": [],
+        "cryptedForeignKeys": {},
+        "delegations": {},
+        "encryptionKeys": {},
+        "aesExchangeKeys": {},
+        "transferKeys": {},
+        "securityMetadata": {
+          "secureDelegations": {},
+          "keysEquivalences": {}
+        },
+        "encryptedSelf": "5wDUpFw2WEjyuSYYRFbyXc3JAUokM/l+R+wVG8Y5Nqk=",
+        "publicKeysForOaepWithSha256": [],
+        "tags": {}
+      },
+      "firstName": "Hubert",
+      "lastName": "Farnsworth"
+    }
+  ]
+}

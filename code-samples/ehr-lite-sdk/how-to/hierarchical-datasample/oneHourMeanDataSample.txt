@@ -1,0 +1,23 @@
+{
+  "id": "60290148-a4d7-414c-8c81-709e0819fc31",
+  "identifiers": [],
+  "component": {
+    "measureValue": {
+      "value": 72,
+      "unit": "{beats}/min",
+      "unitCodes": [
+        {
+          "type": "UCUM",
+          "code": "{beats}/min",
+          "version": "1.2"
+        }
+      ]
+    }
+  },
+  "openingDate": 20220929083400,
+  "localContent": {},
+  "qualifiedLinks": {},
+  "codes": {},
+  "tags": {},
+  "notes": []
+}

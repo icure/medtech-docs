@@ -1,0 +1,71 @@
+{
+  "id": "1e8c6846-9ffb-48f2-815b-de068e22902a",
+  "rev": "4-8a85292bef548ae844b665e4e1309b89",
+  "created": 1698415819976,
+  "modified": 1698415819976,
+  "author": "5f7d11da-ff86-4f57-b4f3-65c489c01501",
+  "responsible": "54b9f244-ce89-4860-b242-028654575a74",
+  "firstName": "Marc",
+  "lastName": "Specter",
+  "companyName": "iCure",
+  "languages": [],
+  "active": true,
+  "parameters": {},
+  "identifiers": [],
+  "labels": {},
+  "codes": {},
+  "notes": [],
+  "names": [
+    {
+      "lastName": "Specter",
+      "firstNames": [
+        "Marc"
+      ],
+      "prefix": [],
+      "suffix": [],
+      "text": "Specter Marc",
+      "use": "official"
+    }
+  ],
+  "addresses": [
+    {
+      "addressType": "home",
+      "description": "London",
+      "telecoms": [
+        {
+          "telecomType": "email",
+          "telecomNumber": "7f3da326@icure.com"
+        }
+      ],
+      "notes": []
+    }
+  ],
+  "gender": "unknown",
+  "birthSex": "unknown",
+  "mergedIds": {},
+  "deactivationReason": "none",
+  "personalStatus": "unknown",
+  "partnerships": [],
+  "patientHealthCareParties": [],
+  "patientProfessions": [],
+  "properties": {},
+  "systemMetaData": {
+    "hcPartyKeys": {},
+    "privateKeyShamirPartitions": {},
+    "secretForeignKeys": [],
+    "cryptedForeignKeys": {},
+    "delegations": {},
+    "encryptionKeys": {},
+    "aesExchangeKeys": {},
+    "transferKeys": {},
+    "securityMetadata": {
+      "secureDelegations": {},
+      "keysEquivalences": {}
+    },
+    "encryptedSelf": "DYYaxzD0sWNSM+5lSpShGF8JyOogat4DH4cWp4rcKgE=",
+    "publicKeysForOaepWithSha256": [
+      "30820122300d06092a864886f70d01010105000382010f003082010a0282010100b50ffdcd02ed922d37c6b869bc2317e536654c5aa5a44b73ea91ae1fad8b0b064ff5582a785a48588176b47a9e091dc0dd8364557bb3ff722f0c1cd0c948866d22fe553fc2f73a582946f19d62bbb90c26bc0b46979b59a8a87c0d4bdcdd3dacadcad109734d6a90a03603e85dad7012292d2bbd2ece4db4f46b145b17e3d0e4a0216d8bd8bf723114aec4cc6f308bf0e604874266dce54b751826496064e16c02402052420688e3d5be4c6954f3f55684670afdeec23c0ffb925f46696c028fdbb3dfe78af24a6c5a28b7eaf449c0712e1306b15e0d9229d0feba87cab8941f7ac7eaf7ab703e59e59a4cda61e52227034b0dc245e05ff5bdb15e33c19d43570203010001"
+    ],
+    "tags": {}
+  }
+}

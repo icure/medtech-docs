@@ -1,0 +1,14 @@
+{
+  "id": "074d3eab-c700-4984-a265-0a74c341765a",
+  "rev": "1-25f53a2884fd4d584d55f67ef227681e",
+  "created": 1698415842300,
+  "name": "argan7kzf6egee@moliere.fr",
+  "properties": {},
+  "roles": {},
+  "login": "argan7kzf6egee@moliere.fr",
+  "groupId": "test-group",
+  "patientId": "1026d83f-f48c-43ee-a464-edae7b438f7c",
+  "sharingDataWith": {},
+  "email": "argan7kzf6egee@moliere.fr",
+  "authenticationTokens": {}
+}

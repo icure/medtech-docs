@@ -1,0 +1,69 @@
+{
+  "id": "1026d83f-f48c-43ee-a464-edae7b438f7c",
+  "rev": "1-42115f44b7ed68dc25d4d256c765e8df",
+  "created": 1698415842172,
+  "modified": 1698415842172,
+  "author": "5f7d11da-ff86-4f57-b4f3-65c489c01501",
+  "responsible": "54b9f244-ce89-4860-b242-028654575a74",
+  "firstName": "Argan",
+  "lastName": "Poquelin",
+  "languages": [],
+  "active": true,
+  "ssin": "1973021014722",
+  "dateOfBirth": 19730210,
+  "parameters": {},
+  "identifiers": [],
+  "labels": {},
+  "codes": {},
+  "notes": [],
+  "names": [
+    {
+      "lastName": "Poquelin",
+      "firstNames": [
+        "Argan"
+      ],
+      "prefix": [],
+      "suffix": [],
+      "text": "Poquelin Argan",
+      "use": "official"
+    }
+  ],
+  "addresses": [
+    {
+      "addressType": "home",
+      "telecoms": [
+        {
+          "telecomType": "email",
+          "telecomNumber": "argan7kzf6egee@moliere.fr"
+        }
+      ],
+      "notes": []
+    }
+  ],
+  "gender": "unknown",
+  "birthSex": "unknown",
+  "mergedIds": {},
+  "deactivationReason": "none",
+  "personalStatus": "unknown",
+  "partnerships": [],
+  "patientHealthCareParties": [],
+  "patientProfessions": [],
+  "properties": {},
+  "systemMetaData": {
+    "hcPartyKeys": {},
+    "privateKeyShamirPartitions": {},
+    "secretForeignKeys": [],
+    "cryptedForeignKeys": {},
+    "delegations": {},
+    "encryptionKeys": {},
+    "aesExchangeKeys": {},
+    "transferKeys": {},
+    "securityMetadata": {
+      "secureDelegations": {},
+      "keysEquivalences": {}
+    },
+    "encryptedSelf": "QSBLD0HwRrreeiYPDE4mSiE3xKojS+mRCvq1mdSlMHE=",
+    "publicKeysForOaepWithSha256": [],
+    "tags": {}
+  }
+}

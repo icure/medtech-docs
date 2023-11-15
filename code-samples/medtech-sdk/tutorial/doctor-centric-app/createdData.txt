@@ -1,0 +1,68 @@
+[
+  {
+    "id": "b639a94e-e76e-41b8-a90e-a337b321255e",
+    "identifiers": [],
+    "batchId": "b37a8600-ef65-40be-ba9c-cce8017d217f",
+    "healthcareElementIds": {},
+    "canvasesIds": {},
+    "content": {},
+    "valueDate": 20220203111034,
+    "openingDate": 20231027141046,
+    "index": 0,
+    "created": 1698415846719,
+    "modified": 1698415846719,
+    "author": "5f7d11da-ff86-4f57-b4f3-65c489c01501",
+    "responsible": "54b9f244-ce89-4860-b242-028654575a74",
+    "comment": "Height",
+    "qualifiedLinks": {},
+    "labels": {},
+    "systemMetaData": {
+      "secretForeignKeys": [
+        "e97d7b05-7f56-4ba9-a427-a683f2b98364"
+      ],
+      "cryptedForeignKeys": {},
+      "delegations": {},
+      "encryptionKeys": {},
+      "securityMetadata": {
+        "secureDelegations": {},
+        "keysEquivalences": {}
+      },
+      "encryptedSelf": "LZ0XGUQs3qgFxhJUYq+R4RiDlRjO7906LwfqCT/QD/tzDL8mYYWt1Wa0BXJBY4hNyaxq7KYxWIvvg0LqnDMkiA==",
+      "tags": {}
+    },
+    "codes": {}
+  },
+  {
+    "id": "c3f06dd6-cdf7-4cca-aee0-e6a96b9576ea",
+    "identifiers": [],
+    "batchId": "b37a8600-ef65-40be-ba9c-cce8017d217f",
+    "healthcareElementIds": {},
+    "canvasesIds": {},
+    "content": {},
+    "valueDate": 20220203111034,
+    "openingDate": 20231027141046,
+    "index": 1,
+    "created": 1698415846719,
+    "modified": 1698415846719,
+    "author": "5f7d11da-ff86-4f57-b4f3-65c489c01501",
+    "responsible": "54b9f244-ce89-4860-b242-028654575a74",
+    "comment": "Weight",
+    "qualifiedLinks": {},
+    "labels": {},
+    "systemMetaData": {
+      "secretForeignKeys": [
+        "e97d7b05-7f56-4ba9-a427-a683f2b98364"
+      ],
+      "cryptedForeignKeys": {},
+      "delegations": {},
+      "encryptionKeys": {},
+      "securityMetadata": {
+        "secureDelegations": {},
+        "keysEquivalences": {}
+      },
+      "encryptedSelf": "nduBG0wtDgW5vUiI/Lm6ntFDHhQM0/X1nnkbX4kalMqrM4cs0PMk5QP8aAY7M2kiJuq8lSHkKjCRQYAFmMsLjA==",
+      "tags": {}
+    },
+    "codes": {}
+  }
+]

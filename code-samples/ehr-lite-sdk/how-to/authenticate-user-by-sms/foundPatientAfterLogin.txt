@@ -1,0 +1,55 @@
+{
+  "id": "22edc2fb-0a87-4bab-b5dd-588195e4f1b1",
+  "rev": "1-eff26e920864ca4caf3e9b5832ddf64f",
+  "identifiers": [],
+  "created": 1698415759711,
+  "modified": 1698415759711,
+  "author": "0d65bba6-b7ac-46e6-8ee9-a688b0be52e3",
+  "responsible": "f8781cfc-c962-4bc5-8ade-4ce1573b32a0",
+  "tags": {},
+  "codes": {},
+  "names": [
+    {
+      "family": "Stark",
+      "given": [
+        "Robb"
+      ],
+      "prefix": [],
+      "suffix": [],
+      "text": "Stark Robb",
+      "use": "official"
+    }
+  ],
+  "languages": [],
+  "addresses": [],
+  "gender": "male",
+  "birthSex": "unknown",
+  "mergedIds": [],
+  "active": true,
+  "deactivationReason": "none",
+  "personalStatus": "unknown",
+  "notes": [],
+  "relatives": [],
+  "patientPractitioners": [],
+  "patientProfessions": [],
+  "properties": {},
+  "systemMetaData": {
+    "hcPartyKeys": {},
+    "privateKeyShamirPartitions": {},
+    "secretForeignKeys": [],
+    "cryptedForeignKeys": {},
+    "delegations": {},
+    "encryptionKeys": {},
+    "aesExchangeKeys": {},
+    "transferKeys": {},
+    "securityMetadata": {
+      "secureDelegations": {},
+      "keysEquivalences": {}
+    },
+    "encryptedSelf": "dqZBIDCr7S5HIP2nNBU8ly+nxze1AxuoiHCaZfZeBGo=",
+    "publicKeysForOaepWithSha256": [],
+    "tags": {}
+  },
+  "firstName": "Robb",
+  "lastName": "Stark"
+}

@@ -1,0 +1,47 @@
+{
+  "id": "1ca61c79-55ac-408e-a499-6c13b8e8e4aa",
+  "rev": "2-c7371780d2a86bd2ce8e47304a15ecfb",
+  "created": 1698415836512,
+  "modified": 1698415836512,
+  "labels": {},
+  "codes": {},
+  "names": [
+    {
+      "lastName": "Keats",
+      "firstNames": [
+        "John"
+      ],
+      "prefix": [],
+      "suffix": [],
+      "text": "Keats John",
+      "use": "official"
+    }
+  ],
+  "addresses": [
+    {
+      "telecoms": [
+        {
+          "telecomType": "email",
+          "telecomNumber": "jk@hospital.care"
+        }
+      ],
+      "notes": []
+    }
+  ],
+  "properties": {},
+  "name": "Keats John",
+  "lastName": "Keats",
+  "firstName": "John",
+  "civility": "Dr.",
+  "speciality": "Psychiatrist",
+  "languages": [],
+  "specialityCodes": {},
+  "systemMetaData": {
+    "hcPartyKeys": {},
+    "privateKeyShamirPartitions": {},
+    "aesExchangeKeys": {},
+    "transferKeys": {},
+    "publicKeysForOaepWithSha256": [],
+    "tags": {}
+  }
+}

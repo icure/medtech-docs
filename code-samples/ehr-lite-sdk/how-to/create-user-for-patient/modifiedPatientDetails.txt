@@ -1,0 +1,69 @@
+{
+  "id": "9a91fcb2-4fe8-4bc7-8767-fd4b5f1baab3",
+  "rev": "4-60b4ca9aa81a3b0c7ebe0b17fdbf7845",
+  "identifiers": [],
+  "created": 1698415773952,
+  "modified": 1698415773952,
+  "author": "5f7d11da-ff86-4f57-b4f3-65c489c01501",
+  "responsible": "54b9f244-ce89-4860-b242-028654575a74",
+  "tags": {},
+  "codes": {},
+  "names": [
+    {
+      "family": "Specter",
+      "given": [
+        "Marc"
+      ],
+      "prefix": [],
+      "suffix": [],
+      "text": "Specter Marc",
+      "use": "official"
+    }
+  ],
+  "languages": [],
+  "addresses": [
+    {
+      "addressType": "home",
+      "description": "London",
+      "notes": [],
+      "telecoms": [
+        {
+          "system": "email",
+          "value": "07e19e1b@icure.com"
+        }
+      ]
+    }
+  ],
+  "gender": "unknown",
+  "birthSex": "unknown",
+  "mergedIds": [],
+  "active": true,
+  "deactivationReason": "none",
+  "personalStatus": "complicated",
+  "notes": [],
+  "relatives": [],
+  "patientPractitioners": [],
+  "patientProfessions": [],
+  "properties": {},
+  "systemMetaData": {
+    "hcPartyKeys": {},
+    "privateKeyShamirPartitions": {},
+    "secretForeignKeys": [],
+    "cryptedForeignKeys": {},
+    "delegations": {},
+    "encryptionKeys": {},
+    "aesExchangeKeys": {},
+    "transferKeys": {},
+    "securityMetadata": {
+      "secureDelegations": {},
+      "keysEquivalences": {}
+    },
+    "encryptedSelf": "Qx9aZEURGqgFQF+KJ6Q9nas2VUZ9XkEm+eQ+BGbQZyg=",
+    "publicKeysForOaepWithSha256": [
+      "30820122300d06092a864886f70d01010105000382010f003082010a0282010100b0bf08d9b49cdfdb437c0225c7a517c8d45f52ddc30b9025693b1b299ce98603d3ffe06aaffbbea1d62889c23a92fd2194937a743e06f502205a966d00840ad21bc0c13620199753d935f36814a42fa14eb73a930a9046d7150ca0f0ce72df834a250fbcb1aaae61a62bad35c3b95fb8dc529488084728db8ee3baadfea88dbd4286a9f88071a54f0fc8d63e698062825dd8b0cba408f9bdc8acb239b1938d665b8ac887f7aaca9da8efddc07bce9d6d1988a0b111e156e3eb32b3e93461c5757437977ff51b4ab5411841448a5be73f0830c5439230c3a10da7758723104adf1d6e36c60abf6dfec3400ea9625851af161d18547cbf7e8939164c1de53bc9910203010001"
+    ],
+    "tags": {}
+  },
+  "firstName": "Marc",
+  "lastName": "Specter"
+}

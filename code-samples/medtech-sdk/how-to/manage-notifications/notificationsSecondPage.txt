@@ -1,0 +1,248 @@
+{
+  "rows": [
+    {
+      "id": "8b42c204-2fb1-4357-9570-95fa9f56f9b7",
+      "rev": "1-84f3c2a982cdda872d7f8c512701941e",
+      "status": "pending",
+      "created": 1698415790774,
+      "identifiers": [],
+      "modified": 1698415790774,
+      "author": "5f7d11da-ff86-4f57-b4f3-65c489c01501",
+      "responsible": "54b9f244-ce89-4860-b242-028654575a74",
+      "properties": {},
+      "type": "OTHER",
+      "systemMetaData": {
+        "secretForeignKeys": [],
+        "cryptedForeignKeys": {},
+        "delegations": {},
+        "encryptionKeys": {},
+        "securityMetadata": {
+          "secureDelegations": {},
+          "keysEquivalences": {}
+        },
+        "encryptedSelf": "5lb1GrJ5C8s6pjs9MuQj5QEpumam772t8GnVLp/kN9n7I5TlAhyPHAJwA8HPd7Jy",
+        "tags": {}
+      }
+    },
+    {
+      "id": "92799d6e-8277-4d6b-b650-8bcb48dbc17c",
+      "rev": "1-b919ea8a3fc4335b13fa78990fb82200",
+      "status": "pending",
+      "created": 1698415790757,
+      "identifiers": [],
+      "modified": 1698415790757,
+      "author": "5f7d11da-ff86-4f57-b4f3-65c489c01501",
+      "responsible": "54b9f244-ce89-4860-b242-028654575a74",
+      "properties": {},
+      "type": "OTHER",
+      "systemMetaData": {
+        "secretForeignKeys": [],
+        "cryptedForeignKeys": {},
+        "delegations": {},
+        "encryptionKeys": {},
+        "securityMetadata": {
+          "secureDelegations": {},
+          "keysEquivalences": {}
+        },
+        "encryptedSelf": "p8p3TNFxwcD7J9qzLX7aF4tZh8Bqyt5lI/vBQjztQublLdLrCrdb7cO/do4pJyWU",
+        "tags": {}
+      }
+    },
+    {
+      "id": "993532c6-a9b8-4313-b4ee-9dfa2a4d9972",
+      "rev": "3-08eedaccc202dfdcec67aae917ee15b8",
+      "status": "completed",
+      "created": 1698415779795,
+      "identifiers": [],
+      "modified": 1698415779795,
+      "author": "72be0a3c-7d28-4c88-b391-770f17f10b23",
+      "responsible": "9a91fcb2-4fe8-4bc7-8767-fd4b5f1baab3",
+      "properties": {},
+      "type": "NEW_USER_OWN_DATA_ACCESS",
+      "systemMetaData": {
+        "secretForeignKeys": [],
+        "cryptedForeignKeys": {},
+        "delegations": {},
+        "encryptionKeys": {},
+        "securityMetadata": {
+          "secureDelegations": {},
+          "keysEquivalences": {}
+        },
+        "encryptedSelf": "nY6Y4AmxIrUT/kFy1LBHek89rEuDx/IJXh8EogPRXrYXkVGs1wxHLYJ1tD1WBvWi",
+        "tags": {}
+      }
+    },
+    {
+      "id": "9a357f5a-57b0-471b-9117-435da6b00767",
+      "rev": "2-9305516d1800b0cae5eab04b920e4388",
+      "status": "ongoing",
+      "created": 1698415791108,
+      "identifiers": [],
+      "modified": 1698415791108,
+      "author": "5f7d11da-ff86-4f57-b4f3-65c489c01501",
+      "responsible": "54b9f244-ce89-4860-b242-028654575a74",
+      "properties": {},
+      "type": "KEY_PAIR_UPDATE",
+      "systemMetaData": {
+        "secretForeignKeys": [],
+        "cryptedForeignKeys": {},
+        "delegations": {},
+        "encryptionKeys": {},
+        "securityMetadata": {
+          "secureDelegations": {},
+          "keysEquivalences": {}
+        },
+        "encryptedSelf": "vsiFtBhmOwishVyba10q54W65PmHW6vHSMwRuqMa49FPrExVXg0wiy44FLcXv/T+",
+        "tags": {}
+      }
+    },
+    {
+      "id": "af0fa79b-cf6e-42ec-bfe5-351b9e2bee1e",
+      "rev": "1-8f155cd9319a08bb32cdd22f358fa196",
+      "status": "pending",
+      "created": 1698415763489,
+      "identifiers": [],
+      "modified": 1698415763489,
+      "author": "*",
+      "responsible": "*",
+      "properties": {},
+      "type": "KEY_PAIR_UPDATE",
+      "systemMetaData": {
+        "secretForeignKeys": [],
+        "cryptedForeignKeys": {},
+        "delegations": {},
+        "encryptionKeys": {},
+        "securityMetadata": {
+          "secureDelegations": {},
+          "keysEquivalences": {}
+        },
+        "encryptedSelf": "ZcTKHC35XGcAFJ6Ao/nadHTHlKXKu8j+fjZmE5Lu4vihMm1RaZS+OnWL86TvD5HWXbuUHDja5Rlax0RJ6wM2y6OFzzhr/+u3nREROoO/vomvgMlSClW+0667ll2TCrS03zeRWNXJi1y20ZPK3jsvRzlbfIcATZ/5LRaeXx3T7sJpi1vIRmAvwmN/NwbY++AdovxQLYgsHnW/8ekF8Le1eiHDdIes9gDmKGxCzhznDKIwx+cMAwu9ZLSwoh6kY8boQpcBm12UnLUnGZ/AQKHPIkRWQtguBMIPNyjc+fCVsJBZpbOUHftjV1JGtx+A1MIooQMcKWt3Be5XphV7PzPSSzrEADXJTlyAsSWPecWWqLykvLCgYOPbrKf3IrOZN9uUcOQJSnWUqRMXxQU0x1yczrpYhMkIafXBCD/8PX7oVdblB44g40KJxq8l8nDRwtitEA35LXshKVPIfq4dt4yw48x6jMjGy/TgWMsLh1cPQcLX6LYDxygsKxAI6jMZDVJMHMhgIpKktUuhEuQ0Q7e/InTGKNJJRGknWzDS3ev/XYnKw/Q664xnM4uTzf4eK1M5rXb496NBEMjRJaHtSX8lImgtskMp31P1n5jEy7IE3O+gmTbtS9OwYrSfe0bclpLGhmiIXZ8UAR7kW8j9GJw+nwCY94ZOUj3eD4mYqIeGCyCFJQdxwJDgMmBFXvxLOoRkEP47mpneqIBOzg7OJv3xIWxwYYJKmK2Xl31rTQymZhvDz09boEhEBE3smb57nHM7z9B7A/vPwKXKO9zNbt0LI2RMN1RIsQIO0bDV1hfJMP4CDDUdVn1MrIHfzslX814nsxT/FhgYnuHJUORjlc6MVDSXb8KCjMT0riI8I/SdMhcIC42/0A3N9WzSbIWHaf6tSeA59ZG9V45g4HkKVzN/+A+zv8yzhYNdij8bLwIzLhHB7uhMfWsVxjxnLPVDwoIs8qnUoQKuIKOgvMf+je4lLIuQRAmXQbzJ8J5849Qksc2uxoOokXbemXo0dOhrP4bICoWea4c0GRxiwpICfubStc+Mp5TK3N7Q22zXUQYWy97bgNta8qb2x2vbVtS5Zgi1gcz1mIV8jfd6Pft7tEwoYcoT7t8x0YmOBZyKK+HOLdTWiVtCqmvjDYGW0e4smuyArJ3vV5a1pdN+1/3KtUSs3A==",
+        "tags": {}
+      }
+    },
+    {
+      "id": "b5da9fe5-183b-4216-9cb6-a561f3388133",
+      "rev": "2-bf7d38632843cc14752ed6b5117a4d2d",
+      "status": "completed",
+      "created": 1698415811613,
+      "identifiers": [],
+      "modified": 1698415811613,
+      "author": "da695b70-3244-4f25-aac9-0b496f09c272",
+      "responsible": "e9184a72-894d-4922-a5b6-91956014ce9e",
+      "properties": {},
+      "type": "OTHER",
+      "systemMetaData": {
+        "secretForeignKeys": [],
+        "cryptedForeignKeys": {},
+        "delegations": {},
+        "encryptionKeys": {},
+        "securityMetadata": {
+          "secureDelegations": {},
+          "keysEquivalences": {}
+        },
+        "encryptedSelf": "mIz/vl4p+1/iotQU7jw3CT2Kce6IcHOLyCa61NwiZuHFVE92XdvIA/opsvNbP/rr",
+        "tags": {}
+      }
+    },
+    {
+      "id": "e6bd2adb-b748-4063-a9c2-1ac78c6f2750",
+      "rev": "1-a8e882959f7749266321a76e3a0bc8c2",
+      "status": "pending",
+      "created": 1698415790919,
+      "identifiers": [],
+      "modified": 1698415790919,
+      "author": "5f7d11da-ff86-4f57-b4f3-65c489c01501",
+      "responsible": "54b9f244-ce89-4860-b242-028654575a74",
+      "properties": {},
+      "type": "OTHER",
+      "systemMetaData": {
+        "secretForeignKeys": [],
+        "cryptedForeignKeys": {},
+        "delegations": {},
+        "encryptionKeys": {},
+        "securityMetadata": {
+          "secureDelegations": {},
+          "keysEquivalences": {}
+        },
+        "encryptedSelf": "CBIbUJRCNpwyJb3I1Aeuri0m9dXCI11OcID9zGZntqOqUjgdV+suXgcxT5yEiHOM",
+        "tags": {}
+      }
+    },
+    {
+      "id": "eb66d9cb-38ac-4e50-848d-0d73dd9d03e4",
+      "rev": "1-39ec6279f833d88c39e861e8e8af85bb",
+      "status": "pending",
+      "created": 1698415837654,
+      "identifiers": [],
+      "modified": 1698415837654,
+      "author": "*",
+      "responsible": "*",
+      "properties": {},
+      "type": "KEY_PAIR_UPDATE",
+      "systemMetaData": {
+        "secretForeignKeys": [],
+        "cryptedForeignKeys": {},
+        "delegations": {},
+        "encryptionKeys": {},
+        "securityMetadata": {
+          "secureDelegations": {},
+          "keysEquivalences": {}
+        },
+        "encryptedSelf": "1YS6S9wmi4ADZNd0JK7G8ngYVzzGsM7buILwjc77w8Cbw3Ob/XI7ayNhH2+8+8XX",
+        "tags": {}
+      }
+    },
+    {
+      "id": "f1a8d7e2-e20d-4e8f-8170-db4376b7b73f",
+      "rev": "1-2b0c1feed12f88ed6adf6a99861c966f",
+      "status": "pending",
+      "created": 1698415790583,
+      "identifiers": [],
+      "modified": 1698415790583,
+      "author": "*",
+      "responsible": "*",
+      "properties": {},
+      "type": "KEY_PAIR_UPDATE",
+      "systemMetaData": {
+        "secretForeignKeys": [],
+        "cryptedForeignKeys": {},
+        "delegations": {},
+        "encryptionKeys": {},
+        "securityMetadata": {
+          "secureDelegations": {},
+          "keysEquivalences": {}
+        },
+        "encryptedSelf": "pxhpwBo2519QOWg7kJfaT7Xt9k1tHPfOUJk+t1oorSqkTHpchl+A7pvfjdRXiQu0",
+        "tags": {}
+      }
+    },
+    {
+      "id": "f1bc71da-d06b-40eb-865f-0742d5d9070b",
+      "rev": "1-59cdc452cdd5c6c0e478626508d318db",
+      "status": "pending",
+      "created": 1698415790740,
+      "identifiers": [],
+      "modified": 1698415790740,
+      "author": "5f7d11da-ff86-4f57-b4f3-65c489c01501",
+      "responsible": "54b9f244-ce89-4860-b242-028654575a74",
+      "properties": {},
+      "type": "OTHER",
+      "systemMetaData": {
+        "secretForeignKeys": [],
+        "cryptedForeignKeys": {},
+        "delegations": {},
+        "encryptionKeys": {},
+        "securityMetadata": {
+          "secureDelegations": {},
+          "keysEquivalences": {}
+        },
+        "encryptedSelf": "wFnBxQ37iUY5o2KX95kydN4R5NAAXn3qdKjq9a6bqINdkq3619YCZpqLt+XmqVoo",
+        "tags": {}
+      }
+    }
+  ],
+  "nextKeyPair": {
+    "startKey": "f4d23be1-dad4-4128-9588-4b0c2cd183bc",
+    "startKeyDocId": "f4d23be1-dad4-4128-9588-4b0c2cd183bc"
+  }
+}

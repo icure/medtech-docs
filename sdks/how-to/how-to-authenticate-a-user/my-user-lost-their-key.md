@@ -32,10 +32,6 @@ For this, start a new authentication process as usual:
 
 <!-- file://code-samples/{{sdk}}/how-to/authenticate-user/index.mts snippet:Complete user lost key authentication-->
 ```typescript
-const loginAuthResult = await anonymousMedTechApi.authenticationApi.completeAuthentication(
-  loginProcess!,
-  newValidationCode,
-)
 ```
 
 The `completeAuthentication` will create autonomously a new key pair for the User if an existing one is not found.  
@@ -43,63 +39,12 @@ At this stage, Daenaerys will be able to create new data using her new RSA keypa
 
 <!-- file://code-samples/{{sdk}}/how-to/authenticate-user/index.mts snippet:User can create new data after loosing their key-->
 ```typescript
-const newlyCreatedDataSample =
-  await loginAuthResult.medTechApi.dataSampleApi.createOrModifyDataSampleFor(
-    foundUser.patientId,
-    new DataSample({
-      labels: new Set([new CodingReference({ type: 'IC-TEST', code: 'TEST' })]),
-      content: { en: new Content({ stringValue: 'Hello world' }) },
-      openingDate: 20220929083400,
-      comment: 'This is a comment',
-    }),
-  )
 ```
 <!-- output://code-samples/{{sdk}}/how-to/authenticate-user/newlyCreatedDataSample.txt -->
 <details>
 <summary>newlyCreatedDataSample</summary>
 
 ```json
-{
-  "id": "213aa3db-25ed-4fba-8f7a-e4e2360ce287",
-  "qualifiedLinks": {},
-  "batchId": "f6859a6c-cc3e-490b-bf1d-580f717ee4b2",
-  "index": 0,
-  "valueDate": 20230328100123,
-  "openingDate": 20220929083400,
-  "created": 1679997683150,
-  "modified": 1679997683150,
-  "author": "d4ed8d59-bf6a-42cb-9d25-25f861b56f28",
-  "responsible": "df18183f-fabf-4f13-b204-0650dc68c7c6",
-  "comment": "This is a comment",
-  "identifiers": [],
-  "healthcareElementIds": {},
-  "canvasesIds": {},
-  "content": {
-    "en": {
-      "stringValue": "Hello world",
-      "compoundValue": [],
-      "ratio": [],
-      "range": []
-    }
-  },
-  "codes": {},
-  "labels": {},
-  "systemMetaData": {
-    "secretForeignKeys": [],
-    "cryptedForeignKeys": {
-      "df18183f-fabf-4f13-b204-0650dc68c7c6": {},
-      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
-    },
-    "delegations": {
-      "df18183f-fabf-4f13-b204-0650dc68c7c6": {},
-      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
-    },
-    "encryptionKeys": {
-      "df18183f-fabf-4f13-b204-0650dc68c7c6": {},
-      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
-    }
-  }
-}
 ```
 </details>
 
@@ -136,62 +81,12 @@ The ones that are interesting us here are the notifications related to updated k
 
 <!-- file://code-samples/{{sdk}}/how-to/authenticate-user/index.mts snippet:Data owner gets all their pending notifications-->
 ```typescript
-const hcpNotifications = await hcpApi.notificationApi
-  .getPendingNotificationsAfter(startTimestamp)
-  .then((notifs) => notifs.filter((notif) => notif.type === NotificationTypeEnum.KEY_PAIR_UPDATE))
 ```
 <!-- output://code-samples/{{sdk}}/how-to/authenticate-user/hcpNotifications.txt -->
 <details>
 <summary>hcpNotifications</summary>
 
 ```text
-[
-  {
-    "id": "e41382a3-c508-44ed-b204-211c14e3ce89",
-    "rev": "1-986a6a5caa1b3c90f53b3f0f5824dae5",
-    "created": 1679997681218,
-    "modified": 1679997681218,
-    "author": "d4ed8d59-bf6a-42cb-9d25-25f861b56f28",
-    "responsible": "df18183f-fabf-4f13-b204-0650dc68c7c6",
-    "status": "pending",
-    "identifiers": [],
-    "properties": [
-      {
-        "id": "dataOwnerConcernedId",
-        "type": {
-          "type": "STRING"
-        },
-        "typedValue": {
-          "stringValue": "df18183f-fabf-4f13-b204-0650dc68c7c6",
-          "type": "STRING"
-        }
-      },
-      {
-        "id": "dataOwnerConcernedPubKey",
-        "type": {
-          "type": "STRING"
-        },
-        "typedValue": {
-          "stringValue": "30820122300d06092a864886f70d01010105000382010f003082010a0282010100db36eb19d1d91fb09f892a9c6246768053d0307eb361f5c48f2ff63e7c5a5a0860ebcfd996ae4c432215fc7263b64251445f488c3ac22d55b7a661fce523832c775292d39420b72b855d8acb3c2226de7e021618f92c61bd97cd4c5c1c3f0a82fcf309bce96db112b69ae116d479c98d23b86a78d192dd7575a2bdeb9c689135b5cc1d8b2b082a59e4b04db056a9b4af81b2585e31492c8e353a81232efbb9a8c4f500478a3b8084d9d44c50c1cd67ab67fc4e482a0d54c62ce0232ef0db65275bf369a9df570560cc9c87e4d67dc46a68d96c44178e9c5643acb2af6a6d38b00591b1b949257abd45882af9955157b48a2743623aa18e9caadf3c9a2749f84f0203010001",
-          "type": "STRING"
-        }
-      }
-    ],
-    "type": "KEY_PAIR_UPDATE",
-    "systemMetaData": {
-      "secretForeignKeys": [],
-      "cryptedForeignKeys": {},
-      "delegations": {
-        "df18183f-fabf-4f13-b204-0650dc68c7c6": {},
-        "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
-      },
-      "encryptionKeys": {
-        "df18183f-fabf-4f13-b204-0650dc68c7c6": {},
-        "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
-      }
-    }
-  }
-]
 ```
 </details>
 
@@ -209,33 +104,12 @@ Let's say Jorah decides to give Daenaerys access back to her previous data using
 
 <!-- file://code-samples/{{sdk}}/how-to/authenticate-user/index.mts snippet:Give access back to a user with their new key-->
 ```typescript
-const daenaerysPatientId = daenaerysNotification!.properties?.find(
-  (prop) => prop.id == 'dataOwnerConcernedId',
-)
-const daenaerysPatientPubKey = daenaerysNotification!.properties?.find(
-  (prop) => prop.id == 'dataOwnerConcernedPubKey',
-)
-
-await hcpApi.dataOwnerApi.giveAccessBackTo(
-  daenaerysPatientId!.typedValue!.stringValue!,
-  daenaerysPatientPubKey!.typedValue!.stringValue!,
-)
 ```
 <!-- output://code-samples/{{sdk}}/how-to/authenticate-user/daenaerysPatientId.txt -->
 <details>
 <summary>daenaerysPatientId</summary>
 
 ```json
-{
-  "id": "dataOwnerConcernedId",
-  "type": {
-    "type": "STRING"
-  },
-  "typedValue": {
-    "stringValue": "df18183f-fabf-4f13-b204-0650dc68c7c6",
-    "type": "STRING"
-  }
-}
 ```
 </details>
 
@@ -244,16 +118,6 @@ await hcpApi.dataOwnerApi.giveAccessBackTo(
 <summary>daenaerysPatientPubKey</summary>
 
 ```json
-{
-  "id": "dataOwnerConcernedPubKey",
-  "type": {
-    "type": "STRING"
-  },
-  "typedValue": {
-    "stringValue": "30820122300d06092a864886f70d01010105000382010f003082010a0282010100db36eb19d1d91fb09f892a9c6246768053d0307eb361f5c48f2ff63e7c5a5a0860ebcfd996ae4c432215fc7263b64251445f488c3ac22d55b7a661fce523832c775292d39420b72b855d8acb3c2226de7e021618f92c61bd97cd4c5c1c3f0a82fcf309bce96db112b69ae116d479c98d23b86a78d192dd7575a2bdeb9c689135b5cc1d8b2b082a59e4b04db056a9b4af81b2585e31492c8e353a81232efbb9a8c4f500478a3b8084d9d44c50c1cd67ab67fc4e482a0d54c62ce0232ef0db65275bf369a9df570560cc9c87e4d67dc46a68d96c44178e9c5643acb2af6a6d38b00591b1b949257abd45882af9955157b48a2743623aa18e9caadf3c9a2749f84f0203010001",
-    "type": "STRING"
-  }
-}
 ```
 </details>
 

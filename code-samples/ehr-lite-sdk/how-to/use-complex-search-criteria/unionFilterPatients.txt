@@ -1,0 +1,116 @@
+{
+  "rows": [
+    {
+      "id": "20491217-0e42-4aae-a74a-c9fc14d94427",
+      "rev": "1-f98e1d510612558660f09008c3102199",
+      "identifiers": [],
+      "created": 1698415795886,
+      "modified": 1698415795886,
+      "author": "e5e57bc2-5452-46d1-b6f8-0d481eadc1de",
+      "responsible": "9773eba3-1376-4f23-8ab4-009ddc0404d3",
+      "tags": {},
+      "codes": {},
+      "names": [
+        {
+          "family": "Astra",
+          "given": [
+            "Trillian"
+          ],
+          "prefix": [],
+          "suffix": [],
+          "text": "Astra Trillian",
+          "use": "official"
+        }
+      ],
+      "languages": [],
+      "addresses": [],
+      "gender": "female",
+      "birthSex": "unknown",
+      "mergedIds": [],
+      "active": true,
+      "deactivationReason": "none",
+      "personalStatus": "unknown",
+      "dateOfBirth": 19520101,
+      "notes": [],
+      "relatives": [],
+      "patientPractitioners": [],
+      "patientProfessions": [],
+      "properties": {},
+      "systemMetaData": {
+        "hcPartyKeys": {},
+        "privateKeyShamirPartitions": {},
+        "secretForeignKeys": [],
+        "cryptedForeignKeys": {},
+        "delegations": {},
+        "encryptionKeys": {},
+        "aesExchangeKeys": {},
+        "transferKeys": {},
+        "securityMetadata": {
+          "secureDelegations": {},
+          "keysEquivalences": {}
+        },
+        "encryptedSelf": "1YQ5IhJfNfzVR/vN4sJGmH27sGGDSbSiV0LegDz6mDw=",
+        "publicKeysForOaepWithSha256": [],
+        "tags": {}
+      },
+      "firstName": "Trillian",
+      "lastName": "Astra"
+    },
+    {
+      "id": "f78c5d88-ca01-4b5b-84fd-fa3b6206ab89",
+      "rev": "1-d9c97c5deb67d616c6eda5e63b7400c1",
+      "identifiers": [],
+      "created": 1698415795903,
+      "modified": 1698415795903,
+      "author": "e5e57bc2-5452-46d1-b6f8-0d481eadc1de",
+      "responsible": "9773eba3-1376-4f23-8ab4-009ddc0404d3",
+      "tags": {},
+      "codes": {},
+      "names": [
+        {
+          "family": "Beeblebrox",
+          "given": [
+            "Zaphod"
+          ],
+          "prefix": [],
+          "suffix": [],
+          "text": "Beeblebrox Zaphod",
+          "use": "official"
+        }
+      ],
+      "languages": [],
+      "addresses": [],
+      "gender": "indeterminate",
+      "birthSex": "unknown",
+      "mergedIds": [],
+      "active": true,
+      "deactivationReason": "none",
+      "personalStatus": "unknown",
+      "dateOfBirth": 19420101,
+      "notes": [],
+      "relatives": [],
+      "patientPractitioners": [],
+      "patientProfessions": [],
+      "properties": {},
+      "systemMetaData": {
+        "hcPartyKeys": {},
+        "privateKeyShamirPartitions": {},
+        "secretForeignKeys": [],
+        "cryptedForeignKeys": {},
+        "delegations": {},
+        "encryptionKeys": {},
+        "aesExchangeKeys": {},
+        "transferKeys": {},
+        "securityMetadata": {
+          "secureDelegations": {},
+          "keysEquivalences": {}
+        },
+        "encryptedSelf": "xGUsMvCUbyk910JiQ0aX/3pdyNjH6gva0408+VfdnAk=",
+        "publicKeysForOaepWithSha256": [],
+        "tags": {}
+      },
+      "firstName": "Zaphod",
+      "lastName": "Beeblebrox"
+    }
+  ]
+}

@@ -1,0 +1,139 @@
+{
+  "id": "628a85e0-1970-468a-bf94-c39c7f047692",
+  "identifiers": [],
+  "component": {
+    "compoundValue": [
+      {
+        "id": "60290148-a4d7-414c-8c81-709e0819fc31",
+        "identifiers": [],
+        "component": {
+          "measureValue": {
+            "value": 72,
+            "unit": "{beats}/min",
+            "unitCodes": [
+              {
+                "type": "UCUM",
+                "code": "{beats}/min",
+                "version": "1.2"
+              }
+            ]
+          }
+        },
+        "openingDate": 20220929083400,
+        "localContent": {},
+        "qualifiedLinks": {},
+        "codes": {},
+        "tags": {},
+        "notes": []
+      },
+      {
+        "id": "bd586958-2fee-4880-9110-923baf1f92ac",
+        "identifiers": [],
+        "component": {
+          "measureValue": {
+            "value": 63,
+            "unit": "{beats}/min",
+            "unitCodes": [
+              {
+                "type": "UCUM",
+                "code": "{beats}/min",
+                "version": "1.2"
+              }
+            ]
+          }
+        },
+        "openingDate": 20220929083400,
+        "localContent": {},
+        "qualifiedLinks": {},
+        "codes": {},
+        "tags": {},
+        "notes": []
+      },
+      {
+        "id": "f7b614e9-d8cc-47fb-b3fe-6d1664fda0a4",
+        "identifiers": [],
+        "component": {
+          "timeSeries": {
+            "samples": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "fields": [
+              "C°"
+            ]
+          }
+        },
+        "openingDate": 20220929083400,
+        "localContent": {},
+        "qualifiedLinks": {},
+        "codes": {},
+        "tags": {},
+        "notes": []
+      }
+    ]
+  },
+  "openingDate": 20220929083400,
+  "localContent": {},
+  "qualifiedLinks": {},
+  "codes": {},
+  "tags": {},
+  "notes": []
+}
