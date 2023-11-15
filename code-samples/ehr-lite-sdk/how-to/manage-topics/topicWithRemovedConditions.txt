@@ -1,10 +1,10 @@
 {
-  "id": "8b0543ee-e263-4a7d-832d-2a423d53bd06",
-  "rev": "3-276713b6ed055b20a6f46b749a1c00c6",
-  "created": 1698415789202,
-  "modified": 1698415789202,
-  "author": "5f7d11da-ff86-4f57-b4f3-65c489c01501",
-  "responsible": "54b9f244-ce89-4860-b242-028654575a74",
+  "id": "b56ff426-bae6-4f3b-9499-9aecdf6ac547",
+  "rev": "3-2e9ff11298b13d8e41da99fdb6fea80f",
+  "created": 1700058626748,
+  "modified": 1700058626748,
+  "author": "17e392da-8e36-4e4e-abd7-7eef3e434395",
+  "responsible": "3ed06450-17e5-47b6-ba4f-7a0a084df56b",
   "tags": {},
   "codes": {},
   "descr": "Topic to share health elements",
@@ -13,7 +13,7 @@
   "activeParticipants": {},
   "systemMetadata": {
     "secretForeignKeys": [
-      "20a24ca1-7231-463c-8c49-a515347c238a"
+      "43d5599e-7f59-4411-b21a-8d814f0986dd"
     ],
     "cryptedForeignKeys": {},
     "delegations": {},
@@ -22,7 +22,7 @@
       "secureDelegations": {},
       "keysEquivalences": {}
     },
-    "encryptedSelf": "P1Mmr2Q5Qp9S3Thynv8KeguSK/JQLowoPI7HMOI9ryvN6rzwuHPLIMaFDUEKba5Kn5LUrerOZ7QnLHJ+i+if+A45jyY85Ae1Oi6jbfqBBXW9UlBsbhqCluKD2+NQDUpxA1FlSDaB7hOEDVwmjqvtXQ==",
+    "encryptedSelf": "/9h1c0aXM1yf8ZmPVI7fQxU+KSEvF7+9uee8c2cEYmm/t07t6NnxKG/rHf7+Ur0NDwWpwC3ywNWIld5O/RFaQb2zYDSnoLBIYVangISTZx5C9gz9TZl5V4L+HFDz2tK4cxtxBoPj9igkKFouEUwYeA==",
     "tags": {}
   }
 }

@@ -1,0 +1,7 @@
+[
+  {
+    "contentType": "text/plain",
+    "data": {},
+    "filename": "importantText.txt"
+  }
+]

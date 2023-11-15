@@ -1,10 +1,10 @@
 {
-  "id": "3b36b262-3dc0-4e2f-b711-dee8fd3a9dee",
-  "rev": "1-8ae93809b924bfdd080deb540de39faa",
-  "created": 1698415839085,
-  "modified": 1698415839085,
-  "author": "5f7d11da-ff86-4f57-b4f3-65c489c01501",
-  "responsible": "54b9f244-ce89-4860-b242-028654575a74",
+  "id": "6b1673bc-309d-44da-9aa0-47f59a9d79aa",
+  "rev": "1-8eb291abca109d098cff6153a8c1c95b",
+  "created": 1700058672503,
+  "modified": 1700058672503,
+  "author": "17e392da-8e36-4e4e-abd7-7eef3e434395",
+  "responsible": "3ed06450-17e5-47b6-ba4f-7a0a084df56b",
   "firstName": "Hubert",
   "lastName": "Farnsworth",
   "languages": [],
@@ -60,7 +60,7 @@
       "secureDelegations": {},
       "keysEquivalences": {}
     },
-    "encryptedSelf": "FCb6fVQI4qVW523Ru1ERHyIqr+47AUPJmSJhNT/OyfI=",
+    "encryptedSelf": "OvKHyVKXEhKmH8ZscWbOptX6ICgLRtRD7d5T0uFkwhI=",
     "publicKeysForOaepWithSha256": [],
     "tags": {}
   }

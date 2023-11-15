@@ -26,14 +26,14 @@ const api = await medTechApi()
 
 const patient = await api.patientApi.getPatient(patientId)
 //tech-doc: patient can create DS and HE
-const healthcareElement = await api.healthcareElementApi.createOrModifyHealthcareElement(
+const healthcareElement = await api.healthcareElementApi.createOrModify(
   new HealthcareElement({
     description: 'My period started',
   }),
   patient.id,
 )
 
-const dataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
+const dataSample = await api.dataSampleApi.createOrModifyFor(
   patient.id,
   new DataSample({
     content: mapOf({

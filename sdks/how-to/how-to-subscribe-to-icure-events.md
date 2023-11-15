@@ -12,13 +12,13 @@ An event is a message sent by iCure to notify that something has happened. For e
 
 Currently, iCure supports the following event types for the following entities:
 
-|                   | CREATE | UPDATE | DELETE |
-| ----------------- | ------ | ------ | ------ |
-| Patient           | ✅     | ✅     | ✅     |
-| DataSample        | ✅     | ❌     | ✅     |
-| HealthcareElement | ✅     | ✅     | ✅     |
-| Notification      | ✅     | ✅     | ✅     |
-| User              | ✅     | ✅     | ✅     |
+|                              | CREATE | UPDATE | DELETE |
+|------------------------------| ------ | ------ | ------ |
+| Patient                      | ✅     | ✅     | ✅     |
+| {{ServiceNoSpace}}           | ✅     | ❌     | ✅     |
+| {{HealthcareElementNoSpace}} | ✅     | ✅     | ✅     |
+| Notification                 | ✅     | ✅     | ✅     |
+| User                         | ✅     | ✅     | ✅     |
 
 ## How to listen to events&#8239;?
 
@@ -28,20 +28,20 @@ We assume that you already know the [How to authenticate a user]({{sdk}}/how-to/
 
 :::
 
-As an example, we will listen to `CREATE` events for `DataSample` objects. This methodology can be applied to any other type of event and objects.
+As an example, we will listen to `CREATE` events for `{{ServiceNoSpace}}` objects. This methodology can be applied to any other type of event and objects.
 
 <!-- file://code-samples/{{sdk}}/how-to/websocket/index.mts snippet:can listen to dataSample events-->
 ```typescript
 ```
 
-The `subscribeToDataSampleEvents` method takes 4 parameters:
+The `subscribeToEvents` method takes 4 parameters:
 
 - The first parameter is an array of event types. In this example, we only listen to `CREATE` events (see the table above for the full list of event types).
 - The second parameter is a filter. In this example, we only listen to events that are created by the logged user and that have the `IC-TEST` tag code and `TEST` tag type.
 - The third parameter is a callback that is called when an event is received. In this example, we push the received event in an array called `events`.
 - The fourth parameter is an options object. In this example, we don't use any options.
 
-The `subscribeToDataSampleEvents` method returns a `Connection` object. This object has 2 methods:
+The `subscribeToEvents` method returns a `Connection` object. This object has 2 methods:
 
 - `onConnected` is called when the connection is established
 - `onClosed` is called when the connection is closed
@@ -54,7 +54,7 @@ If you subscribe to multiple event types, you will not have access to the event 
 
 ### Example
 
-To test this example, we will create a `DataSample` object with the `IC-TEST` tag code and `TEST` tag type.
+To test this example, we will create a `{{ServiceNoSpace}}` object with the `IC-TEST` tag code and `TEST` tag type.
 
 :::note
 

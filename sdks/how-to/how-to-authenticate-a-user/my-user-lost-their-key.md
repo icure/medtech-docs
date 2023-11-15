@@ -37,7 +37,7 @@ For this, start a new authentication process as usual:
 The `completeAuthentication` will create autonomously a new key pair for the User if an existing one is not found.  
 At this stage, Daenaerys will be able to create new data using her new RSA keypair : 
 
-<!-- file://code-samples/{{sdk}}/how-to/authenticate-user/index.mts snippet:User can create new data after loosing their key-->
+<!-- file://code-samples/{{sdk}}/how-to/authenticate-user/index.mts snippet:User can create new data after losing their key-->
 ```typescript
 ```
 <!-- output://code-samples/{{sdk}}/how-to/authenticate-user/newlyCreatedDataSample.txt -->

@@ -1,15 +1,15 @@
 {
-  "id": "862d3ada-d516-40f2-9229-ca366574c552",
+  "id": "4c16a8b7-a31a-4579-a355-5ff6c70eda41",
   "identifiers": [],
-  "batchId": "5b9c5a08-4f7f-4b0a-bc45-f1321e30a535",
+  "batchId": "880771b5-2e2a-4c9c-a5be-fe89e36b6d91",
   "healthcareElementIds": {},
   "canvasesIds": {},
   "content": {},
-  "valueDate": 20231027141018,
+  "valueDate": 20231115143046,
   "openingDate": 20220929083400,
   "index": 0,
-  "created": 1698415818580,
-  "modified": 1698415818580,
+  "created": 1700058646586,
+  "modified": 1700058646586,
   "author": "*",
   "responsible": "*",
   "comment": "This is a comment",
@@ -17,7 +17,7 @@
   "labels": {},
   "systemMetaData": {
     "secretForeignKeys": [
-      "7e11d1d7-4974-4611-88d4-fbe3bb7f235b"
+      "4a1dd924-2725-44ba-86c7-62c37b23b87a"
     ],
     "cryptedForeignKeys": {},
     "delegations": {},
@@ -26,7 +26,7 @@
       "secureDelegations": {},
       "keysEquivalences": {}
     },
-    "encryptedSelf": "YS1+EB94b1WOc9AsX80CJJvNx/8klSMmbk4dF3WBHgYaMWHd1i9mvXWVqaSZFbblZgki+ALj8A25MRuF0UyEJggdCMrMtFdpqSZR54pGVVI=",
+    "encryptedSelf": "kXaKil/LxwVEnovFcJ2pnR1w/4AA4B4OqY6GBmx2Bk0QeZJagbqjHb7IfRarat6S5G9yCoppO7668EJw/xnNRpF/Lx0R9wADuvTsCJVxLZY=",
     "tags": {}
   },
   "codes": {}

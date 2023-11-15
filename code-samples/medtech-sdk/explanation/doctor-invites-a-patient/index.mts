@@ -10,7 +10,7 @@ const api = await initMedTechApi(true)
 
 const user = await api.userApi.getLoggedUser()
 
-const hcp = await api.healthcareProfessionalApi.getHealthcareProfessional(user.healthcarePartyId)
+const hcp = await api.healthcareProfessionalApi.get(user.healthcarePartyId)
 hcp.addresses = [
   new Address({
     addressType: 'home',
@@ -26,7 +26,7 @@ hcp.addresses = [
 
 const patientEmail = `${uuid().substring(0, 8)}@icure.com`
 
-const existingPatient = await api.patientApi.createOrModifyPatient(
+const existingPatient = await api.patientApi.createOrModify(
   new Patient({
     firstName: 'Marc',
     lastName: 'Specter',

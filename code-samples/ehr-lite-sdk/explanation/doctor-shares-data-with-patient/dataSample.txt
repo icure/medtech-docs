@@ -1,24 +1,24 @@
 {
-  "id": "9d178031-cc1a-4910-aaca-ca4ff156c382",
+  "id": "45d3ba95-f428-44ed-a6e8-0b762c3ee0dd",
   "identifiers": [],
-  "batchId": "cea5e431-2017-4566-9248-e3f67908bc56",
+  "batchId": "3fac3055-a9f2-48eb-9e42-432fc5ce7ee3",
   "healthcareElementIds": [
-    "3c8c1a53-65a7-43a8-aca3-1fee27f5ef0e"
+    "28014a62-66f2-445c-8bc0-bf192f5f5801"
   ],
   "index": 0,
-  "valueDate": 20231027141007,
-  "openingDate": 20231027141007,
-  "created": 1698415807724,
-  "modified": 1698415807724,
-  "author": "5f7d11da-ff86-4f57-b4f3-65c489c01501",
-  "performer": "54b9f244-ce89-4860-b242-028654575a74",
+  "valueDate": 20231115142956,
+  "openingDate": 20231115142956,
+  "created": 1700058596327,
+  "modified": 1700058596327,
+  "author": "17e392da-8e36-4e4e-abd7-7eef3e434395",
+  "performer": "3ed06450-17e5-47b6-ba4f-7a0a084df56b",
   "localContent": {},
   "qualifiedLinks": {},
   "codes": {},
   "tags": {},
   "systemMetaData": {
     "secretForeignKeys": [
-      "5719c3b2-466c-4d6e-89b3-6125ec2311ef"
+      "b6540caa-1eb3-42ce-bf4a-f02c42bd9fd7"
     ],
     "cryptedForeignKeys": {},
     "delegations": {},
@@ -27,7 +27,7 @@
       "secureDelegations": {},
       "keysEquivalences": {}
     },
-    "encryptedSelf": "ylfrH2WlbyNPyzWUh0y+6Am0NbwwnPCdajieSjLd9i2TzXbXMemO1Bp3M+3fb0qVjxJ33GNGqzbKHqCo2IWxHgxh4E9kuKBL7KOoUSdNrfM=",
+    "encryptedSelf": "ovFlGFVbuV7TunN4GEHf+mO6P6PEkQM1QwNaeYSiaJ/KMfKRbG5e01W3jMfVKUNVv/Fu6FsiJLNvrN8/i0nBxj+cfi+tq8QXVw8+zdYVLDA=",
     "tags": {}
   },
   "notes": []

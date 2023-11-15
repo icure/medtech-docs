@@ -52,7 +52,7 @@ const masterHcpApi = await new MedTechApi.Builder()
   .withCrypto(webcrypto as any)
   .withCryptoStrategies(new SimpleMedTechCryptoStrategies([]))
   .build()
-const masterUser = await masterHcpApi.userApi.getLoggedUser()
+const masterUser = await masterHcpApi.userApi.getLogged()
 const masterHcpId = masterHcpApi.dataOwnerApi.getDataOwnerIdOf(masterUser)
 //tech-doc: STOP HERE
 output({ masterUser, masterHcpId })
@@ -107,7 +107,7 @@ saveSecurely(
   authenticationResult.keyPairs[0],
 )
 
-const createdPatient = await authenticatedApi.patientApi.createOrModifyPatient(
+const createdPatient = await authenticatedApi.patientApi.createOrModify(
   new Patient({
     firstName: 'Robb',
     lastName: 'Stark',
@@ -133,9 +133,7 @@ const reInstantiatedApi = await new MedTechApi.Builder()
   )
   .build()
 
-const foundPatientAfterInstantiatingApi = await reInstantiatedApi.patientApi.getPatient(
-  createdPatient.id,
-)
+const foundPatientAfterInstantiatingApi = await reInstantiatedApi.patientApi.get(createdPatient.id)
 //tech-doc: STOP HERE
 output({ foundPatientAfterInstantiatingApi })
 

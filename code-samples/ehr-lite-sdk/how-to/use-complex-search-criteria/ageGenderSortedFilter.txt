@@ -1,13 +1,13 @@
 {
   "filters": [
     {
-      "healthcarePartyId": "9773eba3-1376-4f23-8ab4-009ddc0404d3",
+      "healthcarePartyId": "6b25372b-f1ac-4278-957a-cf3c19a210cc",
       "minDateOfBirth": 19391211,
       "maxDateOfBirth": 19520203,
       "$type": "PatientByHealthcarePartyDateOfBirthBetweenFilter"
     },
     {
-      "healthcarePartyId": "9773eba3-1376-4f23-8ab4-009ddc0404d3",
+      "healthcarePartyId": "6b25372b-f1ac-4278-957a-cf3c19a210cc",
       "gender": "female",
       "$type": "PatientByHealthcarePartyGenderEducationProfessionFilter"
     }

@@ -1,12 +1,12 @@
 {
-  "id": "993532c6-a9b8-4313-b4ee-9dfa2a4d9972",
-  "rev": "2-fc32f43d5e2e8dc11551fd6dacb7077c",
+  "id": "c9583cab-4549-4889-9630-feaa11132c81",
+  "rev": "2-10c7d27a6ebba1f29320bf7de4c6c49e",
   "status": "ongoing",
-  "created": 1698415779795,
+  "created": 1700058623099,
   "identifiers": [],
-  "modified": 1698415779795,
-  "author": "72be0a3c-7d28-4c88-b391-770f17f10b23",
-  "responsible": "9a91fcb2-4fe8-4bc7-8767-fd4b5f1baab3",
+  "modified": 1700058623099,
+  "author": "2163c1e4-8255-487c-9c6d-20c5944efe1d",
+  "responsible": "97011d2d-4e31-4b0c-b659-179354669f7e",
   "properties": {},
   "type": "NEW_USER_OWN_DATA_ACCESS",
   "systemMetaData": {
@@ -18,7 +18,7 @@
       "secureDelegations": {},
       "keysEquivalences": {}
     },
-    "encryptedSelf": "uLGenSgJqavnbjWR1xdjBQeSuJxfFOk6WM0s69gWb9Z4pG7b2fAzO7uQ3Gy7D/Oi",
+    "encryptedSelf": "5/EsOprx/+cagnrnjIQLsXLUC2X+DwZw9vaSeGaRIXGN8GQ+GFLukMMEOX+0etpS",
     "tags": {}
   }
 }

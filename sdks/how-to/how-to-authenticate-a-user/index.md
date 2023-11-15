@@ -14,8 +14,8 @@ Therefore, you will need to integrate iCure's user authentication process into y
 
 When starting your app, the users may be in different situations: 
 - They start it for the first time and need to register
-- They already registered and need to login
-- Their latest login session is still valid and you can reuse the corresponding authentication token 
+- They already registered and need to log in
+- Their latest login session is still valid, and you can reuse the corresponding authentication token 
 
 At the end of this guide, you will be able to implement authentication for those 3 use cases using the iCure 
 MedTech SDK. 
@@ -178,7 +178,7 @@ Now that her authentication is completed, Daenaerys may manage data with iCure.
 ```
 </details>
 
-But what do you have to do when the authentication token of Daenaerys expires and she needs to login again?
+But what do you have to do when the authentication token of Daenaerys expires, and she needs to log in again?
 
 ## Logging in with  existing credentials
 Each time you complete the registration or login process, you can save the credentials you receive
@@ -199,7 +199,7 @@ And then, initialise a MedTechApi, authenticating Daenaerys directly.
 ```typescript
 ```
 The MedTech API will automatically load the keys for that user from the local storage, but you can also pass them
-explicitly through the `.withCryptoStrategies` method of the builder.
+explicitly through the `withCryptoStrategies` method of the builder.
 
 :::info
 

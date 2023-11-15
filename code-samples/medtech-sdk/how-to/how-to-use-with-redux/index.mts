@@ -21,7 +21,7 @@ const api = await new MedTechApi.Builder()
   .build()
 
 //tech-doc: marshal and unmarshal the currently logged user
-const user = await api.userApi.getLoggedUser()
+const user = await api.userApi.getLogged()
 const marshalledUser = User.toJSON(user)
 const unmarshalledUser = User.fromJSON(marshalledUser)
 

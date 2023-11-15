@@ -1,22 +1,22 @@
 {
-  "id": "2783e704-7d38-44d4-96b0-4777f6f75f25",
+  "id": "f0daa23f-99ec-49f7-867d-d32ad7733c82",
   "identifiers": [],
-  "rev": "1-c7fb9ae3ec49e06c2cba80b72eaae64c",
-  "created": 1698416467890,
-  "modified": 1698416467890,
-  "author": "1cd44623-2483-4276-97c1-f2291e70c2f9",
-  "responsible": "8a17be3c-8750-40d5-96ee-36022f877bdc",
+  "rev": "1-bf35e39d2fc8aadbf226dc985efd8cc5",
+  "created": 1700058614689,
+  "modified": 1700058614689,
+  "author": "17e392da-8e36-4e4e-abd7-7eef3e434395",
+  "responsible": "3ed06450-17e5-47b6-ba4f-7a0a084df56b",
   "bodySite": {},
   "tags": {},
   "codes": {},
-  "healthcareElementId": "50aa5797-7557-4b38-98fe-79dd7d05fa3d",
-  "recordedDate": 20231027142107,
+  "healthcareElementId": "0ec5906e-82fc-40a0-a986-86c9fcec8044",
+  "recordedDate": 20231115143014,
   "openingDate": 1604793600000,
   "description": "The patient recovered",
   "notes": [],
   "systemMetaData": {
     "secretForeignKeys": [
-      "5e93d7b2-61d3-4757-9618-5da511ba3094"
+      "b6540caa-1eb3-42ce-bf4a-f02c42bd9fd7"
     ],
     "cryptedForeignKeys": {},
     "delegations": {},
@@ -25,7 +25,7 @@
       "secureDelegations": {},
       "keysEquivalences": {}
     },
-    "encryptedSelf": "3N/NISzSToaM+Xx9dsPOWqeUyhaEVi6fSHiu8i7GEPfyUP5aZdsQRpzNP2TJHvyu0iT8uNl4uqmx5Cuwkp4Khw==",
+    "encryptedSelf": "0sqDu8xbrbDNF4cERS/PEqSex702VpBodSitqNoerRvr6EVjqAi3NcvRPoh9IU/as5jaudCzPkE6BNQK9pg80g==",
     "tags": {}
   }
 }

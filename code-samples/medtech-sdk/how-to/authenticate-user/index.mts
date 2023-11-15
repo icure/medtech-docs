@@ -280,7 +280,7 @@ const loginAuthResult = await anonymousMedTechApi.authenticationApi.completeAuth
 )
 //tech-doc: STOP HERE
 
-const foundUser = await loginAuthResult.medTechApi.userApi.getLoggedUser()
+const foundUser = await loginAuthResult.medTechApi.userApi.getLogged()
 
 saveSecurely(
   userEmail,
@@ -291,16 +291,15 @@ saveSecurely(
 )
 
 //tech-doc: User can create new data after losing their key
-const newlyCreatedDataSample =
-  await loginAuthResult.medTechApi.dataSampleApi.createOrModifyDataSampleFor(
-    foundUser.patientId,
-    new DataSample({
-      labels: new Set([new CodingReference({ type: 'IC-TEST', code: 'TEST' })]),
-      content: mapOf({ en: new Content({ stringValue: 'Hello world' }) }),
-      openingDate: 20220929083400,
-      comment: 'This is a comment',
-    }),
-  )
+const newlyCreatedDataSample = await loginAuthResult.medTechApi.dataSampleApi.createOrModifyFor(
+  foundUser.patientId,
+  new DataSample({
+    labels: new Set([new CodingReference({ type: 'IC-TEST', code: 'TEST' })]),
+    content: mapOf({ en: new Content({ stringValue: 'Hello world' }) }),
+    openingDate: 20220929083400,
+    comment: 'This is a comment',
+  }),
+)
 //tech-doc: STOP HERE
 output({ newlyCreatedDataSample })
 
@@ -318,7 +317,7 @@ const startTimestamp = new Date().getTime() - 100000
 
 //tech-doc: Data owner gets all their pending notifications
 const hcpNotifications = await hcpApi.notificationApi
-  .getPendingNotificationsAfter(startTimestamp)
+  .getPendingAfter(startTimestamp)
   .then((notifs) => notifs.filter((notif) => notif.type === NotificationTypeEnum.KeyPairUpdate))
 //tech-doc: STOP HERE
 output({ hcpNotifications })
@@ -355,7 +354,7 @@ output({ daenaerysPatientId, daenaerysPatientPubKey })
 // Then
 const updatedApi = await medTechApi(loginAuthResult.medTechApi).build()
 
-const previousDataSample = await updatedApi.dataSampleApi.getDataSample(createdDataSample.id!)
+const previousDataSample = await updatedApi.dataSampleApi.get(createdDataSample.id!)
 expect(previousDataSample).to.not.be.undefined //skip
 //tech-doc: STOP HERE
 

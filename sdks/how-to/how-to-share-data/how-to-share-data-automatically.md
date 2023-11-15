@@ -14,7 +14,7 @@ In these situations it may be more convenient to use the automatic-sharing featu
 
 :::note
 
-In the following examples we use different instances of `MedTechApi`s, to perform the requests as different users.
+In the following examples we use different instances of `{{CodeSdkName}}SDK`s, to perform the requests as different users.
 The api we use are `hcp1Api` and `hcp2Api` to act as two different healthcare practitioners data owners (`hcp1` and
 `hcp2`, respectively) and `pApi` to act as a patient data owner (`p`).
 

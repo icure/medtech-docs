@@ -1,13 +1,13 @@
 {
-  "id": "be5e1099-0b92-450b-99e7-ec54c6b84242",
+  "id": "3a0aa8d8-de30-405f-9489-dacdd1149467",
   "identifiers": [],
-  "batchId": "2b8203a7-30b0-42c0-8f2f-0543481488a6",
+  "batchId": "6040c8d4-b064-4bdd-b15c-1df0f19a9ba0",
   "healthcareElementIds": [],
   "index": 0,
-  "valueDate": 20231027140922,
+  "valueDate": 20231115142958,
   "openingDate": 20220929083400,
-  "created": 1698415762054,
-  "modified": 1698415762054,
+  "created": 1700058598090,
+  "modified": 1700058598090,
   "author": "*",
   "performer": "*",
   "localContent": {},
@@ -16,7 +16,7 @@
   "tags": {},
   "systemMetaData": {
     "secretForeignKeys": [
-      "656f2bf3-667a-42f8-8859-d06d254feda2"
+      "641fd914-ddc6-4b60-bb65-5b1dda0560cb"
     ],
     "cryptedForeignKeys": {},
     "delegations": {},
@@ -25,7 +25,7 @@
       "secureDelegations": {},
       "keysEquivalences": {}
     },
-    "encryptedSelf": "MME7c/THZGk5SE926ZtZLhjC5K8LklD8K8d00OPy2f7yApXm8GNZDwz2OSjCQbZnA2VA2OSYycwoRTbc0i/l7XnnuuNx5yLnTDApY7xe+Kc=",
+    "encryptedSelf": "1ybmomsFVFQ7soxxwze5gWk0+mOD6cAFz7iHI7cexFDqPuFT9fKKVZIQ1J+Q9OM1CAZubD7bnYTbYPR0jLJHvRPZXtZjSkNm4pDAHcEH/eM=",
     "tags": {}
   },
   "notes": []

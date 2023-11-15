@@ -10,7 +10,7 @@ const api = await initMedTechApi(true)
 const patient = await api.patientApi.getPatient(patientId)
 
 //tech-doc: doctor can create HE
-const healthcareElement = await api.healthcareElementApi.createOrModifyHealthcareElement(
+const healthcareElement = await api.healthcareElementApi.createOrModify(
   new HealthcareElement({
     description: 'The patient is pregnant',
     codes: new Set([

@@ -1,8 +1,8 @@
 {
-  "healthcarePartyId": "54b9f244-ce89-4860-b242-028654575a74",
+  "healthcarePartyId": "3ed06450-17e5-47b6-ba4f-7a0a084df56b",
   "patientSecretForeignKeys": [
-    "5719c3b2-466c-4d6e-89b3-6125ec2311ef",
-    "b5e70320-53bb-4ddf-99c2-1fb8437136a1"
+    "b6540caa-1eb3-42ce-bf4a-f02c42bd9fd7",
+    "03a08319-c8b0-4dcd-b9a1-6c25eaca79b3"
   ],
   "$type": "HealthElementByHealthcarePartyPatientFilter"
 }

@@ -1,21 +1,21 @@
 {
-  "id": "3162ff52-ff85-4a4b-8d2b-135364f8deb2",
+  "id": "1b626568-c193-4d4e-a542-020d9742f9e6",
   "identifiers": [],
-  "rev": "1-d9f88c62005fa01d1a0c975f1360b4d8",
-  "created": 1698415841417,
-  "modified": 1698415841417,
-  "author": "5f7d11da-ff86-4f57-b4f3-65c489c01501",
-  "responsible": "54b9f244-ce89-4860-b242-028654575a74",
+  "rev": "1-7c9fef73fa789a2e8b8cdde88382ff9f",
+  "created": 1700058667246,
+  "modified": 1700058667246,
+  "author": "17e392da-8e36-4e4e-abd7-7eef3e434395",
+  "responsible": "3ed06450-17e5-47b6-ba4f-7a0a084df56b",
   "labels": {},
   "codes": {},
-  "healthcareElementId": "3162ff52-ff85-4a4b-8d2b-135364f8deb2",
-  "valueDate": 20231027141041,
-  "openingDate": 20231027161041,
+  "healthcareElementId": "1b626568-c193-4d4e-a542-020d9742f9e6",
+  "valueDate": 20231115143107,
+  "openingDate": 20231115153107,
   "description": "I am doomed",
   "notes": [],
   "systemMetaData": {
     "secretForeignKeys": [
-      "5719c3b2-466c-4d6e-89b3-6125ec2311ef"
+      "b6540caa-1eb3-42ce-bf4a-f02c42bd9fd7"
     ],
     "cryptedForeignKeys": {},
     "delegations": {},
@@ -24,7 +24,7 @@
       "secureDelegations": {},
       "keysEquivalences": {}
     },
-    "encryptedSelf": "YMLZgui6IeKq3FxvnpT8V/AKs4LpDAPbKUPyhBXXZCfR2tz1a5UU/YBeOMsY0VrW",
+    "encryptedSelf": "ahnhczY8KqsOuojmOs7dtDNGduL7GOoTF5SXpm/jt1ztNqiIc4/yZ2SUBrxrPfcd",
     "tags": {}
   }
 }

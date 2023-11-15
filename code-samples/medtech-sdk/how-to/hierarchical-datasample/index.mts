@@ -16,7 +16,7 @@ initLocalStorage()
 const api = await initMedTechApi(true)
 
 //tech-doc: create a patient for datasample
-const patient = await api.patientApi.createOrModifyPatient(
+const patient = await api.patientApi.createOrModify(
   new Patient({
     firstName: 'John',
     lastName: 'Snow',
@@ -104,7 +104,7 @@ const meanHeartRateDataSample = new DataSample({
   }),
 })
 
-const createdDataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
+const createdDataSample = await api.dataSampleApi.createOrModifyFor(
   patient.id!,
   meanHeartRateDataSample,
 )

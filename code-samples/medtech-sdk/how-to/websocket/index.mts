@@ -13,14 +13,14 @@ import { mapOf } from '@icure/typescript-common'
 initLocalStorage()
 
 const api = await initMedTechApi(true)
-const loggedUser = await api.userApi.getLoggedUser()
+const loggedUser = await api.userApi.getLogged()
 
 //tech-doc: can listen to dataSample events
 const events: DataSample[] = []
 const statuses: string[] = []
 
 const connection = (
-  await api.dataSampleApi.subscribeToDataSampleEvents(
+  await api.dataSampleApi.subscribeToEvents(
     ['CREATE'], // Event types to listen to
     await new DataSampleFilter(api)
       .forDataOwner(loggedUser.healthcarePartyId)
@@ -38,7 +38,7 @@ const connection = (
 //tech-doc: STOP HERE
 
 //tech-doc: create a patient for websocket
-const patient = await api.patientApi.createOrModifyPatient(
+const patient = await api.patientApi.createOrModify(
   new Patient({
     firstName: 'John',
     lastName: 'Snow',
@@ -49,7 +49,7 @@ const patient = await api.patientApi.createOrModifyPatient(
 output({ patient })
 
 //tech-doc: create a dataSample for websocket
-const dataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
+const dataSample = await api.dataSampleApi.createOrModifyFor(
   patient.id,
   new DataSample({
     labels: new Set([new CodingReference({ type: 'IC-TEST', code: 'TEST' })]),

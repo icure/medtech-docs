@@ -9,7 +9,7 @@ tags:
 
 ## Creating a user
 
-To create a user, you first need to create a [User](../references/classes/User.md) object and call the `createUser` method on the `UserService` object.
+To create a user, you first need to create a [User](../references/classes/User.md) object and call the `create` method on the `UserApi` object.
 
 <!-- file://code-samples/{{sdk}}/how-to/manage-users/index.mts snippet:Create a user-->
 ```typescript
@@ -52,9 +52,7 @@ Now it will be possible for the user to log in using the newly created token, th
 
 :::note
 
-A User can always create an authentication token for themself, 
-but only Admins and Healthcare Professionals from create authentication tokens for other users.  
-
+A User can always create an authentication token for themselves, but only Admins can create authentication tokens for other users.  
 
 :::
 
@@ -102,7 +100,7 @@ For this process to succeed the following conditions must be met:
 
 ## Loading a user by id
 
-To load a user by id, you can use the `getUser` method on the `userApi`:
+To load a user by id, you can use the `get` method on the `userApi`:
 
 <!-- file://code-samples/{{sdk}}/how-to/manage-users/index.mts snippet:Load a user-->
 ```typescript
@@ -118,7 +116,7 @@ To load a user by id, you can use the `getUser` method on the `userApi`:
 
 ## Loading a user by email
 
-To load a user by email, you can use the `getUserByEmail` method on the `userApi`:
+To load a user by email, you can use the `getByEmail` method on the `userApi`:
 
 <!-- file://code-samples/{{sdk}}/how-to/manage-users/index.mts snippet:Load a user by email-->
 ```typescript
@@ -134,7 +132,7 @@ To load a user by email, you can use the `getUserByEmail` method on the `userApi
 
 ## Filtering users
 
-To filter users, you can use the `filterUsers` method on the `userApi`.
+To filter users, you can use the `filterBy` method on the `userApi`.
 
 The following filters are available:
 * Filtering on a collection of ids
@@ -154,7 +152,7 @@ The following filters are available:
 
 ## Update a user
 
-To update a user, you first need to load the user you want to update, then modify the fields you want to update and call the `createOrModifyUser` method on the `userApi`.
+To update a user, you first need to load the user you want to update, then modify the fields you want to update and call the `createOrModify` method on the `userApi`.
 
 <!-- file://code-samples/{{sdk}}/how-to/manage-users/index.mts snippet:Update a user-->
 ```typescript
@@ -170,7 +168,7 @@ To update a user, you first need to load the user you want to update, then modif
 
 ## Delete a user
 
-To delete a user, you call the `deleteUser` method on the `userApi` and pass the id of the user to be deleted.
+To delete a user, you call the `delete` method on the `UserApi` and pass the id of the user to be deleted.
 
 <!-- file://code-samples/{{sdk}}/how-to/manage-users/index.mts snippet:Delete a user-->
 ```typescript

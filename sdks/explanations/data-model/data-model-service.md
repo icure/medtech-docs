@@ -20,7 +20,7 @@ related to a Patient.
 
 A {{Service}}:
 - Is always associated to a Patient.
-- May be linked to oner or more {{HealthcareElements}}, in order to provide a context for its measure.
+- May be linked to one or more {{HealthcareElements}}, in order to provide a context for its measure.
 - May have a Coding, which associates the medical information or the measurement to the code of a
 [Terminology](/{{sdk}}/glossary#terminologies).
 
@@ -29,7 +29,7 @@ A {{Service}}:
 ### A Patient Registering Their Symptoms
 
 A Patient has a period tracking app and wants to add some symptoms she is experiencing (headache) by adding a new {{Service}}.
-Then, she adds the information that her period started as a Healthcare Element associated to the {{Service}}.
+Then, she adds the information that her period started as a {{HealthcareElement}} associated to the {{Service}}.
 
 <!-- file://code-samples/{{sdk}}/explanation/patient-creates-data-sample/index.mts snippet:patient can create DS and HE-->
 ```typescript
@@ -38,7 +38,7 @@ Then, she adds the information that her period started as a Healthcare Element a
 ### A Doctor Registering a Visit
 
 After a visit, a Doctor register the symptoms the Patient is experiencing (fatigue) as a new {{Service}}.  
-Then, they add the diagnosis (hay fever) as associated Healthcare Element.
+Then, they add the diagnosis (hay fever) as associated {{HealthcareElement}}.
 
 <!-- file://code-samples/{{sdk}}/explanation/data-sample-w-coding/index.mts snippet:doctor can create DS and HE-->
 ```typescript

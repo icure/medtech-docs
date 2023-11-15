@@ -1,21 +1,21 @@
 {
-  "id": "8523d377-d8f9-43c1-9c2f-a96527346ca3",
+  "id": "7bc342fb-0afa-44e5-a639-fa2557382d96",
   "identifiers": [],
-  "rev": "2-5871a52e0cf65499121acd1e5dcc412a",
-  "created": 1698415840362,
-  "modified": 1698415840362,
-  "author": "5f7d11da-ff86-4f57-b4f3-65c489c01501",
-  "responsible": "54b9f244-ce89-4860-b242-028654575a74",
+  "rev": "2-f2a5b432926d9ef848e6dc427e3e6d82",
+  "created": 1700058666383,
+  "modified": 1700058666383,
+  "author": "17e392da-8e36-4e4e-abd7-7eef3e434395",
+  "responsible": "3ed06450-17e5-47b6-ba4f-7a0a084df56b",
   "labels": {},
   "codes": {},
-  "healthcareElementId": "8523d377-d8f9-43c1-9c2f-a96527346ca3",
-  "valueDate": 20231027141040,
+  "healthcareElementId": "7bc342fb-0afa-44e5-a639-fa2557382d96",
+  "valueDate": 20231115143106,
   "openingDate": 1570838400000,
   "description": "The patient has been diagnosed Pararibulitis",
   "notes": [],
   "systemMetaData": {
     "secretForeignKeys": [
-      "5719c3b2-466c-4d6e-89b3-6125ec2311ef"
+      "b6540caa-1eb3-42ce-bf4a-f02c42bd9fd7"
     ],
     "cryptedForeignKeys": {},
     "delegations": {},
@@ -24,7 +24,7 @@
       "secureDelegations": {},
       "keysEquivalences": {}
     },
-    "encryptedSelf": "EpksiD9trsAX7fSDDr44TZ622iYV0X6mU4A15WRTDSQsvatHjm8MNOSbZ/tZa5zfV3/Aw2s/e6zpJXKSDxGXzQlMB2fpo+nWVCwJAgoTqTE=",
+    "encryptedSelf": "OpSJxvEaw6/rj5X0pDo6FAQOrTdUPj4yR7FaADK3vwmrT5+5Ftejh0NVKUDSJIRdOJsS66LLRw5G/Q3E8mB2ykGqSW4VwnC1zwrFOvb3dNQ=",
     "tags": {}
   }
 }

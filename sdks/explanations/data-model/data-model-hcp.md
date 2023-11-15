@@ -5,21 +5,20 @@ tags:
     - data owner
     - {{hcp}}
 ---
-# Healthcare Professional
+# {{Hcp}}
 
-A Healthcare Professional is an actor that can manage and is responsible for Patients, Medical Devices and other 
-Healthcare Professionals.  
+A {{Hcp}} is an actor that can manage and is responsible for Patients, Medical Devices and other {{Hcp}}s.  
 As [Data Owners](/{{sdk}}/glossary#data-owner) they can create medical information and share it with other Data Owners.
 Other Data Owner can decide to share their medical information with them.
 
-## When Should I Use a Healthcare Professional?
+## When Should I Use a {{Hcp}}?
 
-You should use a Healthcare Professional when you need to represent a Doctor, or another actor responsible for patients,
+You should use a {{Hcp}} when you need to represent a Doctor, or another actor responsible for patients,
 medical data, and treatments, in your application.
 
-## How is a Healthcare Professional Related to Other Entities?
+## How is a {{Hcp}} Related to Other Entities?
 
-A Healthcare Professional can:
+A {{Hcp}} can:
 - create Users for other Patients, Medical Devices, and Healthcare Professionals.  
 - manage other Users, by changing their passwords or deactivating them.  
 - create {{Services}} and {{HealthcareElements}} for Patients.  
@@ -30,7 +29,7 @@ A Healthcare Professional can:
 
 ### A Doctor Inviting a Patient
 
-A Doctor (Healthcare Professional) visits for the first time a Patient. After the visit, they invite the patient
+A Doctor ({{Hcp}}) visits for the first time a Patient. After the visit, they invite the patient
 to the iCure platform.
 
 <!-- file://code-samples/{{sdk}}/explanation/doctor-invites-a-patient/index.mts snippet:doctor invites user-->
@@ -47,7 +46,7 @@ to the iCure platform.
 ### A Doctor Registering a Visit and Sharing the Outcome with the Patient
 
 After a visit, a Doctor register the symptoms the Patient is experiencing (fatigue) as a new {{Service}}.  
-Then, they add the diagnosis (hay fever) as associated Healthcare Element.
+Then, they add the diagnosis (hay fever) as associated {{HealthcareElements}}.
 
 <!-- file://code-samples/{{sdk}}/explanation/doctor-shares-data-with-patient/index.mts snippet:doctor shares medical data-->
 ```typescript
@@ -83,7 +82,7 @@ After that, the Doctor checks if there are new Notifications from the Patient an
 
 ### A Doctor Updating the Status of a Patient
 
-A Doctor (Healthcare Professional) discovers that their Patient is pregnant. Therefore, they update her condition in the
+A Doctor ({{Hcp}}) discovers that their Patient is pregnant. Therefore, they update her condition in the
 application.
 
 <!-- file://code-samples/{{sdk}}/explanation/doctor-creates-he/index.mts snippet:doctor can create HE-->

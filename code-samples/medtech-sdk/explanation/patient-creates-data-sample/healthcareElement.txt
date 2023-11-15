@@ -1,21 +1,21 @@
 {
-  "id": "d1032d52-f021-441d-8ea0-f4a12df28728",
+  "id": "b733e1c1-334e-487b-a7b0-b6232d43889c",
   "identifiers": [],
-  "rev": "1-de9bad1a54ba0acf08051d946358b602",
-  "created": 1698415814108,
-  "modified": 1698415814108,
+  "rev": "1-cc501e5dda321c83ddba3580ccb58bef",
+  "created": 1700058642594,
+  "modified": 1700058642594,
   "author": "*",
   "responsible": "*",
   "labels": {},
   "codes": {},
-  "healthcareElementId": "d1032d52-f021-441d-8ea0-f4a12df28728",
-  "valueDate": 20231027141014,
-  "openingDate": 20231027161014,
+  "healthcareElementId": "b733e1c1-334e-487b-a7b0-b6232d43889c",
+  "valueDate": 20231115143042,
+  "openingDate": 20231115153042,
   "description": "My period started",
   "notes": [],
   "systemMetaData": {
     "secretForeignKeys": [
-      "b5e70320-53bb-4ddf-99c2-1fb8437136a1"
+      "03a08319-c8b0-4dcd-b9a1-6c25eaca79b3"
     ],
     "cryptedForeignKeys": {},
     "delegations": {},
@@ -24,7 +24,7 @@
       "secureDelegations": {},
       "keysEquivalences": {}
     },
-    "encryptedSelf": "Wr8Jgb/ER5EAEy7vG3H4Sz1yyym4OJ6fvIXF20wd9xa6x3BscHqflqwGf+eO+ieT",
+    "encryptedSelf": "wn/rCj0TaPy8iEwBpnBALdCB1BWxIYG+TnsNmf3HvH2sKe7j3PYfSBOylbNKRlpN",
     "tags": {}
   }
 }

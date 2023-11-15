@@ -1,22 +1,22 @@
 {
-  "id": "546bb594-8aa5-4674-b714-d753a4d79dd2",
+  "id": "62f452f5-af9a-4dd8-95a1-382353008f37",
   "identifiers": [],
-  "rev": "1-6fad4a3e3e2b5077a23689fceb0689ad",
-  "created": 1698415804756,
-  "modified": 1698415804756,
-  "author": "5f7d11da-ff86-4f57-b4f3-65c489c01501",
-  "responsible": "54b9f244-ce89-4860-b242-028654575a74",
+  "rev": "1-bc8528e6fcf7feec2d710e37bfd0e110",
+  "created": 1700058593360,
+  "modified": 1700058593360,
+  "author": "17e392da-8e36-4e4e-abd7-7eef3e434395",
+  "responsible": "3ed06450-17e5-47b6-ba4f-7a0a084df56b",
   "bodySite": {},
   "tags": {},
   "codes": {},
-  "healthcareElementId": "546bb594-8aa5-4674-b714-d753a4d79dd2",
-  "recordedDate": 20231027141004,
-  "openingDate": 20231027161004,
+  "healthcareElementId": "62f452f5-af9a-4dd8-95a1-382353008f37",
+  "recordedDate": 20231115142953,
+  "openingDate": 20231115152953,
   "description": "My diagnosis is that the patient has Hay Fever",
   "notes": [],
   "systemMetaData": {
     "secretForeignKeys": [
-      "5719c3b2-466c-4d6e-89b3-6125ec2311ef"
+      "b6540caa-1eb3-42ce-bf4a-f02c42bd9fd7"
     ],
     "cryptedForeignKeys": {},
     "delegations": {},
@@ -25,7 +25,7 @@
       "secureDelegations": {},
       "keysEquivalences": {}
     },
-    "encryptedSelf": "G/3/ST+E9h43pwOrft5HPY/ifOoTkWkqq5VX4+KMsWzK/+SlLN1XKgwMxdnlpGfYsFvS6T/iHpogbO31RpQ5cl7gSGKw1hQ3xv5YN7i5stU=",
+    "encryptedSelf": "4GLWVHlH5fVTZp0ogpJN/oZNKagNuwRx+foGVZFripFVplV97VKrMC6DilY+Ab0QDGln1eBOC7Li6dalchfff0beKrFspSslx4PkjuscRrc=",
     "tags": {}
   }
 }

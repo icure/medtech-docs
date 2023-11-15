@@ -1,11 +1,11 @@
 {
-  "id": "9f0670d6-beb3-45d7-a984-c6504b4debcb",
-  "rev": "1-e8012f197ca98bf4200f06bbd6ae46b5",
+  "id": "d6960f00-066f-4d99-bb76-b61c121c70fd",
+  "rev": "1-52648eddc375f0e85bb14cdfa4147935",
   "identifiers": [],
-  "created": 1698415767720,
-  "modified": 1698415767720,
-  "author": "5f7d11da-ff86-4f57-b4f3-65c489c01501",
-  "responsible": "54b9f244-ce89-4860-b242-028654575a74",
+  "created": 1700058604498,
+  "modified": 1700058604498,
+  "author": "17e392da-8e36-4e4e-abd7-7eef3e434395",
+  "responsible": "3ed06450-17e5-47b6-ba4f-7a0a084df56b",
   "tags": {},
   "codes": {},
   "names": [
@@ -46,7 +46,7 @@
       "secureDelegations": {},
       "keysEquivalences": {}
     },
-    "encryptedSelf": "W5P+dCPoag59sgyCxNW1vR6SvAer9No4QUGMDPk9TCM=",
+    "encryptedSelf": "qDjqQTj8/72VGljxe2XCMuy8rcxQGG0Yqo/hi8M/yac=",
     "publicKeysForOaepWithSha256": [],
     "tags": {}
   },

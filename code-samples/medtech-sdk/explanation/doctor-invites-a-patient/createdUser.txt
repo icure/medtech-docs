@@ -1,14 +1,14 @@
 {
-  "id": "edf988f5-39b1-44d6-ae2c-1c4788c45227",
-  "rev": "1-6e61c1a6b85c8a5de53706f5874b75f7",
-  "created": 1698415812672,
-  "name": "355c7ed8@icure.com",
+  "id": "9a5565dc-5c00-491f-b59d-cbda384a30dc",
+  "rev": "1-702fa59cc03e192b5728641a433a1dbe",
+  "created": 1700058642032,
+  "name": "6c08bbb3@icure.com",
   "properties": {},
   "roles": {},
-  "login": "355c7ed8@icure.com",
+  "login": "6c08bbb3@icure.com",
   "groupId": "test-group",
-  "patientId": "ee99abd6-99a1-4879-bc3b-2499a28f513a",
+  "patientId": "a404e37f-043f-477d-bc6e-19fb7d91576e",
   "sharingDataWith": {},
-  "email": "355c7ed8@icure.com",
+  "email": "6c08bbb3@icure.com",
   "authenticationTokens": {}
 }

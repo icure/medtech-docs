@@ -1,21 +1,21 @@
 {
-  "id": "c9303b7d-db70-4205-8b71-aadc3fa2fce4",
+  "id": "dcdf675b-c1c8-4808-8509-279c52f8b06d",
   "identifiers": [],
-  "rev": "1-ec39fab18c943c1d2ade12ee7df4f86b",
-  "created": 1698415840676,
-  "modified": 1698415840676,
-  "author": "5f7d11da-ff86-4f57-b4f3-65c489c01501",
-  "responsible": "54b9f244-ce89-4860-b242-028654575a74",
+  "rev": "1-d143166bdf99a84b555a86650004f1ac",
+  "created": 1700058666660,
+  "modified": 1700058666660,
+  "author": "17e392da-8e36-4e4e-abd7-7eef3e434395",
+  "responsible": "3ed06450-17e5-47b6-ba4f-7a0a084df56b",
   "labels": {},
   "codes": {},
-  "healthcareElementId": "c9303b7d-db70-4205-8b71-aadc3fa2fce4",
-  "valueDate": 20231027141040,
-  "openingDate": 20231027161040,
+  "healthcareElementId": "dcdf675b-c1c8-4808-8509-279c52f8b06d",
+  "valueDate": 20231115143106,
+  "openingDate": 20231115153106,
   "description": "To modify, I must create",
   "notes": [],
   "systemMetaData": {
     "secretForeignKeys": [
-      "5719c3b2-466c-4d6e-89b3-6125ec2311ef"
+      "b6540caa-1eb3-42ce-bf4a-f02c42bd9fd7"
     ],
     "cryptedForeignKeys": {},
     "delegations": {},
@@ -24,7 +24,7 @@
       "secureDelegations": {},
       "keysEquivalences": {}
     },
-    "encryptedSelf": "jhMbCCbgWtGElaryqrqafDAQyiiMJWlB07hMTYMzKycnOQz3vLhCit1uullzasmDF4s4HNb4PirhTN6WWsJmgw==",
+    "encryptedSelf": "OZu9AJyluwLvA+uFmVKAoWtFsXuu6HgRtbFCWZ55OPCH/ptkMpmDfMnidOw2fdJ7Jj3FYxIYi5EILu9xkGVldQ==",
     "tags": {}
   }
 }

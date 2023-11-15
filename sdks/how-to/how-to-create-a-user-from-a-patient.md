@@ -39,14 +39,14 @@ Sample associated to them.
 
 ### The Doctor Invites the Patient
 
-The first step in inviting a User is to create an instance of a class that implements either the 
-[`EmailMessageFactory`](../references/interfaces/EmailMessageFactory) or the 
-[`SMSMessageFactory`](../references/interfaces/SMSMessageFactory), depending on if you want to invite User by Email or 
-SMS.  
-Two examples are the [`ICureRegistrationEmail`](../references/classes/ICureRegistrationEmail) and 
-[`ICureRegistrationSMS`](../references/classes/ICureRegistrationSMS) classes.
+The first step in inviting a User is to create an instance of a class that implements the 
+[`{{messageFactory}}`](../references/interfaces/EmailMessageFactory) interface. This interface specify the methods to
+define the template of the email or SMS message that will be sent to the user when registering. It also allows to specify
+whether prefer to send the user an email or an SMS message.  
+The SDK also provides a pre-made implementation of this interface that you can use: `{{defaultMessageFactory}}`.  
+The class defined as such must be provided to the builder when instantiating the SDK.
 
-<!-- file://code-samples/{{sdk}}/how-to/create-user-for-patient/index.mts snippet:instantiate a message factory-->
+<!-- file://code-samples/{{sdk}}/how-to/create-user-for-patient/index.mts snippet:doctor api initialization-->
 ```typescript
 ```
 
@@ -85,7 +85,7 @@ but the patient can:
 - access and modify non-encrypted data in his `Patient` entity
 
 Initially, the patient won't be able to decrypt his own `Patient` entity, and for this reason the method 
-`PatientApi.getPatient` will fail. Instead, the patient needs to use the method `PatientApi.getPatientAndTryDecrypt` 
+`PatientApi.get` will fail. Instead, the patient needs to use the method `PatientApi.getAndTryDecrypt` 
 which returns a `PotentiallyEncryptedPatient` which is an interface implemented by both `Patient` and 
 `EncryptedPatient`. This method will try to decrypt the retrieved `Patient`, and if not successful instead of failing 
 the method will just return the patient without decrypting it as an `EncryptedPatient`.
@@ -118,7 +118,7 @@ encrypted according to the api configuration will cause a runtime error.
 
 The patient can also create and share {{service}} and health elements as normal:
 
-<!-- file://code-samples/{{sdk}}/how-to/create-user-for-patient/index.mts snippet:create {{healthcareElement}}-->
+<!-- file://code-samples/{{sdk}}/how-to/create-user-for-patient/index.mts snippet:create healthcare element-->
 ```typescript
 ```
 <!-- output://code-samples/{{sdk}}/how-to/create-user-for-patient/newHealthcareElement.txt -->
@@ -142,7 +142,7 @@ new data is created using a new secret foreign key that only the patient knows. 
 this new medical data you will have to share the secret foreign key using the 
 `PatientApi.giveAccessToPotentiallyEncrypted` method.
 
-<!-- file://code-samples/{{sdk}}/how-to/create-user-for-patient/index.mts snippet:share {{healthcareElement}} sfk-->
+<!-- file://code-samples/{{sdk}}/how-to/create-user-for-patient/index.mts snippet:share healthcare element sfk-->
 ```typescript
 ```
 <!-- output://code-samples/{{sdk}}/how-to/create-user-for-patient/notFoundHEs.txt -->

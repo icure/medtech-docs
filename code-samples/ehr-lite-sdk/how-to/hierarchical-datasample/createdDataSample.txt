@@ -1,13 +1,13 @@
 {
-  "id": "628a85e0-1970-468a-bf94-c39c7f047692",
+  "id": "a61bfa61-db94-41f1-8042-485c7b658d43",
   "identifiers": [],
-  "batchId": "6935249f-e2b7-44d9-94b4-14a3d52f0ee7",
+  "batchId": "c930282c-ab2c-4754-8810-0a3dec9d7df1",
   "healthcareElementIds": [],
   "index": 0,
   "component": {
     "compoundValue": [
       {
-        "id": "60290148-a4d7-414c-8c81-709e0819fc31",
+        "id": "0eb8018e-9d5f-423d-9e3f-d9d681e2bdd6",
         "identifiers": [],
         "component": {
           "measureValue": {
@@ -33,13 +33,13 @@
           "cryptedForeignKeys": {},
           "delegations": {},
           "encryptionKeys": {},
-          "encryptedSelf": "MJqsIGHLJFo9TBCy9y2QoDwNpQLq1VqzWzRL89y+gxXbIMxnEbTXL9dR65MWxn8TpdHtkwrAjmfXMFW7LGNcYpo5MbnAFQYtG6TIBm43mWDcG5rkS2ig5pfzWPZTo9UYGvTmJu0wZYtZVFeuXPK2OiD91t5SAJEUMhRO0rPL3cb2CtaadmteW9yogZmL7pSpPFoUrtaB06RqRDrsoXdmK8gHBJ3BakLZVSajWfaEYYltV+hc3B4ZJjyEhA38WNx6dy0qh/lPvpoO6+2EFhZOXaWAsSOXA36aPx6/mu3cwdGYBbijprrZLJvhGQG9m0Bt",
+          "encryptedSelf": "kXb/JHpUiFrauUrSglEwqY8jSkjGrmJ1VXVMkXDESLstXfIqrNLZitR/+1hQlVGwXMZ9a0y9oiIq1sxBV74g8vE9FcqLegu5l/8a+jsSjqb6gkfEPdXGGGUEePQaxA0l2SZWVp13DNeoMitWESSTH7Lwj2e89XHznGOWBEllf4dduFtSF9vS2gmHEZsoKlRnbCevITkQJWwog3im7E6q9ouZtQ5xicZ/eJd/yYLaWWa1aAyWkPUCVXyTj1ypvs/3BU8iLuubTfRwmgjuRN93uLtSzHtTY7YwY2Ps9b8EjWMo4DTE0FtwKEfIqI0EiECF",
           "tags": {}
         },
         "notes": []
       },
       {
-        "id": "bd586958-2fee-4880-9110-923baf1f92ac",
+        "id": "5b19fc09-efa0-4f9a-a76d-b26cbad5dbda",
         "identifiers": [],
         "component": {
           "measureValue": {
@@ -65,13 +65,13 @@
           "cryptedForeignKeys": {},
           "delegations": {},
           "encryptionKeys": {},
-          "encryptedSelf": "rvP6dQqSL4AX8cu1MgKcKaXywBbMn2Ohws/ZNDzndaOLgZZFefL6OkBKnZ/rYqFc9wQUw8Qscad+8ov2HF4W4/DKdhiomaTJRW+2k5ncDGwC7vaSDmZPQ3SLpvpkqDks2U4YUl7aW9QUa/DycrIhyxZ2wHueA/bT6zcZXJdObcqUtywynX88YG1tWhRZ20mQPTdfVH78IsjPRkRVWep8yggFRKIUkwZ880f5GK0RUrLGvFQPsKT+whXGu++cJ46j45p6RRAEjtAabu3tsUK7Y0CCEfmfRD+H5z+ihZvGhK9lCgwbnzi8dQvqx+3lB2d5",
+          "encryptedSelf": "eIwqgpRxLfcT/eIRjU6mIVzT2M/NFdgBG/BlwQK7iUnTq46ZrVyx/7bHUgMPuWCRRpfitYoKgWEkFo0INrkdAQ9QWYq30/u9X+BjHbgM7RwvL74p3NfPxXJ7eTkC/medasNBYu2LQCz+CT0OtimWZ4ZL3AM+cvvzb4TU5Gu/nF01po3yh6UcWjpa32UWYLj9gOhMSu71CDHsZjCtje1sevP7hO3J0mKpJd6aocrg+IOBtyjBZHqmVESQA7GTLiHfyJvD9KJiRsNeZ5wgGpp2anAbk4QelR6jOJ/cfcbhNiXdp+ujDBZSLnP2SaXLcOXF",
           "tags": {}
         },
         "notes": []
       },
       {
-        "id": "f7b614e9-d8cc-47fb-b3fe-6d1664fda0a4",
+        "id": "80572f6a-3be7-4571-baf4-b6e43bb67693",
         "identifiers": [],
         "component": {
           "timeSeries": {
@@ -157,26 +157,26 @@
           "cryptedForeignKeys": {},
           "delegations": {},
           "encryptionKeys": {},
-          "encryptedSelf": "MApOHaRGm2AhMqH3lhpJ1JiYtpeDri4dlOjDTzKHn/kbTd2NNbSqpMt9Y693PLv2NQetW6NITlE8wHOgOzYr4uQJjPllQuU7vQoOUSmE7lsLy3/7WVr8GM0lmSqp7aKN7oeTXUPfcSxTyQFhd1uJ6kIgvgly2mclYPZgRK/3JZWU5CDMlswP4zu7O3q0v1o9xzcoqoG1mtmBaR9KbvgCXnweldPFUM7B3Ebba9kqJgILke07kfN5yIGWMralL1mH5OWFYRqQGxrjogWtHyEOyfcYCKlC0W+05BjsKPWMK5Hf0dI/5THMRPM6OlouAeGXdQ04/vxiPHBALPu6+3qL3qPdgZfxt6VKRnURjUcnHA9xQOhhEMN8Ef82QGrvbdU14dLbdFUyczQR7izQlg8r+oKbzuLF/itRw6qMSu9YoCqhiP2PK2rIXnuPfNghsPMX6PE6ijmUewkejGkgXvSrzAus6ehtOao0qmJjaF3IKYy4huw4G5hH2bxhugmsAoVQyTwiyqJWxAUZ1rH7+gbkAw0dF359ToIJyehwVZiqsofBeBntMNzpFcdqsn6QBTks",
+          "encryptedSelf": "y1tm/yX1Ac+XEGnWehkJ+S8I8F3Mp39ThNzkOXyl/FFYv1vuTsz3mAXFp5PuuqneR80MssquZUKsAGqOGzDtbDFO/F4K8lssRSH3qeTdEaJ8+LUWL4Vnyp6BrTwA3lhfHdPz9Ymebo47kzMgLUZWbnQtXR6sFNsp0cj0UuFgV4hvv5WHnLTpMU/iJjRy7SeVvfiscn8Yt1jm4gDRe2EctBjv37COzF2zwppSpEdnFJ/79XR85UeakStvW+myR4FqFgW7duJTS1g29h03uPPkueNLv49VwGs8+VGr13rsya0WB44tF+6n6Xyao75m8f7o7QrYOpiyldV0XWHnCUBoIR23NkpAoiVFOEPiavF+mmURO+nvzkMzgoi1oEgN9nHQqMO7yQbJ5QVKlHMhbsCp0Z5zXXgepzUZbXJSU9L3GUUMlLrHpumgqT/THuH+Ki8IpRZ6cVweJEahe+jcIz/BgRyn64KsHJ6UeDnN66kYZmJw85nSrMS8ZWszvTMBGMombFint1G/eyOucdcvEnBJMtIQe9ROEcMllhFn9281TNdT3wnk/1W+YIeo4RqgBJjj",
           "tags": {}
         },
         "notes": []
       }
     ]
   },
-  "valueDate": 20231027140942,
+  "valueDate": 20231115143010,
   "openingDate": 20220929083400,
-  "created": 1698415782790,
-  "modified": 1698415782790,
-  "author": "5f7d11da-ff86-4f57-b4f3-65c489c01501",
-  "performer": "54b9f244-ce89-4860-b242-028654575a74",
+  "created": 1700058610494,
+  "modified": 1700058610494,
+  "author": "17e392da-8e36-4e4e-abd7-7eef3e434395",
+  "performer": "3ed06450-17e5-47b6-ba4f-7a0a084df56b",
   "localContent": {},
   "qualifiedLinks": {},
   "codes": {},
   "tags": {},
   "systemMetaData": {
     "secretForeignKeys": [
-      "3c3fdb6f-9661-456b-be6e-d92c6f1110e5"
+      "d96b288c-bb38-4e5b-85f6-6cda69a15907"
     ],
     "cryptedForeignKeys": {},
     "delegations": {},
@@ -185,7 +185,7 @@
       "secureDelegations": {},
       "keysEquivalences": {}
     },
-    "encryptedSelf": "9+WPqVNcK4JXAWS5skCkE9Ojpfq+GN4X/J/0DXMc9fg=",
+    "encryptedSelf": "GN4FY9HtJN70AL66+UesbCudehKsPQCai/djh1l7Yh0=",
     "tags": {}
   },
   "notes": []

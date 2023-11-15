@@ -74,7 +74,14 @@ const baseEnvironment =
 const initializer = await baseEnvironment
   .withGroup(fetch, {
     patient: ['BASIC_USER', 'BASIC_DATA_OWNER'],
-    hcp: ['BASIC_USER', 'BASIC_DATA_OWNER', 'PATIENT_USER_MANAGER', 'HIERARCHICAL_DATA_OWNER'],
+    hcp: [
+      'BASIC_USER',
+      'BASIC_DATA_OWNER',
+      'PATIENT_USER_MANAGER',
+      'HIERARCHICAL_DATA_OWNER',
+      'TOPIC_MANAGER',
+      'TOPIC_PARTICIPANT',
+    ],
     device: ['BASIC_USER', 'BASIC_DATA_OWNER'],
     user: ['BASIC_USER'],
   })

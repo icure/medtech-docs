@@ -6,27 +6,27 @@ tags:
 ---
 # Notification
 
-A Notification is a request by a [Data Owner](/{{sdk}}/glossary#data-owner) for a Healthcare Professional to perform a 
+A Notification is a request by a [Data Owner](/{{sdk}}/glossary#data-owner) for a {{Hcp}} to perform a 
 particular action, such as sharing a piece of information.  
-Since the Notification is encrypted, only the responsible Healthcare Professional can see its content.
+Since the Notification is encrypted, only the responsible {{Hcp}} can see its content.
 
 ## When Should I Use a Notification?
 
-You should use a Notification when a Data Owner needs a Healthcare Professional to perform an action and wants to 
+You should use a Notification when a Data Owner needs a {{Hcp}} to perform an action and wants to 
 be sure that no one else can access to the request.
 
-## How a Healthcare Professional is Related to Other Entities?
+## How a Notification is Related to Other Entities?
 
 Any Data Owner can create a Notification.  
-A Notification will be shared with a Healthcare Professional.  
-A Healthcare Professional can modify a Notification shared with them.
+A Notification will be shared with a {{Hcp}}.  
+A {{Hcp}} can modify a Notification shared with them.
 
 ## Examples
 
 ### A Doctor Receives a Data Sharing Request
 
 After a visit, a Doctor register the symptoms the Patient is experiencing (fatigue) as a new {{Service}}.  
-Then, they add the diagnosis (hay fever) as associated Healthcare Element.
+Then, they add the diagnosis (hay fever) as associated {{HealthcareElement}}.
 
 <!-- file://code-samples/{{sdk}}/explanation/notification/index.mts snippet:doctor shares medical data-->
 ```typescript

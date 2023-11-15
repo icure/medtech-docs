@@ -10,6 +10,7 @@ initLocalStorage()
 
 const api = await initEHRLiteApi(true)
 
+//tech-doc: Create a user
 //4 random characters to guarantee login uniqueness
 const uniqueId = Math.random().toString(36).substring(4)
 
@@ -34,6 +35,7 @@ const token = await api.userApi.createToken(createdUser.id, 3600)
 //tech-doc: STOP HERE
 output({ token })
 
+//tech-doc: Create a patient user
 const loggedUser = await api.userApi.getLogged()
 const loggedPractitioner = await api.practitionerApi.get(loggedUser.healthcarePartyId)
 

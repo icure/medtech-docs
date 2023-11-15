@@ -1,10 +1,10 @@
 {
-  "id": "0a4abc8f-f4d8-4a1a-80a4-bb1de64d83bc",
-  "rev": "1-03ad43ccb32df8071136571a8717a533",
-  "created": 1698415788573,
-  "modified": 1698415788573,
-  "author": "5f7d11da-ff86-4f57-b4f3-65c489c01501",
-  "responsible": "54b9f244-ce89-4860-b242-028654575a74",
+  "id": "6f81d3bc-0de5-4263-9128-807611db6a6a",
+  "rev": "1-262100999a9357605e6475dc3c9b5321",
+  "created": 1700058626237,
+  "modified": 1700058626238,
+  "author": "17e392da-8e36-4e4e-abd7-7eef3e434395",
+  "responsible": "3ed06450-17e5-47b6-ba4f-7a0a084df56b",
   "tags": {},
   "codes": {},
   "descr": "Topic name",
@@ -13,7 +13,7 @@
   "activeParticipants": {},
   "systemMetadata": {
     "secretForeignKeys": [
-      "20a24ca1-7231-463c-8c49-a515347c238a"
+      "43d5599e-7f59-4411-b21a-8d814f0986dd"
     ],
     "cryptedForeignKeys": {},
     "delegations": {},
@@ -22,7 +22,7 @@
       "secureDelegations": {},
       "keysEquivalences": {}
     },
-    "encryptedSelf": "yhVOU/5j457ch7vGjT+PpYtlJKD7dzSACDoUY867vsi9FV65/8pkiYjMhwM++H9baWdwcEsQzUBHbYxZYWrrC2WZl3zJOOLqjbWPCVzvA1O2VRjUaQqDzsfsOx/+U+9p6sMK0WYdSN7jiISkh2uJ6SUQj011GJ9641KZ8Ck5hgLS2/gdMCi9eyJGQqheoXLUHjVOBRsfgd5e5V6Jcaa1gUkLBYMdR4Cq1unYqRgQLYM=",
+    "encryptedSelf": "y9Rn7OL3ha+AZuPy5SjNeIvQCtEegBKTIioknvRmLannb2LxVB4rtusWVpEkPCrit2yavOUvpKq/5ON+KvOJSEb3Qnn2LKI2LHj/KPKmZk2ghvUmXDv+V3mT4fwkMLPDKNNdlLiruCnNirfnWMFWe6j41lVCAlBc0dbNKSPkm2ObN0VyzmILNQyOqW8UOndZFFgcFnSUdx1HvkZYWSDi3EeeQIJ9KN+KeB0kri7U80U=",
     "tags": {}
   }
 }

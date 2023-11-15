@@ -8,17 +8,17 @@ tags:
 
 # How to Filter Data Using Advanced Search Criteria
 
-All the services in the iCure MedTech SDK offer the `filter` and the `match` methods. They allow you to use complex search
+All the services in the iCure MedTech SDK offer the `filterBy` and the `matchBy` methods. They allow you to use complex search
 criteria to get entities and id of entities, respectively.  
-We can take as example the two method defined in the `PatientAPI`:
+We can take as example the two method defined in the `PatientApi`:
 
 ```typescript
-function filterPatients(filter: Filter<Patient>, nextPatientId?: string, limit?: number): Promise<PaginatedListPatient> { /*...*/ }
-function matchPatients(filter: Filter<Patient>): Promise<Array<string>> { /*...*/ }
+function filterBy(filter: Filter<Patient>, nextPatientId?: string, limit?: number): Promise<PaginatedListPatient> { /*...*/ }
+function matchBy(filter: Filter<Patient>): Promise<Array<string>> { /*...*/ }
 ```
 
 you can learn more about these methods, their parameter and their return type in the [reference](/{{sdk}}/references/apis/PatientApi).
-As for now, let us focus on the `filter` parameter.
+As for now, let us focus on the `filterBy` parameter.
 
 ## The Filter DSL
 
@@ -92,7 +92,7 @@ all the constraints at the same time.
 ```
 </details>
 
-In this case, the method will return all the patients that the hcp with id `healthcarePartyId` can access, bborn between the
+In this case, the method will return all the patients that the {{hcp}} with id `healthcarePartyId` can access, bborn between the
 11th of December 1951 and the 3rd of February 1952, and whose gender is `female`.
 
 ### Sorting Filters
@@ -119,7 +119,7 @@ When defining a filter with more than one condition, you can also set one of the
 ```
 </details>
 
-In this case, the method will return all the patients that the hcp with id `healthcarePartyId` can access, born between the
+In this case, the method will return all the patients that the {{hcp}} with id `healthcarePartyId` can access, born between the
 11th of December 1939 and the 3rd of February 1952, and whose gender is `female`. The result will be sorted by date of 
 birth in ascending order. If you don't specify the sorting key the data may still be ordered according to some field, but we do not guarantee that this will be a consistent behaviour. 
 
@@ -173,7 +173,7 @@ Similarly, you can create a new filter that will return the union of more filter
 ```
 </details>
 
-In this case, the method will return all the patients that the hcp with id `hcpId` can access and whose gender is `indeterminate` or
+In this case, the method will return all the patients that the {{hcp}} with id `hcpId` can access and whose gender is `indeterminate` or
 whose gender is `female`.
 
 :::caution

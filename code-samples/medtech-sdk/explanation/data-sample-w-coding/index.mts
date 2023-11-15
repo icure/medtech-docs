@@ -10,7 +10,7 @@ const api = await initMedTechApi(true)
 const patient = await api.patientApi.getPatient(patientId)
 
 //tech-doc: doctor can create DS and HE
-const healthcareElement = await api.healthcareElementApi.createOrModifyHealthcareElement(
+const healthcareElement = await api.healthcareElementApi.createOrModify(
   new HealthcareElement({
     description: 'My diagnosis is that the patient has Hay Fever',
     codes: new Set([
@@ -26,7 +26,7 @@ const healthcareElement = await api.healthcareElementApi.createOrModifyHealthcar
 )
 expect(!!healthcareElement).to.eq(true) //skip
 expect(healthcareElement.description).to.eq('My diagnosis is that the patient has Hay Fever') //skip
-const dataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
+const dataSample = await api.dataSampleApi.createOrModifyFor(
   patient.id,
   new DataSample({
     content: mapOf({

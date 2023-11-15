@@ -29,7 +29,7 @@ const patient = await patientApi.patientApi.getPatient(patientId)
 const patientUser = await patientApi.userApi.getLoggedUser()
 
 //tech-doc: doctor shares medical data
-const healthcareElement = await api.healthcareElementApi.createOrModifyHealthcareElement(
+const healthcareElement = await api.healthcareElementApi.createOrModify(
   new HealthcareElement({
     description: 'My diagnosis is that the patient has Hay Fever',
     codes: new Set([
@@ -45,7 +45,7 @@ const healthcareElement = await api.healthcareElementApi.createOrModifyHealthcar
 )
 expect(!!healthcareElement).to.eq(true) //skip
 expect(healthcareElement.description).to.eq('My diagnosis is that the patient has Hay Fever') //skip
-const dataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
+const dataSample = await api.dataSampleApi.createOrModifyFor(
   patient.id,
   new DataSample({
     content: mapOf({
@@ -69,7 +69,7 @@ expect(!!dataSample).to.eq(true)
 output({ healthcareElement, dataSample })
 
 //tech-doc: patient sends notification
-const notification = await patientApi.notificationApi.createOrModifyNotification(
+const notification = await patientApi.notificationApi.createOrModify(
   new Notification({
     id: uuid(),
     status: StatusEnum.Pending,
@@ -83,7 +83,7 @@ const notification = await patientApi.notificationApi.createOrModifyNotification
 output({ notification })
 
 //tech-doc: doctor receives notification
-const newNotifications = await api.notificationApi.getPendingNotificationsAfter()
+const newNotifications = await api.notificationApi.getPendingAfter()
 const newPatientNotifications = newNotifications.filter(
   (notification) =>
     notification.type === NotificationTypeEnum.Other &&
@@ -93,15 +93,12 @@ const newPatientNotifications = newNotifications.filter(
 if (!!newPatientNotifications && newPatientNotifications.length > 0) {
   await api.healthcareElementApi.giveAccessTo(healthcareElement, patient.id)
   await api.dataSampleApi.giveAccessTo(dataSample, patient.id)
-  await api.notificationApi.updateNotificationStatus(
-    newPatientNotifications[0],
-    StatusEnum.Completed,
-  )
+  await api.notificationApi.updateStatus(newPatientNotifications[0], StatusEnum.Completed)
 }
 
 await patientApi.cryptoApi.forceReload()
-const fetchedHE = await patientApi.healthcareElementApi.getHealthcareElement(healthcareElement.id)
-const fetchedDS = await patientApi.dataSampleApi.getDataSample(dataSample.id)
+const fetchedHE = await patientApi.healthcareElementApi.get(healthcareElement.id)
+const fetchedDS = await patientApi.dataSampleApi.get(dataSample.id)
 //tech-doc: STOP HERE
 output({ newPatientNotifications })
 expect(fetchedHE.id).to.eq(healthcareElement.id)

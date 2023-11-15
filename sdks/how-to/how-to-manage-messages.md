@@ -1,3 +1,4 @@
+!!ehrlite
 ---
 slug: how-to-manage-messages
 description: Learn how to manage Messages
@@ -7,7 +8,6 @@ tags:
   - Messaging
   - Channel
 ---
-{{#ehrlite}}
 # Handling messages
 
 In this section, we will learn how to manage Messages. A `Message` is a text exchange between `activeParticipants` of a `Topic`.
@@ -41,6 +41,12 @@ To retrieve a `Message`, you must use the `get` function and provide the `Messag
 ```
 
 <!-- output://code-samples/{{sdk}}/how-to/manage-messages/createdMessage.txt -->
+<details>
+<summary>createdMessage</summary>
+
+```json
+```
+</details>
 
 ## Creating a long Message
 
@@ -70,8 +76,20 @@ Then you can check if the `Message` is a long Message by checking the `isTruncat
 ```
 
 <!-- output://code-samples/{{sdk}}/how-to/manage-messages/longMessage.txt -->
+<details>
+<summary>longMessage</summary>
+
+```json
+```
+</details>
 
 <!-- output://code-samples/{{sdk}}/how-to/manage-messages/fullLongMessage.txt -->
+<details>
+<summary>fullLongMessage</summary>
+
+```json
+```
+</details>
 
 ## Resume creating a Message
 
@@ -100,6 +118,12 @@ To create a `Message` with attachments, you must use the `create` function. To d
 ```
 
 <!-- output://code-samples/{{sdk}}/how-to/manage-messages/createdMessageWithAttachments.txt -->
+<details>
+<summary>createdMessageWithAttachments</summary>
+
+```json
+```
+</details>
 
 ## Get a Message with attachments
 
@@ -112,6 +136,12 @@ Then, to get the attachments, you must use the `getAttachments` function and pro
 ```
 
 <!-- output://code-samples/{{sdk}}/how-to/manage-messages/createdMessageWithAttachments.txt -->
+<details>
+<summary>createdMessageWithAttachments</summary>
+
+```json
+```
+</details>
 
 ## Set a Message as read
 
@@ -122,6 +152,12 @@ To set a `Message` as read, you must use the `read` function and provide some `M
 ```
 
 <!-- output://code-samples/{{sdk}}/how-to/manage-messages/readMessages.txt -->
+<details>
+<summary>readMessages</summary>
+
+```json
+```
+</details>
 
 ## Filter Messages
 
@@ -136,6 +172,12 @@ E.G.: To filter latest `Messages` of a `Topic`, you must use the `MessageFilter`
 ```
 
 <!-- output://code-samples/{{sdk}}/how-to/manage-messages/paginatedList.txt -->
+<details>
+<summary>paginatedList</summary>
+
+```json
+```
+</details>
 
 ## Filter Message ids
 
@@ -146,5 +188,9 @@ To filter `Messages` ids, you must use the `match` function and then provide the
 ```
 
 <!-- output://code-samples/{{sdk}}/how-to/manage-messages/messageIds.txt -->
+<details>
+<summary>messageIds</summary>
 
-{{/ehrlite}}
+```json
+```
+</details>

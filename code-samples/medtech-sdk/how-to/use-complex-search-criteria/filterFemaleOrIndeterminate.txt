@@ -1,12 +1,12 @@
 {
   "filters": [
     {
-      "healthcarePartyId": "fce6129d-6001-49c1-bd0b-fc22dcc38f0b",
+      "healthcarePartyId": "993cd716-f4a9-4c26-b3bf-bda23aada8bb",
       "gender": "female",
       "$type": "PatientByHealthcarePartyGenderEducationProfessionFilter"
     },
     {
-      "healthcarePartyId": "fce6129d-6001-49c1-bd0b-fc22dcc38f0b",
+      "healthcarePartyId": "993cd716-f4a9-4c26-b3bf-bda23aada8bb",
       "gender": "indeterminate",
       "$type": "PatientByHealthcarePartyGenderEducationProfessionFilter"
     }

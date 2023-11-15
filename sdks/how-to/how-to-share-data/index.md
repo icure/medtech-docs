@@ -6,7 +6,7 @@ slug: how-to-share-data
 
 One of the core features of iCure is data sharing. 
 
-By default, patients information and medical data (`Patient`, `DataSample` and `HealthcareElement`) are accessible only
+By default, patients information and medical data (`Patient`, `{{ServiceNoSpace}}` and `{{HealthcareElementNoSpace}}`) are accessible only
 to the data owner who created the data.
 
 However, it is possible for a data owner to share an entity he created with any other data owner (`delegate`) by using 
@@ -26,7 +26,7 @@ When you share an iCure entity with a delegate data owner, you are giving them a
 not to any other entity that could be related to it. A data owner can share each entity he creates with a completely 
 different set of delegate data owners.
 
-For example if Dr Bob visits patient Charlie and creates two `DataSample`s *md1* and *md2*, he can decide to share
+For example if Dr Bob visits patient Charlie and creates two `{{ServiceNoSpace}}`s *md1* and *md2*, he can decide to share
 only *md1* with Dr Alice and not *md2* nor the `Patient` information of Charlie.
 
 In some applications you may need to always share data created by a data owner with another specific data owner (for
@@ -41,7 +41,7 @@ There is no need to re-share the entity after a modification.
 
 ## Recovering of shared data
 
-`Patient`s, `HealthcareElement`s and `DataSample`s are encrypted end-to-end.
+`Patient`s, `{{HealthcareElementNoSpace}}`s and `{{ServiceNoSpace}}`s are encrypted end-to-end.
 This means that if a data owner loses their private key they will not be able to access the encrypted entities
 anymore, and not even iCure can help to recover this data, since iCure can never access the encrypted content of
 entities.
@@ -76,7 +76,7 @@ compromised, since the data owner may have already read the entity before his ac
 
 :::note
 
-In the following examples we will use three different instances of `MedTechApi`s, to perform the requests as different
+In the following examples we will use three different instances of `{{CodeSdkName}}SDK`s, to perform the requests as different
 users.
 The api we use are `hcp1Api` and `hcp2Api` to act as two different healthcare practitioners data owners (`hcp1` and 
 `hcp2`, respectively) and `pApi` to act as a patient data owner (`p`).
@@ -127,13 +127,13 @@ relative.
 Users are allowed to share any entity to which they have access, even if they were not the original creators.
 In this example `hcp1` creates a {{healthcareElement}} and shares it with `p`.
 
-<!-- file://code-samples/{{sdk}}/how-to/sharing-data/index.mts snippet:create a {{healthcareElement}}-->
+<!-- file://code-samples/{{sdk}}/how-to/sharing-data/index.mts snippet:create a healthcare element-->
 ```typescript
 ```
 
 Now also `p` can share the {{healthcareElement}} with other data owners.
 
-<!-- file://code-samples/{{sdk}}/how-to/sharing-data/index.mts snippet:share a {{healthcareElement}}-->
+<!-- file://code-samples/{{sdk}}/how-to/sharing-data/index.mts snippet:share a healthcare element-->
 ```typescript
 ```
 
@@ -142,6 +142,6 @@ Now also `p` can share the {{healthcareElement}} with other data owners.
 Patient data owners can create entities and share them with other data owners.
 In this example `p` creates a {{service}} and shares it with `hcp1`, then `hcp1` shares it also with `hcp2`. 
 
-<!-- file://code-samples/{{sdk}}/how-to/sharing-data/index.mts snippet:create and share a {{service}}-->
+<!-- file://code-samples/{{sdk}}/how-to/sharing-data/index.mts snippet:create and share a data sample-->
 ```typescript
 ```

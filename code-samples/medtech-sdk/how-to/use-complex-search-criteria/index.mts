@@ -28,7 +28,7 @@ const { api } = await signUpUserUsingEmail(
 const user = await api.userApi.getLoggedUser()
 const healthcarePartyId = user.healthcarePartyId!
 
-await api.patientApi.createOrModifyPatient(
+await api.patientApi.createOrModify(
   new Patient({
     firstName: 'Arthur',
     lastName: 'Dent',
@@ -37,7 +37,7 @@ await api.patientApi.createOrModifyPatient(
   }),
 )
 
-await api.patientApi.createOrModifyPatient(
+await api.patientApi.createOrModify(
   new Patient({
     firstName: 'Trillian',
     lastName: 'Astra',
@@ -46,7 +46,7 @@ await api.patientApi.createOrModifyPatient(
   }),
 )
 
-await api.patientApi.createOrModifyPatient(
+await api.patientApi.createOrModify(
   new Patient({
     firstName: 'Zaphod',
     lastName: 'Beeblebrox',
@@ -57,7 +57,7 @@ await api.patientApi.createOrModifyPatient(
 
 //tech-doc: filter patients for hcp
 const patientsForHcpFilter = await new PatientFilter(api).forDataOwner(healthcarePartyId).build()
-const patientsForHcp = await api.patientApi.filterPatients(patientsForHcpFilter)
+const patientsForHcp = await api.patientApi.filterBy(patientsForHcpFilter)
 //tech-doc: end
 output({ patientsForHcpFilter, patientsForHcp })
 
@@ -70,7 +70,7 @@ const ageGenderFilter = await new PatientFilter(api)
   .byGenderEducationProfession('female')
   .build()
 
-const ageGenderPatients = await api.patientApi.filterPatients(ageGenderFilter)
+const ageGenderPatients = await api.patientApi.filterBy(ageGenderFilter)
 //tech-doc: end
 output({ ageGenderFilter, ageGenderPatients })
 
@@ -88,7 +88,7 @@ const ageGenderSortedFilter = await new PatientFilter(api)
   .byGenderEducationProfession('female')
   .build()
 
-const ageGenderSortedPatients = await api.patientApi.filterPatients(ageGenderFilter)
+const ageGenderSortedPatients = await api.patientApi.filterBy(ageGenderFilter)
 //tech-doc: end
 output({ ageGenderSortedFilter, ageGenderSortedPatients })
 
@@ -107,7 +107,7 @@ const filterByGender = await new PatientFilter(api)
 
 const filterByGenderAndAge = FilterComposition.intersection(filterByAge, filterByGender)
 
-const ageGenderExplicitPatients = await api.patientApi.filterPatients(filterByGenderAndAge)
+const ageGenderExplicitPatients = await api.patientApi.filterBy(filterByGenderAndAge)
 //tech-doc: end
 output({ filterByGenderAndAge, ageGenderExplicitPatients })
 
@@ -131,7 +131,7 @@ const filterIndeterminate = await new PatientFilter(api)
 
 const filterFemaleOrIndeterminate = FilterComposition.union(filterFemales, filterIndeterminate)
 
-const unionFilterPatients = await api.patientApi.filterPatients(filterFemaleOrIndeterminate)
+const unionFilterPatients = await api.patientApi.filterBy(filterFemaleOrIndeterminate)
 //tech-doc: end
 output({ filterFemaleOrIndeterminate, unionFilterPatients })
 

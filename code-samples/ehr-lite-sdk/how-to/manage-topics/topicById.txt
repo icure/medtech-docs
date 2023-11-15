@@ -1,10 +1,10 @@
 {
-  "id": "47729fc7-835a-4957-9430-151174e444cf",
-  "rev": "1-3c270f67b427d327d1dd1fbe0d9244dd",
-  "created": 1698415789353,
-  "modified": 1698415789353,
-  "author": "5f7d11da-ff86-4f57-b4f3-65c489c01501",
-  "responsible": "54b9f244-ce89-4860-b242-028654575a74",
+  "id": "cab70726-f2d3-4950-ac00-9bd991b8de67",
+  "rev": "1-3682a74da191b547eaa3f3a45cc73e25",
+  "created": 1700058626866,
+  "modified": 1700058626866,
+  "author": "17e392da-8e36-4e4e-abd7-7eef3e434395",
+  "responsible": "3ed06450-17e5-47b6-ba4f-7a0a084df56b",
   "tags": {},
   "codes": {},
   "descr": "Topic to be fetched",
@@ -20,7 +20,7 @@
       "secureDelegations": {},
       "keysEquivalences": {}
     },
-    "encryptedSelf": "KSvp53jkZn+VSmuhkniwDMPrQ1wNjRGns8KiUe3blzHN4xPho3fKj1Kr44mpLn73i7Zl0PByHOGaZn7dDRGS/Q==",
+    "encryptedSelf": "Skogs4W6yC7w4NM+/rBzZyj4HqhHRNwlb+PbSz3A+y2kzKmg2+W9pVFIe7l/OOZt5lNFfzmsFV515jUGYO6u+w==",
     "tags": {}
   }
 }

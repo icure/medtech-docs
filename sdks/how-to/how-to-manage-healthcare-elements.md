@@ -6,22 +6,22 @@ tags:
 ---
 # Handling {{healthcareElements}}
 
-## What is a Healthcare Element?
+## What is a {{HealthcareElement}}?
 
-A [Healthcare Element](../references/classes/HealthcareElement) is a piece of medical information that can be used to give more details about the context of a [{{Service}}](../references/classes/DataSample).  
+A [{{HealthcareElement}}](../references/classes/HealthcareElement) is a piece of medical information that can be used to give more details about the context of a [{{Service}}](../references/classes/DataSample).  
 It typically describes a long-lasting condition affecting a Patient.
-{{HealthcareElements}} can be created by [Patient](../references/classes/Patient) and Healthcare Professionals. The sensitive information they contain are 
+{{HealthcareElements}} can be created by [Patient](../references/classes/Patient) and {{Hcp}}. The sensitive information they contain are 
 encrypted and can be read only by Data Owners with an explicit access.
 
 :::note
 
-To perform the following operations, we suppose you have at least a Patient and a Healthcare Professional in your database.
+To perform the following operations, we suppose you have at least a Patient and a {{Hcp}} in your database.
 
 :::
 
-## Creating a Healthcare Element
+## Creating a {{HealthcareElement}}
 
-In the following example, a Healthcare Professional will create, for a Patient, a Healthcare Element describing a medical condition.
+In the following example, a {{Hcp}} will create, for a Patient, a {{HealthcareElement}} describing a medical condition.
 
 <!-- file://code-samples/{{sdk}}/how-to/manage-healthcare-elements/index.mts snippet:create a HE as data owner-->
 ```typescript
@@ -46,19 +46,19 @@ In the following example, a Healthcare Professional will create, for a Patient, 
 
 If not specified, the value of the following parameters will be automatically set by the iCure Back-End:
 
-* id (to a random UUID)
-* created (to the current timestamp)
-* modified (to the current timestamp)
-* author (to the id of the user who created this Healthcare Element)
-* responsible (to the id of the Data Owner id who created this Healthcare Element)
-* healthElementId (to the id of the current Healthcare Element)
-* valueDate (to the current timestamp)
-* openingDate (to the current timestamp)
+* `id` (to a random UUID)
+* `created` (to the current timestamp)
+* `modified` (to the current timestamp)
+* `author` (to the id of the user who created this Healthcare Element)
+* `responsible` (to the id of the Data Owner id who created this Healthcare Element)
+* `healthElementId` (to the id of the current Healthcare Element)
+* `valueDate` (to the current timestamp)
+* `openingDate` (to the current timestamp)
 
 :::
 
-When creating a new Healthcare Element, you must specify the Patient it is associated to.  
-If the method runs successfully, the Promise will return the newly created Healthcare Element.
+When creating a new {{HealthcareElement}}, you must specify the Patient it is associated to.  
+If the method runs successfully, the Promise will return the newly created {{HealthcareElement}}.
 It is also possible to create a series of {{HealthcareElements}} that describe a medical history. In a medical history, 
 the {{healthcareElements}} share the same `healthcareElementId`
 
@@ -83,7 +83,7 @@ the {{healthcareElements}} share the same `healthcareElementId`
 
 :::note
 
-The `healthcareElementId` is the id of the first Healthcare Element of the series.
+The `healthcareElementId` is the id of the first {{HealthcareElement}} of the series.
 
 :::
 
@@ -118,14 +118,14 @@ Several unrelated {{HealthcareElements}} can also be created at once.
 
 :::caution
 
-Even if you associate a Healthcare Element to a Patient, the Patient does not automatically have access to it. 
-You need to explicitly give access to the patient user to this created Healthcare Element by calling the service `giveAccessTo`.
+Even if you associate a {{HealthcareElement}} to a Patient, the Patient does not automatically have access to it. 
+You need to explicitly give access to the patient user to this created {{HealthcareElement}} by calling the service `giveAccessTo`.
 
 :::
 
-## Sharing a Healthcare Element with a Patient
+## Sharing a {{HealthcareElement}} with a Patient
 
-After creating the Healthcare Element, the Healthcare Professional can share it with the Patient.
+After creating the {{HealthcareElement}}, the {{Hcp}} can share it with the Patient.
 
 <!-- file://code-samples/{{sdk}}/how-to/manage-healthcare-elements/index.mts snippet:HE sharing with data owner-->
 ```typescript
@@ -138,19 +138,19 @@ After creating the Healthcare Element, the Healthcare Professional can share it 
 ```
 </details>
 
-If the operation is successful, the method returns a Promise with the updated Healthcare Element.  
-Using the same service, the Healthcare Professional can share the Healthcare Element with another Healthcare Professional.
+If the operation is successful, the method returns a Promise with the updated {{HealthcareElement}}.  
+Using the same service, the {{Hcp}} can share the Healthcare Element with another Healthcare Professional.
 
 :::note
 
-Any Data Owner that has access to a Healthcare Element can share it with another Data Owner using this service.  
-A Patient could allow another Patient or HCP to access a Healthcare Element.
+Any Data Owner that has access to a {{HealthcareElement}} can share it with another Data Owner using this service.  
+A Patient could allow another Patient or {{Hcp}} to access a {{HealthcareElement}}.
 
 :::
 
-## Retrieving a Healthcare Element Using its ID
+## Retrieving a {{HealthcareElement}} Using its ID
 
-A single Healthcare Element can be retrieved from the iCure Back-end using its id.
+A single {{HealthcareElement}} can be retrieved from the iCure Back-end using its id.
 
 <!-- file://code-samples/{{sdk}}/how-to/manage-healthcare-elements/index.mts snippet:retrieve a HE as data owner-->
 ```typescript
@@ -165,13 +165,13 @@ A single Healthcare Element can be retrieved from the iCure Back-end using its i
 
 :::caution
 
-Trying to retrieve a Healthcare Element you do not have access to will produce an error.
+Trying to retrieve a {{HealthcareElement}} you do not have access to will produce an error.
 
 :::
 
-## Modifying a Healthcare Element
+## Modifying a {{HealthcareElement}}
 
-Given an existing Healthcare Element, it is possible to modify it.  
+Given an existing {{HealthcareElement}}, it is possible to modify it.  
 
 :::note
 
@@ -206,22 +206,22 @@ The id and rev fields cannot be modified.
 ```
 </details>
 
-If the operation is successful, the method returns the updated Healthcare Element.
+If the operation is successful, the method returns the updated {{HealthcareElement}}.
 
 :::caution
 
-To update a Healthcare Element, both id and rev fields must be valid:
+To update a {{HealthcareElement}}, both id and rev fields must be valid:
 
-* the id should be the one of an existing Healthcare Element
+* the id should be the one of an existing {{HealthcareElement}}
 * the rev is a field automatically managed by the iCure Back-End to handle conflicts. It must be equal to the one received
- from the server when creating or getting the Healthcare Element you want to modify.
+ from the server when creating or getting the {{HealthcareElement}} you want to modify.
 
 :::
 
-## Retrieving Healthcare Element Using Complex Search Criteria
+## Retrieving {{HealthcareElement}} Using Complex Search Criteria
 
-If you want to retrieve a set of Healthcare Element that satisfy complex criteria, you can use a Filter.  
-In the following example, you will instantiate a filter to retrieve all the Healthcare Element of a Patient that a Healthcare Professional
+If you want to retrieve a set of {{HealthcareElement}} that satisfy complex criteria, you can use a Filter.  
+In the following example, you will instantiate a filter to retrieve all the {{HealthcareElement}} of a Patient that a {{Hcp}}
  can access
 
 <!-- file://code-samples/{{sdk}}/how-to/manage-healthcare-elements/index.mts snippet:create HE filter-->
@@ -254,7 +254,7 @@ After creating a filter, you can use it to retrieve the {{HealthcareElements}}.
 ```
 </details>
 
-The `filter` method returns a PaginatedList that contains at most the number of elements stated
+The `filterBy` method returns a PaginatedList that contains at most the number of elements stated
  in the method's parameter. If you do not specify any number, the default value is 1000.  
 To retrieve more {{HealthcareElements}}, you can call the same method again, using the startDocumentId provided in the previous PaginatedList.
 
@@ -270,7 +270,7 @@ To retrieve more {{HealthcareElements}}, you can call the same method again, usi
 </details>
 
 If the `nextKeyPair` property of the result is `undefined`, than there are no more {{HealthcareElements}} to retrieve.  
-You can also retrieve just the id of the Healthcare Element instead of the whole documents by using the match method.
+You can also retrieve just the id of the {{HealthcareElement}} instead of the whole documents by using the match method.
 
 <!-- file://code-samples/{{sdk}}/how-to/manage-healthcare-elements/index.mts snippet:use HE match method-->
 ```typescript
@@ -297,9 +297,9 @@ can access.
 ```
 </details>
 
-## Deleting a Healthcare Element
+## Deleting a {{HealthcareElement}}
 
-Finally, a Data Owner that has access to a Healthcare Element can decide to delete it.
+Finally, a Data Owner that has access to a {{HealthcareElement}} can decide to delete it.
 
 <!-- file://code-samples/{{sdk}}/how-to/manage-healthcare-elements/index.mts snippet:delete a HE as data owner-->
 ```typescript

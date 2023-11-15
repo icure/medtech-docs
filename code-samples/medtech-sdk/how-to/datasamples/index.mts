@@ -15,10 +15,10 @@ initLocalStorage()
 
 const api = await initMedTechApi(true)
 
-const loggedUser = await api.userApi.getLoggedUser()
+const loggedUser = await api.userApi.getLogged()
 
 //tech-doc: create a patient for datasample
-const patient = await api.patientApi.createOrModifyPatient(
+const patient = await api.patientApi.createOrModify(
   new Patient({
     firstName: 'John',
     lastName: 'Snow',
@@ -29,7 +29,7 @@ const patient = await api.patientApi.createOrModifyPatient(
 output({ patient })
 
 //tech-doc: create a dataSample
-const createdDataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
+const createdDataSample = await api.dataSampleApi.createOrModifyFor(
   patient.id!,
   new DataSample({
     labels: new Set([new CodingReference({ type: 'IC-TEST', code: 'TEST' })]),
@@ -42,12 +42,12 @@ const createdDataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
 output({ createdDataSample })
 
 //tech-doc: get a dataSample
-const dataSample = await api.dataSampleApi.getDataSample(createdDataSample.id!)
+const dataSample = await api.dataSampleApi.get(createdDataSample.id!)
 //tech-doc: STOP HERE
 output({ dataSample })
 
 //tech-doc: update a dataSample
-const updatedDataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
+const updatedDataSample = await api.dataSampleApi.createOrModifyFor(
   patient.id!,
   new DataSample({
     ...createdDataSample,
@@ -69,7 +69,7 @@ const filter = await new DataSampleFilter(api)
   .forPatients([patient])
   .build()
 
-const filteredDataSamples = await api.dataSampleApi.filterDataSample(filter)
+const filteredDataSamples = await api.dataSampleApi.filterBy(filter)
 //tech-doc: STOP HERE
 output({ filteredDataSamples })
 
@@ -79,13 +79,13 @@ const matchFilter = await new DataSampleFilter(api)
   .forPatients([patient])
   .build()
 
-const matchedDataSampleIds = await api.dataSampleApi.matchDataSample(matchFilter)
+const matchedDataSampleIds = await api.dataSampleApi.matchBy(matchFilter)
 //tech-doc: STOP HERE
 output({ matchedDataSampleIds })
 
 // THIS SHOULD WORK, BUT DOESN'T (We need to merge the PR about RSocket)
 //tech-doc: delete a dataSample
-const deletedDataSample = await api.dataSampleApi.deleteDataSample(updatedDataSample.id!)
+const deletedDataSample = await api.dataSampleApi.delete(updatedDataSample.id!)
 //tech-doc: STOP HERE
 output({ deletedDataSample })
 

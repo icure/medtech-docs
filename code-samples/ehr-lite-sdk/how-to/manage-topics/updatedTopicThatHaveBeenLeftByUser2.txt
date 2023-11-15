@@ -1,10 +1,10 @@
 {
-  "id": "9874879d-36dd-4594-8e87-3cadf4078c4e",
-  "rev": "2-3b2eb95c3be42f5c47946c7ce2d3b411",
-  "created": 1698415788951,
-  "modified": 1698415788951,
-  "author": "5f7d11da-ff86-4f57-b4f3-65c489c01501",
-  "responsible": "54b9f244-ce89-4860-b242-028654575a74",
+  "id": "8910dfb8-8ed1-45a3-9985-c40940ecac18",
+  "rev": "2-634ee720a4ae421a49fa549be04c204f",
+  "created": 1700058626540,
+  "modified": 1700058626540,
+  "author": "17e392da-8e36-4e4e-abd7-7eef3e434395",
+  "responsible": "3ed06450-17e5-47b6-ba4f-7a0a084df56b",
   "tags": {},
   "codes": {},
   "descr": "Topic that will be left",
@@ -20,7 +20,7 @@
       "secureDelegations": {},
       "keysEquivalences": {}
     },
-    "encryptedSelf": "gpi85V94/GhwG58qoGEDeKuOP8blV0sJQxzuN+U+rc2WZylHBofW8cgmsUE19g8DvGkyr02eFT4QYAPFqVme/Q==",
+    "encryptedSelf": "uAZ3w98ffJP89VtMgx6pQs8vmxxYOHxRX9zFRaw7lQVoPVbKZyZOgkc/mJd1RjMMRJxbDh0dUPNttI6AyhrRHQ==",
     "tags": {}
   }
 }

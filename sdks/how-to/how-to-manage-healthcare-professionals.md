@@ -2,7 +2,7 @@
 slug: how-to-manage-healthcare-professionals
 description: Learn how to manage {{hcps}}
 tags:
-- HealthcareProfessional
+- {{HcpNoSpace}}
 ---
 # Handling {{hcps}}
 
@@ -14,9 +14,9 @@ The healthcareProfessionalApi allows you to manage [{{Hcps}}](../references/clas
 ## Create a {{hcp}}
 
 You first need to instantiate a [{{Hcp}}](../references/classes/HealthcareProfessional.md) object.
-Pass the `healthcareProfessional` to the createHealthcareProfessional method of the healthcareProfessionalApi to create it in the database.
+Pass the `{{Hcp}}` to the `create` method of the `{{hcpNoSpace}}Api` to create it in the database.
 
-<!-- file://code-samples/{{sdk}}/how-to/manage-healthcare-professionals/index.mts snippet:Create a {{hcp}}-->
+<!-- file://code-samples/{{sdk}}/how-to/manage-healthcare-professionals/index.mts snippet:Create a healthcare professional-->
 ```typescript
 ```
 
@@ -30,9 +30,9 @@ Pass the `healthcareProfessional` to the createHealthcareProfessional method of 
 
 ## Load a {{hcp}} by id
 
-The getHealthcareProfessional method of the healthcareProfessionalApi allows you to load a [{{Hcp}}](../references/classes/HealthcareProfessional.md) by id.
+The `get` method of the `{{hcpNoSpace}}Api` allows you to load a [{{Hcp}}](../references/classes/HealthcareProfessional.md) by id.
 
-<!-- file://code-samples/{{sdk}}/how-to/manage-healthcare-professionals/index.mts snippet:Load a {{hcp}} by id-->
+<!-- file://code-samples/{{sdk}}/how-to/manage-healthcare-professionals/index.mts snippet:Load a healthcare professional by id-->
 ```typescript
 ```
 
@@ -46,11 +46,11 @@ The getHealthcareProfessional method of the healthcareProfessionalApi allows you
 
 ## Filter {{hcps}}
 
-You can build complex queries and use them to retrieve [{{Hcps}}](../references/classes/HealthcareProfessional.md) using the filterHealthcareProfessionals method of the healthcareProfessionalApi.
+You can build complex queries and use them to retrieve [{{Hcps}}](../references/classes/HealthcareProfessional.md) using the `filterBy` method of the `{{hcpNoSpace}}Api`.
 
-You can build filters by hand or use the DSL provided by the HealthcareProfessionalFilter class.
+You can build filters by hand or use the DSL provided by the `{{HcpNoSpace}}Filter` class.
 
-<!-- file://code-samples/{{sdk}}/how-to/manage-healthcare-professionals/index.mts snippet:Filter {{hcps}}-->
+<!-- file://code-samples/{{sdk}}/how-to/manage-healthcare-professionals/index.mts snippet:Filter healthcare professionals-->
 ```typescript
 ```
 
@@ -64,9 +64,9 @@ You can build filters by hand or use the DSL provided by the HealthcareProfessio
 
 ## Delete a {{hcp}}
 
-The deleteHealthcareProfessional method of the healthcareProfessionalApi allows you to delete a [{{Hcp}}](../references/classes/HealthcareProfessional.md) by id.
+The `delete` method of the `{{hcpNoSpace}}Api` allows you to delete a [{{Hcp}}](../references/classes/HealthcareProfessional.md) by id.
 
-<!-- file://code-samples/{{sdk}}/how-to/manage-healthcare-professionals/index.mts snippet:Delete a {{hcp}}-->
+<!-- file://code-samples/{{sdk}}/how-to/manage-healthcare-professionals/index.mts snippet:Delete a healthcare professional-->
 ```typescript
 ```
 

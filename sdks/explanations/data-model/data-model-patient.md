@@ -7,7 +7,7 @@ tags:
 ---
 # Patient
 
-A Patient is the subject of all the medical processes. They can register to iCure autonomously or be invited by Healthcare Professionals.
+A Patient is the subject of all the medical processes. They can register to iCure autonomously or be invited by {{Hcps}}.
 {{Hcps}} can associate {{Services}} and {{HealthcareElements}} to Patients.
 Additionally, as [Data Owners](/{{sdk}}/glossary#data-owner) Patients can also ask to access this data or create
 {{Services}} and {{HealthcareElements}} by themselves.
@@ -18,16 +18,16 @@ You should use a Patient when you need to represent the recipient of the medical
 
 ## How is a Patient Related to Other Entities?
 
-A Healthcare Professional can create a Patient.  
+A {{Hcps} can create a Patient.  
 A Patient can create {{Services}} and {{HealthcareElements}}.  
-A Patient can ask to access a {{Service}} or a Healthcare Element by creating a Notification to a Healthcare Professional.  
+A Patient can ask to access a {{Service}} or a {{HealthcareElement}} by creating a Notification to a {{Hcp}}.  
 
 ## Examples
 
 ### A Patient Registering Their Symptoms
 
 A Patient has a period tracking app and wants to register that her period started and that she is experiencing a headache.
-She will create a Healthcare Element to register that her period started, then she will create a {{Service}} associated to the Healthcare Element to register the headache.
+She will create a {{HealthcareElement}} to register that her period started, then she will create a {{Service}} associated to the {{HealthcareElement}} to register the headache.
 
 <!-- file://code-samples/{{sdk}}/explanation/patient-creates-data-sample/index.mts snippet:patient can create DS and HE-->
 ```typescript

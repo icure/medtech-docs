@@ -1,22 +1,22 @@
 {
-  "id": "b07c9a4d-2782-4f14-ab93-b213a15fd778",
+  "id": "77060e3d-4439-49c7-bdb0-9b464de25694",
   "identifiers": [],
-  "batchId": "d7db3ce5-8d0f-4e9a-abc5-f98ecabb8190",
+  "batchId": "a51859e0-f921-4d45-ac48-9ecbf290814b",
   "healthcareElementIds": [],
   "index": 0,
-  "valueDate": 20231027140956,
-  "openingDate": 20231027140956,
-  "created": 1698415796930,
-  "modified": 1698415796930,
-  "author": "5f7d11da-ff86-4f57-b4f3-65c489c01501",
-  "performer": "54b9f244-ce89-4860-b242-028654575a74",
+  "valueDate": 20231115143030,
+  "openingDate": 20231115143030,
+  "created": 1700058630491,
+  "modified": 1700058630491,
+  "author": "17e392da-8e36-4e4e-abd7-7eef3e434395",
+  "performer": "3ed06450-17e5-47b6-ba4f-7a0a084df56b",
   "localContent": {},
   "qualifiedLinks": {},
   "codes": {},
   "tags": {},
   "systemMetaData": {
     "secretForeignKeys": [
-      "5b3e903e-075d-44b6-a528-a070badc8fbd"
+      "4aa57e92-e1d6-4ef3-bd37-0a4e28bbbea5"
     ],
     "cryptedForeignKeys": {},
     "delegations": {},
@@ -25,7 +25,7 @@
       "secureDelegations": {},
       "keysEquivalences": {}
     },
-    "encryptedSelf": "tdJfgvLJm56redOQX4XRQJBM/NJzgW6nvqvmZ6FjzdCu6nOVTFV2j6CAfgWuZ/AQ8hAAM+7gtVMPKWrrjc/egTibQFKwJZqPXDoBiM+o2w8=",
+    "encryptedSelf": "zyj8F40IJ8o+dEgRoVckA7Bi50x/yQwCypxzX9D2DHJfeIfd4AK2A2Mfo9pcRG1qFyW6C/8YKXLwHBqtX5MwMTqtpc3JzdmmA0CpSmPe7GY=",
     "tags": {}
   },
   "notes": []

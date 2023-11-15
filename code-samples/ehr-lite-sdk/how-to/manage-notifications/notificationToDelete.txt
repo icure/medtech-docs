@@ -1,12 +1,12 @@
 {
-  "id": "ddd825c9-24b1-44eb-9d43-d5f9b730e3b9",
-  "rev": "1-0bc255d69dcad0ce191305be50bfe032",
+  "id": "b7ed9db3-ab5d-42f5-8d3d-2dfd53789228",
+  "rev": "1-ac52bfa1a217e3b39c8e2f75ba76019c",
   "status": "pending",
-  "created": 1698415791146,
+  "created": 1700058616652,
   "identifiers": [],
-  "modified": 1698415791146,
-  "author": "5f7d11da-ff86-4f57-b4f3-65c489c01501",
-  "responsible": "54b9f244-ce89-4860-b242-028654575a74",
+  "modified": 1700058616652,
+  "author": "17e392da-8e36-4e4e-abd7-7eef3e434395",
+  "responsible": "3ed06450-17e5-47b6-ba4f-7a0a084df56b",
   "properties": {},
   "type": "KEY_PAIR_UPDATE",
   "systemMetaData": {
@@ -18,7 +18,7 @@
       "secureDelegations": {},
       "keysEquivalences": {}
     },
-    "encryptedSelf": "Le0Be6ip6uuxVI6U+qXxU3LE/f1SYWHTM31R8qawnTYQNDC7yZ5A/p8hvHYsuq91",
+    "encryptedSelf": "uqV0kWAMeYlJQ0Lf43RO/XCU+P7ArrIcJOo1Tc4VoYAoGQ2bmXSEY5uJK8X73auP",
     "tags": {}
   }
 }

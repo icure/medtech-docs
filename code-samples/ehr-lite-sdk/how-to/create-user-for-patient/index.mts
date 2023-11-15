@@ -1,17 +1,29 @@
 import 'isomorphic-fetch'
 
-import { initEHRLiteApi } from '../../utils/index.mjs'
-import { host, authProcessId, msgGtwUrl, specId } from '../../../utils/index.mjs'
+import {
+  host,
+  authProcessId,
+  msgGtwUrl,
+  specId,
+  userName,
+  password,
+} from '../../../utils/index.mjs'
 import { initLocalStorage, output } from '../../../utils/index.mjs'
 import {
   AnonymousEHRLiteApi,
   Condition,
   ConditionFilter,
   ContactPoint,
+  EHRLiteApi,
+  EmailMessage,
   LocalComponent,
   Location,
   Observation,
+  Organisation,
   Patient,
+  Practitioner,
+  SMSMessage,
+  User,
 } from '@icure/ehr-lite-sdk'
 import { MaintenanceTask, sleep } from '@icure/api'
 import { assert, expect } from 'chai'
@@ -23,10 +35,56 @@ import { CodingReference, mapOf, NotificationTypeEnum } from '@icure/typescript-
 import { SimpleEHRLiteCryptoStrategies } from '@icure/ehr-lite-sdk/services/EHRLiteCryptoStrategies.js'
 import { ContactPointTelecomTypeEnum } from '@icure/ehr-lite-sdk/models/enums/ContactPointTelecomType.enum.js'
 import { PatientPersonalStatusEnum } from '@icure/ehr-lite-sdk/models/enums/PatientPersonalStatus.enum.js'
+import { EHRLiteMessageFactory } from '@icure/ehr-lite-sdk/services/EHRLiteMessageFactory'
+import { initEHRLiteApi } from '../../utils/index.mjs'
 
 initLocalStorage()
 
-const apiAsDoctor = await initEHRLiteApi(true)
+//tech-doc: doctor api initialization
+class InvitationMessageFactory implements EHRLiteMessageFactory {
+  readonly preferredMessageType = 'email'
+
+  getPatientInvitationEmail(
+    recipientUser: User,
+    recipientPatient: Patient,
+    recipientPassword: string,
+    invitingUser: User,
+    invitingDataOwner: Organisation | Practitioner,
+  ): EmailMessage {
+    return {
+      from: 'nobody@nowhere.boh',
+      subject: `${recipientUser.login}|${recipientPassword}`,
+      html: `User: ${recipientUser.id}`,
+    }
+  }
+
+  getPatientInvitationSMS(
+    recipientUser: User,
+    recipientPatient: Patient,
+    recipientPassword: string,
+    invitingUser: User,
+    invitingDataOwner: Organisation | Practitioner,
+  ): SMSMessage {
+    return {
+      message: `${recipientUser.login}|${recipientPassword}`,
+    }
+  }
+}
+
+let apiAsDoctor = await new EHRLiteApi.Builder()
+  .withICureBaseUrl(host)
+  .withUserName(userName)
+  .withPassword(password)
+  .withCrypto(webcrypto as any)
+  .withCryptoStrategies(new SimpleEHRLiteCryptoStrategies([]))
+  .withMsgGwUrl(msgGtwUrl)
+  .withMsgGwSpecId(specId)
+  .withMessageFactory(new InvitationMessageFactory())
+  .withAuthProcessByEmailId(authProcessId)
+  .build()
+//tech-doc: STOP HERE
+
+apiAsDoctor = await initEHRLiteApi(true)
 
 const loggedUser = await apiAsDoctor.userApi.getLogged()
 
@@ -112,6 +170,7 @@ const patientUser = await apiAsPatient.userApi.getLogged()
 const patientDetails = await apiAsPatient.patientApi.getAndTryDecrypt(patientUser.patientId)
 //tech-doc: STOP HERE
 output({ patientDetails })
+//tech-doc: modify patient details
 patientDetails.patient.personalStatus = PatientPersonalStatusEnum.COMPLICATED
 // patientDetails.note = 'This would make modify fail'
 const modifiedPatientDetails = await apiAsPatient.patientApi.createOrModify(patientDetails.patient)

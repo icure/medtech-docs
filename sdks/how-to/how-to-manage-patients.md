@@ -11,7 +11,7 @@ In this section, we will learn how to manage patients. [Patient](/{{sdk}}/refere
 
 ## How to create a patient&#8239;?
 
-To create a patient, we can use the `createOrModifyPatient` method on the `PatientApi` object. This method takes one parameter: the Patient object.
+To create a patient, we can use the `createOrModify` method on the `PatientApi` object. This method takes one parameter: the Patient object.
 
 <!-- file://code-samples/{{sdk}}/how-to/patients/index.mts snippet:create a patient-->
 ```typescript
@@ -27,7 +27,7 @@ To create a patient, we can use the `createOrModifyPatient` method on the `Patie
 
 ## How to update a patient&#8239;?
 
-To update a patient, we can use the `createOrModifyPatient` method on the `PatientApi` object. This method takes one parameter: the Patient object.
+To update a patient, we can use the `createOrModify` method on the `PatientApi` object. This method takes one parameter: the Patient object.
 
 <!-- file://code-samples/{{sdk}}/how-to/patients/index.mts snippet:update a patient-->
 ```typescript
@@ -44,7 +44,7 @@ To update a patient, we can use the `createOrModifyPatient` method on the `Patie
 
 ## How to get a patient&#8239;?
 
-To get a patient, we can use the `getPatient` method on the `PatientApi` object. This method takes one parameter: the patient id.
+To get a patient, we can use the `get` method on the `PatientApi` object. This method takes one parameter: the patient id.
 
 <!-- file://code-samples/{{sdk}}/how-to/patients/index.mts snippet:get a patient-->
 ```typescript
@@ -61,7 +61,7 @@ To get a patient, we can use the `getPatient` method on the `PatientApi` object.
 
 ## How to delete a patient&#8239;?
 
-To delete a patient, we can use the `deletePatient` method on the `PatientApi` object. This method takes one parameter: the patient id.
+To delete a patient, we can use the `delete` method on the `PatientApi` object. This method takes one parameter: the patient id.
 
 <!-- file://code-samples/{{sdk}}/how-to/patients/index.mts snippet:delete a patient-->
 ```typescript
@@ -77,7 +77,7 @@ To delete a patient, we can use the `deletePatient` method on the `PatientApi` o
 
 ## How to filter patients&#8239;?
 
-To filter patients, we can use the `filterPatients` method on the `PatientApi` object. This method takes one parameter: the filter.
+To filter patients, we can use the `filterBy` method on the `PatientApi` object. This method takes one parameter: the filter.
 
 <!-- file://code-samples/{{sdk}}/how-to/patients/index.mts snippet:get a list of patient-->
 ```typescript
@@ -121,7 +121,7 @@ The resulting filter object will create a filter that allows us to get all `Pati
 
 ## How to get a list of Patient ids&#8239;?
 
-In some circumstances, you might want to get a list of `Patient` ids instead of the `Patient` entities themselves. To do so, you can use the `matchPatients` method on the `PatientApi`. This method takes one parameter: the filter object.
+In some circumstances, you might want to get a list of `Patient` ids instead of the `Patient` entities themselves. To do so, you can use the `matchBy` method on the `PatientApi`. This method takes one parameter: the filter object.
 
 <!-- file://code-samples/{{sdk}}/how-to/patients/index.mts snippet:get a list of patient ids-->
 ```typescript
@@ -138,15 +138,15 @@ In some circumstances, you might want to get a list of `Patient` ids instead of 
 
 ## How to get and modify your information as a patient
 
-If you are building a "patient application", where patients can join by invitation from an HCP you may incur in a 
+If you are building a "patient application", where patients can join by invitation from an {{Hcp}} you may incur in a 
 problem with the decryption of the data of the `Patient` entity for the user of the application. 
 
-This is because when the HCP invites the patient to the application he can't share any existing data with him until the
+This is because when the {{Hcp}} invites the patient to the application he can't share any existing data with him until the
 patient logs in for the first time and creates a public key. Therefore, the patient will not be able to decrypt any 
 data, including his administrative information stored on the patient entity, and for this reason methods like 
 `getPatient` will fail.
 
-However, you can still access and modify any unencrypted data using the methods `getPatientAndTryDecrypt` and 
+However, you can still access and modify any unencrypted data using the methods `getAndTryDecrypt` and 
 `modifyPotentiallyEncryptedPatient` of the `PatientApi`. The method `getPatientAndTryDecrypt` returns a 
 `PotentiallyEncryptedPatient`, which is either a normal `Patient` if the encrypted data could be decrypted, or an 
 `EncryptedPatient` if only the unencrypted data is available. The method `modifyEncryptedPatient` instead takes in 

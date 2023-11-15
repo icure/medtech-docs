@@ -21,10 +21,10 @@ const api = await initMedTechApi(true)
 const user = await api.userApi.getLoggedUser()
 
 const patientApi = await initPatientMedTechApi(true)
-const tmpPatient = await patientApi.patientApi.getPatient(patientId)
+const tmpPatient = await patientApi.patientApi.get(patientId)
 await patientApi.patientApi.giveAccessTo(tmpPatient, user.healthcarePartyId)
 
-const patient = await api.patientApi.getPatient(patientId)
+const patient = await api.patientApi.get(patientId)
 
 //tech-doc: create a HE as data owner
 const newHealthcareElement = new HealthcareElement({
@@ -40,7 +40,7 @@ const newHealthcareElement = new HealthcareElement({
   openingDate: new Date('2019-10-12').getTime(),
 })
 
-const healthcareElement = await api.healthcareElementApi.createOrModifyHealthcareElement(
+const healthcareElement = await api.healthcareElementApi.createOrModify(
   newHealthcareElement,
   patient.id,
 )
@@ -50,7 +50,7 @@ output({ newHealthcareElement, healthcareElement })
 expect(!!healthcareElement).to.eq(true)
 expect(healthcareElement.description).to.eq('The patient has been diagnosed Pararibulitis')
 try {
-  await patientApi.healthcareElementApi.getHealthcareElement(healthcareElement.id)
+  await patientApi.healthcareElementApi.get(healthcareElement.id)
   expect(true, 'promise should fail').eq(false)
 } catch (e) {
   expect(!!e)
@@ -75,7 +75,7 @@ const healthcareElement2 = new HealthcareElement({
   openingDate: new Date('2020-11-08').getTime(),
 })
 
-const newElements = await api.healthcareElementApi.createOrModifyHealthcareElements(
+const newElements = await api.healthcareElementApi.createOrModifyMany(
   [healthcareElement1, healthcareElement2],
   patient.id,
 )
@@ -86,7 +86,7 @@ expect(!!newElements).to.eq(true)
 expect(newElements.length).to.eq(2)
 
 //tech-doc: create multiple related HEs as data owner
-const startHealthcareElement = await api.healthcareElementApi.createOrModifyHealthcareElement(
+const startHealthcareElement = await api.healthcareElementApi.createOrModify(
   new HealthcareElement({
     description: 'The patient has been diagnosed Pararibulitis',
     codes: new Set([
@@ -102,7 +102,7 @@ const startHealthcareElement = await api.healthcareElementApi.createOrModifyHeal
   patient.id,
 )
 
-const followUpHealthcareElement = await api.healthcareElementApi.createOrModifyHealthcareElement(
+const followUpHealthcareElement = await api.healthcareElementApi.createOrModify(
   new HealthcareElement({
     description: 'The patient recovered',
     openingDate: new Date('2020-11-08').getTime(),
@@ -129,20 +129,18 @@ output({ sharedHealthcareElement })
 expect(!!sharedHealthcareElement).to.eq(true)
 expect(sharedHealthcareElement.id).to.eq(healthcareElement.id)
 await patientApi.cryptoApi.forceReload()
-const retrievedHE = await patientApi.healthcareElementApi.getHealthcareElement(healthcareElement.id)
+const retrievedHE = await patientApi.healthcareElementApi.get(healthcareElement.id)
 expect(retrievedHE.id).to.eq(healthcareElement.id)
 
 //tech-doc: retrieve a HE as data owner
-const retrievedHealthcareElement = await api.healthcareElementApi.getHealthcareElement(
-  healthcareElement.id,
-)
+const retrievedHealthcareElement = await api.healthcareElementApi.get(healthcareElement.id)
 //tech-doc: STOP HERE
 output({ retrievedHealthcareElement })
 
 expect(retrievedHealthcareElement.id).to.eq(healthcareElement.id)
 
 //tech-doc: modify a HE as data owner
-const yetAnotherHealthcareElement = await api.healthcareElementApi.createOrModifyHealthcareElement(
+const yetAnotherHealthcareElement = await api.healthcareElementApi.createOrModify(
   new HealthcareElement({
     description: 'To modify, I must create',
   }),
@@ -155,7 +153,7 @@ const modifiedHealthcareElement = new HealthcareElement({
   openingDate: new Date('2019-10-12').getTime(),
 })
 
-const modificationResult = await api.healthcareElementApi.createOrModifyHealthcareElement(
+const modificationResult = await api.healthcareElementApi.createOrModify(
   modifiedHealthcareElement,
   patient.id,
 )
@@ -165,7 +163,7 @@ expect(modificationResult.id).to.eq(yetAnotherHealthcareElement.id)
 expect(modificationResult.description).to.eq('I can change and I can add')
 expect(modificationResult.openingDate).to.eq(new Date('2019-10-12').getTime())
 
-const existingPatient = await api.patientApi.createOrModifyPatient(
+const existingPatient = await api.patientApi.createOrModify(
   new Patient({
     firstName: 'John',
     lastName: 'Snow',
@@ -173,7 +171,7 @@ const existingPatient = await api.patientApi.createOrModifyPatient(
   }),
 )
 
-await api.healthcareElementApi.createOrModifyHealthcareElement(
+await api.healthcareElementApi.createOrModify(
   new HealthcareElement({
     description: 'To modify, I must create',
   }),
@@ -181,7 +179,7 @@ await api.healthcareElementApi.createOrModifyHealthcareElement(
 )
 
 for (let i = 0; i < 10; i++) {
-  await api.healthcareElementApi.createOrModifyHealthcareElement(
+  await api.healthcareElementApi.createOrModify(
     new HealthcareElement({
       description: `Healthcare Element ${i}`,
       openingDate: new Date('2019-10-12').getTime(),
@@ -199,7 +197,7 @@ const healthcareElementFilter = await new HealthcareElementFilter(api)
 output({ healthcareElementFilter })
 
 //tech-doc: use HE filter method
-const healthcareElementsFirstPage = await api.healthcareElementApi.filterHealthcareElement(
+const healthcareElementsFirstPage = await api.healthcareElementApi.filterBy(
   healthcareElementFilter,
   undefined,
   10,
@@ -208,7 +206,7 @@ const healthcareElementsFirstPage = await api.healthcareElementApi.filterHealthc
 output({ healthcareElementsFirstPage })
 
 //tech-doc: use HE filter method second page
-const healthcareElementsSecondPage = await api.healthcareElementApi.filterHealthcareElement(
+const healthcareElementsSecondPage = await api.healthcareElementApi.filterBy(
   healthcareElementFilter,
   healthcareElementsFirstPage.nextKeyPair.startKeyDocId,
   10,
@@ -219,16 +217,14 @@ output({ healthcareElementsSecondPage })
 expect(healthcareElementsSecondPage).not.to.be.undefined
 
 //tech-doc: use HE match method
-const healthcareElementsIdList = await api.healthcareElementApi.matchHealthcareElement(
-  healthcareElementFilter,
-)
+const healthcareElementsIdList = await api.healthcareElementApi.matchBy(healthcareElementFilter)
 //tech-doc: STOP HERE
 output({ healthcareElementsIdList })
 
 expect(healthcareElementsIdList).not.to.be.undefined
 
 //tech-doc: use by patient method
-const healthcareElementsForPatient = await api.healthcareElementApi.getHealthcareElementsForPatient(
+const healthcareElementsForPatient = await api.healthcareElementApi.getAllForPatient(
   existingPatient,
 )
 //tech-doc: STOP HERE
@@ -237,16 +233,14 @@ output({ healthcareElementsForPatient })
 expect(healthcareElementsForPatient).not.to.be.undefined
 
 //tech-doc: delete a HE as data owner
-const healthcareElementToDelete = await api.healthcareElementApi.createOrModifyHealthcareElement(
+const healthcareElementToDelete = await api.healthcareElementApi.createOrModify(
   new HealthcareElement({
     description: 'I am doomed',
   }),
   patient.id,
 )
 
-const deletedHealthcareElement = await api.healthcareElementApi.deleteHealthcareElement(
-  healthcareElementToDelete.id,
-)
+const deletedHealthcareElement = await api.healthcareElementApi.delete(healthcareElementToDelete.id)
 //tech-doc: STOP HERE
 output({ healthcareElementToDelete, deletedHealthcareElement })
 

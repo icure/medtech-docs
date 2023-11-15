@@ -1,21 +1,21 @@
 {
-  "id": "2a3e0927-5416-4d60-b2da-0980ac829e78",
+  "id": "25df9fc6-5e8f-4f91-a849-31e558c23486",
   "identifiers": [],
-  "rev": "1-194dabf66b98aafa4197299fc3f29bf1",
-  "created": 1698415813563,
-  "modified": 1698415813563,
-  "author": "5f7d11da-ff86-4f57-b4f3-65c489c01501",
-  "responsible": "54b9f244-ce89-4860-b242-028654575a74",
+  "rev": "1-23f3257f3985959563eb023e28d66a7e",
+  "created": 1700058641293,
+  "modified": 1700058641293,
+  "author": "17e392da-8e36-4e4e-abd7-7eef3e434395",
+  "responsible": "3ed06450-17e5-47b6-ba4f-7a0a084df56b",
   "labels": {},
   "codes": {},
-  "healthcareElementId": "2a3e0927-5416-4d60-b2da-0980ac829e78",
-  "valueDate": 20231027141013,
-  "openingDate": 1698415813552,
+  "healthcareElementId": "25df9fc6-5e8f-4f91-a849-31e558c23486",
+  "valueDate": 20231115143041,
+  "openingDate": 1700058641283,
   "description": "The patient is pregnant",
   "notes": [],
   "systemMetaData": {
     "secretForeignKeys": [
-      "5719c3b2-466c-4d6e-89b3-6125ec2311ef"
+      "b6540caa-1eb3-42ce-bf4a-f02c42bd9fd7"
     ],
     "cryptedForeignKeys": {},
     "delegations": {},
@@ -24,7 +24,7 @@
       "secureDelegations": {},
       "keysEquivalences": {}
     },
-    "encryptedSelf": "K0dVOOyg9hNt92nzyWcVsuENZqhQG7La23XUc4Dspgle6vXlEaD+M3s5wNFvGV/F4rcQ5kRce//hiBYuvJ7vbQ==",
+    "encryptedSelf": "rEJWzINpkh7qdpGEtu8o/OQ29ZhVLIdHKnQp4ABMZSYFHw/vfQpQ01fZW2g1PrrtlJkF6Sa+yGy1uWdJAVG/Yw==",
     "tags": {}
   }
 }

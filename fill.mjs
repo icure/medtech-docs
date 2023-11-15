@@ -148,7 +148,6 @@ await (docDirectories.reduce(async (p, dir) => {
         await registerReceiver(path);
     }, Promise.resolve());
 }, Promise.resolve()));
-console.log(receivers)
 await (sampleDirectories.reduce(async (p, dir) => {
     await (await traverseFileSystem(`code-samples/${dir}`)).reduce(async (p, path) => {
         await p;

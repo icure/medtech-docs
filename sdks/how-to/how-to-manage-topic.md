@@ -1,3 +1,4 @@
+!!ehrlite
 ---
 slug: how-to-manage-topics
 description: Learn how to manage Topics
@@ -7,7 +8,6 @@ tags:
   - Messaging
   - Channel
 ---
-{{#ehrlite}}
 # Handling topics
 
 In this section, we will learn how to manage Topics. A `Topic` is similar to a chat channel and establishes the link between the `activeParticipants` involved in the text exchange. A `Topic` can reference a `Patient`, one or more `Observation`(s) (optional), and/or one or more `Condition`(s) (optional).
@@ -251,4 +251,3 @@ You can also just get the IDs by applying the same filter using a call to `match
 <details>
 <summary>topicIds</summary>
 </details>
-{{/ehrlite}}

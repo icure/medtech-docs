@@ -1,10 +1,10 @@
 {
-  "id": "628a85e0-1970-468a-bf94-c39c7f047692",
+  "id": "a61bfa61-db94-41f1-8042-485c7b658d43",
   "identifiers": [],
   "component": {
     "compoundValue": [
       {
-        "id": "60290148-a4d7-414c-8c81-709e0819fc31",
+        "id": "0eb8018e-9d5f-423d-9e3f-d9d681e2bdd6",
         "identifiers": [],
         "component": {
           "measureValue": {
@@ -27,7 +27,7 @@
         "notes": []
       },
       {
-        "id": "bd586958-2fee-4880-9110-923baf1f92ac",
+        "id": "5b19fc09-efa0-4f9a-a76d-b26cbad5dbda",
         "identifiers": [],
         "component": {
           "measureValue": {
@@ -50,7 +50,7 @@
         "notes": []
       },
       {
-        "id": "f7b614e9-d8cc-47fb-b3fe-6d1664fda0a4",
+        "id": "80572f6a-3be7-4571-baf4-b6e43bb67693",
         "identifiers": [],
         "component": {
           "timeSeries": {
