@@ -30,7 +30,7 @@
     ]
   },
   "dependencies": {
-    "@icure/api": "7.1.13",
+    "@icure/api": "8.0.0-RC.5",
     "@icure/medical-device-sdk": "^3.0.3",
     "@icure/ehr-lite-sdk": "1.0.2",
     "@icure/test-setup": "^0.0.61",

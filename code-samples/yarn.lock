@@ -116,6 +116,20 @@
     uuid-encoder "^1.1.0"
     ws "^8.13.0"
 
+"@icure/api@8.0.0-RC.5":
+  version "8.0.0-RC.5"
+  resolved "https://registry.yarnpkg.com/@icure/api/-/api-8.0.0-RC.5.tgz#b18dd0814dd89e6ef6d2346570c8805990043961"
+  integrity sha512-4dV/snz/54zAoGhbP6VjePXOBAP5Lvm/yldyDqLmwK5Uz0DAN2scD4GDWaEkw+8sGx8TyiRLJvIy0nm8clbs9g==
+  dependencies:
+    browser-or-node "^2.1.1"
+    date-fns "^2.23.0"
+    libphonenumber-js "^1.7.18"
+    lodash "^4.17.21"
+    moment "^2.22.1"
+    text-encoding "^0.7.0"
+    uuid "^8.3.2"
+    uuid-encoder "^1.1.0"
+
 "@icure/ehr-lite-sdk@1.0.2":
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/@icure/ehr-lite-sdk/-/ehr-lite-sdk-1.0.2.tgz#12beb484772538a575444d0f7d0e8de93d1c108b"

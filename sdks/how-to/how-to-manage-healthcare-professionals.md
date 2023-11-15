@@ -34,7 +34,6 @@ The getHealthcareProfessional method of the healthcareProfessionalApi allows you
 
 <!-- file://code-samples/{{sdk}}/how-to/manage-healthcare-professionals/index.mts snippet:Load a {{hcp}} by id-->
 ```typescript
-const loadedHcp = await api.healthcareProfessionalApi.getHealthcareProfessional(createdHcp.id)
 ```
 
 <!-- output://code-samples/{{sdk}}/how-to/manage-healthcare-professionals/loadedHcp.txt -->

@@ -1,14 +1,14 @@
 {
-  "id": "5f7d11da-ff86-4f57-b4f3-65c489c01501",
-  "rev": "2-36bfc8c433903e8be00bdc706d48da17",
-  "created": 1698415754732,
+  "id": "30176a81-0312-4b88-9c36-d4e7de79cc0d",
+  "rev": "2-71650957d19c64f704ef186c685999e3",
+  "created": 1700044747142,
   "name": "Master HCP",
   "properties": {},
   "roles": {},
-  "login": "master@54b9f2.icure",
+  "login": "master@b5ae5e.icure",
   "groupId": "test-group",
-  "healthcarePartyId": "54b9f244-ce89-4860-b242-028654575a74",
+  "healthcarePartyId": "b5ae5e50-4c49-42e2-8977-f8cfc8c12a80",
   "sharingDataWith": {},
-  "email": "master@54b9f2.icure",
+  "email": "master@b5ae5e.icure",
   "authenticationTokens": {}
 }
