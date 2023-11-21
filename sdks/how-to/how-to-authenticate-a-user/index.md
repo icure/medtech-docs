@@ -47,7 +47,7 @@ You will have to create an `AnonymousMedTechApi` instead.
 ```
 
 The [Anonymous{{CodeSdkName}}Builder](/{{sdk}}/references/entrypoints/AnonymousMedTechApi) asks you to provide multiple information. You will learn more about them in
-the Here are some details [Instantiation How-To](/{{sdk}}/how-to/how-to-instantiate-the-medtech-sdk), but for now, here is a quick summary:
+the Here are some details [Instantiation How-To](/{{sdk}}/how-to/how-to-instantiate-the-sdk), but for now, here is a quick summary:
 
 | Argument             | Description                                                                                      |
 |----------------------|--------------------------------------------------------------------------------------------------|
