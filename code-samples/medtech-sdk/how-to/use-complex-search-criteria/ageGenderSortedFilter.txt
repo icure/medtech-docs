@@ -1,0 +1,16 @@
+{
+  "filters": [
+    {
+      "healthcarePartyId": "993cd716-f4a9-4c26-b3bf-bda23aada8bb",
+      "minDateOfBirth": 19391211,
+      "maxDateOfBirth": 19520203,
+      "$type": "PatientByHealthcarePartyDateOfBirthBetweenFilter"
+    },
+    {
+      "healthcarePartyId": "993cd716-f4a9-4c26-b3bf-bda23aada8bb",
+      "gender": "female",
+      "$type": "PatientByHealthcarePartyGenderEducationProfessionFilter"
+    }
+  ],
+  "$type": "IntersectionFilter"
+}

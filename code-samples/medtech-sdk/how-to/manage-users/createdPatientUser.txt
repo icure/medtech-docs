@@ -1,0 +1,14 @@
+{
+  "id": "1eedf5c2-204e-4faf-997b-89c924905d4d",
+  "rev": "1-c05ee0b8566cba8be910aa28fb18badc",
+  "created": 1700058668117,
+  "name": "arganzzclh707t@moliere.fr",
+  "properties": {},
+  "roles": {},
+  "login": "arganzzclh707t@moliere.fr",
+  "groupId": "test-group",
+  "patientId": "c4b9a1d8-22ed-4377-adb5-ab733490dcaa",
+  "sharingDataWith": {},
+  "email": "arganzzclh707t@moliere.fr",
+  "authenticationTokens": {}
+}

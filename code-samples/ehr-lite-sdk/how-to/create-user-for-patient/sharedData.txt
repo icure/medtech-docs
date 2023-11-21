@@ -1,0 +1,88 @@
+{
+  "patient": {
+    "id": "97011d2d-4e31-4b0c-b659-179354669f7e",
+    "rev": "6-3b03ba9906d8d29e02231f8f8b7e6b8b",
+    "identifiers": [],
+    "created": 1700058617470,
+    "modified": 1700058617470,
+    "author": "17e392da-8e36-4e4e-abd7-7eef3e434395",
+    "responsible": "3ed06450-17e5-47b6-ba4f-7a0a084df56b",
+    "tags": {},
+    "codes": {},
+    "names": [
+      {
+        "family": "Specter",
+        "given": [
+          "Marc"
+        ],
+        "prefix": [],
+        "suffix": [],
+        "text": "Specter Marc",
+        "use": "official"
+      }
+    ],
+    "languages": [],
+    "addresses": [
+      {
+        "addressType": "home",
+        "description": "London",
+        "notes": [],
+        "telecoms": [
+          {
+            "system": "email",
+            "value": "1c87da27@icure.com"
+          }
+        ]
+      }
+    ],
+    "gender": "unknown",
+    "birthSex": "unknown",
+    "mergedIds": [],
+    "active": true,
+    "deactivationReason": "none",
+    "personalStatus": "complicated",
+    "notes": [],
+    "relatives": [],
+    "patientPractitioners": [],
+    "patientProfessions": [],
+    "properties": {},
+    "systemMetaData": {
+      "hcPartyKeys": {},
+      "privateKeyShamirPartitions": {},
+      "secretForeignKeys": [],
+      "cryptedForeignKeys": {},
+      "delegations": {},
+      "encryptionKeys": {},
+      "aesExchangeKeys": {},
+      "transferKeys": {},
+      "securityMetadata": {
+        "secureDelegations": {},
+        "keysEquivalences": {}
+      },
+      "encryptedSelf": "KvoUihjaV3va4gg8L/yAqj+4aQbiSUjhoiDDpF8LdDM=",
+      "publicKeysForOaepWithSha256": [
+        "30820122300d06092a864886f70d01010105000382010f003082010a0282010100bf758af3ae5a5a7e5a1fbe91154efaf0f97fab7b898cc5b38f5671b5bde8c29226e9bb7e4a5b40ef6c4a84f3fd422173518f39e8c4632af4dead70eb47a696b98566e09328926d2c31437ce0a0ac6e6d46190bc3018cb9d645c0ce099d56fc361960735dc50859a0b68259af92607384708c64291bcf8ea1f44ab4d0e3d8b9ca1eaa6e64b96b0a3e2c83801b11cfd2f36cd6b23c97b75a82761a2d632769b4f60515d60951f251e2e19ee49006aaf7d76b0d43e6c28e58bcae8f0bb48f3656a66b571340d384f9fb3c19b860ccca88f99087f306204fdf73d5d43c975b5d588730d2a7d6a5cc0376e9d1da27ef08e820e67fb3ecef716b1abd79a8040e4826230203010001"
+      ],
+      "tags": {}
+    },
+    "firstName": "Marc",
+    "lastName": "Specter"
+  },
+  "statuses": {
+    "dataSamples": {
+      "success": true,
+      "error": null,
+      "modified": 1
+    },
+    "healthcareElements": {
+      "success": true,
+      "error": null,
+      "modified": 1
+    },
+    "patient": {
+      "success": true,
+      "error": null,
+      "modified": 0
+    }
+  }
+}

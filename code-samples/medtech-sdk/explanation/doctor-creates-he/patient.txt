@@ -1,0 +1,57 @@
+{
+  "id": "a7cdd592-022d-496a-b2cf-3b8544aa899f",
+  "rev": "7-6150e5b949ce1010bc55570b4e2e42e4",
+  "created": 1700058591109,
+  "modified": 1700058591109,
+  "author": "17e392da-8e36-4e4e-abd7-7eef3e434395",
+  "responsible": "3ed06450-17e5-47b6-ba4f-7a0a084df56b",
+  "firstName": "072af5",
+  "lastName": "3ae20a",
+  "languages": [],
+  "active": true,
+  "parameters": {},
+  "identifiers": [],
+  "labels": {},
+  "codes": {},
+  "notes": [],
+  "names": [
+    {
+      "lastName": "3ae20a",
+      "firstNames": [
+        "072af5"
+      ],
+      "prefix": [],
+      "suffix": [],
+      "text": "3ae20a 072af5",
+      "use": "official"
+    }
+  ],
+  "addresses": [],
+  "gender": "unknown",
+  "birthSex": "unknown",
+  "mergedIds": {},
+  "deactivationReason": "none",
+  "personalStatus": "unknown",
+  "partnerships": [],
+  "patientHealthCareParties": [],
+  "patientProfessions": [],
+  "properties": {},
+  "systemMetaData": {
+    "publicKey": "30820122300d06092a864886f70d01010105000382010f003082010a0282010100e9789a06cef4b58e14ae2b48e0b480a718fc5eb6db00f823308df85ed36317fcf72de62f19c51b5c6150cd2daac1034ed83e338ea7667c43de89dc5db98b8e1a8d81f5ef876af7ebdbec49e7b2a035253e2cce497f7b4b83ad4c1206d0d2bb47efe56dbbb37f1b05a0e87dfcf05e969b697e9a790e2c475238260b0a42794e34bc394f7ea8f6bbcf68a66ec88785c878e29d0f4d5d0dca666df2812ad1619ffad9a222038fadb3b8a3584e126a27581d7622e934675ad79bd577477a3a2cd8b1b683e8ac460b0b2de3ec80a138a081077ebb73b768a88608b01d405e0f29a7824be73a76f6a06644a568fa2e4442a6b68c822f11a5511844dc8acf3769a514bf0203010001",
+    "hcPartyKeys": {},
+    "privateKeyShamirPartitions": {},
+    "secretForeignKeys": [],
+    "cryptedForeignKeys": {},
+    "delegations": {},
+    "encryptionKeys": {},
+    "aesExchangeKeys": {},
+    "transferKeys": {},
+    "securityMetadata": {
+      "secureDelegations": {},
+      "keysEquivalences": {}
+    },
+    "encryptedSelf": "eflX35Z6QqntCLJ4gm6ORNLfGDQHE81me0AB13XWDP4=",
+    "publicKeysForOaepWithSha256": [],
+    "tags": {}
+  }
+}

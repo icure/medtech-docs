@@ -1,0 +1,57 @@
+{
+  "id": "1128fc00-21a6-4159-94cf-8018e533a378",
+  "rev": "1-140f5a2409e6672e16c0502e9ec9e070",
+  "created": 1700058643665,
+  "modified": 1700058643665,
+  "author": "bdb9c89b-ecd0-4a7f-9bd9-e8f1b1333c36",
+  "responsible": "f075dd66-2ca2-420b-bf71-182cd725ac87",
+  "firstName": "Robb",
+  "lastName": "Stark",
+  "languages": [],
+  "active": true,
+  "note": "You must keep one's head",
+  "parameters": {},
+  "identifiers": [],
+  "labels": {},
+  "codes": {},
+  "notes": [],
+  "names": [
+    {
+      "lastName": "Stark",
+      "firstNames": [
+        "Robb"
+      ],
+      "prefix": [],
+      "suffix": [],
+      "text": "Stark Robb",
+      "use": "official"
+    }
+  ],
+  "addresses": [],
+  "gender": "male",
+  "birthSex": "unknown",
+  "mergedIds": {},
+  "deactivationReason": "none",
+  "personalStatus": "unknown",
+  "partnerships": [],
+  "patientHealthCareParties": [],
+  "patientProfessions": [],
+  "properties": {},
+  "systemMetaData": {
+    "hcPartyKeys": {},
+    "privateKeyShamirPartitions": {},
+    "secretForeignKeys": [],
+    "cryptedForeignKeys": {},
+    "delegations": {},
+    "encryptionKeys": {},
+    "aesExchangeKeys": {},
+    "transferKeys": {},
+    "securityMetadata": {
+      "secureDelegations": {},
+      "keysEquivalences": {}
+    },
+    "encryptedSelf": "aTil7RuAx5JSf6ip4bCgmQW0iZVT0v94Ce+gcInKbfHYcfaLiBSKZJ8eu5Yt3V30kvDXRvTorchdUQKJgzl5xQ==",
+    "publicKeysForOaepWithSha256": [],
+    "tags": {}
+  }
+}

@@ -1,0 +1,5 @@
+{
+  "healthcarePartyId": "3ed06450-17e5-47b6-ba4f-7a0a084df56b",
+  "date": 1664229600000,
+  "$type": "MaintenanceTasksAfterDateFilter"
+}

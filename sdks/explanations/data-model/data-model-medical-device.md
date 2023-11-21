@@ -14,7 +14,7 @@ As a [Data Owner](/{{sdk}}/glossary#data-owner) they can create medical informat
 
 You should use a Medical Device when you need to represent a hardware device, both medical (pulse oximeter, glucometer...) 
 and non-medical (smartwatch, tablet...), which acquires medical data.  
-A Medical Device could be used both by a Patient and by a Healthcare Professional.
+A Medical Device could be used both by a Patient and by a {[Hcp}}.
 
 ## How a Medical Device is Related to Other Entities?
 

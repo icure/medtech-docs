@@ -30,14 +30,18 @@
     ]
   },
   "dependencies": {
-    "@icure/api": "7.1.9",
+    "@icure/api": "8.0.0-RC.5",
     "@icure/medical-device-sdk": "^3.0.3",
+    "@icure/ehr-lite-sdk": "1.0.2",
+    "@icure/test-setup": "^0.0.61",
     "isomorphic-fetch": "^3.0.0",
     "node-fetch": "^2.6.1",
     "node-localstorage": "^2.2.1",
-    "uuid": "^8.3.2"
+    "uuid": "^8.3.2",
+    "axios": "^0.26.1"
   },
   "devDependencies": {
+    "@icure/test-setup": "^0.0.61",
     "@types/chai": "^4.3.3",
     "@types/chai-as-promised": "^7.1.1",
     "@typescript-eslint/eslint-plugin": "^5.38.1",
@@ -48,7 +52,7 @@
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-flowtype": "^3.13.0",
     "eslint-plugin-import": "^2.25.4",
-    "eslint-plugin-jsdoc": "^38.1.4",
+    "eslint-plugin-jsdoc": "^46.8.2",
     "eslint-plugin-prettier": "^4.0.0",
     "lint-staged": "^12.3.7",
     "prettier": "^2.6.1",

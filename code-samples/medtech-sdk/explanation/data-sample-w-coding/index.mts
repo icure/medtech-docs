@@ -1,7 +1,8 @@
 import 'isomorphic-fetch'
 import { CodingReference, Content, DataSample, HealthcareElement } from '@icure/medical-device-sdk'
-import { initLocalStorage, initMedTechApi, output, patientId } from '../../utils/index.mjs'
+import { initLocalStorage, initMedTechApi, output, patientId } from '../../../utils/index.mjs'
 import { expect } from 'chai'
+import { mapOf } from '@icure/typescript-common'
 
 initLocalStorage()
 
@@ -9,7 +10,7 @@ const api = await initMedTechApi(true)
 const patient = await api.patientApi.getPatient(patientId)
 
 //tech-doc: doctor can create DS and HE
-const healthcareElement = await api.healthcareElementApi.createOrModifyHealthcareElement(
+const healthcareElement = await api.healthcareElementApi.createOrModify(
   new HealthcareElement({
     description: 'My diagnosis is that the patient has Hay Fever',
     codes: new Set([
@@ -25,14 +26,14 @@ const healthcareElement = await api.healthcareElementApi.createOrModifyHealthcar
 )
 expect(!!healthcareElement).to.eq(true) //skip
 expect(healthcareElement.description).to.eq('My diagnosis is that the patient has Hay Fever') //skip
-const dataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
+const dataSample = await api.dataSampleApi.createOrModifyFor(
   patient.id,
   new DataSample({
-    content: {
+    content: mapOf({
       en: new Content({
         stringValue: 'The patient has fatigue',
       }),
-    },
+    }),
     codes: new Set([
       new CodingReference({
         id: 'SNOMEDCT|84229001|20020131',

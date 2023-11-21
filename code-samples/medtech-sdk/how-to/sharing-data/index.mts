@@ -7,7 +7,7 @@ import {
   initMedTechApi,
   initMedTechApi2,
   initPatientMedTechApi,
-} from '../../utils/index.mjs'
+} from '../../../utils/index.mjs'
 import { expect, use as chaiUse } from 'chai'
 import {
   CodingReference,
@@ -17,6 +17,7 @@ import {
   Patient,
 } from '@icure/medical-device-sdk'
 import chaiAsPromised from 'chai-as-promised'
+import { mapOf } from '@icure/typescript-common'
 chaiUse(chaiAsPromised)
 
 console.log('Initialising')
@@ -24,9 +25,9 @@ initLocalStorage()
 const hcp1Api = await initMedTechApi(true)
 const hcp2Api = await initMedTechApi2(true)
 const pApi = await initPatientMedTechApi(true)
-const hcp1User = await hcp1Api.userApi.getLoggedUser()
-const hcp2User = await hcp2Api.userApi.getLoggedUser()
-const pUser = await pApi.userApi.getLoggedUser()
+const hcp1User = await hcp1Api.userApi.getLogged()
+const hcp2User = await hcp2Api.userApi.getLogged()
+const pUser = await pApi.userApi.getLogged()
 expect(hcp1User.email).to.equal(userName)
 expect(hcp2User.email).to.equal(userName2)
 expect(pUser.email).to.equal(patientUserName)
@@ -35,7 +36,7 @@ console.log('Testing patient')
 //tech-doc: create a patient
 // hcp1 creates a new patient
 const note = 'Winter is coming'
-const patient = await hcp1Api.patientApi.createOrModifyPatient(
+const patient = await hcp1Api.patientApi.createOrModify(
   new Patient({ firstName: 'John', lastName: 'Snow', note }),
 )
 //tech-doc: end
@@ -58,7 +59,7 @@ console.log('Testing healthcare element')
 //tech-doc: create a healthcare element
 // hcp1 creates a new healthcare element
 const description = 'The patient has been diagnosed Pararibulitis'
-const healthcareElement = await hcp1Api.healthcareElementApi.createOrModifyHealthcareElement(
+const healthcareElement = await hcp1Api.healthcareElementApi.createOrModify(
   new HealthcareElement({
     description: description,
     codes: new Set([
@@ -75,10 +76,10 @@ const healthcareElement = await hcp1Api.healthcareElementApi.createOrModifyHealt
 )
 expect(
   //skip
-  (await hcp1Api.healthcareElementApi.getHealthcareElement(healthcareElement.id)).description, //skip
+  (await hcp1Api.healthcareElementApi.get(healthcareElement.id)).description, //skip
 ).to.equal(description) //skip
-await expect(hcp2Api.healthcareElementApi.getHealthcareElement(healthcareElement.id)).to.be.rejected //skip //skip
-await expect(pApi.healthcareElementApi.getHealthcareElement(healthcareElement.id)).to.be.rejected //skip
+await expect(hcp2Api.healthcareElementApi.get(healthcareElement.id)).to.be.rejected //skip //skip
+await expect(pApi.healthcareElementApi.get(healthcareElement.id)).to.be.rejected //skip
 // hcp1 shares `healthcareElement` with p
 await hcp1Api.healthcareElementApi.giveAccessTo(
   healthcareElement,
@@ -90,53 +91,51 @@ console.log('Share HE with another HCP')
 //tech-doc: share a healthcare element
 // p retrieves `healthcareElement` and shares it with hcp2
 await pApi.healthcareElementApi.giveAccessTo(
-  await pApi.healthcareElementApi.getHealthcareElement(healthcareElement.id),
+  await pApi.healthcareElementApi.get(healthcareElement.id),
   pApi.dataOwnerApi.getDataOwnerIdOf(hcp2User),
 )
 //tech-doc: end
-expect(
-  (await hcp1Api.healthcareElementApi.getHealthcareElement(healthcareElement.id)).description,
-).to.equal(description)
-expect(
-  (await hcp2Api.healthcareElementApi.getHealthcareElement(healthcareElement.id)).description,
-).to.equal(description)
-expect(
-  (await pApi.healthcareElementApi.getHealthcareElement(healthcareElement.id)).description,
-).to.equal(description)
+expect((await hcp1Api.healthcareElementApi.get(healthcareElement.id)).description).to.equal(
+  description,
+)
+expect((await hcp2Api.healthcareElementApi.get(healthcareElement.id)).description).to.equal(
+  description,
+)
+expect((await pApi.healthcareElementApi.get(healthcareElement.id)).description).to.equal(
+  description,
+)
 
 console.log('Testing data sample')
 //tech-doc: create and share a data sample
 // p creates a data sample
 const contentString = 'Hello world'
-const dataSample = await pApi.dataSampleApi.createOrModifyDataSampleFor(
+const dataSample = await pApi.dataSampleApi.createOrModifyFor(
   patient.id,
   new DataSample({
     labels: new Set([new CodingReference({ type: 'IC-TEST', code: 'TEST' })]),
-    content: { en: new Content({ stringValue: contentString }) },
+    content: mapOf({ en: new Content({ stringValue: contentString }) }),
     openingDate: 20220929083400,
     comment: 'This is a comment',
   }),
 )
-expect((await pApi.dataSampleApi.getDataSample(dataSample.id)).content['en'].stringValue).to.equal(
-  //skip
-  contentString, //skip
-) //skip
-expect(hcp1Api.dataSampleApi.getDataSample(dataSample.id)).to.be.rejected //skip
-expect(hcp1Api.dataSampleApi.getDataSample(dataSample.id)).to.be.rejected //skip
+expect((await pApi.dataSampleApi.get(dataSample.id)).content.get('en').stringValue).to.equal(
+  contentString,
+)
+expect(hcp2Api.dataSampleApi.get(dataSample.id)).to.be.rejected //skip
 // p shares the data sample with hcp1
 await pApi.dataSampleApi.giveAccessTo(dataSample, pApi.dataOwnerApi.getDataOwnerIdOf(hcp1User))
 // hcp1 shares the data sample with hcp2
 await hcp1Api.dataSampleApi.giveAccessTo(
-  await hcp1Api.dataSampleApi.getDataSample(dataSample.id),
+  await hcp1Api.dataSampleApi.get(dataSample.id),
   hcp1Api.dataOwnerApi.getDataOwnerIdOf(hcp2User),
 )
 //tech-doc: end
-expect(
-  (await hcp1Api.dataSampleApi.getDataSample(dataSample.id)).content['en'].stringValue,
-).to.equal(contentString)
-expect(
-  (await hcp2Api.dataSampleApi.getDataSample(dataSample.id)).content['en'].stringValue,
-).to.equal(contentString)
-expect((await pApi.dataSampleApi.getDataSample(dataSample.id)).content['en'].stringValue).to.equal(
+expect((await hcp1Api.dataSampleApi.get(dataSample.id)).content.get('en').stringValue).to.equal(
+  contentString,
+)
+expect((await hcp2Api.dataSampleApi.get(dataSample.id)).content.get('en').stringValue).to.equal(
+  contentString,
+)
+expect((await pApi.dataSampleApi.get(dataSample.id)).content.get('en').stringValue).to.equal(
   contentString,
 )

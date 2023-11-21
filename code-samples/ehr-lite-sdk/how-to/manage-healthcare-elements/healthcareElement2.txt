@@ -1,0 +1,9 @@
+{
+  "id": "66d9b1d5-16e5-4303-bdf3-c9122da6828d",
+  "identifiers": [],
+  "tags": {},
+  "codes": {},
+  "openingDate": 1604793600000,
+  "description": "The patient has also the flu",
+  "notes": []
+}

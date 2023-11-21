@@ -1,0 +1,15 @@
+{
+  "filters": [
+    {
+      "healthcarePartyId": "6b25372b-f1ac-4278-957a-cf3c19a210cc",
+      "gender": "female",
+      "$type": "PatientByHealthcarePartyGenderEducationProfessionFilter"
+    },
+    {
+      "healthcarePartyId": "6b25372b-f1ac-4278-957a-cf3c19a210cc",
+      "gender": "indeterminate",
+      "$type": "PatientByHealthcarePartyGenderEducationProfessionFilter"
+    }
+  ],
+  "$type": "UnionFilter"
+}

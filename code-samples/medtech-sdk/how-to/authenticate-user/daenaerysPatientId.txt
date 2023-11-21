@@ -1,0 +1,10 @@
+{
+  "id": "dataOwnerConcernedId",
+  "type": {
+    "type": "STRING"
+  },
+  "typedValue": {
+    "type": "STRING",
+    "stringValue": "b1836b97-39dd-47e2-9750-498e51f23449"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "id": "e8e42e31-8be9-44a6-a38e-ac8b64e06eb8",
+  "identifiers": [],
+  "labels": {},
+  "codes": {},
+  "openingDate": 1570838400000,
+  "description": "The patient has been diagnosed Pararibulitis",
+  "notes": []
+}

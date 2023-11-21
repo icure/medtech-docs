@@ -1,18 +1,23 @@
 import 'isomorphic-fetch'
-import { CodingReference, Content, DataSample, HealthcareElement } from '@icure/medical-device-sdk'
+import {
+  CodingReference,
+  Content,
+  DataSample,
+  HealthcareElement,
+  Notification,
+} from '@icure/medical-device-sdk'
 import {
   initLocalStorage,
   initMedTechApi,
   initPatientMedTechApi,
   output,
   patientId,
-} from '../../utils/index.mjs'
+} from '../../../utils/index.mjs'
 import { expect } from 'chai'
-import {
-  Notification,
-  NotificationTypeEnum,
-} from '@icure/medical-device-sdk/src/models/Notification.js'
 import { v4 as uuid } from 'uuid'
+import { mapOf, NotificationTypeEnum } from '@icure/typescript-common'
+import { MaintenanceTask } from '@icure/api'
+import StatusEnum = MaintenanceTask.StatusEnum
 
 initLocalStorage()
 
@@ -24,7 +29,7 @@ const patient = await patientApi.patientApi.getPatient(patientId)
 const patientUser = await patientApi.userApi.getLoggedUser()
 
 //tech-doc: doctor shares medical data
-const healthcareElement = await api.healthcareElementApi.createOrModifyHealthcareElement(
+const healthcareElement = await api.healthcareElementApi.createOrModify(
   new HealthcareElement({
     description: 'My diagnosis is that the patient has Hay Fever',
     codes: new Set([
@@ -40,14 +45,14 @@ const healthcareElement = await api.healthcareElementApi.createOrModifyHealthcar
 )
 expect(!!healthcareElement).to.eq(true) //skip
 expect(healthcareElement.description).to.eq('My diagnosis is that the patient has Hay Fever') //skip
-const dataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
+const dataSample = await api.dataSampleApi.createOrModifyFor(
   patient.id,
   new DataSample({
-    content: {
+    content: mapOf({
       en: new Content({
         stringValue: 'The patient has fatigue',
       }),
-    },
+    }),
     codes: new Set([
       new CodingReference({
         id: 'SNOMEDCT|84229001|20020131',
@@ -64,13 +69,13 @@ expect(!!dataSample).to.eq(true)
 output({ healthcareElement, dataSample })
 
 //tech-doc: patient sends notification
-const notification = await patientApi.notificationApi.createOrModifyNotification(
+const notification = await patientApi.notificationApi.createOrModify(
   new Notification({
     id: uuid(),
-    status: 'pending',
+    status: StatusEnum.Pending,
     author: patientUser.id,
     responsible: patientUser.patientId,
-    type: NotificationTypeEnum.OTHER,
+    type: NotificationTypeEnum.Other,
   }),
   user.healthcarePartyId,
 )
@@ -78,21 +83,23 @@ const notification = await patientApi.notificationApi.createOrModifyNotification
 output({ notification })
 
 //tech-doc: doctor receives notification
-const newNotifications = await api.notificationApi.getPendingNotificationsAfter()
+const newNotifications = await api.notificationApi.getPendingAfter()
 const newPatientNotifications = newNotifications.filter(
   (notification) =>
-    notification.type === NotificationTypeEnum.OTHER &&
+    notification.type === NotificationTypeEnum.Other &&
     notification.responsible === patientUser.patientId,
 )
 
 if (!!newPatientNotifications && newPatientNotifications.length > 0) {
   await api.healthcareElementApi.giveAccessTo(healthcareElement, patient.id)
   await api.dataSampleApi.giveAccessTo(dataSample, patient.id)
-  await api.notificationApi.updateNotificationStatus(newPatientNotifications[0], 'completed')
+  await api.notificationApi.updateStatus(newPatientNotifications[0], StatusEnum.Completed)
 }
+
+await patientApi.cryptoApi.forceReload()
+const fetchedHE = await patientApi.healthcareElementApi.get(healthcareElement.id)
+const fetchedDS = await patientApi.dataSampleApi.get(dataSample.id)
 //tech-doc: STOP HERE
 output({ newPatientNotifications })
-const fetchedHE = await patientApi.healthcareElementApi.getHealthcareElement(healthcareElement.id)
 expect(fetchedHE.id).to.eq(healthcareElement.id)
-const fetchedDS = await patientApi.dataSampleApi.getDataSample(dataSample.id)
 expect(fetchedDS.id).to.eq(dataSample.id)

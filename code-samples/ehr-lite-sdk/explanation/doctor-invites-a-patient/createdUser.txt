@@ -1,0 +1,14 @@
+{
+  "id": "2a1cf033-80c4-4d2e-b0ca-7fe1bebc2721",
+  "rev": "1-144d9182b23a812582fbfd3c95b9b51e",
+  "created": 1700058594739,
+  "name": "c1ffa50a@icure.com",
+  "properties": {},
+  "roles": {},
+  "login": "c1ffa50a@icure.com",
+  "groupId": "test-group",
+  "patientId": "5e98283a-2a9d-40a9-8cd0-b3914325237e",
+  "sharingDataWith": {},
+  "email": "c1ffa50a@icure.com",
+  "authenticationTokens": {}
+}

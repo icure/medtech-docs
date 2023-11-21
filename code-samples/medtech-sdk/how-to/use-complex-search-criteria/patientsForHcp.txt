@@ -1,0 +1,175 @@
+{
+  "rows": [
+    {
+      "id": "59623531-3d9e-4f88-94a1-852fd36e4af2",
+      "rev": "1-0aef4f523d72f7ecc56c383783658c60",
+      "created": 1700058682292,
+      "modified": 1700058682293,
+      "author": "67199bc5-c9d5-4420-a5b8-d5bf4d645004",
+      "responsible": "993cd716-f4a9-4c26-b3bf-bda23aada8bb",
+      "firstName": "Arthur",
+      "lastName": "Dent",
+      "languages": [],
+      "active": true,
+      "dateOfBirth": 19520101,
+      "parameters": {},
+      "identifiers": [],
+      "labels": {},
+      "codes": {},
+      "notes": [],
+      "names": [
+        {
+          "lastName": "Dent",
+          "firstNames": [
+            "Arthur"
+          ],
+          "prefix": [],
+          "suffix": [],
+          "text": "Dent Arthur",
+          "use": "official"
+        }
+      ],
+      "addresses": [],
+      "gender": "male",
+      "birthSex": "unknown",
+      "mergedIds": {},
+      "deactivationReason": "none",
+      "personalStatus": "unknown",
+      "partnerships": [],
+      "patientHealthCareParties": [],
+      "patientProfessions": [],
+      "properties": {},
+      "systemMetaData": {
+        "hcPartyKeys": {},
+        "privateKeyShamirPartitions": {},
+        "secretForeignKeys": [],
+        "cryptedForeignKeys": {},
+        "delegations": {},
+        "encryptionKeys": {},
+        "aesExchangeKeys": {},
+        "transferKeys": {},
+        "securityMetadata": {
+          "secureDelegations": {},
+          "keysEquivalences": {}
+        },
+        "encryptedSelf": "35i6cWloYCkI7wz4dAB2HADT3XEYLOTPPqVXRG2znMQ=",
+        "publicKeysForOaepWithSha256": [],
+        "tags": {}
+      }
+    },
+    {
+      "id": "be2acc31-4995-43c6-993b-ca41c43a4cb4",
+      "rev": "1-511816fb1cd48c20bd13d81277108823",
+      "created": 1700058682391,
+      "modified": 1700058682391,
+      "author": "67199bc5-c9d5-4420-a5b8-d5bf4d645004",
+      "responsible": "993cd716-f4a9-4c26-b3bf-bda23aada8bb",
+      "firstName": "Zaphod",
+      "lastName": "Beeblebrox",
+      "languages": [],
+      "active": true,
+      "dateOfBirth": 19420101,
+      "parameters": {},
+      "identifiers": [],
+      "labels": {},
+      "codes": {},
+      "notes": [],
+      "names": [
+        {
+          "lastName": "Beeblebrox",
+          "firstNames": [
+            "Zaphod"
+          ],
+          "prefix": [],
+          "suffix": [],
+          "text": "Beeblebrox Zaphod",
+          "use": "official"
+        }
+      ],
+      "addresses": [],
+      "gender": "indeterminate",
+      "birthSex": "unknown",
+      "mergedIds": {},
+      "deactivationReason": "none",
+      "personalStatus": "unknown",
+      "partnerships": [],
+      "patientHealthCareParties": [],
+      "patientProfessions": [],
+      "properties": {},
+      "systemMetaData": {
+        "hcPartyKeys": {},
+        "privateKeyShamirPartitions": {},
+        "secretForeignKeys": [],
+        "cryptedForeignKeys": {},
+        "delegations": {},
+        "encryptionKeys": {},
+        "aesExchangeKeys": {},
+        "transferKeys": {},
+        "securityMetadata": {
+          "secureDelegations": {},
+          "keysEquivalences": {}
+        },
+        "encryptedSelf": "Lb3id9x+BWHIHvXRcumpMFnsWzoohRaLHiT3TTnsY/w=",
+        "publicKeysForOaepWithSha256": [],
+        "tags": {}
+      }
+    },
+    {
+      "id": "e6c83d47-9ff9-478d-9519-9e11e55e9d2d",
+      "rev": "1-c00d9b49c5b09860374cc59567513546",
+      "created": 1700058682374,
+      "modified": 1700058682374,
+      "author": "67199bc5-c9d5-4420-a5b8-d5bf4d645004",
+      "responsible": "993cd716-f4a9-4c26-b3bf-bda23aada8bb",
+      "firstName": "Trillian",
+      "lastName": "Astra",
+      "languages": [],
+      "active": true,
+      "dateOfBirth": 19520101,
+      "parameters": {},
+      "identifiers": [],
+      "labels": {},
+      "codes": {},
+      "notes": [],
+      "names": [
+        {
+          "lastName": "Astra",
+          "firstNames": [
+            "Trillian"
+          ],
+          "prefix": [],
+          "suffix": [],
+          "text": "Astra Trillian",
+          "use": "official"
+        }
+      ],
+      "addresses": [],
+      "gender": "female",
+      "birthSex": "unknown",
+      "mergedIds": {},
+      "deactivationReason": "none",
+      "personalStatus": "unknown",
+      "partnerships": [],
+      "patientHealthCareParties": [],
+      "patientProfessions": [],
+      "properties": {},
+      "systemMetaData": {
+        "hcPartyKeys": {},
+        "privateKeyShamirPartitions": {},
+        "secretForeignKeys": [],
+        "cryptedForeignKeys": {},
+        "delegations": {},
+        "encryptionKeys": {},
+        "aesExchangeKeys": {},
+        "transferKeys": {},
+        "securityMetadata": {
+          "secureDelegations": {},
+          "keysEquivalences": {}
+        },
+        "encryptedSelf": "DuBzqq0sVtFezHJMpNlyecNIeZBQqLpjFjOkSjS2/CI=",
+        "publicKeysForOaepWithSha256": [],
+        "tags": {}
+      }
+    }
+  ]
+}

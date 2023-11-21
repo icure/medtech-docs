@@ -1,0 +1,34 @@
+{
+  "id": "45d3ba95-f428-44ed-a6e8-0b762c3ee0dd",
+  "identifiers": [],
+  "batchId": "3fac3055-a9f2-48eb-9e42-432fc5ce7ee3",
+  "healthcareElementIds": [
+    "28014a62-66f2-445c-8bc0-bf192f5f5801"
+  ],
+  "index": 0,
+  "valueDate": 20231115142956,
+  "openingDate": 20231115142956,
+  "created": 1700058596327,
+  "modified": 1700058596327,
+  "author": "17e392da-8e36-4e4e-abd7-7eef3e434395",
+  "performer": "3ed06450-17e5-47b6-ba4f-7a0a084df56b",
+  "localContent": {},
+  "qualifiedLinks": {},
+  "codes": {},
+  "tags": {},
+  "systemMetaData": {
+    "secretForeignKeys": [
+      "b6540caa-1eb3-42ce-bf4a-f02c42bd9fd7"
+    ],
+    "cryptedForeignKeys": {},
+    "delegations": {},
+    "encryptionKeys": {},
+    "securityMetadata": {
+      "secureDelegations": {},
+      "keysEquivalences": {}
+    },
+    "encryptedSelf": "ovFlGFVbuV7TunN4GEHf+mO6P6PEkQM1QwNaeYSiaJ/KMfKRbG5e01W3jMfVKUNVv/Fu6FsiJLNvrN8/i0nBxj+cfi+tq8QXVw8+zdYVLDA=",
+    "tags": {}
+  },
+  "notes": []
+}

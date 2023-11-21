@@ -9,14 +9,12 @@
       "es2017",
       "dom"
     ],
-    "baseUrl": "./quick-start",
+    "baseUrl": "./",
     "skipLibCheck": true
   },
   "include": [
-	  "runall.mts",
-	  "quick-start/",
-	  "how-to/",
-	  "explanation/",
-	  "tutorial/"
+    "ehr-lite-sdk/**/*.mts",
+    "medtech-sdk/**/*.mts",
+    "runall.mts"
   ]
 }

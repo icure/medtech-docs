@@ -1,0 +1,192 @@
+{
+  "id": "a61bfa61-db94-41f1-8042-485c7b658d43",
+  "identifiers": [],
+  "batchId": "c930282c-ab2c-4754-8810-0a3dec9d7df1",
+  "healthcareElementIds": [],
+  "index": 0,
+  "component": {
+    "compoundValue": [
+      {
+        "id": "0eb8018e-9d5f-423d-9e3f-d9d681e2bdd6",
+        "identifiers": [],
+        "component": {
+          "measureValue": {
+            "value": 72,
+            "unit": "{beats}/min",
+            "unitCodes": [
+              {
+                "id": "UCUM|{beats}/min|1.2",
+                "type": "UCUM",
+                "code": "{beats}/min",
+                "version": "1.2"
+              }
+            ]
+          }
+        },
+        "openingDate": 20220929083400,
+        "localContent": {},
+        "qualifiedLinks": {},
+        "codes": {},
+        "tags": {},
+        "systemMetaData": {
+          "secretForeignKeys": [],
+          "cryptedForeignKeys": {},
+          "delegations": {},
+          "encryptionKeys": {},
+          "encryptedSelf": "kXb/JHpUiFrauUrSglEwqY8jSkjGrmJ1VXVMkXDESLstXfIqrNLZitR/+1hQlVGwXMZ9a0y9oiIq1sxBV74g8vE9FcqLegu5l/8a+jsSjqb6gkfEPdXGGGUEePQaxA0l2SZWVp13DNeoMitWESSTH7Lwj2e89XHznGOWBEllf4dduFtSF9vS2gmHEZsoKlRnbCevITkQJWwog3im7E6q9ouZtQ5xicZ/eJd/yYLaWWa1aAyWkPUCVXyTj1ypvs/3BU8iLuubTfRwmgjuRN93uLtSzHtTY7YwY2Ps9b8EjWMo4DTE0FtwKEfIqI0EiECF",
+          "tags": {}
+        },
+        "notes": []
+      },
+      {
+        "id": "5b19fc09-efa0-4f9a-a76d-b26cbad5dbda",
+        "identifiers": [],
+        "component": {
+          "measureValue": {
+            "value": 63,
+            "unit": "{beats}/min",
+            "unitCodes": [
+              {
+                "id": "UCUM|{beats}/min|1.2",
+                "type": "UCUM",
+                "code": "{beats}/min",
+                "version": "1.2"
+              }
+            ]
+          }
+        },
+        "openingDate": 20220929083400,
+        "localContent": {},
+        "qualifiedLinks": {},
+        "codes": {},
+        "tags": {},
+        "systemMetaData": {
+          "secretForeignKeys": [],
+          "cryptedForeignKeys": {},
+          "delegations": {},
+          "encryptionKeys": {},
+          "encryptedSelf": "eIwqgpRxLfcT/eIRjU6mIVzT2M/NFdgBG/BlwQK7iUnTq46ZrVyx/7bHUgMPuWCRRpfitYoKgWEkFo0INrkdAQ9QWYq30/u9X+BjHbgM7RwvL74p3NfPxXJ7eTkC/medasNBYu2LQCz+CT0OtimWZ4ZL3AM+cvvzb4TU5Gu/nF01po3yh6UcWjpa32UWYLj9gOhMSu71CDHsZjCtje1sevP7hO3J0mKpJd6aocrg+IOBtyjBZHqmVESQA7GTLiHfyJvD9KJiRsNeZ5wgGpp2anAbk4QelR6jOJ/cfcbhNiXdp+ujDBZSLnP2SaXLcOXF",
+          "tags": {}
+        },
+        "notes": []
+      },
+      {
+        "id": "80572f6a-3be7-4571-baf4-b6e43bb67693",
+        "identifiers": [],
+        "component": {
+          "timeSeries": {
+            "fields": [
+              "C°"
+            ],
+            "samples": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "min": [],
+            "max": [],
+            "mean": [],
+            "median": [],
+            "variance": []
+          }
+        },
+        "openingDate": 20220929083400,
+        "localContent": {},
+        "qualifiedLinks": {},
+        "codes": {},
+        "tags": {},
+        "systemMetaData": {
+          "secretForeignKeys": [],
+          "cryptedForeignKeys": {},
+          "delegations": {},
+          "encryptionKeys": {},
+          "encryptedSelf": "y1tm/yX1Ac+XEGnWehkJ+S8I8F3Mp39ThNzkOXyl/FFYv1vuTsz3mAXFp5PuuqneR80MssquZUKsAGqOGzDtbDFO/F4K8lssRSH3qeTdEaJ8+LUWL4Vnyp6BrTwA3lhfHdPz9Ymebo47kzMgLUZWbnQtXR6sFNsp0cj0UuFgV4hvv5WHnLTpMU/iJjRy7SeVvfiscn8Yt1jm4gDRe2EctBjv37COzF2zwppSpEdnFJ/79XR85UeakStvW+myR4FqFgW7duJTS1g29h03uPPkueNLv49VwGs8+VGr13rsya0WB44tF+6n6Xyao75m8f7o7QrYOpiyldV0XWHnCUBoIR23NkpAoiVFOEPiavF+mmURO+nvzkMzgoi1oEgN9nHQqMO7yQbJ5QVKlHMhbsCp0Z5zXXgepzUZbXJSU9L3GUUMlLrHpumgqT/THuH+Ki8IpRZ6cVweJEahe+jcIz/BgRyn64KsHJ6UeDnN66kYZmJw85nSrMS8ZWszvTMBGMombFint1G/eyOucdcvEnBJMtIQe9ROEcMllhFn9281TNdT3wnk/1W+YIeo4RqgBJjj",
+          "tags": {}
+        },
+        "notes": []
+      }
+    ]
+  },
+  "valueDate": 20231115143010,
+  "openingDate": 20220929083400,
+  "created": 1700058610494,
+  "modified": 1700058610494,
+  "author": "17e392da-8e36-4e4e-abd7-7eef3e434395",
+  "performer": "3ed06450-17e5-47b6-ba4f-7a0a084df56b",
+  "localContent": {},
+  "qualifiedLinks": {},
+  "codes": {},
+  "tags": {},
+  "systemMetaData": {
+    "secretForeignKeys": [
+      "d96b288c-bb38-4e5b-85f6-6cda69a15907"
+    ],
+    "cryptedForeignKeys": {},
+    "delegations": {},
+    "encryptionKeys": {},
+    "securityMetadata": {
+      "secureDelegations": {},
+      "keysEquivalences": {}
+    },
+    "encryptedSelf": "GN4FY9HtJN70AL66+UesbCudehKsPQCai/djh1l7Yh0=",
+    "tags": {}
+  },
+  "notes": []
+}

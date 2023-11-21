@@ -1,0 +1,308 @@
+{
+  "rows": [
+    {
+      "id": "02ac45db-5be0-4e9a-84ce-f45d8a90d934",
+      "identifiers": [],
+      "rev": "1-4b03f1f668de5055c1e206ebf0965cd5",
+      "created": 1700058615120,
+      "modified": 1700058615120,
+      "author": "17e392da-8e36-4e4e-abd7-7eef3e434395",
+      "responsible": "3ed06450-17e5-47b6-ba4f-7a0a084df56b",
+      "labels": {},
+      "codes": {},
+      "healthcareElementId": "02ac45db-5be0-4e9a-84ce-f45d8a90d934",
+      "valueDate": 20231115143015,
+      "openingDate": 1570838400000,
+      "description": "Condition 6",
+      "notes": [],
+      "systemMetaData": {
+        "secretForeignKeys": [
+          "b6540caa-1eb3-42ce-bf4a-f02c42bd9fd7"
+        ],
+        "cryptedForeignKeys": {},
+        "delegations": {},
+        "encryptionKeys": {},
+        "securityMetadata": {
+          "secureDelegations": {},
+          "keysEquivalences": {}
+        },
+        "encryptedSelf": "ajci7osPePJMLMvwSpF0FGDnVvVreuU/f8HsoE33x5MilBcbSwisHPVZhL15PuYJ",
+        "tags": {}
+      }
+    },
+    {
+      "id": "0738d47c-b9fa-4924-9116-20495fe3ef30",
+      "identifiers": [],
+      "rev": "1-bda863f9c627f2fc9725300d5cae9498",
+      "created": 1700058615155,
+      "modified": 1700058615155,
+      "author": "17e392da-8e36-4e4e-abd7-7eef3e434395",
+      "responsible": "3ed06450-17e5-47b6-ba4f-7a0a084df56b",
+      "labels": {},
+      "codes": {},
+      "healthcareElementId": "0738d47c-b9fa-4924-9116-20495fe3ef30",
+      "valueDate": 20231115143015,
+      "openingDate": 1570838400000,
+      "description": "Condition 7",
+      "notes": [],
+      "systemMetaData": {
+        "secretForeignKeys": [
+          "b6540caa-1eb3-42ce-bf4a-f02c42bd9fd7"
+        ],
+        "cryptedForeignKeys": {},
+        "delegations": {},
+        "encryptionKeys": {},
+        "securityMetadata": {
+          "secureDelegations": {},
+          "keysEquivalences": {}
+        },
+        "encryptedSelf": "0tnleU72GYh9S6yExpKlxDQGuiJ+iWQ8SvtM0G56qgoyOK4qWcfgUg/bdQK4ZwLA",
+        "tags": {}
+      }
+    },
+    {
+      "id": "0ec5906e-82fc-40a0-a986-86c9fcec8044",
+      "identifiers": [],
+      "rev": "1-a52c7f834ee781f30a27d535f40f3978",
+      "created": 1700058614662,
+      "modified": 1700058614662,
+      "author": "17e392da-8e36-4e4e-abd7-7eef3e434395",
+      "responsible": "3ed06450-17e5-47b6-ba4f-7a0a084df56b",
+      "labels": {},
+      "codes": {},
+      "healthcareElementId": "0ec5906e-82fc-40a0-a986-86c9fcec8044",
+      "valueDate": 20231115143014,
+      "openingDate": 1570838400000,
+      "description": "The patient has been diagnosed Pararibulitis",
+      "notes": [],
+      "systemMetaData": {
+        "secretForeignKeys": [
+          "b6540caa-1eb3-42ce-bf4a-f02c42bd9fd7"
+        ],
+        "cryptedForeignKeys": {},
+        "delegations": {},
+        "encryptionKeys": {},
+        "securityMetadata": {
+          "secureDelegations": {},
+          "keysEquivalences": {}
+        },
+        "encryptedSelf": "KsVESEoeThQoielZ74jKHGZ+fb/0KGDXCIaN4REMcyq+8CKQCg80pgElD6wo5JMLmGMxRN4qT37lSdM0lR84SgqA5xu9eqjmn+qk1aJofRQ=",
+        "tags": {}
+      }
+    },
+    {
+      "id": "0f7b840e-c65d-48dd-a81b-47a968fae1e2",
+      "identifiers": [],
+      "rev": "1-8abced7b97dc77b405a3eee33f412ee3",
+      "created": 1700058615221,
+      "modified": 1700058615221,
+      "author": "17e392da-8e36-4e4e-abd7-7eef3e434395",
+      "responsible": "3ed06450-17e5-47b6-ba4f-7a0a084df56b",
+      "labels": {},
+      "codes": {},
+      "healthcareElementId": "0f7b840e-c65d-48dd-a81b-47a968fae1e2",
+      "valueDate": 20231115143015,
+      "openingDate": 1570838400000,
+      "description": "Condition 9",
+      "notes": [],
+      "systemMetaData": {
+        "secretForeignKeys": [
+          "b6540caa-1eb3-42ce-bf4a-f02c42bd9fd7"
+        ],
+        "cryptedForeignKeys": {},
+        "delegations": {},
+        "encryptionKeys": {},
+        "securityMetadata": {
+          "secureDelegations": {},
+          "keysEquivalences": {}
+        },
+        "encryptedSelf": "jbpgPBtKYHV4u/0B+1KZYGHcpkAbQCiA3Gh4k+CkB4Ml0zVyepujiQDfX+erLJxT",
+        "tags": {}
+      }
+    },
+    {
+      "id": "11a0a289-dca5-4b0f-9e48-b6f3f38c9472",
+      "identifiers": [],
+      "rev": "1-3b78c197db04fecde42734b0ed284df9",
+      "created": 1700058666483,
+      "modified": 1700058666483,
+      "author": "17e392da-8e36-4e4e-abd7-7eef3e434395",
+      "responsible": "3ed06450-17e5-47b6-ba4f-7a0a084df56b",
+      "labels": {},
+      "codes": {},
+      "healthcareElementId": "11a0a289-dca5-4b0f-9e48-b6f3f38c9472",
+      "valueDate": 20231115143106,
+      "openingDate": 1570838400000,
+      "description": "The patient has been diagnosed Pararibulitis",
+      "notes": [],
+      "systemMetaData": {
+        "secretForeignKeys": [
+          "b6540caa-1eb3-42ce-bf4a-f02c42bd9fd7"
+        ],
+        "cryptedForeignKeys": {},
+        "delegations": {},
+        "encryptionKeys": {},
+        "securityMetadata": {
+          "secureDelegations": {},
+          "keysEquivalences": {}
+        },
+        "encryptedSelf": "LoAcr0ws00NLgTSKttD+V8mnw8T0Sl36grkhhB+JLJbhaVI7C1noieyidBq9PdipEv9+YgXhBzK6IukXhL2iiQtOYZT+8y7wb079lhSbK/o=",
+        "tags": {}
+      }
+    },
+    {
+      "id": "11e5eaa1-5cde-4942-a281-49e734ad2184",
+      "identifiers": [],
+      "rev": "1-1f751eac2f5f11efcfb859a8b03a73e9",
+      "created": 1700058666830,
+      "modified": 1700058666830,
+      "author": "17e392da-8e36-4e4e-abd7-7eef3e434395",
+      "responsible": "3ed06450-17e5-47b6-ba4f-7a0a084df56b",
+      "labels": {},
+      "codes": {},
+      "healthcareElementId": "11e5eaa1-5cde-4942-a281-49e734ad2184",
+      "valueDate": 20231115143106,
+      "openingDate": 1570838400000,
+      "description": "Healthcare Element 1",
+      "notes": [],
+      "systemMetaData": {
+        "secretForeignKeys": [
+          "b6540caa-1eb3-42ce-bf4a-f02c42bd9fd7"
+        ],
+        "cryptedForeignKeys": {},
+        "delegations": {},
+        "encryptionKeys": {},
+        "securityMetadata": {
+          "secureDelegations": {},
+          "keysEquivalences": {}
+        },
+        "encryptedSelf": "TPsPtjxXc2cPVSZ79yl8mYO67dn/fZiXY+AfU0afyEYO3dskLDC2pvP7e9/LGiEnooOZwvWZbVBuH/hmyluiqA==",
+        "tags": {}
+      }
+    },
+    {
+      "id": "12f2780a-5719-46e3-bb0e-0c735e1975af",
+      "identifiers": [],
+      "rev": "1-6a3d2e8be9fda36b7fa66a962b611279",
+      "created": 1700058666959,
+      "modified": 1700058666959,
+      "author": "17e392da-8e36-4e4e-abd7-7eef3e434395",
+      "responsible": "3ed06450-17e5-47b6-ba4f-7a0a084df56b",
+      "labels": {},
+      "codes": {},
+      "healthcareElementId": "12f2780a-5719-46e3-bb0e-0c735e1975af",
+      "valueDate": 20231115143106,
+      "openingDate": 1570838400000,
+      "description": "Healthcare Element 5",
+      "notes": [],
+      "systemMetaData": {
+        "secretForeignKeys": [
+          "b6540caa-1eb3-42ce-bf4a-f02c42bd9fd7"
+        ],
+        "cryptedForeignKeys": {},
+        "delegations": {},
+        "encryptionKeys": {},
+        "securityMetadata": {
+          "secureDelegations": {},
+          "keysEquivalences": {}
+        },
+        "encryptedSelf": "Vh7kkGwCcSmEnUcHmleMlQqVOR1AetfqYVMyZhEM4CHbwaZrkvrbRInv4btLMw+pklR7I8oWwODlJcAHZsjLaQ==",
+        "tags": {}
+      }
+    },
+    {
+      "id": "1b0803ed-213a-40a3-ba53-629926e56aef",
+      "identifiers": [],
+      "rev": "1-6fde1ba32e4d7735a5aac07cb1b534a9",
+      "created": 1700058614632,
+      "modified": 1700058614632,
+      "author": "17e392da-8e36-4e4e-abd7-7eef3e434395",
+      "responsible": "3ed06450-17e5-47b6-ba4f-7a0a084df56b",
+      "labels": {},
+      "codes": {},
+      "healthcareElementId": "1b0803ed-213a-40a3-ba53-629926e56aef",
+      "valueDate": 20231115143014,
+      "openingDate": 1570838400000,
+      "description": "The patient has been diagnosed Pararibulitis",
+      "notes": [],
+      "systemMetaData": {
+        "secretForeignKeys": [
+          "b6540caa-1eb3-42ce-bf4a-f02c42bd9fd7"
+        ],
+        "cryptedForeignKeys": {},
+        "delegations": {},
+        "encryptionKeys": {},
+        "securityMetadata": {
+          "secureDelegations": {},
+          "keysEquivalences": {}
+        },
+        "encryptedSelf": "f5QpwmjIYhF95c2Lh6vGmwHmu/sP0op2GjHwoYE92PPbEuMQ+L+bkOGRnJR8OAzOjNTrJVcQLrkZKcqGX88dFT82JGs7MAckB6w3ZRYStBI=",
+        "tags": {}
+      }
+    },
+    {
+      "id": "1d12b3f7-c788-4877-ae38-51ae3f7f493c",
+      "identifiers": [],
+      "rev": "2-01a59611aeb122fd5243dd9090e70d1a",
+      "created": 1700058614809,
+      "modified": 1700058614809,
+      "author": "17e392da-8e36-4e4e-abd7-7eef3e434395",
+      "responsible": "3ed06450-17e5-47b6-ba4f-7a0a084df56b",
+      "labels": {},
+      "codes": {},
+      "healthcareElementId": "1d12b3f7-c788-4877-ae38-51ae3f7f493c",
+      "valueDate": 20231115143014,
+      "openingDate": 1570838400000,
+      "description": "I can change and I can add",
+      "notes": [],
+      "systemMetaData": {
+        "secretForeignKeys": [
+          "b6540caa-1eb3-42ce-bf4a-f02c42bd9fd7"
+        ],
+        "cryptedForeignKeys": {},
+        "delegations": {},
+        "encryptionKeys": {},
+        "securityMetadata": {
+          "secureDelegations": {},
+          "keysEquivalences": {}
+        },
+        "encryptedSelf": "l2RtiWapV2z0m1H2KxtnvDyYX7PZftMfYyQ73touP9BOWIrhLzI+EFLRjJy1OsX5fL5D3aynahlAdE4seJonbw==",
+        "tags": {}
+      }
+    },
+    {
+      "id": "1e97fb4c-cf8c-4997-83c8-730f38b74299",
+      "identifiers": [],
+      "rev": "1-2de4cb34312ffbfbe97a2b2b151b5782",
+      "created": 1700058615087,
+      "modified": 1700058615087,
+      "author": "17e392da-8e36-4e4e-abd7-7eef3e434395",
+      "responsible": "3ed06450-17e5-47b6-ba4f-7a0a084df56b",
+      "labels": {},
+      "codes": {},
+      "healthcareElementId": "1e97fb4c-cf8c-4997-83c8-730f38b74299",
+      "valueDate": 20231115143015,
+      "openingDate": 1570838400000,
+      "description": "Condition 5",
+      "notes": [],
+      "systemMetaData": {
+        "secretForeignKeys": [
+          "b6540caa-1eb3-42ce-bf4a-f02c42bd9fd7"
+        ],
+        "cryptedForeignKeys": {},
+        "delegations": {},
+        "encryptionKeys": {},
+        "securityMetadata": {
+          "secureDelegations": {},
+          "keysEquivalences": {}
+        },
+        "encryptedSelf": "BHi0GmYXMiLGR1TV42CJkm3+GD3g8nwynBp4Lna2zT5xx4jrS7EST8dS5uwHkVCp",
+        "tags": {}
+      }
+    }
+  ],
+  "nextKeyPair": {
+    "startKey": "25df9fc6-5e8f-4f91-a849-31e558c23486",
+    "startKeyDocId": "25df9fc6-5e8f-4f91-a849-31e558c23486"
+  }
+}

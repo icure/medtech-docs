@@ -1,0 +1,28 @@
+{
+  "id": "b56ff426-bae6-4f3b-9499-9aecdf6ac547",
+  "rev": "3-2e9ff11298b13d8e41da99fdb6fea80f",
+  "created": 1700058626748,
+  "modified": 1700058626748,
+  "author": "17e392da-8e36-4e4e-abd7-7eef3e434395",
+  "responsible": "3ed06450-17e5-47b6-ba4f-7a0a084df56b",
+  "tags": {},
+  "codes": {},
+  "descr": "Topic to share health elements",
+  "linkedHealthElements": {},
+  "linkedServices": {},
+  "activeParticipants": {},
+  "systemMetadata": {
+    "secretForeignKeys": [
+      "43d5599e-7f59-4411-b21a-8d814f0986dd"
+    ],
+    "cryptedForeignKeys": {},
+    "delegations": {},
+    "encryptionKeys": {},
+    "securityMetadata": {
+      "secureDelegations": {},
+      "keysEquivalences": {}
+    },
+    "encryptedSelf": "/9h1c0aXM1yf8ZmPVI7fQxU+KSEvF7+9uee8c2cEYmm/t07t6NnxKG/rHf7+Ur0NDwWpwC3ywNWIld5O/RFaQb2zYDSnoLBIYVangISTZx5C9gz9TZl5V4L+HFDz2tK4cxtxBoPj9igkKFouEUwYeA==",
+    "tags": {}
+  }
+}

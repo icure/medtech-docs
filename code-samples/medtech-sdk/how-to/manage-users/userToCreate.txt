@@ -1,0 +1,10 @@
+{
+  "id": "afc39a28-f925-450c-8962-8850bf570811",
+  "properties": {},
+  "roles": {},
+  "login": "johnzzclh707t",
+  "passwordHash": "correct horse battery staple",
+  "sharingDataWith": {},
+  "email": "johnzzclh707t@hospital.care",
+  "authenticationTokens": {}
+}

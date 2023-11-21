@@ -11,7 +11,7 @@ tags:
 
 :::note
 
-This how-to assumes that until now, you have been using the iCure Medical Device SDK in your application with the open-source
+This how-to assumes that until now, you have been using the {{SdkName}} in your application with the open-source
  version of iCure. You now want to start using the iCure Cloud version, including all premium features.
 
 :::
@@ -36,13 +36,6 @@ First, you will have to change the URL used to instantiate the MedTech API to al
 
 <!-- file://code-samples/{{sdk}}/how-to/migrate-to-premium/index.mts snippet:instantiate the api-->
 ```typescript
-const medtechApi = await medTechApi()
-  .withICureBaseUrl(host)
-  .withUserName(userName)
-  .withPassword(password)
-  .withCrypto(webcrypto as any)
-  .withCryptoStrategies(new SimpleMedTechCryptoStrategies([]))
-  .build()
 ```
 
 ### Access Control

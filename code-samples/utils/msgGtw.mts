@@ -1,5 +1,5 @@
 import process from 'process'
-import axios, { Method } from 'axios'
+import axios, { Axios, Method } from 'axios'
 
 export async function getLastEmail(email: string): Promise<any> {
   const msgGtwUrl = process.env.ICURE_MSG_GTW_URL
@@ -9,7 +9,7 @@ export async function getLastEmail(email: string): Promise<any> {
     method: 'GET' as Method,
     url: `${msgGtwUrl}/${specId}/lastEmail/${email}`,
   }
-  const { data: response } = await axios.request(emailOptions)
+  const { data: response } = await (axios as unknown as Axios).request(emailOptions)
   return response
 }
 
@@ -21,6 +21,7 @@ export async function getLastSMS(phoneNumber: string): Promise<any> {
     method: 'GET' as Method,
     url: `${msgGtwUrl}/${specId}/lastSMS/${phoneNumber}`,
   }
-  const { data: response } = await axios.request(smsOptions)
+
+  const { data: response } = await (axios as unknown as Axios).request(smsOptions)
   return response
 }

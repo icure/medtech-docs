@@ -1,0 +1,10 @@
+{
+  "id": "b0bc6005-0dfc-4b37-ad62-fe387b172d81",
+  "identifiers": [],
+  "content": {},
+  "openingDate": 20220929083400,
+  "comment": "Body temperature",
+  "qualifiedLinks": {},
+  "labels": {},
+  "codes": {}
+}
