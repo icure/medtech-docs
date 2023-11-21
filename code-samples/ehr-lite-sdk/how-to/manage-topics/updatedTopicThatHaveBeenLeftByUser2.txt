@@ -1,0 +1,26 @@
+{
+  "id": "8910dfb8-8ed1-45a3-9985-c40940ecac18",
+  "rev": "2-634ee720a4ae421a49fa549be04c204f",
+  "created": 1700058626540,
+  "modified": 1700058626540,
+  "author": "17e392da-8e36-4e4e-abd7-7eef3e434395",
+  "responsible": "3ed06450-17e5-47b6-ba4f-7a0a084df56b",
+  "tags": {},
+  "codes": {},
+  "descr": "Topic that will be left",
+  "linkedHealthElements": {},
+  "linkedServices": {},
+  "activeParticipants": {},
+  "systemMetadata": {
+    "secretForeignKeys": [],
+    "cryptedForeignKeys": {},
+    "delegations": {},
+    "encryptionKeys": {},
+    "securityMetadata": {
+      "secureDelegations": {},
+      "keysEquivalences": {}
+    },
+    "encryptedSelf": "uAZ3w98ffJP89VtMgx6pQs8vmxxYOHxRX9zFRaw7lQVoPVbKZyZOgkc/mJd1RjMMRJxbDh0dUPNttI6AyhrRHQ==",
+    "tags": {}
+  }
+}

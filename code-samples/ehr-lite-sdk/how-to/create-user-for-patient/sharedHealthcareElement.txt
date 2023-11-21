@@ -1,0 +1,31 @@
+{
+  "id": "917f2946-f322-4590-bb9c-4e447ff44d5c",
+  "identifiers": [],
+  "rev": "2-1fc0849a836edeeace1fa26d6e3c7edb",
+  "created": 1700058623224,
+  "modified": 1700058623224,
+  "author": "*",
+  "responsible": "*",
+  "bodySite": {},
+  "tags": {},
+  "codes": {},
+  "healthcareElementId": "917f2946-f322-4590-bb9c-4e447ff44d5c",
+  "recordedDate": 20231115143023,
+  "openingDate": 1570838400000,
+  "description": "I don't feel so well",
+  "notes": [],
+  "systemMetaData": {
+    "secretForeignKeys": [
+      "59b07cf5-c131-4341-9812-c63e5cf08318"
+    ],
+    "cryptedForeignKeys": {},
+    "delegations": {},
+    "encryptionKeys": {},
+    "securityMetadata": {
+      "secureDelegations": {},
+      "keysEquivalences": {}
+    },
+    "encryptedSelf": "osZYE6JLpfh77sBBbPxizmp7k3RmqjlDbZuiWkoDmiH/8upDs31CzAgAgHv2eHTqSDK7vn70tnepKqdIW14sAw==",
+    "tags": {}
+  }
+}

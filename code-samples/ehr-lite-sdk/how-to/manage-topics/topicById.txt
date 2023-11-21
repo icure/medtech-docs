@@ -1,0 +1,26 @@
+{
+  "id": "cab70726-f2d3-4950-ac00-9bd991b8de67",
+  "rev": "1-3682a74da191b547eaa3f3a45cc73e25",
+  "created": 1700058626866,
+  "modified": 1700058626866,
+  "author": "17e392da-8e36-4e4e-abd7-7eef3e434395",
+  "responsible": "3ed06450-17e5-47b6-ba4f-7a0a084df56b",
+  "tags": {},
+  "codes": {},
+  "descr": "Topic to be fetched",
+  "linkedHealthElements": {},
+  "linkedServices": {},
+  "activeParticipants": {},
+  "systemMetadata": {
+    "secretForeignKeys": [],
+    "cryptedForeignKeys": {},
+    "delegations": {},
+    "encryptionKeys": {},
+    "securityMetadata": {
+      "secureDelegations": {},
+      "keysEquivalences": {}
+    },
+    "encryptedSelf": "Skogs4W6yC7w4NM+/rBzZyj4HqhHRNwlb+PbSz3A+y2kzKmg2+W9pVFIe7l/OOZt5lNFfzmsFV515jUGYO6u+w==",
+    "tags": {}
+  }
+}

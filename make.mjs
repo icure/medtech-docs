@@ -11,14 +11,22 @@ function walk(src, dst, view) {
             walk(fullPathSrc, fullPathDst, view)
         } else {
             if (f.endsWith(".md")||f.endsWith(".mdx")) {
-                try {
-                    console.log("Generating file", fullPathSrc)
-                    fs.writeFileSync(fullPathDst, Mustache.render(fs.readFileSync(fullPathSrc, {
-                        encoding: 'utf8',
-                        flag: 'r'
-                    }), view).replace(/(?<!\w)([Aa]) (_|\*\*)?([AEIOaeio])/g, "$1n $2$3"))
-                } catch (e) {
-                    console.error("Cannot interpret file: " + fullPathSrc, e)
+                const fullContent = fs.readFileSync(fullPathSrc, {
+                    encoding: 'utf8',
+                    flag: 'r'
+                })
+                const initialFlag = (fullContent.match(/^!!([a-z]+)/) ?? [])[1]
+                const parsedContent = fullContent.replace(/^!![a-z]+\n/, "")
+                if(!initialFlag || view[initialFlag]){
+                    try {
+                        console.log("Generating file", fullPathSrc)
+                        fs.writeFileSync(fullPathDst, Mustache.render(parsedContent, view)
+                            .replace(/(?<!\w)([Aa]) (_|\*\*)?([AEIOaeio])/g, "$1n $2$3"))
+                    } catch (e) {
+                        console.error("Cannot interpret file: " + fullPathSrc, e)
+                    }
+                } else {
+                    console.log(`Skipping file: ${fullPathSrc}`)
                 }
             } else {
                 fs.copyFileSync(fullPathSrc, fullPathDst)
@@ -32,7 +40,7 @@ const flavours = (s, d) => ({
     [s]: d,
     [cap(s)]: cap(d),
     [s+'s']: d+'s',
-    [cap(s)+'s']: cap(d)+'s',
+    [cap(s)+'s']: cap(d)+'s'
 })
 
 walk("./sdks", "./medtech-sdk", {
@@ -42,6 +50,8 @@ walk("./sdks", "./medtech-sdk", {
     ...flavours('serviceNoSpace', 'dataSample'),
     ...flavours('hcpNoSpace', 'healthcareProfessional'),
     ...flavours('healthcareElementNoSpace', 'healthcareElement'),
+    ...flavours('messageFactory', 'MedTechMessageFactory'),
+    ...flavours('defaultMessageFactory', 'iCureMedTechMessageFactory'),
     sdk: 'medtech-sdk',
     ...flavours('sdkName', 'medtech sdk'),
     SdkName: 'Medtech SDK',
@@ -51,8 +61,13 @@ walk("./sdks", "./medtech-sdk", {
 
 walk("./sdks", "./ehr-lite-sdk", {
     ...flavours('service', 'observation'),
+    ...flavours('serviceNoSpace', 'observation'),
     ...flavours('hcp', 'practitioner'),
+    ...flavours('hcpNoSpace', 'practitioner'),
     ...flavours('healthcareElement', 'condition'),
+    ...flavours('healthcareElementNoSpace', 'condition'),
+    ...flavours('messageFactory', 'EHRLiteMessageFactory'),
+    ...flavours('defaultMessageFactory', 'iCureEHRLiteMessageFactory'),
     sdk: 'ehr-lite-sdk',
     ...flavours('sdkName', 'ehr lite sdk'),
     SdkName: 'Ehr Lite SDK',

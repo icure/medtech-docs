@@ -1,0 +1,64 @@
+[
+  {
+    "id": "1b0803ed-213a-40a3-ba53-629926e56aef",
+    "identifiers": [],
+    "rev": "1-6fde1ba32e4d7735a5aac07cb1b534a9",
+    "created": 1700058614632,
+    "modified": 1700058614632,
+    "author": "17e392da-8e36-4e4e-abd7-7eef3e434395",
+    "responsible": "3ed06450-17e5-47b6-ba4f-7a0a084df56b",
+    "bodySite": {},
+    "tags": {},
+    "codes": {},
+    "healthcareElementId": "1b0803ed-213a-40a3-ba53-629926e56aef",
+    "recordedDate": 20231115143014,
+    "openingDate": 1570838400000,
+    "description": "The patient has been diagnosed Pararibulitis",
+    "notes": [],
+    "systemMetaData": {
+      "secretForeignKeys": [
+        "b6540caa-1eb3-42ce-bf4a-f02c42bd9fd7"
+      ],
+      "cryptedForeignKeys": {},
+      "delegations": {},
+      "encryptionKeys": {},
+      "securityMetadata": {
+        "secureDelegations": {},
+        "keysEquivalences": {}
+      },
+      "encryptedSelf": "f5QpwmjIYhF95c2Lh6vGmwHmu/sP0op2GjHwoYE92PPbEuMQ+L+bkOGRnJR8OAzOjNTrJVcQLrkZKcqGX88dFT82JGs7MAckB6w3ZRYStBI=",
+      "tags": {}
+    }
+  },
+  {
+    "id": "66d9b1d5-16e5-4303-bdf3-c9122da6828d",
+    "identifiers": [],
+    "rev": "1-79bc068d8f926bc5661dbcaea408df24",
+    "created": 1700058614632,
+    "modified": 1700058614632,
+    "author": "17e392da-8e36-4e4e-abd7-7eef3e434395",
+    "responsible": "3ed06450-17e5-47b6-ba4f-7a0a084df56b",
+    "bodySite": {},
+    "tags": {},
+    "codes": {},
+    "healthcareElementId": "66d9b1d5-16e5-4303-bdf3-c9122da6828d",
+    "recordedDate": 20231115143014,
+    "openingDate": 1604793600000,
+    "description": "The patient has also the flu",
+    "notes": [],
+    "systemMetaData": {
+      "secretForeignKeys": [
+        "b6540caa-1eb3-42ce-bf4a-f02c42bd9fd7"
+      ],
+      "cryptedForeignKeys": {},
+      "delegations": {},
+      "encryptionKeys": {},
+      "securityMetadata": {
+        "secureDelegations": {},
+        "keysEquivalences": {}
+      },
+      "encryptedSelf": "nZAKLHG49s1Tui3NtTjugf1Sq2Bgu4xwrRB0wfJI3+VvtyVfJXV1uHpxFjFFYbpiIRAanC1np6I0XgB2f7BC0A==",
+      "tags": {}
+    }
+  }
+]

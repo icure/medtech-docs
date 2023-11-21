@@ -1,66 +1,64 @@
-import os from 'os'
-import console from 'console'
-import { LocalStorage } from 'node-localstorage'
-import { AnonymousMedTechApiBuilder, medTechApi, MedTechApi, User } from '@icure/medical-device-sdk'
+import { User } from '@icure/medical-device-sdk'
+import { webcrypto } from 'crypto'
+import { hex2ua, jwk2spki, pkcs8ToJwk } from '@icure/api'
+import { assert } from 'chai'
+import { v4 as uuid } from 'uuid'
+import { getLastEmail } from '../../utils/msgGtw.mjs'
+import { AnonymousEHRLiteApi, EHRLiteApi } from '@icure/ehr-lite-sdk'
+import { SimpleEHRLiteCryptoStrategies } from '@icure/ehr-lite-sdk/services/EHRLiteCryptoStrategies.js'
 import {
   authProcessId,
   host,
   msgGtwUrl,
   password,
   password2,
+  password3,
   patientPassword,
   patientPrivKey,
   patientUserName,
   privKey,
   privKey2,
+  privKey3,
   specId,
   userName,
   userName2,
-} from './endpoint.mjs'
-import { webcrypto } from 'crypto'
-import { hex2ua, jwk2spki, pkcs8ToJwk } from '@icure/api'
-import { assert } from 'chai'
-import { v4 as uuid } from 'uuid'
-import { getLastEmail } from './msgGtw.mjs'
-import { SimpleMedTechCryptoStrategies } from '@icure/medical-device-sdk'
+  userName3,
+} from '../../utils/endpoint.mjs'
 
-export function initLocalStorage() {
-  const tmp = os.tmpdir()
-  console.log('Saving keys in ' + tmp)
-  ;(global as any).localStorage = new LocalStorage(tmp, 5 * 1024 * 1024 * 1024)
-  ;(global as any).Storage = ''
+export async function initEHRLiteApi(initCrypto?: boolean): Promise<EHRLiteApi> {
+  return await initAnyEHRApi(userName, password, privKey, initCrypto)
 }
 
-export async function initMedTechApi(initCrypto?: boolean): Promise<MedTechApi> {
-  return await initAnyMedTechApi(userName, password, privKey, initCrypto)
+export async function initEHRLiteApi2(initCrypto?: boolean): Promise<EHRLiteApi> {
+  return await initAnyEHRApi(userName2, password2, privKey2, initCrypto)
 }
 
-export async function initMedTechApi2(initCrypto?: boolean): Promise<MedTechApi> {
-  return await initAnyMedTechApi(userName2, password2, privKey2, initCrypto)
+export async function initEHRLiteApi3(initCrypto?: boolean): Promise<EHRLiteApi> {
+  return await initAnyEHRApi(userName3, password3, privKey3, initCrypto)
 }
 
-export async function initPatientMedTechApi(initCrypto?: boolean): Promise<MedTechApi> {
-  return await initAnyMedTechApi(patientUserName, patientPassword, patientPrivKey, initCrypto)
+export async function initPatientEHRLiteApi(initCrypto?: boolean): Promise<EHRLiteApi> {
+  return await initAnyEHRApi(patientUserName, patientPassword, patientPrivKey, initCrypto)
 }
 
-async function initAnyMedTechApi(
+async function initAnyEHRApi(
   username: string,
   password: string,
   privatekey: string,
   initcrypto: boolean | undefined,
-): Promise<MedTechApi> {
-  const api = await medTechApi()
+): Promise<EHRLiteApi> {
+  const api = await new EHRLiteApi.Builder()
     .withICureBaseUrl(host)
     .withUserName(username)
     .withPassword(password)
     .withCrypto(webcrypto as any)
-    .withCryptoStrategies(new SimpleMedTechCryptoStrategies([]))
+    .withCryptoStrategies(new SimpleEHRLiteCryptoStrategies([]))
     .withMsgGwUrl(msgGtwUrl)
     .withMsgGwSpecId(specId)
     .withAuthProcessByEmailId(authProcessId)
     .build()
   if (initcrypto) {
-    const loggedUser = await api.userApi.getLoggedUser()
+    const loggedUser = await api.userApi.getLogged()
     const loggedDataOwner = await api.dataOwnerApi.getDataOwner(
       api.dataOwnerApi.getDataOwnerIdOf(loggedUser),
     )
@@ -73,13 +71,13 @@ async function initAnyMedTechApi(
     ].find((x) => x === publicKeyFromPrivateKey)
 
     if (!!foundPublicKey) {
-      return await medTechApi()
+      return await new EHRLiteApi.Builder()
         .withICureBaseUrl(host)
         .withUserName(username)
         .withPassword(password)
         .withCrypto(webcrypto as any)
         .withCryptoStrategies(
-          new SimpleMedTechCryptoStrategies([
+          new SimpleEHRLiteCryptoStrategies([
             { privateKey: privatekey, publicKey: foundPublicKey },
           ]),
         )
@@ -99,15 +97,15 @@ export async function signUpUserUsingEmail(
   msgGtwSpecId: string,
   authProcessId: string,
   hcpId: string,
-): Promise<{ api: MedTechApi; user: User; token: string }> {
-  const builder = new AnonymousMedTechApiBuilder()
+): Promise<{ api: EHRLiteApi; user: User; token: string }> {
+  const builder = new AnonymousEHRLiteApi.Builder()
     .withICureBaseUrl(iCureUrl)
     .withMsgGwUrl(msgGtwUrl)
     .withMsgGwSpecId(msgGtwSpecId)
     .withCrypto(webcrypto as any)
     .withAuthProcessByEmailId(authProcessId)
     .withAuthProcessBySmsId(authProcessId)
-    .withCryptoStrategies(new SimpleMedTechCryptoStrategies([]))
+    .withCryptoStrategies(new SimpleEHRLiteCryptoStrategies([]))
 
   const anonymousMedTechApi = await builder.build()
 
@@ -132,15 +130,15 @@ export async function signUpUserUsingEmail(
     subjectCode,
   )
 
-  if (result?.medTechApi == undefined) {
+  if (result?.api == undefined) {
     throw Error(`Couldn't sign up user by email for current test`)
   }
 
-  const foundUser = await result.medTechApi.userApi.getLoggedUser()
+  const foundUser = await result.api.userApi.getLogged()
 
   assert(result)
   assert(result!.token != null)
   assert(result!.userId != null)
 
-  return { api: result.medTechApi, user: foundUser, token: result.token }
+  return { api: result.api, user: foundUser, token: result.token }
 }

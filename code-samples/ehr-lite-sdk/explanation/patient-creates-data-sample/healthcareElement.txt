@@ -1,0 +1,31 @@
+{
+  "id": "570e7669-05d9-47e9-a87e-f909edcfcee1",
+  "identifiers": [],
+  "rev": "1-0de62ca1672922261e54dbe68f4ca1c1",
+  "created": 1700058595313,
+  "modified": 1700058595313,
+  "author": "*",
+  "responsible": "*",
+  "bodySite": {},
+  "tags": {},
+  "codes": {},
+  "healthcareElementId": "570e7669-05d9-47e9-a87e-f909edcfcee1",
+  "recordedDate": 20231115142955,
+  "openingDate": 20231115152955,
+  "description": "My period started",
+  "notes": [],
+  "systemMetaData": {
+    "secretForeignKeys": [
+      "03a08319-c8b0-4dcd-b9a1-6c25eaca79b3"
+    ],
+    "cryptedForeignKeys": {},
+    "delegations": {},
+    "encryptionKeys": {},
+    "securityMetadata": {
+      "secureDelegations": {},
+      "keysEquivalences": {}
+    },
+    "encryptedSelf": "2nRL4Hod8y+EY6WUbcro40cgxYxw3ex+zFFOS/oCPkRQsF0EtzrNKHTjlacvAcak",
+    "tags": {}
+  }
+}

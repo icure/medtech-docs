@@ -1,0 +1,308 @@
+{
+  "rows": [
+    {
+      "id": "25df9fc6-5e8f-4f91-a849-31e558c23486",
+      "identifiers": [],
+      "rev": "1-23f3257f3985959563eb023e28d66a7e",
+      "created": 1700058641293,
+      "modified": 1700058641293,
+      "author": "17e392da-8e36-4e4e-abd7-7eef3e434395",
+      "responsible": "3ed06450-17e5-47b6-ba4f-7a0a084df56b",
+      "labels": {},
+      "codes": {},
+      "healthcareElementId": "25df9fc6-5e8f-4f91-a849-31e558c23486",
+      "valueDate": 20231115143041,
+      "openingDate": 1700058641283,
+      "description": "The patient is pregnant",
+      "notes": [],
+      "systemMetaData": {
+        "secretForeignKeys": [
+          "b6540caa-1eb3-42ce-bf4a-f02c42bd9fd7"
+        ],
+        "cryptedForeignKeys": {},
+        "delegations": {},
+        "encryptionKeys": {},
+        "securityMetadata": {
+          "secureDelegations": {},
+          "keysEquivalences": {}
+        },
+        "encryptedSelf": "rEJWzINpkh7qdpGEtu8o/OQ29ZhVLIdHKnQp4ABMZSYFHw/vfQpQ01fZW2g1PrrtlJkF6Sa+yGy1uWdJAVG/Yw==",
+        "tags": {}
+      }
+    },
+    {
+      "id": "28014a62-66f2-445c-8bc0-bf192f5f5801",
+      "identifiers": [],
+      "rev": "2-e6892f5903da7491508b4a414717cbe1",
+      "created": 1700058596247,
+      "modified": 1700058596247,
+      "author": "17e392da-8e36-4e4e-abd7-7eef3e434395",
+      "responsible": "3ed06450-17e5-47b6-ba4f-7a0a084df56b",
+      "labels": {},
+      "codes": {},
+      "healthcareElementId": "28014a62-66f2-445c-8bc0-bf192f5f5801",
+      "valueDate": 20231115142956,
+      "openingDate": 20231115152956,
+      "description": "My diagnosis is that the patient has Hay Fever",
+      "notes": [],
+      "systemMetaData": {
+        "secretForeignKeys": [
+          "b6540caa-1eb3-42ce-bf4a-f02c42bd9fd7"
+        ],
+        "cryptedForeignKeys": {},
+        "delegations": {},
+        "encryptionKeys": {},
+        "securityMetadata": {
+          "secureDelegations": {},
+          "keysEquivalences": {}
+        },
+        "encryptedSelf": "8rZNR5of3tHwQYaDTQAvikxmu6QgE+LYW779oc9xafjJ/h/G/SCf8R5HPbLZjhfcd1v6/W4RcbNYBLvsyaqKjM8NtoY8vLjMr6OgyxcNtTw=",
+        "tags": {}
+      }
+    },
+    {
+      "id": "2be01546-1962-482b-8fc3-be46b798b572",
+      "identifiers": [],
+      "rev": "1-9863b9d0069c4aafa779e569f88330a5",
+      "created": 1700058667026,
+      "modified": 1700058667026,
+      "author": "17e392da-8e36-4e4e-abd7-7eef3e434395",
+      "responsible": "3ed06450-17e5-47b6-ba4f-7a0a084df56b",
+      "labels": {},
+      "codes": {},
+      "healthcareElementId": "2be01546-1962-482b-8fc3-be46b798b572",
+      "valueDate": 20231115143107,
+      "openingDate": 1570838400000,
+      "description": "Healthcare Element 7",
+      "notes": [],
+      "systemMetaData": {
+        "secretForeignKeys": [
+          "b6540caa-1eb3-42ce-bf4a-f02c42bd9fd7"
+        ],
+        "cryptedForeignKeys": {},
+        "delegations": {},
+        "encryptionKeys": {},
+        "securityMetadata": {
+          "secureDelegations": {},
+          "keysEquivalences": {}
+        },
+        "encryptedSelf": "ASFl2OMG575V3qjc2BUgElPX7X1vBbeJygQTcNJNMGIke445vH2zSKka6lxNlWuri4VgeT7VogxpA76AXjNzwg==",
+        "tags": {}
+      }
+    },
+    {
+      "id": "31a6c29e-ffe3-4ec7-86b8-6a151e458a53",
+      "identifiers": [],
+      "rev": "1-59060f6e8754634eb91164086beeaa89",
+      "created": 1700058614925,
+      "modified": 1700058614925,
+      "author": "17e392da-8e36-4e4e-abd7-7eef3e434395",
+      "responsible": "3ed06450-17e5-47b6-ba4f-7a0a084df56b",
+      "labels": {},
+      "codes": {},
+      "healthcareElementId": "31a6c29e-ffe3-4ec7-86b8-6a151e458a53",
+      "valueDate": 20231115143014,
+      "openingDate": 1570838400000,
+      "description": "Condition 0",
+      "notes": [],
+      "systemMetaData": {
+        "secretForeignKeys": [
+          "b6540caa-1eb3-42ce-bf4a-f02c42bd9fd7"
+        ],
+        "cryptedForeignKeys": {},
+        "delegations": {},
+        "encryptionKeys": {},
+        "securityMetadata": {
+          "secureDelegations": {},
+          "keysEquivalences": {}
+        },
+        "encryptedSelf": "dGRE5RmhScLfDZuvrQdz+IhoSJ5OuFLF66BgcffHvFYizbgq43gkJn3LjtQbPoNb",
+        "tags": {}
+      }
+    },
+    {
+      "id": "31ce7c7c-2a84-4074-9674-74260b63d236",
+      "identifiers": [],
+      "rev": "1-895ce5ff7f93b5cba96d9b7b72625032",
+      "created": 1700058667086,
+      "modified": 1700058667086,
+      "author": "17e392da-8e36-4e4e-abd7-7eef3e434395",
+      "responsible": "3ed06450-17e5-47b6-ba4f-7a0a084df56b",
+      "labels": {},
+      "codes": {},
+      "healthcareElementId": "31ce7c7c-2a84-4074-9674-74260b63d236",
+      "valueDate": 20231115143107,
+      "openingDate": 1570838400000,
+      "description": "Healthcare Element 9",
+      "notes": [],
+      "systemMetaData": {
+        "secretForeignKeys": [
+          "b6540caa-1eb3-42ce-bf4a-f02c42bd9fd7"
+        ],
+        "cryptedForeignKeys": {},
+        "delegations": {},
+        "encryptionKeys": {},
+        "securityMetadata": {
+          "secureDelegations": {},
+          "keysEquivalences": {}
+        },
+        "encryptedSelf": "aP4PL3clVCvzi56KknxMn5fxCOiuv/yJ7oBKy/zGXk+RHcijSTbIWkQi7UgjOs6zMgLgEuWuCwjDZvwnHQDHJw==",
+        "tags": {}
+      }
+    },
+    {
+      "id": "4f3205e0-0440-4fea-b784-88f2680aebb5",
+      "identifiers": [],
+      "rev": "1-2b6d46e0b819b84aaffb38569a506bf8",
+      "created": 1700058614953,
+      "modified": 1700058614953,
+      "author": "17e392da-8e36-4e4e-abd7-7eef3e434395",
+      "responsible": "3ed06450-17e5-47b6-ba4f-7a0a084df56b",
+      "labels": {},
+      "codes": {},
+      "healthcareElementId": "4f3205e0-0440-4fea-b784-88f2680aebb5",
+      "valueDate": 20231115143014,
+      "openingDate": 1570838400000,
+      "description": "Condition 1",
+      "notes": [],
+      "systemMetaData": {
+        "secretForeignKeys": [
+          "b6540caa-1eb3-42ce-bf4a-f02c42bd9fd7"
+        ],
+        "cryptedForeignKeys": {},
+        "delegations": {},
+        "encryptionKeys": {},
+        "securityMetadata": {
+          "secureDelegations": {},
+          "keysEquivalences": {}
+        },
+        "encryptedSelf": "bycVTCWeSp/JDPIdIXWl7HI/WsXG9RmnJ7c4ZeXyabLrw0zsfJnOsdXGakf9OsKp",
+        "tags": {}
+      }
+    },
+    {
+      "id": "5944fbdd-9b57-4f5d-bfa4-c95a75b49e85",
+      "identifiers": [],
+      "rev": "1-cc6f4b6685a30b52570de2c17fe08496",
+      "created": 1700058614991,
+      "modified": 1700058614991,
+      "author": "17e392da-8e36-4e4e-abd7-7eef3e434395",
+      "responsible": "3ed06450-17e5-47b6-ba4f-7a0a084df56b",
+      "labels": {},
+      "codes": {},
+      "healthcareElementId": "5944fbdd-9b57-4f5d-bfa4-c95a75b49e85",
+      "valueDate": 20231115143015,
+      "openingDate": 1570838400000,
+      "description": "Condition 2",
+      "notes": [],
+      "systemMetaData": {
+        "secretForeignKeys": [
+          "b6540caa-1eb3-42ce-bf4a-f02c42bd9fd7"
+        ],
+        "cryptedForeignKeys": {},
+        "delegations": {},
+        "encryptionKeys": {},
+        "securityMetadata": {
+          "secureDelegations": {},
+          "keysEquivalences": {}
+        },
+        "encryptedSelf": "rF/d3imitB1Mb/xNsq1HympuYFUSBscI81OinKEloh0jTBK5qQoyQTWv5AZlSGcs",
+        "tags": {}
+      }
+    },
+    {
+      "id": "5c33fba3-9de3-434d-b36f-81ebef1f9d9c",
+      "identifiers": [],
+      "rev": "1-47232ebd835c57df827cee6c4745c4df",
+      "created": 1700058615023,
+      "modified": 1700058615023,
+      "author": "17e392da-8e36-4e4e-abd7-7eef3e434395",
+      "responsible": "3ed06450-17e5-47b6-ba4f-7a0a084df56b",
+      "labels": {},
+      "codes": {},
+      "healthcareElementId": "5c33fba3-9de3-434d-b36f-81ebef1f9d9c",
+      "valueDate": 20231115143015,
+      "openingDate": 1570838400000,
+      "description": "Condition 3",
+      "notes": [],
+      "systemMetaData": {
+        "secretForeignKeys": [
+          "b6540caa-1eb3-42ce-bf4a-f02c42bd9fd7"
+        ],
+        "cryptedForeignKeys": {},
+        "delegations": {},
+        "encryptionKeys": {},
+        "securityMetadata": {
+          "secureDelegations": {},
+          "keysEquivalences": {}
+        },
+        "encryptedSelf": "fvPEk8VA2MKm1vg3fITzelo/avWgOzLxmzx5np1SiYKZ2+FFmeqT0GboplHsUlda",
+        "tags": {}
+      }
+    },
+    {
+      "id": "60017bf9-b6dc-4875-9eb7-b7febc71c87a",
+      "identifiers": [],
+      "rev": "1-6ca1edc334be3460129f6752d1e563ce",
+      "created": 1700058615057,
+      "modified": 1700058615057,
+      "author": "17e392da-8e36-4e4e-abd7-7eef3e434395",
+      "responsible": "3ed06450-17e5-47b6-ba4f-7a0a084df56b",
+      "labels": {},
+      "codes": {},
+      "healthcareElementId": "60017bf9-b6dc-4875-9eb7-b7febc71c87a",
+      "valueDate": 20231115143015,
+      "openingDate": 1570838400000,
+      "description": "Condition 4",
+      "notes": [],
+      "systemMetaData": {
+        "secretForeignKeys": [
+          "b6540caa-1eb3-42ce-bf4a-f02c42bd9fd7"
+        ],
+        "cryptedForeignKeys": {},
+        "delegations": {},
+        "encryptionKeys": {},
+        "securityMetadata": {
+          "secureDelegations": {},
+          "keysEquivalences": {}
+        },
+        "encryptedSelf": "g0lpnJNACoqURlSXQ4Zpbg0xOpKsHt0KXFFetAIG1J4p/LsRjpym5Rn2TUKHoom7",
+        "tags": {}
+      }
+    },
+    {
+      "id": "62f452f5-af9a-4dd8-95a1-382353008f37",
+      "identifiers": [],
+      "rev": "1-bc8528e6fcf7feec2d710e37bfd0e110",
+      "created": 1700058593360,
+      "modified": 1700058593360,
+      "author": "17e392da-8e36-4e4e-abd7-7eef3e434395",
+      "responsible": "3ed06450-17e5-47b6-ba4f-7a0a084df56b",
+      "labels": {},
+      "codes": {},
+      "healthcareElementId": "62f452f5-af9a-4dd8-95a1-382353008f37",
+      "valueDate": 20231115142953,
+      "openingDate": 20231115152953,
+      "description": "My diagnosis is that the patient has Hay Fever",
+      "notes": [],
+      "systemMetaData": {
+        "secretForeignKeys": [
+          "b6540caa-1eb3-42ce-bf4a-f02c42bd9fd7"
+        ],
+        "cryptedForeignKeys": {},
+        "delegations": {},
+        "encryptionKeys": {},
+        "securityMetadata": {
+          "secureDelegations": {},
+          "keysEquivalences": {}
+        },
+        "encryptedSelf": "4GLWVHlH5fVTZp0ogpJN/oZNKagNuwRx+foGVZFripFVplV97VKrMC6DilY+Ab0QDGln1eBOC7Li6dalchfff0beKrFspSslx4PkjuscRrc=",
+        "tags": {}
+      }
+    }
+  ],
+  "nextKeyPair": {
+    "startKey": "66d9b1d5-16e5-4303-bdf3-c9122da6828d",
+    "startKeyDocId": "66d9b1d5-16e5-4303-bdf3-c9122da6828d"
+  }
+}

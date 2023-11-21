@@ -1,20 +1,20 @@
 import 'isomorphic-fetch'
-import { initLocalStorage, output } from '../utils/index.mjs'
-import { SimpleMedTechCryptoStrategies } from '@icure/medical-device-sdk'
+import { initLocalStorage, output } from '../../utils/index.mjs'
 
 initLocalStorage()
 
 //tech-doc: instantiate the api
 import 'isomorphic-fetch'
-import { medTechApi } from '@icure/medical-device-sdk'
 import { webcrypto } from 'crypto'
 import * as process from 'process'
+import { MedTechApi } from '@icure/medical-device-sdk'
+import { SimpleMedTechCryptoStrategies } from '@icure/medical-device-sdk/src/services/MedTechCryptoStrategies.js'
 
 export const host = process.env.ICURE_URL ?? 'https://kraken.icure.cloud'
 export const username = process.env.ICURE_USER_NAME
 export const password = process.env.ICURE_USER_PASSWORD
 
-const api = await medTechApi()
+const api = await new MedTechApi.Builder()
   .withICureBaseUrl(host)
   .withUserName(username)
   .withPassword(password)

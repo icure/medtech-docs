@@ -1,0 +1,9 @@
+{
+  "id": "fe625356-ba37-4a0e-ab5e-a85e711c18f9",
+  "identifiers": [],
+  "content": {},
+  "openingDate": 20220929083400,
+  "qualifiedLinks": {},
+  "labels": {},
+  "codes": {}
+}

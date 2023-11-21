@@ -14,8 +14,8 @@ Therefore, you will need to integrate iCure's user authentication process into y
 
 When starting your app, the users may be in different situations: 
 - They start it for the first time and need to register
-- They already registered and need to login
-- Their latest login session is still valid and you can reuse the corresponding authentication token 
+- They already registered and need to log in
+- Their latest login session is still valid, and you can reuse the corresponding authentication token 
 
 At the end of this guide, you will be able to implement authentication for those 3 use cases using the iCure 
 MedTech SDK. 
@@ -44,21 +44,6 @@ You will have to create an `AnonymousMedTechApi` instead.
 ### Init AnonymousMedTechApi
 <!-- file://code-samples/{{sdk}}/how-to/authenticate-user/index.mts snippet:Instantiate AnonymousMedTech API-->
 ```typescript
-const msgGtwUrl = process.env.ICURE_MSG_GTW_URL
-const specId = process.env.SPEC_ID
-const authProcessByEmailId = process.env.AUTH_BY_EMAIL_PROCESS_ID
-const authProcessBySmsId = process.env.AUTH_BY_SMS_PROCESS_ID
-const recaptcha = process.env.RECAPTCHA
-
-const anonymousApi = await new AnonymousMedTechApiBuilder()
-  .withICureBaseUrl(iCureUrl)
-  .withCrypto(webcrypto as any)
-  .withMsgGwUrl(msgGtwUrl)
-  .withMsgGwSpecId(specId)
-  .withAuthProcessByEmailId(authProcessByEmailId)
-  .withAuthProcessBySmsId(authProcessBySmsId)
-  .withCryptoStrategies(new SimpleMedTechCryptoStrategies([]))
-  .build()
 ```
 
 The [Anonymous{{CodeSdkName}}Builder](/{{sdk}}/references/entrypoints/AnonymousMedTechApi) asks you to provide multiple information. You will learn more about them in
@@ -119,25 +104,12 @@ of the `startAuthentication` method should be `"friendly-captcha"`.
 
 <!-- file://code-samples/{{sdk}}/how-to/authenticate-user/index.mts snippet:Start Authentication Process By Email-->
 ```typescript
-const authProcess = await anonymousApi.authenticationApi.startAuthentication(
-  recaptcha,
-  userEmail, // Email address of the user who wants to register
-  undefined,
-  'Daenerys',
-  'Targaryen',
-  masterHcpId,
-)
 ```
 <!-- output://code-samples/{{sdk}}/how-to/authenticate-user/authProcess.txt -->
 <details>
 <summary>authProcess</summary>
 
 ```json
-{
-  "requestId": "8785543d-490c-44d4-95e9-ab4d97edf888",
-  "login": "1iu03ja0a-dt@got.com",
-  "bypassTokenCheck": false
-}
 ```
 </details>
 
@@ -178,18 +150,6 @@ newly created MedTechAPI.
  
 <!-- file://code-samples/{{sdk}}/how-to/authenticate-user/index.mts snippet:Complete authentication process-->
 ```typescript
-const authenticationResult = await anonymousApi.authenticationApi.completeAuthentication(
-  authProcess!,
-  validationCode,
-)
-
-const authenticatedApi = authenticationResult.medTechApi
-
-console.log(`Your new user id: ${authenticationResult.userId}`)
-console.log(`Database id where new user was created: ${authenticationResult.groupId}`)
-console.log(`Your initialised MedTechAPI: ***\${authenticatedApi}***`)
-console.log(`RSA key pairs of your new user: ***\${authenticationResult.keyPairs}***`)
-console.log(`Token created to authenticate your new user: ***\${authenticationResult.token}***`)
 ```
 
 As a result, you receive : 
@@ -203,83 +163,22 @@ Make sure to save these elements to be able to authenticate Daenaerys again when
 
 <!-- file://code-samples/{{sdk}}/how-to/authenticate-user/index.mts snippet:Save credentials-->
 ```typescript
-// saveSecurely does not exist: Use your own way of storing the following data securely
-// One option is to put these elements into the localStorage
-saveSecurely(
-  userEmail,
-  authenticationResult.token,
-  authenticationResult.userId,
-  authenticationResult.groupId,
-  authenticationResult.keyPairs,
-)
 ```
 
 Now that her authentication is completed, Daenaerys may manage data with iCure.  
 
 <!-- file://code-samples/{{sdk}}/how-to/authenticate-user/index.mts snippet:Create encrypted data-->
 ```typescript
-const createdDataSample = await authenticatedApi.dataSampleApi.createOrModifyDataSampleFor(
-  loggedUser.patientId,
-  new DataSample({
-    labels: new Set([new CodingReference({ type: 'IC-TEST', code: 'TEST' })]),
-    content: { en: new Content({ stringValue: 'Hello world' }) },
-    openingDate: 20220929083400,
-    comment: 'This is a comment',
-  }),
-)
 ```
 <!-- output://code-samples/{{sdk}}/how-to/authenticate-user/createdDataSample.txt -->
 <details>
 <summary>createdDataSample</summary>
 
 ```json
-{
-  "id": "c4b044a9-5c68-4fc8-b2e2-0cb94cdb3f56",
-  "qualifiedLinks": {},
-  "batchId": "ab12417b-e415-488b-a0be-295387d5f993",
-  "index": 0,
-  "valueDate": 20230328100113,
-  "openingDate": 20220929083400,
-  "created": 1679997673343,
-  "modified": 1679997673343,
-  "author": "d4ed8d59-bf6a-42cb-9d25-25f861b56f28",
-  "responsible": "df18183f-fabf-4f13-b204-0650dc68c7c6",
-  "comment": "This is a comment",
-  "identifiers": [],
-  "healthcareElementIds": {},
-  "canvasesIds": {},
-  "content": {
-    "en": {
-      "stringValue": "Hello world",
-      "compoundValue": [],
-      "ratio": [],
-      "range": []
-    }
-  },
-  "codes": {},
-  "labels": {},
-  "systemMetaData": {
-    "secretForeignKeys": [
-      "3fa16d0e-4d39-4f4b-a412-439bdf100f02"
-    ],
-    "cryptedForeignKeys": {
-      "df18183f-fabf-4f13-b204-0650dc68c7c6": {},
-      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
-    },
-    "delegations": {
-      "df18183f-fabf-4f13-b204-0650dc68c7c6": {},
-      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
-    },
-    "encryptionKeys": {
-      "df18183f-fabf-4f13-b204-0650dc68c7c6": {},
-      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
-    }
-  }
-}
 ```
 </details>
 
-But what do you have to do when the authentication token of Daenaerys expires and she needs to login again?
+But what do you have to do when the authentication token of Daenaerys expires, and she needs to log in again?
 
 ## Logging in with  existing credentials
 Each time you complete the registration or login process, you can save the credentials you receive
@@ -288,40 +187,19 @@ We symbolised it through the `saveSecurely` method.
 
 <!-- file://code-samples/{{sdk}}/how-to/authenticate-user/index.mts snippet:Save credentials-->
 ```typescript
-// saveSecurely does not exist: Use your own way of storing the following data securely
-// One option is to put these elements into the localStorage
-saveSecurely(
-  userEmail,
-  authenticationResult.token,
-  authenticationResult.userId,
-  authenticationResult.groupId,
-  authenticationResult.keyPairs,
-)
 ```
 
 The first thing you have to do is to retrieve Daenaerys credentials and her RSA Keypair
 <!-- file://code-samples/{{sdk}}/how-to/authenticate-user/index.mts snippet:Get back credentials-->
 ```typescript
-// getBackCredentials does not exist: Use your own way of storing the following data securely
-// One option is to get them back from the localStorage
-const { login, token, pubKey, privKey } = getBackCredentials()
 ```
 
 And then, initialise a MedTechApi, authenticating Daenaerys directly.
 <!-- file://code-samples/{{sdk}}/how-to/authenticate-user/index.mts snippet:Instantiate back a MedTechApi-->
 ```typescript
-const reInstantiatedApi = await new MedTechApiBuilder()
-  .withICureBaseUrl(iCureUrl)
-  .withUserName(login)
-  .withPassword(token)
-  .withCrypto(webcrypto as any)
-  .withCryptoStrategies(
-    new SimpleMedTechCryptoStrategies([{ publicKey: pubKey, privateKey: privKey }]),
-  )
-  .build()
 ```
 The MedTech API will automatically load the keys for that user from the local storage, but you can also pass them
-explicitly through the `.withCryptoStrategies` method of the builder.
+explicitly through the `withCryptoStrategies` method of the builder.
 
 :::info
 
@@ -332,9 +210,6 @@ You can learn more about the Crypto Strategies [here](/{{sdk}}/explanations/cryp
 Daenaerys can finally manage her data again.
 <!-- file://code-samples/{{sdk}}/how-to/authenticate-user/index.mts snippet:Get back encrypted data-->
 ```typescript
-const foundDataSampleAfterInstantiatingApi = await reInstantiatedApi.dataSampleApi.getDataSample(
-  createdDataSample.id,
-)
 ```
 
 <!-- output://code-samples/{{sdk}}/how-to/authenticate-user/foundDataSampleAfterInstantiatingApi.txt -->
@@ -342,49 +217,6 @@ const foundDataSampleAfterInstantiatingApi = await reInstantiatedApi.dataSampleA
 <summary>foundDataSampleAfterInstantiatingApi</summary>
 
 ```json
-{
-  "id": "c4b044a9-5c68-4fc8-b2e2-0cb94cdb3f56",
-  "qualifiedLinks": {},
-  "batchId": "ab12417b-e415-488b-a0be-295387d5f993",
-  "index": 0,
-  "valueDate": 20230328100113,
-  "openingDate": 20220929083400,
-  "created": 1679997673343,
-  "modified": 1679997673343,
-  "author": "d4ed8d59-bf6a-42cb-9d25-25f861b56f28",
-  "responsible": "df18183f-fabf-4f13-b204-0650dc68c7c6",
-  "comment": "This is a comment",
-  "identifiers": [],
-  "healthcareElementIds": {},
-  "canvasesIds": {},
-  "content": {
-    "en": {
-      "stringValue": "Hello world",
-      "compoundValue": [],
-      "ratio": [],
-      "range": []
-    }
-  },
-  "codes": {},
-  "labels": {},
-  "systemMetaData": {
-    "secretForeignKeys": [
-      "3fa16d0e-4d39-4f4b-a412-439bdf100f02"
-    ],
-    "cryptedForeignKeys": {
-      "df18183f-fabf-4f13-b204-0650dc68c7c6": {},
-      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
-    },
-    "delegations": {
-      "df18183f-fabf-4f13-b204-0650dc68c7c6": {},
-      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
-    },
-    "encryptionKeys": {
-      "df18183f-fabf-4f13-b204-0650dc68c7c6": {},
-      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
-    }
-  }
-}
 ```
 </details>
 
@@ -397,20 +229,6 @@ As Daenaerys is not authenticated anymore, you have to create a new AnonymousMed
 
 <!-- file://code-samples/{{sdk}}/how-to/authenticate-user/index.mts snippet:Login-->
 ```typescript
-const anonymousApiForLogin = await new AnonymousMedTechApiBuilder()
-  .withICureBaseUrl(iCureUrl)
-  .withCrypto(webcrypto as any)
-  .withMsgGwUrl(msgGtwUrl)
-  .withMsgGwSpecId(specId)
-  .withAuthProcessByEmailId(authProcessByEmailId)
-  .withAuthProcessBySmsId(authProcessBySmsId)
-  .withCryptoStrategies(new SimpleMedTechCryptoStrategies([]))
-  .build()
-
-const authProcessLogin = await anonymousApiForLogin.authenticationApi.startAuthentication(
-  recaptcha,
-  userEmail, // The email address used for user registration
-)
 ```
 
 Daenaerys then receives a new validation code by email.
@@ -420,30 +238,11 @@ and provide it to the `completeAuthentication` method.
 
 <!-- file://code-samples/{{sdk}}/how-to/authenticate-user/index.mts snippet:Complete login authentication process-->
 ```typescript
-const loginResult = await anonymousApiForLogin.authenticationApi.completeAuthentication(
-  authProcessLogin!,
-  validationCodeForLogin,
-)
-
-console.log(`Your new user id: ${loginResult.userId}`)
-console.log(`Database id where new user was created: ${loginResult.groupId}`)
-console.log(`Your new initialised MedTechAPI: ***\${loginResult.medTechApi}***`)
-console.log(`RSA key pairs of your user stays the same: ***\${loginResult.keyPairs}***`)
-console.log(`The token of your user will change: ***\${loginResult.token}***`)
 ```
 
 Do not forget to save these new credentials :
 <!-- file://code-samples/{{sdk}}/how-to/authenticate-user/index.mts snippet:Save credentials-->
 ```typescript
-// saveSecurely does not exist: Use your own way of storing the following data securely
-// One option is to put these elements into the localStorage
-saveSecurely(
-  userEmail,
-  authenticationResult.token,
-  authenticationResult.userId,
-  authenticationResult.groupId,
-  authenticationResult.keyPairs,
-)
 ```
 
 :::danger
@@ -462,60 +261,12 @@ For more information check the In-Depth Explanation [What happens if my user los
 And Daenaerys may manage her data again :
 <!-- file://code-samples/{{sdk}}/how-to/authenticate-user/index.mts snippet:Access back encrypted data-->
 ```typescript
-const loggedUserApi = loginResult.medTechApi
-
-const foundDataSampleAfterLogin = await loggedUserApi.dataSampleApi.getDataSample(
-  createdDataSample.id,
-)
 ```
 <!-- output://code-samples/{{sdk}}/how-to/authenticate-user/foundDataSampleAfterLogin.txt -->
 <details>
 <summary>foundDataSampleAfterLogin</summary>
 
 ```json
-{
-  "id": "c4b044a9-5c68-4fc8-b2e2-0cb94cdb3f56",
-  "qualifiedLinks": {},
-  "batchId": "ab12417b-e415-488b-a0be-295387d5f993",
-  "index": 0,
-  "valueDate": 20230328100113,
-  "openingDate": 20220929083400,
-  "created": 1679997673343,
-  "modified": 1679997673343,
-  "author": "d4ed8d59-bf6a-42cb-9d25-25f861b56f28",
-  "responsible": "df18183f-fabf-4f13-b204-0650dc68c7c6",
-  "comment": "This is a comment",
-  "identifiers": [],
-  "healthcareElementIds": {},
-  "canvasesIds": {},
-  "content": {
-    "en": {
-      "stringValue": "Hello world",
-      "compoundValue": [],
-      "ratio": [],
-      "range": []
-    }
-  },
-  "codes": {},
-  "labels": {},
-  "systemMetaData": {
-    "secretForeignKeys": [
-      "3fa16d0e-4d39-4f4b-a412-439bdf100f02"
-    ],
-    "cryptedForeignKeys": {
-      "df18183f-fabf-4f13-b204-0650dc68c7c6": {},
-      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
-    },
-    "delegations": {
-      "df18183f-fabf-4f13-b204-0650dc68c7c6": {},
-      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
-    },
-    "encryptionKeys": {
-      "df18183f-fabf-4f13-b204-0650dc68c7c6": {},
-      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
-    }
-  }
-}
 ```
 </details>
 

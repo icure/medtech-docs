@@ -1,0 +1,90 @@
+{
+  "patient": {
+    "id": "f82ae3f1-3478-49b8-83ed-038d8a9c6721",
+    "rev": "6-ee7860a13d7be531af5cbfa09d7593fc",
+    "created": 1700058649449,
+    "modified": 1700058649449,
+    "author": "17e392da-8e36-4e4e-abd7-7eef3e434395",
+    "responsible": "3ed06450-17e5-47b6-ba4f-7a0a084df56b",
+    "firstName": "Marc",
+    "lastName": "Specter",
+    "companyName": "iCure",
+    "languages": [],
+    "active": true,
+    "parameters": {},
+    "identifiers": [],
+    "labels": {},
+    "codes": {},
+    "notes": [],
+    "names": [
+      {
+        "lastName": "Specter",
+        "firstNames": [
+          "Marc"
+        ],
+        "prefix": [],
+        "suffix": [],
+        "text": "Specter Marc",
+        "use": "official"
+      }
+    ],
+    "addresses": [
+      {
+        "addressType": "home",
+        "description": "London",
+        "telecoms": [
+          {
+            "telecomType": "email",
+            "telecomNumber": "cd38546b@icure.com"
+          }
+        ],
+        "notes": []
+      }
+    ],
+    "gender": "unknown",
+    "birthSex": "unknown",
+    "mergedIds": {},
+    "deactivationReason": "none",
+    "personalStatus": "unknown",
+    "partnerships": [],
+    "patientHealthCareParties": [],
+    "patientProfessions": [],
+    "properties": {},
+    "systemMetaData": {
+      "hcPartyKeys": {},
+      "privateKeyShamirPartitions": {},
+      "secretForeignKeys": [],
+      "cryptedForeignKeys": {},
+      "delegations": {},
+      "encryptionKeys": {},
+      "aesExchangeKeys": {},
+      "transferKeys": {},
+      "securityMetadata": {
+        "secureDelegations": {},
+        "keysEquivalences": {}
+      },
+      "encryptedSelf": "zdFlN/bpWmrfcadUGlpYFO/PWIirPxqFu3R5QBcEJxI=",
+      "publicKeysForOaepWithSha256": [
+        "30820122300d06092a864886f70d01010105000382010f003082010a0282010100bef2205c82c149813e288b40aa52b228e1d988dd1c9c0db75b593e493218054401d2817cd060193a4d9c8dd692e6810e8427ce272f38edabf33fedc37af6d001791008d808c1082e2831881bf273712e43846a71a9ded8ea21e8048f6b27531c85fcee7c976a9fe1fa0b435e5a67aed00db9fd82ce2dd9d6690eff1e644dab8668b001ac6d11a9d82823529e52229e7aaf8f9570b1fa9ef63fcdb10e4b9ab9e6b943748fa5d7661ce527010482c71cfa7af92432dca96b406e65e29b78e8d94bc171c8d5cc1d0e6de86f065d76bbe891c20ddd66b2017f3202aa0b345698a4a2d49d684bd1fee9385f101721fccf443e555d8eca536365ad495380ebe17ab60d0203010001"
+      ],
+      "tags": {}
+    }
+  },
+  "statuses": {
+    "dataSamples": {
+      "success": true,
+      "error": null,
+      "modified": 1
+    },
+    "healthcareElements": {
+      "success": true,
+      "error": null,
+      "modified": 1
+    },
+    "patient": {
+      "success": true,
+      "error": null,
+      "modified": 0
+    }
+  }
+}

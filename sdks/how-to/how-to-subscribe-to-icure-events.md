@@ -12,13 +12,13 @@ An event is a message sent by iCure to notify that something has happened. For e
 
 Currently, iCure supports the following event types for the following entities:
 
-|                   | CREATE | UPDATE | DELETE |
-| ----------------- | ------ | ------ | ------ |
-| Patient           | ✅     | ✅     | ✅     |
-| DataSample        | ✅     | ❌     | ✅     |
-| HealthcareElement | ✅     | ✅     | ✅     |
-| Notification      | ✅     | ✅     | ✅     |
-| User              | ✅     | ✅     | ✅     |
+|                              | CREATE | UPDATE | DELETE |
+|------------------------------| ------ | ------ | ------ |
+| Patient                      | ✅     | ✅     | ✅     |
+| {{ServiceNoSpace}}           | ✅     | ❌     | ✅     |
+| {{HealthcareElementNoSpace}} | ✅     | ✅     | ✅     |
+| Notification                 | ✅     | ✅     | ✅     |
+| User                         | ✅     | ✅     | ✅     |
 
 ## How to listen to events&#8239;?
 
@@ -28,38 +28,20 @@ We assume that you already know the [How to authenticate a user]({{sdk}}/how-to/
 
 :::
 
-As an example, we will listen to `CREATE` events for `DataSample` objects. This methodology can be applied to any other type of event and objects.
+As an example, we will listen to `CREATE` events for `{{ServiceNoSpace}}` objects. This methodology can be applied to any other type of event and objects.
 
 <!-- file://code-samples/{{sdk}}/how-to/websocket/index.mts snippet:can listen to dataSample events-->
 ```typescript
-const events: DataSample[] = []
-const statuses: string[] = []
-
-const connection = (
-  await api.dataSampleApi.subscribeToDataSampleEvents(
-    ['CREATE'], // Event types to listen to
-    await new DataSampleFilter(api)
-      .forDataOwner(loggedUser.healthcarePartyId!)
-      .byLabelCodeDateFilter('IC-TEST', 'TEST')
-      .build(),
-    async (ds) => {
-      events.push(ds)
-    },
-    {}, // Options
-  )
-)
-  .onConnected(() => statuses.push('CONNECTED'))
-  .onClosed(() => statuses.push('CLOSED'))
 ```
 
-The `subscribeToDataSampleEvents` method takes 4 parameters:
+The `subscribeToEvents` method takes 4 parameters:
 
 - The first parameter is an array of event types. In this example, we only listen to `CREATE` events (see the table above for the full list of event types).
 - The second parameter is a filter. In this example, we only listen to events that are created by the logged user and that have the `IC-TEST` tag code and `TEST` tag type.
 - The third parameter is a callback that is called when an event is received. In this example, we push the received event in an array called `events`.
 - The fourth parameter is an options object. In this example, we don't use any options.
 
-The `subscribeToDataSampleEvents` method returns a `Connection` object. This object has 2 methods:
+The `subscribeToEvents` method returns a `Connection` object. This object has 2 methods:
 
 - `onConnected` is called when the connection is established
 - `onClosed` is called when the connection is closed
@@ -72,7 +54,7 @@ If you subscribe to multiple event types, you will not have access to the event 
 
 ### Example
 
-To test this example, we will create a `DataSample` object with the `IC-TEST` tag code and `TEST` tag type.
+To test this example, we will create a `{{ServiceNoSpace}}` object with the `IC-TEST` tag code and `TEST` tag type.
 
 :::note
 
@@ -83,13 +65,6 @@ We assume that you already have a patient created. If not, you can add the follo
 
 <!-- file://code-samples/{{sdk}}/how-to/websocket/index.mts snippet:create a patient for websocket-->
 ```typescript
-const patient = await api.patientApi.createOrModifyPatient(
-  new Patient({
-    firstName: 'John',
-    lastName: 'Snow',
-    note: 'Winter is coming',
-  }),
-)
 ```
 
 </details>
@@ -99,60 +74,6 @@ const patient = await api.patientApi.createOrModifyPatient(
 <summary>patient</summary>
 
 ```json
-{
-  "id": "9148d804-111b-4c19-a02a-2e405bc72fed",
-  "languages": [],
-  "active": true,
-  "parameters": {},
-  "rev": "1-0e69a95a5199b9bf4f34dfbd4868f0e5",
-  "created": 1679928181117,
-  "modified": 1679928181117,
-  "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
-  "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
-  "firstName": "John",
-  "lastName": "Snow",
-  "note": "Winter is coming",
-  "identifiers": [],
-  "labels": {},
-  "codes": {},
-  "names": [
-    {
-      "firstNames": [
-        "John"
-      ],
-      "prefix": [],
-      "suffix": [],
-      "lastName": "Snow",
-      "text": "Snow John",
-      "use": "official"
-    }
-  ],
-  "addresses": [],
-  "gender": "unknown",
-  "birthSex": "unknown",
-  "mergedIds": {},
-  "deactivationReason": "none",
-  "personalStatus": "unknown",
-  "partnerships": [],
-  "patientHealthCareParties": [],
-  "patientProfessions": [],
-  "properties": {},
-  "systemMetaData": {
-    "hcPartyKeys": {},
-    "privateKeyShamirPartitions": {},
-    "aesExchangeKeys": {},
-    "transferKeys": {},
-    "encryptedSelf": "B50sdC+IBLpgiqynG6ldjE9OMsbU+OflKKsfpznPFTLJvwqgz/XPSvdq/sOQo4Bg",
-    "secretForeignKeys": [],
-    "cryptedForeignKeys": {},
-    "delegations": {
-      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
-    },
-    "encryptionKeys": {
-      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
-    }
-  }
-}
 ```
 </details>
 
@@ -160,13 +81,6 @@ const patient = await api.patientApi.createOrModifyPatient(
 
 <!-- file://code-samples/{{sdk}}/how-to/websocket/index.mts snippet:create a dataSample for websocket-->
 ```typescript
-const dataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
-  patient.id!,
-  new DataSample({
-    labels: new Set([new CodingReference({ type: 'IC-TEST', code: 'TEST' })]),
-    content: { en: new Content({ stringValue: 'Hello world' }) },
-  }),
-)
 ```
 
 <!-- output://code-samples/{{sdk}}/how-to/websocket/dataSample.txt -->
@@ -174,45 +88,6 @@ const dataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
 <summary>dataSample</summary>
 
 ```json
-{
-  "id": "6a0e9b7d-12ab-43f1-8d12-862fc26db631",
-  "qualifiedLinks": {},
-  "batchId": "d6e48192-0d44-483b-abbe-b6544c9543f2",
-  "index": 0,
-  "valueDate": 20230327144301,
-  "openingDate": 20230327144301,
-  "created": 1679928181474,
-  "modified": 1679928181473,
-  "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
-  "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
-  "identifiers": [],
-  "healthcareElementIds": {},
-  "canvasesIds": {},
-  "content": {
-    "en": {
-      "stringValue": "Hello world",
-      "compoundValue": [],
-      "ratio": [],
-      "range": []
-    }
-  },
-  "codes": {},
-  "labels": {},
-  "systemMetaData": {
-    "secretForeignKeys": [
-      "c643480a-faa7-4068-a6b3-fed0999340f1"
-    ],
-    "cryptedForeignKeys": {
-      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
-    },
-    "delegations": {
-      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
-    },
-    "encryptionKeys": {
-      "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
-    }
-  }
-}
 ```
 </details>
 
@@ -230,47 +105,6 @@ connection.close()
 <summary>events</summary>
 
 ```text
-[
-  {
-    "id": "6a0e9b7d-12ab-43f1-8d12-862fc26db631",
-    "qualifiedLinks": {},
-    "batchId": "d6e48192-0d44-483b-abbe-b6544c9543f2",
-    "index": 0,
-    "valueDate": 20230327144301,
-    "openingDate": 20230327144301,
-    "created": 1679928181474,
-    "modified": 1679928181473,
-    "author": "f7ec463c-44b4-414e-9e7f-f2cc0967cc01",
-    "responsible": "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806",
-    "identifiers": [],
-    "healthcareElementIds": {},
-    "canvasesIds": {},
-    "content": {
-      "en": {
-        "stringValue": "Hello world",
-        "compoundValue": [],
-        "ratio": [],
-        "range": []
-      }
-    },
-    "codes": {},
-    "labels": {},
-    "systemMetaData": {
-      "secretForeignKeys": [
-        "c643480a-faa7-4068-a6b3-fed0999340f1"
-      ],
-      "cryptedForeignKeys": {
-        "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
-      },
-      "delegations": {
-        "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
-      },
-      "encryptionKeys": {
-        "b16baab3-b6a3-42a0-b4b5-8dc8e00cc806": {}
-      }
-    }
-  }
-]
 ```
 </details>
 
@@ -279,9 +113,5 @@ connection.close()
 <summary>statuses</summary>
 
 ```text
-[
-  "CONNECTED",
-  "CLOSED"
-]
 ```
 </details>

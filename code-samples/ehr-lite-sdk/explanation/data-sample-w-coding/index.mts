@@ -1,16 +1,19 @@
 import 'isomorphic-fetch'
-import { CodingReference, Content, DataSample, HealthcareElement } from '@icure/medical-device-sdk'
-import { initLocalStorage, initMedTechApi, output, patientId } from '../../utils/index.mjs'
+import { CodingReference, mapOf } from '@icure/typescript-common'
+import { initEHRLiteApi } from '../../utils/index.mjs'
+import { patientId } from '../../../utils/index.mjs'
 import { expect } from 'chai'
+import { initLocalStorage, output } from '../../../utils/index.mjs'
+import { Condition, LocalComponent, Observation } from '@icure/ehr-lite-sdk'
 
 initLocalStorage()
 
-const api = await initMedTechApi(true)
-const patient = await api.patientApi.getPatient(patientId)
+const api = await initEHRLiteApi(true)
+const patient = await api.patientApi.get(patientId)
 
 //tech-doc: doctor can create DS and HE
-const healthcareElement = await api.healthcareElementApi.createOrModifyHealthcareElement(
-  new HealthcareElement({
+const condition = await api.conditionApi.createOrModify(
+  new Condition({
     description: 'My diagnosis is that the patient has Hay Fever',
     codes: new Set([
       new CodingReference({
@@ -23,16 +26,16 @@ const healthcareElement = await api.healthcareElementApi.createOrModifyHealthcar
   }),
   patient.id,
 )
-expect(!!healthcareElement).to.eq(true) //skip
-expect(healthcareElement.description).to.eq('My diagnosis is that the patient has Hay Fever') //skip
-const dataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
+expect(!!condition).to.eq(true) //skip
+expect(condition.description).to.eq('My diagnosis is that the patient has Hay Fever') //skip
+const observation = await api.observationApi.createOrModifyFor(
   patient.id,
-  new DataSample({
-    content: {
-      en: new Content({
+  new Observation({
+    localContent: mapOf({
+      en: new LocalComponent({
         stringValue: 'The patient has fatigue',
       }),
-    },
+    }),
     codes: new Set([
       new CodingReference({
         id: 'SNOMEDCT|84229001|20020131',
@@ -41,10 +44,10 @@ const dataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
         version: '20020131',
       }),
     ]),
-    healthcareElementIds: new Set([healthcareElement.id]),
+    healthcareElementIds: [condition.id],
   }),
 )
 
 //tech-doc: STOP HERE
-output({ healthcareElement, dataSample })
-expect(!!dataSample).to.eq(true) //skip
+output({ healthcareElement: condition, dataSample: observation })
+expect(!!observation).to.eq(true) //skip

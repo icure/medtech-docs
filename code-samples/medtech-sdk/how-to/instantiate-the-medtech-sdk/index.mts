@@ -1,9 +1,9 @@
 import 'isomorphic-fetch'
 import {
-  AnonymousMedTechApiBuilder,
+  AnonymousMedTechApi,
   KeyStorageImpl,
   LocalStorageImpl,
-  medTechApi,
+  MedTechApi,
 } from '@icure/medical-device-sdk'
 import {
   host,
@@ -12,9 +12,9 @@ import {
   password,
   specId,
   userName,
-} from '../../utils/index.mjs'
+} from '../../../utils/index.mjs'
 import { webcrypto } from 'crypto'
-import { SimpleMedTechCryptoStrategies } from '@icure/medical-device-sdk'
+import { SimpleMedTechCryptoStrategies } from '@icure/medical-device-sdk/src/services/MedTechCryptoStrategies.js'
 
 initLocalStorage()
 
@@ -24,7 +24,7 @@ const authProcessEmailId = 'AUTH_PROCESS_EMAIL_ID'
 const authProcessSMSId = 'AUTH_PROCESS_SMS_ID'
 
 //tech-doc: doctor can create api
-const api = await medTechApi()
+const api = await new MedTechApi.Builder()
   .withICureBaseUrl(host)
   .withUserName(userName)
   .withPassword(password)
@@ -40,7 +40,7 @@ const api = await medTechApi()
 //tech-doc: STOP HERE
 
 //tech-doc: doctor can create anonymous api
-const anonymousApi = await new AnonymousMedTechApiBuilder()
+const anonymousApi = await new AnonymousMedTechApi.Builder()
   .withICureBaseUrl(host)
   .withMsgGwUrl(msgGtwUrl)
   .withMsgGwSpecId(specId)

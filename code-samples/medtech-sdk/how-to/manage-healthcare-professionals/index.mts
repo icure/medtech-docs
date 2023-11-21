@@ -5,7 +5,7 @@ import {
   HealthcareProfessionalFilter,
   Telecom,
 } from '@icure/medical-device-sdk'
-import { initLocalStorage, initMedTechApi, output } from '../../utils/index.mjs'
+import { initLocalStorage, initMedTechApi, output } from '../../../utils/index.mjs'
 import 'isomorphic-fetch'
 import { expect } from 'chai'
 
@@ -34,9 +34,7 @@ const healthcareProfessional: HealthcareProfessional = new HealthcareProfessiona
   ],
 })
 
-const createdHcp = await api.healthcareProfessionalApi.createOrModifyHealthcareProfessional(
-  healthcareProfessional,
-)
+const createdHcp = await api.healthcareProfessionalApi.createOrModify(healthcareProfessional)
 
 //tech-doc: STOP HERE
 output({ createdHcp, healthcareProfessional })
@@ -47,7 +45,7 @@ expect(createdHcp.lastName).to.equal('Keats')
 expect(createdHcp.addresses[0].telecoms[0].telecomNumber).to.equal('jk@hospital.care')
 
 //tech-doc: Load a healthcare professional by id
-const loadedHcp = await api.healthcareProfessionalApi.getHealthcareProfessional(createdHcp.id)
+const loadedHcp = await api.healthcareProfessionalApi.get(createdHcp.id)
 //tech-doc: STOP HERE
 output({ loadedHcp })
 
@@ -56,7 +54,7 @@ expect(loadedHcp.firstName).to.equal('John')
 expect(loadedHcp.lastName).to.equal('Keats')
 
 //tech-doc: Filter healthcare professionals
-const hcps = await api.healthcareProfessionalApi.filterHealthcareProfessionalBy(
+const hcps = await api.healthcareProfessionalApi.filterBy(
   await new HealthcareProfessionalFilter(api)
     .byLabelCodeFilter(undefined, undefined, 'practitioner-specialty', healthcareProfessionalCode)
     .build(),
@@ -68,8 +66,8 @@ expect(hcps.rows.length).to.be.equal(1)
 expect(hcps.rows[0].id).to.be.equal(createdHcp.id)
 
 //tech-doc: Update a healthcare professional
-const hcpToModify = await api.healthcareProfessionalApi.getHealthcareProfessional(createdHcp.id)
-const modifiedHcp = await api.healthcareProfessionalApi.createOrModifyHealthcareProfessional(
+const hcpToModify = await api.healthcareProfessionalApi.get(createdHcp.id)
+const modifiedHcp = await api.healthcareProfessionalApi.createOrModify(
   new HealthcareProfessional({ ...hcpToModify, civility: 'Dr.' }),
 )
 //tech-doc: STOP HERE
@@ -79,6 +77,6 @@ expect(modifiedHcp.id).to.be.equal(createdHcp.id)
 expect(modifiedHcp.civility).to.equal('Dr.')
 
 //tech-doc: Delete a healthcare professional
-const deletedHcp = await api.healthcareProfessionalApi.deleteHealthcareProfessional(createdHcp.id)
+const deletedHcp = await api.healthcareProfessionalApi.delete(createdHcp.id)
 //tech-doc: STOP HERE
 output({ deletedHcp })

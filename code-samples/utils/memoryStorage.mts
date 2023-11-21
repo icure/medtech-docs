@@ -1,5 +1,4 @@
 import { KeyStorageFacade, StorageFacade } from '@icure/api'
-import PromisedSatisfy = Chai.PromisedSatisfy
 
 export class MemoryStorage implements StorageFacade<string> {
   private readonly data = new Map<string, string>()
@@ -49,5 +48,15 @@ export class MemoryKeyStorage implements KeyStorageFacade {
     keyPair: { publicKey: JsonWebKey; privateKey: JsonWebKey },
   ): Promise<void> {
     this.data.set(key, keyPair)
+  }
+
+  async storePrivateKey(key: string, privateKey: JsonWebKey): Promise<void> {
+    const keys = this.data.get(key)
+    this.data.set(key, { ...keys, privateKey })
+  }
+
+  async storePublicKey(key: string, publicKey: JsonWebKey): Promise<void> {
+    const keys = this.data.get(key)
+    this.data.set(key, { ...keys, publicKey })
   }
 }

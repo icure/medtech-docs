@@ -1,0 +1,67 @@
+{
+  "id": "6b1673bc-309d-44da-9aa0-47f59a9d79aa",
+  "rev": "1-8eb291abca109d098cff6153a8c1c95b",
+  "created": 1700058672503,
+  "modified": 1700058672503,
+  "author": "17e392da-8e36-4e4e-abd7-7eef3e434395",
+  "responsible": "3ed06450-17e5-47b6-ba4f-7a0a084df56b",
+  "firstName": "Hubert",
+  "lastName": "Farnsworth",
+  "languages": [],
+  "active": true,
+  "dateOfBirth": 28410409,
+  "profession": "CEO/Owner of Planet Express, Lecturer at Mars University",
+  "nationality": "American",
+  "parameters": {},
+  "identifiers": [],
+  "labels": {},
+  "codes": {},
+  "notes": [],
+  "names": [
+    {
+      "lastName": "Farnsworth",
+      "firstNames": [
+        "Hubert",
+        "J"
+      ],
+      "prefix": [],
+      "suffix": [],
+      "use": "official"
+    },
+    {
+      "firstNames": [
+        "Professor"
+      ],
+      "prefix": [],
+      "suffix": [],
+      "use": "nickname"
+    }
+  ],
+  "addresses": [],
+  "gender": "male",
+  "birthSex": "male",
+  "mergedIds": {},
+  "deactivationReason": "none",
+  "personalStatus": "unknown",
+  "partnerships": [],
+  "patientHealthCareParties": [],
+  "patientProfessions": [],
+  "properties": {},
+  "systemMetaData": {
+    "hcPartyKeys": {},
+    "privateKeyShamirPartitions": {},
+    "secretForeignKeys": [],
+    "cryptedForeignKeys": {},
+    "delegations": {},
+    "encryptionKeys": {},
+    "aesExchangeKeys": {},
+    "transferKeys": {},
+    "securityMetadata": {
+      "secureDelegations": {},
+      "keysEquivalences": {}
+    },
+    "encryptedSelf": "OvKHyVKXEhKmH8ZscWbOptX6ICgLRtRD7d5T0uFkwhI=",
+    "publicKeysForOaepWithSha256": [],
+    "tags": {}
+  }
+}

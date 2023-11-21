@@ -1,0 +1,194 @@
+{
+  "rows": [
+    {
+      "id": "0a51ce59-a7fe-445d-951c-f1c0ce3eabb8",
+      "rev": "3-49d1e34da0699fd2a11a1a1753cae120",
+      "created": 1700058626624,
+      "modified": 1700058626624,
+      "author": "17e392da-8e36-4e4e-abd7-7eef3e434395",
+      "responsible": "3ed06450-17e5-47b6-ba4f-7a0a084df56b",
+      "tags": {},
+      "codes": {},
+      "descr": "Topic to share services",
+      "linkedHealthElements": {},
+      "linkedServices": {},
+      "activeParticipants": {},
+      "systemMetadata": {
+        "secretForeignKeys": [
+          "cbb6f6eb-c0a1-4045-bf24-0c7c525c2b9f"
+        ],
+        "cryptedForeignKeys": {},
+        "delegations": {},
+        "encryptionKeys": {},
+        "securityMetadata": {
+          "secureDelegations": {},
+          "keysEquivalences": {}
+        },
+        "encryptedSelf": "wbgy8Zvrye1Y5FRY3JPdSmbU4USMn5A7o7oRJHomXCN3fRP9BSyx4Wvl34lKp6VxDfDp4OOxT9EYXqdDtEyu1uCoaZ1oMfvZ9vbrjKY4dyI7QEOW7KdcfDDTo7TvdYhNYz9y2fYkjFGMvzkraLfuzQ==",
+        "tags": {}
+      }
+    },
+    {
+      "id": "6f81d3bc-0de5-4263-9128-807611db6a6a",
+      "rev": "1-262100999a9357605e6475dc3c9b5321",
+      "created": 1700058626237,
+      "modified": 1700058626238,
+      "author": "17e392da-8e36-4e4e-abd7-7eef3e434395",
+      "responsible": "3ed06450-17e5-47b6-ba4f-7a0a084df56b",
+      "tags": {},
+      "codes": {},
+      "descr": "Topic name",
+      "linkedHealthElements": {},
+      "linkedServices": {},
+      "activeParticipants": {},
+      "systemMetadata": {
+        "secretForeignKeys": [
+          "43d5599e-7f59-4411-b21a-8d814f0986dd"
+        ],
+        "cryptedForeignKeys": {},
+        "delegations": {},
+        "encryptionKeys": {},
+        "securityMetadata": {
+          "secureDelegations": {},
+          "keysEquivalences": {}
+        },
+        "encryptedSelf": "y9Rn7OL3ha+AZuPy5SjNeIvQCtEegBKTIioknvRmLannb2LxVB4rtusWVpEkPCrit2yavOUvpKq/5ON+KvOJSEb3Qnn2LKI2LHj/KPKmZk2ghvUmXDv+V3mT4fwkMLPDKNNdlLiruCnNirfnWMFWe6j41lVCAlBc0dbNKSPkm2ObN0VyzmILNQyOqW8UOndZFFgcFnSUdx1HvkZYWSDi3EeeQIJ9KN+KeB0kri7U80U=",
+        "tags": {}
+      }
+    },
+    {
+      "id": "8910dfb8-8ed1-45a3-9985-c40940ecac18",
+      "rev": "2-634ee720a4ae421a49fa549be04c204f",
+      "created": 1700058626540,
+      "modified": 1700058626540,
+      "author": "17e392da-8e36-4e4e-abd7-7eef3e434395",
+      "responsible": "3ed06450-17e5-47b6-ba4f-7a0a084df56b",
+      "tags": {},
+      "codes": {},
+      "descr": "Topic that will be left",
+      "linkedHealthElements": {},
+      "linkedServices": {},
+      "activeParticipants": {},
+      "systemMetadata": {
+        "secretForeignKeys": [],
+        "cryptedForeignKeys": {},
+        "delegations": {},
+        "encryptionKeys": {},
+        "securityMetadata": {
+          "secureDelegations": {},
+          "keysEquivalences": {}
+        },
+        "encryptedSelf": "uAZ3w98ffJP89VtMgx6pQs8vmxxYOHxRX9zFRaw7lQVoPVbKZyZOgkc/mJd1RjMMRJxbDh0dUPNttI6AyhrRHQ==",
+        "tags": {}
+      }
+    },
+    {
+      "id": "a73d3aa4-b032-4757-b14d-ae1946abccd2",
+      "rev": "4-c300c551aa9473d133e575b0ab151478",
+      "created": 1700058626363,
+      "modified": 1700058626363,
+      "author": "17e392da-8e36-4e4e-abd7-7eef3e434395",
+      "responsible": "3ed06450-17e5-47b6-ba4f-7a0a084df56b",
+      "tags": {},
+      "codes": {},
+      "descr": "Topic name",
+      "linkedHealthElements": {},
+      "linkedServices": {},
+      "activeParticipants": {},
+      "systemMetadata": {
+        "secretForeignKeys": [
+          "3a0f3dc0-d5c9-4aec-8574-4e5a13185632"
+        ],
+        "cryptedForeignKeys": {},
+        "delegations": {},
+        "encryptionKeys": {},
+        "securityMetadata": {
+          "secureDelegations": {},
+          "keysEquivalences": {}
+        },
+        "encryptedSelf": "zs9IxXeExCBrEKN88yN1V4d1fcGMlFAD+2aw0yKZ1ipAyun9I1HmASr3FPRWDp2ZBpxJLkwWNiVAdbMIceFMPeZSJ91vW/Fg+raaV2ouva7h/0H/ARAv3wtpu0keHiIOlth2dd9fYVdulgaX8EalII7S33iNqqyGXppV2MRUyKVTPyHRkavjZx0GNMJhOl41kZKnf9F6MoiwtIvOf+Zn9fWEzngfIF1i05+qvMIN3fQ=",
+        "tags": {}
+      }
+    },
+    {
+      "id": "b56ff426-bae6-4f3b-9499-9aecdf6ac547",
+      "rev": "3-2e9ff11298b13d8e41da99fdb6fea80f",
+      "created": 1700058626748,
+      "modified": 1700058626748,
+      "author": "17e392da-8e36-4e4e-abd7-7eef3e434395",
+      "responsible": "3ed06450-17e5-47b6-ba4f-7a0a084df56b",
+      "tags": {},
+      "codes": {},
+      "descr": "Topic to share health elements",
+      "linkedHealthElements": {},
+      "linkedServices": {},
+      "activeParticipants": {},
+      "systemMetadata": {
+        "secretForeignKeys": [
+          "43d5599e-7f59-4411-b21a-8d814f0986dd"
+        ],
+        "cryptedForeignKeys": {},
+        "delegations": {},
+        "encryptionKeys": {},
+        "securityMetadata": {
+          "secureDelegations": {},
+          "keysEquivalences": {}
+        },
+        "encryptedSelf": "/9h1c0aXM1yf8ZmPVI7fQxU+KSEvF7+9uee8c2cEYmm/t07t6NnxKG/rHf7+Ur0NDwWpwC3ywNWIld5O/RFaQb2zYDSnoLBIYVangISTZx5C9gz9TZl5V4L+HFDz2tK4cxtxBoPj9igkKFouEUwYeA==",
+        "tags": {}
+      }
+    },
+    {
+      "id": "ca26a486-33e5-4199-80f2-f2c593aaa1a6",
+      "rev": "1-d174e550a7ebff55a318e650130a1b40",
+      "created": 1700058613018,
+      "modified": 1700058613018,
+      "author": "17e392da-8e36-4e4e-abd7-7eef3e434395",
+      "responsible": "3ed06450-17e5-47b6-ba4f-7a0a084df56b",
+      "tags": {},
+      "codes": {},
+      "descr": "Planet Express Delivery Company",
+      "linkedHealthElements": {},
+      "linkedServices": {},
+      "activeParticipants": {},
+      "systemMetadata": {
+        "secretForeignKeys": [],
+        "cryptedForeignKeys": {},
+        "delegations": {},
+        "encryptionKeys": {},
+        "securityMetadata": {
+          "secureDelegations": {},
+          "keysEquivalences": {}
+        },
+        "encryptedSelf": "cKIY9uLsZd8rr/0TIbs6tZxfBWSzXDKWebmAeHNy9pZmEHKaViI0Yn+LB6LMG/69qnI5UdWmQ8yRKLbTIQsTamqnKyTrbelDOjs5KRBbqjc=",
+        "tags": {}
+      }
+    },
+    {
+      "id": "cab70726-f2d3-4950-ac00-9bd991b8de67",
+      "rev": "1-3682a74da191b547eaa3f3a45cc73e25",
+      "created": 1700058626866,
+      "modified": 1700058626866,
+      "author": "17e392da-8e36-4e4e-abd7-7eef3e434395",
+      "responsible": "3ed06450-17e5-47b6-ba4f-7a0a084df56b",
+      "tags": {},
+      "codes": {},
+      "descr": "Topic to be fetched",
+      "linkedHealthElements": {},
+      "linkedServices": {},
+      "activeParticipants": {},
+      "systemMetadata": {
+        "secretForeignKeys": [],
+        "cryptedForeignKeys": {},
+        "delegations": {},
+        "encryptionKeys": {},
+        "securityMetadata": {
+          "secureDelegations": {},
+          "keysEquivalences": {}
+        },
+        "encryptedSelf": "Skogs4W6yC7w4NM+/rBzZyj4HqhHRNwlb+PbSz3A+y2kzKmg2+W9pVFIe7l/OOZt5lNFfzmsFV515jUGYO6u+w==",
+        "tags": {}
+      }
+    }
+  ]
+}

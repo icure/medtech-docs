@@ -1,0 +1,55 @@
+{
+  "id": "405c3210-8b5f-48a1-9d58-0a3d36672102",
+  "rev": "1-c171d6ff15b710978fafd60a20794416",
+  "identifiers": [],
+  "created": 1700058639561,
+  "modified": 1700058639561,
+  "author": "17e392da-8e36-4e4e-abd7-7eef3e434395",
+  "responsible": "3ed06450-17e5-47b6-ba4f-7a0a084df56b",
+  "tags": {},
+  "codes": {},
+  "names": [
+    {
+      "family": "Snow",
+      "given": [
+        "John"
+      ],
+      "prefix": [],
+      "suffix": [],
+      "text": "Snow John",
+      "use": "official"
+    }
+  ],
+  "languages": [],
+  "addresses": [],
+  "gender": "male",
+  "birthSex": "unknown",
+  "mergedIds": [],
+  "active": true,
+  "deactivationReason": "none",
+  "personalStatus": "unknown",
+  "notes": [],
+  "relatives": [],
+  "patientPractitioners": [],
+  "patientProfessions": [],
+  "properties": {},
+  "systemMetaData": {
+    "hcPartyKeys": {},
+    "privateKeyShamirPartitions": {},
+    "secretForeignKeys": [],
+    "cryptedForeignKeys": {},
+    "delegations": {},
+    "encryptionKeys": {},
+    "aesExchangeKeys": {},
+    "transferKeys": {},
+    "securityMetadata": {
+      "secureDelegations": {},
+      "keysEquivalences": {}
+    },
+    "encryptedSelf": "c8cXVSz6/Fd7j0wanh2f0SWebeUF9fzlPCwS1EloQ1s=",
+    "publicKeysForOaepWithSha256": [],
+    "tags": {}
+  },
+  "firstName": "John",
+  "lastName": "Snow"
+}

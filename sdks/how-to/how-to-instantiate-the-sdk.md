@@ -18,19 +18,6 @@ available options.
 
 <!-- file://code-samples/{{sdk}}/how-to/instantiate-the-medtech-sdk/index.mts snippet:doctor can create api-->
 ```typescript
-const api = await medTechApi()
-  .withICureBaseUrl(host)
-  .withUserName(userName)
-  .withPassword(password)
-  .withMsgGwUrl(msgGtwUrl)
-  .withMsgGwSpecId(specId)
-  .withCrypto(webcrypto as any)
-  .withAuthProcessByEmailId(authProcessEmailId)
-  .withAuthProcessBySmsId(authProcessSMSId)
-  .withStorage(storage)
-  .withKeyStorage(keyStorage)
-  .withCryptoStrategies(new SimpleMedTechCryptoStrategies([]))
-  .build()
 ```
 
 * `.withICureBaseUrl(host)`: sets the url of the local or cloud instance of iCure the SDK will connect to. By default, https://kraken.icure.cloud is used.
@@ -51,17 +38,6 @@ available options.
 
 <!-- file://code-samples/{{sdk}}/how-to/instantiate-the-medtech-sdk/index.mts snippet:doctor can create anonymous api-->
 ```typescript
-const anonymousApi = await new AnonymousMedTechApiBuilder()
-  .withICureBaseUrl(host)
-  .withMsgGwUrl(msgGtwUrl)
-  .withMsgGwSpecId(specId)
-  .withCrypto(webcrypto as any)
-  .withAuthProcessByEmailId(authProcessEmailId)
-  .withAuthProcessBySmsId(authProcessSMSId)
-  .withStorage(storage)
-  .withKeyStorage(keyStorage)
-  .withCryptoStrategies(new SimpleMedTechCryptoStrategies([]))
-  .build()
 ```
 
 * `.withICureBaseUrl(host)`: sets the url of the local or cloud instance of iCure the SDK will connect to. By default, https://kraken.icure.cloud is used.

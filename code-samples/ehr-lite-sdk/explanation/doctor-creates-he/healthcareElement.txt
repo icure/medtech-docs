@@ -1,0 +1,31 @@
+{
+  "id": "68c30b72-d56a-481d-85fd-cc3935020199",
+  "identifiers": [],
+  "rev": "1-c95debef56aa06677acef76b973d981c",
+  "created": 1700058594075,
+  "modified": 1700058594075,
+  "author": "17e392da-8e36-4e4e-abd7-7eef3e434395",
+  "responsible": "3ed06450-17e5-47b6-ba4f-7a0a084df56b",
+  "bodySite": {},
+  "tags": {},
+  "codes": {},
+  "healthcareElementId": "68c30b72-d56a-481d-85fd-cc3935020199",
+  "recordedDate": 20231115142954,
+  "openingDate": 1700058594068,
+  "description": "The patient is pregnant",
+  "notes": [],
+  "systemMetaData": {
+    "secretForeignKeys": [
+      "b6540caa-1eb3-42ce-bf4a-f02c42bd9fd7"
+    ],
+    "cryptedForeignKeys": {},
+    "delegations": {},
+    "encryptionKeys": {},
+    "securityMetadata": {
+      "secureDelegations": {},
+      "keysEquivalences": {}
+    },
+    "encryptedSelf": "NMI/4ShAwLRB3BM6MzNup0SevaSmPWUgKpgaVAHiPVSXAPdtVOi/kUrhVWHnZSlbvP4VmqpPHn0ZPqWAsVV3JA==",
+    "tags": {}
+  }
+}

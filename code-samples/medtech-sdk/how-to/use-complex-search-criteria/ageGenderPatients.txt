@@ -1,0 +1,61 @@
+{
+  "rows": [
+    {
+      "id": "e6c83d47-9ff9-478d-9519-9e11e55e9d2d",
+      "rev": "1-c00d9b49c5b09860374cc59567513546",
+      "created": 1700058682374,
+      "modified": 1700058682374,
+      "author": "67199bc5-c9d5-4420-a5b8-d5bf4d645004",
+      "responsible": "993cd716-f4a9-4c26-b3bf-bda23aada8bb",
+      "firstName": "Trillian",
+      "lastName": "Astra",
+      "languages": [],
+      "active": true,
+      "dateOfBirth": 19520101,
+      "parameters": {},
+      "identifiers": [],
+      "labels": {},
+      "codes": {},
+      "notes": [],
+      "names": [
+        {
+          "lastName": "Astra",
+          "firstNames": [
+            "Trillian"
+          ],
+          "prefix": [],
+          "suffix": [],
+          "text": "Astra Trillian",
+          "use": "official"
+        }
+      ],
+      "addresses": [],
+      "gender": "female",
+      "birthSex": "unknown",
+      "mergedIds": {},
+      "deactivationReason": "none",
+      "personalStatus": "unknown",
+      "partnerships": [],
+      "patientHealthCareParties": [],
+      "patientProfessions": [],
+      "properties": {},
+      "systemMetaData": {
+        "hcPartyKeys": {},
+        "privateKeyShamirPartitions": {},
+        "secretForeignKeys": [],
+        "cryptedForeignKeys": {},
+        "delegations": {},
+        "encryptionKeys": {},
+        "aesExchangeKeys": {},
+        "transferKeys": {},
+        "securityMetadata": {
+          "secureDelegations": {},
+          "keysEquivalences": {}
+        },
+        "encryptedSelf": "DuBzqq0sVtFezHJMpNlyecNIeZBQqLpjFjOkSjS2/CI=",
+        "publicKeysForOaepWithSha256": [],
+        "tags": {}
+      }
+    }
+  ]
+}

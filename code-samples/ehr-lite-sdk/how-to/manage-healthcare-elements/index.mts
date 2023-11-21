@@ -1,32 +1,23 @@
 import 'isomorphic-fetch'
-import {
-  CodingReference,
-  HealthcareElement,
-  HealthcareElementFilter,
-  Patient,
-} from '@icure/medical-device-sdk'
-import {
-  patientId,
-  initLocalStorage,
-  initMedTechApi,
-  initPatientMedTechApi,
-  output,
-} from '../../utils/index.mjs'
+import { initLocalStorage, output, patientId } from '../../../utils/index.mjs'
 import { expect } from 'chai'
+import { initEHRLiteApi, initPatientEHRLiteApi } from '../../utils/index.mjs'
+import { Condition, ConditionFilter, Patient } from '@icure/ehr-lite-sdk'
+import { CodingReference } from '@icure/medical-device-sdk'
 
 initLocalStorage()
 
-const api = await initMedTechApi(true)
-const user = await api.userApi.getLoggedUser()
+const api = await initEHRLiteApi(true)
+const user = await api.userApi.getLogged()
 
-const patientApi = await initPatientMedTechApi(true)
-const tmpPatient = await patientApi.patientApi.getPatient(patientId)
+const patientApi = await initPatientEHRLiteApi(true)
+const tmpPatient = await patientApi.patientApi.get(patientId)
 await patientApi.patientApi.giveAccessTo(tmpPatient, user.healthcarePartyId!)
 
-const patient = await api.patientApi.getPatient(patientId)
+const patient = await api.patientApi.get(patientId)
 
 //tech-doc: create a HE as data owner
-const newHealthcareElement = new HealthcareElement({
+const newCondition = new Condition({
   description: 'The patient has been diagnosed Pararibulitis',
   codes: new Set([
     new CodingReference({
@@ -39,24 +30,21 @@ const newHealthcareElement = new HealthcareElement({
   openingDate: new Date('2019-10-12').getTime(),
 })
 
-const healthcareElement = await api.healthcareElementApi.createOrModifyHealthcareElement(
-  newHealthcareElement,
-  patient.id,
-)
+const condition = await api.conditionApi.createOrModify(newCondition, patient.id)
 //tech-doc: STOP HERE
-output({ newHealthcareElement, healthcareElement })
+output({ newHealthcareElement: newCondition, healthcareElement: condition })
 
-expect(!!healthcareElement).to.eq(true)
-expect(healthcareElement.description).to.eq('The patient has been diagnosed Pararibulitis')
+expect(!!condition).to.eq(true)
+expect(condition.description).to.eq('The patient has been diagnosed Pararibulitis')
 try {
-  await patientApi.healthcareElementApi.getHealthcareElement(healthcareElement.id)
+  await patientApi.conditionApi.get(condition.id)
   expect(true, 'promise should fail').eq(false)
 } catch (e) {
   expect(!!e)
 }
 
 //tech-doc: create multiple HEs as data owner
-const healthcareElement1 = new HealthcareElement({
+const condition1 = new Condition({
   description: 'The patient has been diagnosed Pararibulitis',
   codes: new Set([
     new CodingReference({
@@ -69,24 +57,28 @@ const healthcareElement1 = new HealthcareElement({
   openingDate: new Date('2019-10-12').getTime(),
 })
 
-const healthcareElement2 = new HealthcareElement({
+const condition2 = new Condition({
   description: 'The patient has also the flu',
   openingDate: new Date('2020-11-08').getTime(),
 })
 
-const newElements = await api.healthcareElementApi.createOrModifyHealthcareElements(
-  [healthcareElement1, healthcareElement2],
+const newConditions = await api.conditionApi.createOrModifyMany(
+  [condition1, condition2],
   patient.id,
 )
 //tech-doc: STOP HERE
-output({ healthcareElement1, healthcareElement2, newElements })
+output({
+  healthcareElement1: condition1,
+  healthcareElement2: condition2,
+  newElements: newConditions,
+})
 
-expect(!!newElements).to.eq(true)
-expect(newElements.length).to.eq(2)
+expect(!!newConditions).to.eq(true)
+expect(newConditions.length).to.eq(2)
 
 //tech-doc: create multiple related HEs as data owner
-const startHealthcareElement = await api.healthcareElementApi.createOrModifyHealthcareElement(
-  new HealthcareElement({
+const startCondition = await api.conditionApi.createOrModify(
+  new Condition({
     description: 'The patient has been diagnosed Pararibulitis',
     codes: new Set([
       new CodingReference({
@@ -101,142 +93,140 @@ const startHealthcareElement = await api.healthcareElementApi.createOrModifyHeal
   patient.id,
 )
 
-const followUpHealthcareElement = await api.healthcareElementApi.createOrModifyHealthcareElement(
-  new HealthcareElement({
+const followUpCondition = await api.conditionApi.createOrModify(
+  new Condition({
     description: 'The patient recovered',
     openingDate: new Date('2020-11-08').getTime(),
-    healthcareElementId: startHealthcareElement.healthcareElementId,
+    healthcareElementId: startCondition.healthcareElementId,
   }),
   patient.id,
 )
 //tech-doc: STOP HERE
-output({ startHealthcareElement, followUpHealthcareElement })
+output({ startHealthcareElement: startCondition, followUpHealthcareElement: followUpCondition })
 
-expect(!!startHealthcareElement).to.eq(true)
-expect(startHealthcareElement.description).to.eq('The patient has been diagnosed Pararibulitis')
-expect(!!followUpHealthcareElement).to.eq(true)
-expect(followUpHealthcareElement.description).to.eq('The patient recovered')
+expect(!!startCondition).to.eq(true)
+expect(startCondition.description).to.eq('The patient has been diagnosed Pararibulitis')
+expect(!!followUpCondition).to.eq(true)
+expect(followUpCondition.description).to.eq('The patient recovered')
 
 //tech-doc: HE sharing with data owner
-const sharedHealthcareElement = await api.healthcareElementApi.giveAccessTo(
-  healthcareElement,
-  patient.id,
-)
+const sharedCondition = await api.conditionApi.giveAccessTo(condition, patient.id)
 //tech-doc: STOP HERE
-output({ sharedHealthcareElement })
+output({ sharedHealthcareElement: sharedCondition })
 
-expect(!!sharedHealthcareElement).to.eq(true)
-expect(sharedHealthcareElement.id).to.eq(healthcareElement.id)
-const retrievedHE = await patientApi.healthcareElementApi.getHealthcareElement(healthcareElement.id)
-expect(retrievedHE.id).to.eq(healthcareElement.id)
+expect(!!sharedCondition).to.eq(true)
+expect(sharedCondition.id).to.eq(condition.id)
+await patientApi.cryptoApi.forceReload()
+const retrievedHE = await patientApi.conditionApi.get(condition.id)
+expect(retrievedHE.id).to.eq(condition.id)
 
 //tech-doc: retrieve a HE as data owner
-const retrievedHealthcareElement = await api.healthcareElementApi.getHealthcareElement(
-  healthcareElement.id,
-)
+const retrievedCondition = await api.conditionApi.get(condition.id)
 //tech-doc: STOP HERE
-output({ retrievedHealthcareElement })
+output({ retrievedHealthcareElement: retrievedCondition })
 
-expect(retrievedHealthcareElement.id).to.eq(healthcareElement.id)
+expect(retrievedCondition.id).to.eq(condition.id)
 
 //tech-doc: modify a HE as data owner
-const yetAnotherHealthcareElement = await api.healthcareElementApi.createOrModifyHealthcareElement(
-  new HealthcareElement({
+const yetAnotherCondition = await api.conditionApi.createOrModify(
+  new Condition({
     description: 'To modify, I must create',
   }),
   patient.id,
 )
 
-const modifiedHealthcareElement = new HealthcareElement({
-  ...yetAnotherHealthcareElement,
+const modifiedCondition = new Condition({
+  ...yetAnotherCondition,
   description: 'I can change and I can add',
   openingDate: new Date('2019-10-12').getTime(),
 })
 
-const modificationResult = await api.healthcareElementApi.createOrModifyHealthcareElement(
-  modifiedHealthcareElement,
-  patient.id,
-)
-console.log(modificationResult)
+const modificationResult = await api.conditionApi.createOrModify(modifiedCondition, patient.id)
 //tech-doc: STOP HERE
-output({ yetAnotherHealthcareElement, modifiedHealthcareElement, modificationResult })
-expect(modificationResult.id).to.eq(yetAnotherHealthcareElement.id)
+output({
+  yetAnotherHealthcareElement: yetAnotherCondition,
+  modifiedHealthcareElement: modifiedCondition,
+  modificationResult,
+})
+expect(modificationResult.id).to.eq(yetAnotherCondition.id)
 expect(modificationResult.description).to.eq('I can change and I can add')
 expect(modificationResult.openingDate).to.eq(new Date('2019-10-12').getTime())
 
-const existingPatient = await api.patientApi.createOrModifyPatient(
+const existingPatient = await api.patientApi.createOrModify(
   new Patient({
     firstName: 'John',
     lastName: 'Snow',
-    note: 'Winter is coming',
   }),
 )
 
-await api.healthcareElementApi.createOrModifyHealthcareElement(
-  new HealthcareElement({
+await api.conditionApi.createOrModify(
+  new Condition({
     description: 'To modify, I must create',
   }),
   existingPatient.id,
 )
 
 //tech-doc: create HE filter
-const healthcareElementFilter = await new HealthcareElementFilter(api)
+const conditionFilter = await new ConditionFilter(api)
   .forDataOwner(user.healthcarePartyId)
   .forPatients([patient])
   .build()
 //tech-doc: STOP HERE
-output({ healthcareElementFilter })
+output({ healthcareElementFilter: conditionFilter })
+
+for (let i = 0; i < 10; i++) {
+  await api.conditionApi.createOrModify(
+    new Condition({
+      description: `Condition ${i}`,
+      openingDate: new Date('2019-10-12').getTime(),
+    }),
+    patient.id,
+  )
+}
 
 //tech-doc: use HE filter method
-const healthcareElementsFirstPage = await api.healthcareElementApi.filterHealthcareElement(
-  healthcareElementFilter,
-  undefined,
-  10,
-)
+const conditionsFirstPage = await api.conditionApi.filterBy(conditionFilter, undefined, 10)
 //tech-doc: STOP HERE
-output({ healthcareElementsFirstPage })
+output({ healthcareElementsFirstPage: conditionsFirstPage })
 
 //tech-doc: use HE filter method second page
-const healthcareElementsSecondPage = await api.healthcareElementApi.filterHealthcareElement(
-  healthcareElementFilter,
-  healthcareElementsFirstPage.nextKeyPair.startKeyDocId,
+const conditionsSecondPage = await api.conditionApi.filterBy(
+  conditionFilter,
+  conditionsFirstPage.nextKeyPair.startKeyDocId,
   10,
 )
 //tech-doc: STOP HERE
-output({ healthcareElementsSecondPage })
+output({ healthcareElementsSecondPage: conditionsSecondPage })
 
-expect(healthcareElementsSecondPage).not.to.be.undefined
+expect(conditionsSecondPage).not.to.be.undefined
 
 //tech-doc: use HE match method
-const healthcareElementsIdList = await api.healthcareElementApi.matchHealthcareElement(
-  healthcareElementFilter,
-)
+const conditionsIdList = await api.conditionApi.matchBy(conditionFilter)
 //tech-doc: STOP HERE
-output({ healthcareElementsIdList })
+output({ healthcareElementsIdList: conditionsIdList })
 
-expect(healthcareElementsIdList).not.to.be.undefined
+expect(conditionsIdList).not.to.be.undefined
 
 //tech-doc: use by patient method
-const healthcareElementsForPatient = await api.healthcareElementApi.getHealthcareElementsForPatient(
-  existingPatient,
-)
+const conditionsForPatient = await api.conditionApi.getAllForPatient(existingPatient)
 //tech-doc: STOP HERE
-output({ healthcareElementsForPatient })
+output({ healthcareElementsForPatient: conditionsForPatient })
 
-expect(healthcareElementsForPatient).not.to.be.undefined
+expect(conditionsForPatient).not.to.be.undefined
 
 //tech-doc: delete a HE as data owner
-const healthcareElementToDelete = await api.healthcareElementApi.createOrModifyHealthcareElement(
-  new HealthcareElement({
+const conditionsToDelete = await api.conditionApi.createOrModify(
+  new Condition({
     description: 'I am doomed',
   }),
   patient.id,
 )
 
-const deletedHealthcareElement = await api.healthcareElementApi.deleteHealthcareElement(
-  healthcareElementToDelete.id,
-)
+const deletedCondition = await api.conditionApi.delete(conditionsToDelete.id)
 //tech-doc: STOP HERE
-output({ healthcareElementToDelete, deletedHealthcareElement })
+output({
+  healthcareElementToDelete: conditionsToDelete,
+  deletedHealthcareElement: deletedCondition,
+})
 
-expect(deletedHealthcareElement).not.to.be.undefined
+expect(deletedCondition).not.to.be.undefined

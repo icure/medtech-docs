@@ -1,0 +1,26 @@
+[
+  {
+    "id": "93695877-5aed-489f-8752-bb12701fa494",
+    "rev": "1-c6ed0e6b3a47ca2ec0b47b307a2efdfc",
+    "status": "pending",
+    "created": 1700058599261,
+    "identifiers": [],
+    "modified": 1700058599261,
+    "author": "*",
+    "responsible": "*",
+    "properties": {},
+    "type": "KEY_PAIR_UPDATE",
+    "systemMetaData": {
+      "secretForeignKeys": [],
+      "cryptedForeignKeys": {},
+      "delegations": {},
+      "encryptionKeys": {},
+      "securityMetadata": {
+        "secureDelegations": {},
+        "keysEquivalences": {}
+      },
+      "encryptedSelf": "ujjYdFpdUBZ6o0LdGwLGRvXGKpBtfSsQ8S18pfBKYeFRfFljjeqlMnGmB0cxPKH8EuXaR48DgAXYm9B4eIR4mUAh0tyIa1ApORojqw2mIHhf1wIqSVYGkhNLFS4I5kd9z/ekQAtZvID6etagcECNf5UCu2cFa1pi0hrs10hgpgPrxzfQR9Z6v+ZlMQW7MmechtGKLZLLUhsl6kf8FA1Ctgkv5ob9X70xBZpGLKhRoBCbVYfA/uvt4rGgCClvMY6e/riLQydnyOVBg0AwQmu4FHvnvxbT9YnO1urskpUTXJwYQgWJBZ1x9VHA/E71hzeY//SRQoX0KXy8W3kRTa5IX9CsbNs89YpWo8+CZfYSgJljwWR32k6Egva7P9MpmtfoaCYav8LCYD5PvNMsonE6L0ZO2qESYXuc+I/6Mf8EMVBD6UV6E4wqN5Ku2B1cKOB6yMgorpfLB4dpDECAUtAXV7HEf1qUPSwtJMWqKkLDQIuUy1q5SQbSnX0rdPNwHbhZS9Y3M2krVxf6JR5nUkbyVQxL0k55LxfuTIZqB/Hg48/wVgZd7AcylXxrLJujLbDCsXPE23FNFuHFvtzK3cjxVUQp0FFctaCDKtWzov7+qt+88hKr8hmz64V46M68FwOVGNu+2LeoANLLuXub5vjUsCpUhSOryjmiwG28NG4Ec+BA/BBT7g9pV0nCau0nFyr6hjJycq/q83vLHSvjdmrZT8iUO/fcOfBD3EV4yPigx/ipjBwKy14ESAlQndSmKjAXJIMP6BjvNzJIBJ8wcMn1zSeoHkU77iNC6ndKwM2AlZZqzGhHWIIyO2SO+HYl6CaPDP97FVtTtveUmiCTIE3XCOfMqXDWin2x4vz1evIrsCNkT2zaiDfcCmgOAen9Aj0/Tc0MBIe2xTTIcJ2XJV3dbNb0bw4ynT9YFjRbyVt0PK4jWYiepSXLgenWrkVY7N1pp43FbE8FUincqxHWlFouyl76eU/zznQmvoNUDBQmTv9zur75PFYKpOXFevlxwBfB4pU/8jJ1fWI9cXcgY02jY94E058r9FGOGk0QsDPSZR27gQb+AjhLyalO2dBY/UpwkVCu4vesyGHuH1T1LnEAbAk8pOaHk524GOuxgpRVbPGfGOVmhucP9CFzrldhdtIUFFVHTQhqTWvbp+5j89LwLA==",
+      "tags": {}
+    }
+  }
+]

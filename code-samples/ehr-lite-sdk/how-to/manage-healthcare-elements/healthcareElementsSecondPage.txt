@@ -1,0 +1,283 @@
+{
+  "rows": [
+    {
+      "id": "5944fbdd-9b57-4f5d-bfa4-c95a75b49e85",
+      "identifiers": [],
+      "rev": "1-cc6f4b6685a30b52570de2c17fe08496",
+      "created": 1700058614991,
+      "modified": 1700058614991,
+      "author": "17e392da-8e36-4e4e-abd7-7eef3e434395",
+      "responsible": "3ed06450-17e5-47b6-ba4f-7a0a084df56b",
+      "bodySite": {},
+      "tags": {},
+      "codes": {},
+      "healthcareElementId": "5944fbdd-9b57-4f5d-bfa4-c95a75b49e85",
+      "recordedDate": 20231115143015,
+      "openingDate": 1570838400000,
+      "description": "Condition 2",
+      "notes": [],
+      "systemMetaData": {
+        "secretForeignKeys": [
+          "b6540caa-1eb3-42ce-bf4a-f02c42bd9fd7"
+        ],
+        "cryptedForeignKeys": {},
+        "delegations": {},
+        "encryptionKeys": {},
+        "securityMetadata": {
+          "secureDelegations": {},
+          "keysEquivalences": {}
+        },
+        "encryptedSelf": "rF/d3imitB1Mb/xNsq1HympuYFUSBscI81OinKEloh0jTBK5qQoyQTWv5AZlSGcs",
+        "tags": {}
+      }
+    },
+    {
+      "id": "5c33fba3-9de3-434d-b36f-81ebef1f9d9c",
+      "identifiers": [],
+      "rev": "1-47232ebd835c57df827cee6c4745c4df",
+      "created": 1700058615023,
+      "modified": 1700058615023,
+      "author": "17e392da-8e36-4e4e-abd7-7eef3e434395",
+      "responsible": "3ed06450-17e5-47b6-ba4f-7a0a084df56b",
+      "bodySite": {},
+      "tags": {},
+      "codes": {},
+      "healthcareElementId": "5c33fba3-9de3-434d-b36f-81ebef1f9d9c",
+      "recordedDate": 20231115143015,
+      "openingDate": 1570838400000,
+      "description": "Condition 3",
+      "notes": [],
+      "systemMetaData": {
+        "secretForeignKeys": [
+          "b6540caa-1eb3-42ce-bf4a-f02c42bd9fd7"
+        ],
+        "cryptedForeignKeys": {},
+        "delegations": {},
+        "encryptionKeys": {},
+        "securityMetadata": {
+          "secureDelegations": {},
+          "keysEquivalences": {}
+        },
+        "encryptedSelf": "fvPEk8VA2MKm1vg3fITzelo/avWgOzLxmzx5np1SiYKZ2+FFmeqT0GboplHsUlda",
+        "tags": {}
+      }
+    },
+    {
+      "id": "60017bf9-b6dc-4875-9eb7-b7febc71c87a",
+      "identifiers": [],
+      "rev": "1-6ca1edc334be3460129f6752d1e563ce",
+      "created": 1700058615057,
+      "modified": 1700058615057,
+      "author": "17e392da-8e36-4e4e-abd7-7eef3e434395",
+      "responsible": "3ed06450-17e5-47b6-ba4f-7a0a084df56b",
+      "bodySite": {},
+      "tags": {},
+      "codes": {},
+      "healthcareElementId": "60017bf9-b6dc-4875-9eb7-b7febc71c87a",
+      "recordedDate": 20231115143015,
+      "openingDate": 1570838400000,
+      "description": "Condition 4",
+      "notes": [],
+      "systemMetaData": {
+        "secretForeignKeys": [
+          "b6540caa-1eb3-42ce-bf4a-f02c42bd9fd7"
+        ],
+        "cryptedForeignKeys": {},
+        "delegations": {},
+        "encryptionKeys": {},
+        "securityMetadata": {
+          "secureDelegations": {},
+          "keysEquivalences": {}
+        },
+        "encryptedSelf": "g0lpnJNACoqURlSXQ4Zpbg0xOpKsHt0KXFFetAIG1J4p/LsRjpym5Rn2TUKHoom7",
+        "tags": {}
+      }
+    },
+    {
+      "id": "62f452f5-af9a-4dd8-95a1-382353008f37",
+      "identifiers": [],
+      "rev": "1-bc8528e6fcf7feec2d710e37bfd0e110",
+      "created": 1700058593360,
+      "modified": 1700058593360,
+      "author": "17e392da-8e36-4e4e-abd7-7eef3e434395",
+      "responsible": "3ed06450-17e5-47b6-ba4f-7a0a084df56b",
+      "bodySite": {},
+      "tags": {},
+      "codes": {},
+      "healthcareElementId": "62f452f5-af9a-4dd8-95a1-382353008f37",
+      "recordedDate": 20231115142953,
+      "openingDate": 20231115152953,
+      "description": "My diagnosis is that the patient has Hay Fever",
+      "notes": [],
+      "systemMetaData": {
+        "secretForeignKeys": [
+          "b6540caa-1eb3-42ce-bf4a-f02c42bd9fd7"
+        ],
+        "cryptedForeignKeys": {},
+        "delegations": {},
+        "encryptionKeys": {},
+        "securityMetadata": {
+          "secureDelegations": {},
+          "keysEquivalences": {}
+        },
+        "encryptedSelf": "4GLWVHlH5fVTZp0ogpJN/oZNKagNuwRx+foGVZFripFVplV97VKrMC6DilY+Ab0QDGln1eBOC7Li6dalchfff0beKrFspSslx4PkjuscRrc=",
+        "tags": {}
+      }
+    },
+    {
+      "id": "66d9b1d5-16e5-4303-bdf3-c9122da6828d",
+      "identifiers": [],
+      "rev": "1-79bc068d8f926bc5661dbcaea408df24",
+      "created": 1700058614632,
+      "modified": 1700058614632,
+      "author": "17e392da-8e36-4e4e-abd7-7eef3e434395",
+      "responsible": "3ed06450-17e5-47b6-ba4f-7a0a084df56b",
+      "bodySite": {},
+      "tags": {},
+      "codes": {},
+      "healthcareElementId": "66d9b1d5-16e5-4303-bdf3-c9122da6828d",
+      "recordedDate": 20231115143014,
+      "openingDate": 1604793600000,
+      "description": "The patient has also the flu",
+      "notes": [],
+      "systemMetaData": {
+        "secretForeignKeys": [
+          "b6540caa-1eb3-42ce-bf4a-f02c42bd9fd7"
+        ],
+        "cryptedForeignKeys": {},
+        "delegations": {},
+        "encryptionKeys": {},
+        "securityMetadata": {
+          "secureDelegations": {},
+          "keysEquivalences": {}
+        },
+        "encryptedSelf": "nZAKLHG49s1Tui3NtTjugf1Sq2Bgu4xwrRB0wfJI3+VvtyVfJXV1uHpxFjFFYbpiIRAanC1np6I0XgB2f7BC0A==",
+        "tags": {}
+      }
+    },
+    {
+      "id": "68c30b72-d56a-481d-85fd-cc3935020199",
+      "identifiers": [],
+      "rev": "1-c95debef56aa06677acef76b973d981c",
+      "created": 1700058594075,
+      "modified": 1700058594075,
+      "author": "17e392da-8e36-4e4e-abd7-7eef3e434395",
+      "responsible": "3ed06450-17e5-47b6-ba4f-7a0a084df56b",
+      "bodySite": {},
+      "tags": {},
+      "codes": {},
+      "healthcareElementId": "68c30b72-d56a-481d-85fd-cc3935020199",
+      "recordedDate": 20231115142954,
+      "openingDate": 1700058594068,
+      "description": "The patient is pregnant",
+      "notes": [],
+      "systemMetaData": {
+        "secretForeignKeys": [
+          "b6540caa-1eb3-42ce-bf4a-f02c42bd9fd7"
+        ],
+        "cryptedForeignKeys": {},
+        "delegations": {},
+        "encryptionKeys": {},
+        "securityMetadata": {
+          "secureDelegations": {},
+          "keysEquivalences": {}
+        },
+        "encryptedSelf": "NMI/4ShAwLRB3BM6MzNup0SevaSmPWUgKpgaVAHiPVSXAPdtVOi/kUrhVWHnZSlbvP4VmqpPHn0ZPqWAsVV3JA==",
+        "tags": {}
+      }
+    },
+    {
+      "id": "7a08d83c-9ef3-4c8d-b67e-0682501d77e5",
+      "identifiers": [],
+      "rev": "2-d3b5808036bc59fa33c5c4d156ad8b9d",
+      "created": 1700058614548,
+      "modified": 1700058614548,
+      "author": "17e392da-8e36-4e4e-abd7-7eef3e434395",
+      "responsible": "3ed06450-17e5-47b6-ba4f-7a0a084df56b",
+      "bodySite": {},
+      "tags": {},
+      "codes": {},
+      "healthcareElementId": "7a08d83c-9ef3-4c8d-b67e-0682501d77e5",
+      "recordedDate": 20231115143014,
+      "openingDate": 1570838400000,
+      "description": "The patient has been diagnosed Pararibulitis",
+      "notes": [],
+      "systemMetaData": {
+        "secretForeignKeys": [
+          "b6540caa-1eb3-42ce-bf4a-f02c42bd9fd7"
+        ],
+        "cryptedForeignKeys": {},
+        "delegations": {},
+        "encryptionKeys": {},
+        "securityMetadata": {
+          "secureDelegations": {},
+          "keysEquivalences": {}
+        },
+        "encryptedSelf": "dpH5kYN2rqoS1N95ljz9OBO74PORyiWg9E2omh5sBHbI4qvylnFZMq9Ntkj9xxQVGn1iv5WfNquYq/lvx81y9pUxwKrdfgDjXt8IGJdnMWc=",
+        "tags": {}
+      }
+    },
+    {
+      "id": "d588da9a-ccf5-4bcc-b77e-98a5377d875d",
+      "identifiers": [],
+      "rev": "1-89055db25db9fcc3b2c9d4aa6d6d7877",
+      "created": 1700058615189,
+      "modified": 1700058615189,
+      "author": "17e392da-8e36-4e4e-abd7-7eef3e434395",
+      "responsible": "3ed06450-17e5-47b6-ba4f-7a0a084df56b",
+      "bodySite": {},
+      "tags": {},
+      "codes": {},
+      "healthcareElementId": "d588da9a-ccf5-4bcc-b77e-98a5377d875d",
+      "recordedDate": 20231115143015,
+      "openingDate": 1570838400000,
+      "description": "Condition 8",
+      "notes": [],
+      "systemMetaData": {
+        "secretForeignKeys": [
+          "b6540caa-1eb3-42ce-bf4a-f02c42bd9fd7"
+        ],
+        "cryptedForeignKeys": {},
+        "delegations": {},
+        "encryptionKeys": {},
+        "securityMetadata": {
+          "secureDelegations": {},
+          "keysEquivalences": {}
+        },
+        "encryptedSelf": "jHeL4jlFmltoI9ge/XAuIWia40fd5yF+7BWjZfYmzqs2NrIE9R/Ehq0LgYAgJFQt",
+        "tags": {}
+      }
+    },
+    {
+      "id": "f0daa23f-99ec-49f7-867d-d32ad7733c82",
+      "identifiers": [],
+      "rev": "1-bf35e39d2fc8aadbf226dc985efd8cc5",
+      "created": 1700058614689,
+      "modified": 1700058614689,
+      "author": "17e392da-8e36-4e4e-abd7-7eef3e434395",
+      "responsible": "3ed06450-17e5-47b6-ba4f-7a0a084df56b",
+      "bodySite": {},
+      "tags": {},
+      "codes": {},
+      "healthcareElementId": "0ec5906e-82fc-40a0-a986-86c9fcec8044",
+      "recordedDate": 20231115143014,
+      "openingDate": 1604793600000,
+      "description": "The patient recovered",
+      "notes": [],
+      "systemMetaData": {
+        "secretForeignKeys": [
+          "b6540caa-1eb3-42ce-bf4a-f02c42bd9fd7"
+        ],
+        "cryptedForeignKeys": {},
+        "delegations": {},
+        "encryptionKeys": {},
+        "securityMetadata": {
+          "secureDelegations": {},
+          "keysEquivalences": {}
+        },
+        "encryptedSelf": "0sqDu8xbrbDNF4cERS/PEqSex702VpBodSitqNoerRvr6EVjqAi3NcvRPoh9IU/as5jaudCzPkE6BNQK9pg80g==",
+        "tags": {}
+      }
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 import 'isomorphic-fetch'
 import { CodingReference, HealthcareElement } from '@icure/medical-device-sdk'
-import { initLocalStorage, initMedTechApi, output, patientId } from '../../utils/index.mjs'
+import { initLocalStorage, initMedTechApi, output, patientId } from '../../../utils/index.mjs'
 import { expect } from 'chai'
 
 initLocalStorage()
@@ -10,7 +10,7 @@ const api = await initMedTechApi(true)
 const patient = await api.patientApi.getPatient(patientId)
 
 //tech-doc: doctor can create HE
-const healthcareElement = await api.healthcareElementApi.createOrModifyHealthcareElement(
+const healthcareElement = await api.healthcareElementApi.createOrModify(
   new HealthcareElement({
     description: 'The patient is pregnant',
     codes: new Set([

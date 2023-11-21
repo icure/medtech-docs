@@ -1,11 +1,5 @@
 import 'isomorphic-fetch'
-import {
-  Content,
-  DataSample,
-  HealthcareElement,
-  medTechApi,
-  SimpleMedTechCryptoStrategies,
-} from '@icure/medical-device-sdk'
+import { Content, DataSample, HealthcareElement, medTechApi } from '@icure/medical-device-sdk'
 import { webcrypto } from 'crypto'
 import {
   host,
@@ -14,7 +8,9 @@ import {
   patientId,
   patientPassword,
   patientUserName,
-} from '../../utils/index.mjs'
+} from '../../../utils/index.mjs'
+import { mapOf } from '@icure/typescript-common'
+import { SimpleMedTechCryptoStrategies } from '@icure/medical-device-sdk/src/services/MedTechCryptoStrategies.js'
 
 initLocalStorage()
 
@@ -30,21 +26,21 @@ const api = await medTechApi()
 
 const patient = await api.patientApi.getPatient(patientId)
 //tech-doc: patient can create DS and HE
-const healthcareElement = await api.healthcareElementApi.createOrModifyHealthcareElement(
+const healthcareElement = await api.healthcareElementApi.createOrModify(
   new HealthcareElement({
     description: 'My period started',
   }),
   patient.id,
 )
 
-const dataSample = await api.dataSampleApi.createOrModifyDataSampleFor(
+const dataSample = await api.dataSampleApi.createOrModifyFor(
   patient.id,
   new DataSample({
-    content: {
+    content: mapOf({
       en: new Content({
         stringValue: 'I have a headache',
       }),
-    },
+    }),
     healthcareElementIds: new Set([healthcareElement.id]),
   }),
 )

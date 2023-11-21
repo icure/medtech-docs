@@ -1,0 +1,57 @@
+{
+  "id": "c90505c9-6b8b-466f-b31b-95ed142e860a",
+  "rev": "1-e4ca5e91b556b7100fa509211d2f2d6b",
+  "created": 1700058663882,
+  "modified": 1700058663882,
+  "author": "17e392da-8e36-4e4e-abd7-7eef3e434395",
+  "responsible": "3ed06450-17e5-47b6-ba4f-7a0a084df56b",
+  "firstName": "John",
+  "lastName": "Snow",
+  "languages": [],
+  "active": true,
+  "note": "Winter is coming",
+  "parameters": {},
+  "identifiers": [],
+  "labels": {},
+  "codes": {},
+  "notes": [],
+  "names": [
+    {
+      "lastName": "Snow",
+      "firstNames": [
+        "John"
+      ],
+      "prefix": [],
+      "suffix": [],
+      "text": "Snow John",
+      "use": "official"
+    }
+  ],
+  "addresses": [],
+  "gender": "unknown",
+  "birthSex": "unknown",
+  "mergedIds": {},
+  "deactivationReason": "none",
+  "personalStatus": "unknown",
+  "partnerships": [],
+  "patientHealthCareParties": [],
+  "patientProfessions": [],
+  "properties": {},
+  "systemMetaData": {
+    "hcPartyKeys": {},
+    "privateKeyShamirPartitions": {},
+    "secretForeignKeys": [],
+    "cryptedForeignKeys": {},
+    "delegations": {},
+    "encryptionKeys": {},
+    "aesExchangeKeys": {},
+    "transferKeys": {},
+    "securityMetadata": {
+      "secureDelegations": {},
+      "keysEquivalences": {}
+    },
+    "encryptedSelf": "yTcO8FSgdNYGefvWoUPQVuLB8LA7Y6Tkqyg5Z4WiHO38Vn/1f42L6M6oMlfVFDIc",
+    "publicKeysForOaepWithSha256": [],
+    "tags": {}
+  }
+}

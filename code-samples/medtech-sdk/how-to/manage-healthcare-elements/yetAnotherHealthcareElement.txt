@@ -1,0 +1,30 @@
+{
+  "id": "dcdf675b-c1c8-4808-8509-279c52f8b06d",
+  "identifiers": [],
+  "rev": "1-d143166bdf99a84b555a86650004f1ac",
+  "created": 1700058666660,
+  "modified": 1700058666660,
+  "author": "17e392da-8e36-4e4e-abd7-7eef3e434395",
+  "responsible": "3ed06450-17e5-47b6-ba4f-7a0a084df56b",
+  "labels": {},
+  "codes": {},
+  "healthcareElementId": "dcdf675b-c1c8-4808-8509-279c52f8b06d",
+  "valueDate": 20231115143106,
+  "openingDate": 20231115153106,
+  "description": "To modify, I must create",
+  "notes": [],
+  "systemMetaData": {
+    "secretForeignKeys": [
+      "b6540caa-1eb3-42ce-bf4a-f02c42bd9fd7"
+    ],
+    "cryptedForeignKeys": {},
+    "delegations": {},
+    "encryptionKeys": {},
+    "securityMetadata": {
+      "secureDelegations": {},
+      "keysEquivalences": {}
+    },
+    "encryptedSelf": "OZu9AJyluwLvA+uFmVKAoWtFsXuu6HgRtbFCWZ55OPCH/ptkMpmDfMnidOw2fdJ7Jj3FYxIYi5EILu9xkGVldQ==",
+    "tags": {}
+  }
+}

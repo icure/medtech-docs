@@ -1,0 +1,13 @@
+{
+  "id": "afc39a28-f925-450c-8962-8850bf570811",
+  "rev": "2-6ac8dc2e427d2ee61ed7c20b5e67c4cc",
+  "created": 1700058667942,
+  "properties": {},
+  "roles": {},
+  "login": "johnzzclh707t",
+  "passwordHash": "*",
+  "groupId": "test-group",
+  "sharingDataWith": {},
+  "email": "johnzzclh707t@hospital.care",
+  "authenticationTokens": {}
+}

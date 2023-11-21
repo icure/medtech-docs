@@ -1,17 +1,20 @@
 import 'isomorphic-fetch'
-import { CodingReference, HealthcareElement } from '@icure/medical-device-sdk'
-import { initLocalStorage, initMedTechApi, output, patientId } from '../../utils/index.mjs'
+import { initEHRLiteApi } from '../../utils/index.mjs'
+import { patientId } from '../../../utils/index.mjs'
 import { expect } from 'chai'
+import { initLocalStorage, output } from '../../../utils/index.mjs'
+import { Condition } from '@icure/ehr-lite-sdk'
+import { CodingReference } from '@icure/typescript-common'
 
 initLocalStorage()
 
-const api = await initMedTechApi(true)
+const api = await initEHRLiteApi(true)
 
-const patient = await api.patientApi.getPatient(patientId)
+const patient = await api.patientApi.get(patientId)
 
 //tech-doc: doctor can create HE
-const healthcareElement = await api.healthcareElementApi.createOrModifyHealthcareElement(
-  new HealthcareElement({
+const condition = await api.conditionApi.createOrModify(
+  new Condition({
     description: 'The patient is pregnant',
     codes: new Set([
       new CodingReference({
@@ -27,6 +30,6 @@ const healthcareElement = await api.healthcareElementApi.createOrModifyHealthcar
 )
 
 //tech-doc: STOP HERE
-output({ healthcareElement, patient })
-expect(!!healthcareElement).to.eq(true) //skip
-expect(healthcareElement.description).to.eq('The patient is pregnant') //skip
+output({ healthcareElement: condition, patient })
+expect(!!condition).to.eq(true) //skip
+expect(condition.description).to.eq('The patient is pregnant') //skip

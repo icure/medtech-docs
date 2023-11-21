@@ -1,0 +1,9 @@
+{
+  "id": "679fd5d4-a4e0-46d2-af9e-004934b71bd9",
+  "identifiers": [],
+  "labels": {},
+  "codes": {},
+  "openingDate": 1604793600000,
+  "description": "The patient has also the flu",
+  "notes": []
+}

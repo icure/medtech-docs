@@ -1,0 +1,10 @@
+{
+  "id": "c4afae47-22c7-437d-b8b6-8b8f57153362",
+  "identifiers": [],
+  "content": {},
+  "openingDate": 20220929083400,
+  "comment": "Heart rate 1 hour mean",
+  "qualifiedLinks": {},
+  "labels": {},
+  "codes": {}
+}
