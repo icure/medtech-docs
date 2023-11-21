@@ -50,8 +50,8 @@ const medtechApi = await medTechApi()
 While testing your app, you could experience some `403 - FORBIDDEN` errors on iCure Backend requests.
  This is because the cloud version applies a permission-based access control on its endpoints, which is useless for the iCure free version.
 To resolve those issues, make sure your data owner may access the requested data. 
- If not, give him access through the [giveAccessTo service](/{{sdk}}/how-to/how-to-share-data) first, 
-or [share of all future data](/{{sdk}}/how-to/how-to-share-data-automatically) with another user.
+ If not, give him access through the [giveAccessTo service](/{{sdk}}/how-to/how-to-share-data/index.md) first, 
+or [share of all future data](/{{sdk}}/how-to/how-to-share-data/how-to-share-data-automatically) with another user.
 
 ## Additional Features
 

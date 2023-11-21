@@ -323,7 +323,7 @@ explicitly through the `.withCryptoStrategies` method of the builder.
 
 :::info
 
-You can learn more about the Crypto Strategies [here](/{{sdk}}/explanations/crypto-strategies/crypto-strategies).
+You can learn more about the Crypto Strategies [here](/{{sdk}}/explanations/crypto-strategies).
 
 :::
 

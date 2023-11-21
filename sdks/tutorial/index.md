@@ -116,7 +116,7 @@ the local storage contains no key, then a new pair will be created.
 
 :::info
 
-You can learn more about the Crypto Strategies [here](/{{sdk}}/explanations/crypto-strategies/crypto-strategies).
+You can learn more about the Crypto Strategies [here](/{{sdk}}/explanations/crypto-strategies).
 
 :::
 

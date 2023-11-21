@@ -8,8 +8,8 @@ In this page, you will find the most common issues encountered by our users and 
 ## Could not decrypt X with user Y
 If you happen to get this error while getting an entity with encrypted information, such as a `Patient` or a `DataSample`,
 this means that your current user does not have a delegation for it. You can add a delegation for a user following the 
-steps described in [Sharing data between data owners](/{{sdk}}/how-to/how-to-share-data). You may also be interested in 
-[Sharing data automatically with other data owners](/{{sdk}}/how-to/how-to-share-data-automatically).
+steps described in [Sharing data between data owners](/{{sdk}}/how-to/how-to-share-data/index.md). You may also be interested in 
+[Sharing data automatically with other data owners](/{{sdk}}/how-to/how-to-share-data/how-to-share-data-automatically).
 
 ## I cannot create an entity
 The creation of some types of entities, such as `Patients`, `Codings`, or `HealthcareParties` is restricted to users that

@@ -118,7 +118,7 @@ export const userApiRtk = createApi({
 
 :::info
 
-There's others way to share data with other users. You can check the [Sharing data](../../../how-to/how-to-share-data)
+There's others way to share data with other users. You can check the [Sharing data](../../../how-to/how-to-share-data/index.md)
 guide.
 
 :::
