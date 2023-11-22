@@ -9,7 +9,7 @@ This version has the commit code 4.0.489-g3c3d708f38.
 
 ### Breaking Changes
 
-- This release introduces stricter control accesses on endpoints that have a security impact or can affect destructively the data. The iCure API will respond with a 401 if the level of authentication is not high enough.
+- This release introduces stricter control accesses on endpoints that have a security impact or can affect destructively the data (e.g. deleting all data of a group). The iCure API will respond with a 401 if the level of authentication is not high enough.
 - This release supports a new format for the storage of encrypted keys in shareable entities (Patient, Health Elements, Contacts, …) that allows for anonymous sharing of data with patients. When a piece of data is created with this new format it will not be available from previous versions of the API.
 
 ### New Features
