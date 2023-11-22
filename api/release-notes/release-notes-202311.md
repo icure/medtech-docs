@@ -22,8 +22,8 @@ This version has the commit code 4.0.489-g3c3d708f38.
 - Terminologies and codifications: Support for LOINC
 - Terminologies and codifications: Support for the querying of codes per version
 - Cryptographic model : Support for secure delegations that allows for anonymized sharing of information to the patient
-- Cryptographic model : Better control of trusted keys
-- Cryptographic model : Automated recovery of lost keys
+- Cryptographic model : Exchange keys are now signed to ensure that they are not tampered
+- Cryptographic model : New entitites to simplify recovery of lost keys
 - Authentication and Authorisation: JWT tokens support
 - Authentication and Authorisation: Authentication with OAuth
 - Authentication and Authorisation: Authentication by email or SMS tokens
