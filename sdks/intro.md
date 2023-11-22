@@ -4,12 +4,25 @@ sidebar_position: 1
 
 # Introduction
 
-## What is iCure ?
+{{#medtech}}
+## What is iCure for Medtech ?
+{{/medtech}}
+{{#ehrlite}}
+## What is iCure for EHR Lite ?
+{{/ehrlite}}
 
 *iCure* is a trustable service ensuring the privacy of your patient medical data thanks to [end-to-end encryption](explanations/encryption/introduction.mdx), 
-meaning your users are the only ones who decide who can access their data. 
+meaning your users are the only ones who decide who can access their data.
 
-iCure helps you to manage the encrypted data by providing a series of easy-to-use tools :   
+{{#medtech}}
+iCure lets you focus on the core features that are going to make your medical device solution successful: the user experience of your app, your algorithm, … while offloading to us the management of your data store, the monitoring of your solution, the release management of the apis, the security of the data.
+{{/medtech}}
+{{#ehrlite}}
+iCure acts as a complete backend for your EHR solution and provides you with a very flexible data model that provides a high level of customisation while guaranteeing that interoperability in standard formats like FHIR will be straightforward.
+{{/ehrlite}}
+
+
+iCure helps you manage the encrypted data by providing a series of easy-to-use tools :   
 - The **iCure Back-End** allows you to save your data into the databases and manage the access control to it based on the access 
 rules you defined in your app.
 - The [**iCure Cockpit Web Portal**](../cockpit/intro) allows you to create your solutions, your databases and 

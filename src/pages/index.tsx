@@ -88,6 +88,14 @@ const DocsList: () => DocItem[] = () => [
       link: '/cockpit/intro',
     },
   },
+  {
+    title: 'iCure API',
+    description: 'The iCure API is the cloud component to which the SDKs connect',
+    button: {
+      title: 'Information about our API releases',
+      link: '/api/intro',
+    },
+  },
 ]
 
 const codeLines = [

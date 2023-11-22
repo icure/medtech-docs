@@ -79,6 +79,20 @@ async function createConfig() {
                 },
             ],
             [
+                'content-docs',
+                {
+                    id: 'api',
+                    path: './api',
+                    routeBasePath: 'api',
+                    sidebarPath: require.resolve('./sidebarsApi.js'),
+                    editUrl:
+                        `https://github.com/${GITHUB_USERNAME}/medtech-docs/edit/main/`,
+                    remarkPlugins: [
+                        [remarkKroki, krokiConfig]
+                    ],
+                },
+            ],
+            [
                 '@docusaurus/plugin-sitemap',
                 {
                     changefreq: 'weekly',
@@ -170,6 +184,13 @@ async function createConfig() {
                             position: 'right',
                             label: 'Cockpit',
                             docsPluginId: 'cockpit',
+                        },
+                        {
+                            type: 'doc',
+                            docId: 'intro',
+                            position: 'right',
+                            label: 'iCure API',
+                            docsPluginId: 'api',
                         },
                         {
                             type: 'search',
