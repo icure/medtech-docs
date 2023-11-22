@@ -44,7 +44,7 @@ In the following example, a {{Hcp}} will create, for a Patient, a {{HealthcareEl
 
 :::note
 
-If not specified, the value of the following parameters will be automatically set by the iCure Back-End:
+If not specified, the value of the following parameters will be automatically set by the iCure API:
 
 * `id` (to a random UUID)
 * `created` (to the current timestamp)
@@ -213,7 +213,7 @@ If the operation is successful, the method returns the updated {{HealthcareEleme
 To update a {{HealthcareElement}}, both id and rev fields must be valid:
 
 * the id should be the one of an existing {{HealthcareElement}}
-* the rev is a field automatically managed by the iCure Back-End to handle conflicts. It must be equal to the one received
+* the rev is a field automatically managed by the iCure API to handle conflicts. It must be equal to the one received
  from the server when creating or getting the {{HealthcareElement}} you want to modify.
 
 :::

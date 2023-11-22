@@ -23,7 +23,7 @@ iCure acts as a complete backend for your EHR solution and provides you with a v
 
 
 iCure helps you manage the encrypted data by providing a series of easy-to-use tools :   
-- The **iCure Back-End** allows you to save your data into the databases and manage the access control to it based on the access 
+- The **iCure API** allows you to save your data into the databases and manage the access control to it based on the access 
 rules you defined in your app.
 - The [**iCure Cockpit Web Portal**](../cockpit/intro) allows you to create your solutions, your databases and 
 your admin users in your iCure environment.

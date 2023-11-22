@@ -19,7 +19,7 @@ To make it easier for you, we created a [Node.JS Template Repository](https://gi
 - The cryptographic keys creation of your parent organisation (See [Quick Start - Configure your parent Organisation](/{{sdk}}/quick-start/index.md#optional-configure-your-parent-organization-to-allow-patients-to-share-data-with-it) for more information), to allow you to directly start working with medical data.
 
 ## Before starting
-Make sure you [generated an authentication token](/{{sdk}}/quick-start/index.md#create-an-authentication-token-for-your-parent-organisation) for your parent organisation, in order to allow it to connect to the iCure Back-End. 
+Make sure you [generated an authentication token](/{{sdk}}/quick-start/index.md#create-an-authentication-token-for-your-parent-organisation) for your parent organisation, in order to allow it to connect to the iCure API. 
 
 You should now be in possession of your **PARENT_ORGANISATION_USERNAME** and your **PARENT_ORGANISATION_TOKEN**. 
 
