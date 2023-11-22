@@ -4,7 +4,7 @@ sidebar_position: 2
 
 # iCure API version 202311.0.0
 
-This iCure release is a long term support release. It is going to be available at https://v202311.api.icure.cloud for at least 30 months.
+This iCure release is a long term support release. It is going to be available at https://v202311.api.icure.cloud for at least 30 months, from the 15th of November 2023 to the 15th of March 2026.
 This version has the commit code 4.0.489-g3c3d708f38. 
 
 ### Breaking Changes
