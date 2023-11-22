@@ -15,7 +15,7 @@ sidebar_position: 1
 meaning your users are the only ones who decide who can access their data.
 
 {{#medtech}}
-iCure lets you focus on the core features that are going to make your medical device solution successful: the user experience of your app, your algorithm, … while offloading to us the management of your data store, the monitoring of your solution, the release management of the apis, and the security of the data.
+iCure lets you focus on the core features that are going to make your medical device solution successful: the user experience of your app, your algorithms or more generally, everything that has an impact on the user experience, while offloading to us the management of your data store, the monitoring of your solution, the release management of the apis, and the security of the data.
 {{/medtech}}
 {{#ehrlite}}
 iCure acts as a complete backend for your EHR solution and provides you with a very flexible data model that provides a high level of customisation while guaranteeing that interoperability in standard formats like FHIR will be straightforward.
