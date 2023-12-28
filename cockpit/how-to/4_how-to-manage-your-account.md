@@ -42,7 +42,7 @@ Make sure the information you provide are valid, otherwise your users won't be a
 ## Password
 
 In the **Password** tab, you have the possibility to add a password (or update it) to login on Cockpit without generating an OTP
-(See [How-to: Login to Cockpit](how-to-login.md)).
+(See [How-to: Login to Cockpit](2_how-to-login.md)).
 
 ![Manage account security set password](./img/manage-account/security-set-password.png)
 

@@ -17,5 +17,4 @@ Click on the **Verify** button to accept the invitation and create your account.
 
 You may now start configuring your own iCure solution : 
 
-![Registration Completed](./img/register/create-solution-card.png)
-
+![Welcome step, create Solution](img/onboarding/create-solution-btn.png)
