@@ -36,6 +36,6 @@ Fill in your username, your password and click on the **Login** button.
 
 :::info
 
-You can define a password for your account through the [Manage your account screen](how-to-manage-your-account.md) 
+You can define a password for your account through the [Manage your account screen](4_how-to-manage-your-account.md) 
 
 :::

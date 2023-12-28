@@ -67,6 +67,16 @@ For now, you may only edit the name of your solution.
 
 Fill in the new solution name and click on the **Save** button.
 
+## Transfer ownership of a solution
+
+iCure offers you the flexibility to transfer ownership of your solution to another environment seamlessly. This feature enables you to relocate your solution to a new environment while ensuring the safety of all your critical data, including databases, Health Care Providers (HCP), patient information, devices, and more.
+
+![Transfer solution option](./img/solution-interactions/transfer-solution-option.png)
+
+The environment token, which is essential for the transfer process, should be supplied to you by the global administrator of the target environment where the solution is intended to be relocated. This token serves as the gateway to ensure secure and authorized transfers. The global administrator has the flexibility to provide you with the token through a method of their choice.
+
+![Operation token window](./img/solution-interactions/operation-token-window.png)
+
 ## Delete a solution
 
 To delete a solution, click on the **overflow menu**, on the top-right of your
