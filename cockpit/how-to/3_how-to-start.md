@@ -43,3 +43,13 @@ In this step, you will find crucial information needed to finalize the configura
 ![Final step, save btn](img/onboarding/final-step-finish-btn.png)
 
 Congratulations! You've completed the onboarding process for your iCure solution. If you encounter any issues or have questions, feel free to refer to our comprehensive documentation or reach out to our support team for assistance.
+
+## Configuration details shortcuts:
+
+Discovering configuration details is a breeze with these shortcuts:
+
+- **PARENT_ORGANISATION_ID:**  Start by heading to the Database page. Once there, navigate to the HCP tab, where you'll discover details about the organization and its ID. Remember to choose the correct database.
+
+- **EMAIL_AUTHENTICATION_PROCESS_ID:** Begin at the Database page and proceed to the Auth Process tab. There, you'll find information about the organization and its corresponding ID. Ensure you've selected the right database.
+
+- **EXTERNAL_SERVICES_SPEC_ID** and **FRIENDLY_CAPTCHA_SITE_KEY:** Simply access the user dropdown and select the "Manage Environment" pop-up. Voila! You'll find the necessary information right there.
