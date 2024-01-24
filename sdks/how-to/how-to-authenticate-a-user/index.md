@@ -3,104 +3,100 @@ slug: how-to-authenticate-a-user
 ---
 # Authenticating a user
 
-:::caution
-
-This tutorial only applies to the Cloud version: you can't register new users in the free version of iCure.
-
-:::
-
 When using your solution, your users will need to be authenticated to iCure in order to access their data.
 Therefore, you will need to integrate iCure's user authentication process into your product.
 
 When starting your app, the users may be in different situations: 
-- They start it for the first time and need to register
+- They start it for the first time and need to register (autonomously)
 - They already registered and need to log in
 - Their latest login session is still valid, and you can reuse the corresponding authentication token 
 
-At the end of this guide, you will be able to implement authentication for those 3 use cases using the iCure 
-MedTech SDK. 
+This guide will show you how to authenticate into iCure for these situations. 
 
-## Pre-requisites 
-Make sure to have the following elements in your possession:
-- The iCure reCAPTCHA v3 SiteKey
-- Your `msgGtwSpecId`
-- Your `patientAuthProcessByEmailId` and/or `patientAuthProcessBySmsId` identifiers to authenticate your patient users
-- Your `hcpAuthProcessByEmailId` and/or `hcpAuthProcessBySmsId` identifiers to authenticate your {{hcps}} users
+## Register a user
 
-:::info
+In this section we will show you how you can implement autonomous user registration in your app. You can also check
+the [react-native boilerplate](/{{sdk}}/quick-start/react-js-quick-start), which provides an implementation of the
+registration and passwordless login process. 
 
-Currently, you need to contact us at support@icure.com to get this information. However, you
-you will be able to retrieve it autonomously from the [Cockpit](../../../cockpit/intro)
-in a future release.
+:::note
+
+This section is only relevant if your application allows users to register autonomously. If instead you want users to be
+able to access your application by invite only:
+
+- You can use the [Cockpit](/cockpit/intro) to create admin users.
+- You can create new {{hcp}} users using an admin account, or an account with the HCP_USER_MANAGER permission.
+- You can create new patient users using an admin account, or an account with the PATIENT_USER_MANAGER permission.
+  You can follow the [create a user from an existing patient](/{{sdk}}/how-to/how-to-create-a-user-from-a-patient.md) guide to learn 
+  more about this.
 
 :::
 
+### Prerequisites
 
-## Register a user 
-Let's say your patient Daenaerys uses your app for the first time. You will ask her to sign up.
-During this procedure, Daenaerys is not known by iCure system yet. Therefore, you can't use the MedTechApi directly. 
-You will have to create an `AnonymousMedTechApi` instead.
+To implement the registration process in your app you need the following information:
+- The reCAPTCHA v3 or Friendly Captcha site key to use with iCure
+- Your `specId`
+- Your `hcpAuthProcessByEmailId` and/or `hcpAuthProcessBySmsId` if you want to register {{hcps}} users
+- Your `patientAuthProcessByEmailId` and/or `patientAuthProcessBySmsId` identifiers if you want to register patient users
 
-### Init AnonymousMedTechApi
-<!-- file://code-samples/{{sdk}}/how-to/authenticate-user/index.mts snippet:Instantiate AnonymousMedTech API-->
+If you followed the [quickstart](../../../cockpit/how-to/how-to-start) process with the cockpit using the demo setup you should have received this 
+information the `specId`, Friendly Captcha site key and a `patientAuthProcessByEmailId` at the end of the walkthrough. 
+Otherwise, you can always create more authentication processes using the `Processes` tab in the cockpit, and you can refer 
+[this guide](/cockpit/how-to/how-to-start#configuration-details-shortcuts) to learn about where you can find these 
+information. 
+
+:::warning
+
+You will have to embed these information in your app in order to use them. However, make sure to not include the 
+processes identifiers for hcp users in apps for patients: this could  allow patients to register as {{hcps}}, which
+usually have more privileges and could be a security issue.
+
+:::
+
+### Initialise an anonymous instance of the Api
+
+Let's say your patient John uses your app for the first time, so he will have to sign up.
+During this procedure, John is not known by iCure system yet, therefore, you can't use the `{{CodeSdkName}}Api` directly.
+You will have to create an `Anonymous{{CodeSdkName}}Api` instead.
+
+<!-- file://code-samples/{{sdk}}/how-to/authenticate-user/index.mts snippet:Instantiate anonymous API-->
 ```typescript
 ```
 
-The [Anonymous{{CodeSdkName}}Builder](/{{sdk}}/references/entrypoints/AnonymousMedTechApi) asks you to provide multiple information. You will learn more about them in
-the Here are some details [Instantiation How-To](/{{sdk}}/how-to/how-to-instantiate-the-sdk), but for now, here is a quick summary:
+The [Anonymous{{CodeSdkName}}Builder](/{{sdk}}/references/entrypoints/AnonymousMedTechApi) asks you to provide multiple information. You can learn more about them in
+the [Instantiation How-To](/{{sdk}}/how-to/how-to-instantiate-the-sdk), but here is a quick summary:
 
-| Argument             | Description                                                                                      |
-|----------------------|--------------------------------------------------------------------------------------------------|
-| iCureUrlPath         | The URL to contact the iCure API. By default, https://api.icure.cloud is used                    |
-| msgGtwUrl            | The URL to contact the iCure Message Gateway API. By default, https://msg-gw.icure.cloud is used |
-| msgGtwSpecId         | Your iCure Message Gateway Identifier. See next section to know more about it                    |
-| authProcessByEmailId | Identifier of the authentication by email process. See next section to know more about it        |
-| authProcessBySmsId   | Identifier of the authentication by SMS process. See next section to know more about it          |
-| cryptoStrategies     | Customizes cryptographical operations. For now you can use the provided `Simple` implementation. |
-=======
-
-You can learn about all the options you have when instantiating the MedTech API and the AnonymousMedTech API in the [Instantiation How-To](/{{sdk}}/how-to/how-to-instantiate-the-sdk). 
-
-Since Daenaerys is a patient, you will have to provide the `patientAuthProcessByEmailId` as a 
-authProcessByEmailId or `patientAuthProcessBySmsId` as a authProcessBySmsId. 
-
-:::info
-
-If Daenaerys was a doctor, you would instead provide the `hcpAuthProcessByEmailId` as
-authProcessByEmailId or `hcpAuthProcessByEmailId` as authProcessBySmsId.
-
-:::
+| Argument             | Description                                                                                                                                      |
+|----------------------|--------------------------------------------------------------------------------------------------------------------------------------------------|
+| iCureUrlPath         | The URL to contact the iCure API (default https://api.icure.cloud).                                                                              |
+| msgGtwUrl            | The URL to contact the iCure Message Gateway API (default https://msg-gw.icure.cloud).                                                           |
+| specId               | Your iCure Message Gateway Identifier, obtained through the cockpit.                                                                             |
+| authProcessByEmailId | Identifier of the authentication by email process.                                                                                               |
+| authProcessBySmsId   | Identifier of the authentication by SMS process.                                                                                                 |
+| cryptoStrategies     | Customizes the behaviour for operations related to cryptography. See [crypto strategies](/{{sdk}}/explanations/crypto-strategies) for more info. |
 
 :::info
 
 On node.js or React Native, two extra parameters are required to set the way the SDK will handle the internal storage of keys and additional data.
 The `withStorage` method allows you to provide a custom implementation of the [Storage](/{{sdk}}/references/interfaces/StorageFacade) interface.
-This implementation is responsible for storing data in platform specific storage facilities.
+This implementation is used by the SDK to store generic data in platform specific storage facilities.
 The `withKeyStorage` method allows you to provide a custom implementation of the [KeyStorage](/{{sdk}}/references/interfaces/KeyStorageFacade) interface.
-This implementation is responsible for storing cryptographic keys in platform specific secure storage facilities.
-
-You can find more information about this in the [AnonymousMedTechApiBuilder](/{{sdk}}/references/builders/AnonymousMedTechApiBuilder) documentation.
+This implementation is used by the SDK for storing cryptographic keys in platform specific secure storage facilities.
 
 In the browser, default implementations are used that store data and keys in the browser's local storage.
 
 :::
 
-### Starting the authentication process
-The registration process of iCure uses a one-time password (OTP) sent by email or [sms](my-user-authenticates-by-sms.md).
-Therefore, Daenaerys will need to provide at least an email or mobile phone number to register or login.
+### Starting the authentication process - requesting an OTP
+The registration process of iCure uses a one-time password (OTP) sent by email or sms, depending on the type of process
+used.
+Therefore, John will need to provide at least an email or mobile phone number to register or login.
 
-You will also have to implement the ReCAPTCHA mechanism and provide us the computed score during the startAuthentication 
-process.
-
-:::info
-
-Check the official [reCAPTCHA v3 documentation](https://developers.google.com/recaptcha/docs/v3) for more information.
-Also, do not forget to contact the iCure team to get our ReCAPTCHA SiteKey that you will need to implement the reCAPTCHA
-
-:::
-
-As an alternative, you can use [FriendlyCaptcha](https://friendlycaptcha.com/). In this case, the `recaptchaType` property
-of the `startAuthentication` method should be `"friendly-captcha"`.
+You will also have to implement a captcha mechanism and provide us the computed score during the startAuthentication 
+process. You can use either [reCAPTCHA](https://developers.google.com/recaptcha/docs/v3) (default) or [FriendlyCaptcha](https://friendlycaptcha.com/).
+If you want to use friendly captcha the `recaptchaType` parameter of the `startAuthentication` method must be set to
+`"friendly-captcha"`.
 
 <!-- file://code-samples/{{sdk}}/how-to/authenticate-user/index.mts snippet:Start Authentication Process By Email-->
 ```typescript
@@ -113,37 +109,15 @@ of the `startAuthentication` method should be `"friendly-captcha"`.
 ```
 </details>
 
-As an output, you receive an `AuthenticationProcess` object, which you will need for next steps of the procedure.
-
-:::info
-
-The `masterHcpId` represents the identifier of the dataOwner that will be responsible of Daenaerys user creation.
-This `masterHcpId` is optional for {{hcps}} registration but mandatory for patients. 
-
-It's good to know that after their registration, user will share all their future data with this responsible. The user may decide to stop
-sharing their data with this responsible by using the `userApi.stopSharingDataWith` service. For more information, 
-go to the [How-to: Automatically share data with other data owners](../how-to-share-data/how-to-share-data-automatically.md).
-
-:::
-
-### Getting the validation code (OTP)
-The iCure Message Gateway will send the validation code to the user. Since Daenaerys decided  
-to authenticate by email, she can now check her emails to get this code.
-
-:::info
-
-In a future version of Cockpit, you will be able to edit the email and SMS templating for the authentication process. 
-For now, these have all a default template. 
-
-:::
-
-Once Daenaerys retrieves her validation code, she can come back to your app and continue the process. 
+This method will cause the message gateway to send an email (or sms, depending on the process type) to John containing 
+the OTP needed to complete the registration. 
+As an output, you also receive an `AuthenticationProcess` object, which you will need for next steps of the procedure.
 
 #### Completing the authentication process
-To complete Daenaerys registration, you will have to call the `authenticationApi.completeAuthentication` service, 
+To complete the registration, you will have to call the `authenticationApi.completeAuthentication` service, 
 by providing two arguments: 
 - The previous `AuthenticationProcess`
-- The validation code Daenaerys received by email
+- The validation code John received by email
 
 This method will also generate the public and private key for the user, saving them in the `keyStorage` of the 
 newly created MedTechAPI.
@@ -153,19 +127,19 @@ newly created MedTechAPI.
 ```
 
 As a result, you receive : 
-- The MedTechApi instance to use for Daenaerys (properly initialised);
-- The `userId`, identifying Daenaerys user uniquely;
-- The `groupId`, identifying the database in which Daenaerys was created;
+- The MedTechApi instance to use for John (properly initialised);
+- The `userId`, identifying John user uniquely;
+- The `groupId`, identifying the database in which John was created;
 - The `keyPair`, the RSA keypair generated for the patient; 
-- The `token`, the time-limited token created for Daenaerys, to authenticate her; 
+- The `token`, the time-limited token created for John, to authenticate her; 
 
-Make sure to save these elements to be able to authenticate Daenaerys again when she'll come back on your app.
+Make sure to save these elements to be able to authenticate John again when she'll come back on your app.
 
 <!-- file://code-samples/{{sdk}}/how-to/authenticate-user/index.mts snippet:Save credentials-->
 ```typescript
 ```
 
-Now that her authentication is completed, Daenaerys may manage data with iCure.  
+Now that her authentication is completed, John may manage data with iCure.  
 
 <!-- file://code-samples/{{sdk}}/how-to/authenticate-user/index.mts snippet:Create encrypted data-->
 ```typescript
@@ -178,7 +152,7 @@ Now that her authentication is completed, Daenaerys may manage data with iCure.
 ```
 </details>
 
-But what do you have to do when the authentication token of Daenaerys expires, and she needs to log in again?
+But what do you have to do when the authentication token of John expires, and she needs to log in again?
 
 ## Logging in with  existing credentials
 Each time you complete the registration or login process, you can save the credentials you receive
@@ -189,12 +163,12 @@ We symbolised it through the `saveSecurely` method.
 ```typescript
 ```
 
-The first thing you have to do is to retrieve Daenaerys credentials and her RSA Keypair
+The first thing you have to do is to retrieve John credentials and her RSA Keypair
 <!-- file://code-samples/{{sdk}}/how-to/authenticate-user/index.mts snippet:Get back credentials-->
 ```typescript
 ```
 
-And then, initialise a MedTechApi, authenticating Daenaerys directly.
+And then, initialise a MedTechApi, authenticating John directly.
 <!-- file://code-samples/{{sdk}}/how-to/authenticate-user/index.mts snippet:Instantiate back a MedTechApi-->
 ```typescript
 ```
@@ -207,7 +181,7 @@ You can learn more about the Crypto Strategies [here](/{{sdk}}/explanations/cryp
 
 :::
 
-Daenaerys can finally manage her data again.
+John can finally manage her data again.
 <!-- file://code-samples/{{sdk}}/how-to/authenticate-user/index.mts snippet:Get back encrypted data-->
 ```typescript
 ```
@@ -222,16 +196,16 @@ Daenaerys can finally manage her data again.
 
 ## Regenerate the credentials for a User
 
-Once Daenaerys's token is expired, she will need to authenticate again to iCure by starting the login process. 
+Once John's token is expired, she will need to authenticate again to iCure by starting the login process. 
 This flow is similar to the one of the registration phase.
 
-As Daenaerys is not authenticated anymore, you have to create a new AnonymousMedTechApi instance. 
+As John is not authenticated anymore, you have to create a new AnonymousMedTechApi instance. 
 
 <!-- file://code-samples/{{sdk}}/how-to/authenticate-user/index.mts snippet:Login-->
 ```typescript
 ```
 
-Daenaerys then receives a new validation code by email.
+John then receives a new validation code by email.
 
 Since you already created an RSA keypair for her, you just need to retrieve it from where you stored it previously
 and provide it to the `completeAuthentication` method.
@@ -258,7 +232,7 @@ For more information check the In-Depth Explanation [What happens if my user los
 
 :::
 
-And Daenaerys may manage her data again :
+And John may manage her data again :
 <!-- file://code-samples/{{sdk}}/how-to/authenticate-user/index.mts snippet:Access back encrypted data-->
 ```typescript
 ```
@@ -271,7 +245,7 @@ And Daenaerys may manage her data again :
 </details>
 
 ## What's next? 
-Some specific use cases can bring you some questions: what happens if Daenaerys lost her RSA Keypair?
-What happens if Daenaerys would like to start your app on another device?
+Some specific use cases can bring you some questions: what happens if John lost her RSA Keypair?
+What happens if John would like to start your app on another device?
 
 All those questions are answered in the children pages of this tutorial. 
