@@ -6,7 +6,14 @@ description: Start your React JS App
 # Start your React JS App
 Now your iCure environment is successfully set up, you will be able to start the creation of your React JS App. 
 
-To make it easier for you, we created a [React JS Template Repository](https://github.com/icure/icure-medical-device-react-js-boilerplate-app-template), that includes: 
+To make it easier for you, we created a
+{{#medtech}}
+[React JS Template Repository](https://github.com/icure/icure-medical-device-react-js-boilerplate-app-template),
+{{/medtech}}
+{{#ehrlite}}
+[React JS Template Repository](https://github.com/icure/icure-ehr-lite-react-js-boilerplate-app-template),
+{{/ehrlite}}
+that includes: 
 - All the needed dependencies to work with iCure in a React JS app;
 - A fully implemented [authentication flow](https://docs.icure.com/{{sdk}}/how-to/how-to-authenticate-a-user/how-to-authenticate-a-user), to allow you to directly start working with medical data. 
 
@@ -20,18 +27,29 @@ To work with our React JS Template, make sure the following tools are installed 
 - [Yarn](https://yarnpkg.com/getting-started/install)
 
 ## Create your project
-Create your React JS App by executing the following command in a terminal: 
+Create your React JS App by executing the following command in a terminal:
+{{#medtech}}
 ```
 yarn create react-app <your-icure-medtech-react-app> --template @icure/cra-template-icure-medtech
 ```
+{{/medtech}}
+{{#ehrlite}}
+```
+yarn create react-app <your-icure-ehr-app> --template @icure/cra-template-icure-ehr-lite
+```
+{{/ehrlite}}
 
 Once your project is created and `yarn` installed the needed dependencies, you should see a similar entry: 
 ```
 ✨  Done in 6.16s.
 
 Created git commit.
-
+{{#medtech}}
 Success! Created <your-icure-medtech-react-app> at /...
+{{/medtech}}
+{{#ehrlite}}
+Success! Created <your-icure-ehr-app> at /...
+{{/ehrlite}}
 Inside that directory, you can run several commands:
 
   yarn start
@@ -48,8 +66,12 @@ Inside that directory, you can run several commands:
     and scripts into the app directory. If you do this, you can’t go back!
 
 We suggest that you begin by typing:
-
+{{#medtech}}
   cd <your-icure-medtech-react-app>
+{{/medtech}}
+{{#ehrlite}}
+  cd <your-icure-ehr-app>
+{{/ehrlite}}
   yarn start
 
 Happy hacking!
@@ -79,11 +101,17 @@ After you created your Google reCAPTCHA component, include it in the `pages/Logi
 
 
 ## Launch your app
-Once you completed all the environment variables needed in the `.env` file, execute the following command in the terminal to launch your app in the browser: 
+Once you completed all the environment variables needed in the `.env` file, execute the following command in the terminal to launch your app in the browser:
+{{#medtech}}
 ```
 cd <your-icure-medtech-react-app> && yarn start
 ```
-
+{{/medtech}}
+{{#ehrlite}}
+```
+cd <your-icure-ehr-app> && yarn start
+```
+{{/ehrlite}}
 
 ## Congratulations !
 You're fully ready to start creating medical data inside your React App ! Time to have a look to our various [How To's pages](../how-to/index) and start implementing the functionalities of your choice. 
