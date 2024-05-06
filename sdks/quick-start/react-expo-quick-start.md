@@ -45,7 +45,7 @@ gh repo create MyMedTechApp --template icure/expo-medtech-boilerplate --private
 2. Fill in the repository name and description
 3. Click on "Create repository from template"
 
-Your Expo React Native repo created, let's add the missing information to complete an authentication process successfully in the React Native App. 
+Your Expo React Native repo is created, let's add the missing information to complete an authentication process successfully in the React Native App. 
 
 ## Add the authentication information in constants.ts
 While you initialized your environment in [Quick Start](./index.md), we asked you to keep a series of information: 
