@@ -1,15 +1,20 @@
 ---
-slug: react-native-quick-start
-description: Start your React Native App
+slug: react-expo-quick-start
+description: Start your Expo App
 ---
 
-# Start your React Native App
+# Start your Expo App
 
-Now your iCure environment is successfully set up, you will be able to start the creation of your React Native App. 
+Now your iCure environment is successfully set up, you will be able to start the creation of your Expo/React Native App. 
 
-To make it easier for you, we created a [React Native Template Repository](https://github.com/icure/icure-medtech-react-native-boilerplate), that includes: 
+To make it easier for you, we created a [React Native Template Repository](https://github.com/icure/expo-medtech-boilerplate), that includes: 
 - All the needed dependencies to work with iCure in a React Native app;
 - A fully implemented [authentication flow](https://docs.icure.com/{{sdk}}/how-to/how-to-authenticate-a-user/how-to-authenticate-a-user), to allow you to directly start working with medical data. 
+- A call to create a new random Patient in iCure 
+
+:::danger
+Creating a new Patient is only available when using a Organization/Practitioner account.
+:::
 
 :::info
 We use [Friendly-Captcha](https://friendlycaptcha.com/) as our CAPTCHA solution in the template's authentication implementation, as we consider it more privacy friendly than Google reCaptcha. If you would like to use Google reCAPTCHA in your React Native App, you will have to implement your own reCAPTCHA component first. 
@@ -27,23 +32,20 @@ To work with our React Native Template, make sure the following tools are instal
 
 ## Create your project
 Create your React Native App by executing the following command: 
-```
-npx react-native init MedtechApp --template https://github.com/icure/icure-medtech-react-native-boilerplate
-```
 
-Answer the questions in the prompt and once npx instruction is done, you should see a similar entry: 
-```
-✅ Your project is ready!
+### Using gh cli
 
-To run your project, navigate to the directory and run one of the following yarn commands.
-
-- cd <your-react-native-app-name>
-- yarn android
-- yarn ios
-- yarn web
+```bash
+gh repo create MyMedTechApp --template icure/expo-medtech-boilerplate --private
 ```
 
-Your React Native App created, let's add the missing information to complete an authentication process successfully in the React Native App. 
+### Using GitHub web interface
+
+1. Click on the green "Use this template" button at the top of the repository
+2. Fill in the repository name and description
+3. Click on "Create repository from template"
+
+Your Expo React Native repo is created, let's add the missing information to complete an authentication process successfully in the React Native App. 
 
 ## Add the authentication information in constants.ts
 While you initialized your environment in [Quick Start](./index.md), we asked you to keep a series of information: 
@@ -70,7 +72,7 @@ The first time you'll execute those commands, you'll have to provide the package
 
 Once your emulator is starting, you should see the following screen on your emulator: 
 
-![Emulator Login](./img/emulator_login_screen.png)
+![Emulator Login](./img/emulator_login_screen.png) 
 
 Click on **Create an account** and complete the information to create a new user in iCure. Click on **Receive a one time code**. 
 
