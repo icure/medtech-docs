@@ -39,7 +39,7 @@ Create your React Native App by executing the following command:
 gh repo create MyMedTechApp --template icure/expo-medtech-boilerplate --private
 ```
 
-### Using GitHub interface
+### Using GitHub web interface
 
 1. Click on the green "Use this template" button at the top of the repository
 2. Fill in the repository name and description
