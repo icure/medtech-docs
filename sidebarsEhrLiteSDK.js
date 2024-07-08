@@ -27,7 +27,7 @@ const sidebarsSDK = {
                 type: 'doc',
                 id: 'quick-start/index',
             },
-            items: ['quick-start/react-native-quick-start', 'quick-start/react-js-quick-start', 'quick-start/node-js-quick-start']
+            items: ['quick-start/react-native-quick-start', 'quick-start/react-js-quick-start', 'quick-start/node-js-quick-start', 'quick-start/python-quick-start']
         },
         'release-notes',
         {
