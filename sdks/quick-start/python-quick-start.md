@@ -71,7 +71,7 @@ Once these commands complete successfully, you can start your Python server.
 python3 src/server.py
 ```
 
-Go to `http://127.0.0.1:3000/` (except if you updated the HOST & PORT environment variables). You should see the information of your parent Healthcare Professional. 
+Go to `http://127.0.0.1:3000/` (except if you updated the `host` & `port` configuration). You should see the information of your parent Healthcare Professional. 
 All the functionalities in our SDK come both in a blocking and async version. You can go to `http://127.0.0.1:3000/async` to test the retrieval of your parent Healthcare Professional using the async version of the function.
 
 And that's it ! You're now all set to add new functionalities in your Python Server using the iCure SDK. 
