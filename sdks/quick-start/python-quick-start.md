@@ -56,7 +56,7 @@ Here is the list of a few other optional environment variables you can configure
 
 
 ### Start your Python Server
-Once you provided the needed environment variables, install the provided dependencies using the `requirements.txt` file. You cna also use a [virtual environment](https://docs.python.org/3/library/venv.html#creating-virtual-environments) to keep the dependencies of your different projects separate:
+Once you provided the needed environment variables, install the provided dependencies using the `requirements.txt` file. You can also use a [virtual environment](https://docs.python.org/3/library/venv.html#creating-virtual-environments) to keep the dependencies of your different projects separate:
 
 ```bash
 cd <your-icure-nodejs-app>
