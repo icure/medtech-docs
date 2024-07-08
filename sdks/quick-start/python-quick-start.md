@@ -12,7 +12,7 @@ All medical data is encrypted by default inside iCure. This is why you need to b
 
 In this Quick Start, we assume you already followed the [Quick Start - Set up your environment](/{{sdk}}/quick-start/index.md) including the [Quick Start - Configure your parent Organisation](/{{sdk}}/quick-start/index.md#optional-configure-your-parent-organization-to-allow-patients-to-share-data-with-it) step.
 
-We also assume that you already have a React.JS or React Native App, that you have connected to iCure. Two other quick starts are available to help you with this: [Quick Start - Connect your React.JS App](/{{sdk}}/quick-start/react-js-quick-start.md) and [Quick Start - Connect your React Native App](/{{sdk}}/quick-start/react-native-quick-start.md). In this App you will have to set up sharing of encrypted information with the parent organization.
+We also assume that you already have a frontend web application, that you have connected to iCure. Two other quick starts are available to help you with this: [Quick Start - Connect your React.JS App](/{{sdk}}/quick-start/react-js-quick-start.md) and [Quick Start - Connect your React Native App](/{{sdk}}/quick-start/react-native-quick-start.md). In this App you will have to set up sharing of encrypted information with the parent organization.
 
 To make it easier for you, we created a [Python Template Repository](https://github.com/icure/icure-sdk-python-boilerplate-app-template), that includes: 
 - All the needed dependencies to work with iCure in a Python app;
