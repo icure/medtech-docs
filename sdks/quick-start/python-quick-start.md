@@ -56,7 +56,7 @@ Here is the list of a few other optional environment variables you can configure
 
 
 ### Start your Python Server
-Once you provided the needed environment variables, install the provided dependencies using the `requirements.txt` file. You cna also use a [virtual environment](https://docs.python.org/3/library/venv.html#creating-virtual-environments) to keep the dependencies of your different projects separate:
+Once you provided the needed environment variables, install the provided dependencies using the `requirements.txt` file. You can also use a [virtual environment](https://docs.python.org/3/library/venv.html#creating-virtual-environments) to keep the dependencies of your different projects separate:
 
 ```bash
 cd <your-icure-nodejs-app>
@@ -71,7 +71,7 @@ Once these commands complete successfully, you can start your Python server.
 python3 src/server.py
 ```
 
-Go to `http://127.0.0.1:3000/` (except if you updated the HOST & PORT environment variables). You should see the information of your parent Healthcare Professional. 
+Go to `http://127.0.0.1:3000/` (except if you updated the `host` & `port` configuration). You should see the information of your parent Healthcare Professional. 
 All the functionalities in our SDK come both in a blocking and async version. You can go to `http://127.0.0.1:3000/async` to test the retrieval of your parent Healthcare Professional using the async version of the function.
 
 And that's it ! You're now all set to add new functionalities in your Python Server using the iCure SDK. 
