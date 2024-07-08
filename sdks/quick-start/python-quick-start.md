@@ -25,7 +25,7 @@ You should now be in possession of your **PARENT_ORGANISATION_USERNAME** and you
 
 ## Create your project
 ### Create a new repository from the template
-Head to our [Python app template](https://github.com/icure-sdk-python-boilerplate-app-template) and click on `Use this template` to create a new repository
+Head to our [Python app template](https://github.com/icure/icure-sdk-python-boilerplate-app-template) and click on `Use this template` to create a new repository
 initialised with the essential files for a node-js icure app ([more on github templates](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template)).
 You can also initialise the repository using the GitHub CLI:
 ```bash
@@ -34,7 +34,7 @@ gh repo create <your-icure-nodejs-app> --private --clone --template icure/icure-
 
 Alternatively you can also clone the Python template project: 
 ```bash
-git clone git@github.com:iicure-sdk-python-boilerplate-app-template.git <your-icure-nodejs-app>
+git clone git@github.com:icure-sdk-python-boilerplate-app-template.git <your-icure-python-app>
 ```
 Beware that if you do this your repository will be initialised with the history from the template repository and the `origin` remote pointing to it. You may want to delete the `.git` folder and
 re-initialise the repository to achieve an effect similar to the github template.
