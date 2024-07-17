@@ -93,6 +93,20 @@ async function createConfig() {
                 },
             ],
             [
+                'content-docs',
+                {
+                    id: 'nsdk',
+                    path: './nsdk',
+                    routeBasePath: 'nsdk',
+                    sidebarPath: require.resolve('./sidebarsNsdk.js'),
+                    editUrl:
+                        `https://github.com/${GITHUB_USERNAME}/medtech-docs/edit/main/`,
+                    remarkPlugins: [
+                        [remarkKroki, krokiConfig]
+                    ],
+                },
+            ],
+            [
                 '@docusaurus/plugin-sitemap',
                 {
                     changefreq: 'weekly',
@@ -193,6 +207,13 @@ async function createConfig() {
                             docsPluginId: 'api',
                         },
                         {
+                            type: 'doc',
+                            docId: 'intro',
+                            position: 'right',
+                            label: 'New SDK',
+                            docsPluginId: 'nsdk',
+                        },
+                        {
                             type: 'search',
                             position: 'right',
                         },
@@ -224,6 +245,7 @@ async function createConfig() {
                 prism: {
                     theme: lightCodeTheme,
                     darkTheme: darkCodeTheme,
+                    additionalLanguages: ["kotlin"]
                 },
                 algolia: {
                     // The application ID provided by Algolia
