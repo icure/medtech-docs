@@ -1,6 +1,5 @@
 import SdkCode from "../src/components/SdkCode/SdkCode";
-import Python from "../src/components/SdkCode/Pyhon";
-import Pyhon from "../src/components/SdkCode/Pyhon";
+import Python from "../src/components/SdkCode/Python";
 
 # Overview
 
@@ -48,8 +47,8 @@ TODO table of optional parameters?
     <Python>
 {`from icure.authentication import UsernamePassword
 from icure.storage import FileSystemStorage
-from icure import IcureSdk
-from icure.CryptoStrategies import CryptoStrategies, KeyDataRecoveryRequest, RecoveredKeyData, ExportedKeyData, KeyGenerationRequestResult, KeyGenerationRequestResultAllow\n
+from icure import IcureSdk, CryptoStrategies, KeyDataRecoveryRequest, RecoveredKeyData, ExportedKeyData, KeyGenerationRequestResult, KeyGenerationRequestResultAllow
+from icure.model import DataOwnerType, DecryptedPatient, DataOwnerWithType, CryptoActorStubWithType, RecoveryDataUseFailureReason\n
 class MyCryptoStrategies(CryptoStrategies):
     def recover_and_verify_self_hierarchy_keys(
         self,
@@ -91,6 +90,12 @@ sdk = IcureSdk(
 
 ## Overview on entities
 
+### Introduction to the data model
+
+TODO
+
+### Encryptable entities
+
 All entities in iCure fall in two main categories depending on whether they are encryptable or not.
 
 Some types of entities like `Patient`, `HealthElement`, or `Contact` support end-to-end encryption, while others like `HealthcareParty` or
@@ -130,7 +135,7 @@ entity.
     <Python>
 {`from icure.model import DecryptedPatient, AccessLevel
 import uuid\n
-patientWithInitialisedMetadata = sdk.patient.with_encryption_metadata_blocking(
+patient_with_initialised_metadata = sdk.patient.with_encryption_metadata_blocking(
     base=DecryptedPatient(
         # You should use a uuid implementation with a random source that is suitable for cryptographic operations.
         # The uuid of most implementations of python uuid is good for this purpose, but this is not a requirement in the
@@ -139,29 +144,32 @@ patientWithInitialisedMetadata = sdk.patient.with_encryption_metadata_blocking(
         id=str(uuid.uuid4()),
         first_name="John",
         last_name="Smith",
+        date_of_birth=19930805,
         note="If you use the default configuration this will be encrypted end-to-end"
     ),
     # The data will be shared with the data owner corresponding to organisationId
     delegates={organisationId:AccessLevel.Write}
 )
-createdPatient = sdk.patient.create_patient_blocking(patientWithInitialisedMetadata)`}
+created_patient = sdk.patient.create_patient_blocking(patient_with_initialised_metadata)`}
     </Python>
 </SdkCode>
 
-Some entities have links to other entities, for example each `Contact` and `HealthElement` must always be linked to a
-patient. In these cases when initialising the encryption metadata of the entity you also have to provide the "owning"
-entity. In some cases the owning entity is a mandatory parameter, while in others it is optional.
+Some entities have encrypted links to other entities, for example each `Contact` and `HealthElement` must always be
+linked to a patient, and for security reasons this link is encrypted. We will provide more information about encrypted
+links in a later chapter.
+
+When initialising the encryption metadata of an entity with an encrypted link you also have to provide the linked entity.
 
 <SdkCode>
     <Python>
 {`from icure.model import DecryptedHealthElement\n
-healthcareElement = sdk.healthcare_element.create_healthcare_element_blocking(
+healthcare_element = sdk.healthcare_element.create_healthcare_element_blocking(
     sdk.healthcare_element.with_encryption_metadata_blocking(
         base=DecryptedHealthElement(
             id=str(uuid.uuid4()),
             note="Example",
         ),
-        patient=createdPatient
+        patient=created_patient
     )
 )`}
     </Python>
@@ -169,10 +177,13 @@ healthcareElement = sdk.healthcare_element.create_healthcare_element_blocking(
 
 ### Api and entity *flavours*
 
-The iCure SDK will automatically handle encryption and decryption of the entities, but this comes at a cost: decrypting
-and encrypting entities takes some time, and you don't always need to do it. For example if in your application you
-don't encrypt the codes on a patient you can get the patient, modify the codes, and update the patient without
-decrypting and then re-encrypting it.
+Modifying and retrieving encryptable entities in iCure is straightforward: you can use the `get` and `modify` methods
+provided by the iCure SDK without worrying about encryption, because the SDK will automatically handle encryption and
+decryption of the entities.
+
+This however comes at a cost: decrypting and encrypting entities takes some time, and you don't always need to do it.
+For example if in your application you don't encrypt the codes on a patient you can get the patient, modify the codes,
+and update the patient without decrypting and then re-encrypting it.
 
 To cover these use cases the api and entities come in different "flavours".
 
@@ -212,10 +223,10 @@ The following table summarises the behaviour of the flavours of the api
 
 <SdkCode>
     <Python>
-{`encryptedPatient = sdk.patient.encrypted.get_patient_blocking(createdPatient.id)
-maybeDecryptedHealthElement = sdk.healthcare_element.tryAndRecover.get_healthcare_element_blocking(healthcareElement.id)
+{`encrypted_patient = sdk.patient.encrypted.get_patient_blocking(created_patient.id)
+maybe_decrypted_health_element = sdk.healthcare_element.tryAndRecover.get_healthcare_element_blocking(healthcare_element.id)
 # You can check if the health element was decrypted by using \`isinstance\`
-healthElementIsDecrypted = isintance(maybeDecryptedHealthElement, DecryptedHealthElement)`}
+health_element_is_decrypted = isintance(maybeDecryptedHealthElement, DecryptedHealthElement)`}
     </Python>
 </SdkCode>
 
@@ -235,47 +246,96 @@ modifying the fields that need to be encrypted.
 
 ### Searching for entities
 
-You can use *Filters* to search for entities that have some specific characteristics. For example, you can use the
-`PatientByHcPartyNameContainsFuzzyFilter` to search for all patients that contain a certain string in their name.
+You can use *Filters* to search for entities that have some specific characteristics.
+
+To create filters you can use the builders provided for each type of entity. With the builder you can provide some
+conditions that all entities returned by the filter methods need to satisfy. You can also combine multiple conditions
+as *intersection*, which means that the filter will only return entities that satisfy all conditions, or as *union*,
+which means that the filter will return entities that satisfy at least one of the conditions.
+
+Additionally, when building an intersection filter you can specify one search condition to also be used as a sorting
+key.
+
+In the following example we build a filter that returns all patients that have john in the name and are born between
+the 1st January 1990 and the 31st December 1999, sorting them by date of birth. You can refer to the code documentation
+on the builders to learn more about the available filters.
 
 <SdkCode>
     <Python>
-{`from icure.model import FilterChain, PatientByHcPartyNameContainsFuzzyFilter\n
-currentDataOwnerId = sdk.data_owner.get_current_data_owner_id_blocking()
-foundPatients = sdk.patient.filter_patients_by_blocking(
-    FilterChain(
-        PatientByHcPartyNameContainsFuzzyFilter(
-            search_string="John",
-            healthcare_party_id=currentDataOwnerId
-        )
-    )
-)
-print(foundPatients.rows)`}
+{`from icure.filters import PatientFilters\n
+john_filter = PatientFilters.Builder(sdk).contains_fuzzy("John").date_of_birth_between(
+    from_date=19900101,
+    to_date=19991231,
+    sort=True
+).build()`}
     </Python>
 </SdkCode>
 
+You can use the filters by passing them to the *filter* methods in the respective api. The result of a filtering
+operation is an iterator, which can be used to retrieve all entities matching the filter in pages.
+
+<SdkCode>
+    <Python>
+{`filter_iterator = sdk.patient.filter_patients_by_blocking(john_filter)
+print(filter_iterator.next_blocking(100))`}
+    </Python>
+</SdkCode>
+
+### Encrypted entity links
+
+Encrypted links are used to represent one-to-many relationship between entities in a secure yet still usable way.
+
+The encrypted link works by using *secret ids*. For each entity that can be on the *one* side of a one-to-many
+relationship we have a *secret id*, which is stored encrypted in the entity itself. This secret id will be added to the
+*many* linked entities, allowing for any user with access to the secret id of the *one* entity to search for the linked
+entities.
+
 :::note
 
-A future version of the SDK will add builder methods to simplify the definitions of filters.
+It is possible for a single entity to have multiple secret ids, which is useful in cases where you want to better
+separate the health data of patients that needs to be accessible to different groups of data owners. This however is
+a more advanced topic and won't be covered in this page.
 
 :::
 
-:::note
+You can use filters to find the *many* entities linked through secret ids to a *one* entity, for example you can create
+a filter to get all the health elements linked to a patient in the following way:
 
-Currently some filter methods return a `PaginatedList` which contains a "page" of elements matching the filter and
-keys to use to retrieve the next page with the same filters. In a future version of the SDK we will replace all
-`PaginatedList` with `PaginatedListIterator`, which envelops the logic for the retrieval of data over multiple pages
-and allows seamless access to each page.
+<SdkCode>
+    <Python>
+{`from icure.filters import HealthElementFilters\n
+health_elements_for_patient_filter = HealthElementFilters.Builder(sdk).by_patients([created_patient]).build()`}
+    </Python>
+</SdkCode>
 
-:::
+In addition to the secret id we also encrypt and add the normal id of the *one* entity on each of the *many*. This value
+is kept separate from the other encrypted content of the entity in order to allow for the sharing of only the full
+entity content without sharing the linked entity or vice-versa. This could be useful for example if a doctor wants to
+share some exam results without sharing the patient they belong to.
 
-### Retrieving linked entities
+You can use sdk methods to decrypt a linked entity id from an entity when you need it (it will not be automatically
+decrypted like the entity content), for example to get the id of the patient that a health element refers to:
 
-
+<SdkCode>
+    <Python>
+{`# A list containing the id of the patient if it could be decrypted, or empty if the current user can't decrypt it
+patient_of_health_element = sdk.healthcare_element.decrypt_patient_id_of_blocking(healthcare_element)`}
+    </Python>
+</SdkCode>
 
 ### Sharing an existing entity
 
+You can share entities with other data owners even after the entity creation. You can do this by using the `share`
+method in the api of that entity.
 
+When sharing an entity with another data owner you will at least give them read access to the unencrypted content of the
+entity. Additionally, you can give:
+- Access to the encrypted content
+- Write access to the entity
+- Access to the encrypted id of an entity linked by an encrypted link (if the entity is on the *many* side of the one-to-many relationship)
+- Access to some specific secret id of the entity (if the entity is on the *one* side of an encrypted link for a one-to-many relationship)
+
+TODO examples
 
 ## Working with non encryptable entities
 
