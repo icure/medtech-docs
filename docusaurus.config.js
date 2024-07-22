@@ -210,7 +210,7 @@ async function createConfig() {
                             type: 'doc',
                             docId: 'intro',
                             position: 'right',
-                            label: 'New SDK',
+                            label: 'New SDK 🚧',
                             docsPluginId: 'nsdk',
                         },
                         {
