@@ -1,0 +1,447 @@
+import SdkCode from "../src/components/SdkCode/SdkCode";
+import Python from "../src/components/SdkCode/Python";
+
+# Overview
+
+This page gives an overview of the main features of the iCure SDK.
+
+## Initialise your app on cockpit
+
+Before you can start coding you will need to create your application databases and master user from the cockpit.
+You can follow the [onboarding procedure](/cockpit/how-to/how-to-start) using the demo setup to do this.
+
+:::info
+
+The demo setup will provide you with information such as `EXTERNAL_SERVICES_SPEC_ID` and `EMAIL_AUTHENTICATION_PROCESS_ID`.
+These values are used for the autonomous registration of new users and for the passwordless login (using an email/sms
+totp), however these procedures are not yet supported in the current SDK preview build.
+
+:::
+
+## Initialising the SDK
+
+Before you can start working with the medical data you will need to initialise an instance of the iCure SDK. The
+initialisation process will perform the login to the iCure backend and load or initialise the cryptographic keys.
+
+To initialise the SDK you will need:
+1. The URL of the iCure backend. In order to allow our users to comply with various regulations we have multiple
+deployments of iCure, some of which are frozen at specific versions. You can use `https://api.icure.cloud` which always
+points to the latest deployment of the backend.
+2. The credentials of your user. You can create new users and get a temporary login token for new and existing users
+through the cockpit <!--TODO add documentation page and link-->
+3. An implementation of `CryptoStrategies`, which allow you to customise the behaviour of iCure when performing
+cryptographic operations. In the following example we provide an implementation of crypto strategies that does not
+perform any custom key recovery operation, puts full trust on the server, and configures the SDK to use anonymous
+delegations for all non-hcp users but you may want to do things differently in your real application. You can learn more
+about the crypto strategies [here](/ehr-lite-sdk/explanations/crypto-strategies)
+4. A data storage solution, which will be used by the sdk to persistently store keys and other information. By default,
+the same storage solution is used to store both keys (exported as bytes and encoded) and other data, but you can provide
+two different storage implementations if you want.
+
+You can also provide other optional parameters that you can provide to configure the SDK, for example you can specify
+for each encryptable entity which fields should be encrypted.
+
+<!--TODO table of optional parameters?-->
+
+<SdkCode>
+    <Python>
+{`from icure.authentication import UsernamePassword
+from icure.storage import FileSystemStorage
+from icure import IcureSdk, CryptoStrategies, KeyDataRecoveryRequest, RecoveredKeyData, ExportedKeyData, KeyGenerationRequestResult, KeyGenerationRequestResultAllow
+from icure.model import DataOwnerType, DecryptedPatient, DataOwnerWithType, CryptoActorStubWithType, RecoveryDataUseFailureReason\n
+class MyCryptoStrategies(CryptoStrategies):
+    def recover_and_verify_self_hierarchy_keys(
+        self,
+        keys_data: List[KeyDataRecoveryRequest],
+        recover_with_icure_recovery_key: Callable[[str, bool], Union[Dict[str, Dict[str, ExportedKeyData]], RecoveryDataUseFailureReason]]
+    ) -> Dict[str, RecoveredKeyData]:
+        return {
+            k.data_owner_details.data_owner.id: RecoveredKeyData({}, {}) for k in keys_data
+        }\n
+    def generate_new_key_for_data_owner(
+        self,
+        self_data_owner: DataOwnerWithType
+    ) -> KeyGenerationRequestResult:
+        return KeyGenerationRequestResultAllow()\n
+    def verify_delegate_public_keys(
+        self,
+        delegate: CryptoActorStubWithType,
+        public_keys: List[str],
+    ) -> List[str]:
+        return public_keys\n
+    def data_owner_requires_anonymous_delegation(self, data_owner: CryptoActorStubWithType) -> bool:
+        return data_owner.type != DataOwnerType.Hcp\n\n
+executor = ThreadPoolExecutor()
+sdk = IcureSdk(
+    "https://api.icure.cloud",
+    UsernamePassword(
+        "user@icure.com",
+        "password",
+    ),
+    # The file system storage stores the data and keys as plain files on your filesystem
+    FileSystemStorage("/path/to/storage/directory"),
+    MyCryptoStrategies(),
+    # The executor is used on python to execute the async methods.
+    # If you don't provide an executor you can only use the blocking variants of methods.
+    executor=executor
+)`}
+    </Python>
+</SdkCode>
+
+## Overview on entities
+
+### Introduction to the data model
+
+In this chapter we will briefly introduce the most common entities in iCure.
+
+#### User
+
+A user represents an actor that can login to iCure and perform some operations.
+
+#### Data owner
+
+A data owner is an actor that can manage medical data. All data owners have personal cryptographic keys that are used in
+the sharing of data with other data owners.
+
+Most users are also data owners and most data owners are also users, but this is not always the case.
+
+For example, you can have a non-data-owner user, which can still perform some operations on medical data, depending on
+its permissions, however it will not be able to create or decrypt any encrypted data as it lacks any cryptographic
+capabilities.
+
+Alternatively you could have a data owner for a clinic, which holds a cryptographic key that is shared between all
+doctors practicing in that clinic. Since there is no person or application acting as the clinic then there is no reason
+to have a user linked to this data owner,
+
+In iCure data owner can be either a `HealthcareParty` or `Patient`, and a data owner user will always be linked to one
+of these two entities.
+
+#### HealthcareParty (often shortened to hcp)
+
+A healthcare party represent a professional actor that takes part in the management of the health of the patient.
+This could be a physical person, such as a nurse or a doctor, or an organisation such as a hospital or a
+medical analysis laboratory. A healthcare party can be a user, but this is not always the case.
+
+An healthcare party in iCure is similar to `Organisation` or `Practitioner` in FHIR
+
+#### Patient
+
+An actor that receives some form of medical care. Patients in iCure can also be data owners.
+
+#### Contact and services
+
+Services are at the main way of storing medical data and events in iCure, such as measurements, laboratory results,
+or observations made by a practitioner. Services are performed in a precise moment in time and always in the context of a
+Contact, which could be for example a doctor visit. Therefore, services are always contained within a contact. A contact
+and its services are always linked to exactly one patient.
+
+A contact in iCure is similar to an `Encounter` in FHIR. A service instead could be different FHIR entities depending on
+the service being performed, with some common ones being `Observation` and `Immunization`
+
+#### Health element
+
+A health element represent some information that was in some way derived from services, such as a diagnosis.
+Observations are often linked to services, and have often a lasting duration. Health elements are always linked to
+exactly one patient.
+
+A health element is similar to a `Condition` in FHIR.
+
+#### CodeStub
+
+Code stubs are short identifiers that link to more descriptive information. Code stubs could either link to some
+international terminology standards such as SnomedCT or LOINC, or they could use some internal convention.
+
+Most entities can have two collections of code stubs, to represent either "tags" or "codes", which can be useful for
+filtering purposes. You should use tags to define some information on the class of the item, and you should use codes to
+provide information on that specific instance. For example you can have a service for the COVID-19 vaccine
+administration with a tag for [LOINC 30956-7 (Vaccine)](https://loinc.org/30956-7), and a code
+[SNOMED 28531000087107 (covid vaccine)](https://browser.ihtsdotools.org/?perspective=full&conceptId1=28531000087107&edition=MAIN/2024-07-01&release=&languages=en&latestRedirect=false).
+
+### Encryptable entities
+
+All entities in iCure fall in two main categories depending on whether they are encryptable or not.
+
+Some types of entities like `Patient`, `HealthElement`, or `Contact` support end-to-end encryption, while others like
+`HealthcareParty` or `Code` do not, but this is not the only distinction between these two kinds of entities. An
+important difference is that access control is entity-based for encryptable entities and role-based for the others.
+
+This means for example that if a user has the permission to get HealthcareParties then the user can get any
+`HealthcareParty`. If the user also has the permission to modify HealthcareParties then he can modify any
+`HealthcareParty`. These permissions are not restricted to a specific instance of `HealthcareParty`.
+
+:::info
+
+You can change the roles assigned by default to a specific class of user (e.g. hcp or patient) through the cockpit.
+You can also assign different roles to each users. We are going to release documentation page with all the available
+roles and corresponding permissions in the future.
+
+:::
+
+Instead, for encryptable entities the permissions are applied individually to each entity. For example a data owner may be
+allowed to get `ContactA` or `ContactB`, but he may not be allowed to get `ContactC`. The same data owner may also be allowed
+to modify `ContactA` but not `ContactB`. The permission to access to encrypted data of the entity and to the ids of
+linked entities (e.g. the id of the patient that is the subject of a contact) also applies to each entity separately.
+
+## Working with encryptable entities
+
+### Creating an encryptable entity
+
+Before you can create an encryptable entity you first need to initialise its encryption metadata. If you use the
+`create` method passing in input an entity with uninitialised metadata you will get a runtime error.
+
+In most cases the encryption metadata initialisation methods only take optional parameters, for example in the case
+of the patient api method you can pass:
+- A base for the entity to initialise. The entity with initialised metadata will copy its content from the base. If not
+passed the returned entity will only have the id and encryption metadata set. You can always modify the content of the
+initialised entity later.
+- Initial delegates for the entity, which is a map of other data owners (and corresponding access level) that will
+immediately have access to the entity as soon as it is created. You can always share an entity with the other data
+owners later, but if you know already you want to share the entity with someone else it would be better to do it
+immediately, especially if you want the other data owners to be able to get realtime `Create` notifications for the
+entity.
+- Your current user if you want to use the auto-delegations set on the user in addition to any initial delegate provided.
+
+
+<SdkCode>
+    <Python>
+{`from icure.model import DecryptedPatient, AccessLevel
+import uuid\n
+patient_with_initialised_metadata = sdk.patient.with_encryption_metadata_blocking(
+    base=DecryptedPatient(
+        # You should use a uuid implementation with a random source that is suitable for cryptographic operations.
+        # The uuid of most implementations of python uuid is good for this purpose, but this is not a requirement in the
+        # documentation. We will provide an implementation of uuid v4 generator which guarantees this requirement in a
+        # future release.
+        id=str(uuid.uuid4()),
+        first_name="John",
+        last_name="Smith",
+        date_of_birth=19930805,
+        note="If you use the default configuration this will be encrypted end-to-end"
+    ),
+    # The data will be shared with the data owner corresponding to organisationId
+    delegates={organisationId:AccessLevel.Write}
+)
+created_patient = sdk.patient.create_patient_blocking(patient_with_initialised_metadata)`}
+    </Python>
+</SdkCode>
+
+Some entities have encrypted links to other entities, for example each `Contact` and `HealthElement` must always be
+linked to a patient, and for security reasons this link is encrypted. We will provide more information about encrypted
+links in a later chapter.
+
+When initialising the encryption metadata of an entity with an encrypted link you also have to provide the linked entity.
+
+<SdkCode>
+    <Python>
+{`from icure.model import DecryptedHealthElement\n
+health_element = sdk.health_element.create_health_element_blocking(
+    sdk.health_element.with_encryption_metadata_blocking(
+        base=DecryptedHealthElement(
+            id=str(uuid.uuid4()),
+            note="Example",
+        ),
+        patient=created_patient
+    )
+)`}
+    </Python>
+</SdkCode>
+
+### Api and entity *flavours*
+
+Modifying and retrieving encryptable entities in iCure is straightforward: you can use the `get` and `modify` methods
+provided by the iCure SDK without worrying about encryption, because the SDK will automatically handle encryption and
+decryption of the entities.
+
+This however comes at a cost: decrypting and encrypting entities takes some time, and you don't always need to do it.
+For example if in your application you don't encrypt the codes on a patient you can get the patient, modify the codes,
+and update the patient without decrypting and then re-encrypting it.
+
+To cover these use cases the api and entities come in different "flavours".
+
+For each encryptable entity the sdk provides 3 different types: a decrypted type (e.g. `DecryptedPatient`), an encrypted
+type (e.g. `EncryptedPatient`), and a polymorphic type (e.g. `Patient`). These types are de-facto identical, the
+division exists only to support the development of applications by providing better type checking.
+
+:::info
+
+Depending on the language the SDK represents the polymorphic type of an encryptable entity either represented as a
+**union** of the encrypted and decrypted type, or by an **interface** with the two concrete implementations.
+
+:::
+
+Similarly, the api for each encryptable entity comes in 3 flavours. Most methods that you can access directly from the
+api take/return the decrypted flavour of the entity, but you can use the `encrypted` and the `tryAndRecover` properties
+to access versions of the api that work with the encrypted and polymorphic flavours of the entity, respectively.
+
+:::note
+
+Not all methods of the main api are available in the `encrypted` and `tryAndRecover` variants, since some methods such
+as the creation of a new entity don't really make sense in multiple flavours: when you create a new entity it will be
+originally decrypted (you are not going to encrypt it yourself), and it will be encrypted by the sdk before sending it
+to the backend.
+
+:::
+
+The following table summarises the behaviour of the flavours of the api
+
+|                             | Input                                                                                                                                                                                   | Output                                                                               | Example use case                                                                                           |
+|-----------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------|
+| Decrypted                   | Encrypts the entities, fails if not possible for some entity.                                                                                                                           | Decrypts the entities, fails if not possible for some entity.                        | You need to access the encrypted content of an entity                                                      |
+| Encrypted                   | Best-effort validation to verify that the entities do not contain any data which should be encrypted according to the configuration. Fails if some entity does not pass the validation. | Returns the entities as is.                                                          | You don't need the encrypted content of an entity                                                          |
+| Polymorphic (tryAndRecover) | Encrypts or validate the entity depending on the actual type. Fails if some entity can't be encrypted or does not pass validation.                                                      | Tries to decrypt the entities, any entity that can't be decrypted is returned as is. | You don't know if the user can decrypt the entity but you want to display as much information as possible. |
+
+
+
+<SdkCode>
+    <Python>
+{`encrypted_patient = sdk.patient.encrypted.get_patient_blocking(created_patient.id)
+maybe_decrypted_health_element = sdk.health_element.tryAndRecover.get_health_element_blocking(health_element.id)
+# You can check if the health element was decrypted by using \`isinstance\`
+health_element_is_decrypted = isintance(maybeDecryptedHealthElement, DecryptedHealthElement)`}
+    </Python>
+</SdkCode>
+
+:::warning
+
+The validation of encrypted input performed by the encrypted and polymorphic flavours of the apis are best-effort and
+may not always be accurate. There are some edge cases where you can perform illegal changes to an entity and end up with
+a seemingly valid entity (e.g. adding nested services with no content in an encrypted service). Without decrypting the
+final entity, or without having a list of changes it is impossible for the SDK to detect the issue.
+
+The objective of this validation is only to help identify mistakes in the logic of your application, and you should not
+rely solely on it for validation. For example, instead of allowing your user to freely modify an encrypted entity and
+then passing the updated entity to the api wrapping the call in a `try catch` you should just prevent the user from
+modifying the fields that need to be encrypted.
+
+:::
+
+### Searching for entities
+
+You can use *Filters* to search for entities that have some specific characteristics.
+
+To create filters you can use the builders provided for each type of entity. With the builder you can provide some
+conditions that all entities returned by the filter methods need to satisfy. You can also combine multiple conditions
+as *intersection*, which means that the filter will only return entities that satisfy all conditions, or as *union*,
+which means that the filter will return entities that satisfy at least one of the conditions.
+
+Additionally, when building an intersection filter you can specify one search condition to also be used as a sorting
+key.
+
+In the following example we build a filter that returns all patients that have john in the name and are born between
+the 1st January 1990 and the 31st December 1999, sorting them by date of birth. You can refer to the code documentation
+on the builders to learn more about the available filters.
+
+<SdkCode>
+    <Python>
+{`from icure.filters import PatientFilters\n
+john_filter = PatientFilters.Builder(sdk).contains_fuzzy("john").date_of_birth_between(
+    from_date=19900101,
+    to_date=19991231,
+    sort=True
+).build()`}
+    </Python>
+</SdkCode>
+
+You can use the filters by passing them to the *filter* methods in the respective api. The result of a filtering
+operation is an iterator, which can be used to retrieve all entities matching the filter in pages.
+
+<SdkCode>
+    <Python>
+{`filter_iterator = sdk.patient.filter_patients_by_blocking(john_filter)
+print(filter_iterator.next_blocking(100))`}
+    </Python>
+</SdkCode>
+
+### Encrypted entity links
+
+Encrypted links are used to represent one-to-many relationship between entities in a secure yet still usable way.
+
+The encrypted link works by using *secret ids*. For each entity that can be on the *one* side of a one-to-many
+relationship we have a *secret id*, which is stored encrypted in the entity itself. This secret id will be added to the
+*many* linked entities, allowing for any user with access to the secret id of the *one* entity to search for the linked
+entities.
+
+:::note
+
+It is possible for a single entity to have multiple secret ids, which is useful in cases where you want to better
+separate the health data of patients that needs to be accessible to different groups of data owners. This however is
+a more advanced topic and won't be covered in this page.
+
+:::
+
+You can use filters to find the *many* entities linked through secret ids to a *one* entity, for example you can create
+a filter to get all the health elements linked to a patient in the following way:
+
+<SdkCode>
+    <Python>
+{`from icure.filters import HealthElementFilters\n
+health_elements_for_patient_filter = HealthElementFilters.Builder(sdk).by_patients([created_patient]).build()`}
+    </Python>
+</SdkCode>
+
+In addition to the secret id we also encrypt and add the normal id of the *one* entity on each of the *many*. This value
+is kept separate from the other encrypted content of the entity in order to allow for the sharing of only the full
+entity content without sharing the linked entity or vice-versa. This could be useful for example if a doctor wants to
+share some exam results without sharing the patient they belong to.
+
+You can use sdk methods to decrypt a linked entity id from an entity when you need it (it will not be automatically
+decrypted like the entity content), for example to get the id of the patient that a health element refers to:
+
+<SdkCode>
+    <Python>
+{`# A list containing the id of the patient if it could be decrypted, or empty if the current user can't decrypt it
+patient_of_health_element = sdk.health_element.decrypt_patient_id_of_blocking(health_element)`}
+    </Python>
+</SdkCode>
+
+### Sharing an existing entity
+
+You can share entities with other data owners even after the entity creation. You can do this by using the `share`
+method in the api of that entity.
+
+When sharing an entity with another data owner you will at least give them read access to the unencrypted content of the
+entity. Additionally, you can give:
+- Access to the encrypted content
+- Write access to the entity
+- Access to the encrypted id of an entity linked by an encrypted link (if the entity is on the *many* side of the one-to-many relationship)
+- Access to some specific secret id of the entity (if the entity is on the *one* side of an encrypted link for a one-to-many relationship)
+
+<SdkCode>
+    <Python>
+{`from icure.model import RequestedPermission, ShareMetadataBehaviour\n
+# Get the secret ids of the patient
+patient_secret_ids = sdk.patient.get_secret_ids_of_blocking(created_patient)
+shared_patient = sdk.patient.share_with_blocking(
+    other_data_owner,
+    created_patient,
+    PatientShareOptions(
+        # Share the provided secret ids
+        share_secret_ids=patient_secret_ids,
+        # Share the encryption key of the patient if available to the current user
+        share_encryption_key=ShareMetadataBehaviour.IfAvailable,
+        # Share the entity with write permission if the current user has write permission, read permission otherwise
+        requested_permissions=RequestedPermission.MaxWrite
+    )
+)
+shared_health_element = sdk.health_element.share_with_blocking(
+    other_data_owner,
+    health_element,
+    HealthElementShareOptions(
+        # Share the encryption key of the health element, failing if not available to the current user.
+        share_encryption_key=ShareMetadataBehaviour.Required,
+        # Do not share the patient id linked to the health element (even if the current user can access it).
+        share_patient_id=ShareMetadataBehaviour.Never,
+        # Share the entity with write permission, failing if the current user does not have write permission.
+        requested_permissions=RequestedPermission.FullWrite
+    )
+)`}
+    </Python>
+</SdkCode>
+
+## Working with non encryptable entities
+
+After understanding how to work with encryptable entities the usage of non-encryptable entities api methods should be
+quite straightforward. The main changes on the non-encryptable entities are:
+- There is no encryption metadata, so you can use the create entity methods using a newly constructed instance
+- There is no flavours of api
+- There are no share methods, since access control is role-based
