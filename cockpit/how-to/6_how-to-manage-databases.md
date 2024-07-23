@@ -2,7 +2,7 @@
 slug: how-to-manage-databases
 ---
 
-# Handling your databases
+# Handling databases
 
 ## Go to a solution's databases
 

@@ -2,7 +2,7 @@
 slug: how-to-manage-solutions
 ---
 
-# Handling your solutions
+# Handling solutions
 In iCure, a **Solution** represents a **medical system, software or platform** in which users' medical data are potentially managed through multiple IT stakeholders.
 
 For example, let's take Petra Corp, developing solutions to help patients follow their menstruation cycle and share medical information linked to it with their gynecologist. 
