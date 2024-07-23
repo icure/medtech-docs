@@ -41,7 +41,7 @@ HCPs (Healthcare Professionals or Organizations) can be managed within any datab
 - Select the "Delete" option.
 
   ![Delete user](./img/hcp-interactions/delete-option.jpg)
-  
+
 :::warning
 Deletion is permanent and cannot be undone.
 :::
@@ -54,7 +54,7 @@ Deletion is permanent and cannot be undone.
   ![Copy user id](./img/hcp-interactions/copy-btn.jpg)
 
 :::info
-  The HCP ID or Organization ID corresponds to the **PARENT_ORGANISATION_ID** used as an environment variable for configuring your mobile or web application.
+The HCP ID or Organization ID corresponds to the **PARENT_ORGANISATION_ID** used as an environment variable for configuring your mobile or web application.
 :::
 
 ## Generating an Authentication Token
@@ -88,7 +88,7 @@ To retrieve the **Parent Organization ID**, navigate to the HCP tab of the parti
   ![Copy user id](./img/hcp-interactions/import-users.jpg)
 
 - Upload a file that matches one of the allowed formats: .xlsx, .xls, .xml, .csv, .txt, .ods.
-  
+
   ![Copy user id](./img/hcp-interactions/upload-file-btn.jpg)
 
 - If there are any rejected HCPs, check the reason and fix the problem.
