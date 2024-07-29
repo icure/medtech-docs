@@ -76,6 +76,39 @@ The HCP ID or Organization ID corresponds to the **PARENT_ORGANISATION_ID** used
 
   ![Copy user id](./img/hcp-interactions/delete-token-btn.jpg)
 
+## Generating a Cryptographic Keypair
+#### Follow these steps to generate and save a cryptographic keypair:
+
+- **Locate the Relevant HCP**
+  - Open the application and navigate to the list of HCPs.
+  - Find the HCP for which you need to generate a keypair.
+
+- **Access the Overflow Menu**
+  - Click on the three-dot icon (overflow menu) next to the selected HCP.
+  - In the dropdown menu, select the "Generate Keypair" option.
+
+  ![Generate keypair option](./img/hcp-interactions/generate-keypair-option.jpg)
+
+- **Generate the Keypair**
+  - Follow the prompt and instructions that appear to complete the keypair generation process.
+
+  ![Generate keypair button](./img/hcp-interactions/generate-btn.jpg)
+
+- **Save the Keys**
+  - Once the keypair is generated, you will receive both a private and a public key.
+  - **Important:** Save the private key securely. Do not share it with anyone.
+  - Save the public key where it is easily accessible for future use.
+
+  ![Safe the keypair as a json](./img/hcp-interactions/save-json-btn.jpg)
+
+
+:::info
+**Generate Keys Only for Direct Use:** Please generate keys only for the HCP you will use directly. Doctors and other HCPs should create their own keys when they start using your application.
+:::
+:::warning
+**Private Key Security:** You will not be able to see the private key again, as we do not store it on our servers. If you lose your private key, you will lose access to your data.
+:::
+
 ## Importing HCPs from .xlsx
 To upload a batch of Healthcare Parties, ensure your table contains the following columns: First Name, Last Name, Email Address, Country Code, Mobile Phone, Parent Organization ID.
 :::info
