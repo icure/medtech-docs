@@ -132,3 +132,172 @@ It is worth noting that even though `Service` is an encryptable entity, there is
 `withEncryptionMetadata` method because the entity is nested within another encryptable entity and will inherit
 its encryption metadata. This means that if the enclosing entity was shared with another user,
 the nested entity will automatically be shared as well.
+
+### Creating Signal-like Medical Data (Electrocardiography)
+
+A `Service` can also hold time-series data, signals, and, in general, vector-like data. In the following example,
+the resulting signal from an [ECG (Electrocardiography)](https://en.wikipedia.org/wiki/Electrocardiography) exam is
+added to the `Contact` through a `Service`:
+
+<SdkCode>
+   <Kotlin>
+{`val ecgSignal = List(10) { Random.nextInt(0, 100) / 100.0 }
+val heartRateService = DecryptedService(
+	id = UUID.randomUUID().toString(),
+	identifier = listOf(Identifier(system = "icure", value = "ecg")),
+	label = "Heart rate",
+	content = mapOf(
+		"en" to DecryptedContent(
+			timeSeries = TimeSeries(
+				samples = listOf(ecgSignal)
+			)
+		)
+	)
+)
+val contactWithECG = sdk.contact.modifyContact(
+	contactWithBloodPressure.copy(
+		services = contactWithBloodPressure.services + heartRateService
+	)
+)`}
+   </Kotlin>
+</SdkCode>
+
+The structure of this `Service` is almost identical to that of the previous example, with the only difference being
+that the medical data are stored as `timeSeries` in the Content instead of `measureValue`. A `TimeSeries` entity
+can contain both 1-dimensional and 2-dimensional signals, as well as aggregated data such as minimum, maximum, and
+average values.
+
+### Creating Medical Image Data
+
+Due to their larger size, the process of uploading medical images (such as those from X-Ray or CT exams, as well as
+simple photos) in iCure differs from uploading single measurements or signals. This difference is intended to avoid
+performance loss when querying and retrieving entities that contain large files.
+
+:::note
+A `Content` has a `binaryData` field that can be used to store binary data, but for the aforementioned reasons,
+it should not be used to store large amounts of data.
+:::
+
+The first step in uploading a medical image (or another large file) to iCure is to create a new `Document` entity.
+A `Document` is an encryptable entity that represents medical documents (e.g., reports, certificates, images) in any format.
+
+<SdkCode>
+   <Kotlin>
+{`val document = DecryptedDocument(
+	id = UUID.randomUUID().toString(),
+	documentType = DocumentType.Labresult
+)`}
+   </Kotlin>
+</SdkCode>
+
+In this example, a new `DecryptedDocument` is instantiated with the type set to a laboratory result. Since a `Document`
+is encryptable, the encryption metadata must be initialized before it is created on the cloud.
+
+<SdkCode>
+   <Kotlin>
+{`val createdDocument = sdk.document.createDocument(
+	sdk.document.withEncryptionMetadata(document, null)
+)`}
+   </Kotlin>
+</SdkCode>
+
+Note that in this case, the `withEncryptionMetadata` method takes a null second parameter. This is because there is no
+ need to link the `Document` directly to the `Patient`, as the document will be linked to a `Service` that, in turn,
+ will be linked to the `Patient`.
+
+Next, you can load the image as an attachment to the `Document`. A `Document` can have a single main attachment and
+multiple secondary attachments. In this case, an "image" is loaded as the main attachment to the document.
+
+<SdkCode>
+   <Kotlin>
+{`val xRayImage = Random.nextBytes(100)
+val documentWithAttachment = sdk.document.encryptAndSetMainAttachment(
+	document = createdDocument,
+	utis = listOf("public.tiff"),
+	attachment = xRayImage
+)`}
+   </Kotlin>
+</SdkCode>
+
+The bytes composing the image are encrypted and set as the attachment of the `Document`. Information about the
+ [UTI](https://en.wikipedia.org/wiki/Uniform_Type_Identifier) of the attachment is also set.
+
+Finally, it is possible to link this `Document` with a new `Service` representing the X-Ray image and add it to the `Contact`.
+
+<SdkCode>
+   <Kotlin>
+{`val xRayService = DecryptedService(
+	id = UUID.randomUUID().toString(),
+	label = "X-Ray image",
+	identifier = listOf(Identifier(system = "icure", value = "xRay")),
+	content = mapOf(
+		"en" to DecryptedContent(
+			documentId = documentWithAttachment.id
+		)
+	)
+)
+val contactWithImage = sdk.contact.modifyContact(
+	contactWithECG.copy(
+		services = contactWithECG.services + xRayService
+	)
+)`}
+   </Kotlin>
+</SdkCode>
+
+## Adding a Diagnosis
+
+Diagnoses and other medical contexts that define the health condition of a patient are represented in iCure by a
+`HealthElement` encryptable entity. In this example, the user will create a `HealthElement` containing the
+diagnosis elaborated after the examination.
+
+<SdkCode>
+   <Kotlin>
+{`print("What is the diagnosis?: ")
+val diagnosis = readln().trim()
+val healthElement = DecryptedHealthElement(
+	id = UUID.randomUUID().toString(),
+	descr = diagnosis
+)
+val createdDiagnosis = sdk.healthElement.createHealthElement(
+	sdk.healthElement.withEncryptionMetadata(healthElement, patient)
+)`}
+   </Kotlin>
+</SdkCode>
+
+A `HealthElement` is an encryptable entity, so like a `Contact`, first a `DecryptedHealthElement`
+is instantiated with the desired information. Then, the encryption metadata are initialized, linking the
+`HealthElement` to a Patient and sharing the entity with the current user. Finally, the entity is created.
+
+It is possible to associate the `HealthElement` with a `Contact` by linking it to a `SubContact`:
+
+<SdkCode>
+   <Kotlin>
+{`val contactWithDiagnosis = sdk.contact.modifyContact(
+	contactWithImage.copy(
+		subContacts = setOf(DecryptedSubContact(
+			descr = "Diagnosis",
+			healthElementId = createdDiagnosis.id
+		))
+	)
+)`}
+   </Kotlin>
+</SdkCode>
+
+## Closing the Examination
+
+To indicate that the medical examination has concluded, you can set the `closingDate` on the corresponding `Contact`.
+This action signifies that the data collection session is finished and, ideally, that the `Contact` will not be
+ modified further.
+
+<SdkCode>
+   <Kotlin>
+{`val finalContact = sdk.contact.modifyContact(
+	contactWithDiagnosis.copy(
+		closingDate = LocalDateTime.now().format(formatter).toLong()
+	)
+)`}
+   </Kotlin>
+</SdkCode>
+
+Like `openingDate`, the `closingDate` is an instant, precise to the second, represented in the `YYYYMMDDhhmmss` format.
+
