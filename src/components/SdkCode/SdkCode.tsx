@@ -6,7 +6,8 @@ import { usePrismTheme } from '@docusaurus/theme-common';
 
 const allowedLanguages = new Set([
   "Kotlin",
-  "Python"
+  "Python",
+  "Typescript"
 ])
 
 const SdkCode = ({ children }) => {
