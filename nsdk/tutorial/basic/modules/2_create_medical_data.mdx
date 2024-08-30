@@ -1,0 +1,134 @@
+---
+slug: basic-tutorial-create-medical-data
+---
+
+import SdkCode from "../../../../src/components/SdkCode/SdkCode";
+import Kotlin from "../../../../src/components/SdkCode/Kotlin";
+
+# Create Medical Data
+
+The example in this section demonstrates how to register a medical examination in iCure, where some medical exams are
+ performed and a diagnosis is elaborated.
+
+## Initiating a Medical Examination
+
+In iCure, the concept of a medical examination is represented through the `Contact` entity. Generally, a `Contact`
+represents a moment when medical data are produced and involves a patient and, usually, one or more healthcare actors.
+As the first step, the user can choose to use an existing Patient or create a new one:
+
+<SdkCode>
+   <Kotlin>
+{`print("Insert the id of a Patient (blank to create a new one): ")
+val patientId = readlnOrNull()
+val patient = if (patientId.isNullOrBlank()) {
+	sdk.patient.createPatient(
+		DecryptedPatient(
+			id = UUID.randomUUID().toString(),
+			firstName = "Annabelle",
+			lastName = "Hall",
+		).let { sdk.patient.withEncryptionMetadata(it) }
+	)
+} else {
+	sdk.patient.getPatient(patientId)
+}`}
+   </Kotlin>
+</SdkCode>
+
+Next, a new `Contact` is instantiated with a custom description provided by the user:
+
+<SdkCode>
+   <Kotlin>
+{`val formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss")
+print("Examination description: ")
+val description = readln().trim()
+val contact = DecryptedContact(
+	id = UUID.randomUUID().toString(),
+	descr = description,
+	openingDate = LocalDateTime.now().format(formatter).toLong()
+)`}
+   </Kotlin>
+</SdkCode>
+
+A `Contact` is an encryptable entity, so a `DecryptedContact` is used when instantiating it. Besides the description,
+ both the `id` and `openingDate` must be set. The `openingDate` represents the moment when the medical examination
+ starts. Generally, it marks the beginning of the event during which medical data are created.
+
+Being an encryptable entity, the encryption metadata need to be initialized before creating the `Contact`, just as with the `Patient`:
+
+<SdkCode>
+   <Kotlin>
+{`val contactWithMetadata = sdk.contact.withEncryptionMetadata(contact, patient)`}
+   </Kotlin>
+</SdkCode>
+
+In this case, the initialization step differs slightly from that of the patient. The function takes two parameters as
+input: the contact itself and a patient. This is because the metadata will also include a link to the Patient who is
+the subject of this examination. To prevent data leaks, this link is encrypted, and only users with access to the
+contact will be able to decipher it.
+
+Finally, the `Contact` can be encrypted and stored in the cloud:
+
+<SdkCode>
+   <Kotlin>
+{`val createdContact = sdk.contact.createContact(contactWithMetadata)`}
+   </Kotlin>
+</SdkCode>
+
+## Register Medical Data
+
+After the `Contact` is created, you can add medical data to it. Medical information is registered in iCure using a
+`Service` encryptable entity nested within a `Contact`. In the following examples, data in different formats will be
+added to the contact that was just created.
+
+### Creating Scalar Medical Data (Blood Pressure)
+
+The first piece of information added to the contact is a blood pressure measurement. In the following snippet, a
+`Service` (using its `DecryptedService` variation, since `Service` is an encryptable entity) is instantiated with the
+result of the exam:
+
+<SdkCode>
+   <Kotlin>
+{`val bloodPressureService = DecryptedService(
+	id = UUID.randomUUID().toString(),
+	label = "Blood pressure",
+	identifier = listOf(Identifier(system = "icure", value = "bloodPressure")),
+	content = mapOf(
+		"en" to DecryptedContent(
+			measureValue = Measure(
+				value = Random.nextInt(80, 120).toDouble(),
+				unit = "mmHg"
+			)
+		)
+	)
+)`}
+   </Kotlin>
+</SdkCode>
+
+In this case, a free-text `label` provides a description for the `Service`, and an `identifier` allows for a
+more structured labeling.
+
+:::warning
+When adding sensitive information to an encryptable entity, always remember that not all fields are encrypted.
+You can customize the encrypted fields for each entity during [SDK initialization](TODO).
+:::
+
+The actual measurement is stored in the `content` of the `Service`. This field is a map that associates an
+[ISO language code](https://en.wikipedia.org/wiki/List_of_ISO_639_language_codes) with `Content`. In this case,
+the content contains a measure value that holds the blood pressure result and its unit.
+
+The `Service` can now be added to the existing `Contact`:
+
+<SdkCode>
+   <Kotlin>
+{`val contactWithBloodPressure = sdk.contact.modifyContact(
+	createdContact.copy(
+		services = setOf(bloodPressureService)
+	)
+)`}
+   </Kotlin>
+</SdkCode>
+
+It is worth noting that even though `Service` is an encryptable entity, there is no need to call the
+`withEncryptionMetadata` method because the entity is nested within another encryptable entity and will inherit
+its encryption metadata. This means that if the enclosing entity was shared with another user,
+the nested entity will automatically be shared as well.

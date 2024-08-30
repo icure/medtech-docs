@@ -1,0 +1,81 @@
+---
+slug: basic-tutorial-create-patient
+---
+
+import SdkCode from "../../../../src/components/SdkCode/SdkCode";
+import Kotlin from "../../../../src/components/SdkCode/Kotlin";
+
+# Create a Patient
+
+In iCure, a patient is represented by the `Patient` entity. In the following example, the user reads a first name and
+last name from the standard input and creates a patient:
+
+<SdkCode>
+   <Kotlin>
+{`print("First name: ")
+val firstName = readln().trim()
+print("Last name: ")
+val lastName = readln().trim()
+val patient = DecryptedPatient(
+	id = UUID.randomUUID().toString(),
+	firstName = firstName,
+	lastName = lastName,
+)
+`}
+   </Kotlin>
+</SdkCode>
+
+A `Patient` is an encryptable entity, meaning it will be encrypted on the device that creates it and then sent
+encrypted to the cloud. Since it is decrypted at the moment of creation, a `DecryptedPatient` is instantiated. Besides
+`firstName` and `lastName`, the `id` must also be set on the entity. Using a
+[UUID v4](https://en.wikipedia.org/wiki/Universally_unique_identifier) is strongly recommended.
+
+Next, the metadata required for the encryption of the entity must be initialized:
+
+<SdkCode>
+   <Kotlin>
+{`val patientWithMetadata = sdk.patient.withEncryptionMetadata(patient)`}
+   </Kotlin>
+</SdkCode>
+
+This step is mandatory and also sets up a delegation for the user creating the entity, who will initially be the only
+one able to read the entity's encrypted fields.
+
+After this step, the entity can finally be encrypted and stored in the cloud:
+
+<SdkCode>
+   <Kotlin>
+{`val createdPatient = sdk.patient.createPatient(patientWithMetadata)`}
+   </Kotlin>
+</SdkCode>
+
+Once created, the entity can be modified. In the following example, a date of birth is read from the standard input
+and added to the patient:
+
+<SdkCode>
+   <Kotlin>
+{`print("Date of birth (YYYYMMDD): ")
+val dateOfBirth = readln().toInt()
+val patientWithBirth = createdPatient.copy(
+	dateOfBirth = dateOfBirth
+)
+val updatedPatient = sdk.patient.modifyPatient(patientWithBirth)`}
+   </Kotlin>
+</SdkCode>
+
+The date of birth in the patient is stored in the `dateOfBirth` field as an integer in the `YYYYMMDD` format. It is worth
+noting that since the entity is already created and the encryption metadata are already initialized, there is no need
+to call `withEncryptionMetadata` again.
+
+After creation, it is also possible to retrieve the entity from the cloud. In the following example, the patient
+is retrieved using its ID:
+
+<SdkCode>
+   <Kotlin>
+{`println("Retrieving patient by ID:")
+val retrievedPatient = sdk.patient.getPatient(updatedPatient.id)`}
+   </Kotlin>
+</SdkCode>
+
+More advanced methods for retrieving entities are available and will be explained in [another section](TODO) of this
+tutorial and [in more depth here](TODO).

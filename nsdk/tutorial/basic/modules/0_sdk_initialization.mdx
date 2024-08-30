@@ -1,0 +1,38 @@
+---
+slug: basic-tutorial-sdk-initialization
+---
+
+import SdkCode from "../../../../src/components/SdkCode/SdkCode";
+import Kotlin from "../../../../src/components/SdkCode/Kotlin";
+
+# Initialize the SDK
+
+After you have [created a first database and a healthcare party user with a token](/nsdk/tutorial/basic/sdk-basic-tutorial),
+you can use those credentials to instantiate a new iCure SDK.
+In the following example, the username and password are retrieved from the standard input:
+
+<SdkCode>
+    <Kotlin>
+{`import com.icure.sdk.IcureSdk
+import com.icure.sdk.options.AuthenticationMethod
+import com.icure.sdk.storage.impl.FileStorageFacade\n
+private const val ICURE_URL = "https://api.icure.cloud"\n
+print("Login: ")
+val username = readln().trim()
+print("Password: ")
+val password = readln().trim()
+val sdk = IcureSdk.initialize(
+	applicationId = null,
+	baseUrl = ICURE_URL,
+	authenticationMethod = AuthenticationMethod.UsingCredentials(
+		UsernamePassword(username, password)
+	),
+	baseStorage = FileStorageFacade("./scratch/storage")
+)`}
+    </Kotlin>
+</SdkCode>
+
+The `initialize` function creates an instance of the SDK with the provided username and password. It also attempts to
+load existing cryptographic keys for the user from the `./scratch/storage` folder. If no key is found for the user in
+that folder, a new cryptographic key will be generated and stored there.
+If you want to know more about the SDK initialization parameter, check [this explanation](TODO).
