@@ -1,0 +1,289 @@
+---
+slug: basic-tutorial-share-data
+---
+
+import SdkCode from "../../../../src/components/SdkCode/SdkCode";
+import Kotlin from "../../../../src/components/SdkCode/Kotlin";
+
+# Share Encrypted Data
+
+In iCure, sharing a piece of encrypted information means allowing another user to read it by encrypting the
+cryptographic key associated with the data using the recipient's key.
+
+:::note
+You can only share encrypted data with **Data Owners**, such as Healthcare Parties, Patients, or Devices. Additionally,
+the recipient Data Owner must have initialized their cryptographic keys. To initialize the keys, a Data Owner must log
+in to the SDK. Therefore, the Data Owner must be associated with a valid user to successfully complete the login and
+participate in a data-sharing procedure.
+:::
+
+## Share Data with a Healthcare Party
+
+### Share an Existing Entity with a Healthcare Party
+
+For this example, you need another Healthcare Party user. You can create one in the Cockpit by
+[following this guide](http://localhost:3000/cockpit/how-to/how-to-manage-hcp).
+
+Once you have created the new user, log in to initialize their cryptographic keys:
+
+<SdkCode>
+   <Kotlin>
+{`print("Login of the other HCP: ")
+val username = readln().trim()
+print("Insert the password for this HCP: ")
+val otherPassword = readln()
+val otherSdk = createSdk(username, otherPassword)
+val otherHcp = otherSdk.healthcareParty.getCurrentHealthcareParty()
+`}
+   </Kotlin>
+</SdkCode>
+
+Consider a `Document` entity created with the initial Healthcare Party user:
+
+<SdkCode>
+   <Kotlin>
+{`val oldDocument = sdk.document.createDocument(
+	DecryptedDocument(
+		id = UUID.randomUUID().toString(),
+		name = "An important document"
+	).let {
+		sdk.document.withEncryptionMetadata(it, null)
+	}
+)
+`}
+   </Kotlin>
+</SdkCode>
+
+If the other Healthcare Party tries to access it using the ID, the operation will fail with an error:
+
+<SdkCode>
+   <Kotlin>
+{`try {
+	otherSdk.document.getDocument(oldDocument.id)
+} catch (e: Exception) {
+	println("This means I am not authorized to read the document -> \${e.message}")
+}`}
+   </Kotlin>
+</SdkCode>
+
+The initial Healthcare Party can then grant access using the `shareWith` method. This method takes two parameters:
+the ID of the recipient Data Owner (i.e., the Healthcare Party, Patient, or Device) and the entity to share:
+
+<SdkCode>
+   <Kotlin>
+{`val result = sdk.document.shareWith(
+	delegateId = otherHcp.id,
+	document = oldDocument
+)\n
+if(result.isSuccess) {
+	println("Successfully shared document")
+}`}
+   </Kotlin>
+</SdkCode>
+
+At this point, the other Healthcare Party can access the document successfully:
+
+<SdkCode>
+   <Kotlin>
+{`val oldDocumentOtherHcp = otherSdk.document.getDocument(oldDocument.id)`}
+   </Kotlin>
+</SdkCode>
+
+### Share a New Entity with a Healthcare Party
+
+When creating an entity, you can directly specify the other Data Owner to share the entity with by including them when
+initializing the encryption metadata:
+
+<SdkCode>
+   <Kotlin>
+{`val newDocument = DecryptedDocument(
+	id = UUID.randomUUID().toString(),
+	name = "Another important document"
+)\n
+val newDocumentWithMetadata = sdk.document.withEncryptionMetadata(
+	newDocument,
+	null,
+	delegates = mapOf(otherHcp.id to AccessLevel.Read)
+)\n
+val createdNewDocument = sdk.document.createDocument(newDocumentWithMetadata)`}
+   </Kotlin>
+</SdkCode>
+
+The other Healthcare Party is a delegate for the new `Document` with Read permissions. This means they can access the
+entity and read the encrypted information but cannot modify it:
+
+<SdkCode>
+   <Kotlin>
+{`val newDocumentOtherHcp = otherSdk.document.getDocument(createdNewDocument.id)`}
+   </Kotlin>
+</SdkCode>
+
+## Share Data with a Patient
+
+The flow to share data with a Patient user is the same as to share data with a Healthcare Party user. However, it is
+not possible to initialize a Patient User using the Cockpit.
+
+To create a Patient user, you first need to create a Patient:
+
+<SdkCode>
+   <Kotlin>
+{`val newPatient = DecryptedPatient(
+	id = UUID.randomUUID().toString(),
+	firstName = "Edmond",
+	lastName = "Dantes",
+)
+val patientWithMetadata = sdk.patient.withEncryptionMetadata(newPatient)
+val createdPatient = sdk.patient.createPatient(patientWithMetadata)`}
+   </Kotlin>
+</SdkCode>
+
+Then, you need to create a User for that Patient. You can link the User to the Patient by setting the `patientId`
+property on the User to the id of the newly created Patient.
+
+<SdkCode>
+   <Kotlin>
+{`val patientUser = User(
+	id = UUID.randomUUID().toString(),
+	patientId = createdPatient.id,
+	login = login,
+	email = login
+)
+val createdUser = sdk.user.createUser(patientUser)`}
+   </Kotlin>
+</SdkCode>
+
+Finally, you have to create a temporary access token for the User, so that they can log in.
+
+<SdkCode>
+   <Kotlin>
+{`val loginToken = sdk.user.getToken(createdUser.id, "login")`}
+   </Kotlin>
+</SdkCode>
+
+Now, the User can log in to the SDK, initializing their cryptographic keys:
+
+<SdkCode>
+   <Kotlin>
+{`createSdk(login, loginToken)`}
+   </Kotlin>
+</SdkCode>
+
+However, the Patient user cannot access itself, as the Patient entity could not be shared with them as the
+cryptographic keys were not initialized yet. Now that they are, the Healthcare Party that is managing this registration
+can share the Patient:
+
+<SdkCode>
+   <Kotlin>
+{`val patientSecretIds = sdk.patient.getSecretIdsOf(createdPatient)
+val patientShareResult = sdk.patient.shareWith(
+	delegateId = createdPatient.id,
+	patient = createdPatient,
+	options = PatientShareOptions(
+		shareSecretIds = patientSecretIds,
+		shareEncryptionKey = ShareMetadataBehaviour.IfAvailable,
+		requestedPermissions = RequestedPermission.MaxWrite
+	)
+)\n
+if (patientShareResult.isSuccess) {
+	println("Successfully shared patient")
+}\n
+val patient = patientShareResult.updatedEntityOrThrow()`}
+   </Kotlin>
+</SdkCode>
+
+Now, the Patient can finally log in and have access to their full information:
+
+<SdkCode>
+   <Kotlin>
+{`val patientSdk = createSdk(login, loginToken)`}
+   </Kotlin>
+</SdkCode>
+
+:::warning
+This registration flow makes sense only in the context of this example, to make it self-contained.
+To learn how to register a Patient in a real context, check [this how to](/nsdk/how-to/how-to-create-patient-user).
+:::
+
+### Share an Existing Entity with a Patient
+
+Sharing an entity with a Patient follows the same flow as sharing with a Healthcare Party. First, the Healthcare Party
+needs to create an entity, such as a `HealthElement`, to represent a medical condition or prolonged context:
+
+<SdkCode>
+   <Kotlin>
+{`val healthElement = DecryptedHealthElement(
+	id = UUID.randomUUID().toString(),
+	descr = "This is some medical context"
+)\n
+val healthElementWithMetadata = sdk.healthElement.withEncryptionMetadata(healthElement, patient)
+val createdHealthElement = sdk.healthElement.createHealthElement(healthElementWithMetadata)`}
+   </Kotlin>
+</SdkCode>
+
+It is important to note that even though the `HealthElement` is linked to the patient by the encryption metadata,
+the Patient does not yet have the right to access it:
+
+<SdkCode>
+   <Kotlin>
+{`try {
+	patientSdk.healthElement.getHealthElement(createdHealthElement.id)
+} catch (e: Exception) {
+	println("This means the patient cannot access this health element -> \${e.message}")
+}`}
+   </Kotlin>
+</SdkCode>
+
+Next, the Healthcare Party can share the entity with the Patient:
+
+<SdkCode>
+   <Kotlin>
+{`val result = sdk.healthElement.shareWith(
+	delegateId = patient.id,
+	healthElement = createdHealthElement
+)\n
+if (result.isSuccess) {
+	println("Successfully shared with patient ID \${patient.id}")
+}`}
+   </Kotlin>
+</SdkCode>
+
+Finally, the Patient can access it:
+
+<SdkCode>
+   <Kotlin>
+{`patientSdk.healthElement.getHealthElement(createdHealthElement.id)`}
+   </Kotlin>
+</SdkCode>
+
+### Share a New Entity with a Patient
+
+As with the Healthcare Party case, a Patient can be directly included in the delegations of the encryption metadata for
+a newly created entity.
+
+<SdkCode>
+   <Kotlin>
+{`val newHealthElement = DecryptedHealthElement(
+	id = UUID.randomUUID().toString(),
+	descr = "This is some other medical context"
+)\n
+val newHealthElementWithMetadata = sdk.healthElement.withEncryptionMetadata(
+	newHealthElement,
+	patient,
+	delegates = mapOf(patient.id to AccessLevel.Write)
+)\n
+val newCreatedHealthElement = sdk.healthElement.createHealthElement(newHealthElementWithMetadata)
+`}
+   </Kotlin>
+</SdkCode>
+
+It is important to note that the Patient linked to an entity is entirely separate from a patient with a delegation for
+the entity: setting up a delegation does not create a link between the patient and the entity,
+and creating the link does not set up a delegation.
+
+Now, the Patient has read and write access to the entity and can directly retrieve it:
+
+<SdkCode>
+   <Kotlin>
+{`val retrievedHealthElement = patientSdk.healthElement.getHealthElement(newCreatedHealthElement.id)`}
+   </Kotlin>
+</SdkCode>

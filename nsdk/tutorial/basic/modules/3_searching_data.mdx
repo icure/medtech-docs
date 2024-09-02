@@ -6,15 +6,16 @@ import SdkCode from "../../../../src/components/SdkCode/SdkCode";
 import Kotlin from "../../../../src/components/SdkCode/Kotlin";
 
 # Search Data
-Once an entity (a patient, a piece of medical information) is created, it is always possible to retrieve it using its id.
-However, in most of the cases, you will not have the id of the entity you need. Therefore, the iCure SDK allows you to
-search data by their content using filters.
 
-The following examples will provide some insights about how to search data using the filter mechanism. For a more
-comprehensive understanding, check the code documentation.
+Once an entity (such as a patient or a medical record) is created, you can always retrieve it using its ID.
+However, in most cases, you might not have the ID of the entity you need. Therefore, the iCure SDK allows you to search
+data by their content using filters.
 
-In this first code snippet, all the patients where the name matches the query string provided by the user and that are
-shared with the current user will be returned:
+The following examples provide insights into how to search data using the filter mechanism. For a more comprehensive
+understanding, check the code documentation.
+
+In the first code snippet, all patients whose name matches the query string provided by the user and who are shared
+with the current user will be returned:
 
 <SdkCode>
    <Kotlin>
@@ -26,12 +27,12 @@ val patientIterator = sdk.patient.filterPatientsBy(
    </Kotlin>
 </SdkCode>
 
-`PatientFilters.byNameForSelf` defines the options that will be used to retrieve the patients while the `filterPatientsBy`
-method is the one responsible for actually getting them. This method returns an iterator with two methods: a `hasNext()`
-method that returns `true` if there is at least one more entity available, and a `next(X)` method that retrieves up to
-the next X available entities, with a minimum of 1.
+`PatientFilters.byNameForSelf` defines the options used to retrieve the patients, while the `filterPatientsBy` method
+is responsible for actually getting them. This method returns an iterator with two methods: `hasNext()`, which returns
+`true` if there is at least one more entity available, and `next(X)`, which retrieves up to the next X available
+entities, with a minimum of 1.
 
-The following is a usage example of this iterator:
+Here’s an example of how to use this iterator:
 
 <SdkCode>
    <Kotlin>
@@ -52,7 +53,7 @@ if (patient == null) {
    </Kotlin>
 </SdkCode>
 
-The same logic can be applied to medical data, where it is possible to leverage the
+The same logic can be applied to medical data, where you can leverage the
 [secret link](/nsdk/tutorial/basic/modules/basic-tutorial-create-medical-data#initiating-a-medical-examination) between
 a patient and another entity:
 
@@ -73,18 +74,17 @@ while(contactIterator.hasNext()) {
    </Kotlin>
 </SdkCode>
 
-In this case, the filter method will return all the Contacts shared with the current user that have an encrypted link
-to one of the Patients passed as parameter.
+In this case, the filter method returns all the `Contacts` shared with the current user that have an encrypted link to
+one of the `Patients` passed as a parameter.
 
 :::note
-As the link between Patient and Contact is encrypted, the user must also have access to the Patient in order to use
-this filter.
+Since the link between `Patient` and `Contact` is encrypted, the user must also have access to the `Patient` to use this filter.
 :::
 
-Also in this case, the method will return an iterator that can be used to retrieve all the matching Contacts.
+As with the previous example, the method returns an iterator that can be used to retrieve all the matching `Contacts`.
 
-The additional information stored in an entity to include additional context in it
-(like the [identifiers in a Service](/nsdk/tutorial/basic/modules/basic-tutorial-create-medical-data#creating-scalar-medical-data-blood-pressure))
+The additional information stored in an entity to provide additional context (like the
+[identifiers in a Service](/nsdk/tutorial/basic/modules/basic-tutorial-create-medical-data#creating-scalar-medical-data-blood-pressure))
 can also be used for filtering:
 
 <SdkCode>
@@ -118,5 +118,4 @@ while (serviceIterator.hasNext()) {
    </Kotlin>
 </SdkCode>
 
-In this last example, the filter method will return all the Services that have the provided identifier in the `identifiers`
-filter.
+In this example, the filter method returns all the `Services` that have the provided identifier in the `identifiers` filter.
