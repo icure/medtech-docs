@@ -1,0 +1,142 @@
+---
+slug: basic-tutorial-codifications
+---
+
+import SdkCode from "../../../../src/components/SdkCode/SdkCode";
+import Kotlin from "../../../../src/components/SdkCode/Kotlin";
+
+# Use Codification Systems
+
+Codifications like [SNOMED CT](https://www.snomed.org/what-is-snomed-ct), [ICD-10](https://icd.who.int/browse10/2019/en),
+or [LOINC](https://loinc.org/) are used to express medical concepts in a formal and unambiguous way.
+
+In iCure, codifications are represented through the `Code` entity, which can also be used to represent internal
+codification systems:
+
+<SdkCode>
+   <Kotlin>
+{`val internalCode = sdk.code.createCode(Code(
+	id = "INTERNAL|ANALYSIS|1",
+	type = "INTERNAL",
+	code = "ANALYSIS",
+	version = "1",
+	label = mapOf("en" to "Internal analysis code")
+))\n
+val snomedCodes = sdk.code.createCodes(listOf(
+	Code(
+		id = "SNOMED|45007003|1",
+		type = "SNOMED",
+		code = "45007003",
+		version = "1",
+		label = mapOf("en" to "Low blood pressure")
+	),
+	Code(
+		id = "SNOMED|38341003|1",
+		type = "SNOMED",
+		code = "38341003",
+		version = "1",
+		label = mapOf("en" to "High blood pressure")
+	),
+	Code(
+		id = "SNOMED|2004005|1",
+		type = "SNOMED",
+		code = "2004005",
+		version = "1",
+		label = mapOf("en" to "Normal blood pressure")
+	)
+))`}
+   </Kotlin>
+</SdkCode>
+
+:::note
+The codification systems are supported, but the codes themselves are not present by default in the iCure system.
+:::
+
+A `Code` is defined by three properties:
+- `type`: Represents the codification system the code belongs to.
+- `code`: Represents the unique ID of the code within the codification system.
+- `version`: Allows versioning of the code, enabling the maintenance of both old and new versions when something in the
+`Code` is updated (such as the label or metadata). In this case, a new `Code` entity is created with the updated content
+and a new version.
+
+A `Code` is uniquely identified by the `type`, `code`, `version` triple, so the ID of a `Code` is not a UUID but rather
+the string `type|code|version`.
+
+A `Code` can be used to add additional context to other entities. In the following example, it is used to add a tag to
+a `Service`:
+
+<SdkCode>
+   <Kotlin>
+{`val selectedCode = snomedCodes.firstNotNullOf { code ->
+	prettyPrint(code)
+	print("Use this code? [y/N]: ")
+	val use = readln().trim().lowercase() == "y"
+	if (use) {
+		code
+	} else null
+}\n
+val patient = sdk.patient.createPatient(
+	DecryptedPatient(
+		id = UUID.randomUUID().toString(),
+		firstName = "Annabelle",
+		lastName = "Hall",
+	).let { sdk.patient.withEncryptionMetadata(it) }
+)\n
+val formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss")
+val contact = DecryptedContact(
+	id = UUID.randomUUID().toString(),
+	descr = "Blood pressure measurement",
+	openingDate = LocalDateTime.now().format(formatter).toLong(),
+	services = setOf(
+		DecryptedService(
+			id = UUID.randomUUID().toString(),
+			label = "Blood pressure",
+			content = mapOf(
+				"en" to DecryptedContent(
+					measureValue = Measure(
+						value = Random.nextInt(80, 120).toDouble(),
+						unit = "mmHg"
+					)
+				)
+			),
+			tags = setOf(
+				CodeStub(
+					id = selectedCode.id,
+					type = selectedCode.type,
+					code = selectedCode.code,
+					version = selectedCode.version
+				)
+			)
+		)
+	)
+)\n
+val createdContact = sdk.contact.createContact(
+	sdk.contact.withEncryptionMetadata(contact, patient)
+)`}
+   </Kotlin>
+</SdkCode>
+
+In this snippet, the user can choose a `Code` from the created SNOMED codes. Then, a `Contact` is created that contains
+a `Service` for a blood pressure measurement, and a tag is added for the SNOMED code of high, low, or normal blood
+pressure as a `CodeStub`, a reference to a `Code` that includes only the `type`, `code`, and `version`.
+
+`Codes` can also be used to filter entities:
+
+<SdkCode>
+   <Kotlin>
+{`val serviceIterator = sdk.contact.filterServicesBy(
+	ServiceFilters.byTagAndValueDateForSelf(
+		tagType = selectedCode.type,
+		tagCode = selectedCode.code
+	)
+)\n
+println("Result of searching by code: \${selectedCode.id}")
+while (serviceIterator.hasNext()) {
+	val service = serviceIterator.next(1).first()
+	prettyPrint(service)
+}`}
+   </Kotlin>
+</SdkCode>
+
+This example shows how to retrieve all the `Services` that have a tag with the specified `type` and `code` and are
+shared with the current user.

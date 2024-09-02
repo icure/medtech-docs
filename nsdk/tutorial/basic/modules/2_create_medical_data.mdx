@@ -5,7 +5,7 @@ slug: basic-tutorial-create-medical-data
 import SdkCode from "../../../../src/components/SdkCode/SdkCode";
 import Kotlin from "../../../../src/components/SdkCode/Kotlin";
 
-# Create Medical Data
+# Create and Encrypt Medical Data
 
 The example in this section demonstrates how to register a medical examination in iCure, where some medical exams are
  performed and a diagnosis is elaborated.
@@ -50,8 +50,8 @@ val contact = DecryptedContact(
 </SdkCode>
 
 A `Contact` is an encryptable entity, so a `DecryptedContact` is used when instantiating it. Besides the description,
- both the `id` and `openingDate` must be set. The `openingDate` represents the moment when the medical examination
- starts. Generally, it marks the beginning of the event during which medical data are created.
+both the `id` and `openingDate` must be set. The `openingDate` represents the moment when the medical examination
+starts. Generally, it marks the beginning of the event during which medical data are created.
 
 Being an encryptable entity, the encryption metadata need to be initialized before creating the `Contact`, just as with the `Patient`:
 
