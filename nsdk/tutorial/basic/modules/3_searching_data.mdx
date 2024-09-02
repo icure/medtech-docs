@@ -1,0 +1,122 @@
+---
+slug: basic-tutorial-search-data
+---
+
+import SdkCode from "../../../../src/components/SdkCode/SdkCode";
+import Kotlin from "../../../../src/components/SdkCode/Kotlin";
+
+# Search Data
+Once an entity (a patient, a piece of medical information) is created, it is always possible to retrieve it using its id.
+However, in most of the cases, you will not have the id of the entity you need. Therefore, the iCure SDK allows you to
+search data by their content using filters.
+
+The following examples will provide some insights about how to search data using the filter mechanism. For a more
+comprehensive understanding, check the code documentation.
+
+In this first code snippet, all the patients where the name matches the query string provided by the user and that are
+shared with the current user will be returned:
+
+<SdkCode>
+   <Kotlin>
+{`print("Enter a name: ")
+val nameToSearch = readln()
+val patientIterator = sdk.patient.filterPatientsBy(
+	PatientFilters.byNameForSelf(nameToSearch)
+)`}
+   </Kotlin>
+</SdkCode>
+
+`PatientFilters.byNameForSelf` defines the options that will be used to retrieve the patients while the `filterPatientsBy`
+method is the one responsible for actually getting them. This method returns an iterator with two methods: a `hasNext()`
+method that returns `true` if there is at least one more entity available, and a `next(X)` method that retrieves up to
+the next X available entities, with a minimum of 1.
+
+The following is a usage example of this iterator:
+
+<SdkCode>
+   <Kotlin>
+{`var patient: Patient? = null
+while (patientIterator.hasNext() && patient == null) {
+	val p = patientIterator.next(1).first()
+	prettyPrint(p)
+	print("Use this patient? [y/N]: ")
+	val use = readln().trim().lowercase() == "y"
+	if (use) {
+		patient = p
+	}
+}\n
+if (patient == null) {
+	println("No matching patient found")
+	return
+}`}
+   </Kotlin>
+</SdkCode>
+
+The same logic can be applied to medical data, where it is possible to leverage the
+[secret link](/nsdk/tutorial/basic/modules/basic-tutorial-create-medical-data#initiating-a-medical-examination) between
+a patient and another entity:
+
+<SdkCode>
+   <Kotlin>
+{`val contactIterator = sdk.contact.filterContactsBy(
+	ContactFilters.byPatientsForSelf(listOf(patient))
+)\n
+if (!contactIterator.hasNext()) {
+	println("No matching contacts found")
+}\n
+while(contactIterator.hasNext()) {
+	val contact = contactIterator.next(1).first()
+	prettyPrint(contact)
+	print("Press enter for next contact")
+	readln()
+}`}
+   </Kotlin>
+</SdkCode>
+
+In this case, the filter method will return all the Contacts shared with the current user that have an encrypted link
+to one of the Patients passed as parameter.
+
+:::note
+As the link between Patient and Contact is encrypted, the user must also have access to the Patient in order to use
+this filter.
+:::
+
+Also in this case, the method will return an iterator that can be used to retrieve all the matching Contacts.
+
+The additional information stored in an entity to include additional context in it
+(like the [identifiers in a Service](/nsdk/tutorial/basic/modules/basic-tutorial-create-medical-data#creating-scalar-medical-data-blood-pressure))
+can also be used for filtering:
+
+<SdkCode>
+   <Kotlin>
+{`var choice = -1
+while (choice < 0 || choice >= 3) {
+	println("Make your choice")
+	println("0. blood pressure")
+	println("1. heart rate")
+	println("2. x ray")
+	choice = readln().trim().toIntOrNull() ?: 0
+}\n
+val identifier = when(choice) {
+	0 -> Identifier(system = "icure", value = "bloodPressure")
+	1 -> Identifier(system = "icure", value = "ecg")
+	2 -> Identifier(system = "icure", value = "xRay")
+	else -> throw IllegalArgumentException("Invalid choice")
+}\n
+val serviceIterator = sdk.contact.filterServicesBy(
+	ServiceFilters.byIdentifiersForSelf(listOf(identifier))
+)\n
+if (!serviceIterator.hasNext()) {
+	println("No matching services found")
+}\n
+while (serviceIterator.hasNext()) {
+	val service = serviceIterator.next(1).first()
+	prettyPrint(service)
+	print("Press enter for next service")
+	readln()
+}`}
+   </Kotlin>
+</SdkCode>
+
+In this last example, the filter method will return all the Services that have the provided identifier in the `identifiers`
+filter.
