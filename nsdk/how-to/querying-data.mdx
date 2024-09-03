@@ -1,0 +1,286 @@
+import SdkCode from "../../src/components/SdkCode/SdkCode";
+import Kotlin from "../../src/components/SdkCode/Kotlin";
+import Typescript from "../../src/components/SdkCode/Typescript";
+import Python from "../../src/components/SdkCode/Python";
+
+# Querying data
+
+This page explains how you can use the iCure SDK to query stored data.
+
+## Filter options
+
+Filter options are at the core of queries in iCure. For each kind of entity, the SDK provides a factory that allows
+you to create various types of filter options that check different properties on the entities.
+
+For example, you can create filter options that match all healthcare parties with a name (first or last name) that
+contains "joh":
+
+<SdkCode>
+<Kotlin>{`import com.icure.sdk.filters.HealthcarePartyFilters\n
+val hcpWithName = HealthcarePartyFilters.byName("joh")`}</Kotlin>
+<Typescript>{`import {HealthcarePartyFilters} from "@icure/api";\n
+const hcpWithName = HealthcarePartyFilters.byName("joh")`}</Typescript>
+<Python>{`from icure.filters import HealthcarePartyFilters\n
+hcpWithName = HealthcarePartyFilters.by_name("joh")`}</Python>
+</SdkCode>
+
+
+:::info
+
+In this page we're showing how to use filter options for querying data, but they're also used in other contexts.
+For example, when setting up a realtime event listener, you need to provide filter options which will determine the
+entities for which you will get a notification.
+
+:::
+
+:::note
+
+In this page we only explain the concepts of filter options and how they can be used for querying.
+
+If you want a comprehensive list of the available filter options refer to the code documentation (TODO link)
+
+:::
+
+### Data owners in filters
+
+:::info
+
+[This section will be clearer if you have a good understanding of data owners and access control in iCure.](/nsdk/explanations/data-owners-and-access-control)
+
+:::
+
+For the entities where the access control policy is entity-based, the filter options always require you to provide a
+data owner id.
+In these cases, the filter will match only entities the provided data owner can "access" (with some limitations,
+explained later).
+
+For convenience, since you usually need to retrieve data that is accessible to the current data owner, the factory
+methods for these filter options come in two versions:
+- A *for-self* version (for example `PatientFilters.byIdentifiersForSelf`) where the data owner id is automatically filled
+with the current data owner id. Unless you're using a special configuration for data owners (such as hierarchical
+healthcare parties TODO link), you should only be using these filter options in your application for the end-users.
+- A *for-data-owner* version (for example `PatientFilters.byIdentifiersForDataOwner`) where you need to explicit specify
+the id of the data owner.
+Unless you're using a special configuration for data owners (such as hierarchical healthcare parties TODO link), this is
+only needed when you're querying the data as a non-data-owner user.
+For example, this could be the case if you, acting as the system administrator, are compiling some statistics on the
+patients registered to your app.
+Note that using a for-data-owner filter option with a data owner id other than the current data owner id may require
+special permissions, depending on which method they're used for.
+
+#### Access for filter options
+
+TODO note about needing to understand what anonymous delegation and hierarchical healthcare parties are.
+
+Previously, we said that in the filter options for EBAC entities, you need to specify the id of a data owner and the
+filter options will only match entities that the provided data owner can access.
+While, this is true in basic scenarios, if you're using hierarchical healthcare parties or anonymous delegations for data
+owners (which is usually the case when you have patient data owners), this is not entirely correct: there may be cases
+where a data owner has access to an entity, but the filter for that data owner does not return that entity.
+
+When you're using a hierarchical data owner configuration, the filter options won't be taking the data owner hierarchy in
+consideration: for example, if a child HCP has access to an entity only through a parent HCP, any filter option *for-self*
+will not return that entity.
+To get that entity the child HCP needs to use *for-data-owner* filter options with the parent id.
+
+Similarly, when using filter options for a data owner that has anonymous delegations, only that data owner will be able
+to find the entities that he can access only through an anonymous delegation.
+Due to the nature of anonymous delegations, all other users, regardless of their permissions, will not be able to find
+these entities.
+
+### Combining filter options
+
+Filter options can be used individually, but you often need to query data using multiple conditions that can't be
+covered by one filter option alone.
+
+The SDK provides you three different operations that can be used to combine filter options:
+- *intersection* takes two or more filter options and returns filter options that match the entities that match all
+provided filters
+- *union* takes two or more filter options and returns filter options that match the entities matching at least one of
+the provided filters
+- *difference* takes in input exactly two filter options and returns filter options that match entities that are matching
+the first provided filter but not the second.
+
+In the following example we use these operators to get filter options that match all male patients born between 1960 and
+2000 and all female patients born between 1950 and 2000.
+
+<SdkCode>
+<Kotlin>{`import com.icure.sdk.filters.PatientFilters
+import com.icure.sdk.filters.intersection
+import com.icure.sdk.filters.union
+import com.icure.sdk.model.embed.Gender\n
+val myFilter = union(
+	intersection(
+		PatientFilters.byGenderEducationProfessionForSelf(Gender.Male),
+		PatientFilters.byDateOfBirthBetweenForSelf(fromDate = 19600101, toDate = 19991231)
+	),
+	intersection(
+		PatientFilters.byGenderEducationProfessionForSelf(Gender.Female),
+		PatientFilters.byDateOfBirthBetweenForSelf(fromDate = 19500101, toDate = 19991231)
+	)
+)\n
+// In kotlin you can also use infix functions to build combined filters
+val myFilterWithOperators = (
+	PatientFilters.byGenderEducationProfessionForSelf(
+		Gender.Male
+	) and PatientFilters.byDateOfBirthBetweenForSelf(
+		fromDate = 19600101,
+		toDate = 19991231
+	)
+) or (
+	PatientFilters.byGenderEducationProfessionForSelf(
+		Gender.Female
+	) and PatientFilters.byDateOfBirthBetweenForSelf(
+		fromDate = 19500101,
+		toDate = 19991231
+	)
+)`}</Kotlin>
+<Typescript>{`import {PatientFilters,Gender,intersection,union} from "@icure/api";\n
+const myFilter = union(
+	intersection(
+		PatientFilters.byGenderEducationProfessionForSelf(Gender.Male),
+		PatientFilters.byDateOfBirthBetweenForSelf(19600101, 19991231)
+	),
+	intersection(
+		PatientFilters.byGenderEducationProfessionForSelf(Gender.Female),
+		PatientFilters.byDateOfBirthBetweenForSelf(19500101, 19991231)
+	)
+)`}</Typescript>
+<Python>{`from icure.model import Gender
+from icure.filters import union, intersection, PatientFilters\n
+myFilter = union(
+	intersection(
+		PatientFilters.by_gender_education_profession_for_self(Gender.Male),
+		PatientFilters.by_date_of_birth_between_for_self(19600101, 19991231)
+	),
+	intersection(
+		PatientFilters.by_gender_education_profession_for_self(Gender.Female),
+		PatientFilters.by_date_of_birth_between_for_self(19500101, 19991231)
+	)
+)`}</Python>
+</SdkCode>
+
+## Retrieve entities matching a filter
+
+To retrieve the entities matching the filter options you've created you can use the filter and match methods of the
+corresponding api.
+
+The match method returns the ids of all the entity matching the provided filter options.
+
+<SdkCode>
+<Kotlin>{`
+import com.icure.sdk.IcureSdk
+import com.icure.sdk.filters.FilterOptions
+import com.icure.sdk.model.Patient\n
+suspend fun getIdsOfPatientsMatching(patientFilterOptions: FilterOptions\u003CPatient\u003E): List\u003CString\u003E =
+	sdk.patient.matchPatientsBy(patientFilterOptions)`}</Kotlin>
+<Typescript>{`import {FilterOptions, IcureSdk, Patient} from "@icure/api";\n
+function getIdsOfPatientsMatching(patientFilterOptions: FilterOptions\u003CPatient\u003E): Promise\u003CArray\u003Cstring\u003E\u003E {
+	return sdk.patient.matchPatientsBy(patientFilterOptions)
+}`}</Typescript>
+<Python>{`from icure.model import Patient
+from icure.filters import FilterOptions
+from icure import IcureSdk
+from typing import List\n
+def get_ids_of_patients_matching(patient_filter_options: FilterOptions[Patient]) -> List[str]:
+	return sdk.patient.match_patients_by_blocking(patient_filter_options)
+`}</Python>
+</SdkCode>
+
+The filter method returns an iterator that retrieves the matching entities from the backend over multiple pages if needed.
+For encryptable entities this method is flavoured: the method on the main api returns the decrypted entities, but you
+can also retrieve the entities using the encrypted and polymorphic flavours.
+
+<SdkCode>
+<Kotlin>{`import com.icure.sdk.IcureSdk
+import com.icure.sdk.filters.FilterOptions
+import com.icure.sdk.model.DecryptedPatient
+import com.icure.sdk.model.EncryptedPatient
+import com.icure.sdk.model.Patient
+import com.icure.sdk.utils.pagination.PaginatedListIterator\n
+// Get the iterator over decrypted patients.
+// If one of the retrieved patients can't be decrypted you will get an exception when using the iterator
+suspend fun getDecryptedPatientsIterator(patientFilterOptions: FilterOptions\u003CPatient\u003E): PaginatedListIterator\u003CDecryptedPatient\u003E =
+	sdk.patient.filterPatientsBy(patientFilterOptions)\n
+// Get the iterator over encrypted patients.
+suspend fun getEncryptedPatientsIterator(patientFilterOptions: FilterOptions\u003CPatient\u003E): PaginatedListIterator\u003CEncryptedPatient\u003E =
+	sdk.patient.encrypted.filterPatientsBy(patientFilterOptions)\n
+// Get the iterator over patients, attempting to decrypt them.
+// If one of the retrieved patients can't be decrypted you will get the encrypted patient.
+suspend fun getPatientsIterator(patientFilterOptions: FilterOptions\u003CPatient\u003E): PaginatedListIterator\u003CPatient\u003E =
+	sdk.patient.tryAndRecover.filterPatientsBy(patientFilterOptions)\n
+// Print 10 patients at a time until we've printed all patients of the iterator
+suspend fun printAllPatientsBy10(patientsIterator: PaginatedListIterator\u003CPatient\u003E) {
+	while (patientsIterator.hasNext()) {
+		println(patientsIterator.next(10))
+	}
+}`}</Kotlin>
+<Typescript>{`import {DecryptedPatient, EncryptedPatient, FilterOptions, IcureSdk, PaginatedListIterator, Patient} from "@icure/api";\n
+// Get the iterator over decrypted patients.
+// If one of the retrieved patients can't be decrypted you will get an exception when using the iterator
+function getDecryptedPatientsIterator(patientFilterOptions: FilterOptions\u003CPatient\u003E): Promise\u003CPaginatedListIterator\u003CDecryptedPatient\u003E\u003E {
+	return sdk.patient.filterPatientsBy(patientFilterOptions)
+}\n
+// Get the iterator over encrypted patients.
+function getEncryptedPatientsIterator(patientFilterOptions: FilterOptions\u003CPatient\u003E): Promise\u003CPaginatedListIterator\u003CEncryptedPatient\u003E\u003E {
+	return sdk.patient.encrypted.filterPatientsBy(patientFilterOptions)
+}\n
+// Get the iterator over patients, attempting to decrypt them.
+// If one of the retrieved patients can't be decrypted you will get the encrypted patient.
+function getPatientsIterator(patientFilterOptions: FilterOptions\u003CPatient\u003E): Promise\u003CPaginatedListIterator\u003CPatient\u003E\u003E {
+	return sdk.patient.tryAndRecover.filterPatientsBy(patientFilterOptions)
+}\n
+// Print 10 patients at a time until we've printed all patients of the iterator
+async function printAllPatientsBy10(patientsIterator: PaginatedListIterator\u003CPatient\u003E) {
+	while (await patientsIterator.hasNext()) {
+		console.log(await patientsIterator.next(10))
+	}
+}`}</Typescript>
+<Python>{`from icure.model import Patient, DecryptedPatient, EncryptedPatient
+from icure.filters import FilterOptions
+from icure import IcureSdk
+from icure.pagination.PaginatedListIterator import PaginatedListIterator\n
+# Get the iterator over decrypted patients.
+# If one of the retrieved patients can't be decrypted you will get an exception when using the iterator
+def get_decrypted_patients_iterator(patient_filter_options: FilterOptions[Patient]) -> PaginatedListIterator[DecryptedPatient]:
+	return sdk.patient.filter_patients_by_blocking(patient_filter_options)\n
+# Get the iterator over encrypted patients.
+def get_encrypted_patients_iterator(patient_filter_options: FilterOptions[Patient]) -> PaginatedListIterator[EncryptedPatient]:
+	return sdk.patient.encrypted.filter_patients_by_blocking(patient_filter_options)\n
+# Get the iterator over patients, attempting to decrypt them.
+# If one of the retrieved patients can't be decrypted you will get the encrypted patient.
+def get_patients_iterator(patient_filter_options: FilterOptions[Patient]) -> PaginatedListIterator[Patient]:
+	return sdk.patient.try_and_recover.filter_patients_by_blocking(patient_filter_options)\n
+# Print 10 patients at a time until we've printed all patients of the iterator
+def print_all_patients_by_10(patients_iterator: PaginatedListIterator[Patient]):
+	while patients_iterator.has_next_blocking():
+		print(patients_iterator.next_blocking(10))
+`}</Python>
+</SdkCode>
+
+### Sorted queries
+
+Some filter options are sortable, meaning that you can use them to sort data according to certain properties as defined
+by the filter options.
+
+If you want to retrieve sorted data using sortable filter options you can use the filterSorted/matchSorted variant
+of the filter/match method. If you don't need sorted data, you should always prefer using the standard version of
+the filter/match method, as it may be faster, depending on the actual query.
+
+:::note
+
+You may notice that sometimes data is consistently sorted according to the filter options even when using the standard
+variant of the filter/match method. However, if you need your data to be sorted you should change to the sorted variant
+because this may change across different versions of the iCure SDK or backend.
+
+:::
+
+In some cases composite filter options are also sortable: if the first filter options of an intersection or difference
+are sortable, then the resulting filter options are sortable using the criteria of those options, regardless of the
+sortability of the other provided options. Union filter options are never sortable.
+
+## Cross-entity queries
+
+TODO
+
+Want to make a query like all BPM measurements for patients between age 40-45
