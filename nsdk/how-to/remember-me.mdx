@@ -1,3 +1,150 @@
-# Implement a "remember-me" option
+import Tabs from "@theme/Tabs";
+import SdkCode from "../../src/components/SdkCode/SdkCode";
+import Python from "../../src/components/SdkCode/Python";
+import Kotlin from "../../src/components/SdkCode/Kotlin";
+import Typescript from "../../src/components/SdkCode/Typescript";
+import TabItem from "@theme/TabItem";
 
-TODO
+# Implement a persistent user session (aka "Remember-me or "Stay logged in")
+
+## Introduction
+
+On this page, we will see how to set up a persistent user session that allows the user to have a new sessionautomatically
+created when they return to the application.
+
+
+## Prerequisites
+
+It will be easier for you to follow the different concepts discussed in this documentation if you have reviewed the section
+[Initialize the SDK](./initialize-the-sdk).
+
+
+## Steps
+
+To set up a persistent session, you need a way to store the user’s credentials on the device (or elsewhere depending on
+your use cases). This can be done using cookies or the browser’s localStorage, SharedPreferences on Android, or UserDefaults
+on iOS, etc.
+
+To outline the plan, we assume that you already have a method to store the user’s credentials and that you have already
+implemented a method to retrieve them. Additionally, you have already initialized the SDK with the user’s username and
+password.
+
+### Obtain a long-lived token
+
+First step is to obtain a long-lived token. We will store this token in the persistent storage alongside the username.
+
+In this example, we will use a 30-day long-lived token. This token will be valid as long as it is not expired or revoked.
+
+The token will be identified by a key that is unique to the device. This key have to be unique for each device/user,
+getting a token with the same key will invalidate the previous token.
+
+<SdkCode>
+	<Kotlin>
+{`import kotlin.time.Duration.Companion.days\n
+val tokenKey = buildString {
+	append("remember-me-")
+	append(getDeviceId())
+}
+val currentUser = sdk.user.getCurrentUser()
+val longToken = sdk.user.getToken(currentUser.id, tokenKey, 30.days.inWholeSeconds)
+saveCredentialsInPersistentStorage("username", longToken)`}
+	</Kotlin>
+	<Typescript>
+{`const deviceId = "remember-me-" + await getDeviceId();
+const currentUser = await sdk.user.getCurrentUser();
+const longToken = await sdk.user.getToken(
+	currentUser.id,
+	deviceId,
+	{
+		tokenValidity: 30 * 24 * 60 * 60
+	}
+);
+await saveCredentialsInPersistentStorage("username", longToken);`}
+	</Typescript>
+	<Python>
+{`from datetime import timedelta\n
+current_user = sdk.user.get_current_user_blocking()
+long_token = sdk.user.get_token_blocking(
+	current_user.id,
+	f"remember-me-{get_device_id()}",
+	int(timedelta(days=30).total_seconds())
+)
+save_credentials_in_persistent_storage("username", long_token)`}
+	</Python>
+</SdkCode>
+
+### Retrieve the long-lived token and re-authenticate the user
+
+When the user returns to the application, you need to retrieve the long-lived token from the persistent storage and
+re-authenticate the user.
+
+<SdkCode>
+	<Kotlin>
+{`import com.icure.sdk.auth.UsernameLongToken
+import com.icure.sdk.options.AuthenticationMethod
+import com.icure.sdk.options.EncryptedFieldsConfiguration
+import com.icure.sdk.options.SdkOptions
+import com.icure.sdk.storage.impl.FileStorageFacade\n
+val (username, longToken) = getCredentialsFromPersistentStorage()
+val auth = AuthenticationMethod.UsingCredentials(UsernameLongToken(username, longToken))\n
+val sdk = IcureSdk.initialize(
+	"MyIcureApplication",
+	"https://api.icure.cloud",
+	auth,
+	FileStorageFacade("/path/to/storage/directory"),
+	SdkOptions(
+		encryptedFields = EncryptedFieldsConfiguration(
+			patient = setOf("notes", "addresses")
+		)
+	)
+)`}
+	</Kotlin>
+	<Typescript>
+{`import { AuthenticationMethod, IcureSdk, randomUuid, StorageFacade } from "@icure/api";
+import UsernamePassword = AuthenticationMethod.UsingCredentials.UsernamePassword;
+import UsernameLongToken = AuthenticationMethod.UsingCredentials.UsernameLongToken;\n
+const [username, longToken] = await getCredentialsFromPersistentStorage();
+const auth = new UsernameLongToken(username, longToken);
+const sdk = await IcureSdk.initialize(
+	"MyIcureApplication",
+	"https://api.icure.cloud",
+	auth,
+	new MyStorage(),
+	{
+		encryptedFields: {
+			patient: ["notes", "addresses"],
+		}
+	}
+);`}
+	</Typescript>
+	<Python>
+{`from icure.IcureSdk import IcureSdk
+from icure.authentication import UsernameLongToken
+from icure.options.SdkOptions import EncryptedFieldsConfiguration, SdkOptions
+from icure.storage.StorageFacadeOptions import FileSystemStorage\n
+username, long_token = get_credentials_from_persistent_storage()
+auth = UsernameLongToken(username, long_token)
+sdk = IcureSdk(
+	None,
+	"https://api.icure.cloud",
+	auth,
+	FileSystemStorage("/Users/clementvandendaelen/Projects/cardinalsdk_python_samples/scratch"),
+	SdkOptions(
+		encrypted_fields=EncryptedFieldsConfiguration(
+			patient=["notes", "addresses"]
+		)
+	)
+)`}
+	</Python>
+</SdkCode>
+
+And that's it! You have successfully implemented a persistent user session in your application.
+
+## Limitations
+
+A persistent session can pose a security risk for the user. Once the authentication token is in the hands of an attacker
+, they can access the application as the user.
+
+To mitigate these risks, it will not be possible to request another long-lived token from an SDK initialized with a
+long-lived token. You will need to request a new token from an SDK instance initialized with a more secure authentication
+method (e.g., short-lived token, password, etc.).
