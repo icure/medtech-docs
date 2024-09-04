@@ -172,17 +172,17 @@ The match method returns the ids of all the entity matching the provided filter 
 import com.icure.sdk.IcureSdk
 import com.icure.sdk.filters.FilterOptions
 import com.icure.sdk.model.Patient\n
-suspend fun getIdsOfPatientsMatching(patientFilterOptions: FilterOptions\u003CPatient\u003E): List\u003CString\u003E =
+suspend fun getIdsOfPatientsMatching(sdk: IcureSdk, patientFilterOptions: FilterOptions\u003CPatient\u003E): List\u003CString\u003E =
 	sdk.patient.matchPatientsBy(patientFilterOptions)`}</Kotlin>
 <Typescript>{`import {FilterOptions, IcureSdk, Patient} from "@icure/api";\n
-function getIdsOfPatientsMatching(patientFilterOptions: FilterOptions\u003CPatient\u003E): Promise\u003CArray\u003Cstring\u003E\u003E {
+function getIdsOfPatientsMatching(sdk: IcureSdk, patientFilterOptions: FilterOptions\u003CPatient\u003E): Promise\u003CArray\u003Cstring\u003E\u003E {
 	return sdk.patient.matchPatientsBy(patientFilterOptions)
 }`}</Typescript>
 <Python>{`from icure.model import Patient
 from icure.filters import FilterOptions
 from icure import IcureSdk
 from typing import List\n
-def get_ids_of_patients_matching(patient_filter_options: FilterOptions[Patient]) -> List[str]:
+def get_ids_of_patients_matching(sdk: IcureSdk, patient_filter_options: FilterOptions[Patient]) -> List[str]:
 	return sdk.patient.match_patients_by_blocking(patient_filter_options)
 `}</Python>
 </SdkCode>
@@ -207,7 +207,7 @@ suspend fun getEncryptedPatientsIterator(patientFilterOptions: FilterOptions\u00
 	sdk.patient.encrypted.filterPatientsBy(patientFilterOptions)\n
 // Get the iterator over patients, attempting to decrypt them.
 // If one of the retrieved patients can't be decrypted you will get the encrypted patient.
-suspend fun getPatientsIterator(patientFilterOptions: FilterOptions\u003CPatient\u003E): PaginatedListIterator\u003CPatient\u003E =
+suspend fun getPatientsIterator(sdk: IcureSdk, patientFilterOptions: FilterOptions\u003CPatient\u003E): PaginatedListIterator\u003CPatient\u003E =
 	sdk.patient.tryAndRecover.filterPatientsBy(patientFilterOptions)\n
 // Print 10 patients at a time until we've printed all patients of the iterator
 suspend fun printAllPatientsBy10(patientsIterator: PaginatedListIterator\u003CPatient\u003E) {
@@ -227,7 +227,7 @@ function getEncryptedPatientsIterator(patientFilterOptions: FilterOptions\u003CP
 }\n
 // Get the iterator over patients, attempting to decrypt them.
 // If one of the retrieved patients can't be decrypted you will get the encrypted patient.
-function getPatientsIterator(patientFilterOptions: FilterOptions\u003CPatient\u003E): Promise\u003CPaginatedListIterator\u003CPatient\u003E\u003E {
+function getPatientsIterator(sdk: IcureSdk, patientFilterOptions: FilterOptions\u003CPatient\u003E): Promise\u003CPaginatedListIterator\u003CPatient\u003E\u003E {
 	return sdk.patient.tryAndRecover.filterPatientsBy(patientFilterOptions)
 }\n
 // Print 10 patients at a time until we've printed all patients of the iterator
@@ -249,7 +249,7 @@ def get_encrypted_patients_iterator(patient_filter_options: FilterOptions[Patien
 	return sdk.patient.encrypted.filter_patients_by_blocking(patient_filter_options)\n
 # Get the iterator over patients, attempting to decrypt them.
 # If one of the retrieved patients can't be decrypted you will get the encrypted patient.
-def get_patients_iterator(patient_filter_options: FilterOptions[Patient]) -> PaginatedListIterator[Patient]:
+def get_patients_iterator(sdk: IcureSdk, patient_filter_options: FilterOptions[Patient]) -> PaginatedListIterator[Patient]:
 	return sdk.patient.try_and_recover.filter_patients_by_blocking(patient_filter_options)\n
 # Print 10 patients at a time until we've printed all patients of the iterator
 def print_all_patients_by_10(patients_iterator: PaginatedListIterator[Patient]):
@@ -270,17 +270,187 @@ the filter/match method, as it may be faster, depending on the actual query.
 :::note
 
 You may notice that sometimes data is consistently sorted according to the filter options even when using the standard
-variant of the filter/match method. However, if you need your data to be sorted you should change to the sorted variant
-because this may change across different versions of the iCure SDK or backend.
+variant of the filter/match method.
+However, this may change across different versions of the iCure SDK or backend, therefore, if you need your data to be
+sorted, you should switch to the sorted variant of the method.
 
 :::
 
-In some cases composite filter options are also sortable: if the first filter options of an intersection or difference
+In some cases, composite filter options are also sortable: if the first filter options of an intersection or difference
 are sortable, then the resulting filter options are sortable using the criteria of those options, regardless of the
 sortability of the other provided options. Union filter options are never sortable.
 
+For example, you can create a filter that gets all diagnoses (health element) of long or acute covid for a certain patient,
+sorting from most to least recent:
+
+<SdkCode>
+<Kotlin>{`import com.icure.sdk.IcureSdk
+import com.icure.sdk.filters.HealthElementFilters
+import com.icure.sdk.filters.SortableFilterOptions
+import com.icure.sdk.model.DecryptedHealthElement
+import com.icure.sdk.model.HealthElement
+import com.icure.sdk.model.Patient
+import com.icure.sdk.utils.pagination.PaginatedListIterator\n
+suspend fun getSortedAcuteOrLongCovidDiagnosesForPatient(sdk: IcureSdk, patient: Patient): PaginatedListIterator\u003CDecryptedHealthElement\u003E {
+	val filter: SortableFilterOptions\u003CHealthElement> = HealthElementFilters.byPatientsOpeningDateForSelf(
+		listOf(patient),
+		descending = true
+	) and (
+		HealthElementFilters.byCodeForSelf(
+			"SNOMED",
+			"1119302008"
+		) or HealthElementFilters.byCodeForSelf(
+			"SNOMED",
+			"1119304009"
+		)
+	)
+	return sdk.healthElement.filterHealthElementsBySorted(filter)
+}`}</Kotlin>
+<Typescript>{`import {
+	DecryptedHealthElement,
+	HealthElement,
+	HealthElementFilters,
+	IcureSdk,
+	intersection,
+	PaginatedListIterator,
+	Patient,
+	SortableFilterOptions,
+	union
+} from "@icure/api";\n
+function getSortedAcuteOrLongCovidDiagnosesForPatient(sdk: IcureSdk, patient: Patient): Promise\u003CPaginatedListIterator\u003CDecryptedHealthElement\u003E {
+	const filter: SortableFilterOptions\u003CHealthElement\u003E = intersection(
+		HealthElementFilters.byPatientsOpeningDateForSelf(
+			[patient],
+			{ descending: true }
+		),
+		union(
+			HealthElementFilters.byCodeForSelf(
+				"SNOMED",
+				{ codeCode: "1119302008" }
+			),
+			HealthElementFilters.byCodeForSelf(
+		"SNOMED",
+				{ codeCode: "1119304009" }
+			)
+		)
+	)
+	return sdk.healthElement.filterHealthElementsBySorted(filter)
+}`}</Typescript>
+<Python>{`from icure.filters import HealthElementFilters, union, intersection, SortableFilterOptions
+from icure import IcureSdk
+from icure.model import Patient, DecryptedHealthElement, HealthElement
+from icure.pagination.PaginatedListIterator import PaginatedListIterator\n
+def get_sorted_acute_or_long_covid_diagnoses_for_patient(sdk: IcureSdk, patient: Patient) -> PaginatedListIterator[DecryptedHealthElement]:
+	filter_options: SortableFilterOptions[HealthElement] = intersection(
+		HealthElementFilters.by_patients_opening_date_for_self(
+			[patient],
+			descending=True
+		),
+		union(
+			HealthElementFilters.by_code_for_self(
+				"SNOMED",
+				"1119302008"
+			),
+			HealthElementFilters.by_code_for_self(
+				"SNOMED",
+				"1119304009"
+			)
+		)
+	)
+	return sdk.health_element.filterHealthElementsBySorted(filter_options)`}</Python>
+</SdkCode>
+
 ## Cross-entity queries
 
-TODO
+Sometimes you need to perform queries that span across multiple types of entities.
+For example, you may want to get all heart rate measurements (services) for patients born between within a certain year
+range.
 
-Want to make a query like all BPM measurements for patients between age 40-45
+In iCure, you can achieve this by querying first for one entity, then use the result of the first query to build the
+filter options for the second entity.
+Referring back to the previous example, we first get all patients born within the chosen range (in the code sample
+1990 and 2000), then we get all the services that have a tag for heart rate measurement and are linked to one of the
+retrieved patients.
+
+<SdkCode>
+<Kotlin>{`import com.icure.sdk.IcureSdk
+import com.icure.sdk.filters.PatientFilters
+import com.icure.sdk.filters.ServiceFilters
+import com.icure.sdk.filters.intersection
+import com.icure.sdk.model.embed.DecryptedService
+import com.icure.sdk.utils.pagination.PaginatedListIterator\n
+suspend fun getHeartRateMeasurements(sdk: IcureSdk): PaginatedListIterator\u003CDecryptedService\u003E {
+	val allMatchingPatients = sdk.patient.getPatients(
+		sdk.patient.matchPatientsBy(PatientFilters.byDateOfBirthBetweenForSelf(19900101, 19991231))
+	)
+	val serviceFilter = intersection(
+		ServiceFilters.byPatientsForSelf(allMatchingPatients),
+		ServiceFilters.byTagAndValueDateForSelf("SNOMED", "364075005")
+	)
+	return sdk.contact.filterServicesBy(serviceFilter)
+}`}</Kotlin>
+<Typescript>{`import {
+	DecryptedService,
+	IcureSdk,
+	intersection,
+	PaginatedListIterator,
+	PatientFilters,
+	ServiceFilters
+} from "@icure/api";\n
+async function getHeartRateMeasurements(sdk: IcureSdk): Promise\u003CPaginatedListIterator\u003CDecryptedService\u003E\u003E {
+	const allMatchingPatients = await sdk.patient.getPatients(
+		await sdk.patient.matchPatientsBy(PatientFilters.byDateOfBirthBetweenForSelf(19900101, 19991231))
+	)
+	const serviceFilter = intersection(
+		ServiceFilters.byPatientsForSelf(allMatchingPatients),
+		ServiceFilters.byTagAndValueDateForSelf("SNOMED", { tagCode: "364075005" })
+	)
+	return sdk.contact.filterServicesBy(serviceFilter)
+}`}</Typescript>
+<Python>{`from icure.filters import ServiceFilters, PatientFilters, intersection
+from icure import IcureSdk
+from icure.model import DecryptedService
+from icure.pagination.PaginatedListIterator import PaginatedListIterator\n
+def get_heart_rate_measurements(sdk: IcureSdk) -> PaginatedListIterator[DecryptedService]:
+	all_matching_patients = sdk.patient.get_patients_blocking(
+		sdk.patient.matchPatientsBy(PatientFilters.by_date_of_birth_between_for_self(19900101, 19991231))
+	)
+	service_filter = intersection(
+		ServiceFilters.by_patients_for_self(all_matching_patients),
+		ServiceFilters.by_tag_and_value_date_for_self("SNOMED", "364075005")
+	)
+	return sdk.contact.filter_services_by_blocking(service_filter)`}</Python>
+</SdkCode>
+
+Note that this requires that the user performing the query has access to all the secret ids (TODO link) of the patients
+obtained from the first query.
+If not, some items will be missing from the final result.
+
+### Cross-entity queries with data denormalization.
+
+An alternative approach to the two-step query proposed early is to denormalize your data: if you know that you will
+often need to query services based on the gender and age of the patient, you may start adding some custom tags to each
+service containing the patient's year of birth.
+
+An advantage of this approach is that you wouldn't need to get the patients to perform a patient-service cross-entity
+query, and more importantly, you don't need to have access to the secret ids of the patients.
+
+However, this approach has some major flaws.
+
+The first and most obvious flaw is that the duplicated has some cost, in terms of storage space, amounts of data
+transferred, but most importantly maintenance: today you want to filter services using only the age of the patients, but
+what if tomorrow you also want to filter depending on the gender of the patient?
+If you only added a tag for the patient's year of birth, you will have to either update all the services or go back to
+performing the query in two steps.
+
+The other flaw of this approach is that any patient information we add to the service could be used to de-anonymize
+the patients.
+Today (in the 2020s) if we add to the services a tag that says the patient was born between the years 1940 and 1950,
+we're significantly restricting the set of patients that the service could be referring to.
+We're still probably within a safe range, but what about 10 years from now?
+The number of patients born between 1940 and 1950 will be drastically reduced, making de-anonymization of these patients
+simpler and simpler, especially when this information is combined with the metadata added by iCure.
+
+In general, this approach is much more challenging to manage and implement properly.
+Unless you're certain that this brings value to your solution, and that it will not harm the privacy of your users we
+recommend you to avoid this.
