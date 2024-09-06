@@ -1,0 +1,222 @@
+---
+slug: how-to-subscribe-to-events
+---
+
+import {LanguageTabs} from "@site/src/components/LanguageTabs";
+import TabItem from "@theme/TabItem";
+
+# Subscribing to Events
+
+## Introduction
+
+In some cases, you may want to react to the creation or update of data in Cardinal. Since this data is encrypted,
+we cannot host this code in Cardinal. That's why we provide you with the tools to implement a microservice/backend
+that can subscribe to these different events and react accordingly.
+
+## Example use cases
+
+- Analyze a measurement taken on a patient using a machine learning model
+- Send an email to a patient when a new appointment is created
+
+## Setup
+
+You will need to host a service that can subscribe to these events using the Cardinal SDK. The service
+in question must have access to the events, so you will need to share health data with the user that
+will be used by the service.
+
+In this example, we will focus on the code used to subscribe to events. Let's start by creating a service
+that subscribes to the creation of new `Service` objects with the tag `INTERNAL_INFERENCE_STATUS` having the value
+`TO_BE_STARTED` and logs them in the console.
+
+<LanguageTabs>
+
+<TabItem value="kotlin">
+
+The `subscribeToServiceCreateOrUpdateEvents` method allows you to subscribe to the creation or update events of a
+`Service`. In this example, we filter the events to receive only those with the tag type `INTERNAL_INFERENCE_STATUS`
+and the tag code `TO_BE_STARTED`.
+
+This method returns a `ReceiveChannel` that allows us to consume the events.
+
+```kotlin
+import com.icure.cardinal.sdk.filters.ServiceFilters
+import com.icure.cardinal.sdk.subscription.EntitySubscriptionConfiguration
+import kotlinx.coroutines.channels.consumeEach
+
+sdk.contact.subscribeToServiceCreateOrUpdateEvents(
+    ServiceFilters.byTagAndValueDateForSelf(
+        tagType = "INTERNAL_INFERENCE_STATUS",
+        tagCode = "TO_BE_STARTED",
+    ),
+    EntitySubscriptionConfiguration(
+        channelBufferCapacity = 100,
+        onBufferFull = EntitySubscriptionConfiguration.FullBufferBehaviour.Close,
+        reconnectionDelay = 2.seconds,
+        retryDelayExponentFactor = 2.0,
+        connectionMaxRetries = 5,
+    )
+).eventChannel.consumeEach {
+    println("Service created or updated: $it")
+}
+```
+
+:::note
+
+This code needs to be executed in a coroutine context. The part managing this has been omitted
+for simplicity.
+
+:::
+
+</TabItem>
+
+<TabItem value="typescript">
+
+The `subscribeToServiceCreateOrUpdateEvents` method allows you to subscribe to the creation or update events of a
+`Service`. In this example, we filter the events to receive only those with the tag type `INTERNAL_INFERENCE_STATUS`
+and the tag code `TO_BE_STARTED`.
+
+This method returns an `EntitySubscription` that allows us to consume the events.
+
+To consume the events, we use the `waitForEvent` method, which lets us wait for an event for a certain time. If no event
+is received, the method returns `null`.
+
+We loop as long as the `EntitySubscription` is not closed.
+
+```typescript
+import {
+  EntitySubscriptionConfiguration,
+  ServiceFilters,
+} from "@icure/cardinal-sdk";
+
+const subscription = await sdk.contact.subscribeToServiceCreateOrUpdateEvents(
+  ServiceFilters.byTagAndValueDateForSelf(
+    "INTERNAL_INFERENCE_STATUS",
+    {
+      tagCode: "TO_BE_STARTED",
+    },
+  ),
+  {
+    subscriptionConfig: new EntitySubscriptionConfiguration(
+      {
+        channelBufferCapacity: 100,
+        onBufferFull: EntitySubscriptionConfiguration.FullBufferBehaviour.Close,
+        reconnectionDelay: 2 * 1000,
+        retryDelayExponentFactor: 2.0,
+        connectionMaxRetries: 5
+      }
+    )
+  }
+)
+
+while (!subscription.isClosed) {
+  const event = await subscription.waitForEvent(10 * 1000)
+  if (event !== null) {
+    console.log(`Received event: ${JSON.stringify(event)}`)
+  }
+  else {
+    console.log("No new event yet")
+  }
+}
+```
+
+</TabItem>
+
+<TabItem value="python">
+
+The `subscribe_to_service_create_or_update_events_blocking` method allows you to subscribe to the creation or update events of a
+`Service`. In this example, we filter the events to receive only those with the tag type `INTERNAL_INFERENCE_STATUS`
+and the tag code `TO_BE_STARTED`.
+
+This method returns an `EntitySubscription` that allows us to consume the events.
+
+To consume the events, we use the `wait_for_event_blocking` method, which lets us wait for an event for a
+certain time. If no event is received, the method returns `None`.
+
+We loop as long as the `EntitySubscription` is not closed.
+
+```python
+from cardinal_sdk.filters import ServiceFilters
+from cardinal_sdk.model import EntitySubscriptionConfiguration
+from datetime import timedelta
+
+subscription = sdk.contact.subscribe_to_service_create_or_update_events_blocking(
+    ServiceFilters.by_tag_and_value_date_for_self(
+        "INTERNAL_INFERENCE_STATUS",
+        "TO_BE_STARTED",
+    ),
+    EntitySubscriptionConfiguration(
+        channel_buffer_capacity=100,
+        on_buffer_full=EntitySubscriptionConfiguration.FullBufferBehaviour.Close,
+        reconnection_delay=timedelta(seconds=5),
+        retry_delay_exponent_factor=2.0,
+        connection_max_retries=5,
+    )
+)
+
+while subscription.get_close_reason() is None:
+    event = subscription.wait_for_event_blocking(timedelta(seconds=10))
+    if event is not None:
+        print(event)
+    else:
+        print("No new event yet")
+```
+
+</TabItem>
+
+</LanguageTabs>
+
+## Some explanations
+
+### Buffered events
+
+We have completely abstracted the various concepts used to establish the connection and consume events.
+The goal is to provide you with a tool that allows you to react to events without worrying about setting up
+a WebSocket connection, handling connection errors, etc.
+
+Events are sent by the Cardinal backend, and this event is then added to a buffer. You can specify
+the size of this buffer and the behavior to adopt if the buffer is full.
+
+This buffer contains events that have not yet been consumed. An event can be:
+- A connection event (emitted once during the initial connection)
+- An error event:
+  - An error event due to a missed ping from the server
+  - An error event due to backend closure
+  - An unexpected error event
+- A reconnection event (automatically initiated in case of a non-fatal error)
+- An event with an entity (Service, Contact, etc.) that has been created or modified (depending on your filter)
+- A deserialization error event (if an event cannot be deserialized)
+
+This mechanism allows you to continue consuming events even if the connection is lost, without losing
+those already collected before the connection loss.
+
+We will provide a more complete example later in this document.
+
+### Ping mechanism
+
+Cardinal SDK uses a ping mechanism to check the connection with the backend. This ping/pong is initiated by the backend
+after receiving the subscription message from the client.
+
+The client must respond to this ping with a pong within a given time window. If the client does not respond,
+the backend considers the connection lost and closes the connection. Conversely, the client expects to receive
+a ping from the backend within a given time window. If the client does not receive a ping, it considers
+the connection lost and closes the connection.
+
+In both cases, the client attempts to reconnect automatically in the event of a connection loss. You can specify
+the reconnection delay, the reconnection delay exponent factor, and the number of reconnection attempts.
+
+If, after the number of reconnection attempts, the connection cannot be restored, a close event is emitted
+with the reason for the closure.
+
+### Close reasons
+
+Possible close reasons are as follows:
+- `ChannelFull`: The buffer is full, and the close behavior is set to `Close`
+- `ConnectionLost`: The connection was lost, and the maximum number of reconnection attempts was reached
+- `IntentionallyClosed`: The connection was intentionally closed by the client
+
+## Advanced usage
+
+Now that we know the basics, we can determine how to handle different error cases and enable our service
+to react accordingly.
+
+### Recover from a connection error
