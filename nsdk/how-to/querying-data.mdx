@@ -1,7 +1,5 @@
-import SdkCode from "../../src/components/SdkCode/SdkCode";
-import Kotlin from "../../src/components/SdkCode/Kotlin";
-import Typescript from "../../src/components/SdkCode/Typescript";
-import Python from "../../src/components/SdkCode/Python";
+import TabItem from "@theme/TabItem";
+import {LanguageTabs} from "@site/src/components/LanguageTabs";
 
 # Querying data
 
@@ -15,14 +13,39 @@ you to create various types of filter options that check different properties on
 For example, you can create filter options that match all healthcare parties with a name (first or last name) that
 contains "joh":
 
-<SdkCode>
-<Kotlin>{`import com.icure.sdk.filters.HealthcarePartyFilters\n
-val hcpWithName = HealthcarePartyFilters.byName("joh")`}</Kotlin>
-<Typescript>{`import {HealthcarePartyFilters} from "@icure/api";\n
-const hcpWithName = HealthcarePartyFilters.byName("joh")`}</Typescript>
-<Python>{`from icure.filters import HealthcarePartyFilters\n
-hcpWithName = HealthcarePartyFilters.by_name("joh")`}</Python>
-</SdkCode>
+<LanguageTabs>
+
+<TabItem value="kotlin">
+
+```kotlin
+import com.icure.cardinal.sdk.filters.HealthcarePartyFilters
+
+val hcpWithName = HealthcarePartyFilters.byName("joh")
+```
+
+</TabItem>
+
+<TabItem value="typescript">
+
+```typescript
+import {HealthcarePartyFilters} from "@icure/cardinal-sdk";
+
+const hcpWithName = HealthcarePartyFilters.byName("joh")
+```
+
+</TabItem>
+
+<TabItem value="python">
+
+```python
+from cardinal_sdk.filters import HealthcarePartyFilters
+
+hcpWithName = HealthcarePartyFilters.by_name("joh")
+```
+
+</TabItem>
+
+</LanguageTabs>
 
 
 :::info
@@ -104,11 +127,16 @@ the first provided filter but not the second.
 In the following example we use these operators to get filter options that match all male patients born between 1960 and
 2000 and all female patients born between 1950 and 2000.
 
-<SdkCode>
-<Kotlin>{`import com.icure.sdk.filters.PatientFilters
-import com.icure.sdk.filters.intersection
-import com.icure.sdk.filters.union
-import com.icure.sdk.model.embed.Gender\n
+<LanguageTabs>
+
+<TabItem value="kotlin">
+
+```kotlin
+import com.icure.cardinal.sdk.filters.PatientFilters
+import com.icure.cardinal.sdk.filters.intersection
+import com.icure.cardinal.sdk.filters.union
+import com.icure.cardinal.sdk.model.embed.Gender
+
 val myFilter = union(
 	intersection(
 		PatientFilters.byGenderEducationProfessionForSelf(Gender.Male),
@@ -118,7 +146,8 @@ val myFilter = union(
 		PatientFilters.byGenderEducationProfessionForSelf(Gender.Female),
 		PatientFilters.byDateOfBirthBetweenForSelf(fromDate = 19500101, toDate = 19991231)
 	)
-)\n
+)
+
 // In kotlin you can also use infix functions to build combined filters
 val myFilterWithOperators = (
 	PatientFilters.byGenderEducationProfessionForSelf(
@@ -134,8 +163,16 @@ val myFilterWithOperators = (
 		fromDate = 19500101,
 		toDate = 19991231
 	)
-)`}</Kotlin>
-<Typescript>{`import {PatientFilters,Gender,intersection,union} from "@icure/api";\n
+)
+```
+
+</TabItem>
+
+<TabItem value="typescript">
+
+```typescript
+import {PatientFilters,Gender,intersection,union} from "@icure/cardinal-sdk";
+
 const myFilter = union(
 	intersection(
 		PatientFilters.byGenderEducationProfessionForSelf(Gender.Male),
@@ -145,9 +182,17 @@ const myFilter = union(
 		PatientFilters.byGenderEducationProfessionForSelf(Gender.Female),
 		PatientFilters.byDateOfBirthBetweenForSelf(19500101, 19991231)
 	)
-)`}</Typescript>
-<Python>{`from icure.model import Gender
-from icure.filters import union, intersection, PatientFilters\n
+)
+```
+
+</TabItem>
+
+<TabItem value="python">
+
+```python
+from cardinal_sdk.model import Gender
+from cardinal_sdk.filters import union, intersection, PatientFilters
+
 myFilter = union(
 	intersection(
 		PatientFilters.by_gender_education_profession_for_self(Gender.Male),
@@ -157,8 +202,12 @@ myFilter = union(
 		PatientFilters.by_gender_education_profession_for_self(Gender.Female),
 		PatientFilters.by_date_of_birth_between_for_self(19500101, 19991231)
 	)
-)`}</Python>
-</SdkCode>
+)
+```
+
+</TabItem>
+
+</LanguageTabs>
 
 ## Retrieve entities matching a filter
 
@@ -167,96 +216,161 @@ corresponding api.
 
 The match method returns the ids of all the entity matching the provided filter options.
 
-<SdkCode>
-<Kotlin>{`
-import com.icure.sdk.IcureSdk
-import com.icure.sdk.filters.FilterOptions
-import com.icure.sdk.model.Patient\n
-suspend fun getIdsOfPatientsMatching(sdk: IcureSdk, patientFilterOptions: FilterOptions\u003CPatient\u003E): List\u003CString\u003E =
-	sdk.patient.matchPatientsBy(patientFilterOptions)`}</Kotlin>
-<Typescript>{`import {FilterOptions, IcureSdk, Patient} from "@icure/api";\n
-function getIdsOfPatientsMatching(sdk: IcureSdk, patientFilterOptions: FilterOptions\u003CPatient\u003E): Promise\u003CArray\u003Cstring\u003E\u003E {
+<LanguageTabs>
+
+<TabItem value="kotlin">
+
+```kotlin
+
+import com.icure.cardinal.sdk.CardinalSdk
+import com.icure.cardinal.sdk.filters.FilterOptions
+import com.icure.cardinal.sdk.model.Patient
+
+suspend fun getIdsOfPatientsMatching(sdk: CardinalSdk, patientFilterOptions: FilterOptions<Patient>): List<String> =
+	sdk.patient.matchPatientsBy(patientFilterOptions)
+```
+
+</TabItem>
+
+<TabItem value="typescript">
+
+```typescript
+import {FilterOptions, CardinalSdk, Patient} from "@icure/cardinal-sdk";
+
+function getIdsOfPatientsMatching(sdk: CardinalSdk, patientFilterOptions: FilterOptions<Patient>): Promise<Array<string>> {
 	return sdk.patient.matchPatientsBy(patientFilterOptions)
-}`}</Typescript>
-<Python>{`from icure.model import Patient
-from icure.filters import FilterOptions
-from icure import IcureSdk
-from typing import List\n
-def get_ids_of_patients_matching(sdk: IcureSdk, patient_filter_options: FilterOptions[Patient]) -> List[str]:
+}
+```
+
+</TabItem>
+
+<TabItem value="python">
+
+```python
+from cardinal_sdk.model import Patient
+from cardinal_sdk.filters import FilterOptions
+from cardinal_sdk import CardinalSdk
+from typing import List
+
+def get_ids_of_patients_matching(sdk: CardinalSdk, patient_filter_options: FilterOptions[Patient]) -> List[str]:
 	return sdk.patient.match_patients_by_blocking(patient_filter_options)
-`}</Python>
-</SdkCode>
+
+```
+
+</TabItem>
+
+</LanguageTabs>
 
 The filter method returns an iterator that retrieves the matching entities from the backend over multiple pages if needed.
 For encryptable entities this method is flavoured: the method on the main api returns the decrypted entities, but you
 can also retrieve the entities using the encrypted and polymorphic flavours.
 
-<SdkCode>
-<Kotlin>{`import com.icure.sdk.IcureSdk
-import com.icure.sdk.filters.FilterOptions
-import com.icure.sdk.model.DecryptedPatient
-import com.icure.sdk.model.EncryptedPatient
-import com.icure.sdk.model.Patient
-import com.icure.sdk.utils.pagination.PaginatedListIterator\n
+<LanguageTabs>
+
+<TabItem value="kotlin">
+
+```kotlin
+import com.icure.cardinal.sdk.CardinalSdk
+import com.icure.cardinal.sdk.filters.FilterOptions
+import com.icure.cardinal.sdk.model.DecryptedPatient
+import com.icure.cardinal.sdk.model.EncryptedPatient
+import com.icure.cardinal.sdk.model.Patient
+import com.icure.cardinal.sdk.utils.pagination.PaginatedListIterator
+
 // Get the iterator over decrypted patients.
 // If one of the retrieved patients can't be decrypted you will get an exception when using the iterator
-suspend fun getDecryptedPatientsIterator(patientFilterOptions: FilterOptions\u003CPatient\u003E): PaginatedListIterator\u003CDecryptedPatient\u003E =
-	sdk.patient.filterPatientsBy(patientFilterOptions)\n
+suspend fun getDecryptedPatientsIterator(sdk: CardinalSdk, patientFilterOptions: FilterOptions<Patient>): PaginatedListIterator<DecryptedPatient> =
+	sdk.patient.filterPatientsBy(patientFilterOptions)
+
 // Get the iterator over encrypted patients.
-suspend fun getEncryptedPatientsIterator(patientFilterOptions: FilterOptions\u003CPatient\u003E): PaginatedListIterator\u003CEncryptedPatient\u003E =
-	sdk.patient.encrypted.filterPatientsBy(patientFilterOptions)\n
+suspend fun getEncryptedPatientsIterator(sdk: CardinalSdk, patientFilterOptions: FilterOptions<Patient>): PaginatedListIterator<EncryptedPatient> =
+	sdk.patient.encrypted.filterPatientsBy(patientFilterOptions)
+
 // Get the iterator over patients, attempting to decrypt them.
 // If one of the retrieved patients can't be decrypted you will get the encrypted patient.
-suspend fun getPatientsIterator(sdk: IcureSdk, patientFilterOptions: FilterOptions\u003CPatient\u003E): PaginatedListIterator\u003CPatient\u003E =
-	sdk.patient.tryAndRecover.filterPatientsBy(patientFilterOptions)\n
+suspend fun getPatientsIterator(sdk: CardinalSdk, patientFilterOptions: FilterOptions<Patient>): PaginatedListIterator<Patient> =
+	sdk.patient.tryAndRecover.filterPatientsBy(patientFilterOptions)
+
 // Print 10 patients at a time until we've printed all patients of the iterator
-suspend fun printAllPatientsBy10(patientsIterator: PaginatedListIterator\u003CPatient\u003E) {
+suspend fun printAllPatientsBy10(patientsIterator: PaginatedListIterator<Patient>) {
 	while (patientsIterator.hasNext()) {
 		println(patientsIterator.next(10))
 	}
-}`}</Kotlin>
-<Typescript>{`import {DecryptedPatient, EncryptedPatient, FilterOptions, IcureSdk, PaginatedListIterator, Patient} from "@icure/api";\n
+}
+```
+
+</TabItem>
+
+<TabItem value="typescript">
+
+```typescript
+import {
+	DecryptedPatient,
+	EncryptedPatient,
+	FilterOptions,
+	CardinalSdk,
+	PaginatedListIterator,
+	Patient
+} from "@icure/cardinal-sdk";
+
 // Get the iterator over decrypted patients.
 // If one of the retrieved patients can't be decrypted you will get an exception when using the iterator
-function getDecryptedPatientsIterator(patientFilterOptions: FilterOptions\u003CPatient\u003E): Promise\u003CPaginatedListIterator\u003CDecryptedPatient\u003E\u003E {
+function getDecryptedPatientsIterator(sdk: CardinalSdk, patientFilterOptions: FilterOptions<Patient>): Promise<PaginatedListIterator<DecryptedPatient>> {
 	return sdk.patient.filterPatientsBy(patientFilterOptions)
-}\n
+}
+
 // Get the iterator over encrypted patients.
-function getEncryptedPatientsIterator(patientFilterOptions: FilterOptions\u003CPatient\u003E): Promise\u003CPaginatedListIterator\u003CEncryptedPatient\u003E\u003E {
+function getEncryptedPatientsIterator(sdk: CardinalSdk, patientFilterOptions: FilterOptions<Patient>): Promise<PaginatedListIterator<EncryptedPatient>> {
 	return sdk.patient.encrypted.filterPatientsBy(patientFilterOptions)
-}\n
+}
+
 // Get the iterator over patients, attempting to decrypt them.
 // If one of the retrieved patients can't be decrypted you will get the encrypted patient.
-function getPatientsIterator(sdk: IcureSdk, patientFilterOptions: FilterOptions\u003CPatient\u003E): Promise\u003CPaginatedListIterator\u003CPatient\u003E\u003E {
+function getPatientsIterator(sdk: CardinalSdk, patientFilterOptions: FilterOptions<Patient>): Promise<PaginatedListIterator<Patient>> {
 	return sdk.patient.tryAndRecover.filterPatientsBy(patientFilterOptions)
-}\n
+}
+
 // Print 10 patients at a time until we've printed all patients of the iterator
-async function printAllPatientsBy10(patientsIterator: PaginatedListIterator\u003CPatient\u003E) {
+async function printAllPatientsBy10(patientsIterator: PaginatedListIterator<Patient>) {
 	while (await patientsIterator.hasNext()) {
 		console.log(await patientsIterator.next(10))
 	}
-}`}</Typescript>
-<Python>{`from icure.model import Patient, DecryptedPatient, EncryptedPatient
-from icure.filters import FilterOptions
-from icure import IcureSdk
-from icure.pagination.PaginatedListIterator import PaginatedListIterator\n
+}
+```
+
+</TabItem>
+
+<TabItem value="python">
+
+```python
+from cardinal_sdk.model import Patient, DecryptedPatient, EncryptedPatient
+from cardinal_sdk.filters import FilterOptions
+from cardinal_sdk import CardinalSdk
+from cardinal_sdk.pagination.PaginatedListIterator import PaginatedListIterator
+
 # Get the iterator over decrypted patients.
 # If one of the retrieved patients can't be decrypted you will get an exception when using the iterator
-def get_decrypted_patients_iterator(patient_filter_options: FilterOptions[Patient]) -> PaginatedListIterator[DecryptedPatient]:
-	return sdk.patient.filter_patients_by_blocking(patient_filter_options)\n
+def get_decrypted_patients_iterator(sdk: CardinalSdk, patient_filter_options: FilterOptions[Patient]) -> PaginatedListIterator[DecryptedPatient]:
+	return sdk.patient.filter_patients_by_blocking(patient_filter_options)
+
 # Get the iterator over encrypted patients.
-def get_encrypted_patients_iterator(patient_filter_options: FilterOptions[Patient]) -> PaginatedListIterator[EncryptedPatient]:
-	return sdk.patient.encrypted.filter_patients_by_blocking(patient_filter_options)\n
+def get_encrypted_patients_iterator(sdk: CardinalSdk, patient_filter_options: FilterOptions[Patient]) -> PaginatedListIterator[EncryptedPatient]:
+	return sdk.patient.encrypted.filter_patients_by_blocking(patient_filter_options)
+
 # Get the iterator over patients, attempting to decrypt them.
 # If one of the retrieved patients can't be decrypted you will get the encrypted patient.
-def get_patients_iterator(sdk: IcureSdk, patient_filter_options: FilterOptions[Patient]) -> PaginatedListIterator[Patient]:
-	return sdk.patient.try_and_recover.filter_patients_by_blocking(patient_filter_options)\n
+def get_patients_iterator(sdk: CardinalSdk, patient_filter_options: FilterOptions[Patient]) -> PaginatedListIterator[Patient]:
+	return sdk.patient.try_and_recover.filter_patients_by_blocking(patient_filter_options)
+
 # Print 10 patients at a time until we've printed all patients of the iterator
 def print_all_patients_by_10(patients_iterator: PaginatedListIterator[Patient]):
 	while patients_iterator.has_next_blocking():
 		print(patients_iterator.next_blocking(10))
-`}</Python>
-</SdkCode>
+```
+
+</TabItem>
+
+</LanguageTabs>
 
 ### Sorted queries
 
@@ -283,16 +397,21 @@ sortability of the other provided options. Union filter options are never sortab
 For example, you can create a filter that gets all diagnoses (health element) of long or acute covid for a certain patient,
 sorting from most to least recent:
 
-<SdkCode>
-<Kotlin>{`import com.icure.sdk.IcureSdk
-import com.icure.sdk.filters.HealthElementFilters
-import com.icure.sdk.filters.SortableFilterOptions
-import com.icure.sdk.model.DecryptedHealthElement
-import com.icure.sdk.model.HealthElement
-import com.icure.sdk.model.Patient
-import com.icure.sdk.utils.pagination.PaginatedListIterator\n
-suspend fun getSortedAcuteOrLongCovidDiagnosesForPatient(sdk: IcureSdk, patient: Patient): PaginatedListIterator\u003CDecryptedHealthElement\u003E {
-	val filter: SortableFilterOptions\u003CHealthElement> = HealthElementFilters.byPatientsOpeningDateForSelf(
+<LanguageTabs>
+
+<TabItem value="kotlin">
+
+```kotlin
+import com.icure.cardinal.sdk.CardinalSdk
+import com.icure.cardinal.sdk.filters.HealthElementFilters
+import com.icure.cardinal.sdk.filters.SortableFilterOptions
+import com.icure.cardinal.sdk.model.DecryptedHealthElement
+import com.icure.cardinal.sdk.model.HealthElement
+import com.icure.cardinal.sdk.model.Patient
+import com.icure.cardinal.sdk.utils.pagination.PaginatedListIterator
+
+suspend fun getSortedAcuteOrLongCovidDiagnosesForPatient(sdk: CardinalSdk, patient: Patient): PaginatedListIterator<DecryptedHealthElement> {
+	val filter: SortableFilterOptions<HealthElement> = HealthElementFilters.byPatientsOpeningDateForSelf(
 		listOf(patient),
 		descending = true
 	) and (
@@ -305,20 +424,28 @@ suspend fun getSortedAcuteOrLongCovidDiagnosesForPatient(sdk: IcureSdk, patient:
 		)
 	)
 	return sdk.healthElement.filterHealthElementsBySorted(filter)
-}`}</Kotlin>
-<Typescript>{`import {
+}
+```
+
+</TabItem>
+
+<TabItem value="typescript">
+
+```typescript
+import {
 	DecryptedHealthElement,
 	HealthElement,
 	HealthElementFilters,
-	IcureSdk,
+	CardinalSdk,
 	intersection,
 	PaginatedListIterator,
 	Patient,
 	SortableFilterOptions,
 	union
-} from "@icure/api";\n
-function getSortedAcuteOrLongCovidDiagnosesForPatient(sdk: IcureSdk, patient: Patient): Promise\u003CPaginatedListIterator\u003CDecryptedHealthElement\u003E {
-	const filter: SortableFilterOptions\u003CHealthElement\u003E = intersection(
+} from "@icure/cardinal-sdk";
+
+function getSortedAcuteOrLongCovidDiagnosesForPatient(sdk: CardinalSdk, patient: Patient): Promise<PaginatedListIterator<DecryptedHealthElement>> {
+	const filter: SortableFilterOptions<HealthElement> = intersection(
 		HealthElementFilters.byPatientsOpeningDateForSelf(
 			[patient],
 			{ descending: true }
@@ -329,18 +456,26 @@ function getSortedAcuteOrLongCovidDiagnosesForPatient(sdk: IcureSdk, patient: Pa
 				{ codeCode: "1119302008" }
 			),
 			HealthElementFilters.byCodeForSelf(
-		"SNOMED",
+				"SNOMED",
 				{ codeCode: "1119304009" }
 			)
 		)
 	)
 	return sdk.healthElement.filterHealthElementsBySorted(filter)
-}`}</Typescript>
-<Python>{`from icure.filters import HealthElementFilters, union, intersection, SortableFilterOptions
-from icure import IcureSdk
-from icure.model import Patient, DecryptedHealthElement, HealthElement
-from icure.pagination.PaginatedListIterator import PaginatedListIterator\n
-def get_sorted_acute_or_long_covid_diagnoses_for_patient(sdk: IcureSdk, patient: Patient) -> PaginatedListIterator[DecryptedHealthElement]:
+}
+```
+
+</TabItem>
+
+<TabItem value="python">
+
+```python
+from cardinal_sdk.filters import HealthElementFilters, union, intersection, SortableFilterOptions
+from cardinal_sdk import CardinalSdk
+from cardinal_sdk.model import Patient, DecryptedHealthElement, HealthElement
+from cardinal_sdk.pagination.PaginatedListIterator import PaginatedListIterator
+
+def get_sorted_acute_or_long_covid_diagnoses_for_patient(sdk: CardinalSdk, patient: Patient) -> PaginatedListIterator[DecryptedHealthElement]:
 	filter_options: SortableFilterOptions[HealthElement] = intersection(
 		HealthElementFilters.by_patients_opening_date_for_self(
 			[patient],
@@ -357,8 +492,12 @@ def get_sorted_acute_or_long_covid_diagnoses_for_patient(sdk: IcureSdk, patient:
 			)
 		)
 	)
-	return sdk.health_element.filterHealthElementsBySorted(filter_options)`}</Python>
-</SdkCode>
+	return sdk.health_element.filterHealthElementsBySorted(filter_options)
+```
+
+</TabItem>
+
+</LanguageTabs>
 
 ## Cross-entity queries
 
@@ -372,14 +511,19 @@ Referring back to the previous example, we first get all patients born within th
 1990 and 2000), then we get all the services that have a tag for heart rate measurement and are linked to one of the
 retrieved patients.
 
-<SdkCode>
-<Kotlin>{`import com.icure.sdk.IcureSdk
-import com.icure.sdk.filters.PatientFilters
-import com.icure.sdk.filters.ServiceFilters
-import com.icure.sdk.filters.intersection
-import com.icure.sdk.model.embed.DecryptedService
-import com.icure.sdk.utils.pagination.PaginatedListIterator\n
-suspend fun getHeartRateMeasurements(sdk: IcureSdk): PaginatedListIterator\u003CDecryptedService\u003E {
+<LanguageTabs>
+
+<TabItem value="kotlin">
+
+```kotlin
+import com.icure.cardinal.sdk.CardinalSdk
+import com.icure.cardinal.sdk.filters.PatientFilters
+import com.icure.cardinal.sdk.filters.ServiceFilters
+import com.icure.cardinal.sdk.filters.intersection
+import com.icure.cardinal.sdk.model.embed.DecryptedService
+import com.icure.cardinal.sdk.utils.pagination.PaginatedListIterator
+
+suspend fun getHeartRateMeasurements(sdk: CardinalSdk): PaginatedListIterator<DecryptedService> {
 	val allMatchingPatients = sdk.patient.getPatients(
 		sdk.patient.matchPatientsBy(PatientFilters.byDateOfBirthBetweenForSelf(19900101, 19991231))
 	)
@@ -388,16 +532,24 @@ suspend fun getHeartRateMeasurements(sdk: IcureSdk): PaginatedListIterator\u003C
 		ServiceFilters.byTagAndValueDateForSelf("SNOMED", "364075005")
 	)
 	return sdk.contact.filterServicesBy(serviceFilter)
-}`}</Kotlin>
-<Typescript>{`import {
+}
+```
+
+</TabItem>
+
+<TabItem value="typescript">
+
+```typescript
+import {
 	DecryptedService,
-	IcureSdk,
+	CardinalSdk,
 	intersection,
 	PaginatedListIterator,
 	PatientFilters,
 	ServiceFilters
-} from "@icure/api";\n
-async function getHeartRateMeasurements(sdk: IcureSdk): Promise\u003CPaginatedListIterator\u003CDecryptedService\u003E\u003E {
+} from "@icure/cardinal-sdk";
+
+async function getHeartRateMeasurements(sdk: CardinalSdk): Promise<PaginatedListIterator<DecryptedService>> {
 	const allMatchingPatients = await sdk.patient.getPatients(
 		await sdk.patient.matchPatientsBy(PatientFilters.byDateOfBirthBetweenForSelf(19900101, 19991231))
 	)
@@ -406,12 +558,20 @@ async function getHeartRateMeasurements(sdk: IcureSdk): Promise\u003CPaginatedLi
 		ServiceFilters.byTagAndValueDateForSelf("SNOMED", { tagCode: "364075005" })
 	)
 	return sdk.contact.filterServicesBy(serviceFilter)
-}`}</Typescript>
-<Python>{`from icure.filters import ServiceFilters, PatientFilters, intersection
-from icure import IcureSdk
-from icure.model import DecryptedService
-from icure.pagination.PaginatedListIterator import PaginatedListIterator\n
-def get_heart_rate_measurements(sdk: IcureSdk) -> PaginatedListIterator[DecryptedService]:
+}
+```
+
+</TabItem>
+
+<TabItem value="python">
+
+```python
+from cardinal_sdk.filters import ServiceFilters, PatientFilters, intersection
+from cardinal_sdk import CardinalSdk
+from cardinal_sdk.model import DecryptedService
+from cardinal_sdk.pagination.PaginatedListIterator import PaginatedListIterator
+
+def get_heart_rate_measurements(sdk: CardinalSdk) -> PaginatedListIterator[DecryptedService]:
 	all_matching_patients = sdk.patient.get_patients_blocking(
 		sdk.patient.matchPatientsBy(PatientFilters.by_date_of_birth_between_for_self(19900101, 19991231))
 	)
@@ -419,8 +579,12 @@ def get_heart_rate_measurements(sdk: IcureSdk) -> PaginatedListIterator[Decrypte
 		ServiceFilters.by_patients_for_self(all_matching_patients),
 		ServiceFilters.by_tag_and_value_date_for_self("SNOMED", "364075005")
 	)
-	return sdk.contact.filter_services_by_blocking(service_filter)`}</Python>
-</SdkCode>
+	return sdk.contact.filter_services_by_blocking(service_filter)
+```
+
+</TabItem>
+
+</LanguageTabs>
 
 Note that this requires that the user performing the query has access to all the secret ids (TODO link) of the patients
 obtained from the first query.
