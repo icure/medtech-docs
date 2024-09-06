@@ -55,6 +55,27 @@ else:
 ```
 
 </TabItem>
+<TabItem value="typescript">
+
+```typescript
+const patientId = await readLn("Insert the id of a Patient (blank to create a new one): ")
+let patient: DecryptedPatient
+if(patientId.length === 0) {
+	patient = await sdk.patient.createPatient(
+		await sdk.patient.withEncryptionMetadata(
+			new DecryptedPatient({
+				id: uuid(),
+				firstName: "Annabelle",
+				lastName: "Hall",
+			})
+		)
+	)
+} else {
+	patient = await sdk.patient.getPatient(patientId)
+}
+```
+
+</TabItem>
 </LanguageTabs>
 
 Next, a new `Contact` is instantiated with a custom description provided by the user:
@@ -86,6 +107,18 @@ contact = DecryptedContact(
 ```
 
 </TabItem>
+<TabItem value="typescript">
+
+```typescript
+const description = await readLn("Examination description: ")
+const contact = new DecryptedContact({
+	id: uuid(),
+	descr: description,
+	openingDate: currentFuzzyDate()
+})
+```
+
+</TabItem>
 </LanguageTabs>
 
 A `Contact` is an encryptable entity, so a `DecryptedContact` is used when instantiating it. Besides the description,
@@ -106,6 +139,13 @@ val contactWithMetadata = sdk.contact.withEncryptionMetadata(contact, patient)
 
 ```python
 contact_with_metadata = sdk.contact.with_encryption_metadata_blocking(contact, patient)
+```
+
+</TabItem>
+<TabItem value="typescript">
+
+```typescript
+const contactWithMetadata = await sdk.contact.withEncryptionMetadata(contact, patient)
 ```
 
 </TabItem>
@@ -130,6 +170,13 @@ val createdContact = sdk.contact.createContact(contactWithMetadata)
 
 ```python
 created_contact = sdk.contact.create_contact_blocking(contact_with_metadata)
+```
+
+</TabItem>
+<TabItem value="typescript">
+
+```typescript
+const createdContact = await sdk.contact.createContact(contactWithMetadata)
 ```
 
 </TabItem>
@@ -186,6 +233,25 @@ blood_pressure_service = DecryptedService(
 ```
 
 </TabItem>
+<TabItem value="typescript">
+
+```typescript
+const bloodPressureService = new DecryptedService({
+	id: uuid(),
+	label: "Blood pressure",
+	identifier: [new Identifier({system: "cardinal", value: "bloodPressure"})],
+	content: {
+		"en": new DecryptedContent({
+			measureValue: new Measure({
+				value: random(80, 120),
+				unit: "mmHg"
+			})
+		})
+	}
+})
+```
+
+</TabItem>
 </LanguageTabs>
 
 In this case, a free-text `label` provides a description for the `Service`, and an `identifier` allows for a
@@ -220,6 +286,18 @@ val contactWithBloodPressure = sdk.contact.modifyContact(
 created_contact.services = [blood_pressure_service]
 contact_with_blood_pressure = sdk.contact.modify_contact_blocking(
 	created_contact
+)
+```
+
+</TabItem>
+<TabItem value="typescript">
+
+```typescript
+const contactWithBloodPressure = await sdk.contact.modifyContact(
+	new DecryptedContact({
+		...createdContact,
+		services: [...createdContact.services, bloodPressureService]
+	})
 )
 ```
 
@@ -283,6 +361,31 @@ contact_with_ecg = sdk.contact.modify_contact_blocking(contact_with_blood_pressu
 ```
 
 </TabItem>
+<TabItem value="typescript">
+
+```typescript
+const ecgSignal = Array.from({ length: 10 }, () => random(0, 100)/100.0 )
+const heartRateService = new  DecryptedService({
+	id: uuid(),
+	identifier: [new Identifier({system: "cardinal", value: "ecg"})],
+	label: "Heart rate",
+	content: {
+		"en": new DecryptedContent({
+			timeSeries: new TimeSeries({
+				samples: [ecgSignal]
+			})
+		})
+	}
+})
+const contactWithECG = await sdk.contact.modifyContact(
+	new DecryptedContact({
+		...contactWithBloodPressure,
+		services: [...contactWithBloodPressure.services, heartRateService]
+	})
+)
+```
+
+</TabItem>
 </LanguageTabs>
 
 The structure of this `Service` is almost identical to that of the previous example, with the only difference being
@@ -325,6 +428,16 @@ document = DecryptedDocument(
 ```
 
 </TabItem>
+<TabItem value="typescript">
+
+```typescript
+const document = new DecryptedDocument({
+	id: uuid(),
+	documentType: DocumentType.Labresult
+})
+```
+
+</TabItem>
 </LanguageTabs>
 
 In this example, a new `DecryptedDocument` is instantiated with the type set to a laboratory result. Since a `Document`
@@ -345,6 +458,15 @@ val createdDocument = sdk.document.createDocument(
 ```python
 created_document = sdk.document.create_document_blocking(
 	sdk.document.with_encryption_metadata_blocking(document, None)
+)
+```
+
+</TabItem>
+<TabItem value="typescript">
+
+```typescript
+const createdDocument = await sdk.document.createDocument(
+	await sdk.document.withEncryptionMetadata(document, null)
 )
 ```
 
@@ -379,6 +501,21 @@ document_with_attachment = sdk.document.encrypt_and_set_main_attachment_blocking
 	document=created_document,
 	utis=["public.tiff"],
 	attachment=x_ray_image
+)
+```
+
+</TabItem>
+<TabItem value="typescript">
+
+```typescript
+const xRayImage = new Int8Array(100)
+for (let i = 0; i < 100; i++) {
+	xRayImage[i] = random(-127, 128)
+}
+const documentWithAttachment = await sdk.document.encryptAndSetMainAttachment(
+	createdDocument,
+	["public.tiff"],
+	xRayImage
 )
 ```
 
@@ -430,6 +567,28 @@ contact_with_image = sdk.contact.modify_contact_blocking(contact_with_ecg)
 ```
 
 </TabItem>
+<TabItem value="typescript">
+
+```typescript
+const xRayService = new DecryptedService({
+	id: uuid(),
+	label: "X-Ray image",
+	identifier: [new Identifier({system: "cardinal", value: "xRay"})],
+	content: {
+		"en": new DecryptedContent({
+			documentId: documentWithAttachment.id
+		})
+	}
+})
+const contactWithImage = await sdk.contact.modifyContact(
+	new DecryptedContact({
+		...contactWithECG,
+		services: [...contactWithECG.services, xRayService]
+	})
+)
+```
+
+</TabItem>
 </LanguageTabs>
 
 ## Adding a Diagnosis
@@ -464,6 +623,20 @@ health_element = DecryptedHealthElement(
 )
 created_diagnosis = sdk.health_element.create_health_element_blocking(
 	sdk.health_element.with_encryption_metadata_blocking(health_element, patient)
+)
+```
+
+</TabItem>
+<TabItem value="typescript">
+
+```typescript
+const diagnosis = await readLn("What is the diagnosis?: ")
+const healthElement = new DecryptedHealthElement({
+	id: uuid(),
+	descr: diagnosis
+})
+const createdDiagnosis = await sdk.healthElement.createHealthElement(
+	await sdk.healthElement.withEncryptionMetadata(healthElement, patient)
 )
 ```
 
@@ -504,6 +677,23 @@ contact_with_diagnosis = sdk.contact.modify_contact_blocking(contact_with_image)
 ```
 
 </TabItem>
+<TabItem value="typescript">
+
+```typescript
+const contactWithDiagnosis = await sdk.contact.modifyContact(
+	new DecryptedContact({
+		...contactWithImage,
+		subContacts: [
+			new DecryptedSubContact({
+				descr: "Diagnosis",
+				healthElementId: createdDiagnosis.id
+			})
+		]
+	})
+)
+```
+
+</TabItem>
 </LanguageTabs>
 
 ## Closing the Examination
@@ -529,6 +719,18 @@ val finalContact = sdk.contact.modifyContact(
 ```python
 contact_with_diagnosis.closing_date = int(datetime.now().strftime("%Y%m%d%H%M%S"))
 final_contact = sdk.contact.modify_contact_blocking(contact_with_diagnosis)
+```
+
+</TabItem>
+<TabItem value="typescript">
+
+```typescript
+const finalContact = await sdk.contact.modifyContact(
+	new DecryptedContact({
+		...contactWithDiagnosis,
+		closingDate: currentFuzzyDate()
+	})
+)
 ```
 
 </TabItem>

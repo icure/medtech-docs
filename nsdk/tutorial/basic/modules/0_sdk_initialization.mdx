@@ -46,6 +46,21 @@ sdk = CardinalSdk(
 )
 ```
 </TabItem>
+<TabItem value="typescript">
+
+```typescript
+const CARDINAL_URL = "https://api.icure.cloud"
+
+const username = await readLn("Login: ")
+const password = await readLn("Password: ")
+const sdk = CardinalSdk.initialize(
+	undefined,
+	CARDINAL_URL,
+	new AuthenticationMethod.UsingCredentials.UsernamePassword(username, password),
+	StorageFacade.usingFileSystem("./scratch/storage")
+)
+```
+</TabItem>
 </LanguageTabs>
 
 The `initialize` function creates an instance of the SDK with the provided username and password. It also attempts to

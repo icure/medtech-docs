@@ -38,6 +38,19 @@ patient = DecryptedPatient(
 ```
 
 </TabItem>
+<TabItem value="typescript">
+
+```typescript
+const firstName = await readLn("First name: ")
+const lastName = await readLn("Last name: ")
+const patient = new DecryptedPatient({
+	id: uuid(),
+	firstName: firstName,
+	lastName: lastName,
+})
+```
+
+</TabItem>
 </LanguageTabs>
 
 A `Patient` is an encryptable entity, meaning it will be encrypted on the device that creates it and then sent
@@ -62,6 +75,13 @@ patient_with_metadata = sdk.patient.with_encryption_metadata_blocking(patient)
 ```
 
 </TabItem>
+<TabItem value="typescript">
+
+```typescript
+const patientWithMetadata = await sdk.patient.withEncryptionMetadata(patient)
+```
+
+</TabItem>
 </LanguageTabs>
 
 This step is mandatory and also shares the newly created Patient with the user creating it, who will initially be the only
@@ -81,6 +101,13 @@ val createdPatient = sdk.patient.createPatient(patientWithMetadata)
 
 ```python
 created_patient = sdk.patient.create_patient_blocking(patient_with_metadata)
+```
+
+</TabItem>
+<TabItem value="typescript">
+
+```typescript
+const createdPatient = await sdk.patient.createPatient(patientWithMetadata)
 ```
 
 </TabItem>
@@ -111,6 +138,18 @@ updated_patient = sdk.patient.modify_patient_blocking(created_patient)
 ```
 
 </TabItem>
+<TabItem value="typescript">
+
+```typescript
+const dateOfBirth = parseInt((await readLn("Date of birth (YYYYMMDD): ")).trim())
+const patientWithBirth = new DecryptedPatient({
+	...createdPatient,
+	dateOfBirth: dateOfBirth,
+})
+const updatedPatient = await sdk.patient.modifyPatient(patientWithBirth)
+```
+
+</TabItem>
 </LanguageTabs>
 
 The date of birth in the patient is stored in the `dateOfBirth` field as an integer in the `YYYYMMDD` format. It is worth
@@ -134,6 +173,14 @@ val retrievedPatient = sdk.patient.getPatient(updatedPatient.id)
 ```python
 print("The retrieved patient is:")
 retrieved_patient = sdk.patient.get_patient_blocking(updated_patient.id)
+```
+
+</TabItem>
+<TabItem value="typescript">
+
+```typescript
+console.log("The retrieved patient is:")
+const retrievedPatient = await sdk.patient.getPatient(updatedPatient.id)
 ```
 
 </TabItem>
