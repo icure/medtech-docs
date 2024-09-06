@@ -2,27 +2,30 @@
 slug: basic-tutorial-codifications
 ---
 
-import SdkCode from "../../../../src/components/SdkCode/SdkCode";
-import Kotlin from "../../../../src/components/SdkCode/Kotlin";
+import {LanguageTabs} from "@site/src/components/LanguageTabs";
+import TabItem from "@theme/TabItem";
 
 # Use Codification Systems
 
 Codifications like [SNOMED CT](https://www.snomed.org/what-is-snomed-ct), [ICD-10](https://icd.who.int/browse10/2019/en),
 or [LOINC](https://loinc.org/) are used to express medical concepts in a formal and unambiguous way.
 
-In iCure, codifications are represented through the `Code` entity, which can also be used to represent internal
+In Cardinal, codifications are represented through the `Code` entity, which can also be used to represent internal
 codification systems:
 
-<SdkCode>
-   <Kotlin>
-{`val internalCode = sdk.code.createCode(Code(
+<LanguageTabs>
+<TabItem value="kotlin">
+
+```kotlin
+sdk.code.createCode(Code(
 	id = "INTERNAL|ANALYSIS|1",
 	type = "INTERNAL",
 	code = "ANALYSIS",
 	version = "1",
 	label = mapOf("en" to "Internal analysis code")
-))\n
-val snomedCodes = sdk.code.createCodes(listOf(
+))
+
+sdk.code.createCodes(listOf(
 	Code(
 		id = "SNOMED|45007003|1",
 		type = "SNOMED",
@@ -44,12 +47,53 @@ val snomedCodes = sdk.code.createCodes(listOf(
 		version = "1",
 		label = mapOf("en" to "Normal blood pressure")
 	)
-))`}
-   </Kotlin>
-</SdkCode>
+))
+```
+
+</TabItem>
+<TabItem value="python">
+
+```python
+internal_code = sdk.code.create_code_blocking(
+	Code(
+		id="INTERNAL|ANALYSIS|1",
+		type="INTERNAL",
+		code="ANALYSIS",
+		version="1",
+		label={"en": "Internal analysis code"}
+	)
+)
+
+sdk.code.create_codes_blocking(
+	Code(
+		id="SNOMED|45007003|1",
+		type="SNOMED",
+		code="45007003",
+		version="1",
+		label={"en": "Low blood pressure"}
+	),
+	Code(
+		id="SNOMED|38341003|1",
+		type="SNOMED",
+		code="38341003",
+		version="1",
+		label={"en": "High blood pressure"}
+	),
+	Code(
+		id="SNOMED|2004005|1",
+		type="SNOMED",
+		code="2004005",
+		version="1",
+		label={"en": "Normal blood pressure"}
+	)
+)
+```
+
+</TabItem>
+</LanguageTabs>
 
 :::note
-The codification systems are supported, but the codes themselves are not present by default in the iCure system.
+The codification systems are supported, but the codes themselves are not present by default in the cloud.
 :::
 
 A `Code` is defined by three properties:
@@ -63,25 +107,42 @@ A `Code` is uniquely identified by the `type`, `code`, `version` triple, so the 
 the string `type|code|version`.
 
 A `Code` can be used to add additional context to other entities. In the following example, it is used to add a tag to
-a `Service`:
+a `Service`.
 
-<SdkCode>
-   <Kotlin>
-{`val selectedCode = snomedCodes.firstNotNullOf { code ->
+Like other entities, it is possible to search code to facilitate the retrieval: for example, it is possible to retrieve
+codes of a certain type searching for a word that is present in the label for a specific language:
+
+<LanguageTabs>
+<TabItem value="kotlin">
+
+```kotlin
+val codeIterator = sdk.code.filterCodesBy(
+	CodeFilters.byLanguageTypeLabelRegion(
+		language = "en",
+		label = "blood",
+		type = "SNOMED"
+	)
+)
+
+var selectedCode: Code? = null
+while (codeIterator.hasNext() && selectedCode == null) {
+	val code = codeIterator.next(1).first()
 	prettyPrint(code)
 	print("Use this code? [y/N]: ")
 	val use = readln().trim().lowercase() == "y"
 	if (use) {
-		code
-	} else null
-}\n
+		selectedCode = code
+	}
+}
+
 val patient = sdk.patient.createPatient(
 	DecryptedPatient(
 		id = UUID.randomUUID().toString(),
 		firstName = "Annabelle",
 		lastName = "Hall",
 	).let { sdk.patient.withEncryptionMetadata(it) }
-)\n
+)
+
 val formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss")
 val contact = DecryptedContact(
 	id = UUID.randomUUID().toString(),
@@ -109,34 +170,122 @@ val contact = DecryptedContact(
 			)
 		)
 	)
-)\n
+)
+
 val createdContact = sdk.contact.createContact(
 	sdk.contact.withEncryptionMetadata(contact, patient)
-)`}
-   </Kotlin>
-</SdkCode>
+)
+```
 
-In this snippet, the user can choose a `Code` from the created SNOMED codes. Then, a `Contact` is created that contains
-a `Service` for a blood pressure measurement, and a tag is added for the SNOMED code of high, low, or normal blood
-pressure as a `CodeStub`, a reference to a `Code` that includes only the `type`, `code`, and `version`.
+</TabItem>
+<TabItem value="python">
+
+```python
+code_iterator = sdk.code.filter_codes_by_blocking(
+	CodeFilters.by_language_type_label_region(
+		language="en",
+		label="blood",
+		type="SNOMED"
+	)
+)
+
+selected_code = None
+while selected_code is None and code_iterator.has_next_blocking():
+	code = code_iterator.next_blocking(1)[0]
+	pretty_print_code(code)
+	choice = input("Use this code [y/N]: ")
+	if choice.lower() == "y":
+		selected_code = code
+		break
+
+patient = sdk.patient.create_patient_blocking(
+	sdk.patient.with_encryption_metadata_blocking(
+		DecryptedPatient(
+			id=str(uuid.uuid4()),
+			first_name="Annabelle",
+			last_name="Hall"
+		)
+	)
+)
+
+contact = DecryptedContact(
+	id=str(uuid.uuid4()),
+	descr="Blood pressure measurement",
+	opening_date=int(datetime.now().strftime("%Y%m%d%H%M%S")),
+	services=[
+		DecryptedService(
+			id=str(uuid.uuid4()),
+			label="Blood pressure",
+			content={
+				"en": DecryptedContent(
+					measure_value=Measure(
+						value=float(random.randint(80, 120)),
+						unit="mmHg"
+					)
+				)
+			},
+			tags=[
+				CodeStub(
+					id=selected_code.id,
+					type=selected_code.type,
+					code=selected_code.code,
+					version=selected_code.version
+				)
+			]
+		)
+	]
+)
+created_contact = sdk.contact.create_contact_blocking(
+	sdk.contact.with_encryption_metadata_blocking(contact, patient)
+)
+```
+
+</TabItem>
+</LanguageTabs>
+
+In this snippet, the user can choose a `Code` from all the SNOMED codes that contain the word "blood"  in their label 
+in English. Then, a `Contact` is created that contains a `Service` for a blood pressure measurement, and a tag is added 
+for the SNOMED code of high, low, or normal blood pressure as a `CodeStub`, a reference to a `Code` that 
+includes only the `type`, `code`, and `version`.
 
 `Codes` can also be used to filter entities:
 
-<SdkCode>
-   <Kotlin>
-{`val serviceIterator = sdk.contact.filterServicesBy(
+<LanguageTabs>
+<TabItem value="kotlin">
+
+```kotlin
+val serviceIterator = sdk.contact.filterServicesBy(
 	ServiceFilters.byTagAndValueDateForSelf(
 		tagType = selectedCode.type,
 		tagCode = selectedCode.code
 	)
-)\n
+)
+
 println("Result of searching by code: \${selectedCode.id}")
 while (serviceIterator.hasNext()) {
 	val service = serviceIterator.next(1).first()
 	prettyPrint(service)
-}`}
-   </Kotlin>
-</SdkCode>
+}
+```
+
+</TabItem>
+<TabItem value="kotlin">
+
+```kotlin
+service_iterator = sdk.contact.filter_services_by_blocking(
+	ServiceFilters.by_tag_and_value_date_for_self(
+		tag_type=selected_code.type,
+		tag_code=selected_code.code
+	)
+)
+print(f"Result of searching Services by code: {selected_code.id}")
+while service_iterator.has_next_blocking():
+	service = service_iterator.next_blocking(1)[0]
+	pretty_print_service(service)
+```
+
+</TabItem>
+</LanguageTabs>
 
 This example shows how to retrieve all the `Services` that have a tag with the specified `type` and `code` and are
 shared with the current user.

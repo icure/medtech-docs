@@ -2,12 +2,12 @@
 slug: basic-tutorial-share-data
 ---
 
-import SdkCode from "../../../../src/components/SdkCode/SdkCode";
-import Kotlin from "../../../../src/components/SdkCode/Kotlin";
+import {LanguageTabs} from "@site/src/components/LanguageTabs";
+import TabItem from "@theme/TabItem";
 
 # Share Encrypted Data
 
-In iCure, sharing a piece of encrypted information means allowing another user to read it by encrypting the
+Sharing a piece of encrypted information means allowing another user to read it by encrypting the
 cryptographic key associated with the data using the recipient's key.
 
 :::note
@@ -26,23 +26,50 @@ For this example, you need another Healthcare Party user. You can create one in 
 
 Once you have created the new user, log in to initialize their cryptographic keys:
 
-<SdkCode>
-   <Kotlin>
-{`print("Login of the other HCP: ")
+<LanguageTabs>
+<TabItem value="kotlin">
+
+```kotlin
+print("Login of the other HCP: ")
 val username = readln().trim()
 print("Insert the password for this HCP: ")
 val otherPassword = readln()
-val otherSdk = createSdk(username, otherPassword)
+val otherSdk = CardinalSdk.initialize(
+	applicationId = null,
+	baseUrl = CARDINAL_URL,
+	authenticationMethod = AuthenticationMethod.UsingCredentials(
+		UsernamePassword(username, otherPassword)
+	),
+	baseStorage = FileStorageFacade("./scratch/storage")
+)
 val otherHcp = otherSdk.healthcareParty.getCurrentHealthcareParty()
-`}
-   </Kotlin>
-</SdkCode>
+```
+
+</TabItem>
+<TabItem value="python">
+
+```python
+username = input("Login of the other hcp: ").strip()
+other_password = input("Insert the password for this hcp: ")
+other_sdk = CardinalSdk(
+	application_id=None,
+	baseurl=CARDINAL_URL,
+	authentication_method=UsernamePassword(username, other_password),
+	storage_facade=FileSystemStorage("./scratch/storage")
+)
+other_hcp = other_sdk.healthcare_party.get_current_healthcare_party_blocking()
+```
+
+</TabItem>
+</LanguageTabs>
 
 Consider a `Document` entity created with the initial Healthcare Party user:
 
-<SdkCode>
-   <Kotlin>
-{`val oldDocument = sdk.document.createDocument(
+<LanguageTabs>
+<TabItem value="kotlin">
+
+```kotlin
+val oldDocument = sdk.document.createDocument(
 	DecryptedDocument(
 		id = UUID.randomUUID().toString(),
 		name = "An important document"
@@ -50,73 +77,163 @@ Consider a `Document` entity created with the initial Healthcare Party user:
 		sdk.document.withEncryptionMetadata(it, null)
 	}
 )
-`}
-   </Kotlin>
-</SdkCode>
+```
+
+</TabItem>
+<TabItem value="python">
+
+```python
+old_document_without_encryption_meta = DecryptedDocument(
+	id=str(uuid.uuid4()),
+	name="An important document"
+)
+old_document = sdk.document.create_document_blocking(
+	sdk.document.with_encryption_metadata_blocking(old_document_without_encryption_meta, None)
+)
+```
+
+</TabItem>
+</LanguageTabs>
 
 If the other Healthcare Party tries to access it using the ID, the operation will fail with an error:
 
-<SdkCode>
-   <Kotlin>
-{`try {
+<LanguageTabs>
+<TabItem value="kotlin">
+
+```kotlin
+try {
 	otherSdk.document.getDocument(oldDocument.id)
 } catch (e: Exception) {
 	println("This means I am not authorized to read the document -> \${e.message}")
-}`}
-   </Kotlin>
-</SdkCode>
+}
+```
+
+</TabItem>
+<TabItem value="python">
+
+```python
+try:
+	other_sdk.document.get_document_blocking(old_document.id)
+except Exception as e:
+	print(f"This means I am not authorized to read the document -> {e}")
+```
+
+</TabItem>
+</LanguageTabs>
 
 The initial Healthcare Party can then grant access using the `shareWith` method. This method takes two parameters:
 the ID of the recipient Data Owner (i.e., the Healthcare Party, Patient, or Device) and the entity to share:
 
-<SdkCode>
-   <Kotlin>
-{`val result = sdk.document.shareWith(
+<LanguageTabs>
+<TabItem value="kotlin">
+
+```kotlin
+val result = sdk.document.shareWith(
 	delegateId = otherHcp.id,
 	document = oldDocument
-)\n
+)
+
 if(result.isSuccess) {
 	println("Successfully shared document")
-}`}
-   </Kotlin>
-</SdkCode>
+}
+```
+
+</TabItem>
+<TabItem value="python">
+
+```python
+		result = sdk.document.share_with_blocking(
+	delegate_id=other_hcp.id,
+	document=old_document
+)
+
+if isinstance(result, SimpleShareResultDecryptedDocumentSuccess):
+	print("Successfully shared document")
+```
+
+</TabItem>
+</LanguageTabs>
 
 At this point, the other Healthcare Party can access the document successfully:
 
-<SdkCode>
-   <Kotlin>
-{`val oldDocumentOtherHcp = otherSdk.document.getDocument(oldDocument.id)`}
-   </Kotlin>
-</SdkCode>
+<LanguageTabs>
+<TabItem value="kotlin">
+
+```kotlin
+val oldDocumentOtherHcp = otherSdk.document.getDocument(oldDocument.id)
+```
+
+</TabItem>
+<TabItem value="python">
+
+```python
+old_document_other_hcp = other_sdk.document.get_document_blocking(old_document.id)
+```
+
+</TabItem>
+</LanguageTabs>
 
 ### Share a New Entity with a Healthcare Party
 
 When creating an entity, you can directly specify the other Data Owner to share the entity with by including them when
 initializing the encryption metadata:
 
-<SdkCode>
-   <Kotlin>
-{`val newDocument = DecryptedDocument(
+<LanguageTabs>
+<TabItem value="kotlin">
+
+```kotlin
+val newDocument = DecryptedDocument(
 	id = UUID.randomUUID().toString(),
 	name = "Another important document"
-)\n
+)
+
 val newDocumentWithMetadata = sdk.document.withEncryptionMetadata(
 	newDocument,
 	null,
 	delegates = mapOf(otherHcp.id to AccessLevel.Read)
-)\n
-val createdNewDocument = sdk.document.createDocument(newDocumentWithMetadata)`}
-   </Kotlin>
-</SdkCode>
+)
+
+val createdNewDocument = sdk.document.createDocument(newDocumentWithMetadata)
+```
+
+</TabItem>
+<TabItem value="python">
+
+```python
+new_document = DecryptedDocument(
+	id=str(uuid.uuid4()),
+	name="Another important document"
+)
+new_document_with_metadata = sdk.document.with_encryption_metadata_blocking(
+	new_document,
+	None,
+	delegates={other_hcp.id: AccessLevel.Read}
+)
+created_new_document = sdk.document.create_document_blocking(new_document_with_metadata)
+```
+
+</TabItem>
+</LanguageTabs>
 
 The other Healthcare Party is a delegate for the new `Document` with Read permissions. This means they can access the
 entity and read the encrypted information but cannot modify it:
 
-<SdkCode>
-   <Kotlin>
-{`val newDocumentOtherHcp = otherSdk.document.getDocument(createdNewDocument.id)`}
-   </Kotlin>
-</SdkCode>
+<LanguageTabs>
+<TabItem value="kotlin">
+
+```kotlin
+val newDocumentOtherHcp = otherSdk.document.getDocument(createdNewDocument.id)
+```
+
+</TabItem>
+<TabItem value="python">
+
+```python
+new_document_other_hcp = other_sdk.document.get_document_blocking(created_new_document.id)
+```
+
+</TabItem>
+</LanguageTabs>
 
 ## Share Data with a Patient
 
@@ -125,56 +242,128 @@ not possible to initialize a Patient User using the Cockpit.
 
 To create a Patient user, you first need to create a Patient:
 
-<SdkCode>
-   <Kotlin>
-{`val newPatient = DecryptedPatient(
+<LanguageTabs>
+<TabItem value="kotlin">
+
+```kotlin
+val newPatient = DecryptedPatient(
 	id = UUID.randomUUID().toString(),
 	firstName = "Edmond",
 	lastName = "Dantes",
 )
 val patientWithMetadata = sdk.patient.withEncryptionMetadata(newPatient)
-val createdPatient = sdk.patient.createPatient(patientWithMetadata)`}
-   </Kotlin>
-</SdkCode>
+val createdPatient = sdk.patient.createPatient(patientWithMetadata)
+```
+
+</TabItem>
+<TabItem value="python">
+
+```python
+new_patient = DecryptedPatient(
+	id=str(uuid.uuid4()),
+	first_name="Edmond",
+	last_name="Dantes",
+)
+patient_with_metadata = sdk.patient.with_encryption_metadata_blocking(new_patient)
+created_patient = sdk.patient.create_patient_blocking(patient_with_metadata)
+```
+
+</TabItem>
+</LanguageTabs>
 
 Then, you need to create a User for that Patient. You can link the User to the Patient by setting the `patientId`
 property on the User to the id of the newly created Patient.
 
-<SdkCode>
-   <Kotlin>
-{`val patientUser = User(
+<LanguageTabs>
+<TabItem value="kotlin">
+
+```kotlin
+val login = "edmond.dantes.${UUID.randomUUID().toString().substring(0, 6)}@icure.com"
+val patientUser = User(
 	id = UUID.randomUUID().toString(),
 	patientId = createdPatient.id,
 	login = login,
 	email = login
 )
-val createdUser = sdk.user.createUser(patientUser)`}
-   </Kotlin>
-</SdkCode>
+val createdUser = sdk.user.createUser(patientUser)
+```
+
+</TabItem>
+<TabItem value="python">
+
+```python
+login = f"edmond.dantes.{str(uuid.uuid4())[0:6]}@icure.com"
+patient_user = User(
+	id=str(uuid.uuid4()),
+	patient_id=created_patient.id,
+	login=login,
+	email=login
+)
+created_user = sdk.user.create_user_blocking(patient_user)
+```
+
+</TabItem>
+</LanguageTabs>
 
 Finally, you have to create a temporary access token for the User, so that they can log in.
 
-<SdkCode>
-   <Kotlin>
-{`val loginToken = sdk.user.getToken(createdUser.id, "login")`}
-   </Kotlin>
-</SdkCode>
+<LanguageTabs>
+<TabItem value="kotlin">
+
+```kotlin
+val loginToken = sdk.user.getToken(createdUser.id, "login")
+```
+
+</TabItem>
+<TabItem value="python">
+
+```python
+login_token = sdk.user.get_token_blocking(created_user.id, "login")
+```
+
+</TabItem>
+</LanguageTabs>
 
 Now, the User can log in to the SDK, initializing their cryptographic keys:
 
-<SdkCode>
-   <Kotlin>
-{`createSdk(login, loginToken)`}
-   </Kotlin>
-</SdkCode>
+<LanguageTabs>
+<TabItem value="kotlin">
+
+```kotlin
+CardinalSdk.initialize(
+	applicationId = null,
+	baseUrl = CARDINAL_URL,
+	authenticationMethod = AuthenticationMethod.UsingCredentials(
+		UsernamePassword(login, loginToken)
+	),
+	baseStorage = FileStorageFacade("./scratch/storage")
+)
+```
+
+</TabItem>
+<TabItem value="python">
+
+```python
+CardinalSdk(
+	application_id=None,
+	baseurl=CARDINAL_URL,
+	authentication_method=UsernamePassword(login, login_token),
+	storage_facade=FileSystemStorage("./scratch/storage")
+)
+```
+
+</TabItem>
+</LanguageTabs>
 
 However, the Patient user cannot access itself, as the Patient entity could not be shared with them as the
 cryptographic keys were not initialized yet. Now that they are, the Healthcare Party that is managing this registration
 can share the Patient:
 
-<SdkCode>
-   <Kotlin>
-{`val patientSecretIds = sdk.patient.getSecretIdsOf(createdPatient)
+<LanguageTabs>
+<TabItem value="kotlin">
+
+```kotlin
+val patientSecretIds = sdk.patient.getSecretIdsOf(createdPatient)
 val patientShareResult = sdk.patient.shareWith(
 	delegateId = createdPatient.id,
 	patient = createdPatient,
@@ -183,21 +372,69 @@ val patientShareResult = sdk.patient.shareWith(
 		shareEncryptionKey = ShareMetadataBehaviour.IfAvailable,
 		requestedPermissions = RequestedPermission.MaxWrite
 	)
-)\n
+)
+
 if (patientShareResult.isSuccess) {
 	println("Successfully shared patient")
-}\n
-val patient = patientShareResult.updatedEntityOrThrow()`}
-   </Kotlin>
-</SdkCode>
+}
+
+val patient = patientShareResult.updatedEntityOrThrow()
+```
+
+</TabItem>
+<TabItem value="python">
+
+```python
+patient_secret_ids = sdk.patient.get_secret_ids_of_blocking(created_patient)
+patient_share_result = sdk.patient.share_with_blocking(
+	delegate_id=created_patient.id,
+	patient=created_patient,
+	options=PatientShareOptions(
+		share_secret_ids=patient_secret_ids,
+		share_encryption_key=ShareMetadataBehaviour.IfAvailable,
+		requested_permissions=RequestedPermission.MaxWrite
+	)
+)
+
+if isinstance(patient_share_result, SimpleShareResultDecryptedPatientSuccess):
+	print("Successfully shared patient")
+
+patient = patient_share_result.updated_entity
+```
+
+</TabItem>
+</LanguageTabs>
 
 Now, the Patient can finally log in and have access to their full information:
 
-<SdkCode>
-   <Kotlin>
-{`val patientSdk = createSdk(login, loginToken)`}
-   </Kotlin>
-</SdkCode>
+<LanguageTabs>
+<TabItem value="kotlin">
+
+```kotlin
+val patientSdk = CardinalSdk.initialize(
+	applicationId = null,
+	baseUrl = CARDINAL_URL,
+	authenticationMethod = AuthenticationMethod.UsingCredentials(
+		UsernamePassword(login, loginToken)
+	),
+	baseStorage = FileStorageFacade("./scratch/storage")
+)
+```
+
+</TabItem>
+<TabItem value="python">
+
+```python
+patient_sdk = CardinalSdk(
+	application_id=None,
+	baseurl=CARDINAL_URL,
+	authentication_method=UsernamePassword(login, login_token),
+	storage_facade=FileSystemStorage("./scratch/storage")
+)
+```
+
+</TabItem>
+</LanguageTabs>
 
 :::warning
 This registration flow makes sense only in the context of this example, to make it self-contained.
@@ -209,72 +446,153 @@ To learn how to register a Patient in a real context, check [this how to](/nsdk/
 Sharing an entity with a Patient follows the same flow as sharing with a Healthcare Party. First, the Healthcare Party
 needs to create an entity, such as a `HealthElement`, to represent a medical condition or prolonged context:
 
-<SdkCode>
-   <Kotlin>
-{`val healthElement = DecryptedHealthElement(
+<LanguageTabs>
+<TabItem value="kotlin">
+
+```kotlin
+val healthElement = DecryptedHealthElement(
 	id = UUID.randomUUID().toString(),
 	descr = "This is some medical context"
-)\n
+)
+
 val healthElementWithMetadata = sdk.healthElement.withEncryptionMetadata(healthElement, patient)
-val createdHealthElement = sdk.healthElement.createHealthElement(healthElementWithMetadata)`}
-   </Kotlin>
-</SdkCode>
+val createdHealthElement = sdk.healthElement.createHealthElement(healthElementWithMetadata)
+```
+
+</TabItem>
+<TabItem value="python">
+
+```python
+health_element = DecryptedHealthElement(
+	id=str(uuid.uuid4()),
+	descr="This is some medical context"
+)
+health_element_with_metadata = sdk.health_element.with_encryption_metadata_blocking(health_element, patient)
+created_health_element = sdk.health_element.create_health_element_blocking(health_element_with_metadata)
+```
+
+</TabItem>
+</LanguageTabs>
 
 It is important to note that even though the `HealthElement` is linked to the patient by the encryption metadata,
 the Patient does not yet have the right to access it:
 
-<SdkCode>
-   <Kotlin>
-{`try {
+<LanguageTabs>
+<TabItem value="kotlin">
+
+```kotlin
+try {
 	patientSdk.healthElement.getHealthElement(createdHealthElement.id)
 } catch (e: Exception) {
 	println("This means the patient cannot access this health element -> \${e.message}")
-}`}
-   </Kotlin>
-</SdkCode>
+}
+```
+
+</TabItem>
+<TabItem value="python">
+
+```python
+try:
+	patient_sdk.health_element.get_health_element_blocking(created_health_element.id)
+except Exception as e:
+	print(f"This means the patient cannot get this health element -> {e}")
+```
+
+</TabItem>
+</LanguageTabs>
 
 Next, the Healthcare Party can share the entity with the Patient:
 
-<SdkCode>
-   <Kotlin>
-{`val result = sdk.healthElement.shareWith(
+<LanguageTabs>
+<TabItem value="kotlin">
+
+```kotlin
+val result = sdk.healthElement.shareWith(
 	delegateId = patient.id,
 	healthElement = createdHealthElement
-)\n
+)
+
 if (result.isSuccess) {
 	println("Successfully shared with patient ID \${patient.id}")
-}`}
-   </Kotlin>
-</SdkCode>
+}
+```
+
+</TabItem>
+<TabItem value="python">
+
+```python
+result = sdk.health_element.share_with_blocking(
+	delegate_id=patient.id,
+	health_element=created_health_element
+)
+
+if isinstance(result, SimpleShareResultDecryptedHealthElementSuccess):
+	print(f"Successfully shared with patient id {patient.id}")
+```
+
+</TabItem>
+</LanguageTabs>
 
 Finally, the Patient can access it:
 
-<SdkCode>
-   <Kotlin>
-{`patientSdk.healthElement.getHealthElement(createdHealthElement.id)`}
-   </Kotlin>
-</SdkCode>
+<LanguageTabs>
+<TabItem value="kotlin">
+
+```kotlin
+patientSdk.healthElement.getHealthElement(createdHealthElement.id)
+```
+
+</TabItem>
+<TabItem value="python">
+
+```python
+patient_sdk.health_element.get_health_element_blocking(created_health_element.id)
+```
+
+</TabItem>
+</LanguageTabs>
 
 ### Share a New Entity with a Patient
 
 As with the Healthcare Party case, a Patient can be directly included in the delegations of the encryption metadata for
 a newly created entity.
 
-<SdkCode>
-   <Kotlin>
-{`val newHealthElement = DecryptedHealthElement(
+<LanguageTabs>
+<TabItem value="kotlin">
+
+```kotlin
+val newHealthElement = DecryptedHealthElement(
 	id = UUID.randomUUID().toString(),
 	descr = "This is some other medical context"
-)\n
+)
+
 val newHealthElementWithMetadata = sdk.healthElement.withEncryptionMetadata(
 	newHealthElement,
 	patient,
 	delegates = mapOf(patient.id to AccessLevel.Write)
-)\n
+)
+
 val newCreatedHealthElement = sdk.healthElement.createHealthElement(newHealthElementWithMetadata)
-`}
-   </Kotlin>
-</SdkCode>
+```
+
+</TabItem>
+<TabItem value="python">
+
+```python
+new_health_element = DecryptedHealthElement(
+	id=str(uuid.uuid4()),
+	descr="This is some other medical context"
+)
+new_health_element_with_metadata = sdk.health_element.with_encryption_metadata_blocking(
+	new_health_element,
+	patient,
+	delegates={patient.id: AccessLevel.Write}
+)
+new_created_health_element = sdk.health_element.create_health_element_blocking(new_health_element_with_metadata)
+```
+
+</TabItem>
+</LanguageTabs>
 
 It is important to note that the Patient linked to an entity is entirely separate from a patient with a delegation for
 the entity: setting up a delegation does not create a link between the patient and the entity,
@@ -282,8 +600,19 @@ and creating the link does not set up a delegation.
 
 Now, the Patient has read and write access to the entity and can directly retrieve it:
 
-<SdkCode>
-   <Kotlin>
-{`val retrievedHealthElement = patientSdk.healthElement.getHealthElement(newCreatedHealthElement.id)`}
-   </Kotlin>
-</SdkCode>
+<LanguageTabs>
+<TabItem value="kotlin">
+
+```kotlin
+val retrievedHealthElement = patientSdk.healthElement.getHealthElement(newCreatedHealthElement.id)
+```
+
+</TabItem>
+<TabItem value="python">
+
+```python
+retrieved_health_element = patient_sdk.health_element.get_health_element_blocking(new_created_health_element.id)
+```
+
+</TabItem>
+</LanguageTabs>

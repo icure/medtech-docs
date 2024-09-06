@@ -2,30 +2,44 @@
 slug: basic-tutorial-search-data
 ---
 
-import SdkCode from "../../../../src/components/SdkCode/SdkCode";
-import Kotlin from "../../../../src/components/SdkCode/Kotlin";
+import {LanguageTabs} from "@site/src/components/LanguageTabs";
+import TabItem from "@theme/TabItem";
 
 # Search Data
 
 Once an entity (such as a patient or a medical record) is created, you can always retrieve it using its ID.
-However, in most cases, you might not have the ID of the entity you need. Therefore, the iCure SDK allows you to search
+However, in most cases, you might not have the ID of the entity you need. Therefore, the Cardinal SDK allows you to search
 data by their content using filters.
 
 The following examples provide insights into how to search data using the filter mechanism. For a more comprehensive
-understanding, check the code documentation.
+understanding, check [this how to](/nsdk/how-to/querying-data).
 
 In the first code snippet, all patients whose name matches the query string provided by the user and who are shared
 with the current user will be returned:
 
-<SdkCode>
-   <Kotlin>
-{`print("Enter a name: ")
+<LanguageTabs>
+<TabItem value="kotlin">
+
+```kotlin
+print("Enter a name: ")
 val nameToSearch = readln()
 val patientIterator = sdk.patient.filterPatientsBy(
 	PatientFilters.byNameForSelf(nameToSearch)
-)`}
-   </Kotlin>
-</SdkCode>
+)
+```
+
+</TabItem>
+<TabItem value="python">
+
+```python
+name_to_search = input("Enter a name: ")
+patient_iterator = sdk.patient.filter_patients_by_blocking(
+	PatientFilters.by_name_for_self(name_to_search)
+)
+```
+
+</TabItem>
+</LanguageTabs>
 
 `PatientFilters.byNameForSelf` defines the options used to retrieve the patients, while the `filterPatientsBy` method
 is responsible for actually getting them. This method returns an iterator with two methods: `hasNext()`, which returns
@@ -34,9 +48,11 @@ entities, with a minimum of 1.
 
 Here’s an example of how to use this iterator:
 
-<SdkCode>
-   <Kotlin>
-{`var patient: Patient? = null
+<LanguageTabs>
+<TabItem value="kotlin">
+
+```kotlin
+var patient: Patient? = null
 while (patientIterator.hasNext() && patient == null) {
 	val p = patientIterator.next(1).first()
 	prettyPrint(p)
@@ -45,34 +61,78 @@ while (patientIterator.hasNext() && patient == null) {
 	if (use) {
 		patient = p
 	}
-}\n
+}
+
 if (patient == null) {
 	println("No matching patient found")
 	return
-}`}
-   </Kotlin>
-</SdkCode>
+}
+```
+
+</TabItem>
+<TabItem value="python">
+
+```python
+patient = None
+while patient_iterator.has_next_blocking() and patient is None:
+	p = patient_iterator.next_blocking(1)[0]
+	pretty_print_patient(p)
+	use = input("Use this patient? [y/N]: ").strip().lower() == "y"
+	if use:
+		patient = p
+
+if patient is None:
+	print("No matching patient found")
+	return
+
+```
+
+</TabItem>
+</LanguageTabs>
 
 The same logic can be applied to medical data, where you can leverage the
 [secret link](/nsdk/tutorial/basic/modules/basic-tutorial-create-medical-data#initiating-a-medical-examination) between
 a patient and another entity:
 
-<SdkCode>
-   <Kotlin>
-{`val contactIterator = sdk.contact.filterContactsBy(
+<LanguageTabs>
+<TabItem value="kotlin">
+
+```kotlin
+val contactIterator = sdk.contact.filterContactsBy(
 	ContactFilters.byPatientsForSelf(listOf(patient))
-)\n
+)
+
 if (!contactIterator.hasNext()) {
 	println("No matching contacts found")
-}\n
+}
+
 while(contactIterator.hasNext()) {
 	val contact = contactIterator.next(1).first()
 	prettyPrint(contact)
 	print("Press enter for next contact")
 	readln()
-}`}
-   </Kotlin>
-</SdkCode>
+}
+```
+
+</TabItem>
+<TabItem value="python">
+
+```python
+contact_iterator = sdk.contact.filter_contacts_by_blocking(
+	ContactFilters.by_patients_for_self([patient])
+)
+
+if not contact_iterator.has_next_blocking():
+	print("No matching contacts found")
+
+while contact_iterator.has_next_blocking():
+	contact = contact_iterator.next_blocking(1)[0]
+	pretty_print_contact(contact)
+	input("Press enter for next contact")
+```
+
+</TabItem>
+</LanguageTabs>
 
 In this case, the filter method returns all the `Contacts` shared with the current user that have an encrypted link to
 one of the `Patients` passed as a parameter.
@@ -87,35 +147,77 @@ The additional information stored in an entity to provide additional context (li
 [identifiers in a Service](/nsdk/tutorial/basic/modules/basic-tutorial-create-medical-data#creating-scalar-medical-data-blood-pressure))
 can also be used for filtering:
 
-<SdkCode>
-   <Kotlin>
-{`var choice = -1
+<LanguageTabs>
+<TabItem value="kotlin">
+
+```kotlin
+var choice = -1
 while (choice < 0 || choice >= 3) {
 	println("Make your choice")
 	println("0. blood pressure")
 	println("1. heart rate")
 	println("2. x ray")
 	choice = readln().trim().toIntOrNull() ?: 0
-}\n
+}
+
 val identifier = when(choice) {
-	0 -> Identifier(system = "icure", value = "bloodPressure")
-	1 -> Identifier(system = "icure", value = "ecg")
-	2 -> Identifier(system = "icure", value = "xRay")
+	0 -> Identifier(system = "cardinal", value = "bloodPressure")
+	1 -> Identifier(system = "cardinal", value = "ecg")
+	2 -> Identifier(system = "cardinal", value = "xRay")
 	else -> throw IllegalArgumentException("Invalid choice")
-}\n
+}
+
 val serviceIterator = sdk.contact.filterServicesBy(
 	ServiceFilters.byIdentifiersForSelf(listOf(identifier))
-)\n
+)
+
 if (!serviceIterator.hasNext()) {
 	println("No matching services found")
-}\n
+}
+
 while (serviceIterator.hasNext()) {
 	val service = serviceIterator.next(1).first()
 	prettyPrint(service)
 	print("Press enter for next service")
 	readln()
-}`}
-   </Kotlin>
-</SdkCode>
+}
+```
+
+</TabItem>
+<TabItem value="python">
+
+```python
+choice = -1
+while choice < 0 or choice >= 3:
+	print("0. blood pressure")
+	print("1. heart rate")
+	print("2. x ray")
+	try:
+		choice = int(input("Enter your choice: ").strip())
+	except ValueError:
+		choice = -1
+
+if choice == 0:
+	identifier = Identifier(system="cardinal", value="bloodPressure")
+elif choice == 1:
+	identifier = Identifier(system="cardinal", value="ecg")
+else:
+	identifier = Identifier(system="cardinal", value="xRay")
+
+service_iterator = sdk.contact.filter_services_by_blocking(
+	ServiceFilters.by_identifiers_for_self([identifier])
+)
+
+if not service_iterator.has_next_blocking():
+	print("No matching services found")
+
+while service_iterator.has_next_blocking():
+	service = service_iterator.next_blocking(1)[0]
+	pretty_print_service(service)
+	input("Press enter for next service")
+```
+
+</TabItem>
+</LanguageTabs>
 
 In this example, the filter method returns all the `Services` that have the provided identifier in the `identifiers` filter.

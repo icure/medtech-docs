@@ -2,17 +2,18 @@
 slug: basic-tutorial-create-patient
 ---
 
-import SdkCode from "../../../../src/components/SdkCode/SdkCode";
-import Kotlin from "../../../../src/components/SdkCode/Kotlin";
+import {LanguageTabs} from "@site/src/components/LanguageTabs";
+import TabItem from "@theme/TabItem";
 
 # Create a Patient
 
-In iCure, a patient is represented by the `Patient` entity. In the following example, the user reads a first name and
+In Cardinal, a patient is represented by the `Patient` entity. In the following example, the user reads a first name and
 last name from the standard input and creates a patient:
 
-<SdkCode>
-   <Kotlin>
-{`print("First name: ")
+<LanguageTabs>
+<TabItem value="kotlin">
+
+```kotlin
 val firstName = readln().trim()
 print("Last name: ")
 val lastName = readln().trim()
@@ -21,9 +22,23 @@ val patient = DecryptedPatient(
 	firstName = firstName,
 	lastName = lastName,
 )
-`}
-   </Kotlin>
-</SdkCode>
+```
+
+</TabItem>
+<TabItem value="python">
+
+```python
+first_name = input("First name: ")
+last_name = input("Last name: ")
+patient = DecryptedPatient(
+	id=str(uuid.uuid4()),
+	first_name=first_name,
+	last_name=last_name,
+)
+```
+
+</TabItem>
+</LanguageTabs>
 
 A `Patient` is an encryptable entity, meaning it will be encrypted on the device that creates it and then sent
 encrypted to the cloud. Since it is decrypted at the moment of creation, a `DecryptedPatient` is instantiated. Besides
@@ -32,36 +47,71 @@ encrypted to the cloud. Since it is decrypted at the moment of creation, a `Decr
 
 Next, the metadata required for the encryption of the entity must be initialized:
 
-<SdkCode>
-   <Kotlin>
-{`val patientWithMetadata = sdk.patient.withEncryptionMetadata(patient)`}
-   </Kotlin>
-</SdkCode>
+<LanguageTabs>
+<TabItem value="kotlin">
+
+```kotlin
+val patientWithMetadata = sdk.patient.withEncryptionMetadata(patient)
+```
+
+</TabItem>
+<TabItem value="python">
+
+```python
+patient_with_metadata = sdk.patient.with_encryption_metadata_blocking(patient)
+```
+
+</TabItem>
+</LanguageTabs>
 
 This step is mandatory and also shares the newly created Patient with the user creating it, who will initially be the only
 one able to read the entity's encrypted fields.
 
 After this step, the entity can finally be encrypted and stored in the cloud:
 
-<SdkCode>
-   <Kotlin>
-{`val createdPatient = sdk.patient.createPatient(patientWithMetadata)`}
-   </Kotlin>
-</SdkCode>
+<LanguageTabs>
+<TabItem value="kotlin">
+
+```kotlin
+val createdPatient = sdk.patient.createPatient(patientWithMetadata)
+```
+
+</TabItem>
+<TabItem value="python">
+
+```python
+created_patient = sdk.patient.create_patient_blocking(patient_with_metadata)
+```
+
+</TabItem>
+</LanguageTabs>
 
 Once created, the entity can be modified. In the following example, a date of birth is read from the standard input
 and added to the patient:
 
-<SdkCode>
-   <Kotlin>
-{`print("Date of birth (YYYYMMDD): ")
+<LanguageTabs>
+<TabItem value="kotlin">
+
+```kotlin
+print("Date of birth (YYYYMMDD): ")
 val dateOfBirth = readln().toInt()
 val patientWithBirth = createdPatient.copy(
 	dateOfBirth = dateOfBirth
 )
-val updatedPatient = sdk.patient.modifyPatient(patientWithBirth)`}
-   </Kotlin>
-</SdkCode>
+val updatedPatient = sdk.patient.modifyPatient(patientWithBirth)
+```
+
+</TabItem>
+<TabItem value="python">
+
+```python
+date_of_birth = int(input("Date of birth (YYYYMMDD): "))
+created_patient.date_of_birth = date_of_birth
+updated_patient = sdk.patient.modify_patient_blocking(created_patient)
+```
+
+</TabItem>
+</LanguageTabs>
 
 The date of birth in the patient is stored in the `dateOfBirth` field as an integer in the `YYYYMMDD` format. It is worth
 noting that since the entity is already created and the encryption metadata are already initialized, there is no need
@@ -70,12 +120,24 @@ to call `withEncryptionMetadata` again.
 After creation, it is also possible to retrieve the entity from the cloud. In the following example, the patient
 is retrieved using its ID:
 
-<SdkCode>
-   <Kotlin>
-{`println("Retrieving patient by ID:")
-val retrievedPatient = sdk.patient.getPatient(updatedPatient.id)`}
-   </Kotlin>
-</SdkCode>
+<LanguageTabs>
+<TabItem value="kotlin">
 
-More advanced methods for retrieving entities are available and will be explained in [another section](TODO) of this
-tutorial and [in more depth here](TODO).
+```kotlin
+println("Retrieving patient by ID:")
+val retrievedPatient = sdk.patient.getPatient(updatedPatient.id)
+```
+
+</TabItem>
+<TabItem value="python">
+
+```python
+print("The retrieved patient is:")
+retrieved_patient = sdk.patient.get_patient_blocking(updated_patient.id)
+```
+
+</TabItem>
+</LanguageTabs>
+
+More advanced methods for retrieving entities are available and will be explained in
+[another section of this tutorial](/nsdk/tutorial/basic/modules/basic-tutorial-search-data) and [in more depth here](/nsdk/how-to/querying-data).
