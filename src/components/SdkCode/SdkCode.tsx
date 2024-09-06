@@ -28,7 +28,6 @@ const SdkCode = ({ children }) => {
     >{
         React.Children.map(children, child => {
           const type = child.props.mdxType.toLowerCase()
-          console.log(child)
           return <TabItem value={type}>
             <Highlight {...defaultProps} theme={theme} code={child.props.children} language={type}>
             {({ className, style, tokens, getLineProps, getTokenProps }) => (
