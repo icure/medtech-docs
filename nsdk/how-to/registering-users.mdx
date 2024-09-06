@@ -1,0 +1,513 @@
+import TabItem from "@theme/TabItem";
+import {LanguageTabs} from "@site/src/components/LanguageTabs";
+
+# Registering users
+
+There are two primary approaches you can use to enroll new users in your application using the Cardinal SDK:
+self-registration and invitation-based registration.
+
+The self-registration approach allows new users to register autonomously through your application by providing basic 
+information such as their email address, name, and other details.
+For example, you could do use this approach in a patient-oriented digital wellbeing application. 
+
+The invitation-based approach, on the other hand, requires that new users are invited by administrators or other users 
+with certain permissions.
+For example, you could use this approach in an EHR application for general practitioners, which will be invited directly
+by you.
+Meanwhile, a related application that allows patients to view digital prescriptions created through the first 
+application could have the doctors inviting their patients.
+
+You can also combine both approaches in your applications.
+For example, HCP users might require an invitation, while patient users can register autonomously.
+
+## Implementing user self-registration
+
+
+If you want to allow users to self-register in your application, you first need to create a registration process for the
+application through the cockpit. TODO link.
+
+You can register the user to your application by initializing an instance of the Cardinal SDK using the registration 
+process id. 
+For more information on how to instantiate the SDK using a process, refer to the 
+[SDK initialization documentation](/nsdk/how-to/initialize-the-sdk/#authentication-with-a-process).
+
+:::note
+
+Since authentication with processes is not supported on the Cardinal python SDK you can't have user self-registration
+on python applications.
+
+:::
+
+<LanguageTabs>
+
+<TabItem value = "kotlin">
+
+```kotlin
+import com.icure.cardinal.sdk.CardinalSdk
+import com.icure.cardinal.sdk.auth.AuthenticationProcessCaptchaType
+import com.icure.cardinal.sdk.auth.AuthenticationProcessTelecomType
+import com.icure.cardinal.sdk.auth.AuthenticationProcessTemplateParameters
+import com.icure.cardinal.sdk.options.EncryptedFieldsConfiguration
+import com.icure.cardinal.sdk.options.SdkOptions
+import com.icure.cardinal.sdk.storage.impl.FileStorageFacade
+
+// Take these ids from the cockpit. The type of user created depends on the process id used.
+private const val REGISTRATION_PROCESS_ID = "..."
+private const val SPEC_ID = "..."
+
+suspend fun registerAndLogin(
+	email: String,
+	firstName: String,
+	lastName: String,
+	captcha: String
+): CardinalSdk {
+	val authStep = CardinalSdk.initializeWithProcess(
+		"MyCardinalApp",
+		"https://api.icure.cloud",
+		"https://msg-gw.icure.cloud/",
+		SPEC_ID,
+		REGISTRATION_PROCESS_ID,
+		AuthenticationProcessTelecomType.Email,
+		email,
+		AuthenticationProcessCaptchaType.FriendlyCaptcha,
+		captcha,
+		FileStorageFacade("/path/to/storage/directory"),
+		AuthenticationProcessTemplateParameters(
+			firstName = firstName,
+			lastName = lastName
+		)
+	)
+	val validationCode = askUserValidationCode()
+	return authStep.completeAuthentication(validationCode)
+}
+```
+
+</TabItem>
+
+<TabItem value="typescript">
+
+```typescript
+import {
+	AuthenticationProcessCaptchaType,
+	AuthenticationProcessTelecomType,
+	CardinalSdk,
+	StorageFacade
+} from "@icure/cardinal-sdk";
+
+// Take these ids from the cockpit. The type of user created depends on the process id used.
+const REGISTRATION_PROCESS_ID = "..."
+const SPEC_ID = "..."
+
+async function registerAndLogin(
+	email: string,
+	firstName: string,
+	lastName: string,
+	captcha: string
+): Promise<CardinalSdk> {
+	const authStep = await CardinalSdk.initializeWithProcess(
+		"MyCardinalApp",
+		"https://api.icure.cloud",
+		"https://msg-gw.icure.cloud/",
+		SPEC_ID,
+		REGISTRATION_PROCESS_ID,
+		AuthenticationProcessTelecomType.Email,
+		email,
+		AuthenticationProcessCaptchaType.FriendlyCaptcha,
+		captcha,
+		StorageFacade.usingFileSystem("/path/to/storage/directory"),
+		{ firstName, lastName }
+	)
+	const validationCode = await askUserValidationCode()
+	return authStep.completeAuthentication(validationCode)
+}
+```
+
+</TabItem>
+
+</LanguageTabs>
+
+:::info
+
+After registration, the user can login again using the same process as for registration, since registration processes 
+can also work as login processes.
+However, if you want to use a different template for the login email or sms you will need to create a login process.
+
+Alternatively, immediately after the first login you can ask the user to initialize a password, which they will be able
+to use for future login.
+
+:::
+
+## Implementing user invitation
+
+If you want to allow users to register only through invitation, you first need to create a login process for the
+application or for the solution through the cockpit. TODO link.
+Make sure to not create a registration process instead, as this could allow malicious actors to retrieve the process 
+ID from your application and use it to register users bypassing the invitation requirement.
+
+To implement the invitation system, you will have to use the Cardinal SDK to create the data owner for the new user (if
+it doesn't already exist), and a user linked to the data owner. 
+You need to specify at least the email or mobile phone for the newly created user, otherwise they will not be able to 
+login.
+
+<LanguageTabs>
+
+<TabItem value="kotlin">
+
+```kotlin
+import com.icure.cardinal.sdk.CardinalSdk
+import com.icure.cardinal.sdk.model.Patient
+import com.icure.cardinal.sdk.model.User
+import com.icure.kryptom.crypto.defaultCryptoService
+
+suspend fun inviteExistingPatientAsUser(
+	doctorSdk: CardinalSdk,
+	email: String,
+	patient: Patient
+) {
+	// The user logged in to the SDK must have the UserManagement.Create.Patient permission
+	// This permission is given for example to users with the role PATIENT_USER_MANAGER
+	doctorSdk.user.createUser(
+		User(
+			id = defaultCryptoService.strongRandom.randomUUID(),
+			email = email,
+			patientId = patient.id
+		)
+	)
+}
+```
+
+</TabItem>
+
+<TabItem value="typescript">
+
+```typescript
+import {CardinalSdk, Patient, randomUuid, User} from "@icure/cardinal-sdk";
+
+async function inviteExistingPatientAsUser(
+	doctorSdk: CardinalSdk,
+	email: String,
+	patient: Patient
+) {
+	// The user logged in to the SDK must have the UserManagement.Create.Patient permission
+	// This permission is given for example to users with the role PATIENT_USER_MANAGER
+	await doctorSdk.user.createUser(
+		new User({
+			id: randomUuid(),
+			email: email,
+			patientId: patient.id
+		})
+	)
+}
+```
+
+</TabItem>
+
+<TabItem value="python">
+
+```python
+from cardinal_sdk import CardinalSdk
+from cardinal_sdk.model import Patient, User
+import uuid
+
+def invite_existing_patient_as_user(
+	doctor_sdk: CardinalSdk,
+	email: str,
+	patient: Patient
+):
+	doctor_sdk.user.create_user_blocking(
+		User(
+			id=str(uuid.uuid4()),
+			email=email,
+			patient_id=patient.id
+		)
+	)
+```
+
+</TabItem>
+
+</LanguageTabs>
+
+After that the new user can login using the provided email/phone and a login process for your application or solution.  
+
+:::note
+
+You can invite users from the Cardinal python SDK, but they will only be able to login using other SDKs, since 
+authentication with processes is not supported on python.
+
+:::
+
+<LanguageTabs>
+
+<TabItem value="kotlin">
+
+```kotlin
+import com.icure.cardinal.sdk.CardinalSdk
+import com.icure.cardinal.sdk.auth.AuthenticationProcessCaptchaType
+import com.icure.cardinal.sdk.auth.AuthenticationProcessTelecomType
+import com.icure.cardinal.sdk.auth.AuthenticationProcessTemplateParameters
+import com.icure.cardinal.sdk.options.EncryptedFieldsConfiguration
+import com.icure.cardinal.sdk.options.SdkOptions
+import com.icure.cardinal.sdk.storage.impl.FileStorageFacade
+
+// Take these ids from the cockpit.
+private const val LOGIN_PROCESS_ID = "..."
+private const val SPEC_ID = "..."
+
+suspend fun login(
+	email: String,
+	captcha: String
+): CardinalSdk {
+	val authStep = CardinalSdk.initializeWithProcess(
+		"MyCardinalApp",
+		"https://api.icure.cloud",
+		"https://msg-gw.icure.cloud/",
+		SPEC_ID,
+		LOGIN_PROCESS_ID,
+		AuthenticationProcessTelecomType.Email,
+		email,
+		AuthenticationProcessCaptchaType.FriendlyCaptcha,
+		captcha,
+		FileStorageFacade("/path/to/storage/directory"),
+		AuthenticationProcessTemplateParameters()
+	)
+	val validationCode = askUserValidationCode()
+	return authStep.completeAuthentication(validationCode)
+}
+```
+
+</TabItem>
+
+<TabItem value="typescript">
+
+```typescript
+// Take these ids from the cockpit.
+import {
+	AuthenticationProcessCaptchaType,
+	AuthenticationProcessTelecomType,
+	CardinalSdk,
+	StorageFacade
+} from "@icure/cardinal-sdk";
+
+const LOGIN_PROCESS_ID = "..."
+const SPEC_ID = "..."
+
+async function login(
+	email: string,
+	captcha: string
+): Promise<CardinalSdk> {
+	const authStep = await CardinalSdk.initializeWithProcess(
+		"MyCardinalApp",
+		"https://api.icure.cloud",
+		"https://msg-gw.icure.cloud/",
+		SPEC_ID,
+		LOGIN_PROCESS_ID,
+		AuthenticationProcessTelecomType.Email,
+		email,
+		AuthenticationProcessCaptchaType.FriendlyCaptcha,
+		captcha,
+		StorageFacade.usingFileSystem("/path/to/storage/directory"),
+		{}
+	)
+	const validationCode = await askUserValidationCode()
+	return authStep.completeAuthentication(validationCode)
+}
+```
+
+</TabItem>
+
+</LanguageTabs>
+
+### Sharing data with invited patients
+
+A common scenario that may occur in your application is a patient being invited during a doctor's visit.
+In this scenario the doctor wants to immediately share the data from the current visit (and potentially past visits)
+with the patient so that they can see it as soon as they log in.
+However, the patient typically won't log in during the visit and, as a result, won't have any keypair generated.
+Since the SDK forbids sharing data with data owners who don't have a keypair (as this is usually a mistake), the 
+doctor will be unable to share the data right after inviting the patient using the standard sharing mechanisms.
+
+To cover this specific scenario, the Cardinal SDK provides a method to allow you to forcefully start sharing data with a
+patient even if they don't have yet initialized a keypair.
+
+The full process is:
+
+1. Use the doctor SDK to call the `forceInitializeExchangeDataToNewlyInvitedPatient` method on the patient API. 
+   This will initialize the metadata necessary to share data from the doctor to the patient even if the patient has no
+   keypair, returning true if it was indeed necessary.
+2. Use the doctor SDK to share all data that the patient needs to access using the standard "share with" methods of the 
+   various entities apis. TODO link to how to share
+3. If the method at step 1 returned `true`, the exchange data that was forcefully initialized (and therefore all data
+   shared at step 2) will not be immediately accessible to the patient. 
+   To complete the sharing procedure, you will need to:
+   1. Create exchange data recovery information for the patient using the doctor's SDK.
+   2. Give the key to the recovery data to the patient.
+      This could be done using physical means, such as a custom QR code, or using an email. 
+   3. After the patient logins and initializes a keypair, ask them to provide the recovery information key and use it.  
+4. The doctor can still share more data like in step 2 without having to recreate the exchange data recovery information.
+
+The process on the doctor app side could be:
+
+<LanguageTabs>
+
+<TabItem value="kotlin">
+
+```kotlin
+import com.icure.cardinal.sdk.CardinalSdk
+import com.icure.cardinal.sdk.crypto.entities.ContactShareOptions
+import com.icure.cardinal.sdk.model.DecryptedContact
+import com.icure.cardinal.sdk.model.requests.RequestedPermission
+
+suspend fun shareDataWithNewlyInvitedPatient(
+	doctorSdk: CardinalSdk,
+	contactToShare: DecryptedContact,
+	patientId: String
+) {
+	val didForceInitialize = doctorSdk.patient.forceInitializeExchangeDataToNewlyInvitedPatient(patientId)
+	doctorSdk.contact.shareWith(
+		patientId,
+		contactToShare,
+		ContactShareOptions(requestedPermissions = RequestedPermission.FullRead)
+	).updatedEntityOrThrow()
+	// You can do this before or after sharing
+	if (didForceInitialize) {
+		val recoveryKey = doctorSdk.recovery.createExchangeDataRecoveryInfo(patientId)
+		// Implement this yourself
+		printRecoveryKeyQrCode(recoveryKey)
+	}
+}
+```
+
+</TabItem>
+
+<TabItem value="typescript">
+
+```typescript
+import {
+	CardinalSdk,
+	DecryptedContact,
+	RequestedPermission,
+	SimpleShareResult,
+	ShareMetadataBehaviour
+} from "@icure/cardinal-sdk";
+
+async function shareDataWithNewlyInvitedPatient(
+	doctorSdk: CardinalSdk,
+	contactToShare: DecryptedContact,
+	patientId: string
+) {
+	const didForceInitialize = await doctorSdk.patient.forceInitializeExchangeDataToNewlyInvitedPatient(patientId)
+	const shareResult = await doctorSdk.contact.shareWith(
+		patientId,
+		contactToShare,
+		{ options: {
+			requestedPermissions: RequestedPermission.FullRead,
+			shareEncryptionKey: ShareMetadataBehaviour.IfAvailable,
+			sharePatientId: ShareMetadataBehaviour.IfAvailable
+		} }
+	)
+	if (shareResult instanceof SimpleShareResult.Failure) throw new Error("Failed to share")
+	// You can do this before or after sharing
+	if (didForceInitialize) {
+		const recoveryKey = await doctorSdk.recovery.createExchangeDataRecoveryInfo(patientId)
+		// Implement this yourself
+		await printRecoveryKeyQrCode(recoveryKey)
+	}
+}
+```
+
+</TabItem>
+
+<TabItem value="python">
+
+```python
+from cardinal_sdk import CardinalSdk
+from cardinal_sdk.model import DecryptedContact, ContactShareOptions, RequestedPermission, SimpleShareResultFailure
+
+def share_data_with_newly_invited_patient(
+	doctor_sdk: CardinalSdk,
+	contact_to_share: DecryptedContact,
+	patient_id: str
+):
+	did_force_iniitialize = doctor_sdk.patient.force_initialize_exchange_data_to_newly_invited_patient_blocking(patient_id)
+	share_result = doctor_sdk.contact.share_with_blocking(
+		patient_id,
+		contact_to_share,
+		ContactShareOptions(
+			requested_permissions=RequestedPermission.FullRead
+		)
+	)
+	if isinstance(share_result, SimpleShareResultFailure):
+		raise Exception("Failed to share")
+	# You can do this before or after sharing
+	if did_force_iniitialize:
+		recovery_key = doctor_sdk.recovery.create_exchange_data_recovery_info_blocking(patient_id)
+		# Implement this yourself
+		send_recovery_key_email(recovery_key) 
+```
+
+</TabItem>
+
+</LanguageTabs>
+
+And on the patient side, after login:
+
+<LanguageTabs>
+
+<TabItem value="kotlin">
+
+```kotlin
+import com.icure.cardinal.sdk.CardinalSdk
+
+suspend fun doExchangeDataRecovery(
+	patientSdk: CardinalSdk
+) {
+	// Implement this yourself
+	val recoveryKey = askRecoveryKey()
+
+	val recoveryResult = patientSdk.recovery.recoverExchangeData(recoveryKey)
+	if (recoveryResult != null) throw IllegalArgumentException("Invalid recovery key for reason $recoveryResult")
+}
+```
+
+</TabItem>
+
+<TabItem value="typescript">
+
+```typescript
+import {CardinalSdk} from "@icure/cardinal-sdk";
+
+async function doExchangeDataRecovery(
+	patientSdk: CardinalSdk
+) {
+	// Implement this yourself
+	const recoveryKey = await askRecoveryKey()
+
+	const recoveryResult = await patientSdk.recovery.recoverExchangeData(recoveryKey)
+	if (recoveryResult != null) throw Error(`Invalid recovery key for reason ${recoveryResult}`)
+}
+```
+
+</TabItem>
+
+<TabItem value="python">
+
+```python
+from cardinal_sdk import CardinalSdk
+
+def do_exchange_data_recovery(
+	patient_sdk: CardinalSdk
+):
+	# Implement this yourself
+	recovery_key = ask_recovery_key()
+
+	recovery_result = patient_sdk.recovery.recover_exchange_data_blocking(recovery_key)
+	if recovery_result is not None:
+		raise Exception(f"Invalid recovery key for reason {recovery_result}")
+```
+
+</TabItem>
+
+</LanguageTabs>
+
+TODO more info link to the recovery data?
+
