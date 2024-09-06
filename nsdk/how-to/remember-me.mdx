@@ -1,8 +1,4 @@
-import Tabs from "@theme/Tabs";
-import SdkCode from "../../src/components/SdkCode/SdkCode";
-import Python from "../../src/components/SdkCode/Python";
-import Kotlin from "../../src/components/SdkCode/Kotlin";
-import Typescript from "../../src/components/SdkCode/Typescript";
+import LanguageTabs from "../../src/components/LanguageTabs";
 import TabItem from "@theme/TabItem";
 
 # Implement a persistent user session (aka "Remember-me or "Stay logged in")
@@ -38,19 +34,27 @@ In this example, we will use a 30-day long-lived token. This token will be valid
 The token will be identified by a key that is unique to the device. This key have to be unique for each device/user,
 getting a token with the same key will invalidate the previous token.
 
-<SdkCode>
-	<Kotlin>
-{`import kotlin.time.Duration.Companion.days\n
+<LanguageTabs>
+
+<TabItem value="kotlin">
+
+```kotlin
+import kotlin.time.Duration.Companion.days\n
 val tokenKey = buildString {
 	append("remember-me-")
 	append(getDeviceId())
 }
 val currentUser = sdk.user.getCurrentUser()
 val longToken = sdk.user.getToken(currentUser.id, tokenKey, 30.days.inWholeSeconds)
-saveCredentialsInPersistentStorage("username", longToken)`}
-	</Kotlin>
-	<Typescript>
-{`const deviceId = "remember-me-" + await getDeviceId();
+saveCredentialsInPersistentStorage("username", longToken)
+```
+
+</TabItem>
+
+<TabItem value="typescript">
+
+```typescript
+const deviceId = "remember-me-" + await getDeviceId();
 const currentUser = await sdk.user.getCurrentUser();
 const longToken = await sdk.user.getToken(
 	currentUser.id,
@@ -59,28 +63,39 @@ const longToken = await sdk.user.getToken(
 		tokenValidity: 30 * 24 * 60 * 60
 	}
 );
-await saveCredentialsInPersistentStorage("username", longToken);`}
-	</Typescript>
-	<Python>
-{`from datetime import timedelta\n
+await saveCredentialsInPersistentStorage("username", longToken);
+```
+
+</TabItem>
+
+<TabItem value="python">
+
+```python
+from datetime import timedelta\n
 current_user = sdk.user.get_current_user_blocking()
 long_token = sdk.user.get_token_blocking(
 	current_user.id,
 	f"remember-me-{get_device_id()}",
 	int(timedelta(days=30).total_seconds())
 )
-save_credentials_in_persistent_storage("username", long_token)`}
-	</Python>
-</SdkCode>
+save_credentials_in_persistent_storage("username", long_token)
+```
+
+</TabItem>
+
+</LanguageTabs>
 
 ### Retrieve the long-lived token and re-authenticate the user
 
 When the user returns to the application, you need to retrieve the long-lived token from the persistent storage and
 re-authenticate the user.
 
-<SdkCode>
-	<Kotlin>
-{`import com.icure.sdk.auth.UsernameLongToken
+<LanguageTabs>
+
+<TabItem value="kotlin">
+
+```kotlin
+import com.icure.sdk.auth.UsernameLongToken
 import com.icure.sdk.options.AuthenticationMethod
 import com.icure.sdk.options.EncryptedFieldsConfiguration
 import com.icure.sdk.options.SdkOptions
@@ -97,10 +112,15 @@ val sdk = IcureSdk.initialize(
 			patient = setOf("notes", "addresses")
 		)
 	)
-)`}
-	</Kotlin>
-	<Typescript>
-{`import { AuthenticationMethod, IcureSdk, randomUuid, StorageFacade } from "@icure/api";
+)
+```
+
+</TabItem>
+
+<TabItem value="typescript">
+
+```typescript
+import { AuthenticationMethod, IcureSdk, randomUuid, StorageFacade } from "@icure/api";
 import UsernamePassword = AuthenticationMethod.UsingCredentials.UsernamePassword;
 import UsernameLongToken = AuthenticationMethod.UsingCredentials.UsernameLongToken;\n
 const [username, longToken] = await getCredentialsFromPersistentStorage();
@@ -115,10 +135,15 @@ const sdk = await IcureSdk.initialize(
 			patient: ["notes", "addresses"],
 		}
 	}
-);`}
-	</Typescript>
-	<Python>
-{`from icure.IcureSdk import IcureSdk
+);
+```
+
+</TabItem>
+
+<TabItem value="python">
+
+```python
+from icure.IcureSdk import IcureSdk
 from icure.authentication import UsernameLongToken
 from icure.options.SdkOptions import EncryptedFieldsConfiguration, SdkOptions
 from icure.storage.StorageFacadeOptions import FileSystemStorage\n
@@ -134,9 +159,12 @@ sdk = IcureSdk(
 			patient=["notes", "addresses"]
 		)
 	)
-)`}
-	</Python>
-</SdkCode>
+)
+```
+
+</TabItem>
+
+</LanguageTabs>
 
 And that's it! You have successfully implemented a first version of persistent user session in your application.
 
