@@ -90,6 +90,42 @@ sdk.code.create_codes_blocking(
 ```
 
 </TabItem>
+<TabItem value="typescript">
+
+```typescript
+const internalCode = await sdk.code.createCode(new Code({
+	id: "INTERNAL|ANALYSIS|1",
+	type: "INTERNAL",
+	code: "ANALYSIS",
+	version: "1",
+	label: {"en": "Internal analysis code"}
+}))
+await sdk.code.createCodes([
+	new Code({
+		id: "SNOMED|45007003|1",
+		type: "SNOMED",
+		code: "45007003",
+		version: "1",
+		label: {"en": "Low blood pressure"}
+	}),
+	new Code({
+		id: "SNOMED|38341003|1",
+		type: "SNOMED",
+		code: "38341003",
+		version: "1",
+		label: {"en": "High blood pressure"}
+	}),
+	new Code({
+		id: "SNOMED|2004005|1",
+		type: "SNOMED",
+		code: "2004005",
+		version: "1",
+		label: {"en": "Normal blood pressure"}
+	})
+])
+```
+
+</TabItem>
 </LanguageTabs>
 
 :::note
@@ -241,6 +277,75 @@ created_contact = sdk.contact.create_contact_blocking(
 ```
 
 </TabItem>
+<TabItem value="typescript">
+
+```typescript
+const codeIterator = await sdk.code.filterCodesBy(
+	CodeFilters.byLanguageTypeLabelRegion(
+		"en",
+		"SNOMED",
+		{ label: "blood" }
+	)
+)
+
+let selectedCode: Code | null = null
+while ((await codeIterator.hasNext()) && selectedCode == null) {
+	const code = (await codeIterator.next(1))[0]
+	prettyPrintCode(code)
+	const use = (await readLn("Use this code? [y/N]: ")).trim().toLowerCase() === "y"
+	if (use) {
+		selectedCode = code
+	}
+}
+
+if (selectedCode == null) {
+	console.log("No code was selected")
+	return
+}
+
+const patient = await sdk.patient.createPatient(
+	await sdk.patient.withEncryptionMetadata(
+		new DecryptedPatient({
+			id: uuid(),
+			firstName: "Annabelle",
+			lastName: "Hall",
+		})
+	)
+)
+
+const contact = new DecryptedContact({
+	id: uuid(),
+	descr: "Blood pressure measurement",
+	openingDate: currentFuzzyDate(),
+	services: [
+		new DecryptedService({
+			id: uuid(),
+			label: "Blood pressure",
+			content: {
+				"en": new DecryptedContent({
+					measureValue: new Measure({
+						value: random(80, 120),
+						unit: "mmHg"
+					})
+				})
+			}
+		})
+	],
+	tags: [
+		new CodeStub({
+			id: selectedCode.id,
+			type: selectedCode.type,
+			code: selectedCode.code,
+			version: selectedCode.version
+		})
+	]
+})
+const createdContact = await sdk.contact.createContact(
+	await sdk.contact.withEncryptionMetadata(contact, patient)
+)
+```
+
+</TabItem>
 </LanguageTabs>
 
 In this snippet, the user can choose a `Code` from all the SNOMED codes that contain the word "blood"  in their label 
@@ -282,6 +387,24 @@ print(f"Result of searching Services by code: {selected_code.id}")
 while service_iterator.has_next_blocking():
 	service = service_iterator.next_blocking(1)[0]
 	pretty_print_service(service)
+```
+
+</TabItem>
+<TabItem value="typescript">
+
+```typescript
+const serviceIterator = await sdk.contact.filterServicesBy(
+	ServiceFilters.byTagAndValueDateForSelf(
+		selectedCode.type,
+		{ tagCode: selectedCode.code }
+	)
+)
+
+console.log(`Result of searching Services by code: ${selectedCode.id}`)
+while (await serviceIterator.hasNext()) {
+	const service = (await serviceIterator.next(1))[0]
+	prettyPrintService(service)
+}
 ```
 
 </TabItem>

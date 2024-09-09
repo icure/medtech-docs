@@ -61,6 +61,21 @@ other_hcp = other_sdk.healthcare_party.get_current_healthcare_party_blocking()
 ```
 
 </TabItem>
+<TabItem value="typescript">
+
+```typescript
+const username = (await readLn("Login of the other hcp: ")).trim()
+const otherPassword = await readLn("Insert the password for this hcp: ")
+const otherSdk = await CardinalSdk.initialize(
+	undefined,
+	CARDINAL_URL,
+	new AuthenticationMethod.UsingCredentials.UsernamePassword(username, otherPassword),
+	StorageFacade.usingFileSystem("../scratch/storage")
+)
+const otherHcp = await otherSdk.healthcareParty.getCurrentHealthcareParty()
+```
+
+</TabItem>
 </LanguageTabs>
 
 Consider a `Document` entity created with the initial Healthcare Party user:
@@ -93,6 +108,20 @@ old_document = sdk.document.create_document_blocking(
 ```
 
 </TabItem>
+<TabItem value="typescript">
+
+```typescript
+const oldDocument = await sdk.document.createDocument(
+	await sdk.document.withEncryptionMetadata(new DecryptedDocument({
+			id: uuid(),
+			name: "An important document"
+		}),
+		null
+	)
+)
+```
+
+</TabItem>
 </LanguageTabs>
 
 If the other Healthcare Party tries to access it using the ID, the operation will fail with an error:
@@ -119,6 +148,17 @@ except Exception as e:
 ```
 
 </TabItem>
+<TabItem value="typescript">
+
+```typescript
+try {
+	await otherSdk.document.getDocument(oldDocument.id)
+} catch (e) {
+	console.error("This means I am not authorized to read the document -> ", e)
+}
+```
+
+</TabItem>
 </LanguageTabs>
 
 The initial Healthcare Party can then grant access using the `shareWith` method. This method takes two parameters:
@@ -142,13 +182,27 @@ if(result.isSuccess) {
 <TabItem value="python">
 
 ```python
-		result = sdk.document.share_with_blocking(
+result = sdk.document.share_with_blocking(
 	delegate_id=other_hcp.id,
 	document=old_document
 )
 
 if isinstance(result, SimpleShareResultDecryptedDocumentSuccess):
 	print("Successfully shared document")
+```
+
+</TabItem>
+<TabItem value="typescript">
+
+```typescript
+const result = await sdk.document.shareWith(
+	otherHcp.id,
+	oldDocument
+)
+
+if(result instanceof SimpleShareResult.Success) {
+	console.log("Successfully shared document")
+}
 ```
 
 </TabItem>
@@ -168,6 +222,13 @@ val oldDocumentOtherHcp = otherSdk.document.getDocument(oldDocument.id)
 
 ```python
 old_document_other_hcp = other_sdk.document.get_document_blocking(old_document.id)
+```
+
+</TabItem>
+<TabItem value="typescript">
+
+```typescript
+const oldDocumentOtherHcp = await otherSdk.document.getDocument(oldDocument.id)
 ```
 
 </TabItem>
@@ -213,6 +274,22 @@ created_new_document = sdk.document.create_document_blocking(new_document_with_m
 ```
 
 </TabItem>
+<TabItem value="typescript">
+
+```typescript
+const newDocument = new DecryptedDocument({
+	id: uuid(),
+	name: "Another important document"
+})
+const newDocumentWithMetadata = await sdk.document.withEncryptionMetadata(
+	newDocument,
+	null,
+	{ delegates: { [otherHcp.id]:  AccessLevel.Read } }
+)
+const createdNewDocument = await sdk.document.createDocument(newDocumentWithMetadata)
+```
+
+</TabItem>
 </LanguageTabs>
 
 The other Healthcare Party is a delegate for the new `Document` with Read permissions. This means they can access the
@@ -230,6 +307,13 @@ val newDocumentOtherHcp = otherSdk.document.getDocument(createdNewDocument.id)
 
 ```python
 new_document_other_hcp = other_sdk.document.get_document_blocking(created_new_document.id)
+```
+
+</TabItem>
+<TabItem value="typescript">
+
+```typescript
+const newDocumentOtherHcp = await otherSdk.document.getDocument(createdNewDocument.id)
 ```
 
 </TabItem>
@@ -269,6 +353,19 @@ created_patient = sdk.patient.create_patient_blocking(patient_with_metadata)
 ```
 
 </TabItem>
+<TabItem value="typescript">
+
+```typescript
+const newPatient = new DecryptedPatient({
+	id: uuid(),
+	firstName: "Edmond",
+	lastName: "Dantes",
+})
+const patientWithMetadata = await sdk.patient.withEncryptionMetadata(newPatient)
+const createdPatient = await sdk.patient.createPatient(patientWithMetadata)
+```
+
+</TabItem>
 </LanguageTabs>
 
 Then, you need to create a User for that Patient. You can link the User to the Patient by setting the `patientId`
@@ -303,6 +400,20 @@ created_user = sdk.user.create_user_blocking(patient_user)
 ```
 
 </TabItem>
+<TabItem value="typescript">
+
+```typescript
+const login = `edmond.dantes.${uuid().substring(0, 6)}@icure.com`
+const patientUser = new User({
+	id: uuid(),
+	patientId: createdPatient.id,
+	login: login,
+	email: login
+})
+const createdUser = await sdk.user.createUser(patientUser)
+```
+
+</TabItem>
 </LanguageTabs>
 
 Finally, you have to create a temporary access token for the User, so that they can log in.
@@ -319,6 +430,13 @@ val loginToken = sdk.user.getToken(createdUser.id, "login")
 
 ```python
 login_token = sdk.user.get_token_blocking(created_user.id, "login")
+```
+
+</TabItem>
+<TabItem value="typescript">
+
+```typescript
+const loginToken = await sdk.user.getToken(createdUser.id, "login")
 ```
 
 </TabItem>
@@ -349,6 +467,18 @@ CardinalSdk(
 	baseurl=CARDINAL_URL,
 	authentication_method=UsernamePassword(login, login_token),
 	storage_facade=FileSystemStorage("./scratch/storage")
+)
+```
+
+</TabItem>
+<TabItem value="typescript">
+
+```typescript
+await CardinalSdk.initialize(
+	undefined,
+	CARDINAL_URL,
+	new AuthenticationMethod.UsingCredentials.UsernamePassword(login, loginToken),
+	StorageFacade.usingFileSystem("../scratch/storage")
 )
 ```
 
@@ -403,6 +533,28 @@ patient = patient_share_result.updated_entity
 ```
 
 </TabItem>
+<TabItem value="typescript">
+
+```typescript
+const patientSecretIds = await sdk.patient.getSecretIdsOf(createdPatient)
+const patientShareResult = await sdk.patient.shareWith(
+	createdPatient.id,
+	createdPatient,
+	new PatientShareOptions({
+		shareSecretIds: patientSecretIds,
+		shareEncryptionKey: ShareMetadataBehaviour.IfAvailable,
+		requestedPermissions: RequestedPermission.MaxWrite
+	})
+)
+
+if (patientShareResult instanceof SimpleShareResult.Success) {
+	console.log("Successfully shared patient")
+}
+
+const patient = (patientShareResult as SimpleShareResult.Success<DecryptedPatient>).updatedEntity
+```
+
+</TabItem>
 </LanguageTabs>
 
 Now, the Patient can finally log in and have access to their full information:
@@ -430,6 +582,18 @@ patient_sdk = CardinalSdk(
 	baseurl=CARDINAL_URL,
 	authentication_method=UsernamePassword(login, login_token),
 	storage_facade=FileSystemStorage("./scratch/storage")
+)
+```
+
+</TabItem>
+<TabItem value="typescript">
+
+```typescript
+const patientSdk = await CardinalSdk.initialize(
+	undefined,
+	CARDINAL_URL,
+	new AuthenticationMethod.UsingCredentials.UsernamePassword(login, loginToken),
+	StorageFacade.usingFileSystem("../scratch/storage")
 )
 ```
 
@@ -472,6 +636,18 @@ created_health_element = sdk.health_element.create_health_element_blocking(healt
 ```
 
 </TabItem>
+<TabItem value="typescript">
+
+```typescript
+const healthElement = new DecryptedHealthElement({
+	id: uuid(),
+	descr: "This is some medical context"
+})
+const healthElementWithMetadata = await sdk.healthElement.withEncryptionMetadata(healthElement, patient)
+const createdHealthElement = await sdk.healthElement.createHealthElement(healthElementWithMetadata)
+```
+
+</TabItem>
 </LanguageTabs>
 
 It is important to note that even though the `HealthElement` is linked to the patient by the encryption metadata,
@@ -496,6 +672,17 @@ try:
 	patient_sdk.health_element.get_health_element_blocking(created_health_element.id)
 except Exception as e:
 	print(f"This means the patient cannot get this health element -> {e}")
+```
+
+</TabItem>
+<TabItem value="typescript">
+
+```typescript
+try {
+	await patientSdk.healthElement.getHealthElement(createdHealthElement.id)
+} catch (e) {
+	console.error("This means the patient cannot get this health element", e)
+}
 ```
 
 </TabItem>
@@ -531,6 +718,20 @@ if isinstance(result, SimpleShareResultDecryptedHealthElementSuccess):
 ```
 
 </TabItem>
+<TabItem value="typescript">
+
+```typescript
+const result = await sdk.healthElement.shareWith(
+	patient.id,
+	createdHealthElement
+)
+
+if(result instanceof SimpleShareResult.Success) {
+	console.log(`Successfully shared with patient id ${patient.id}`)
+}
+```
+
+</TabItem>
 </LanguageTabs>
 
 Finally, the Patient can access it:
@@ -547,6 +748,13 @@ patientSdk.healthElement.getHealthElement(createdHealthElement.id)
 
 ```python
 patient_sdk.health_element.get_health_element_blocking(created_health_element.id)
+```
+
+</TabItem>
+<TabItem value="typescript">
+
+```typescript
+await patientSdk.healthElement.getHealthElement(createdHealthElement.id)
 ```
 
 </TabItem>
@@ -592,6 +800,22 @@ new_created_health_element = sdk.health_element.create_health_element_blocking(n
 ```
 
 </TabItem>
+<TabItem value="typescript">
+
+```typescript
+const newHealthElement = new DecryptedHealthElement({
+	id: uuid(),
+	descr: "This is some other medical context"
+})
+const newHealthElementWithMetadata = await sdk.healthElement.withEncryptionMetadata(
+	newHealthElement,
+	patient,
+	{ delegates: { [patient.id]: AccessLevel.Write } }
+)
+const newCreatedHealthElement = await sdk.healthElement.createHealthElement(newHealthElementWithMetadata)
+```
+
+</TabItem>
 </LanguageTabs>
 
 It is important to note that the Patient linked to an entity is entirely separate from a patient with a delegation for
@@ -612,6 +836,13 @@ val retrievedHealthElement = patientSdk.healthElement.getHealthElement(newCreate
 
 ```python
 retrieved_health_element = patient_sdk.health_element.get_health_element_blocking(new_created_health_element.id)
+```
+
+</TabItem>
+<TabItem value="typescript">
+
+```typescript
+const retrievedHealthElement = await patientSdk.healthElement.getHealthElement(newCreatedHealthElement.id)
 ```
 
 </TabItem>
