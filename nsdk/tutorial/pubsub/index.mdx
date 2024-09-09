@@ -1,0 +1,29 @@
+# Real-time Communication and Analysis Tutorial
+
+# Tutorial: Publisher and Subscriber Example
+
+This tutorial demonstrates an example application with two concurrent components: a **publisher** and a **subscriber**.
+
+- **Publisher**: Simulates a patient application where a device measures the [blood glucose level](https://en.wikipedia.org/wiki/Blood_sugar_level) and creates a new reading using Cardinal.
+- **Subscriber**: Receives the created medical data in real time and modifies it with the analysis results.
+
+This example is useful for scenarios where a backend service (e.g., an AI algorithm) needs to continuously analyze data 
+as soon as it's created.
+
+## Prerequisites
+
+Before starting, ensure you have:
+
+1. Completed the [onboarding procedure](/cockpit/how-to/how-to-create-your-account) to register for Cardinal.
+2. Created a database and [added a healthcare party user](/cockpit/how-to/how-to-manage-hcp).
+3. Familiarized yourself with the Cardinal SDK by following the [introductory tutorial](/nsdk/tutorial/basic/sdk-basic-tutorial).
+
+:::note
+Be sure to [generate an authentication token](/cockpit/how-to/how-to-manage-hcp#generating-an-authentication-token) (i.e.
+a temporary password) for your healthcare party to be able to instantiate the SDK in the code examples.
+:::
+
+:::note
+The full code examples is available [in this repo](https://github.com/icure/cardinal-real-time-analysis-tutorial), 
+where you will find a folder for each language.
+:::
