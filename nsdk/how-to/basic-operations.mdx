@@ -1,8 +1,45 @@
+import TabItem from "@theme/TabItem";
+import {LanguageTabs} from "@site/src/components/LanguageTabs";
+
 # Basic operations
 
-TODO somewhere we need to figure out where to explain about encryptable entities
+When using the Cardinal SDK you will be working mostly with end-to-end encrypted data.
+The patients, the encounters with practitioners, diagnoses, appointments, the exam results and more.
+All the entities used to represent these concepts are at least in part encrypted to protect the privacy of the end 
+users.
 
-## CRUD
+Usually end-to-end encryption comes with many challenges, but the Cardinal SDK abstracts this complexity away, allowing
+you to work almost as if there was no encryption happening.
+
+In this page we cover the basic operations that you can do when working with the Cardinal SDK
+
+## Creating new entities
+
+The entities creation is done in two steps: you first initialize an instance of the entity, setting some metadata if
+needed and the content, then you can "commit" the creation of the entity to save it in the backend.  
+
+You can initialize an unencrypted entity using the constructor of the corresponding model class.
+
+TODO code sample
+
+For encrypted entities, however, you have to use the initialization method provided by that entity api.
+This method will initialize some metadata needed for the encryption and access control of the entity.
+
+TODO code sample with no params
+
+To commit the creation of the entity use the `create` method from the corresponding api passing the initialized entity.
+
+TODO code sample
+
+### Encryptable entity initialization parameters
+
+## Retrieving entities
+
+## Updating entities
+
+## Delete
+
+- Warning: delete is soft delete - hides from search but not from get by id.
 
 ## Flavours
 

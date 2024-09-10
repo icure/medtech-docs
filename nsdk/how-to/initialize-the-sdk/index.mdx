@@ -824,8 +824,8 @@ The parameters that allow you to configure the cryptographic operations of the C
 - `cryptoStrategies`: allows you to provide custom key generation, recovery and verification solutions. TODO more info link
 - `createTransferKeys`: allows you to disable the automatic creation of information that allows to recover newly created
 keys using previously existing lost but verified keys of the user. TODO more info link
-- `disableParentKeysInitialisation`: disables the hierarchical data owners key management. The SDK won't expect to have
-keys for the data owners parents (if any). TODO link to specific chapter of share data with many users
+- `useHierarchicalDataOwners`: enables the hierarchical data owners key management when set to true.
+The SDK will expect to have keys for the data owners parents (if any). TODO link to specific chapter of share data with many users
 
 ### Http client configuration (kotlin only)
 
