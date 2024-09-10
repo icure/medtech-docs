@@ -9,13 +9,14 @@ import TabItem from "@theme/TabItem";
 
 ## Publisher Application Overview
 
-In this tutorial, the Publisher is a simple command-line application that uses a patient account to create medical data.
+The Publisher is any application that a patient can use to create medical data. In this example, it is a CLI that
+creates samples simulating a device that measures the sugar level in blood.
 
 Since patient users cannot be created directly through the cockpit and to keep this tutorial self-contained, the
 application will first log in as a healthcare party to create the patient user. This newly created patient user will 
 then be used for the rest of the example.
 
-## Creating the Patient User
+## Create the Patient User
 
 First, the user will be prompted to insert the credentials of a [healthcare party created through the cockpit](cockpit/how-to/how-to-manage-hcp).
 An SDK instance will be initialized for that healthcare party.
@@ -213,6 +214,10 @@ Three different codifications were used in the Service:
 Now, the Publisher can initialize the encryption metadata of the entity, sharing it with the healthcare party at the same
 time, and create it.
 
+For simplicity's sake, the Publisher is getting the id of the healthcare party to share the data with from the `responsible`
+field of the patient. This is a field automatically filled at patient creating with the id of the healthcare party who
+created it. For more information about sharing data, check our tutorial on [data sharing](/nsdk/tutorial/basic/modules/basic-tutorial-share-data).
+
 <LanguageTabs>
 <TabItem value="kotlin">
 
@@ -231,7 +236,7 @@ patientSdk.contact.createContact(contactWithEncryptionMetadata)
 
 At the same time, the Subscriber will immediately receive the created entity and will perform its analysis.
 
-## Reviewing the Analysis Result
+## Review the Analysis Result
 
 In the full code example available on the repository, the user will be able to register multiple glycemia measurements.
 After that, they will be asked if they want to display the results of the analysis performed by the Subscriber, that 
