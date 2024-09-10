@@ -58,6 +58,22 @@ sdk = CardinalSdk(
 ```
 
 </TabItem>
+<TabItem value="typescript">
+
+```typescript
+const CARDINAL_URL = "https://api.icure.cloud"
+
+const username = await readLn("Login: ")
+const password = await readLn("Password: ")
+sdk = await CardinalSdk.initialize(
+	undefined,
+	CARDINAL_URL,
+	new AuthenticationMethod.UsingCredentials.UsernamePassword(username, password),
+	StorageFacade.usingFileSystem("../scratch/storage")
+)
+```
+
+</TabItem>
 </LanguageTabs>
 
 Then, the Subscriber which types of data it wants to receive and it can do using a [filter](/nsdk/how-to/querying-data).
@@ -99,6 +115,22 @@ service_filter = intersection(
 ```
 
 </TabItem>
+<TabItem value="typescript">
+
+```typescript
+const filter = intersection(
+	ServiceFilters.byTagAndValueDateForSelf(
+		"LOINC",
+		{tagCode: "2339-0"}
+	),
+	ServiceFilters.byTagAndValueDateForSelf(
+		"CARDINAL",
+		{tagCode: "TO_BE_ANALYZED"}
+	)
+)
+```
+
+</TabItem>
 </LanguageTabs>
 
 Finally, the Subscriber can open the connection using the filter, receiving an event whenever a service that matches
@@ -125,6 +157,15 @@ subscription = sdk.contact.subscribe_to_service_create_or_update_events_blocking
 ```
 
 </TabItem>
+<TabItem value="typescript">
+
+```typescript
+const subscription = await sdk.contact.subscribeToServiceCreateOrUpdateEvents(
+	filter
+)
+```
+
+</TabItem>
 </LanguageTabs>
 
 ## React to Events
@@ -147,6 +188,15 @@ for (event in subscription.eventChannel) {
 while subscription.get_close_reason() is None:
 	event = subscription.wait_for_event_blocking(timedelta(seconds=10))
 	# The code for handling the event will go here
+```
+
+</TabItem>
+<TabItem value="typescript">
+
+```typescript
+while (!subscription.isClosed) {
+	const event = await subscription.waitForEvent(10 * 1000)
+	// The code for handling the event will go here
 }
 ```
 
@@ -190,6 +240,24 @@ while subscription.get_close_reason() is None:
 ```
 
 </TabItem>
+<TabItem value="typescript">
+
+```typescript
+while (!subscription.isClosed) {
+	const event = await subscription.waitForEvent(10 * 1000)
+	if (event === null) {
+		console.log("No event yet")
+	} else if (event.$ktClass === EntitySubscriptionEvent.Connected.$ktClass) {
+		console.log("Successfully opened connection")
+	} else if (event instanceof EntitySubscriptionEvent.EntityNotification) {
+		// The rest of the code to handle the entity will go here
+	} else {
+		console.log(`Unexpected event: ${event.$ktClass}`)
+	}
+}
+```
+
+</TabItem>
 </LanguageTabs>
 
 When a new service shared with the healthcare party and with the defined tags is created or updated, the appropriate 
@@ -213,6 +281,17 @@ is EntitySubscriptionEvent.EntityNotification -> {
 elif event.type == EntitySubscriptionEvent.Type.EntityNotification:
 	service = sdk.contact.decrypt_service_blocking(event.entity)
 	print(f"Received service {service.id}")
+```
+
+</TabItem>
+<TabItem value="typescript">
+
+```typescript
+else if (event instanceof EntitySubscriptionEvent.EntityNotification) {
+	const service = await sdk.contact.decryptService(event.entity)
+	console.log(`Received service ${service.id}`)
+	// The rest of the code to handle the entity will go here
+}
 ```
 
 </TabItem>
@@ -298,6 +377,48 @@ elif event.type == EntitySubscriptionEvent.Type.EntityNotification:
 		# The rest of the code to handle the entity will go here
 	else:
 		print(f"Service with id {service.id} does not contain a valid measure.")
+```
+
+</TabItem>
+<TabItem value="typescript">
+
+```typescript
+else if (event instanceof EntitySubscriptionEvent.EntityNotification) {
+	const service = await sdk.contact.decryptService(event.entity)
+	console.log(`Received service ${service.id}`)
+	const measure = service.content["en"]?.measureValue?.value
+	if (!!measure) {
+		let inferenceResult: CodeStub
+		if (measure < 80) {
+			// Snomed code for Hypoglycemia
+			inferenceResult = new CodeStub({
+				id: "SNOMED|302866003|1",
+				type: "SNOMED",
+				code: "302866003",
+				version: "1"
+			})
+		} else if (measure > 130) {
+			// Snomed code for Hyperglycemia
+			inferenceResult = new CodeStub({
+				id: "SNOMED|80394007|1",
+				type: "SNOMED",
+				code: "80394007",
+				version: "1"
+			})
+		} else {
+			// Snomed code for normal range
+			inferenceResult = new CodeStub({
+				id: "SNOMED|260395002|1",
+				type: "SNOMED",
+				code: "260395002",
+				version: "1"
+			})
+		}
+		// The rest of the code to handle the entity will go here
+	} else {
+		console.log(`Service with id ${service.id} does not contain a valid measure.`)
+	}
+}
 ```
 
 </TabItem>
@@ -425,6 +546,74 @@ elif event.type == EntitySubscriptionEvent.Type.EntityNotification:
 			print("Cannot find parent contact")
 	else:
 		print(f"Service with id {service.id} does not contain a valid measure.")
+```
+
+</TabItem>
+<TabItem value="typescript">
+
+```typescript
+else if (event instanceof EntitySubscriptionEvent.EntityNotification) {
+	const service = await sdk.contact.decryptService(event.entity)
+	console.log(`Received service ${service.id}`)
+	const measure = service.content["en"]?.measureValue?.value
+	if (!!measure) {
+		let inferenceResult: CodeStub
+		if (measure < 80) {
+			// Snomed code for Hypoglycemia
+			inferenceResult = new CodeStub({
+				id: "SNOMED|302866003|1",
+				type: "SNOMED",
+				code: "302866003",
+				version: "1"
+			})
+		} else if (measure > 130) {
+			// Snomed code for Hyperglycemia
+			inferenceResult = new CodeStub({
+				id: "SNOMED|80394007|1",
+				type: "SNOMED",
+				code: "80394007",
+				version: "1"
+			})
+		} else {
+			// Snomed code for normal range
+			inferenceResult = new CodeStub({
+				id: "SNOMED|260395002|1",
+				type: "SNOMED",
+				code: "260395002",
+				version: "1"
+			})
+		}
+
+		const analyzedCodeStub = new CodeStub({
+			id: "CARDINAL|ANALYZED|1",
+			type: "CARDINAL",
+			code: "ANALYZED",
+			version: "1"
+		})
+		const updatedService = new DecryptedService({
+			...service,
+			tags: service.tags
+				.filter(it => it.type !== "CARDINAL" || it.code !== "TO_BE_ANALYZED")
+				.concat(inferenceResult, analyzedCodeStub)
+		})
+		if (!!updatedService.contactId) {
+			const contact = await sdk.contact.getContact(service.contactId)
+			await sdk.contact.modifyContact(
+				new DecryptedContact({
+					...contact,
+					services: contact.services
+						.filter(it => it.id !== updatedService.id)
+						.concat(updatedService)
+				})
+			)
+			console.log("Successfully updated contact")
+		} else {
+			console.log("Cannot find parent contact")
+		}
+	} else {
+		console.log(`Service with id ${service.id} does not contain a valid measure.`)
+	}
+}
 ```
 
 </TabItem>
@@ -565,6 +754,82 @@ while subscription.get_close_reason() is None:
 			print(f"Service with id {service.id} does not contain a valid measure.")
 	else:
 		print(f"Unexpected event: {event.type}")
+```
+
+</TabItem>
+<TabItem value="typescript">
+
+```typescript
+while (!subscription.isClosed) {
+	const event = await subscription.waitForEvent(10 * 1000)
+	if (event === null) {
+		console.log("No event yet")
+	} else if (event.$ktClass === EntitySubscriptionEvent.Connected.$ktClass) {
+		console.log("Successfully opened connection")
+	} else if (event instanceof EntitySubscriptionEvent.EntityNotification) {
+		const service = await sdk.contact.decryptService(event.entity)
+		console.log(`Received service ${service.id}`)
+		const measure = service.content["en"]?.measureValue?.value
+		if (!!measure) {
+			let inferenceResult: CodeStub
+			if (measure < 80) {
+				// Snomed code for Hypoglycemia
+				inferenceResult = new CodeStub({
+					id: "SNOMED|302866003|1",
+					type: "SNOMED",
+					code: "302866003",
+					version: "1"
+				})
+			} else if (measure > 130) {
+				// Snomed code for Hyperglycemia
+				inferenceResult = new CodeStub({
+					id: "SNOMED|80394007|1",
+					type: "SNOMED",
+					code: "80394007",
+					version: "1"
+				})
+			} else {
+				// Snomed code for normal range
+				inferenceResult = new CodeStub({
+					id: "SNOMED|260395002|1",
+					type: "SNOMED",
+					code: "260395002",
+					version: "1"
+				})
+			}
+			const analyzedCodeStub = new CodeStub({
+				id: "CARDINAL|ANALYZED|1",
+				type: "CARDINAL",
+				code: "ANALYZED",
+				version: "1"
+			})
+			const updatedService = new DecryptedService({
+				...service,
+				tags: service.tags
+					.filter(it => it.type !== "CARDINAL" || it.code !== "TO_BE_ANALYZED")
+					.concat(inferenceResult, analyzedCodeStub)
+			})
+			if (!!updatedService.contactId) {
+				const contact = await sdk.contact.getContact(service.contactId)
+				await sdk.contact.modifyContact(
+					new DecryptedContact({
+						...contact,
+						services: contact.services
+							.filter(it => it.id !== updatedService.id)
+							.concat(updatedService)
+					})
+				)
+				console.log("Successfully updated contact")
+			} else {
+				console.log("Cannot find parent contact")
+			}
+		} else {
+			console.log(`Service with id ${service.id} does not contain a valid measure.`)
+		}
+	} else {
+		console.log(`Unexpected event: ${event.$ktClass}`)
+	}
+}
 ```
 
 </TabItem>
