@@ -1,7 +1,7 @@
 import TabItem from "@theme/TabItem";
 import {LanguageTabs} from "@site/src/components/LanguageTabs";
 
-# Basic operations
+# Basic operations on entities
 
 When using the Cardinal SDK you will be working mostly with end-to-end encrypted data.
 The patients, the encounters with practitioners, diagnoses, appointments, the exam results and more.
@@ -13,29 +13,200 @@ you to work almost as if there was no encryption happening.
 
 In this page we cover the basic operations that you can do when working with the Cardinal SDK
 
+:::note
+
+All entities directly connected to patients and medical data in the Cardinal SDK are encrypted end-to-end.
+However, there are also some entities like `HealthcareParty` that are never encrypted.
+We will refer to the first kind of entities as "encryptable", and to the second kind as "non-encryptable".
+
+:::
+
 ## Creating new entities
 
-The entities creation is done in two steps: you first initialize an instance of the entity, setting some metadata if
-needed and the content, then you can "commit" the creation of the entity to save it in the backend.  
 
-You can initialize an unencrypted entity using the constructor of the corresponding model class.
+You can create non-encryptable entities by instantiating an instance of their model class and then passing it to the 
+create method of the corresponding api, which "commits" the creation and saves the new entity in the backend.
+
+<LanguageTabs>
+
+<TabItem value="kotlin">
+
+```kotlin
+import com.icure.cardinal.sdk.CardinalSdk
+import com.icure.cardinal.sdk.model.HealthcareParty
+import com.icure.kryptom.crypto.defaultCryptoService
+
+suspend fun createDoctor(sdk: CardinalSdk, firstName: String, lastName: String): HealthcareParty {
+	return sdk.healthcareParty.createHealthcareParty(
+		HealthcareParty(
+			id = defaultCryptoService.strongRandom.randomUUID(),
+			firstName = firstName,
+			lastName = lastName
+		)
+	)
+}
+```
+
+</TabItem>
+
+</LanguageTabs>
+
+For encryptable entities, however, you will also need to initialize some metadata used for encryption and access 
+control before you can create the entity.
+You can do this using the `withEncryptionMetadata` method of the corresponding api.
+Note that you will still have to commit the creation using the create method after initializing the metadata.
+
+<LanguageTabs>
+
+<TabItem value="kotlin">
+
+```kotlin
+import com.icure.cardinal.sdk.CardinalSdk
+import com.icure.cardinal.sdk.model.DecryptedPatient
+import com.icure.kryptom.crypto.defaultCryptoService
+
+suspend fun createPatient(sdk: CardinalSdk, firstName: String, lastName: String): DecryptedPatient {
+	// Initialize the metadata for the patient. Note that this doesn't save the patient in the backend.
+	val initializedPatient = sdk.patient.withEncryptionMetadata(
+		DecryptedPatient(
+			id = defaultCryptoService.strongRandom.randomUUID(),
+			firstName = firstName,
+			lastName = lastName,
+			note = "This note will be encrypted if you use the default configuration"
+		)
+	)
+	// Save the patient. If you didn't initialize the metadata this method will throw an exception.
+	return sdk.patient.createPatient(initializedPatient)
+}
+```
+
+</TabItem>
+
+</LanguageTabs>
+
+The result of the create methods (for both encryptable and non-encryptable entities) is the input entity with an 
+updated revision (`rev`).
+This revision value is used for optimistic locking by the methods that modify entities. 
+ 
+### Encryptable entity initialization
+
+The encryptable entities initialization method can take in input various parameters: 
+
+#### Linked entities
+
+Some types of encryptable entities can be linked to other entities; for example, each contact is always linked to a 
+patient.
+These links are always encrypted to protect the privacy of the patients, and for this reason they're initialized with
+the rest of the encryption metadata.
+
+For example, when you initialize the encryption metadata of a contact, you also have to pass the linked patient.
 
 TODO code sample
 
-For encrypted entities, however, you have to use the initialization method provided by that entity api.
-This method will initialize some metadata needed for the encryption and access control of the entity.
+:::info
 
-TODO code sample with no params
+Refer to the [encrypted links explanation page](/nsdk/explanations/encrypted-links) to learn more about how the
+encrypted links works.
 
-To commit the creation of the entity use the `create` method from the corresponding api passing the initialized entity.
+:::
+
+:::note
+
+Encrypted links are "directional", and you have to pass the linked entity only for one direction of the link.
+
+For example, in the patient-contacts link you only pass the patient when initializing the contact, and you don't have
+to pass the contacts when initializing the patient.
+
+:::
+
+#### A *base* for the entity to initialize:
+
+The entity with initialized metadata will copy its content from the base (as shown in the previous example).
+
+If not passed, the returned entity will only have the id and encryption metadata set, and you will have to modify it
+to add your content before commiting the entity creation.
 
 TODO code sample
 
-### Encryptable entity initialization parameters
+#### *Initial delegates* for the entity:
+
+
+This is a map of other data owners (delegates) that will immediately have access to the entity as soon as it is created. 
+For each of them, you can specify the access level granted on the entity (read or read+write).
+When sharing an entity this way, all the encrypted information of the entity will be shared as well, including any 
+information for the resolution of encrypted links.
+
+You can always share an entity with the delegates at later point, however, if you know already that the entity should be
+shared with someone else, it is better to do it while initializing the metadata. 
+This is especially the case if you want the other delegates to be able to listen to the creation event for that entity.
+TODO linkx
+
+TODO code sample
+
+#### Auto delegations
+
+If you're using the auto-delegations system (TODO link) you can pass the current sdk user instance (with the configured
+auto-delegations).
+
+If you do, any auto-delegation setup for the user will be used in addition to any provided initial-delegate.
+Auto-delegations will be ignored if you don't pass any user.
+
+:::warning
+
+The configuration for initial delegates takes priority over auto-delegations. 
+If the same data owner appears in both the auto-delegations and initial delegates the SDK will use the configuration
+provided through the initial delegates. 
+
+:::
+
+TODO code sample
 
 ## Retrieving entities
 
+You can retrieve an entity by using the get of the corresponding api. 
+The SDK will automatically decrypt any retrieved encryptable entity.
+
+TODO code sample
+
+The Cardinal SDK also provides a filtering system that allows you to query the backend for entities matching certain
+characteristics:
+
+TODO code sample get contacts of patients
+
+If you want to learn more about the querying system refer to the dedicated page (TODO link).
+
 ## Updating entities
+
+You can update an entity using the update method of the corresponding API. 
+
+TODO code sample
+
+The update method returns the updated entity with a new revision.
+
+This method requires that the revision of the entity you pass matches the revision stored in the backend. 
+In case of a mismatch, the method will throw an exception.
+This could happen if another user updated the entity after you retrieved it and before you committed the update, which
+in a collaborative environment could be a normal occurrence.
+
+If the logic of your application could allow multiple users to work on a single entity at the same time, you should 
+handle the conflict exceptions, requesting the end-user help if necessary:
+
+TODO code sample
+
+:::note
+
+The revision of an entity changes on every update of that entity.
+This includes updates that only modify the metadata of the entity, such as updates following a request to share the 
+entity with other delegates.
+
+:::
+
+### Bulk update
+
+The SDK also provides bulk update methods.
+Differently from the single entity update methods, the bulk methods don't throw an exception in case of revision 
+conflict.
+Instead any conflicting entity will be ignored and won't be included in the returned entities.
 
 ## Delete
 
