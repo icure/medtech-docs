@@ -1,0 +1,73 @@
+# The Cardinal Data Model
+
+## Overview
+
+The Cardinal Data model is designed to support all the use cases in the digital health context. It is a fixed data model
+that does not allow for custom models defined by the user. The rationale behind this choice is for a faster and more 
+robust support of interoperability and encryption.
+
+In this section, you will find a list of the most commonly used entities with an explanation of their use cases and 
+properties. For a complete list of all the entities, check the [references](TODO).
+
+## Main Entities
+
+These entities represent the entry points in creating data in Cardinal. Each one has its own section in the sdk, with 
+methods that allow to create, modify, search, and delete. All the entities that contain sensitive data are defined as
+**encryptable entities** and are encrypted by the SDK before being created on the cloud.
+
+- [**Code**](/nsdk/explanations/data-model/code): a Code is a non-encryptable entity that represent a concept from a medical codification system (e.g.
+[SNOMED-CT](https://www.snomed.org/what-is-snomed-ct), [LOINC](https://loinc.org/), etc.) or from an internal one. For each
+Code, it supports versioning and multilingual content.
+- [**Contact**](/nsdk/explanations/data-model/contact): a Contact is an encryptable entity that represents a situation that involves a patient where 
+medical data is created. Usually it involves a doctor (healthcare party), like in the case of a medical examination. 
+- [**Device**](/nsdk/explanations/data-model/device): a Device is a non-encryptable entity that represents a medical
+device (e.g. an MRI machine, a smartwatch or another connected device that monitors a patient, etc.) When associated to
+a User, a Device can also log in and create, search, and share data like any other data owner.
+- [**Document**](nsdk/explanations/data-model/document): a Document is an encryptable entity that is used to store a medical document in any format.
+It can contain textual document, images, and binary data, that are also encrypted before being stored on the cloud. 
+Document entities can store large quantities of data while keeping efficiency in searching the data.
+- [**HealthElement**](nsdk/explanations/data-model/healthelement): a HealthElement is an encryptable entity that represents a medical condition that persists
+over time, so it is valid to register both illnesses with a short duration (e.g. fever) to permanent conditions
+(e.g. allergies).
+- [**HealthcareParty**](/nsdk/explanations/data-model/healthcareparty): a HealthcareParty is a non-encryptable entity that represent any actor involved in the care
+of the patient: it can be a doctor, a nurse, a receptionist, or the medical institution. A HealthcareParty can be 
+associated to a user, allowing them to log in and manage data.
+- [**Message**](/nsdk/explanations/data-model/message): a Message is an encryptable entity that can be used to implement encrypted message exchanges 
+between users. It supports plain text content and file attachments, that will be encrypted before being sent on the 
+cloud.
+- [**Patient**](/nsdk/explanations/data-model/patient): a Patient is an encryptable entity that represents the subject of a treatment, of an analysis, or
+in general the production of medical data. A Patient can be linked to a User to log in to manage medical data.
+- [**Topic**](/nsdk/explanations/data-model/topic): a Topic is an encryptable entity that can be used in combination with the Message entity to 
+implement messaging systems between two or more users. 
+- [**User**](/nsdk/explanations/data-model/user): a User is an encryptable entity that represents an actor that can log in to Cardinal. It can be
+linked to a HealthcareParty, Patient, or Device entity.
+
+:::info
+Even if a registered User is able to log in, it will not be able to properly create, retrieve, search, and share 
+encryptable data unless linked with a HealthcareParty, Patient, or Device. A User linked with one of these three types
+of entities is called **Data Owner** user.
+:::
+
+## Nested Entities
+
+Nested entities are all the entities that cannot exist on their own, but only within another entity. A nested entity
+can still be encryptable. In this case, when a user is able to decrypt an entity it will also be able to decrypt any
+nested encryptable entity contained in it.
+
+- [**CodeStub**](/nsdk/explanations/data-model/codestub): a CodeStub is a non-encryptable entity that represent a reference to a [Code](/nsdk/explanations/data-model/code).
+It can be nested in many different entities, most commonly in the `tag` and `code` filter, and it is used to link a Code
+to it without having to include the whole Code.
+- [**Content**](TODO):
+- [**Service**](TODO):
+
+## Shared Fields
+
+### Id
+
+### Rev
+
+### Tag
+
+### Code
+
+### Internal Metadata Fields
