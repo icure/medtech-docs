@@ -317,7 +317,52 @@ async function login(
 
 </LanguageTabs>
 
-### Sharing data with invited patients
+## Patient user cryptography initialization
+
+When a patient user logs in for the first time, there are a few scenarios that could occur:
+- The patient is self-registered, so their information exists on the backend but has no associated encryption metadata.
+- The patient user was created starting from an existing patient, and there is already some encryption metadata for the
+  patient, but the patient can't access it.
+  This could also happen if the patient had lost his previous private key and had to create a new one.
+
+In these cases, the SDK will have two main limitations:
+- The SDK won't be able to use encrypted fields of the patient entity, due to the lack of an (accessible) encryption key
+- The SDK won't be able to create any data linked to the patient (like contacts or health element), due to the lack of
+  an (accessible) secret id.
+
+Since this is usually an issue for most applications, the SDK provides a method that you can use to initialize the
+encryption metadata of the current user's patient.
+The `ensureEncryptionMetadataForSelfIsInitialized` method of the patient api will:
+- Initialize an encryption key and secret id for the patient if there is no encryption metadata initialized
+- Initialize a secret id for the patient if the encryption metadata is already initialized, and there is no secret id 
+  available to the current user.
+- If there is already a secret id available to the current user the method does nothing.
+
+This way you can be sure that the SDK will be able to at least create data linked to the current patient.
+
+TODO code sample
+
+:::note
+
+In cases where a doctor invited the patient user, we recommend [pre-sharing the patient information](#pre-share) instead
+of creating a new secret id through the `ensureEncryptionMetadataForSelfIsInitialized` method.
+
+:::
+
+### Ensuring the doctor can find data created by the patient
+
+If there was already some encryption metadata initialized for the current user's patient, and the
+`ensureEncryptionMetadataForSelfIsInitialized` created a new secret id for it, any data that had access to the patient
+won't be able to find new data you create when they use filters. TODO link
+
+If you want to make sure that other users will be able to find the data created by the patient user you can pass the
+id of those data owners to the `ensureEncryptionMetadataForSelfIsInitialized` method.
+This will cause any encryption metadata created by that method to be immediately shared with these data owners (note 
+that this also includes the encryption key if the patient had no encryption metadata initialized).
+
+TODO code sample
+
+## Pre-sharing data with invited patients {#pre-share}
 
 A common scenario that may occur in your application is a patient being invited during a doctor's visit.
 In this scenario the doctor wants to immediately share the data from the current visit (and potentially past visits)
@@ -346,6 +391,8 @@ The full process is:
 4. The doctor can still share more data like in step 2 without having to recreate the exchange data recovery information.
 
 The process on the doctor app side could be:
+
+TODO improve code sample: do also login, and ensure metadata initialized
 
 <LanguageTabs>
 
