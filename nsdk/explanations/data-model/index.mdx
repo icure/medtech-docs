@@ -63,9 +63,13 @@ in the `tag` and `code` filter, and it is used to link a Code to it without havi
 - [**Content**](/nsdk/explanations/data-model/content): a Content is an encryptable entity that is nested into a
 [Service](/nsdk/explanations/data-model/service) and contains the value of the medical data. It supports scalar numeric
 values, multidimensional arrays, binary data and references to big files stored in [Document](nsdk/explanations/data-model/document)s.
+- [**Identifier**](/nsdk/explanations/data-model/identfier): an Identifier is a non-encryptable entity that can be used 
+to connect resources with external contents, as per the [FHIR specification](https://build.fhir.org/datatypes.html#Identifier).
 - [**Service**](/nsdk/explanations/data-model/service): a Service is an encryptable entity nested inside a [Contact](/nsdk/explanations/data-model/contact)
 and represent an instance of medical data collected in it. Multiple Services can be associated to the same contact if
 multiple measurements are taken in the same session.
+- [**SubContact**](/nsdk/explanations/data-model/subcontact): a SubContact is an encryptable entity that is embedded into
+a Contact and can provide additional medical context to it and to the Service it contains.
 
 
 ## Shared Fields
@@ -113,3 +117,30 @@ All the non-nested encryptable entities contain several field dedicated to handl
 `cryptedForeignKeys`, `delegations`, `encryptionKeys`, `encryptedSelf`, `securityMetadata`). These fields are managed
 internally and must not be modified manually. Any attempt of modifying those fields in an entity will be refused by the
 backend.
+
+### Created 
+Where present, the `created` field contains the timestamp of creation of the entity. It is automatically filled by the
+backend when the entity is created.
+
+### Modified 
+The `modified` field contains the timestamp of the last modification of the entity. Differently from the `created` field,
+it is not handled automatically by the backend.
+
+### Author
+Where present, the `author` field contains the id of the User that created the entity. It is automatically filled by the
+backend when the user is created.
+
+### Responsible 
+Where present, the `responsible` field contains the id of the Data Owner (HealthcareParty, Patient, or Device) that 
+created the entity. The backend will automatically fill this field when the entity is created. However, a Data Owner 
+can opt out [when creating the sdk](/nsdk/how-to/initialize-the-sdk/#optional-parameters) to avoid creating an 
+unencrypted connection with the Contact. This may be the case for Patient users or when HealthcareParty users are 
+defined as anonymous data owners.
+
+### Deletion Date
+Where present, the `deletionDate` field contains the timestamp of soft-deletion of an entity. For more information
+about deleting entities, check the [related how to](/nsdk/how-to/basic-operations#delete).
+
+### Identifiers
+A collection of [Identifier](/nsdk/explanations/data-model/identfier) that can be used to connect an entity with external
+resources as per the [FHIR specification](https://build.fhir.org/datatypes.html#Identifier).
