@@ -340,7 +340,74 @@ The `ensureEncryptionMetadataForSelfIsInitialized` method of the patient api wil
 
 This way you can be sure that the SDK will be able to at least create data linked to the current patient.
 
-TODO code sample
+<LanguageTabs>
+
+<TabItem value="kotlin">
+
+```kotlin
+import com.icure.cardinal.sdk.CardinalSdk
+import com.icure.cardinal.sdk.auth.UsernamePassword
+import com.icure.cardinal.sdk.options.AuthenticationMethod
+import com.icure.cardinal.sdk.storage.impl.FileStorageFacade
+
+suspend fun initializePatientSdk(username: String, password: String): CardinalSdk {
+	val sdk = CardinalSdk.initialize(
+		"MyCardinalApp",
+		"https://api.icure.cloud",
+		AuthenticationMethod.UsingCredentials(UsernamePassword(username, password)),
+		FileStorageFacade("/path/to/storage/directory")
+	)
+	sdk.patient.ensureEncryptionMetadataForSelfIsInitialized()
+	return sdk
+}
+```
+
+</TabItem>
+
+<TabItem value="typescript">
+
+```typescript
+import {
+	AuthenticationMethod,
+	CardinalSdk,
+	StorageFacade
+} from "@icure/cardinal-sdk";
+
+async function initializePatientSdk(username: string, password: string): Promise<CardinalSdk> {
+	const sdk = await CardinalSdk.initialize(
+		"MyCardinalApp",
+		"https://api.icure.cloud",
+		new AuthenticationMethod.UsingCredentials.UsernamePassword(username, password),
+		StorageFacade.usingFileSystem("/Users/trema/pthonto/storage")
+	)
+	await sdk.patient.ensureEncryptionMetadataForSelfIsInitialized()
+	return sdk
+}
+```
+
+</TabItem>
+
+<TabItem value="python">
+
+```python
+from cardinal_sdk import CardinalSdk
+from cardinal_sdk.authentication import UsernamePassword
+from cardinal_sdk.storage import FileSystemStorage
+
+def initialize_patient_sdk(username: str, password: str) -> CardinalSdk:
+	sdk = CardinalSdk(
+		"MyCardinalApp",
+		"https://api.icure.cloud",
+		UsernamePassword(username, password),
+		FileSystemStorage("/path/to/storage/directory")
+	)
+	sdk.patient.ensure_encryption_metadata_for_self_is_initialized_blocking()
+	return sdk
+```
+
+</TabItem>
+
+</LanguageTabs>
 
 :::note
 
@@ -359,8 +426,6 @@ If you want to make sure that other users will be able to find the data created 
 id of those data owners to the `ensureEncryptionMetadataForSelfIsInitialized` method.
 This will cause any encryption metadata created by that method to be immediately shared with these data owners (note 
 that this also includes the encryption key if the patient had no encryption metadata initialized).
-
-TODO code sample
 
 ## Pre-sharing data with invited patients {#pre-share}
 
@@ -387,12 +452,14 @@ The full process is:
    1. Create exchange data recovery information for the patient using the doctor's SDK.
    2. Give the key to the recovery data to the patient.
       This could be done using physical means, such as a custom QR code, or using an email. 
-   3. After the patient logins and initializes a keypair, ask them to provide the recovery information key and use it.  
+   3. When the patient logins and initializes a keypair they can provide the recovery key to get access to all the 
+      pre-shared.
+      In this case you shouldn't use the `ensureEncryptionMetadataForSelfIsInitialized` until after using the recovery 
+      key, since the doctor may have pre-shared the patient, or if you're certain of it, there is no need to use the
+      method at all.  
 4. The doctor can still share more data like in step 2 without having to recreate the exchange data recovery information.
 
 The process on the doctor app side could be:
-
-TODO improve code sample: do also login, and ensure metadata initialized
 
 <LanguageTabs>
 
@@ -400,26 +467,40 @@ TODO improve code sample: do also login, and ensure metadata initialized
 
 ```kotlin
 import com.icure.cardinal.sdk.CardinalSdk
-import com.icure.cardinal.sdk.crypto.entities.ContactShareOptions
-import com.icure.cardinal.sdk.model.DecryptedContact
+import com.icure.cardinal.sdk.crypto.entities.PatientShareOptions
+import com.icure.cardinal.sdk.crypto.entities.SecretIdShareOptions
+import com.icure.cardinal.sdk.crypto.entities.ShareMetadataBehaviour
+import com.icure.cardinal.sdk.model.DecryptedPatient
+import com.icure.cardinal.sdk.model.User
 import com.icure.cardinal.sdk.model.requests.RequestedPermission
+import com.icure.kryptom.crypto.defaultCryptoService
 
-suspend fun shareDataWithNewlyInvitedPatient(
+suspend fun invitePatientAndPreShare(
 	doctorSdk: CardinalSdk,
-	contactToShare: DecryptedContact,
-	patientId: String
+	patient: DecryptedPatient,
+	patientEmail: String
 ) {
-	val didForceInitialize = doctorSdk.patient.forceInitializeExchangeDataToNewlyInvitedPatient(patientId)
-	doctorSdk.contact.shareWith(
-		patientId,
-		contactToShare,
-		ContactShareOptions(requestedPermissions = RequestedPermission.FullRead)
+	doctorSdk.user.createUser(
+		User(
+			id = defaultCryptoService.strongRandom.randomUUID(),
+			email = patientEmail,
+			patientId = patient.id
+		)
+	)
+	val didForceInitialize = doctorSdk.patient.forceInitializeExchangeDataToNewlyInvitedPatient(patient.id)
+	doctorSdk.patient.shareWith(
+		patient.id,
+		patient,
+		PatientShareOptions(
+			requestedPermissions = RequestedPermission.FullWrite,
+			shareEncryptionKey = ShareMetadataBehaviour.Required,
+			shareSecretIds = SecretIdShareOptions.AllAvailable(requireAtLeastOne = true)
+		)
 	).updatedEntityOrThrow()
 	// You can do this before or after sharing
 	if (didForceInitialize) {
-		val recoveryKey = doctorSdk.recovery.createExchangeDataRecoveryInfo(patientId)
-		// Implement this yourself
-		printRecoveryKeyQrCode(recoveryKey)
+		val recoveryKey = doctorSdk.recovery.createExchangeDataRecoveryInfo(patient.id)
+		showRecoveryKey(recoveryKey) // Implement this yourself
 	}
 }
 ```
@@ -431,65 +512,42 @@ suspend fun shareDataWithNewlyInvitedPatient(
 ```typescript
 import {
 	CardinalSdk,
-	DecryptedContact,
-	RequestedPermission,
-	SimpleShareResult,
-	ShareMetadataBehaviour
+	DecryptedPatient,
+	PatientShareOptions,
+	randomUuid, RequestedPermission, SecretIdShareOptions,
+	ShareMetadataBehaviour, SimpleShareResult,
+	User
 } from "@icure/cardinal-sdk";
 
-async function shareDataWithNewlyInvitedPatient(
+async function invitePatientAndPreShare(
 	doctorSdk: CardinalSdk,
-	contactToShare: DecryptedContact,
-	patientId: string
+	patient: DecryptedPatient,
+	patientEmail: string
 ) {
-	const didForceInitialize = await doctorSdk.patient.forceInitializeExchangeDataToNewlyInvitedPatient(patientId)
-	const shareResult = await doctorSdk.contact.shareWith(
-		patientId,
-		contactToShare,
-		{ options: {
-			requestedPermissions: RequestedPermission.FullRead,
-			shareEncryptionKey: ShareMetadataBehaviour.IfAvailable,
-			sharePatientId: ShareMetadataBehaviour.IfAvailable
-		} }
+	await doctorSdk.user.createUser(
+		new User({
+			id: randomUuid(),
+			email: patientEmail,
+			patientId: patient.id
+		})
+	)
+	const didForceInitialize = await doctorSdk.patient.forceInitializeExchangeDataToNewlyInvitedPatient(patient.id)
+	const shareResult = await doctorSdk.patient.shareWith(
+		patient.id,
+		patient,
+		new PatientShareOptions({
+			requestedPermissions = RequestedPermission.FullWrite,
+			shareEncryptionKey = ShareMetadataBehaviour.Required,
+			shareSecretIds = new SecretIdShareOptions.AllAvailable({ requireAtLeastOne: true })
+		})
 	)
 	if (shareResult instanceof SimpleShareResult.Failure) throw new Error("Failed to share")
 	// You can do this before or after sharing
 	if (didForceInitialize) {
-		const recoveryKey = await doctorSdk.recovery.createExchangeDataRecoveryInfo(patientId)
-		// Implement this yourself
-		await printRecoveryKeyQrCode(recoveryKey)
+		const recoveryKey = await doctorSdk.recovery.createExchangeDataRecoveryInfo(patient.id)
+		showRecoveryKey(recoveryKey) // Implement this yourself
 	}
 }
-```
-
-</TabItem>
-
-<TabItem value="python">
-
-```python
-from cardinal_sdk import CardinalSdk
-from cardinal_sdk.model import DecryptedContact, ContactShareOptions, RequestedPermission, SimpleShareResultFailure
-
-def share_data_with_newly_invited_patient(
-	doctor_sdk: CardinalSdk,
-	contact_to_share: DecryptedContact,
-	patient_id: str
-):
-	did_force_iniitialize = doctor_sdk.patient.force_initialize_exchange_data_to_newly_invited_patient_blocking(patient_id)
-	share_result = doctor_sdk.contact.share_with_blocking(
-		patient_id,
-		contact_to_share,
-		ContactShareOptions(
-			requested_permissions=RequestedPermission.FullRead
-		)
-	)
-	if isinstance(share_result, SimpleShareResultFailure):
-		raise Exception("Failed to share")
-	# You can do this before or after sharing
-	if did_force_iniitialize:
-		recovery_key = doctor_sdk.recovery.create_exchange_data_recovery_info_blocking(patient_id)
-		# Implement this yourself
-		send_recovery_key_email(recovery_key) 
 ```
 
 </TabItem>
@@ -504,15 +562,40 @@ And on the patient side, after login:
 
 ```kotlin
 import com.icure.cardinal.sdk.CardinalSdk
+import com.icure.cardinal.sdk.auth.AuthenticationProcessCaptchaType
+import com.icure.cardinal.sdk.auth.AuthenticationProcessTelecomType
+import com.icure.cardinal.sdk.storage.impl.FileStorageFacade
 
-suspend fun doExchangeDataRecovery(
-	patientSdk: CardinalSdk
-) {
-	// Implement this yourself
-	val recoveryKey = askRecoveryKey()
+private const val SPEC_ID = "..."
+private const val PROCESS_ID = "..."
 
-	val recoveryResult = patientSdk.recovery.recoverExchangeData(recoveryKey)
+suspend fun initializePatientSdkAfterInvite(
+	email: String,
+	captcha: String,
+): CardinalSdk {
+	val sdkInitializationStep = CardinalSdk.initializeWithProcess(
+		"MyCardinalApp",
+		"https://api.icure.cloud",
+		"https://msg-gw.icure.cloud",
+		SPEC_ID,
+		PROCESS_ID,
+		AuthenticationProcessTelecomType.Email,
+		email,
+		AuthenticationProcessCaptchaType.Recaptcha,
+		captcha,
+		FileStorageFacade("/path/to/storage/directory")
+	)
+	val validationCode = askValidationCode() // Implement this yourself
+	val sdk = sdkInitializationStep.completeAuthentication(validationCode)
+
+	val recoveryKey = askRecoveryKey() // Implement this yourself
+	val recoveryResult = sdk.recovery.recoverExchangeData(recoveryKey)
 	if (recoveryResult != null) throw IllegalArgumentException("Invalid recovery key for reason $recoveryResult")
+
+	// No need to `ensureEncryptionMetadataForSelfIsInitialized()` since the doctor always pre-shares the patient
+	// metadata in our application.
+
+	return sdk
 }
 ```
 
@@ -521,35 +604,44 @@ suspend fun doExchangeDataRecovery(
 <TabItem value="typescript">
 
 ```typescript
-import {CardinalSdk} from "@icure/cardinal-sdk";
+import {
+	AuthenticationProcessCaptchaType,
+	AuthenticationProcessTelecomType,
+	CardinalSdk,
+	StorageFacade
+} from "@icure/cardinal-sdk";
 
-async function doExchangeDataRecovery(
-	patientSdk: CardinalSdk
-) {
-	// Implement this yourself
-	const recoveryKey = await askRecoveryKey()
+private const SPEC_ID = "..."
+private const PROCESS_ID = "..."
 
-	const recoveryResult = await patientSdk.recovery.recoverExchangeData(recoveryKey)
-	if (recoveryResult != null) throw Error(`Invalid recovery key for reason ${recoveryResult}`)
+async function initializePatientSdkAfterInvite(
+	email: string,
+	captcha: string,
+): Promise<CardinalSdk> {
+	const sdkInitializationStep = await CardinalSdk.initializeWithProcess(
+		"MyCardinalApp",
+		"https://api.icure.cloud",
+		"https://msg-gw.icure.cloud",
+		SPEC_ID,
+		PROCESS_ID,
+		AuthenticationProcessTelecomType.Email,
+		email,
+		AuthenticationProcessCaptchaType.Recaptcha,
+		captcha,
+		StorageFacade.usingFileSystem("/path/to/storage/directory")
+	)
+	const validationCode = await askValidationCode() // Implement this yourself
+	const sdk = await sdkInitializationStep.completeAuthentication(validationCode)
+
+	const recoveryKey = await askRecoveryKey() // Implement this yourself
+	const recoveryResult = await sdk.recovery.recoverExchangeData(recoveryKey)
+	if (recoveryResult != null) throw Error("Invalid recovery key for reason $recoveryResult")
+
+	// No need to `ensureEncryptionMetadataForSelfIsInitialized()` since the doctor always pre-shares the patient
+	// metadata in our application.
+
+	return sdk
 }
-```
-
-</TabItem>
-
-<TabItem value="python">
-
-```python
-from cardinal_sdk import CardinalSdk
-
-def do_exchange_data_recovery(
-	patient_sdk: CardinalSdk
-):
-	# Implement this yourself
-	recovery_key = ask_recovery_key()
-
-	recovery_result = patient_sdk.recovery.recover_exchange_data_blocking(recovery_key)
-	if recovery_result is not None:
-		raise Exception(f"Invalid recovery key for reason {recovery_result}")
 ```
 
 </TabItem>
