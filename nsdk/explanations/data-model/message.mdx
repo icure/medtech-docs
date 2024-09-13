@@ -1,1 +1,36 @@
 # Message
+
+A Message is an encryptable, root-level entity that can be use to implement an encrypted messaging systems between users
+and, in combinations with [Topic](/nsdk/explanations/data-model/topic), chat-like features.
+
+## Fields Encrypted by Default
+By default, the following fields of this entity will be encrypted:
+- `subject`
+
+You can customize the encrypted fields as [explained in this how to](/nsdk/how-to/initialize-the-sdk/configure-what-to-encrypt).
+
+## Properties
+
+Below you will find an explanation of the most commonly used properties in the entity that are not among the
+[shared fields](/nsdk/explanations/data-model/#shared-fields). For a full list, check the [references](TODO).
+
+### fromAddress
+TODO
+
+### fromHealthcarePartyId
+The id of the HealthcareParty who sent this message.
+
+### received
+The timestamp of when the Message was received.
+
+### readStatus
+A data structure that associates the user id of each recipient to the information about when the message was read by them.
+
+### sent
+The timestamp of when the Message was sent.
+
+### subject
+A short text containing the subject of the message.
+
+### toAddresses
+TODO

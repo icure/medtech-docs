@@ -1,3 +1,6 @@
+import {LanguageTabs} from "@site/src/components/LanguageTabs";
+import TabItem from "@theme/TabItem";
+
 # The Cardinal Data Model
 
 ## Overview
@@ -9,7 +12,73 @@ interoperability and encryption.
 In this section, we outline the most commonly used entities, their use cases, and properties. For a full list of 
 entities, refer to the [reference documentation](TODO).
 
-## Base Entities
+## Root-level Entities
+
+Root level entities are the one that can be manipulated using [basic operations](/nsdk/how-to/basic-operations). Each
+root-level entity has its own section in the SDK, that exposes the operations that can be applied to the entity.
+
+<LanguageTabs>
+<TabItem value="kotlin">
+
+```kotlin
+private const val CARDINAL_URL = "https://api.icure.cloud"
+
+print("Login: ")
+val username = readln().trim()
+print("Password: ")
+val password = readln().trim()
+val sdk = CardinalSdk.initialize(
+	applicationId = null,
+	baseUrl = CARDINAL_URL,
+	authenticationMethod = AuthenticationMethod.UsingCredentials(
+		UsernamePassword(username, password)
+	),
+	baseStorage = FileStorageFacade("./scratch/storage")
+)
+
+// Accessing the section for the HealthElement entity to retrieve a single HealthElement by id
+val healthElement = sdk.healthElement.getHealthElement(healthElementId)
+```
+</TabItem>
+<TabItem value="python">
+
+```python
+CARDINAL_URL = "https://api.icure.cloud"
+
+username = input("Username: ")
+password = input("Password: ")
+sdk = CardinalSdk(
+	application_id=None,
+	baseurl=CARDINAL_URL,
+	authentication_method=UsernamePassword(username, password),
+	storage_facade=FileSystemStorage("./scratch/storage")
+)
+
+# Accessing the section for the HealthElement entity to retrieve a single HealthElement by id
+health_element = sdk.health_element.get_health_element_blocking(health_element_id)
+```
+</TabItem>
+<TabItem value="typescript">
+
+```typescript
+const CARDINAL_URL = "https://api.icure.cloud"
+
+const username = await readLn("Login: ")
+const password = await readLn("Password: ")
+const sdk = CardinalSdk.initialize(
+	undefined,
+	CARDINAL_URL,
+	new AuthenticationMethod.UsingCredentials.UsernamePassword(username, password),
+	StorageFacade.usingFileSystem("./scratch/storage")
+)
+
+// Accessing the section for the HealthElement entity to retrieve a single HealthElement by id
+const healthElement = await sdk.healthElement.getHealthElement(healthElementId)
+```
+</TabItem>
+</LanguageTabs>
+
+### Base Entities
 
 Base entities do not contain sensitive data and are therefore unencrypted. Any user with appropriate permissions can 
 create, search, and delete these entities. Since they are not encrypted, there are no encryption metadata fields to 
@@ -32,7 +101,7 @@ A registered user can log in but will not be able to create, retrieve, search, o
 are linked to a HealthcareParty, Patient, or Device. A user linked with one of these entities is called a **Data Owner**.
 :::
 
-## Encrypted Entities
+### Encrypted Entities
 
 Encryptable entities contain sensitive data and are encrypted on the client side before being stored in the cloud.
 Only Data Owners can create, share, retrieve, or delete these entities. Even if a non-Data Owner has permission to 

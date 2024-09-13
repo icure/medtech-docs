@@ -1,1 +1,58 @@
 # HealthElement
+
+A HealthElement is an encryptable, root-level entity that represents a medical event persistent in time. For example,
+it may represent an illness that lasts for a couple of days (e.g. a flu), a more prolonged state (e.g. pregnancy), or
+a permanent ailment (e.g. allergy).
+
+## Fields Encrypted by Default
+By default, the following fields of this entity will be encrypted:
+- `descr`
+- `note`
+- The `markdown` field in all the `notes`.
+
+You can customize the encrypted fields as [explained in this how to](/nsdk/how-to/initialize-the-sdk/configure-what-to-encrypt).
+
+## Properties
+
+Below you will find an explanation of the most commonly used properties in the entity that are not among the
+[shared fields](/nsdk/explanations/data-model/#shared-fields). For a full list, check the [references](TODO).
+
+### careTeam
+A collection of object that contain information about all the healthcare actor related to the condition of this 
+HealthcareElement.
+
+### closingDate
+The `closingDate` represent the starting moment of the event of the HealthElement. It is a timestamp, precise to the second,
+encoded as a *FuzzyDate*, i.e. a number in the `YYYYMMDDhhmmss` format.
+
+### descr
+A human-readable description for the HealthElement.
+
+### episodes
+A collection of objects that contain information about all the moments when the condition described by the HealthElement
+happened.
+
+### idOpeningContact
+The id of the [Contact](/nsdk/explanations/data-model/contact) that represents the encounter where this HealthElement
+was created.
+
+### idClosingContact
+The id of the [Contact](/nsdk/explanations/data-model/contact) that represents the encounter where this HealthElement
+is closed.
+
+### idService
+The id of a [Service](/nsdk/explanations/data-model/service) if this HealthElement was created within a specific Service
+in a contact.
+
+### note
+A textual note to include in the HealthElement.
+
+### notes
+Additional textual notes to include in the HealthElement.
+
+### openingDate
+The `openingDate` represent the starting moment of the event of the HealthElement. It is a timestamp, precise to the second,
+encoded as a *FuzzyDate*, i.e. a number in the `YYYYMMDDhhmmss` format.
+
+### plansOfAction
+A collection of objects that contain information about all the healthcare approaches related to this HealthElement.

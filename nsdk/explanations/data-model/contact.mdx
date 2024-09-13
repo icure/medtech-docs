@@ -1,6 +1,6 @@
 # Contact
 
-The Contact is an encryptable entity that records the medical information about the patient. A visit to the patient's house, a
+The Contact is an encryptable root-level entity that records the medical information about the patient. A visit to the patient's house, a
 consultation at the practice, a phone call between the patient and the healthcare party or integrating lab reports into 
 the medical file are examples of when a contact can be recorded.
 
@@ -21,7 +21,7 @@ a new Contact should be created.
 ## Fields Encrypted by Default
 By default, the following fields of this entity will be encrypted:
 - `descr`
-- The `markdown` field in all the `note`s.
+- The `markdown` field in all the `notes`.
 - The Services in `service`, according to their [encryption configuration](nsdk/how-to/initialize-the-sdk/configure-what-to-encrypt#contact-service-and-service-content-encryption).
 
 You can customize the encrypted fields as [explained in this how to](/nsdk/how-to/initialize-the-sdk/configure-what-to-encrypt).
