@@ -49,6 +49,24 @@ suspend fun createDoctor(sdk: CardinalSdk, firstName: String, lastName: String):
 
 </TabItem>
 
+<TabItem value="typescript">
+
+```typescript
+import {CardinalSdk, HealthcareParty, randomUuid} from "@icure/cardinal-sdk";
+
+async function createDoctor(sdk: CardinalSdk, firstName: string, lastName: string): Promise<HealthcareParty> {
+	return sdk.healthcareParty.createHealthcareParty(
+		new HealthcareParty({
+			id: randomUuid(),
+			firstName: firstName,
+			lastName: lastName
+		})
+	)
+}
+```
+
+</TabItem>
+
 </LanguageTabs>
 
 For encryptable entities, however, you will also need to initialize some metadata used for encryption and access 
@@ -73,6 +91,27 @@ suspend fun createPatient(sdk: CardinalSdk, firstName: String, lastName: String)
 			firstName = firstName,
 			lastName = lastName,
 		)
+	)
+	// Save the patient. If you didn't initialize the metadata this method will throw an exception.
+	return sdk.patient.createPatient(initializedPatient)
+}
+```
+
+</TabItem>
+
+<TabItem value="typescript">
+
+```typescript
+import {CardinalSdk, DecryptedPatient, randomUuid} from "@icure/cardinal-sdk";
+
+async function createPatient(sdk: CardinalSdk, firstName: string, lastName: string): Promise<DecryptedPatient> {
+	// Initialize the metadata for the patient. Note that this doesn't save the patient in the backend.
+	const initializedPatient = await sdk.patient.withEncryptionMetadata(
+		new DecryptedPatient({
+			id: randomUuid(),
+			firstName: firstName,
+			lastName: lastName,
+		})
 	)
 	// Save the patient. If you didn't initialize the metadata this method will throw an exception.
 	return sdk.patient.createPatient(initializedPatient)
@@ -128,6 +167,29 @@ suspend fun createHealthElementForPatient(
 
 </TabItem>
 
+<TabItem value="typescript">
+
+```typescript
+import {CardinalSdk, DecryptedHealthElement, Patient, randomUuid} from "@icure/cardinal-sdk";
+
+async function createHealthElementForPatient(
+	sdk: CardinalSdk,
+	patient: Patient,
+	description: string
+): Promise<DecryptedHealthElement> {
+	const initializedHealthElement = await sdk.healthElement.withEncryptionMetadata(
+		new DecryptedHealthElement({
+			id: randomUuid(),
+			descr: description
+		}),
+		patient // This is mandatory
+	)
+	return sdk.healthElement.createHealthElement(initializedHealthElement)
+}
+```
+
+</TabItem>
+
 </LanguageTabs>
 
 :::info
@@ -173,6 +235,21 @@ suspend fun createPatient(sdk: CardinalSdk, firstName: String, lastName: String)
 
 </TabItem>
 
+<TabItem value="typescript">
+
+```typescript
+import {CardinalSdk, DecryptedPatient} from "@icure/cardinal-sdk";
+
+async function createPatient(sdk: CardinalSdk, firstName: string, lastName: string): Promise<DecryptedPatient> {
+	const initializedPatient = await sdk.patient.withEncryptionMetadata(null)
+	initializedPatient.firstName = firstName
+	initializedPatient.lastName = lastName
+	return sdk.patient.createPatient(initializedPatient)
+}
+```
+
+</TabItem>
+
 </LanguageTabs>
 
 #### Initial delegates for the entity {#initial-delegates}
@@ -206,6 +283,33 @@ suspend fun createPatient(sdk: CardinalSdk, firstName: String, lastName: String,
 			lastName = lastName,
 		),
 		delegates = sharedWith?.let { mapOf(it to AccessLevel.Write) }.orEmpty()
+	)
+	return sdk.patient.createPatient(initializedPatient)
+}
+```
+
+</TabItem>
+
+<TabItem value="typescript">
+
+```typescript
+import {AccessLevel, CardinalSdk, DecryptedPatient, randomUuid} from "@icure/cardinal-sdk";
+
+async function createPatient(
+	sdk: CardinalSdk,
+	firstName: string,
+	lastName: string,
+	sharedWith: string | null
+): Promise<DecryptedPatient> {
+	const initializedPatient = await sdk.patient.withEncryptionMetadata(
+		new DecryptedPatient({
+			id: randomUuid(),
+			firstName: firstName,
+			lastName: lastName,
+		}),
+		{
+			delegates: sharedWith != null ? { [sharedWith]: AccessLevel.Write } : {}
+		}
 	)
 	return sdk.patient.createPatient(initializedPatient)
 }
@@ -256,6 +360,31 @@ suspend fun createPatient(sdk: CardinalSdk, currentUser: User, firstName: String
 
 </TabItem>
 
+<TabItem value="typescript">
+
+```typescript
+import {CardinalSdk, DecryptedPatient, randomUuid, User} from "@icure/cardinal-sdk";
+
+async function createPatient(
+	sdk: CardinalSdk,
+	currentUser: User,
+	firstName: string,
+	lastName: string
+): Promise<DecryptedPatient> {
+	const initializedPatient = await sdk.patient.withEncryptionMetadata(
+		new DecryptedPatient({
+			id: randomUuid(),
+			firstName: firstName,
+			lastName: lastName,
+		}),
+		{ user: currentUser }
+	)
+	return sdk.patient.createPatient(initializedPatient)
+}
+```
+
+</TabItem>
+
 </LanguageTabs>
 
 ## Retrieving entities
@@ -274,6 +403,19 @@ import com.icure.cardinal.sdk.model.User
 
 suspend fun getPatientOfUser(sdk: CardinalSdk, user: User): DecryptedPatient {
 	return sdk.patient.getPatient(requireNotNull(user.patientId) { "Not a patient user"})
+}
+```
+
+</TabItem>
+
+<TabItem value="typescript">
+
+```typescript
+import {CardinalSdk, DecryptedPatient, User} from "@icure/cardinal-sdk";
+
+async function getPatientOfUser(sdk: CardinalSdk, user: User): Promise<DecryptedPatient> {
+	if (!user.patientId) throw new Error("Not a patient user")
+	return sdk.patient.getPatient(user.patientId)
 }
 ```
 
@@ -302,6 +444,19 @@ suspend fun getContactsOfPatient(sdk: CardinalSdk, patient: Patient, limit: Int)
 
 </TabItem>
 
+<TabItem value="typescript">
+
+```typescript
+import {CardinalSdk, ContactFilters, DecryptedContact, Patient} from "@icure/cardinal-sdk";
+
+async function getContactsOfPatient(sdk: CardinalSdk, patient: Patient, limit: number): Promise<DecryptedContact[]> {
+	const contactsIterator = await sdk.contact.filterContactsBy(ContactFilters.byPatientsForSelf([patient]))
+	return contactsIterator.next(limit)
+}
+```
+
+</TabItem>
+
 </LanguageTabs>
 
 If you want to learn more about the querying system refer to the dedicated page (TODO link).
@@ -320,6 +475,18 @@ import com.icure.cardinal.sdk.model.DecryptedPatient
 
 suspend fun setPatientNote(sdk: CardinalSdk, patient: DecryptedPatient, newNote: String): DecryptedPatient {
 	return sdk.patient.modifyPatient(patient.copy(note = newNote))
+}
+```
+
+</TabItem>
+
+<TabItem value="typescript">
+
+```typescript
+import {CardinalSdk, DecryptedPatient} from "@icure/cardinal-sdk";
+
+async function setPatientNote(sdk: CardinalSdk, patient: DecryptedPatient, newNote: string): Promise<DecryptedPatient> {
+	return sdk.patient.modifyPatient(new DecryptedPatient({ ...patient, note: newNote }))
 }
 ```
 
@@ -358,6 +525,34 @@ tailrec suspend fun setPatientNote(sdk: CardinalSdk, patient: DecryptedPatient, 
 			newNote -> latestPatient
 			patient.note -> setPatientNote(sdk, latestPatient, newNote)
 			else -> setPatientNote(
+				sdk,
+				latestPatient,
+				askUserToResolveNoteConflict(latestPatient.note, newNote) // Implement this yourself
+			)
+		}
+	}
+}
+```
+
+</TabItem>
+
+<TabItem value="typescript">
+
+```typescript
+import {CardinalSdk, DecryptedPatient, RevisionConflictException} from "@icure/cardinal-sdk";
+
+async function setPatientNote(sdk: CardinalSdk, patient: DecryptedPatient, newNote: string): Promise<DecryptedPatient> {
+	try {
+		return await sdk.patient.modifyPatient(new DecryptedPatient({ ...patient, note: newNote }))
+	} catch (e) {
+		if (!(e instanceof RevisionConflictException)) throw e
+		const latestPatient = await sdk.patient.getPatient(patient.id)
+		if (latestPatient.note == newNote) {
+			return latestPatient
+		} else if (latestPatient.note == patient.note) {
+			return setPatientNote(sdk, latestPatient, newNote)
+		} else {
+			return setPatientNote(
 				sdk,
 				latestPatient,
 				askUserToResolveNoteConflict(latestPatient.note, newNote) // Implement this yourself
@@ -545,6 +740,42 @@ suspend fun printPatientDetails(
 
 </TabItem>
 
+<TabItem value="typescript">
+
+```typescript
+import {CardinalSdk, DecryptedPatient, FilterOptions, Patient} from "@icure/cardinal-sdk";
+
+async function printMatchingPatientNames(
+	sdk: CardinalSdk,
+	filter: FilterOptions<Patient>,
+	limit: number
+) {
+	// Names aren't encrypted in the configuration of this application, no need to decrypt
+	const iterator = await sdk.patient.encrypted.filterPatientsBy(filter)
+	for (const p of (await iterator.next(limit))) {
+		console.log(`${p.firstName} ${p.lastName}`)
+	}
+	if (await iterator.hasNext()) console.log("...")
+}
+
+async function printPatientDetails(
+	sdk: CardinalSdk,
+	patientId: string
+) {
+	// This application doesn't encrypt the name but encrypts the note
+	const patient = await sdk.patient.tryAndRecover.getPatient(patientId)
+	console.log(`First name: ${patient.firstName}`)
+	console.log(`Last name: ${patient.lastName}`)
+	if (patient instanceof DecryptedPatient) {
+		console.log(`Note: ${patient.note}`)
+	} else {
+		console.log("Encrypted data is not accessible")
+	}
+}
+```
+
+</TabItem>
+
 </LanguageTabs>
 
 ## Sharing entities {#sharing}
@@ -641,7 +872,7 @@ const val STATISTICS_DATA_OWNER_ID = "..."
 suspend fun shareHealthElementForStatistics(
 	sdk: CardinalSdk,
 	healthElement: DecryptedHealthElement
-): DecryptedHealthElement {
+): DecryptedHealthElement =
 	sdk.healthElement.shareWith(
 		// You already know the data owner id
 		STATISTICS_DATA_OWNER_ID,
@@ -656,7 +887,49 @@ suspend fun shareHealthElementForStatistics(
 			// The statistics script doesn't need the secret ids of the health element
 			shareSecretIds = SecretIdShareOptions.UseExactly(emptySet(), false)
 		)
+	).updatedEntityOrThrow()
+```
+
+</TabItem>
+
+<TabItem value="typescript">
+
+```typescript
+import {
+	CardinalSdk,
+	DecryptedHealthElement,
+	HealthElementShareOptions,
+	RequestedPermission, SecretIdShareOptions,
+	ShareMetadataBehaviour, SimpleShareResult
+} from "@icure/cardinal-sdk";
+
+const STATISTICS_DATA_OWNER_ID = "..."
+
+// Example: the statistics data owner is used by a script that compiles some statistics about your data.
+async function shareHealthElementForStatistics(
+	sdk: CardinalSdk,
+	healthElement: DecryptedHealthElement
+): Promise<DecryptedHealthElement> {
+	const shareResult = await sdk.healthElement.shareWith(
+		// You already know the data owner id
+		STATISTICS_DATA_OWNER_ID,
+		healthElement,
+		{
+			options: new HealthElementShareOptions({
+				// The statistics script doesn't need to modify data
+				requestedPermissions: RequestedPermission.FullRead,
+				// The statistics script doesn't need to link patients with health elements
+				sharePatientId: ShareMetadataBehaviour.Never,
+				// The statistics script needs access to the encrypted content
+				shareEncryptionKey: ShareMetadataBehaviour.Required,
+				// The statistics script doesn't need the secret ids of the health element
+				shareSecretIds: new SecretIdShareOptions.UseExactly({ secretIds: [], createUnknownSecretIds: false })
+			})
+		}
 	)
+	if (shareResult instanceof SimpleShareResult.Success) {
+		return shareResult.updatedEntity
+	} else throw new Error("Failed to share")
 }
 ```
 
