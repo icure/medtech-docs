@@ -72,7 +72,6 @@ suspend fun createPatient(sdk: CardinalSdk, firstName: String, lastName: String)
 			id = defaultCryptoService.strongRandom.randomUUID(),
 			firstName = firstName,
 			lastName = lastName,
-			note = "This note will be encrypted if you use the default configuration"
 		)
 	)
 	// Save the patient. If you didn't initialize the metadata this method will throw an exception.
@@ -94,14 +93,42 @@ The encryptable entities initialization method can take in input various paramet
 
 #### Linked entities
 
-Some types of encryptable entities can be linked to other entities; for example, each contact is always linked to a 
-patient.
+Some types of encryptable entities can be linked to other entities; for example, each health element is always linked to 
+a patient.
 These links are always encrypted to protect the privacy of the patients, and for this reason they're initialized with
 the rest of the encryption metadata.
 
-For example, when you initialize the encryption metadata of a contact, you also have to pass the linked patient.
+For example, when you initialize the encryption metadata of a health element, you also have to pass the linked patient.
 
-TODO code sample
+<LanguageTabs>
+
+<TabItem value="kotlin">
+
+```kotlin
+import com.icure.cardinal.sdk.CardinalSdk
+import com.icure.cardinal.sdk.model.DecryptedHealthElement
+import com.icure.cardinal.sdk.model.Patient
+import com.icure.kryptom.crypto.defaultCryptoService
+
+suspend fun createHealthElementForPatient(
+	sdk: CardinalSdk,
+	patient: Patient,
+	description: String
+): DecryptedHealthElement {
+	val initializedHealthElement = sdk.healthElement.withEncryptionMetadata(
+		DecryptedHealthElement(
+			id = defaultCryptoService.strongRandom.randomUUID(),
+			descr= description
+		),
+		patient // This is mandatory
+	)
+	return sdk.healthElement.createHealthElement(initializedHealthElement)
+}
+```
+
+</TabItem>
+
+</LanguageTabs>
 
 :::info
 
@@ -114,42 +141,87 @@ encrypted links works.
 
 Encrypted links are "directional", and you have to pass the linked entity only for one direction of the link.
 
-For example, in the patient-contacts link you only pass the patient when initializing the contact, and you don't have
-to pass the contacts when initializing the patient.
+For example, in the Patient-HealthElement link you only pass the patient when initializing the health element, and you 
+never pass health elements when initializing the patient.
 
 :::
 
-#### A *base* for the entity to initialize:
+#### A base for the entity to initialize:
 
 The entity with initialized metadata will copy its content from the base (as shown in the previous example).
 
 If not passed, the returned entity will only have the id and encryption metadata set, and you will have to modify it
 to add your content before commiting the entity creation.
 
-TODO code sample
+<LanguageTabs>
 
-#### *Initial delegates* for the entity:
+<TabItem value="kotlin">
 
+```kotlin
+import com.icure.cardinal.sdk.CardinalSdk
+import com.icure.cardinal.sdk.model.DecryptedPatient
+
+suspend fun createPatient(sdk: CardinalSdk, firstName: String, lastName: String): DecryptedPatient {
+	val patientWithInitializedMetadata = sdk.patient.withEncryptionMetadata(base = null)
+	val initializedPatient = patientWithInitializedMetadata.copy(
+		firstName = firstName,
+		lastName = lastName,
+	)
+	return sdk.patient.createPatient(initializedPatient)
+}
+```
+
+</TabItem>
+
+</LanguageTabs>
+
+#### Initial delegates for the entity {#initial-delegates}
 
 This is a map of other data owners (delegates) that will immediately have access to the entity as soon as it is created. 
 For each of them, you can specify the access level granted on the entity (read or read+write).
 When sharing an entity this way, all the encrypted information of the entity will be shared as well, including any 
 information for the resolution of encrypted links.
 
-You can always share an entity with the delegates at later point, however, if you know already that the entity should be
-shared with someone else, it is better to do it while initializing the metadata. 
+You can always [share an entity with the delegates at a later point](#sharing).
+However, if you know already that the entity should be shared with someone else, and you want to fully share the entity
+encrypted information, it is better to do it while initializing the metadata. 
 This is especially the case if you want the other delegates to be able to listen to the creation event for that entity.
-TODO linkx
+TODO link
 
-TODO code sample
+<LanguageTabs>
 
-#### Auto delegations
+<TabItem value="kotlin">
+
+```kotlin
+import com.icure.cardinal.sdk.CardinalSdk
+import com.icure.cardinal.sdk.model.DecryptedPatient
+import com.icure.cardinal.sdk.model.embed.AccessLevel
+import com.icure.kryptom.crypto.defaultCryptoService
+
+suspend fun createPatient(sdk: CardinalSdk, firstName: String, lastName: String, sharedWith: String?): DecryptedPatient {
+	val initializedPatient = sdk.patient.withEncryptionMetadata(
+		DecryptedPatient(
+			id = defaultCryptoService.strongRandom.randomUUID(),
+			firstName = firstName,
+			lastName = lastName,
+		),
+		delegates = sharedWith?.let { mapOf(it to AccessLevel.Write) }.orEmpty()
+	)
+	return sdk.patient.createPatient(initializedPatient)
+}
+```
+
+</TabItem>
+
+</LanguageTabs>
+
+#### Auto delegations {#auto-delegations}
 
 If you're using the auto-delegations system (TODO link) you can pass the current sdk user instance (with the configured
 auto-delegations).
 
 If you do, any auto-delegation setup for the user will be used in addition to any provided initial-delegate.
-Auto-delegations will be ignored if you don't pass any user.
+Auto-delegations will be ignored if you don't pass the user.
 
 :::warning
 
@@ -159,19 +231,78 @@ provided through the initial delegates.
 
 :::
 
-TODO code sample
+<LanguageTabs>
+
+<TabItem value="kotlin">
+
+```kotlin
+import com.icure.cardinal.sdk.CardinalSdk
+import com.icure.cardinal.sdk.model.DecryptedPatient
+import com.icure.cardinal.sdk.model.User
+import com.icure.kryptom.crypto.defaultCryptoService
+
+suspend fun createPatient(sdk: CardinalSdk, currentUser: User, firstName: String, lastName: String): DecryptedPatient {
+	val initializedPatient = sdk.patient.withEncryptionMetadata(
+		DecryptedPatient(
+			id = defaultCryptoService.strongRandom.randomUUID(),
+			firstName = firstName,
+			lastName = lastName,
+		),
+		user = currentUser
+	)
+	return sdk.patient.createPatient(initializedPatient)
+}
+```
+
+</TabItem>
+
+</LanguageTabs>
 
 ## Retrieving entities
 
 You can retrieve an entity by using the get of the corresponding api. 
 The SDK will automatically decrypt any retrieved encryptable entity.
 
-TODO code sample
+<LanguageTabs>
+
+<TabItem value="kotlin">
+
+```kotlin
+import com.icure.cardinal.sdk.CardinalSdk
+import com.icure.cardinal.sdk.model.DecryptedPatient
+import com.icure.cardinal.sdk.model.User
+
+suspend fun getPatientOfUser(sdk: CardinalSdk, user: User): DecryptedPatient {
+	return sdk.patient.getPatient(requireNotNull(user.patientId) { "Not a patient user"})
+}
+```
+
+</TabItem>
+
+</LanguageTabs>
 
 The Cardinal SDK also provides a filtering system that allows you to query the backend for entities matching certain
 characteristics:
 
-TODO code sample get contacts of patients
+<LanguageTabs>
+
+<TabItem value="kotlin">
+
+```kotlin
+import com.icure.cardinal.sdk.CardinalSdk
+import com.icure.cardinal.sdk.filters.ContactFilters
+import com.icure.cardinal.sdk.model.DecryptedContact
+import com.icure.cardinal.sdk.model.Patient
+
+suspend fun getContactsOfPatient(sdk: CardinalSdk, patient: Patient, limit: Int): List<DecryptedContact> {
+	val contactsIterator = sdk.contact.filterContactsBy(ContactFilters.byPatientsForSelf(listOf(patient)))
+	return contactsIterator.next(limit)
+}
+```
+
+</TabItem>
+
+</LanguageTabs>
 
 If you want to learn more about the querying system refer to the dedicated page (TODO link).
 
@@ -179,7 +310,22 @@ If you want to learn more about the querying system refer to the dedicated page 
 
 You can update an entity using the update method of the corresponding API. 
 
-TODO code sample
+<LanguageTabs>
+
+<TabItem value="kotlin">
+
+```kotlin
+import com.icure.cardinal.sdk.CardinalSdk
+import com.icure.cardinal.sdk.model.DecryptedPatient
+
+suspend fun setPatientNote(sdk: CardinalSdk, patient: DecryptedPatient, newNote: String): DecryptedPatient {
+	return sdk.patient.modifyPatient(patient.copy(note = newNote))
+}
+```
+
+</TabItem>
+
+</LanguageTabs>
 
 The update method returns the updated entity with a new revision.
 
@@ -191,7 +337,39 @@ in a collaborative environment could be a normal occurrence.
 If the logic of your application could allow multiple users to work on a single entity at the same time, you should 
 handle the conflict exceptions, requesting the end-user help if necessary:
 
-TODO code sample
+<LanguageTabs>
+
+<TabItem value="kotlin">
+
+```kotlin
+import com.icure.cardinal.sdk.CardinalSdk
+import com.icure.cardinal.sdk.exceptions.RevisionConflictException
+import com.icure.cardinal.sdk.model.DecryptedPatient
+
+tailrec suspend fun setPatientNote(sdk: CardinalSdk, patient: DecryptedPatient, newNote: String): DecryptedPatient {
+	val updatedPatient = try {
+		sdk.patient.modifyPatient(patient.copy(note = newNote))
+	} catch (_: RevisionConflictException) {
+		null
+	}
+	return if (updatedPatient != null) updatedPatient else {
+		val latestPatient = sdk.patient.getPatient(patient.id)
+		when (latestPatient.note) {
+			newNote -> latestPatient
+			patient.note -> setPatientNote(sdk, latestPatient, newNote)
+			else -> setPatientNote(
+				sdk,
+				latestPatient,
+				askUserToResolveNoteConflict(latestPatient.note, newNote) // Implement this yourself
+			)
+		}
+	}
+}
+```
+
+</TabItem>
+
+</LanguageTabs>
 
 :::note
 
@@ -200,6 +378,15 @@ This includes updates that only modify the metadata of the entity, such as updat
 entity with other delegates.
 
 :::
+
+### Updating encryptable entities
+
+By default, you can only update encryptable entities if you have Write access to the entity.
+This is only possible if you created the entity or if another user shared the entity with you granting you also Write
+access.
+
+Some permissions allow users to bypass this requirement. 
+For example, admin user can update any encryptable entity, even if it wasn't shared with them.
 
 ### Bulk update
 
@@ -210,16 +397,269 @@ Instead, any conflicting entity will be ignored and won't be included in the ret
 
 ## Delete
 
-- Warning: delete is soft delete - hides from search but not from get by id.
+:::info
+
+:construction: We're currently reviewing the delete logic in the Cardinal SDK. 
+There will be some improvements in a future version. 
+
+:::
+
+You can delete entities by passing the entity id to the delete method of the corresponding API. 
+
+### Soft-delete
+
+By default, the delete method in the Cardinal SDK is actually a "soft" delete.
+This means that the data is not destroyed, instead it is hidden.
+
+When you soft-delete an entity, it will not be returned anymore when you query data using standard filters, but you can
+still retrieve data by id or by using filters specifically designed to lookup soft-deleted entities.
+
+:construction: We're working on exposing "undelete" methods, that will allow you to undo the deletion of a soft-deleted 
+entity.  
+
+### Hard-delete :construction:
+
+Unlike soft-delete the hard-delete method actually destroys the deleted data. 
+You will not be able to undo this action. 
+
+:construction: We're working on exposing hard delete methods.
+
+:::warning
+
+Even when you hard delete data, there is a period where it will actually still be available in the backend's database.
+The data will be completely destroyed when the next compaction completes.
+
+:::
+
+### Deleted with revision :construction:
+
+Currently, when you delete an entity, you only have to provide the id. 
+This could be problematic if the entity was changed since you last retrieved it, because the entity may now contain some
+data that may change your intentions.
+
+We're working on adding a revision parameter to the delete methods, that will work like the revision of the update 
+methods (the delete method will succeed only if the revision you provided matches the revision of the stored entity). 
+This will be initially optional, but the methods delete without the revision will be deprecated.
+In future the revision parameter will be mandatory for all delete methods.
 
 ## Flavours
 
+By default, the Cardinal SDK decrypts all retrieved entities.
 
-- WARNING: When working with encrypted entities make sure to not modify data that should be encrypted according to your
-  configuration. There are measures to help prevent these mistakes but they can't always detect them.
+However, you don't always need access to the encrypted content of an entity, and since the decryption could be a slow
+process, it would be better to skip it when unnecessary.
 
-## Sharing
+Similarly, your application may have situation where a user sometimes has access only to the unencrypted part of an 
+entity, and other times has access to the full entity.
+In both situations, you want to show as much as possible of the entity to your user.
 
-## Attachments
+To help you cover all these scenarios, the encryptable entities and corresponding apis come in three "flavors".
 
-- Deleting attachment on purge???
+For each encryptable entity, the SDK model provides three different types: a decrypted type (for example 
+`DecryptedPatient`), an encrypted type (`EncryptedPatient`), and a polymorphic type (`Patient`).
+These types are de-facto identical; the division exists only to support the development of applications by providing 
+better type checking.
+
+:::info
+
+Depending on the language you're using, the encryptable entities flavors will be represents in different ways.
+
+For example, in kotlin the polymorphic type is a sealed interface, and the encrypted and decrypted types are classes.
+
+Instead, in python and typescript, the encrypted and decrypted types are classes, and the polymorphic type is a union 
+type of the two implementations.
+
+:::
+
+Similarly, the api for each encryptable entity comes in three flavors. 
+Most methods that you use directly from the api take/return the decrypted flavor of the corresponding entity, but you
+can use the `encrypted` and the `tryAndRecover` properties of the api to access versions of the methods that work with 
+the encrypted and polymorphic flavors of the entity, respectively.
+
+:::note
+
+Not all methods of the main api are available in the multiple flavors.
+For example, the methods for the creation of entities are available only in the decrypted flavor.
+
+:::
+
+The following table summarizes the behavior of the APIs' flavors.
+
+|                             | Input                                                                                                                                                                                 | Output                                                                                                                 | Example use case                                                                                           |
+|-----------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------|
+| Decrypted                   | Encrypts the entities, fails if not possible for some entity (the user can't access the encryption key of the entity).                                                                | Decrypts the entities, fails if not possible for some entity (the user can't access the encryption key of the entity). | You need to access the encrypted content of an entity                                                      |
+| Encrypted                   | Best-effort validation to verify that the entities don't contain any data which should be encrypted according to the configuration. Fails if some entity doesn't pass the validation. | Returns the entities as is.                                                                                            | You don't need the encrypted content of an entity                                                          |
+| Polymorphic (tryAndRecover) | Encrypts or validate the entity depending on the actual type. Fails if some entity can't be encrypted or doesn't pass validation.                                                     | Tries to decrypt the entities, any entity that can't be decrypted is returned as is.                                   | You don't know if the user can decrypt the entity but you want to display as much information as possible. |
+
+
+:::warning
+
+The validation of encrypted input performed by the encrypted and polymorphic flavors of the apis are best-effort and
+may not always be accurate.
+There are some edge cases where you can perform illegal changes to an entity that the SDK can't detect.
+
+The goal of this validation is only to help identify mistakes in the logic of your application, and you shouldn't
+rely solely on it for validation.
+For example, you should avoid allowing your user to freely modify an encrypted entity and then passing the updated
+entity to the api wrapping the call in a `try catch` to recover from illegal changes.
+You should instead design your UI in a way that prevents the user from modifying the fields that need to be encrypted.
+
+:::
+
+<LanguageTabs>
+
+<TabItem value="kotlin">
+
+```kotlin
+import com.icure.cardinal.sdk.CardinalSdk
+import com.icure.cardinal.sdk.filters.FilterOptions
+import com.icure.cardinal.sdk.model.DecryptedPatient
+import com.icure.cardinal.sdk.model.Patient
+
+suspend fun printMatchingPatientNames(
+	sdk: CardinalSdk,
+	filter: FilterOptions<Patient>,
+	limit: Int
+) {
+	// Names aren't encrypted in the configuration of this application, no need to decrypt
+	val iterator = sdk.patient.encrypted.filterPatientsBy(filter)
+	iterator.next(limit).forEach { println("${it.firstName} ${it.lastName}") }
+	if (iterator.hasNext()) println("...")
+}
+
+suspend fun printPatientDetails(
+	sdk: CardinalSdk,
+	patientId: String
+) {
+	// This application doesn't encrypt the name but encrypts the note
+	val patient = sdk.patient.tryAndRecover.getPatient(patientId)
+	println("First name: ${patient.firstName}")
+	println("Last name: ${patient.lastName}")
+	if (patient is DecryptedPatient) {
+		println("Note: ${patient.note}")
+	} else {
+		println("Encrypted data is not accessible")
+	}
+}
+```
+
+</TabItem>
+
+</LanguageTabs>
+
+## Sharing entities {#sharing}
+
+The Cardinal SDK is controlled using an entity-based access control for encryptable entities.
+Each encryptable entity is by default accessible only to its creator unless it is shared with other data owners.
+
+We already saw that you can share entities with other data owners at creation time using 
+[initial delegates](#initial-delegates) or [auto-delegations](#auto-delegations), but you can also share an existing 
+entity using the share method of the corresponding api.
+
+### Configuration options
+
+When you share an entity this way, you have to pass some "share options" that allow you to configure how the entity
+is shared with the new delegate.
+
+The exact parameters you can configure depend on the type of entity being shared, but the possible options are the
+following:
+
+#### `shareEncryptionKey` (always present)
+
+This configuration specifies if the share method should share the entity encryption key with the delegate, or if it 
+should share only the unencrypted data.
+
+Possible values for this configuration are:
+- `ShareMetadataBehaviour.Required`: the delegator will share the encryption key with the delegate. 
+  If the delegator can't access the encryption key of the entity, the sharing will fail.
+- `ShareMetadataBehaviour.IfAvailable`: the delegator will share the encryption key with the delegate if it is available.
+  If the delegator can't access the encryption key of the entity, then it won't be shared.
+- `ShareMetadataBehaviour.Never`: the delegator will not share the encryption key with the delegate, even if it is available.
+
+The default configuration for this option is always `ShareMetadataBehaviour.IfAvailable`.
+
+#### `requestedPermissions` (always present)
+
+This configuration option specifies if the delegate will have only read access to the entity or also write access. 
+
+Possible values for this configuration are:
+- `RequestedPermission.FullWrite`: the delegate will get write access to the full entity. 
+  If the delegator is not allowed to give write access, the sharing will fail
+- `RequestedPermission.MaxWrite`: the delegate will get the highest permissions that the current user can grant. 
+  In the current version of the SDK this means that if the delegator can grant full write access,
+  the delegate will have full write access, otherwise the delegate will have full read access.
+- `RequestedPermission.FullRead`: gives the delegate full read access to the entity, failing if the delegator can't
+  grant read access to the full entity.
+  In the current version of the SDK this can never fail (as long as the delegator has access to the entity).
+- `RequestedPermission.MaxRead`: gives the delegate as much read access to the entity as the delegator can give.
+  In the current version of the SDK as long this is equivalent to FullRead.
+
+The default configuration for this option is always `RequestedPermission.MaxWrite`.
+
+#### `shareSecretIds` (always present)
+
+This configuration option specifies which secret ids of the entity will be shared with the delegate.
+
+Possible values for this configuration are
+- `SecretIdShareOptions.AllAvailable(requireAtLeastOne)`: share all secret ids of the entity that are available to the
+  current user.
+  If `requireAtLeastOne` is true and the current user can't access any secret id of the entity the sharing will fail.
+- `SecretIdShareOptions.UseExactly(secretIds, createUnknownSecretIds)`: share exactly the provided `secretIds`.
+  If some of the provided secret ids aren't found by the SDK using the keys of the current user and 
+  `createUnknownSecretIds` is false the sharing will fail, otherwise the SDK will create new secret ids.
+ 
+The default configuration for this option is always `SecretIdShareOptions.AllAvailable(false)`
+
+#### `share[OwningEntity]Ids`
+
+This configuration option is only present for entity types that can have an encrypted link to other entities, and the
+exact name of this option depends on the type of the linked entity. 
+For example, in the share options for contacts you have the option `sharePatientIds`.
+  
+This configuration option uses the same values as the `shareEncryptionKey`
+
+When present, the default configuration for this option is always `ShareMetadataBehaviour.IfAvailable`.
+
+### Example
+
+
+<LanguageTabs>
+
+<TabItem value="kotlin">
+
+```kotlin
+import com.icure.cardinal.sdk.CardinalSdk
+import com.icure.cardinal.sdk.crypto.entities.HealthElementShareOptions
+import com.icure.cardinal.sdk.crypto.entities.SecretIdShareOptions
+import com.icure.cardinal.sdk.crypto.entities.ShareMetadataBehaviour
+import com.icure.cardinal.sdk.model.DecryptedHealthElement
+import com.icure.cardinal.sdk.model.requests.RequestedPermission
+
+const val STATISTICS_DATA_OWNER_ID = "..."
+
+// Example: the statistics data owner is used by a script that compiles some statistics about your data.
+suspend fun shareHealthElementForStatistics(
+	sdk: CardinalSdk,
+	healthElement: DecryptedHealthElement
+): DecryptedHealthElement {
+	sdk.healthElement.shareWith(
+		// You already know the data owner id
+		STATISTICS_DATA_OWNER_ID,
+		healthElement,
+		HealthElementShareOptions(
+			// The statistics script doesn't need to modify data
+			requestedPermissions = RequestedPermission.FullRead,
+			// The statistics script doesn't need to link patients with health elements
+			sharePatientId = ShareMetadataBehaviour.Never,
+			// The statistics script needs access to the encrypted content
+			shareEncryptionKey = ShareMetadataBehaviour.Required,
+			// The statistics script doesn't need the secret ids of the health element
+			shareSecretIds = SecretIdShareOptions.UseExactly(emptySet(), false)
+		)
+	)
+}
+```
+
+</TabItem>
+
+</LanguageTabs>
