@@ -67,6 +67,25 @@ async function createDoctor(sdk: CardinalSdk, firstName: string, lastName: strin
 
 </TabItem>
 
+<TabItem value="python">
+
+```python
+import uuid
+from cardinal_sdk import CardinalSdk
+from cardinal_sdk.model import HealthcareParty
+
+def create_doctor(sdk: CardinalSdk, first_name: str, last_name: str) -> HealthcareParty:
+	return sdk.healthcare_party.create_healthcare_party_blocking(
+		HealthcareParty(
+			id=str(uuid.uuid4()),
+			first_name=first_name,
+			last_name=last_name
+		)
+	)
+```
+
+</TabItem>
+
 </LanguageTabs>
 
 For encryptable entities, however, you will also need to initialize some metadata used for encryption and access 
@@ -116,6 +135,29 @@ async function createPatient(sdk: CardinalSdk, firstName: string, lastName: stri
 	// Save the patient. If you didn't initialize the metadata this method will throw an exception.
 	return sdk.patient.createPatient(initializedPatient)
 }
+```
+
+</TabItem>
+
+<TabItem value="python">
+
+```python
+import uuid
+from cardinal_sdk import CardinalSdk
+from cardinal_sdk.model import DecryptedPatient
+
+def create_patient(sdk: CardinalSdk, first_name: str, last_name: str) -> DecryptedPatient:
+	# Initialize the metadata for the patient. Note that this doesn't save the patient in the backend.
+	initialized_patient = sdk.patient.with_encryption_metadata_blocking(
+		DecryptedPatient(
+			id=str(uuid.uuid4()),
+			first_name=first_name,
+			last_name=last_name
+		)
+	)
+	# Save the patient. If you didn't initialize the metadata this method will throw an exception.
+	return sdk.patient.create_patient_blocking(initialized_patient)
+
 ```
 
 </TabItem>
@@ -190,6 +232,30 @@ async function createHealthElementForPatient(
 
 </TabItem>
 
+<TabItem value="python">
+
+```python
+import uuid
+from cardinal_sdk import CardinalSdk
+from cardinal_sdk.model import Patient, DecryptedHealthElement
+
+def create_health_element_for_patient(
+	sdk: CardinalSdk,
+	patient: Patient,
+	description: str
+) -> DecryptedHealthElement:
+	initialized_health_element = sdk.health_element.with_encryption_metadata_blocking(
+		DecryptedHealthElement(
+			id=str(uuid.uuid4()),
+			descr=description
+		),
+		patient  # This is mandatory
+	)
+	return sdk.health_element.create_patient_blocking(initialized_health_element)
+```
+
+</TabItem>
+
 </LanguageTabs>
 
 :::info
@@ -246,6 +312,21 @@ async function createPatient(sdk: CardinalSdk, firstName: string, lastName: stri
 	initializedPatient.lastName = lastName
 	return sdk.patient.createPatient(initializedPatient)
 }
+```
+
+</TabItem>
+
+<TabItem value="python">
+
+```python
+from cardinal_sdk import CardinalSdk
+from cardinal_sdk.model import DecryptedPatient
+
+def create_patient(sdk: CardinalSdk, first_name: str, last_name: str) -> DecryptedPatient:
+	initialized_patient = sdk.patient.with_encryption_metadata_blocking(None)
+	initialized_patient.first_name = first_name
+	initialized_patient.last_name = last_name
+	return sdk.patient.create_patient_blocking()
 ```
 
 </TabItem>
@@ -313,6 +394,36 @@ async function createPatient(
 	)
 	return sdk.patient.createPatient(initializedPatient)
 }
+```
+
+</TabItem>
+
+<TabItem value="python">
+
+```python
+import uuid
+from cardinal_sdk import CardinalSdk
+from cardinal_sdk.model import DecryptedPatient, AccessLevel
+from typing import Optional
+
+def create_patient(
+		sdk: CardinalSdk,
+		first_name: str,
+		last_name: str,
+		shared_with: Optional[str]
+) -> DecryptedPatient:
+	initialized_patient = sdk.patient.with_encryption_metadata_blocking(
+		DecryptedPatient(
+			id=str(uuid.uuid4()),
+			first_name=first_name,
+			last_name=last_name
+		),
+		delegates={
+			shared_with: AccessLevel.Write
+		} if shared_with is not None else {}
+	)
+	return sdk.patient.create_patient_blocking(initialized_patient)
+
 ```
 
 </TabItem>
@@ -385,6 +496,32 @@ async function createPatient(
 
 </TabItem>
 
+<TabItem value="python">
+
+```python
+import uuid
+from cardinal_sdk import CardinalSdk
+from cardinal_sdk.model import DecryptedPatient, AccessLevel, User
+
+def create_patient(
+		sdk: CardinalSdk,
+		current_user: User,
+		first_name: str,
+		last_name: str,
+) -> DecryptedPatient:
+	initialized_patient = sdk.patient.with_encryption_metadata_blocking(
+		DecryptedPatient(
+			id=str(uuid.uuid4()),
+			first_name=first_name,
+			last_name=last_name
+		),
+		user=current_user
+	)
+	return sdk.patient.create_patient_blocking(initialized_patient)
+```
+
+</TabItem>
+
 </LanguageTabs>
 
 ## Retrieving entities
@@ -417,6 +554,19 @@ async function getPatientOfUser(sdk: CardinalSdk, user: User): Promise<Decrypted
 	if (!user.patientId) throw new Error("Not a patient user")
 	return sdk.patient.getPatient(user.patientId)
 }
+```
+
+</TabItem> 
+
+<TabItem value="python">
+
+```python
+from cardinal_sdk import CardinalSdk
+from cardinal_sdk.model import DecryptedPatient, User
+
+def get_patient_of_user(sdk: CardinalSdk, user: User) -> DecryptedPatient:
+	if user.patient_id is None: raise Exception("Not a patient user")
+	return sdk.patient.get_patient_blocking(user.patient_id)
 ```
 
 </TabItem>
@@ -457,6 +607,21 @@ async function getContactsOfPatient(sdk: CardinalSdk, patient: Patient, limit: n
 
 </TabItem>
 
+<TabItem value="python">
+
+```python
+from typing import List
+from cardinal_sdk import CardinalSdk
+from cardinal_sdk.filters import ContactFilters
+from cardinal_sdk.model import DecryptedContact, Patient
+
+def get_contacts_of_patient(sdk: CardinalSdk, patient: Patient, limit: int) -> List[DecryptedContact]:
+	contact_iterator = sdk.contact.filter_contacts_by_blocking(ContactFilters.by_patients_for_self([patient]))
+	return contact_iterator.next_blocking(limit)
+```
+
+</TabItem>
+
 </LanguageTabs>
 
 If you want to learn more about the querying system refer to the dedicated page (TODO link).
@@ -488,6 +653,22 @@ import {CardinalSdk, DecryptedPatient} from "@icure/cardinal-sdk";
 async function setPatientNote(sdk: CardinalSdk, patient: DecryptedPatient, newNote: string): Promise<DecryptedPatient> {
 	return sdk.patient.modifyPatient(new DecryptedPatient({ ...patient, note: newNote }))
 }
+```
+
+</TabItem>
+
+<TabItem value="python">
+
+```python
+from copy import copy
+from typing import List
+from cardinal_sdk import CardinalSdk
+from cardinal_sdk.model import DecryptedPatient
+
+def set_patient_note(sdk: CardinalSdk, patient: DecryptedPatient, new_note: str) -> List[DecryptedPatient]:
+	updated_patient = copy(patient)
+	updated_patient.note = new_note
+	return sdk.patient.modify_patient_blocking(updated_patient)
 ```
 
 </TabItem>
@@ -560,6 +741,36 @@ async function setPatientNote(sdk: CardinalSdk, patient: DecryptedPatient, newNo
 		}
 	}
 }
+```
+
+</TabItem>
+
+<TabItem value="python">
+
+```python
+from copy import copy
+from typing import List
+from cardinal_sdk import CardinalSdk
+from cardinal_sdk.model import DecryptedPatient
+from cardinal_sdk.errors import RevisionConflictError
+
+def set_patient_note(sdk: CardinalSdk, patient: DecryptedPatient, new_note: str) -> List[DecryptedPatient]:
+	updated_patient = copy(patient)
+	updated_patient.note = new_note
+	try:
+		return sdk.patient.modify_patient_blocking(updated_patient)
+	except RevisionConflictError:
+		latest_patient = sdk.patient.get_patient_blocking(patient.id)
+		if latest_patient.note == new_note:
+			return latest_patient
+		elif latest_patient.note == patient.note:
+			return set_patient_note(sdk, latest_patient, new_note)
+		else:
+			return set_patient_note(
+				sdk,
+				latest_patient,
+				ask_user_to_resolve_note_conflict(latest_patient.note, new_note) # Implement yourself
+			)
 ```
 
 </TabItem>
@@ -776,6 +987,41 @@ async function printPatientDetails(
 
 </TabItem>
 
+<TabItem value="python">
+
+```python
+from cardinal_sdk import CardinalSdk
+from cardinal_sdk.filters import FilterOptions
+from cardinal_sdk.model import DecryptedPatient, Patient
+
+def print_matching_patient_names(
+	sdk: CardinalSdk,
+	data_filter: FilterOptions<Patient>,
+	limit: int
+):
+	# Names aren't encrypted in the configuration of this application, no need to decrypt
+	iterator = sdk.patient.encrypted.filter_patients_by_blocking(data_filter)
+	for p in iterator.next_blocking(limit):
+		print(f"{p.firstName} {p.lastName}")
+	if iterator.has_next_blocking():
+		print("...")
+
+def print_patient_details(
+	sdk: CardinalSdk,
+	patient_id: str
+):
+	# This application doesn't encrypt the name but encrypts the note
+	patient = sdk.patient.try_and_recover.get_patient_blocking(patient_id)
+	print(f"First name: {patient.firstName}")
+	print(f"Last name: {patient.lastName}")
+	if isinstance(patient, DecryptedPatient):
+		print(f"Note: {patient.note}")
+	else:
+		print("Encrypted data is not accessible")
+```
+
+</TabItem>
+
 </LanguageTabs>
 
 ## Sharing entities {#sharing}
@@ -931,6 +1177,43 @@ async function shareHealthElementForStatistics(
 		return shareResult.updatedEntity
 	} else throw new Error("Failed to share")
 }
+```
+
+</TabItem>
+
+<TabItem value="python">
+
+```python
+from cardinal_sdk import CardinalSdk
+from cardinal_sdk.model import DecryptedHealthElement, HealthElementShareOptions, RequestedPermission, \
+	ShareMetadataBehaviour, SecretIdShareOptionsUseExactly, SimpleShareResultDecryptedHealthElementSuccess
+
+__STATISTICS_DATA_OWNER_ID = "..."
+
+# Example: the statistics data owner is used by a script that compiles some statistics about your data.
+def share_health_element_for_statistics(
+		sdk: CardinalSdk,
+		health_element: DecryptedHealthElement
+) -> DecryptedHealthElement:
+	share_result = sdk.health_element.share_with_blocking(
+		# You already know the data owner id
+		__STATISTICS_DATA_OWNER_ID,
+		health_element,
+		HealthElementShareOptions(
+			# The statistics script doesn't need to modify data
+			requested_permissions=RequestedPermission.FullRead,
+			# The statistics script doesn't need to link patients with health elements
+			share_patient_id=ShareMetadataBehaviour.Never,
+			# The statistics script needs access to the encrypted content
+			share_encryption_key=ShareMetadataBehaviour.Required,
+			# The statistics script doesn't need the secret ids of the health element
+			share_secret_ids=SecretIdShareOptionsUseExactly(secret_ids=[], create_unknown_secret_ids=False)
+		)
+	)
+	if isinstance(share_result, SimpleShareResultDecryptedHealthElementSuccess):
+		return share_result.updated_entity
+	else:
+		raise Exception("Failed to share")
 ```
 
 </TabItem>
