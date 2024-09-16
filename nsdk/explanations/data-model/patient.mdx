@@ -25,10 +25,14 @@ A boolean field that indicates whether the patient is active.
 ### addresses
 A list of addresses for this Patient.
 
+### administrativeNote
+Any additional remark about the patient for administrative and organizational purposes. It should not contain any 
+confidential or sensitive information.
+
 ### alias
 A non-official name (nickname) used to refer to the Patient.
 
-### birthSez
+### birthSex
 The birth sex of the Patient.
 
 ### civility
@@ -55,7 +59,13 @@ If the `active` field is false, this should contain the date of the deactivation
 If the `active` field is false, this should contain the reason of deactivation of the patient.
 
 ### education
-The level of education of the Patient as a free text (e.g. college degree, undergraduate, phd).
+The level of education of the Patient as a free text (e.g. college degree, undergraduate, PhD).
+
+### ethnicity
+The ethnicity of the Patient.
+
+### financialInstitutionInformation
+A collection of object that contains the bank information (IBAN, BIC, bank) of this Patient.
 
 ### firstName
 The first name of the Patient.
@@ -79,6 +89,9 @@ before marriage.
 This collection should contain all the names for a Patient. It is a good practice to sort them by preference of use, 
 with the official name being the first entry.
 
+### nationality
+The nationality of the Patient.
+
 ### notes
 Confidential annotations related to the Patient.
 
@@ -86,8 +99,23 @@ Confidential annotations related to the Patient.
 By default, only the `markdown` field of each note will be encrypted.
 :::
 
+### partnerships
+A collection of objects that contains the relationships and contact people for this Patient.
+
+### patientHealthCareParties
+A collection of objects that represent a relation in time between this Patient and a HealthcareParty (e.g. to indicate
+that a doctor was the referring doctor for that patient).
+
 ### personalStatus
 Represents the Patient current social or relationship status (e.g. married, single, in a relationship, etc.).
+
+### picture
+An image associated to the Patient as array of bytes.
+
+:::warning
+This field is meant to contain only a short byte array (a few kilobytes). Using it to store bigger data may result in
+a loss of performance while querying your database.
+:::
 
 ### placeOfBirth
 The place of birth of the patient as a free text.
@@ -97,6 +125,9 @@ The place of death of the patient as a free text.
 
 ### profession
 The current profession of the Patient as a free text.
+
+### race
+The race of the patient.
 
 ### ssin
 The Social Security Number of the HealthcareParty.
