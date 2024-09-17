@@ -25,15 +25,15 @@ in question must have access to the events, so you will need to share health dat
 will be used by the service.
 
 In this example, we will focus on the code used to subscribe to events. Let's start by creating a service
-that subscribes to the creation of new `Service` objects with the tag `INTERNAL_INFERENCE_STATUS` having the value
+that subscribes to the creation of new `HealthElement` objects with the tag `INTERNAL_INFERENCE_STATUS` having the value
 `TO_BE_STARTED` and logs them in the console.
 
 <LanguageTabs>
 
 <TabItem value="kotlin">
 
-The `subscribeToServiceCreateOrUpdateEvents` method allows you to subscribe to the creation or update events of a
-`Service`. In this example, we filter the events to receive only those with the tag type `INTERNAL_INFERENCE_STATUS`
+The `subscribeToEvents` method allows you to subscribe to the creation events of an
+`HealthElement`. In this example, we filter the events to receive only those with the tag type `INTERNAL_INFERENCE_STATUS`
 and the tag code `TO_BE_STARTED`.
 
 This method returns a `ReceiveChannel` that allows us to consume the events.
@@ -43,20 +43,21 @@ import com.icure.cardinal.sdk.filters.ServiceFilters
 import com.icure.cardinal.sdk.subscription.EntitySubscriptionConfiguration
 import kotlinx.coroutines.channels.consumeEach
 
-sdk.contact.subscribeToServiceCreateOrUpdateEvents(
-    ServiceFilters.byTagAndValueDateForSelf(
-        tagType = "INTERNAL_INFERENCE_STATUS",
-        tagCode = "TO_BE_STARTED",
-    ),
-    EntitySubscriptionConfiguration(
-        channelBufferCapacity = 100,
-        onBufferFull = EntitySubscriptionConfiguration.FullBufferBehaviour.Close,
-        reconnectionDelay = 2.seconds,
-        retryDelayExponentFactor = 2.0,
-        connectionMaxRetries = 5,
-    )
+sdk.healthElement.subscribeToEvents (
+	setOf(SubscriptionEventType.Create),
+	HealthElementFilters.byTagForSelf(
+		tagType = "INTERNAL_INFERENCE_STATUS",
+		tagCode = "TO_BE_STARTED",
+	),
+	EntitySubscriptionConfiguration(
+		channelBufferCapacity = 100,
+		onBufferFull = EntitySubscriptionConfiguration.FullBufferBehaviour.Close,
+		reconnectionDelay = 2.seconds,
+		retryDelayExponentFactor = 2.0,
+		connectionMaxRetries = 5,
+	)
 ).eventChannel.consumeEach {
-    println("Service created or updated: $it")
+	println("HealthElement created: $it")
 }
 ```
 
@@ -71,8 +72,8 @@ for simplicity.
 
 <TabItem value="typescript">
 
-The `subscribeToServiceCreateOrUpdateEvents` method allows you to subscribe to the creation or update events of a
-`Service`. In this example, we filter the events to receive only those with the tag type `INTERNAL_INFERENCE_STATUS`
+The `subscribeToEvents` method allows you to subscribe to the creation events of an
+`HealthElement`. In this example, we filter the events to receive only those with the tag type `INTERNAL_INFERENCE_STATUS`
 and the tag code `TO_BE_STARTED`.
 
 This method returns an `EntitySubscription` that allows us to consume the events.
@@ -84,38 +85,38 @@ We loop as long as the `EntitySubscription` is not closed.
 
 ```typescript
 import {
-  EntitySubscriptionConfiguration,
-  ServiceFilters,
+	EntitySubscriptionConfiguration,
+	ServiceFilters,
 } from "@icure/cardinal-sdk";
 
-const subscription = await sdk.contact.subscribeToServiceCreateOrUpdateEvents(
-  ServiceFilters.byTagAndValueDateForSelf(
-    "INTERNAL_INFERENCE_STATUS",
-    {
-      tagCode: "TO_BE_STARTED",
-    },
-  ),
-  {
-    subscriptionConfig: new EntitySubscriptionConfiguration(
-      {
-        channelBufferCapacity: 100,
-        onBufferFull: EntitySubscriptionConfiguration.FullBufferBehaviour.Close,
-        reconnectionDelay: 2 * 1000,
-        retryDelayExponentFactor: 2.0,
-        connectionMaxRetries: 5
-      }
-    )
-  }
+const subscription = await sdk.healthElement.subscribeToEvents(
+	[SubscriptionEventType.Create],
+	HealthElementFilters.byTagForSelf(
+		'INTERNAL_INFERENCE_STATUS',
+		{
+			tagCode: 'TO_BE_STARTED',
+		},
+	),
+	{
+		subscriptionConfig: new EntitySubscriptionConfiguration(
+			{
+				channelBufferCapacity: 100,
+				onBufferFull: EntitySubscriptionConfiguration.FullBufferBehaviour.Close,
+				reconnectionDelay: 2 * 1000,
+				retryDelayExponentFactor: 2.0,
+				connectionMaxRetries: 5,
+			},
+		),
+	},
 )
 
 while (!subscription.isClosed) {
-  const event = await subscription.waitForEvent(10 * 1000)
-  if (event !== null) {
-    console.log(`Received event: ${JSON.stringify(event)}`)
-  }
-  else {
-    console.log("No new event yet")
-  }
+	const event = await subscription.waitForEvent(10 * 1000)
+	if (event !== null) {
+		console.log(`Received event: ${JSON.stringify(event)}`)
+	} else {
+		console.log('No new event yet')
+	}
 }
 ```
 
@@ -123,8 +124,8 @@ while (!subscription.isClosed) {
 
 <TabItem value="python">
 
-The `subscribe_to_service_create_or_update_events_blocking` method allows you to subscribe to the creation or update events of a
-`Service`. In this example, we filter the events to receive only those with the tag type `INTERNAL_INFERENCE_STATUS`
+The `subscribe_to_events_blocking` method allows you to subscribe to the creation events of an
+`HealthElement`. In this example, we filter the events to receive only those with the tag type `INTERNAL_INFERENCE_STATUS`
 and the tag code `TO_BE_STARTED`.
 
 This method returns an `EntitySubscription` that allows us to consume the events.
@@ -139,26 +140,27 @@ from cardinal_sdk.filters import ServiceFilters
 from cardinal_sdk.model import EntitySubscriptionConfiguration
 from datetime import timedelta
 
-subscription = sdk.contact.subscribe_to_service_create_or_update_events_blocking(
-    ServiceFilters.by_tag_and_value_date_for_self(
-        "INTERNAL_INFERENCE_STATUS",
-        "TO_BE_STARTED",
-    ),
-    EntitySubscriptionConfiguration(
-        channel_buffer_capacity=100,
-        on_buffer_full=EntitySubscriptionConfiguration.FullBufferBehaviour.Close,
-        reconnection_delay=timedelta(seconds=5),
-        retry_delay_exponent_factor=2.0,
-        connection_max_retries=5,
-    )
+subscription = sdk.health_element.subscribe_to_events_blocking(
+	[SubscriptionEventType.Create],
+	HealthElementFilters.by_tag_for_self(
+		"INTERNAL_INFERENCE_STATUS",
+		"TO_BE_STARTED",
+	),
+	EntitySubscriptionConfiguration(
+		channel_buffer_capacity=100,
+		on_buffer_full=EntitySubscriptionConfiguration.FullBufferBehaviour.Close,
+		reconnection_delay=timedelta(seconds=5),
+		retry_delay_exponent_factor=2.0,
+		connection_max_retries=5,
+	)
 )
 
 while subscription.get_close_reason() is None:
-    event = subscription.wait_for_event_blocking(timedelta(seconds=10))
-    if event is not None:
-        print(event)
-    else:
-        print("No new event yet")
+	event = subscription.wait_for_event_blocking(timedelta(seconds=10))
+	if event is not None:
+		print(event)
+	else:
+		print("No new event yet")
 ```
 
 </TabItem>
@@ -179,9 +181,9 @@ the size of this buffer and the behavior to adopt if the buffer is full.
 This buffer contains events that have not yet been consumed. An event can be:
 - A connection event (emitted once during the initial connection)
 - An error event:
-  - An error event due to a missed ping from the server
-  - An error event due to backend closure
-  - An unexpected error event
+	- An error event due to a missed ping from the server
+	- An error event due to backend closure
+	- An unexpected error event
 - A reconnection event (automatically initiated in case of a non-fatal error)
 - An event with an entity (Service, Contact, etc.) that has been created or modified (depending on your filter)
 - A deserialization error event (if an event cannot be deserialized)
@@ -220,3 +222,5 @@ Now that we know the basics, we can determine how to handle different error case
 to react accordingly.
 
 ### Recover from a connection error
+
+### 
