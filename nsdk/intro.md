@@ -18,7 +18,7 @@ the examples for all the languages.
 
 This documentation is structured as follows:
 
-- In the Quickstart section, you will find instructions and boilerplate code to quickly set up a project with Cardinal in
+- In the [Quickstart](/quickstart/index) section, you will find instructions and boilerplate code to quickly set up a project with Cardinal in
 all the supported languages.
 - In the [Tutorial](/nsdk/tutorial) section, you will find example applications for the most common base use cases. The
 code of these examples is fully explained and available in public GitHub repositories.
@@ -26,3 +26,7 @@ code of these examples is fully explained and available in public GitHub reposit
 Cardinal SDK, each one with code examples in all the supported languages.
 - In the [Explanation](/nsdk/explanations/index) section, you will find additional material to understand the structure 
 of the Cardinal SDK.
+
+:::note
+Before start using the Cardinal SDK, you have to [create your account on the Cockpit](cockpit/how-to/how-to-create-your-account)
+:::
