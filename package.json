@@ -5,8 +5,10 @@
   "scripts": {
     "make": "node make.mjs && node fill.mjs",
     "docusaurus": "yarn make && docusaurus",
-    "start": "yarn make && docusaurus start",
-    "build": "yarn make && docusaurus build",
+    "old-start": "yarn make && docusaurus start",
+    "old-build": "yarn make && docusaurus build",
+    "start": "docusaurus start",
+    "build": "docusaurus build",
     "swizzle": "yarn make && docusaurus swizzle",
     "deploy": "yarn make && docusaurus deploy",
     "clear": "yarn make && docusaurus clear",
@@ -55,7 +57,7 @@
     ]
   },
   "engines": {
-    "node": ">=16.14"
+    "node": ">=18.0"
   },
   "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
 }

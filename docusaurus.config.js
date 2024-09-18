@@ -35,35 +35,18 @@ async function createConfig() {
         },
 
         plugins: [
-            'content-pages',
-            [
-                'content-docs',
-                {
-                    id: 'ehrlite',
-                    path: './ehr-lite-sdk',
-                    routeBasePath: 'ehr-lite-sdk',
-                    sidebarPath: require.resolve('./sidebarsEhrLiteSDK.js'),
-                    editUrl:
-                        `https://github.com/${GITHUB_USERNAME}/medtech-docs/edit/main/`,
-                    remarkPlugins: [
-                        [remarkKroki, krokiConfig]
-                    ],
-                },
-            ],
-            [
-                'content-docs',
-                {
-                    id: 'medtech',
-                    path: './medtech-sdk',
-                    routeBasePath: 'medtech-sdk',
-                    sidebarPath: require.resolve('./sidebarsMedtechSDK.js'),
-                    editUrl:
-                        `https://github.com/${GITHUB_USERNAME}/medtech-docs/edit/main/`,
-                    remarkPlugins: [
-                        [remarkKroki, krokiConfig]
-                    ],
-                },
-            ],
+            // [
+            //     '@docusaurus/plugin-client-redirects',
+            //     {
+            //         redirects: [
+            //             // /docs/oldDoc -> /docs/newDoc
+            //             {
+            //                 to: '/',
+            //                 from: '/sdk',
+            //             },
+            //         ],
+            //     },
+            // ],
             [
                 'content-docs',
                 {
@@ -81,23 +64,9 @@ async function createConfig() {
             [
                 'content-docs',
                 {
-                    id: 'api',
-                    path: './api',
-                    routeBasePath: 'api',
-                    sidebarPath: require.resolve('./sidebarsApi.js'),
-                    editUrl:
-                        `https://github.com/${GITHUB_USERNAME}/medtech-docs/edit/main/`,
-                    remarkPlugins: [
-                        [remarkKroki, krokiConfig]
-                    ],
-                },
-            ],
-            [
-                'content-docs',
-                {
                     id: 'nsdk',
                     path: './nsdk',
-                    routeBasePath: 'nsdk',
+                    routeBasePath: 'sdk',
                     sidebarPath: require.resolve('./sidebarsNsdk.js'),
                     editUrl:
                         `https://github.com/${GITHUB_USERNAME}/medtech-docs/edit/main/`,
@@ -178,20 +147,20 @@ async function createConfig() {
                         className: 'logoBtn'
                     },
                     items: [
-                        {
-                            type: 'doc',
-                            docId: 'intro',
-                            position: 'right',
-                            label: 'EHR Lite SDK',
-                            docsPluginId: 'ehrlite',
-                        },
-                        {
-                            type: 'doc',
-                            docId: 'intro',
-                            position: 'right',
-                            label: 'Medical Device SDK',
-                            docsPluginId: 'medtech',
-                        },
+                        // {
+                        //     type: 'doc',
+                        //     docId: 'intro',
+                        //     position: 'right',
+                        //     label: 'EHR Lite SDK',
+                        //     docsPluginId: 'ehrlite',
+                        // },
+                        // {
+                        //     type: 'doc',
+                        //     docId: 'intro',
+                        //     position: 'right',
+                        //     label: 'Medical Device SDK',
+                        //     docsPluginId: 'medtech',
+                        // },
                         {
                             type: 'doc',
                             docId: 'intro',
@@ -199,13 +168,13 @@ async function createConfig() {
                             label: 'Cockpit',
                             docsPluginId: 'cockpit',
                         },
-                        {
-                            type: 'doc',
-                            docId: 'intro',
-                            position: 'right',
-                            label: 'iCure API',
-                            docsPluginId: 'api',
-                        },
+                        // {
+                        //     type: 'doc',
+                        //     docId: 'intro',
+                        //     position: 'right',
+                        //     label: 'iCure API',
+                        //     docsPluginId: 'api',
+                        // },
                         {
                             type: 'doc',
                             docId: 'intro',
