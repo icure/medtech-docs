@@ -1,5 +1,7 @@
 ---
 sidebar_position: 1
+# This slug is important to keep, it is allowing the page to be loaded as the homepage instead of the classic landing page
+slug: /
 ---
 
 # Introduction

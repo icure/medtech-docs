@@ -47,10 +47,12 @@ for each encryptable entity which fields should be encrypted.
 
 <TabItem value="python">
 
-{`from icure.authentication import UsernamePassword
+```python
+from icure.authentication import UsernamePassword
 from icure.storage import FileSystemStorage
 from icure import IcureSdk, CryptoStrategies, KeyDataRecoveryRequest, RecoveredKeyData, ExportedKeyData, KeyGenerationRequestResult, KeyGenerationRequestResultAllow
-from icure.model import DataOwnerType, DecryptedPatient, DataOwnerWithType, CryptoActorStubWithType, RecoveryDataUseFailureReason\n
+from icure.model import DataOwnerType, DecryptedPatient, DataOwnerWithType, CryptoActorStubWithType, RecoveryDataUseFailureReason
+
 class MyCryptoStrategies(CryptoStrategies):
     def recover_and_verify_self_hierarchy_keys(
         self,
@@ -59,20 +61,24 @@ class MyCryptoStrategies(CryptoStrategies):
     ) -> Dict[str, RecoveredKeyData]:
         return {
             k.data_owner_details.data_owner.id: RecoveredKeyData({}, {}) for k in keys_data
-        }\n
+        }
+    
     def generate_new_key_for_data_owner(
         self,
         self_data_owner: DataOwnerWithType
     ) -> KeyGenerationRequestResult:
-        return KeyGenerationRequestResultAllow()\n
+        return KeyGenerationRequestResultAllow()
+    
     def verify_delegate_public_keys(
         self,
         delegate: CryptoActorStubWithType,
         public_keys: List[str],
     ) -> List[str]:
-        return public_keys\n
+        return public_keys
+    
     def data_owner_requires_anonymous_delegation(self, data_owner: CryptoActorStubWithType) -> bool:
-        return data_owner.type != DataOwnerType.Hcp\n\n
+        return data_owner.type != DataOwnerType.Hcp
+    
 executor = ThreadPoolExecutor()
 sdk = IcureSdk(
     "https://api.icure.cloud",
@@ -86,7 +92,8 @@ sdk = IcureSdk(
     # The executor is used on python to execute the async methods.
     # If you don't provide an executor you can only use the blocking variants of methods.
     executor=executor
-)`}
+)
+```
 
 </TabItem>
 </LanguageTabs>
@@ -209,8 +216,10 @@ entity.
 
 <TabItem value="python">
 
-{`from icure.model import DecryptedPatient, AccessLevel
-import uuid\n
+```python
+from icure.model import DecryptedPatient, AccessLevel
+import uuid
+
 patient_with_initialised_metadata = sdk.patient.with_encryption_metadata_blocking(
     base=DecryptedPatient(
         # You should use a uuid implementation with a random source that is suitable for cryptographic operations.
@@ -226,7 +235,8 @@ patient_with_initialised_metadata = sdk.patient.with_encryption_metadata_blockin
     # The data will be shared with the data owner corresponding to organisationId
     delegates={organisationId:AccessLevel.Write}
 )
-created_patient = sdk.patient.create_patient_blocking(patient_with_initialised_metadata)`}
+created_patient = sdk.patient.create_patient_blocking(patient_with_initialised_metadata)
+```
 
 </TabItem>
 
@@ -241,7 +251,9 @@ When initialising the encryption metadata of an entity with an encrypted link yo
 <LanguageTabs>
 <TabItem value="python">
 
-{`from icure.model import DecryptedHealthElement\n
+```python
+from icure.model import DecryptedHealthElement
+
 health_element = sdk.health_element.create_health_element_blocking(
     sdk.health_element.with_encryption_metadata_blocking(
         base=DecryptedHealthElement(
@@ -250,7 +262,8 @@ health_element = sdk.health_element.create_health_element_blocking(
         ),
         patient=created_patient
     )
-)`}
+)
+```
 
 </TabItem>
 </LanguageTabs>
@@ -304,10 +317,12 @@ The following table summarises the behaviour of the flavours of the api
 <LanguageTabs>
 <TabItem value="python">
 
-{`encrypted_patient = sdk.patient.encrypted.get_patient_blocking(created_patient.id)
+```python
+encrypted_patient = sdk.patient.encrypted.get_patient_blocking(created_patient.id)
 maybe_decrypted_health_element = sdk.health_element.tryAndRecover.get_health_element_blocking(health_element.id)
 # You can check if the health element was decrypted by using \`isinstance\`
-health_element_is_decrypted = isintance(maybeDecryptedHealthElement, DecryptedHealthElement)`}
+health_element_is_decrypted = isintance(maybeDecryptedHealthElement, DecryptedHealthElement)
+```
 
 </TabItem>
 </LanguageTabs>
@@ -346,12 +361,15 @@ on the builders to learn more about the available filters.
 <LanguageTabs>
 <TabItem value="python">
 
-{`from icure.filters import PatientFilters\n
+```python
+from icure.filters import PatientFilters
+
 john_filter = PatientFilters.Builder(sdk).contains_fuzzy("john").date_of_birth_between(
     from_date=19900101,
     to_date=19991231,
     sort=True
-).build()`}
+).build()
+```
 
 </TabItem>
 </LanguageTabs>
@@ -363,8 +381,10 @@ operation is an iterator, which can be used to retrieve all entities matching th
 <LanguageTabs>
 <TabItem value="python">
 
-{`filter_iterator = sdk.patient.filter_patients_by_blocking(john_filter)
-print(filter_iterator.next_blocking(100))`}
+```python
+filter_iterator = sdk.patient.filter_patients_by_blocking(john_filter)
+print(filter_iterator.next_blocking(100))
+```
 
 </TabItem>
 </LanguageTabs>
@@ -393,8 +413,11 @@ a filter to get all the health elements linked to a patient in the following way
 <LanguageTabs>
 <TabItem value="python">
 
-{`from icure.filters import HealthElementFilters\n
-health_elements_for_patient_filter = HealthElementFilters.Builder(sdk).by_patients([created_patient]).build()`}
+```python
+from icure.filters import HealthElementFilters
+
+health_elements_for_patient_filter = HealthElementFilters.Builder(sdk).by_patients([created_patient]).build()
+```
 
 </TabItem>
 </LanguageTabs>
@@ -411,8 +434,10 @@ decrypted like the entity content), for example to get the id of the patient tha
 <LanguageTabs>
 <TabItem value="python">
 
-{`# A list containing the id of the patient if it could be decrypted, or empty if the current user can't decrypt it
-patient_of_health_element = sdk.health_element.decrypt_patient_id_of_blocking(health_element)`}
+```python
+# A list containing the id of the patient if it could be decrypted, or empty if the current user can't decrypt it
+patient_of_health_element = sdk.health_element.decrypt_patient_id_of_blocking(health_element)
+```
 
 </TabItem>
 </LanguageTabs>
@@ -433,7 +458,9 @@ entity. Additionally, you can give:
 <LanguageTabs>
 <TabItem value="python">
 
-{`from icure.model import RequestedPermission, ShareMetadataBehaviour\n
+```python
+from icure.model import RequestedPermission, ShareMetadataBehaviour
+
 # Get the secret ids of the patient
 patient_secret_ids = sdk.patient.get_secret_ids_of_blocking(created_patient)
 shared_patient = sdk.patient.share_with_blocking(
@@ -459,7 +486,8 @@ shared_health_element = sdk.health_element.share_with_blocking(
         # Share the entity with write permission, failing if the current user does not have write permission.
         requested_permissions=RequestedPermission.FullWrite
     )
-)`}
+)
+```
 
 </TabItem>
 </LanguageTabs>
