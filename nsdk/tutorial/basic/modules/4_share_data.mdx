@@ -168,41 +168,30 @@ the ID of the recipient Data Owner (i.e., the Healthcare Party, Patient, or Devi
 <TabItem value="kotlin">
 
 ```kotlin
-val result = sdk.document.shareWith(
+val updatedDocument = sdk.document.shareWith(
 	delegateId = otherHcp.id,
 	document = oldDocument
 )
-
-if(result.isSuccess) {
-	println("Successfully shared document")
-}
 ```
 
 </TabItem>
 <TabItem value="python">
 
 ```python
-result = sdk.document.share_with_blocking(
+updated_document = sdk.document.share_with_blocking(
 	delegate_id=other_hcp.id,
 	document=old_document
 )
-
-if isinstance(result, SimpleShareResultDecryptedDocumentSuccess):
-	print("Successfully shared document")
 ```
 
 </TabItem>
 <TabItem value="typescript">
 
 ```typescript
-const result = await sdk.document.shareWith(
+updatedDocument = await sdk.document.shareWith(
 	otherHcp.id,
 	oldDocument
 )
-
-if(result instanceof SimpleShareResult.Success) {
-	console.log("Successfully shared document")
-}
 ```
 
 </TabItem>
@@ -494,7 +483,7 @@ can share the Patient:
 
 ```kotlin
 val patientSecretIds = sdk.patient.getSecretIdsOf(createdPatient)
-val patientShareResult = sdk.patient.shareWith(
+val patient = sdk.patient.shareWith(
 	delegateId = createdPatient.id,
 	patient = createdPatient,
 	options = PatientShareOptions(
@@ -503,12 +492,6 @@ val patientShareResult = sdk.patient.shareWith(
 		requestedPermissions = RequestedPermission.MaxWrite
 	)
 )
-
-if (patientShareResult.isSuccess) {
-	println("Successfully shared patient")
-}
-
-val patient = patientShareResult.updatedEntityOrThrow()
 ```
 
 </TabItem>
@@ -516,7 +499,7 @@ val patient = patientShareResult.updatedEntityOrThrow()
 
 ```python
 patient_secret_ids = sdk.patient.get_secret_ids_of_blocking(created_patient)
-patient_share_result = sdk.patient.share_with_blocking(
+patient = sdk.patient.share_with_blocking(
 	delegate_id=created_patient.id,
 	patient=created_patient,
 	options=PatientShareOptions(
@@ -525,11 +508,6 @@ patient_share_result = sdk.patient.share_with_blocking(
 		requested_permissions=RequestedPermission.MaxWrite
 	)
 )
-
-if isinstance(patient_share_result, SimpleShareResultDecryptedPatientSuccess):
-	print("Successfully shared patient")
-
-patient = patient_share_result.updated_entity
 ```
 
 </TabItem>
@@ -537,7 +515,7 @@ patient = patient_share_result.updated_entity
 
 ```typescript
 const patientSecretIds = await sdk.patient.getSecretIdsOf(createdPatient)
-const patientShareResult = await sdk.patient.shareWith(
+const patient = await sdk.patient.shareWith(
 	createdPatient.id,
 	createdPatient,
 	new PatientShareOptions({
@@ -546,12 +524,6 @@ const patientShareResult = await sdk.patient.shareWith(
 		requestedPermissions: RequestedPermission.MaxWrite
 	})
 )
-
-if (patientShareResult instanceof SimpleShareResult.Success) {
-	console.log("Successfully shared patient")
-}
-
-const patient = (patientShareResult as SimpleShareResult.Success<DecryptedPatient>).updatedEntity
 ```
 
 </TabItem>
@@ -698,41 +670,30 @@ Next, the Healthcare Party can share the entity with the Patient:
 <TabItem value="kotlin">
 
 ```kotlin
-val result = sdk.healthElement.shareWith(
+val healthElement = sdk.healthElement.shareWith(
 	delegateId = patient.id,
 	healthElement = createdHealthElement
 )
-
-if (result.isSuccess) {
-	println("Successfully shared with patient ID \${patient.id}")
-}
 ```
 
 </TabItem>
 <TabItem value="python">
 
 ```python
-result = sdk.health_element.share_with_blocking(
+health_element = sdk.health_element.share_with_blocking(
 	delegate_id=patient.id,
 	health_element=created_health_element
 )
-
-if isinstance(result, SimpleShareResultDecryptedHealthElementSuccess):
-	print(f"Successfully shared with patient id {patient.id}")
 ```
 
 </TabItem>
 <TabItem value="typescript">
 
 ```typescript
-const result = await sdk.healthElement.shareWith(
+const healthElement = await sdk.healthElement.shareWith(
 	patient.id,
 	createdHealthElement
 )
-
-if(result instanceof SimpleShareResult.Success) {
-	console.log(`Successfully shared with patient id ${patient.id}`)
-}
 ```
 
 </TabItem>

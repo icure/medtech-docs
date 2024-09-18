@@ -795,7 +795,7 @@ Some permissions allow users to bypass this requirement.
 For example, admin user can update any encryptable entity, even if it wasn't shared with them.
 
 ### Bulk update
-
+ 
 The SDK also provides bulk update methods.
 Differently from the single entity update methods, the bulk methods don't throw an exception in case of revision 
 conflict.
@@ -1133,7 +1133,7 @@ suspend fun shareHealthElementForStatistics(
 			// The statistics script doesn't need the secret ids of the health element
 			shareSecretIds = SecretIdShareOptions.UseExactly(emptySet(), false)
 		)
-	).updatedEntityOrThrow()
+	)
 ```
 
 </TabItem>
@@ -1145,8 +1145,9 @@ import {
 	CardinalSdk,
 	DecryptedHealthElement,
 	HealthElementShareOptions,
-	RequestedPermission, SecretIdShareOptions,
-	ShareMetadataBehaviour, SimpleShareResult
+	RequestedPermission, 
+	SecretIdShareOptions,
+	ShareMetadataBehaviour
 } from "@icure/cardinal-sdk";
 
 const STATISTICS_DATA_OWNER_ID = "..."
@@ -1156,7 +1157,7 @@ async function shareHealthElementForStatistics(
 	sdk: CardinalSdk,
 	healthElement: DecryptedHealthElement
 ): Promise<DecryptedHealthElement> {
-	const shareResult = await sdk.healthElement.shareWith(
+	return sdk.healthElement.shareWith(
 		// You already know the data owner id
 		STATISTICS_DATA_OWNER_ID,
 		healthElement,
@@ -1173,9 +1174,6 @@ async function shareHealthElementForStatistics(
 			})
 		}
 	)
-	if (shareResult instanceof SimpleShareResult.Success) {
-		return shareResult.updatedEntity
-	} else throw new Error("Failed to share")
 }
 ```
 
@@ -1186,16 +1184,16 @@ async function shareHealthElementForStatistics(
 ```python
 from cardinal_sdk import CardinalSdk
 from cardinal_sdk.model import DecryptedHealthElement, HealthElementShareOptions, RequestedPermission, \
-	ShareMetadataBehaviour, SecretIdShareOptionsUseExactly, SimpleShareResultDecryptedHealthElementSuccess
+	ShareMetadataBehaviour, SecretIdShareOptionsUseExactly
 
 __STATISTICS_DATA_OWNER_ID = "..."
 
 # Example: the statistics data owner is used by a script that compiles some statistics about your data.
 def share_health_element_for_statistics(
-		sdk: CardinalSdk,
-		health_element: DecryptedHealthElement
+	sdk: CardinalSdk,
+	health_element: DecryptedHealthElement
 ) -> DecryptedHealthElement:
-	share_result = sdk.health_element.share_with_blocking(
+	return sdk.health_element.share_with_blocking(
 		# You already know the data owner id
 		__STATISTICS_DATA_OWNER_ID,
 		health_element,
@@ -1210,10 +1208,6 @@ def share_health_element_for_statistics(
 			share_secret_ids=SecretIdShareOptionsUseExactly(secret_ids=[], create_unknown_secret_ids=False)
 		)
 	)
-	if isinstance(share_result, SimpleShareResultDecryptedHealthElementSuccess):
-		return share_result.updated_entity
-	else:
-		raise Exception("Failed to share")
 ```
 
 </TabItem>

@@ -496,7 +496,7 @@ suspend fun invitePatientAndPreShare(
 			shareEncryptionKey = ShareMetadataBehaviour.Required,
 			shareSecretIds = SecretIdShareOptions.AllAvailable(requireAtLeastOne = true)
 		)
-	).updatedEntityOrThrow()
+	)
 	// You can do this before or after sharing
 	if (didForceInitialize) {
 		val recoveryKey = doctorSdk.recovery.createExchangeDataRecoveryInfo(patient.id)
@@ -514,8 +514,10 @@ import {
 	CardinalSdk,
 	DecryptedPatient,
 	PatientShareOptions,
-	randomUuid, RequestedPermission, SecretIdShareOptions,
-	ShareMetadataBehaviour, SimpleShareResult,
+	randomUuid,
+	RequestedPermission,
+	SecretIdShareOptions,
+	ShareMetadataBehaviour,
 	User
 } from "@icure/cardinal-sdk";
 
@@ -532,7 +534,7 @@ async function invitePatientAndPreShare(
 		})
 	)
 	const didForceInitialize = await doctorSdk.patient.forceInitializeExchangeDataToNewlyInvitedPatient(patient.id)
-	const shareResult = await doctorSdk.patient.shareWith(
+	await doctorSdk.patient.shareWith(
 		patient.id,
 		patient,
 		new PatientShareOptions({
@@ -541,7 +543,6 @@ async function invitePatientAndPreShare(
 			shareSecretIds = new SecretIdShareOptions.AllAvailable({ requireAtLeastOne: true })
 		})
 	)
-	if (shareResult instanceof SimpleShareResult.Failure) throw new Error("Failed to share")
 	// You can do this before or after sharing
 	if (didForceInitialize) {
 		const recoveryKey = await doctorSdk.recovery.createExchangeDataRecoveryInfo(patient.id)

@@ -227,7 +227,7 @@ through Cardinal.
 
 ```kotlin
 val patientSecretIds = sdk.patient.getSecretIdsOf(createdPatient)
-val patientShareResult = sdk.patient.shareWith(
+val patient = sdk.patient.shareWith(
 	delegateId = createdPatient.id,
 	patient = createdPatient,
 	options = PatientShareOptions(
@@ -236,12 +236,6 @@ val patientShareResult = sdk.patient.shareWith(
 		requestedPermissions = RequestedPermission.MaxWrite
 	)
 )
-
-if (patientShareResult.isSuccess) {
-	println("Successfully shared patient")
-}
-
-val patient = patientShareResult.updatedEntityOrThrow()
 ```
 
 </TabItem>
@@ -249,7 +243,7 @@ val patient = patientShareResult.updatedEntityOrThrow()
 
 ```python
 patient_secret_ids = sdk.patient.get_secret_ids_of_blocking(created_patient)
-patient_share_result = sdk.patient.share_with_blocking(
+patient = sdk.patient.share_with_blocking(
 	delegate_id=created_patient.id,
 	patient=created_patient,
 	options=PatientShareOptions(
@@ -258,11 +252,6 @@ patient_share_result = sdk.patient.share_with_blocking(
 		requested_permissions=RequestedPermission.MaxWrite
 	)
 )
-
-if isinstance(patient_share_result, SimpleShareResultDecryptedPatientSuccess):
-	print("Successfully shared patient")
-
-patient = patient_share_result.updated_entity
 ```
 
 </TabItem>
@@ -270,7 +259,7 @@ patient = patient_share_result.updated_entity
 
 ```typescript
 const patientSecretIds = await sdk.patient.getSecretIdsOf(createdPatient)
-const patientShareResult = await sdk.patient.shareWith(
+const  = await sdk.patient.shareWith(
 	createdPatient.id,
 	createdPatient,
 	new PatientShareOptions({
@@ -279,12 +268,6 @@ const patientShareResult = await sdk.patient.shareWith(
 		requestedPermissions: RequestedPermission.MaxWrite
 	})
 )
-
-if (patientShareResult instanceof SimpleShareResult.Success) {
-	console.log("Successfully shared patient")
-}
-
-const patient = (patientShareResult as SimpleShareResult.Success<DecryptedPatient>).updatedEntity
 ```
 
 </TabItem>
