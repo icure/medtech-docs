@@ -15,7 +15,6 @@
 const sidebars = {
   apiSidebar: [
     'intro',
-    'overview',
     {
       type: 'category',
       label: 'Quickstart',
