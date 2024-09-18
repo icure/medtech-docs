@@ -15,6 +15,6 @@ A few seconds later, you will receive an invitation to the email address you pro
 
 Click on the **Verify** button to accept the invitation and create your account.
 
-You may now start configuring your own iCure solution : 
+You may now start configuring your own Cardinal solution : 
 
 ![Welcome step, create Solution](img/onboarding/create-solution-btn.png)
