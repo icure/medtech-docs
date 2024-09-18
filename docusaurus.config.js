@@ -14,7 +14,7 @@ async function createConfig() {
 
     /** @type {import('@docusaurus/types').Config} */
     return {
-        title: 'iCure Documentation',
+        title: 'Cardinal Documentation',
         url: 'https://docs.icure.com',
         baseUrl: '/',
         onBrokenLinks: 'throw',
@@ -143,7 +143,7 @@ async function createConfig() {
                     },
                     {
                         name: 'twitter:title',
-                        content: 'iCure Documentation | Start to build your Medical Device or EHR App with iCure'
+                        content: 'Cardinal Documentation | Start to build your Medical Device or EHR App with iCure'
                     },
                     {
                         name: 'twitter:description',
@@ -155,7 +155,7 @@ async function createConfig() {
                     },
                     {
                         property: "og:title",
-                        content: 'iCure Documentation | Start to build your Medical Device or EHR App with iCure'
+                        content: 'Cardinal Documentation | Start to build your Medical Device or EHR App with iCure'
                     },
                     {
                         property: 'og:description',
