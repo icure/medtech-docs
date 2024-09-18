@@ -5,7 +5,7 @@ results.
 
 Differently from the other entities, the Document is designed to manage big files, that are stored as attachments of this
 entity. Each Document can have a **main attachment** and multiple **secondary attachments**, that are fully encrypted
-before being sent on the cloud. You can read more about store big files in Cardinal [here](/nsdk/how-to/store-big-files).
+before being sent on the cloud. You can read more about store big files in Cardinal [here](/how-to/store-unstructured-data).
 
 ## Fields Encrypted by Default
 In this entity, no field is encrypted by default. You can customize the encrypted fields as [explained in this how to](/nsdk/how-to/initialize-the-sdk/configure-what-to-encrypt).
@@ -18,7 +18,7 @@ Below you will find an explanation of the most commonly used properties in the e
 ### attachmentId
 The id of the main attachment of this document. This is an internal field managed by the Cardinal SDK that is part of 
 the mechanism to store big files. Do not modify this field directly. For more information about attachments and how to 
-store big files in Cardinal, check this [how to](/nsdk/how-to/store-big-files).
+store big files in Cardinal, check this [how to](/how-to/store-unstructured-data).
 
 ### decryptedAttachment
 This is an internal field managed by the Cardinal SDK. Do not modify it manually
@@ -36,7 +36,7 @@ The name of the Document as free text.
 ### objectStoreReference
 This is an internal field managed by the Cardinal SDK that is part of the mechanism to store big files. Do not modify
 this field directly. For more information about attachments and how to store big files in Cardinal, check this
-[how to](/nsdk/how-to/store-big-files).
+[how to](/how-to/store-unstructured-data).
 
 ### openingContactId
 The id of the [Contact](/nsdk/explanations/data-model/contact) that represent the encounter where this document was 
@@ -49,7 +49,7 @@ that can be associated to the main attachment of this Document.
 ### secondaryAttachments
 This data structure associates the id of any secondary attachment of the Document with the metadata needed to store it.
 This is a field managed internally by the Cardinal SDK and you should not modify it manually. For more information 
-about storing and retrieving secondary attachments, check this [how to](/nsdk/how-to/store-big-files).
+about storing and retrieving secondary attachments, check this [how to](/how-to/store-unstructured-data).
 
 ### size
 The size of the Document, in bytes.
