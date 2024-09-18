@@ -1,0 +1,69 @@
+---
+slug: basic-tutorial-sdk-initialization
+---
+
+import {LanguageTabs} from "@site/src/components/LanguageTabs";
+import TabItem from "@theme/TabItem";
+
+# Initialize the SDK
+
+After you have [created a first database and a healthcare party user with a token](/nsdk/tutorial/basic/sdk-basic-tutorial),
+you can use those credentials to instantiate a new iCure SDK.
+In the following example, the username and password are retrieved from the standard input:
+
+<LanguageTabs>
+<TabItem value="kotlin">
+
+```kotlin
+private const val CARDINAL_URL = "https://api.icure.cloud"
+
+print("Login: ")
+val username = readln().trim()
+print("Password: ")
+val password = readln().trim()
+val sdk = CardinalSdk.initialize(
+	applicationId = null,
+	baseUrl = CARDINAL_URL,
+	authenticationMethod = AuthenticationMethod.UsingCredentials(
+		UsernamePassword(username, password)
+	),
+	baseStorage = FileStorageFacade("./scratch/storage")
+)
+```
+</TabItem>
+<TabItem value="python">
+
+```python
+CARDINAL_URL = "https://api.icure.cloud"
+
+username = input("Username: ")
+password = input("Password: ")
+sdk = CardinalSdk(
+	application_id=None,
+	baseurl=CARDINAL_URL,
+	authentication_method=UsernamePassword(username, password),
+	storage_facade=FileSystemStorage("./scratch/storage")
+)
+```
+</TabItem>
+<TabItem value="typescript">
+
+```typescript
+const CARDINAL_URL = "https://api.icure.cloud"
+
+const username = await readLn("Login: ")
+const password = await readLn("Password: ")
+const sdk = CardinalSdk.initialize(
+	undefined,
+	CARDINAL_URL,
+	new AuthenticationMethod.UsingCredentials.UsernamePassword(username, password),
+	StorageFacade.usingFileSystem("./scratch/storage")
+)
+```
+</TabItem>
+</LanguageTabs>
+
+The `initialize` function creates an instance of the SDK with the provided username and password. It also attempts to
+load existing cryptographic keys for the user from the `./scratch/storage` folder. If no key is found for the user in
+that folder, a new cryptographic key will be generated and stored there.
+If you want to know more about the SDK initialization parameters, check [this how to](/nsdk/how-to/initialize-the-sdk/).

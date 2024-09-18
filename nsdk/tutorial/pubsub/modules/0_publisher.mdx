@@ -1,0 +1,621 @@
+---
+slug: pubsub-tutorial-publisher
+---
+
+import {LanguageTabs} from "@site/src/components/LanguageTabs";
+import TabItem from "@theme/TabItem";
+
+# Implement the Publisher
+
+## Publisher Application Overview
+
+The Publisher is any application that a patient can use to create medical data. In this example, it is a CLI that
+creates samples simulating a device that measures the sugar level in blood.
+
+Since patient users cannot be created directly through the cockpit and to keep this tutorial self-contained, the
+application will first log in as a healthcare party to create the patient user. This newly created patient user will 
+then be used for the rest of the example.
+
+## Create the Patient User
+
+First, the user will be prompted to insert the credentials of a [healthcare party created through the cockpit](cockpit/how-to/how-to-manage-hcp).
+An SDK instance will be initialized for that healthcare party.
+
+<LanguageTabs>
+<TabItem value="kotlin">
+
+```kotlin
+private const val CARDINAL_URL = "https://api.icure.cloud"
+
+print("Login: ")
+val username = readln().trim()
+print("Password: ")
+val password = readln().trim()
+val sdk = CardinalSdk.initialize(
+	applicationId = null,
+	baseUrl = CARDINAL_URL,
+	authenticationMethod = AuthenticationMethod.UsingCredentials(
+		UsernamePassword(username, password)
+	),
+	baseStorage = FileStorageFacade("./scratch/storage")
+)
+```
+
+</TabItem>
+<TabItem value="python">
+
+```python
+CARDINAL_URL = "https://api.icure.cloud"
+
+username = input("Username: ")
+password = input("Password: ")
+sdk = CardinalSdk(
+	application_id=None,
+	baseurl=CARDINAL_URL,
+	authentication_method=UsernamePassword(username, password),
+	storage_facade=FileSystemStorage("../scratch/storage")
+)
+```
+
+</TabItem>
+<TabItem value="typescript">
+
+```typescript
+const CARDINAL_URL = "https://api.icure.cloud"
+
+const username = await readLn("Login: ")
+const password = await readLn("Password: ")
+sdk = await CardinalSdk.initialize(
+	undefined,
+	CARDINAL_URL,
+	new AuthenticationMethod.UsingCredentials.UsernamePassword(username, password),
+	StorageFacade.usingFileSystem("../scratch/storage")
+)
+```
+
+</TabItem>
+</LanguageTabs>
+
+Npw, the healthcare party user can create a Patient entity.
+
+<LanguageTabs>
+<TabItem value="kotlin">
+
+```kotlin
+val newPatient = DecryptedPatient(
+	id = UUID.randomUUID().toString(),
+	firstName = "Edmond",
+	lastName = "Dantes",
+)
+val patientWithMetadata = sdk.patient.withEncryptionMetadata(newPatient)
+val createdPatient = sdk.patient.createPatient(patientWithMetadata)
+```
+
+</TabItem>
+<TabItem value="python">
+
+```python
+new_patient = DecryptedPatient(
+	id=str(uuid.uuid4()),
+	first_name="Edmond",
+	last_name="Dantes",
+)
+patient_with_metadata = sdk.patient.with_encryption_metadata_blocking(new_patient)
+created_patient = sdk.patient.create_patient_blocking(patient_with_metadata)
+```
+
+</TabItem>
+<TabItem value="typescript">
+
+```typescript
+const newPatient = new DecryptedPatient({
+	id: uuid(),
+	firstName: "Edmond",
+	lastName: "Dantes",
+})
+const patientWithMetadata = await sdk.patient.withEncryptionMetadata(newPatient)
+const createdPatient = await sdk.patient.createPatient(patientWithMetadata)
+```
+
+</TabItem>
+</LanguageTabs>
+
+Then, it creates a user associated to the patient. The healthcare party also creates a temporary token that will allow 
+the new user to log in.
+
+<LanguageTabs>
+<TabItem value="kotlin">
+
+```kotlin
+val login = "edmond.dantes.${UUID.randomUUID().toString().substring(0, 6)}@icure.com"
+val patientUser = User(
+	id = UUID.randomUUID().toString(),
+	patientId = createdPatient.id,
+	login = login,
+	email = login
+)
+val createdUser = sdk.user.createUser(patientUser)
+val loginToken = sdk.user.getToken(createdUser.id, "login")
+```
+
+</TabItem>
+<TabItem value="python">
+
+```python
+login = f"edmond.dantes.{str(uuid.uuid4())[0:6]}@icure.com"
+patient_user = User(
+	id=str(uuid.uuid4()),
+	patient_id=created_patient.id,
+	login=login,
+	email=login
+)
+created_user = sdk.user.create_user_blocking(patient_user)
+login_token = sdk.user.get_token_blocking(created_user.id, "login")
+```
+
+</TabItem>
+<TabItem value="typescript">
+
+```typescript
+const login = `edmond.dantes.${uuid().substring(0, 6)}@icure.com`
+const patientUser = new User({
+	id: uuid(),
+	patientId: createdPatient.id,
+	login: login,
+	email: login
+})
+const createdUser = await sdk.user.createUser(patientUser)
+const loginToken = await sdk.user.getToken(createdUser.id, "login")
+```
+
+</TabItem>
+</LanguageTabs>
+
+Now, the patient user can log in and instantiate a new sdk. By doing so, they will also initialize their cryptographic key.
+
+<LanguageTabs>
+<TabItem value="kotlin">
+
+```kotlin
+CardinalSdk.initialize(
+	applicationId = null,
+	baseUrl = CARDINAL_URL,
+	authenticationMethod = AuthenticationMethod.UsingCredentials(
+		UsernamePassword(login, loginToken)
+	),
+	baseStorage = FileStorageFacade("./scratch/storage")
+)
+```
+
+</TabItem>
+<TabItem value="python">
+
+```python
+CardinalSdk(
+	application_id=None,
+	baseurl=CARDINAL_URL,
+	authentication_method=UsernamePassword(login, login_token),
+	storage_facade=FileSystemStorage("../scratch/storage")
+)
+```
+
+</TabItem>
+<TabItem value="typescript">
+
+```typescript
+await CardinalSdk.initialize(
+	undefined,
+	CARDINAL_URL,
+	new AuthenticationMethod.UsingCredentials.UsernamePassword(login, loginToken),
+	StorageFacade.usingFileSystem("../scratch/storage")
+)
+```
+
+</TabItem>
+</LanguageTabs>
+
+However, the Patient (entity) is an encrypted entity. The healthcare party user could not share it with the Patient (user),
+because their key were not initialized yet. Now that they are, the healthcare party can share the patient with itself.
+
+:::note
+A user that acts as a patient must be able to access their own patient entity to create, read, and share data
+through Cardinal.
+:::
+
+<LanguageTabs>
+<TabItem value="kotlin">
+
+```kotlin
+val patientSecretIds = sdk.patient.getSecretIdsOf(createdPatient)
+val patient = sdk.patient.shareWith(
+	delegateId = createdPatient.id,
+	patient = createdPatient,
+	options = PatientShareOptions(
+		shareSecretIds = patientSecretIds,
+		shareEncryptionKey = ShareMetadataBehaviour.IfAvailable,
+		requestedPermissions = RequestedPermission.MaxWrite
+	)
+)
+```
+
+</TabItem>
+<TabItem value="python">
+
+```python
+patient_secret_ids = sdk.patient.get_secret_ids_of_blocking(created_patient)
+patient = sdk.patient.share_with_blocking(
+	delegate_id=created_patient.id,
+	patient=created_patient,
+	options=PatientShareOptions(
+		share_secret_ids=patient_secret_ids,
+		share_encryption_key=ShareMetadataBehaviour.IfAvailable,
+		requested_permissions=RequestedPermission.MaxWrite
+	)
+)
+```
+
+</TabItem>
+<TabItem value="typescript">
+
+```typescript
+const patientSecretIds = await sdk.patient.getSecretIdsOf(createdPatient)
+const  = await sdk.patient.shareWith(
+	createdPatient.id,
+	createdPatient,
+	new PatientShareOptions({
+		shareSecretIds: patientSecretIds,
+		shareEncryptionKey: ShareMetadataBehaviour.IfAvailable,
+		requestedPermissions: RequestedPermission.MaxWrite
+	})
+)
+```
+
+</TabItem>
+</LanguageTabs>
+
+Now that the patient has the permission to access their own information, it can log in and create data.
+
+<LanguageTabs>
+<TabItem value="kotlin">
+
+```kotlin
+val patientSdk = CardinalSdk.initialize(
+	applicationId = null,
+	baseUrl = CARDINAL_URL,
+	authenticationMethod = AuthenticationMethod.UsingCredentials(
+		UsernamePassword(login, loginToken)
+	)
+```
+
+</TabItem>
+<TabItem value="python">
+
+```python
+patient_sdk = CardinalSdk(
+	application_id=None,
+	baseurl=CARDINAL_URL,
+	authentication_method=UsernamePassword(login, login_token),
+	storage_facade=FileSystemStorage("../scratch/storage")
+)
+```
+
+</TabItem>
+<TabItem value="typescript">
+
+```typescript
+const patientSdk = await CardinalSdk.initialize(
+	undefined,
+	CARDINAL_URL,
+	new AuthenticationMethod.UsingCredentials.UsernamePassword(login, loginToken),
+	StorageFacade.usingFileSystem("../scratch/storage")
+)
+```
+
+</TabItem>
+</LanguageTabs>
+
+:::warning
+This registration flow makes sense only in the context of this example, to make it self-contained.
+To learn how to register a Patient in a real context, check [this how to](/nsdk/how-to/registering-users).
+:::
+
+## Create Medical Data
+
+The patient user is now completely initialized and can start creating data. The Publisher simulates a medical
+device capable of measuring glycemia. This measurement is stored through the Cardinal SDK as a `Service` inside of a 
+`Contact`, as explained in the [previous tutorial](/nsdk/tutorial/basic/modules/basic-tutorial-create-medical-data).
+
+<LanguageTabs>
+<TabItem value="kotlin">
+
+```kotlin
+val glycemiaValue = Random.nextInt(60, 160).toDouble()
+val formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss")
+val contact = DecryptedContact(
+	id = UUID.randomUUID().toString(),
+	openingDate = LocalDateTime.now().format(formatter).toLong(),
+	services = setOf(
+		DecryptedService(
+			id = UUID.randomUUID().toString(),
+			content = mapOf(
+				"en" to DecryptedContent(
+					measureValue = Measure(
+						value = glycemiaValue,
+						unitCodes = setOf(
+							CodeStub(
+								id = "UCUM|mmol/L|1",
+								type="UCUM",
+								code="mmol/L",
+								version="1"
+							)
+						)
+					)
+				)
+			),
+			tags = setOf(
+				CodeStub(
+					id="LOINC|2339-0|1",
+					type="LOINC",
+					code="2339-0",
+					version="1"
+				),
+				CodeStub(
+					id="CARDINAL|TO_BE_ANALYZED|1",
+					type="CARDINAL",
+					code="TO_BE_ANALYZED",
+					version="1"
+				)
+			)
+		)
+	)
+)
+```
+
+</TabItem>
+<TabItem value="python">
+
+```python
+glycemia_value = float(random.randint(60, 160))
+contact = DecryptedContact(
+	id=str(uuid.uuid4()),
+	opening_date=int(datetime.now().strftime("%Y%m%d%H%M%S")),
+	services=[
+		DecryptedService(
+			id=str(uuid.uuid4()),
+			content={
+				"en": DecryptedContent(
+					measure_value=Measure(
+						value=glycemia_value,
+						unit_codes=[
+							CodeStub(
+								id="UCUM|mmol/L|1",
+								type="UCUM",
+								code="mmol/L",
+								version="1"
+							)
+						]
+					)
+				)
+			},
+			tags=[
+				CodeStub(
+					id="LOINC|2339-0|1",
+					type="LOINC",
+					code="2339-0",
+					version="1"
+				),
+				CodeStub(
+					id="CARDINAL|TO_BE_ANALYZED|1",
+					type="CARDINAL",
+					code="TO_BE_ANALYZED",
+					version="1"
+				)
+			]
+		)
+	]
+)
+```
+
+</TabItem>
+<TabItem value="typescript">
+
+```typescript
+const glycemiaValue = random(60, 160)
+const contact = new DecryptedContact({
+	id: uuid(),
+	openingDate: currentFuzzyDate(),
+	services: [
+		new DecryptedService({
+			id: uuid(),
+			content: {
+				"en": new DecryptedContent({
+					measureValue: new Measure({
+						value: glycemiaValue,
+						unitCodes: [
+							new CodeStub({
+								id: "UCUM|mmol/L|1",
+								type: "UCUM",
+								code: "mmol/L",
+								version: "1"
+							})
+						]
+					})
+				})
+			},
+			tags: [
+				new CodeStub({
+					id: "LOINC|2339-0|1",
+					type: "LOINC",
+					code: "2339-0",
+					version: "1"
+				}),
+				new CodeStub({
+					id: "CARDINAL|TO_BE_ANALYZED|1",
+					type: "CARDINAL",
+					code: "TO_BE_ANALYZED",
+					version: "1"
+				})
+			]
+		})
+	]
+})
+```
+
+</TabItem>
+</LanguageTabs>
+
+Three different codifications were used in the Service: 
+
+- One (`UCUM|mmol/L|1`) was used in the `Measure` to associate to the number the [UCUM](https://ucum.org/ucum) code for mmol/L, the standard unit for glycemia tests.
+- Another (`LOINC|2339-0|1`) was used to include the information that the service represents a glycemia test. For that, a [LOINC code](https://loinc.org/) (2339-0) was used.
+- The last one (`CARDINAL|TO_BE_ANALYZED|1`) was also used to annotate the service, but this time is an internal code that will be used by the subscriber to recognize the entity that it has to analyze.
+
+Now, the Publisher can initialize the encryption metadata of the entity, sharing it with the healthcare party at the same
+time, and create it.
+
+For simplicity's sake, the Publisher is getting the id of the healthcare party to share the data with from the `responsible`
+field of the patient. This is a field automatically filled at patient creating with the id of the healthcare party who
+created it. For more information about sharing data, check our tutorial on [data sharing](/nsdk/tutorial/basic/modules/basic-tutorial-share-data).
+
+<LanguageTabs>
+<TabItem value="kotlin">
+
+```kotlin
+val recipientHcp = patient.responsible ?: throw IllegalStateException("Patient has no responsible")
+val contactWithEncryptionMetadata = patientSdk.contact.withEncryptionMetadata(
+	base = contact,
+	patient = patient,
+	delegates = mapOf(recipientHcp to AccessLevel.Write)
+)
+patientSdk.contact.createContact(contactWithEncryptionMetadata)
+```
+
+</TabItem>
+<TabItem value="python">
+
+```python
+recipient_hcp = patient.responsible
+contact_with_encryption_metadata = patient_sdk.contact.with_encryption_metadata_blocking(
+	base=contact,
+	patient=patient,
+	delegates={recipient_hcp: AccessLevel.Write}
+)
+patient_sdk.contact.create_contact_blocking(contact_with_encryption_metadata)
+```
+
+</TabItem>
+<TabItem value="typescript">
+
+```typescript
+const recipientHcp = patient.responsible
+const contactWithEncryptionMetadata = await patientSdk.contact.withEncryptionMetadata(
+	contact,
+	patient,
+	{ delegates: { [recipientHcp]: AccessLevel.Write}}
+)
+await patientSdk.contact.createContact(contactWithEncryptionMetadata)
+```
+
+</TabItem>
+</LanguageTabs>
+
+At the same time, the Subscriber will immediately receive the created entity and will perform its analysis.
+
+## Review the Analysis Result
+
+In the full code example available on the repository, the user will be able to register multiple glycemia measurements.
+After that, they will be asked if they want to display the results of the analysis performed by the Subscriber, that 
+will add a [SNOMED-CT](https://www.snomed.org/what-is-snomed-ct) code for the diagnosis and an internal code to signal
+that a Service has been analyzed.
+
+To retrieve the Service where the Subscriber completed the analysis, the Publisher creates a filter.
+
+<LanguageTabs>
+<TabItem value="kotlin">
+
+```kotlin
+val filter = ServiceFilters.byTagAndValueDateForSelf(
+	tagType = "CARDINAL",
+	tagCode = "ANALYZED"
+)
+val serviceIterator = patientSdk.contact.filterServicesBy(filter)
+```
+
+</TabItem>
+<TabItem value="python">
+
+```python
+service_filter = ServiceFilters.by_tag_and_value_date_for_self(
+	tag_type="CARDINAL",
+	tag_code="ANALYZED"
+)
+service_iterator = patient_sdk.contact.filter_services_by_blocking(service_filter)
+```
+
+</TabItem>
+<TabItem value="typescript">
+
+```typescript
+const filter = ServiceFilters.byTagAndValueDateForSelf(
+	"CARDINAL",
+	{ tagCode: "ANALYZED" }
+)
+const serviceIterator = await patientSdk.contact.filterServicesBy(filter)
+```
+
+</TabItem>
+</LanguageTabs>
+
+This filter will retrieve all the services shared with the Patient that have in the tag field a CodeStub with type `CARDINAL` and code `ANALYZED`.
+
+Finally, for each retrieved service, the first CodeStub with type `SNOMED` is taken, the full Code is retrieved from the
+cloud and the label is shown.
+
+<LanguageTabs>
+<TabItem value="kotlin">
+
+```kotlin
+while(serviceIterator.hasNext()) {
+	val service = serviceIterator.next(1).first()
+	val diagnosisOrNull = service.tags.firstOrNull { it.type == "SNOMED" }
+	if (diagnosisOrNull != null) {
+		val code = patientSdk.code.getCode(diagnosisOrNull.id!!)
+		println("The diagnosis for sample ${service.id} is ${code.label?.getValue("en")}")
+	} else {
+		println("No diagnosis for this sample")
+	}
+}
+```
+
+</TabItem>
+<TabItem value="python">
+
+```python
+while service_iterator.has_next_blocking():
+	service = service_iterator.next_blocking(1)[0]
+	diagnosis_or_none = next((tag for tag in service.tags if tag.type == "SNOMED"), None)
+	if diagnosis_or_none is not None:
+		code = patient_sdk.code.get_code_blocking(diagnosis_or_none.id)
+		print(f"The diagnosis for sample {service.id} is {code.label['en']}")
+	else:
+		print("No diagnosis for this sample")
+```
+
+</TabItem>
+<TabItem value="typescript">
+
+```typescript
+while(await serviceIterator.hasNext()) {
+	const service = (await serviceIterator.next(1))[0]
+	const diagnosisOrNull = service.tags.find( it => it.type == "SNOMED")
+	if (diagnosisOrNull !== undefined) {
+		const code = await patientSdk.code.getCode(diagnosisOrNull.id)
+		console.log(`The diagnosis for sample ${service.id} is ${code.label["en"]}`)
+	} else {
+		console.log("No diagnosis for this sample")
+	}
+}
+```
+
+</TabItem>
+</LanguageTabs>

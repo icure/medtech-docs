@@ -1,0 +1,35 @@
+# Device
+
+A Device is a non-encryptable root-level entity that represents any medical device.
+
+Any Device associated to a [User](/nsdk/explanations/data-model/user) is able to log in, initialize their own
+encryption keys and manage encryptable data as a Data Owner user. For more details about users and data owner users,
+check [this explanation](/nsdk/explanations/data-owners-and-access-control).
+
+## Properties
+
+Below you will find an explanation of the most commonly used properties in the entity that are not among the
+[shared fields](/nsdk/explanations/data-model/#shared-fields). For a full list, check the [references](TODO).
+
+### brand
+The brand of the Device as a free text.
+
+### name 
+The name of the Device as a free text.
+
+### model
+The model of the Device as a free text.
+
+### picture
+An image associated to the device as array of bytes.
+
+:::warning
+This field is meant to contain only a short byte array (a few kilobytes). Using it to store bigger data may result in
+a loss of performance while querying your database.
+:::
+
+### serialNumber
+The serial number of the Device.
+
+### type
+The type of the Device as a free text.

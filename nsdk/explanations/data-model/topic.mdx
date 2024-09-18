@@ -1,0 +1,38 @@
+# Topic
+
+A Topic is an encryptable, root-level entity that can be used in combination with the [Message](/nsdk/explanations/data-model/message) 
+entity to implement chat-like messaging systems.
+
+## Fields Encrypted by Default
+By default, the following fields of this entity will be encrypted:
+- `description`
+- `linkedServices`
+- `linkedHealthElements`
+
+You can customize the encrypted fields as [explained in this how to](/nsdk/how-to/initialize-the-sdk/configure-what-to-encrypt).
+
+## Link to Messages
+A Topic does not contain any reference to the messages that are part of it. This link is contained in the messages 
+themselves, as the `transportGuid` field should be set to the id of the Topic.
+
+Note that the Cardinal backend does not enforce this behaviour.
+
+## Properties
+
+Below you will find an explanation of the most commonly used properties in the entity that are not among the
+[shared fields](/nsdk/explanations/data-model/#shared-fields). For a full list, check the [references](TODO).
+
+### activeParticipants
+A data structure that associates the Users that are actively participating in this topic. Each user is associated to the
+role that they have in the topic (participant, administrator, or owner).
+
+### description
+A free-text description for the topic.
+
+### linkedHealthElements
+A collection containing the ids of the [HealthElement](/nsdk/explanations/data-model/healthelement)s that are a subject
+of this topic.
+
+### linkedServices
+A collection containing the ids of the [Service](/nsdk/explanations/data-model/service)s that are a subject
+of this topic.

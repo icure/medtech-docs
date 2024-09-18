@@ -1,0 +1,135 @@
+# Patient
+
+A Patient is an encryptable, root-level entities that represents a patient, the subject of treatment or medical data
+collection.
+
+Any Patient associated to a [User](/nsdk/explanations/data-model/user) is able to log in, initialize their own
+encryption keys and manage encryptable data as a Data Owner user. For more details about users and data owner users,
+check [this explanation](/nsdk/explanations/data-owners-and-access-control).
+
+## Fields Encrypted by Default
+By default, the following fields of this entity will be encrypted:
+- The deprecated field `note`.
+- The `markdown` field in all the `notes`.
+
+You can customize the encrypted fields as [explained in this how to](/nsdk/how-to/initialize-the-sdk/configure-what-to-encrypt).
+
+## Properties
+
+Below you will find an explanation of the most commonly used properties in the entity that are not among the
+[shared fields](/nsdk/explanations/data-model/#shared-fields). For a full list, check the [references](TODO).
+
+### active
+A boolean field that indicates whether the patient is active.
+
+### addresses
+A list of addresses for this Patient.
+
+### administrativeNote
+Any additional remark about the patient for administrative and organizational purposes. It should not contain any 
+confidential or sensitive information.
+
+### alias
+A non-official name (nickname) used to refer to the Patient.
+
+### birthSex
+The birth sex of the Patient.
+
+### civility
+The civility of the Patient (e.g. Mr., Ms., Pr., Dr., etc.).
+
+### companyName
+The name of the company the Patient is part of.
+
+### deceased
+A boolean field that indicates whether the patient is deceased.
+
+### dateOfBirth
+The date of birth of the Patient as a [FuzzyDate](/nsdk/explanations/data-model/#fuzzydate).
+
+### dateOfDeath
+The date of death of the Patient as a [FuzzyDate](/nsdk/explanations/data-model/#fuzzydate).
+
+### deactivationDate
+If the `active` field is false, this should contain the date of the deactivation of the patient.
+It is encoded as a [FuzzyDate](/nsdk/explanations/data-model/#fuzzydate).
+
+### deactivationReason
+If the `active` field is false, this should contain the reason of deactivation of the patient.
+
+### education
+The level of education of the Patient as a free text (e.g. college degree, undergraduate, PhD).
+
+### ethnicity
+The ethnicity of the Patient.
+
+### financialInstitutionInformation
+A collection of object that contains the bank information (IBAN, BIC, bank) of this Patient.
+
+### firstName
+The first name of the Patient.
+
+### gender
+The gender of the Patient.
+
+### languages
+A collection of the [ISO codes](https://www.loc.gov/standards/iso639-2/ISO-639-2_8859-1.txt) of the languages spoken by
+this Patient.
+
+### lastName
+The official surname of the Patient. The surname contained in this field is the one that should be used for all the 
+administrative purposes.
+
+### maidenName
+If the Patient is married and acquired their spouse name, this field should contain the last name of the Patient 
+before marriage.
+
+### names
+This collection should contain all the names for a Patient. It is a good practice to sort them by preference of use, 
+with the official name being the first entry.
+
+### nationality
+The nationality of the Patient.
+
+### notes
+Confidential annotations related to the Patient.
+
+:::note
+By default, only the `markdown` field of each note will be encrypted.
+:::
+
+### partnerships
+A collection of objects that contains the relationships and contact people for this Patient.
+
+### patientHealthCareParties
+A collection of objects that represent a relation in time between this Patient and a HealthcareParty (e.g. to indicate
+that a doctor was the referring doctor for that patient).
+
+### personalStatus
+Represents the Patient current social or relationship status (e.g. married, single, in a relationship, etc.).
+
+### picture
+An image associated to the Patient as array of bytes.
+
+:::warning
+This field is meant to contain only a short byte array (a few kilobytes). Using it to store bigger data may result in
+a loss of performance while querying your database.
+:::
+
+### placeOfBirth
+The place of birth of the patient as a free text.
+
+### placeOfDeath
+The place of death of the patient as a free text.
+
+### profession
+The current profession of the Patient as a free text.
+
+### race
+The race of the patient.
+
+### ssin
+The Social Security Number of the HealthcareParty.
+
+### spouseName
+If the Patient is married, the last name of their spouse.

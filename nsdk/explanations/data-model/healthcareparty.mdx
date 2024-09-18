@@ -1,0 +1,73 @@
+# HealthcareParty
+
+A HealthcareParty is a non-encrypted, root-level entity that represents any actor involved in the care of the patient.
+The most common examples of this are doctors, nurses, hospitals, or any organizations that has to manage patient's data.
+
+Any HealthcareParty associated to a [User](/nsdk/explanations/data-model/user) is able to log in, initialize their own 
+encryption keys and manage encryptable data as a Data Owner user. For more details about users and data owner users, 
+check [this explanation](/nsdk/explanations/data-owners-and-access-control).
+
+## Properties
+
+Below you will find an explanation of the most commonly used properties in the entity that are not among the
+[shared fields](/nsdk/explanations/data-model/#shared-fields). For a full list, check the [references](TODO).
+
+### addresses
+A list of addresses for this HealthcareParty.
+
+### civility
+The civility of the HealthcareParty (e.g. Mr., Ms., Pr., Dr., etc.), if the entity represents a physical person.
+
+### companyName
+The name of the company this HealthcareParty is a member of. 
+
+### financialInstitutionInformation
+A collection of object that contains the bank information (IBAN, BIC, bank) of this HealthcareParty.
+
+### firstName
+The first name of the HealthcareParty, if the entity represents a physical person.
+
+### gender
+The gender of the HealthcarePArty, if the entity represents a physical person.
+
+### languages
+A collection of the [ISO codes](https://www.loc.gov/standards/iso639-2/ISO-639-2_8859-1.txt) of the languages spoken by
+this HealthcareParty.
+
+### lastName
+The official surname of the HealthcareParty, if the entity represents a physical person. The surname contained in this
+field is the one that should be used for all the administrative purposes.
+
+### name
+The full name of the HealthcareParty, in the case it represents an organization (e.g. a hospital, a company). In the case
+of a physical person, use `firstName`, `lastName`, and `names`.
+
+### names
+In the case this HealthcareParty represents a physical person, this collection should contain all the names for them. 
+It is a good practice to sort them by preference of use, with the official name being the first entry.
+
+### notes
+A free text field to store additional unstructured text information in the entity.
+
+### picture
+An image associated to the HealthcareParty as array of bytes.
+
+:::warning
+This field is meant to contain only a short byte array (a few kilobytes). Using it to store bigger data may result in
+a loss of performance while querying your database.
+:::
+
+### speciality
+The medical specialty for this HealthcareParty.
+
+### specialityCodes
+A collection of [CodeStub](/nsdk/explanations/data-model/codestub)s to store the medical specialties of this 
+HealthcareParty using a codification system.
+
+### ssin
+The Social Security Number of the HealthcareParty.
+
+### parentId
+The id of the HealthcareParty that is a logical parent for the current HealthcareParty. For example, in the case of a 
+doctor, the parent could be the HealthcareParty of the hospital. This is relevant when using the `useHierarchicalDataOwners`
+options in the [SDK configuration](/nsdk/how-to/initialize-the-sdk/#cryptography-configurations).

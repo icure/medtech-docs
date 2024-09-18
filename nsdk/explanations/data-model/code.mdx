@@ -1,0 +1,46 @@
+# Code
+
+A Code is a non-encryptable root-level entity that represents a concept from a medical codification system (e.g., 
+[SNOMED-CT](https://www.snomed.org/what-is-snomed-ct), [LOINC](https://loinc.org/)), or an internal codification. Codes 
+support versioning and multilingual content. 
+
+## Properties
+
+Below you will find an explanation of the most commonly used properties in the entity that are not among the 
+[shared fields](/nsdk/explanations/data-model/#shared-fields). For a full list, check the [references](TODO).
+
+### id
+Uniquely identifies the Code. Differently from all the other entities, where the id should be a
+[UUID v4](https://en.wikipedia.org/wiki/Universally_unique_identifier#Version_4_(random)), the id of the Code should be
+`type|code|version`, where `type`, `code`, and `version` are the values of the homonymous properties.
+
+### type 
+The type of the Code is the classification system where the code come from (e.g. `SNOMED-CT`, `LOINC`). All the codes 
+from the same source should have the same type. 
+
+For internal codes, you can choose any value you prefer.
+
+### code
+A value that uniquely identifies the code inside the system. For example, the illness "Besnier's prurigo" is uniquely
+defined by the code `200773006` in SNOMED and by the code `L20.0` in ICD-10.
+
+### version
+The version of the code, useful if you want to update a Code in your system (e.g. because an update in label or meaning)
+while also keeping the outdated version.
+
+As for the format, you can use either [semantic versioning](https://semver.org/) or any version format that can be 
+ordered lexicographically (e.g. the date of the publishing of the version in `YYYYMMDD` format).
+
+### label 
+Associates an [ISO language code](https://en.wikipedia.org/wiki/List_of_ISO_639_language_codes) and a human-readable 
+description of the code in that language. The label and the search terms will be taken into account when searching
+codes by label.
+
+### region
+A collection of regions where the code is applicable. It may be the [ISO code of the country](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes)
+or any code that can define a region in a country.
+
+### searchTerms
+Associates an [ISO language code](https://en.wikipedia.org/wiki/List_of_ISO_639_language_codes) with a collection of
+words in that language that are related to the code. The label and the search terms will be taken into account when searching
+codes by label.

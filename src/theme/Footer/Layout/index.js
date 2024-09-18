@@ -7,10 +7,10 @@ export default function FooterLayout({ style }) {
 
   const footerLinks = [
     {
-      title: 'Want to know more about iCure?',
+      title: 'Want to know more about Cardinal?',
       link: {
         title: 'Visit our website',
-        url: 'https://icure.com/'
+        url: 'https://cardinalsdk.com/'
       }
     },
     {
