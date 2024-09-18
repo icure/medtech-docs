@@ -10,7 +10,7 @@ data model, meaning that users cannot define custom models. This decision enhanc
 interoperability and encryption.
 
 In this section, we outline the most commonly used entities, their use cases, and properties. For a full list of 
-entities, refer to the [reference documentation](TODO).
+entities, refer to the reference documentation (:construction:).
 
 ## Root-level Entities
 
@@ -109,10 +109,10 @@ access an entity (e.g., an admin), they will only have access to the unencrypted
 
 - [**Contact**](/explanations/data-model/contact): a Contact is an encryptable entity that represents a situation that involves a patient where
 medical data is created. Usually it involves a doctor (healthcare party), like in the case of a medical examination.
-- [**Document**](nsdk/explanations/data-model/document): a Document is an encryptable entity that is used to store a medical document in any format.
+- [**Document**](/explanations/data-model/document): a Document is an encryptable entity that is used to store a medical document in any format.
 It can contain textual document, images, and binary data, that are also encrypted before being stored on the cloud.
 Document entities can store large quantities of data while keeping efficiency in searching the data.
-- [**HealthElement**](nsdk/explanations/data-model/healthelement): Represents a medical condition, ranging from short-term 
+- [**HealthElement**](/explanations/data-model/healthelement): Represents a medical condition, ranging from short-term 
 conditions (e.g., fever) to chronic ones (e.g., allergies).
 - [**Message**](/explanations/data-model/message): Used for encrypted message exchanges between users. It supports
 both text and file attachments, all of which are encrypted.
@@ -131,7 +131,7 @@ reference to a [Code](/explanations/data-model/code). It can be nested in many d
 in the `tag` and `code` filter, and it is used to link a Code to it without having to include the whole Code.
 - [**Content**](/explanations/data-model/content): a Content is an encryptable entity that is nested into a
 [Service](/explanations/data-model/service) and contains the value of the medical data. It supports scalar numeric
-values, multidimensional arrays, binary data and references to big files stored in [Document](nsdk/explanations/data-model/document)s.
+values, multidimensional arrays, binary data and references to big files stored in [Document](/explanations/data-model/document)s.
 - [**Identifier**](/explanations/data-model/identfier): an Identifier is a non-encryptable entity that can be used 
 to connect resources with external contents, as per the [FHIR specification](https://build.fhir.org/datatypes.html#Identifier).
 - [**Service**](/explanations/data-model/service): a Service is an encryptable entity nested inside a [Contact](/explanations/data-model/contact)
@@ -158,13 +158,13 @@ internally by Cardinal and is not present on nested entities.
 
 When you create an entity, its rev will start from 1, and it will increase with each operation that modifies or deletes it.
 To modify an entity, you will always have to start from the latest revision of the entity otherwise an exception will be
-thrown. All the methods that allow you to retrieve entities by id or using [other search criteria](nsdk/how-to/querying-data) 
+thrown. All the methods that allow you to retrieve entities by id or using [other search criteria](/how-to/querying-data) 
 will return the latest revision of each entity.
 
 ### Tag and Code
 
 `tag` and `code` are collections of [CodeStub](/explanations/data-model/codestub) (i.e. a reference to a [Code](/explanations/data-model/code))
-that can be used to add to an entity some context that can be used after to [query the data](nsdk/how-to/querying-data).
+that can be used to add to an entity some context that can be used after to [query the data](/how-to/querying-data).
 
 The difference between `tag` and `code` is purely conceptual: `tag` is strictly for non-sensitive context while the
 CodeStubs in `code` may contain sensitive data. For example, a CodeStub for the region a patient lives in would go in

@@ -22,7 +22,7 @@ In general, you'll create a new database in your Solution if some of your client
 The **parent organisation** identifies your company inside a database and will be considered as the responsible of the users created in your database.
 
 If your product needs to process some of your patients data to create additional medical data, your patients will have to share their data with your parent organisation. 
-You can find how configure your parent organisation to allow patients sharing data with it [here](../ehr-lite-sdk/quick-start#optional-configure-your-parent-organization-to-allow-patients-to-share-data-with-it). 
+You can find how configure your parent organisation to allow patients sharing data with it here (:construction:). 
 
 ## External Service
 An **External Service** is a service not directly managed by Cardinal but needed to guarantee the functioning of your whole solution. 
