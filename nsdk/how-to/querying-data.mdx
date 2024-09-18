@@ -60,7 +60,7 @@ entities for which you will get a notification.
 
 In this page we only explain the concepts of filter options and how they can be used for querying.
 
-If you want a comprehensive list of the available filter options refer to the code documentation (TODO link)
+If you want a comprehensive list of the available filter options refer to the code documentation (:construction:)
 
 :::
 
@@ -80,11 +80,11 @@ explained later).
 For convenience, since you usually need to retrieve data that is accessible to the current data owner, the factory
 methods for these filter options come in two versions:
 - A *for-self* version (for example `PatientFilters.byIdentifiersForSelf`) where the data owner id is automatically filled
-with the current data owner id. Unless you're using a special configuration for data owners (such as hierarchical
-healthcare parties TODO link), you should only be using these filter options in your application for the end-users.
+with the current data owner id. Unless you're using a special configuration for data owners ([such as hierarchical
+healthcare parties](/nsdk/how-to/share-data-with-many-users.mdx)), you should only be using these filter options in your application for the end-users.
 - A *for-data-owner* version (for example `PatientFilters.byIdentifiersForDataOwner`) where you need to explicit specify
 the id of the data owner.
-Unless you're using a special configuration for data owners (such as hierarchical healthcare parties TODO link), this is
+Unless you're using a special configuration for data owners ([such as hierarchical healthcare parties](/nsdk/how-to/share-data-with-many-users.mdx)), this is
 only needed when you're querying the data as a non-data-owner user.
 For example, this could be the case if you, acting as the system administrator, are compiling some statistics on the
 patients registered to your app.
@@ -93,7 +93,12 @@ special permissions, depending on which method they're used for.
 
 #### Access for filter options
 
-TODO note about needing to understand what anonymous delegation and hierarchical healthcare parties are.
+:::info
+
+We recommend you understand the concepts of [hierarchical healthcare parties](/nsdk/how-to/share-data-with-many-users.mdx)]
+and anonymous data owners (:construction:) before you read this section.
+
+:::
 
 Previously, we said that in the filter options for EBAC entities, you need to specify the id of a data owner and the
 filter options will only match entities that the provided data owner can access.
@@ -586,7 +591,7 @@ def get_heart_rate_measurements(sdk: CardinalSdk) -> PaginatedListIterator[Decry
 
 </LanguageTabs>
 
-Note that this requires that the user performing the query has access to all the secret ids (TODO link) of the patients
+Note that this requires that the user performing the query has access to all the [secret ids](/nsdk/explanations/encrypted-links) of the patients
 obtained from the first query.
 If not, some items will be missing from the final result.
 

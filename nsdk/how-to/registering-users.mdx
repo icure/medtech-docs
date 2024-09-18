@@ -24,7 +24,7 @@ For example, HCP users might require an invitation, while patient users can regi
 
 
 If you want to allow users to self-register in your application, you first need to create a registration process for the
-application through the cockpit. TODO link.
+application through the cockpit (:construction:).
 
 You can register the user to your application by initializing an instance of the Cardinal SDK using the registration 
 process id. 
@@ -140,7 +140,7 @@ to use for future login.
 ## Implementing user invitation
 
 If you want to allow users to register only through invitation, you first need to create a login process for the
-application or for the solution through the cockpit. TODO link.
+application or for the solution through the cockpit (:construction:).
 Make sure to not create a registration process instead, as this could allow malicious actors to retrieve the process 
 ID from your application and use it to register users bypassing the invitation requirement.
 
@@ -419,8 +419,9 @@ of creating a new secret id through the `ensureEncryptionMetadataForSelfIsInitia
 ### Ensuring the doctor can find data created by the patient
 
 If there was already some encryption metadata initialized for the current user's patient, and the
-`ensureEncryptionMetadataForSelfIsInitialized` created a new secret id for it, any data that had access to the patient
-won't be able to find new data you create when they use filters. TODO link
+`ensureEncryptionMetadataForSelfIsInitialized` created a new [secret id](/nsdk/explanations/encrypted-links) for it,
+any data owner that had access to the patient won't be able to find new data you created by the patient when they use 
+[filters](/nsdk/how-to/querying-data).
 
 If you want to make sure that other users will be able to find the data created by the patient user you can pass the
 id of those data owners to the `ensureEncryptionMetadataForSelfIsInitialized` method.
@@ -445,7 +446,7 @@ The full process is:
    This will initialize the metadata necessary to share data from the doctor to the patient even if the patient has no
    keypair, returning true if it was indeed necessary.
 2. Use the doctor SDK to share all data that the patient needs to access using the standard "share with" methods of the 
-   various entities apis. TODO link to how to share
+   various [entities apis](/nsdk/how-to/basic-operations#sharing).
 3. If the method at step 1 returned `true`, the exchange data that was forcefully initialized (and therefore all data
    shared at step 2) will not be immediately accessible to the patient. 
    To complete the sharing procedure, you will need to:
@@ -649,5 +650,5 @@ async function initializePatientSdkAfterInvite(
 
 </LanguageTabs>
 
-TODO more info link to the recovery data?
+<!--TODO more info link to the recovery data?-->
 
