@@ -1,12 +1,12 @@
 # Content
 
 A Content is an encryptable nested entity that contains the value of the medical data to store in the cloud. It is nested 
-inside [Service](/nsdk/explanations/data-model/service), and it will always be encrypted before being saved in the cloud.
+inside [Service](/explanations/data-model/service), and it will always be encrypted before being saved in the cloud.
 
 ## Properties
 
 Below you will find an explanation of the most commonly used properties in the entity that are not among the
-[shared fields](/nsdk/explanations/data-model/#shared-fields). For a full list, check the [references](TODO).
+[shared fields](/explanations/data-model/#shared-fields). For a full list, check the [references](TODO).
 
 ### binaryValue
 Raw bytes to store in the Content.
@@ -21,9 +21,9 @@ can affect the performance of retrieving your data.
 Also, it is not possible to store any entity with a total size > 16Mb.
 
 If you want to store large files / big binary content, you can store it in a [Document](nsdk/explanations/data-model/document)
-and put the document id in the [documentId](/nsdk/explanations/data-model/content#documentid) field of the Content.
+and put the document id in the [documentId](/explanations/data-model/content#documentid) field of the Content.
 
-More information about how to store large files are available in [this how to](/nsdk/how-to/store-big-files).
+More information about how to store large files are available in [this how to](/how-to/store-big-files).
 :::
 
 ### booleanValue
@@ -31,14 +31,14 @@ A boolean value to store in the Content.
 
 ### compoundValue
 This field is used to store any complex structure that does not fit in any other field as a collection of nested 
-[Service](/nsdk/explanations/data-model/service)s. 
+[Service](/explanations/data-model/service)s. 
 
 ### documentId
 The id of a [Document](nsdk/explanations/data-model/document) entity. This can be used to store large files as medical
 content without having to include the file directly in the entity.
 
 ### fuzzyDateValue
-A date to store in the Content as a [FuzzyDateTime](/nsdk/explanations/data-model/#fuzzydatetime).
+A date to store in the Content as a [FuzzyDateTime](/explanations/data-model/#fuzzydatetime).
 
 ### instantValue
 A timestamp to store in the Content.

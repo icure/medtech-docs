@@ -1,18 +1,18 @@
 # Message
 
 A Message is an encryptable, root-level entity that can be use to implement an encrypted messaging systems between users
-and, in combinations with [Topic](/nsdk/explanations/data-model/topic), chat-like features.
+and, in combinations with [Topic](/explanations/data-model/topic), chat-like features.
 
 ## Fields Encrypted by Default
 By default, the following fields of this entity will be encrypted:
 - `subject`
 
-You can customize the encrypted fields as [explained in this how to](/nsdk/how-to/initialize-the-sdk/configure-what-to-encrypt).
+You can customize the encrypted fields as [explained in this how to](/how-to/initialize-the-sdk/configure-what-to-encrypt).
 
 ## Properties
 
 Below you will find an explanation of the most commonly used properties in the entity that are not among the
-[shared fields](/nsdk/explanations/data-model/#shared-fields). For a full list, check the [references](TODO).
+[shared fields](/explanations/data-model/#shared-fields). For a full list, check the [references](TODO).
 
 ### fromAddress
 Any identifier that can be used to uniquely retrieve the User that sent the message. It can be the user id, the email,
@@ -49,4 +49,4 @@ uniqueness.
 :::
 
 ### transportGuid
-The id of the [Topic](/nsdk/explanations/data-model/topic) that contains the Message. 
+The id of the [Topic](/explanations/data-model/topic) that contains the Message. 

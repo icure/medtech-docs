@@ -10,7 +10,7 @@ This documentation will guide you through the functionalities of the Cardinal SD
 to access the functionalities of the Cardinal Backend.
 
 The main purpose of the SDK is the **end-to-end encryption**: it encrypts the data before creating or modifying them and
-it decrypts when retrieving. The only exceptions are the [base entities](/nsdk/explanations/data-model/#base-entities) as
+it decrypts when retrieving. The only exceptions are the [base entities](/explanations/data-model/#base-entities) as
 they are not supposed to contain sensitive data.
 
 The SDK is currently available for Kotlin, Python, and Typescript. In each article of this documentation, you will find
@@ -20,11 +20,11 @@ This documentation is structured as follows:
 
 - In the [Quickstart](/quickstart/index) section, you will find instructions and boilerplate code to quickly set up a project with Cardinal in
 all the supported languages.
-- In the [Tutorial](/nsdk/tutorial) section, you will find example applications for the most common base use cases. The
+- In the [Tutorial](/tutorial) section, you will find example applications for the most common base use cases. The
 code of these examples is fully explained and available in public GitHub repositories.
-- In the [How To](/nsdk/how-to/index) section, you will find explanations about how to implement your features with the
+- In the [How To](/how-to/index) section, you will find explanations about how to implement your features with the
 Cardinal SDK, each one with code examples in all the supported languages.
-- In the [Explanation](/nsdk/explanations/index) section, you will find additional material to understand the structure 
+- In the [Explanation](/explanations/index) section, you will find additional material to understand the structure 
 of the Cardinal SDK.
 
 :::note

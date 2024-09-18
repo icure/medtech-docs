@@ -22,18 +22,18 @@ a new Contact should be created.
 By default, the following fields of this entity will be encrypted:
 - `descr`
 - The `markdown` field in all the `notes`.
-- The Services in `service`, according to their [encryption configuration](nsdk/how-to/initialize-the-sdk/configure-what-to-encrypt#contact-service-and-service-content-encryption).
+- The Services in `service`, according to their [encryption configuration](/how-to/initialize-the-sdk/configure-what-to-encrypt#contact-service-and-service-content-encryption).
 
-You can customize the encrypted fields as [explained in this how to](/nsdk/how-to/initialize-the-sdk/configure-what-to-encrypt).
+You can customize the encrypted fields as [explained in this how to](/how-to/initialize-the-sdk/configure-what-to-encrypt).
 
 ## Properties
 
 Below you will find an explanation of the most commonly used properties in the entity that are not among the
-[shared fields](/nsdk/explanations/data-model/#shared-fields). For a full list, check the [references](TODO).
+[shared fields](/explanations/data-model/#shared-fields). For a full list, check the [references](TODO).
 
 ### closingDate
 The `closingDate` represent the moment when the Contact ended. 
-It is encoded as a [FuzzyDateTime](/nsdk/explanations/data-model/#fuzzydatetime).
+It is encoded as a [FuzzyDateTime](/explanations/data-model/#fuzzydatetime).
 
 ### descr
 A human-readable description for the Contact.
@@ -42,18 +42,18 @@ A human-readable description for the Contact.
 An address to record where the Contact took place.
 
 ### encounterType
-A [CodeStub](/nsdk/explanations/data-model/codestub) to give a context to the type of Contact using a standard terminology.
+A [CodeStub](/explanations/data-model/codestub) to give a context to the type of Contact using a standard terminology.
 
 ### groupId
 The medical information contained into a single "logical" Contact can be separated into multiple Contact entities that
-share the same `groupId`. This use case is explained in more details in [this how to](/nsdk/how-to/contact-group-id).
+share the same `groupId`. This use case is explained in more details in [this how to](/how-to/contact-group-id).
 
 ### notes
 A list of textual remarks related to this Contact.
 
 ### openingDate
 The `openingDate` represent the starting moment of the event of the Contact. 
-It is encoded as a [FuzzyDateTime](/nsdk/explanations/data-model/#fuzzydatetime).
+It is encoded as a [FuzzyDateTime](/explanations/data-model/#fuzzydatetime).
 
 ### participants
 The ids of all the other Data Owners that participated in this encounter, associated to their role in the encounter. 
@@ -64,9 +64,9 @@ anonymization between Contact and Patient.
 :::
 
 ### services
-A collection of [Service](/nsdk/explanations/data-model/service)s that contain the value of the examinations performed
+A collection of [Service](/explanations/data-model/service)s that contain the value of the examinations performed
 during the encounter.
 
 ### subContacts
-A collection of [SubContact](/nsdk/explanations/data-model/subcontact) to link to the containing Contact additional 
-medical context, like [HealthElement](/nsdk/explanations/data-model/healthelement)s or therapeutic plans.
+A collection of [SubContact](/explanations/data-model/subcontact) to link to the containing Contact additional 
+medical context, like [HealthElement](/explanations/data-model/healthelement)s or therapeutic plans.

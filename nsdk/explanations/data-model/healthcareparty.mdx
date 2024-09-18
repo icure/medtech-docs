@@ -3,14 +3,14 @@
 A HealthcareParty is a non-encrypted, root-level entity that represents any actor involved in the care of the patient.
 The most common examples of this are doctors, nurses, hospitals, or any organizations that has to manage patient's data.
 
-Any HealthcareParty associated to a [User](/nsdk/explanations/data-model/user) is able to log in, initialize their own 
+Any HealthcareParty associated to a [User](/explanations/data-model/user) is able to log in, initialize their own 
 encryption keys and manage encryptable data as a Data Owner user. For more details about users and data owner users, 
-check [this explanation](/nsdk/explanations/data-owners-and-access-control).
+check [this explanation](/explanations/data-owners-and-access-control).
 
 ## Properties
 
 Below you will find an explanation of the most commonly used properties in the entity that are not among the
-[shared fields](/nsdk/explanations/data-model/#shared-fields). For a full list, check the [references](TODO).
+[shared fields](/explanations/data-model/#shared-fields). For a full list, check the [references](TODO).
 
 ### addresses
 A list of addresses for this HealthcareParty.
@@ -61,7 +61,7 @@ a loss of performance while querying your database.
 The medical specialty for this HealthcareParty.
 
 ### specialityCodes
-A collection of [CodeStub](/nsdk/explanations/data-model/codestub)s to store the medical specialties of this 
+A collection of [CodeStub](/explanations/data-model/codestub)s to store the medical specialties of this 
 HealthcareParty using a codification system.
 
 ### ssin
@@ -70,4 +70,4 @@ The Social Security Number of the HealthcareParty.
 ### parentId
 The id of the HealthcareParty that is a logical parent for the current HealthcareParty. For example, in the case of a 
 doctor, the parent could be the HealthcareParty of the hospital. This is relevant when using the `useHierarchicalDataOwners`
-options in the [SDK configuration](/nsdk/how-to/initialize-the-sdk/#cryptography-configurations).
+options in the [SDK configuration](/how-to/initialize-the-sdk/#cryptography-configurations).

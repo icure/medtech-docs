@@ -68,7 +68,7 @@ If you want a comprehensive list of the available filter options refer to the co
 
 :::info
 
-[This section will be clearer if you have a good understanding of data owners and access control in iCure.](/nsdk/explanations/data-owners-and-access-control)
+[This section will be clearer if you have a good understanding of data owners and access control in iCure.](/explanations/data-owners-and-access-control)
 
 :::
 
@@ -81,10 +81,10 @@ For convenience, since you usually need to retrieve data that is accessible to t
 methods for these filter options come in two versions:
 - A *for-self* version (for example `PatientFilters.byIdentifiersForSelf`) where the data owner id is automatically filled
 with the current data owner id. Unless you're using a special configuration for data owners ([such as hierarchical
-healthcare parties](/nsdk/how-to/share-data-with-many-users.mdx)), you should only be using these filter options in your application for the end-users.
+healthcare parties](/how-to/share-data-with-many-users.mdx)), you should only be using these filter options in your application for the end-users.
 - A *for-data-owner* version (for example `PatientFilters.byIdentifiersForDataOwner`) where you need to explicit specify
 the id of the data owner.
-Unless you're using a special configuration for data owners ([such as hierarchical healthcare parties](/nsdk/how-to/share-data-with-many-users.mdx)), this is
+Unless you're using a special configuration for data owners ([such as hierarchical healthcare parties](/how-to/share-data-with-many-users.mdx)), this is
 only needed when you're querying the data as a non-data-owner user.
 For example, this could be the case if you, acting as the system administrator, are compiling some statistics on the
 patients registered to your app.
@@ -95,7 +95,7 @@ special permissions, depending on which method they're used for.
 
 :::info
 
-We recommend you understand the concepts of [hierarchical healthcare parties](/nsdk/how-to/share-data-with-many-users.mdx)]
+We recommend you understand the concepts of [hierarchical healthcare parties](/how-to/share-data-with-many-users.mdx)]
 and anonymous data owners (:construction:) before you read this section.
 
 :::
@@ -591,7 +591,7 @@ def get_heart_rate_measurements(sdk: CardinalSdk) -> PaginatedListIterator[Decry
 
 </LanguageTabs>
 
-Note that this requires that the user performing the query has access to all the [secret ids](/nsdk/explanations/encrypted-links) of the patients
+Note that this requires that the user performing the query has access to all the [secret ids](/explanations/encrypted-links) of the patients
 obtained from the first query.
 If not, some items will be missing from the final result.
 

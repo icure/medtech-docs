@@ -1,6 +1,6 @@
 # Service
 
-A Service is an encryptable nested entity that represents all the medical data produced during a [Contact](/nsdk/explanations/data-model/contact), and is therefore
+A Service is an encryptable nested entity that represents all the medical data produced during a [Contact](/explanations/data-model/contact), and is therefore
 nested into that entity. It can represent subjective information provided by the patient, such as complaints, reason for 
 visits, feelings, etc. or objective information like biometric measures (blood pressure, temperature, heart beat, etc.), 
 or physical exam description, diagnosis, prescription, integration of lab reports from another healthcare party, action plan, etc.
@@ -16,16 +16,16 @@ entity will be encrypted:
 
 - The `markdown` field in all the `notes`.
 
-You can customize the encrypted fields as [explained in this how to](/nsdk/how-to/initialize-the-sdk/configure-what-to-encrypt).
+You can customize the encrypted fields as [explained in this how to](/how-to/initialize-the-sdk/configure-what-to-encrypt).
 
 ## Properties
 
 Below you will find an explanation of the most commonly used properties in the entity that are not among the
-[shared fields](/nsdk/explanations/data-model/#shared-fields). For a full list, check the [references](TODO).
+[shared fields](/explanations/data-model/#shared-fields). For a full list, check the [references](TODO).
 
 ### closingDate
 The `closingDate` represent the moment when the service ended.
-It is encoded as a [FuzzyDateTime](/nsdk/explanations/data-model/#fuzzydatetime).
+It is encoded as a [FuzzyDateTime](/explanations/data-model/#fuzzydatetime).
 
 ### contactId
 The id of the Contact where this Service is nested. This property will be automatically filled by the backend when the
@@ -35,7 +35,7 @@ The use case for this property is to provide a link to the parent Contact in all
 on its own, by using a filter or a specialized get method.
 
 ### content
-Stores the data of the Service as a [Content](/nsdk/explanations/data-model/content). Each content is associated to an
+Stores the data of the Service as a [Content](/explanations/data-model/content). Each content is associated to an
 [ISO language code](https://en.wikipedia.org/wiki/List_of_ISO_639_language_codes), to provide localized information if
 needed.
 
@@ -51,7 +51,7 @@ A list of textual remarks related to this Service.
 
 ### openingDate
 The `openingDate` represent the starting moment of the Service.
-It is encoded as a [FuzzyDateTime](/nsdk/explanations/data-model/#fuzzydatetime).
+It is encoded as a [FuzzyDateTime](/explanations/data-model/#fuzzydatetime).
 
 ### subContactIds
 The ids of all the [SubContact](nsdk/explanations/data-model/subcontact)s that are used to link the Service with other
@@ -59,4 +59,4 @@ entities, such as health elements or healthcare approaches.
 
 ### valueDate
 If the Service was opened and closed on the same date, this field can be used instead of `openingDate` and `closingDate`.
-It is encoded as a [FuzzyDateTime](/nsdk/explanations/data-model/#fuzzydatetime).
+It is encoded as a [FuzzyDateTime](/explanations/data-model/#fuzzydatetime).

@@ -1,8 +1,8 @@
 # SubContact
 
-A SubContact is an encryptable nested entity that is used to link [Contact](/nsdk/explanations/data-model/contact)s and
-[Service](/nsdk/explanations/data-model/service)s to other structuring element that can provide an additional medical
-context, such as [HealthElement](/nsdk/explanations/data-model/healthelement), healthcare approach (PlanOfAction), or
+A SubContact is an encryptable nested entity that is used to link [Contact](/explanations/data-model/contact)s and
+[Service](/explanations/data-model/service)s to other structuring element that can provide an additional medical
+context, such as [HealthElement](/explanations/data-model/healthelement), healthcare approach (PlanOfAction), or
 medical forms.
 
 SubContacts are nested in the Contact entity, in the `subContacts` field.
@@ -10,7 +10,7 @@ SubContacts are nested in the Contact entity, in the `subContacts` field.
 ## Properties
 
 Below you will find an explanation of the most commonly used properties in the entity that are not among the
-[shared fields](/nsdk/explanations/data-model/#shared-fields). For a full list, check the [references](TODO).
+[shared fields](/explanations/data-model/#shared-fields). For a full list, check the [references](TODO).
 
 ### descr
 A free text description of the SubContact.
@@ -20,7 +20,7 @@ If a medical form (of an external system) was used to acquire the information co
 contains the identifier of that form.
 
 ### healthElementId
-The id of an [HealthElement](/nsdk/explanations/data-model/healthelement) that was opened in the contact, referenced by
+The id of an [HealthElement](/explanations/data-model/healthelement) that was opened in the contact, referenced by
 the contact or closed by the contact.
 
 ### planOfActionId

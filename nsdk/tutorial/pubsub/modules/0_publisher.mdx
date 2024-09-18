@@ -316,14 +316,14 @@ const patientSdk = await CardinalSdk.initialize(
 
 :::warning
 This registration flow makes sense only in the context of this example, to make it self-contained.
-To learn how to register a Patient in a real context, check [this how to](/nsdk/how-to/registering-users).
+To learn how to register a Patient in a real context, check [this how to](/how-to/registering-users).
 :::
 
 ## Create Medical Data
 
 The patient user is now completely initialized and can start creating data. The Publisher simulates a medical
 device capable of measuring glycemia. This measurement is stored through the Cardinal SDK as a `Service` inside of a 
-`Contact`, as explained in the [previous tutorial](/nsdk/tutorial/basic/modules/basic-tutorial-create-medical-data).
+`Contact`, as explained in the [previous tutorial](/tutorial/basic/modules/basic-tutorial-create-medical-data).
 
 <LanguageTabs>
 <TabItem value="kotlin">
@@ -475,7 +475,7 @@ time, and create it.
 
 For simplicity's sake, the Publisher is getting the id of the healthcare party to share the data with from the `responsible`
 field of the patient. This is a field automatically filled at patient creating with the id of the healthcare party who
-created it. For more information about sharing data, check our tutorial on [data sharing](/nsdk/tutorial/basic/modules/basic-tutorial-share-data).
+created it. For more information about sharing data, check our tutorial on [data sharing](/tutorial/basic/modules/basic-tutorial-share-data).
 
 <LanguageTabs>
 <TabItem value="kotlin">

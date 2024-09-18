@@ -76,7 +76,7 @@ sdk = await CardinalSdk.initialize(
 </TabItem>
 </LanguageTabs>
 
-Then, the Subscriber which types of data it wants to receive and it can do using a [filter](/nsdk/how-to/querying-data).
+Then, the Subscriber which types of data it wants to receive and it can do using a [filter](/how-to/querying-data).
 The following filter includes all the service entities that are:
 
 - Shared with the healthcare party.
@@ -136,7 +136,7 @@ const filter = intersection(
 Finally, the Subscriber can open the connection using the filter, receiving an event whenever a service that matches
 the filter is created or updated.
 
-For more information about subscriptions and events, check [this how-to](/nsdk/how-to/how-to-subscribe-to-events).
+For more information about subscriptions and events, check [this how-to](/how-to/how-to-subscribe-to-events).
 
 <LanguageTabs>
 <TabItem value="kotlin">
@@ -203,7 +203,7 @@ while (!subscription.isClosed) {
 </TabItem>
 </LanguageTabs>
 
-[Different types of events can be produced](/nsdk/how-to/how-to-subscribe-to-events#buffered-events) by the channel. In
+[Different types of events can be produced](/how-to/how-to-subscribe-to-events#buffered-events) by the channel. In
 this example, the Subscriber will handle only the events related to opening a connection and receiving an entity.
 
 <LanguageTabs>

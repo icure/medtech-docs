@@ -419,7 +419,7 @@ Your secret provider implementation, in turn, may prompt the user for his passwo
 
 The following code provides an example implementation of a authentication secret provider that uses a long-lived token
 when possible and as fallback asks the user for its password.
-If you want more information on authentication with a secret provider refer to the [dedicated documentation page](/nsdk/how-to/initialize-the-sdk/authentication-with-secret-provider)
+If you want more information on authentication with a secret provider refer to the [dedicated documentation page](/how-to/initialize-the-sdk/authentication-with-secret-provider)
 
 <LanguageTabs>
 
@@ -667,7 +667,7 @@ If you want to change which parts of your user's data is encrypted, you can prov
 object at the SDK initialization time.
 
 To learn more about the syntax of the encrypted fields configuration and for more tips on how to configure it you can
-refer to the [dedicated documentation page](/how-to/configure-what-to-encrypt)
+refer to the [dedicated documentation page](/how-to/initialize-the-sdk/configure-what-to-encrypt)
 
 <LanguageTabs>
 
@@ -825,7 +825,7 @@ The parameters that allow you to configure the cryptographic operations of the C
 - `createTransferKeys`: allows you to disable the automatic creation of information that allows to recover newly created
 keys using previously existing lost but verified keys of the user (:construction:).
 - `useHierarchicalDataOwners`: enables the hierarchical data owners key management when set to true.
-The SDK will expect to have keys for the [data owners parents](/nsdk/how-to/share-data-with-many-users) (if any).
+The SDK will expect to have keys for the [data owners parents](/how-to/share-data-with-many-users) (if any).
 
 ### Http client configuration (kotlin only)
 

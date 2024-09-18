@@ -12,7 +12,7 @@ However, in most cases, you might not have the ID of the entity you need. Theref
 data by their content using filters.
 
 The following examples provide insights into how to search data using the filter mechanism. For a more comprehensive
-understanding, check [this how to](/nsdk/how-to/querying-data).
+understanding, check [this how to](/how-to/querying-data).
 
 In the first code snippet, all patients whose name matches the query string provided by the user and who are shared
 with the current user will be returned:
@@ -120,7 +120,7 @@ if (patient == null) {
 </LanguageTabs>
 
 The same logic can be applied to medical data, where you can leverage the
-[secret link](/nsdk/tutorial/basic/modules/basic-tutorial-create-medical-data#initiating-a-medical-examination) between
+[secret link](/tutorial/basic/modules/basic-tutorial-create-medical-data#initiating-a-medical-examination) between
 a patient and another entity:
 
 <LanguageTabs>
@@ -192,7 +192,7 @@ Since the link between `Patient` and `Contact` is encrypted, the user must also 
 As with the previous example, the method returns an iterator that can be used to retrieve all the matching `Contacts`.
 
 The additional information stored in an entity to provide additional context (like the
-[identifiers in a Service](/nsdk/tutorial/basic/modules/basic-tutorial-create-medical-data#creating-scalar-medical-data-blood-pressure))
+[identifiers in a Service](/tutorial/basic/modules/basic-tutorial-create-medical-data#creating-scalar-medical-data-blood-pressure))
 can also be used for filtering:
 
 <LanguageTabs>

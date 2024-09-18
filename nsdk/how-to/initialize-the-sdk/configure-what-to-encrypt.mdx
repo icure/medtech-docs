@@ -31,7 +31,7 @@ application.
 ### Impact on querying
 
 The biggest and most impactful downside of encryption in the Cardinal SDK is that encrypted data is not queryable.
-All the filtering options provided by the [querying system](/nsdk/how-to/querying-data) work only if the properties 
+All the filtering options provided by the [querying system](/how-to/querying-data) work only if the properties 
 used by the filter are readable by the backend: if you encrypt them the filter will not work.
 
 The default configuration of the SDK leaves all properties used by filter options unencrypted, including some sensitive

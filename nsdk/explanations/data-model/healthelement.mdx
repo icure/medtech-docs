@@ -10,12 +10,12 @@ By default, the following fields of this entity will be encrypted:
 - `note`
 - The `markdown` field in all the `notes`.
 
-You can customize the encrypted fields as [explained in this how to](/nsdk/how-to/initialize-the-sdk/configure-what-to-encrypt).
+You can customize the encrypted fields as [explained in this how to](/how-to/initialize-the-sdk/configure-what-to-encrypt).
 
 ## Properties
 
 Below you will find an explanation of the most commonly used properties in the entity that are not among the
-[shared fields](/nsdk/explanations/data-model/#shared-fields). For a full list, check the [references](TODO).
+[shared fields](/explanations/data-model/#shared-fields). For a full list, check the [references](TODO).
 
 ### careTeam
 A collection of object that contain information about all the healthcare actor related to the condition of this 
@@ -23,7 +23,7 @@ HealthcareElement.
 
 ### closingDate
 The `closingDate` represent the moment when the HealthElement ended.
-It is encoded as a [FuzzyDateTime](/nsdk/explanations/data-model/#fuzzydatetime).
+It is encoded as a [FuzzyDateTime](/explanations/data-model/#fuzzydatetime).
 
 ### descr
 A human-readable description for the HealthElement.
@@ -33,15 +33,15 @@ A collection of objects that contain information about all the moments when the 
 happened.
 
 ### idOpeningContact
-The id of the [Contact](/nsdk/explanations/data-model/contact) that represents the encounter where this HealthElement
+The id of the [Contact](/explanations/data-model/contact) that represents the encounter where this HealthElement
 was created.
 
 ### idClosingContact
-The id of the [Contact](/nsdk/explanations/data-model/contact) that represents the encounter where this HealthElement
+The id of the [Contact](/explanations/data-model/contact) that represents the encounter where this HealthElement
 is closed.
 
 ### idService
-The id of a [Service](/nsdk/explanations/data-model/service) if this HealthElement was created within a specific Service
+The id of a [Service](/explanations/data-model/service) if this HealthElement was created within a specific Service
 in a contact.
 
 ### note
@@ -52,11 +52,11 @@ Additional textual notes to include in the HealthElement.
 
 ### openingDate
 The `openingDate` represent the starting moment of the event of the HealthElement.
-It is encoded as a [FuzzyDateTime](/nsdk/explanations/data-model/#fuzzydatetime).
+It is encoded as a [FuzzyDateTime](/explanations/data-model/#fuzzydatetime).
 
 ### plansOfAction
 A collection of objects that contain information about all the healthcare approaches related to this HealthElement.
 
 ### valueDate
 If the HealthElement was opened and closed on the same date, this field can be used instead of `openingDate` and `closingDate`.
-It is encoded as a [FuzzyDateTime](/nsdk/explanations/data-model/#fuzzydatetime).
+It is encoded as a [FuzzyDateTime](/explanations/data-model/#fuzzydatetime).
