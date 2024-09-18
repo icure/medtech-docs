@@ -92,7 +92,7 @@ cryptographic keys.
 
 You can access the Cardinal backend through multiple urls, which follow different release schedules.
 
-TODO which ones
+<!-- TODO which ones -->
 
 ## Authentication method
 
@@ -158,7 +158,7 @@ auth = UsernamePassword("username", "password")
 #### Username + login token
 
 You can generate login token through the [cockpit](/cockpit/how-to/how-to-manage-hcp#generating-an-authentication-token)
-or through the Cardinal SDK itself. TODO link
+or through the Cardinal SDK itself (:construction:).
 The lifespan of a login token is configurable, and there may be multiple login tokens associated with a user.
 Login tokens can be revoked, but any JWTs generated through that login token won't be automatically revoked.
 
@@ -199,7 +199,7 @@ auth = UsernameLongToken("username", "token")
 
 #### Third party authentication
 
-TODO probably requires work to allow our users to set their own site-key or equivalent
+<!-- TODO probably requires work to allow our users to set their own site-key or equivalent -->
 
 <LanguageTabs>
 
@@ -289,7 +289,7 @@ Refer to the official documentation of the chosen captcha provider to learn how 
 
 #### Example
 
-TODO example with wrong code given by user?
+<!-- TODO example with wrong code given by user? -->
 
 <LanguageTabs>
 
@@ -522,7 +522,7 @@ If none of the provided implementations included in the SDK suits your needs, yo
 
 <LanguageTabs>
 
-<TabItem value={"kotlin"}>
+<TabItem value="kotlin">
 
 On the kotlin multiplatform SDK the storage solutions available depend on the actual platform being used.
 
@@ -564,7 +564,7 @@ class MyVolatileStorage : StorageFacade {
 
 </TabItem>
 
-<TabItem value={"typescript"}>
+<TabItem value="typescript">
 
 On typescript you can use file-system storage when running on node, or local storage when running on browser.
 
@@ -573,7 +573,7 @@ On other platforms you will need to provide your own storage implementation.
 :::info
 
 If you are on react-native we provide a supplementary package a storage facade and other required components.
-Refer to the expo boilerplate for more information (TODO link).
+Refer to the expo boilerplate for more information (:construction:).
 
 :::
 
@@ -613,7 +613,7 @@ class MyVolatileStorage implements StorageFacade {
 
 </TabItem>
 
-<TabItem value={"python"}>
+<TabItem value="python">
 
 On python you can use file-system storage or provide your own implementation.
 
@@ -777,7 +777,7 @@ const jwkEncodedKeyStorage =
 :::info
 
 if you don't know what groups and applications are in the Cardinal ecosystem you should read the dedicated documentation
-page TODO link.
+page (:construction:).
 
 :::
 
@@ -821,11 +821,11 @@ that the users are sharing data with who they intend.
 
 These topics are a bit advanced, but we recommend that you read about them after you've familiarized with the cardinal SDK.
 The parameters that allow you to configure the cryptographic operations of the Cardinal SDK are:
-- `cryptoStrategies`: allows you to provide custom key generation, recovery and verification solutions. TODO more info link
+- `cryptoStrategies`: allows you to provide custom key generation, recovery and verification solutions (:construction:). 
 - `createTransferKeys`: allows you to disable the automatic creation of information that allows to recover newly created
-keys using previously existing lost but verified keys of the user. TODO more info link
+keys using previously existing lost but verified keys of the user (:construction:).
 - `useHierarchicalDataOwners`: enables the hierarchical data owners key management when set to true.
-The SDK will expect to have keys for the data owners parents (if any). TODO link to specific chapter of share data with many users
+The SDK will expect to have keys for the [data owners parents](/nsdk/how-to/share-data-with-many-users) (if any).
 
 ### Http client configuration (kotlin only)
 
@@ -847,8 +847,7 @@ used, and in those cases you need to provide a `CryptoService` instance through 
 
 Currently, this is the case only for the typescript SDK when it is used on react-native.
 Refer to the boilerplate documentation for more information on how you can provide the appropriate crypto service to
-the SDK.
-TODO link
+the SDK (:construction:)\.
 
 ### Legacy support configurations
 
