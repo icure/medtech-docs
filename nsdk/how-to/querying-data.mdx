@@ -1,0 +1,625 @@
+import TabItem from "@theme/TabItem";
+import {LanguageTabs} from "@site/src/components/LanguageTabs";
+
+# Querying data
+
+This page explains how you can use the iCure SDK to query stored data.
+
+## Filter options
+
+Filter options are at the core of queries in iCure. For each kind of entity, the SDK provides a factory that allows
+you to create various types of filter options that check different properties on the entities.
+
+For example, you can create filter options that match all healthcare parties with a name (first or last name) that
+contains "joh":
+
+<LanguageTabs>
+
+<TabItem value="kotlin">
+
+```kotlin
+import com.icure.cardinal.sdk.filters.HealthcarePartyFilters
+
+val hcpWithName = HealthcarePartyFilters.byName("joh")
+```
+
+</TabItem>
+
+<TabItem value="typescript">
+
+```typescript
+import {HealthcarePartyFilters} from "@icure/cardinal-sdk";
+
+const hcpWithName = HealthcarePartyFilters.byName("joh")
+```
+
+</TabItem>
+
+<TabItem value="python">
+
+```python
+from cardinal_sdk.filters import HealthcarePartyFilters
+
+hcpWithName = HealthcarePartyFilters.by_name("joh")
+```
+
+</TabItem>
+
+</LanguageTabs>
+
+
+:::info
+
+In this page we're showing how to use filter options for querying data, but they're also used in other contexts.
+For example, when setting up a realtime event listener, you need to provide filter options which will determine the
+entities for which you will get a notification.
+
+:::
+
+:::note
+
+In this page we only explain the concepts of filter options and how they can be used for querying.
+
+If you want a comprehensive list of the available filter options refer to the code documentation (:construction:)
+
+:::
+
+### Data owners in filters
+
+:::info
+
+[This section will be clearer if you have a good understanding of data owners and access control in iCure.](/explanations/data-owners-and-access-control)
+
+:::
+
+For the entities where the access control policy is entity-based, the filter options always require you to provide a
+data owner id.
+In these cases, the filter will match only entities the provided data owner can "access" (with some limitations,
+explained later).
+
+For convenience, since you usually need to retrieve data that is accessible to the current data owner, the factory
+methods for these filter options come in two versions:
+- A *for-self* version (for example `PatientFilters.byIdentifiersForSelf`) where the data owner id is automatically filled
+with the current data owner id. Unless you're using a special configuration for data owners ([such as hierarchical
+healthcare parties](/how-to/share-data-with-many-users.mdx)), you should only be using these filter options in your application for the end-users.
+- A *for-data-owner* version (for example `PatientFilters.byIdentifiersForDataOwner`) where you need to explicit specify
+the id of the data owner.
+Unless you're using a special configuration for data owners ([such as hierarchical healthcare parties](/how-to/share-data-with-many-users.mdx)), this is
+only needed when you're querying the data as a non-data-owner user.
+For example, this could be the case if you, acting as the system administrator, are compiling some statistics on the
+patients registered to your app.
+Note that using a for-data-owner filter option with a data owner id other than the current data owner id may require
+special permissions, depending on which method they're used for.
+
+#### Access for filter options
+
+:::info
+
+We recommend you understand the concepts of [hierarchical healthcare parties](/how-to/share-data-with-many-users.mdx)]
+and anonymous data owners (:construction:) before you read this section.
+
+:::
+
+Previously, we said that in the filter options for EBAC entities, you need to specify the id of a data owner and the
+filter options will only match entities that the provided data owner can access.
+While, this is true in basic scenarios, if you're using hierarchical healthcare parties or anonymous delegations for data
+owners (which is usually the case when you have patient data owners), this is not entirely correct: there may be cases
+where a data owner has access to an entity, but the filter for that data owner does not return that entity.
+
+When you're using a hierarchical data owner configuration, the filter options won't be taking the data owner hierarchy in
+consideration: for example, if a child HCP has access to an entity only through a parent HCP, any filter option *for-self*
+will not return that entity.
+To get that entity the child HCP needs to use *for-data-owner* filter options with the parent id.
+
+Similarly, when using filter options for a data owner that has anonymous delegations, only that data owner will be able
+to find the entities that he can access only through an anonymous delegation.
+Due to the nature of anonymous delegations, all other users, regardless of their permissions, will not be able to find
+these entities.
+
+### Combining filter options
+
+Filter options can be used individually, but you often need to query data using multiple conditions that can't be
+covered by one filter option alone.
+
+The SDK provides you three different operations that can be used to combine filter options:
+- *intersection* takes two or more filter options and returns filter options that match the entities that match all
+provided filters
+- *union* takes two or more filter options and returns filter options that match the entities matching at least one of
+the provided filters
+- *difference* takes in input exactly two filter options and returns filter options that match entities that are matching
+the first provided filter but not the second.
+
+In the following example we use these operators to get filter options that match all male patients born between 1960 and
+2000 and all female patients born between 1950 and 2000.
+
+<LanguageTabs>
+
+<TabItem value="kotlin">
+
+```kotlin
+import com.icure.cardinal.sdk.filters.PatientFilters
+import com.icure.cardinal.sdk.filters.intersection
+import com.icure.cardinal.sdk.filters.union
+import com.icure.cardinal.sdk.model.embed.Gender
+
+val myFilter = union(
+	intersection(
+		PatientFilters.byGenderEducationProfessionForSelf(Gender.Male),
+		PatientFilters.byDateOfBirthBetweenForSelf(fromDate = 19600101, toDate = 19991231)
+	),
+	intersection(
+		PatientFilters.byGenderEducationProfessionForSelf(Gender.Female),
+		PatientFilters.byDateOfBirthBetweenForSelf(fromDate = 19500101, toDate = 19991231)
+	)
+)
+
+// In kotlin you can also use infix functions to build combined filters
+val myFilterWithOperators = (
+	PatientFilters.byGenderEducationProfessionForSelf(
+		Gender.Male
+	) and PatientFilters.byDateOfBirthBetweenForSelf(
+		fromDate = 19600101,
+		toDate = 19991231
+	)
+) or (
+	PatientFilters.byGenderEducationProfessionForSelf(
+		Gender.Female
+	) and PatientFilters.byDateOfBirthBetweenForSelf(
+		fromDate = 19500101,
+		toDate = 19991231
+	)
+)
+```
+
+</TabItem>
+
+<TabItem value="typescript">
+
+```typescript
+import {PatientFilters,Gender,intersection,union} from "@icure/cardinal-sdk";
+
+const myFilter = union(
+	intersection(
+		PatientFilters.byGenderEducationProfessionForSelf(Gender.Male),
+		PatientFilters.byDateOfBirthBetweenForSelf(19600101, 19991231)
+	),
+	intersection(
+		PatientFilters.byGenderEducationProfessionForSelf(Gender.Female),
+		PatientFilters.byDateOfBirthBetweenForSelf(19500101, 19991231)
+	)
+)
+```
+
+</TabItem>
+
+<TabItem value="python">
+
+```python
+from cardinal_sdk.model import Gender
+from cardinal_sdk.filters import union, intersection, PatientFilters
+
+myFilter = union(
+	intersection(
+		PatientFilters.by_gender_education_profession_for_self(Gender.Male),
+		PatientFilters.by_date_of_birth_between_for_self(19600101, 19991231)
+	),
+	intersection(
+		PatientFilters.by_gender_education_profession_for_self(Gender.Female),
+		PatientFilters.by_date_of_birth_between_for_self(19500101, 19991231)
+	)
+)
+```
+
+</TabItem>
+
+</LanguageTabs>
+
+## Retrieve entities matching a filter
+
+To retrieve the entities matching the filter options you've created you can use the filter and match methods of the
+corresponding api.
+
+The match method returns the ids of all the entity matching the provided filter options.
+
+<LanguageTabs>
+
+<TabItem value="kotlin">
+
+```kotlin
+
+import com.icure.cardinal.sdk.CardinalSdk
+import com.icure.cardinal.sdk.filters.FilterOptions
+import com.icure.cardinal.sdk.model.Patient
+
+suspend fun getIdsOfPatientsMatching(sdk: CardinalSdk, patientFilterOptions: FilterOptions<Patient>): List<String> =
+	sdk.patient.matchPatientsBy(patientFilterOptions)
+```
+
+</TabItem>
+
+<TabItem value="typescript">
+
+```typescript
+import {FilterOptions, CardinalSdk, Patient} from "@icure/cardinal-sdk";
+
+function getIdsOfPatientsMatching(sdk: CardinalSdk, patientFilterOptions: FilterOptions<Patient>): Promise<Array<string>> {
+	return sdk.patient.matchPatientsBy(patientFilterOptions)
+}
+```
+
+</TabItem>
+
+<TabItem value="python">
+
+```python
+from cardinal_sdk.model import Patient
+from cardinal_sdk.filters import FilterOptions
+from cardinal_sdk import CardinalSdk
+from typing import List
+
+def get_ids_of_patients_matching(sdk: CardinalSdk, patient_filter_options: FilterOptions[Patient]) -> List[str]:
+	return sdk.patient.match_patients_by_blocking(patient_filter_options)
+
+```
+
+</TabItem>
+
+</LanguageTabs>
+
+The filter method returns an iterator that retrieves the matching entities from the backend over multiple pages if needed.
+For encryptable entities this method is flavoured: the method on the main api returns the decrypted entities, but you
+can also retrieve the entities using the encrypted and polymorphic flavours.
+
+<LanguageTabs>
+
+<TabItem value="kotlin">
+
+```kotlin
+import com.icure.cardinal.sdk.CardinalSdk
+import com.icure.cardinal.sdk.filters.FilterOptions
+import com.icure.cardinal.sdk.model.DecryptedPatient
+import com.icure.cardinal.sdk.model.EncryptedPatient
+import com.icure.cardinal.sdk.model.Patient
+import com.icure.cardinal.sdk.utils.pagination.PaginatedListIterator
+
+// Get the iterator over decrypted patients.
+// If one of the retrieved patients can't be decrypted you will get an exception when using the iterator
+suspend fun getDecryptedPatientsIterator(sdk: CardinalSdk, patientFilterOptions: FilterOptions<Patient>): PaginatedListIterator<DecryptedPatient> =
+	sdk.patient.filterPatientsBy(patientFilterOptions)
+
+// Get the iterator over encrypted patients.
+suspend fun getEncryptedPatientsIterator(sdk: CardinalSdk, patientFilterOptions: FilterOptions<Patient>): PaginatedListIterator<EncryptedPatient> =
+	sdk.patient.encrypted.filterPatientsBy(patientFilterOptions)
+
+// Get the iterator over patients, attempting to decrypt them.
+// If one of the retrieved patients can't be decrypted you will get the encrypted patient.
+suspend fun getPatientsIterator(sdk: CardinalSdk, patientFilterOptions: FilterOptions<Patient>): PaginatedListIterator<Patient> =
+	sdk.patient.tryAndRecover.filterPatientsBy(patientFilterOptions)
+
+// Print 10 patients at a time until we've printed all patients of the iterator
+suspend fun printAllPatientsBy10(patientsIterator: PaginatedListIterator<Patient>) {
+	while (patientsIterator.hasNext()) {
+		println(patientsIterator.next(10))
+	}
+}
+```
+
+</TabItem>
+
+<TabItem value="typescript">
+
+```typescript
+import {
+	DecryptedPatient,
+	EncryptedPatient,
+	FilterOptions,
+	CardinalSdk,
+	PaginatedListIterator,
+	Patient
+} from "@icure/cardinal-sdk";
+
+// Get the iterator over decrypted patients.
+// If one of the retrieved patients can't be decrypted you will get an exception when using the iterator
+function getDecryptedPatientsIterator(sdk: CardinalSdk, patientFilterOptions: FilterOptions<Patient>): Promise<PaginatedListIterator<DecryptedPatient>> {
+	return sdk.patient.filterPatientsBy(patientFilterOptions)
+}
+
+// Get the iterator over encrypted patients.
+function getEncryptedPatientsIterator(sdk: CardinalSdk, patientFilterOptions: FilterOptions<Patient>): Promise<PaginatedListIterator<EncryptedPatient>> {
+	return sdk.patient.encrypted.filterPatientsBy(patientFilterOptions)
+}
+
+// Get the iterator over patients, attempting to decrypt them.
+// If one of the retrieved patients can't be decrypted you will get the encrypted patient.
+function getPatientsIterator(sdk: CardinalSdk, patientFilterOptions: FilterOptions<Patient>): Promise<PaginatedListIterator<Patient>> {
+	return sdk.patient.tryAndRecover.filterPatientsBy(patientFilterOptions)
+}
+
+// Print 10 patients at a time until we've printed all patients of the iterator
+async function printAllPatientsBy10(patientsIterator: PaginatedListIterator<Patient>) {
+	while (await patientsIterator.hasNext()) {
+		console.log(await patientsIterator.next(10))
+	}
+}
+```
+
+</TabItem>
+
+<TabItem value="python">
+
+```python
+from cardinal_sdk.model import Patient, DecryptedPatient, EncryptedPatient
+from cardinal_sdk.filters import FilterOptions
+from cardinal_sdk import CardinalSdk
+from cardinal_sdk.pagination.PaginatedListIterator import PaginatedListIterator
+
+# Get the iterator over decrypted patients.
+# If one of the retrieved patients can't be decrypted you will get an exception when using the iterator
+def get_decrypted_patients_iterator(sdk: CardinalSdk, patient_filter_options: FilterOptions[Patient]) -> PaginatedListIterator[DecryptedPatient]:
+	return sdk.patient.filter_patients_by_blocking(patient_filter_options)
+
+# Get the iterator over encrypted patients.
+def get_encrypted_patients_iterator(sdk: CardinalSdk, patient_filter_options: FilterOptions[Patient]) -> PaginatedListIterator[EncryptedPatient]:
+	return sdk.patient.encrypted.filter_patients_by_blocking(patient_filter_options)
+
+# Get the iterator over patients, attempting to decrypt them.
+# If one of the retrieved patients can't be decrypted you will get the encrypted patient.
+def get_patients_iterator(sdk: CardinalSdk, patient_filter_options: FilterOptions[Patient]) -> PaginatedListIterator[Patient]:
+	return sdk.patient.try_and_recover.filter_patients_by_blocking(patient_filter_options)
+
+# Print 10 patients at a time until we've printed all patients of the iterator
+def print_all_patients_by_10(patients_iterator: PaginatedListIterator[Patient]):
+	while patients_iterator.has_next_blocking():
+		print(patients_iterator.next_blocking(10))
+```
+
+</TabItem>
+
+</LanguageTabs>
+
+### Sorted queries
+
+Some filter options are sortable, meaning that you can use them to sort data according to certain properties as defined
+by the filter options.
+
+If you want to retrieve sorted data using sortable filter options you can use the filterSorted/matchSorted variant
+of the filter/match method. If you don't need sorted data, you should always prefer using the standard version of
+the filter/match method, as it may be faster, depending on the actual query.
+
+:::note
+
+You may notice that sometimes data is consistently sorted according to the filter options even when using the standard
+variant of the filter/match method.
+However, this may change across different versions of the iCure SDK or backend, therefore, if you need your data to be
+sorted, you should switch to the sorted variant of the method.
+
+:::
+
+In some cases, composite filter options are also sortable: if the first filter options of an intersection or difference
+are sortable, then the resulting filter options are sortable using the criteria of those options, regardless of the
+sortability of the other provided options. Union filter options are never sortable.
+
+For example, you can create a filter that gets all diagnoses (health element) of long or acute covid for a certain patient,
+sorting from most to least recent:
+
+<LanguageTabs>
+
+<TabItem value="kotlin">
+
+```kotlin
+import com.icure.cardinal.sdk.CardinalSdk
+import com.icure.cardinal.sdk.filters.HealthElementFilters
+import com.icure.cardinal.sdk.filters.SortableFilterOptions
+import com.icure.cardinal.sdk.model.DecryptedHealthElement
+import com.icure.cardinal.sdk.model.HealthElement
+import com.icure.cardinal.sdk.model.Patient
+import com.icure.cardinal.sdk.utils.pagination.PaginatedListIterator
+
+suspend fun getSortedAcuteOrLongCovidDiagnosesForPatient(sdk: CardinalSdk, patient: Patient): PaginatedListIterator<DecryptedHealthElement> {
+	val filter: SortableFilterOptions<HealthElement> = HealthElementFilters.byPatientsOpeningDateForSelf(
+		listOf(patient),
+		descending = true
+	) and (
+		HealthElementFilters.byCodeForSelf(
+			"SNOMED",
+			"1119302008"
+		) or HealthElementFilters.byCodeForSelf(
+			"SNOMED",
+			"1119304009"
+		)
+	)
+	return sdk.healthElement.filterHealthElementsBySorted(filter)
+}
+```
+
+</TabItem>
+
+<TabItem value="typescript">
+
+```typescript
+import {
+	DecryptedHealthElement,
+	HealthElement,
+	HealthElementFilters,
+	CardinalSdk,
+	intersection,
+	PaginatedListIterator,
+	Patient,
+	SortableFilterOptions,
+	union
+} from "@icure/cardinal-sdk";
+
+function getSortedAcuteOrLongCovidDiagnosesForPatient(sdk: CardinalSdk, patient: Patient): Promise<PaginatedListIterator<DecryptedHealthElement>> {
+	const filter: SortableFilterOptions<HealthElement> = intersection(
+		HealthElementFilters.byPatientsOpeningDateForSelf(
+			[patient],
+			{ descending: true }
+		),
+		union(
+			HealthElementFilters.byCodeForSelf(
+				"SNOMED",
+				{ codeCode: "1119302008" }
+			),
+			HealthElementFilters.byCodeForSelf(
+				"SNOMED",
+				{ codeCode: "1119304009" }
+			)
+		)
+	)
+	return sdk.healthElement.filterHealthElementsBySorted(filter)
+}
+```
+
+</TabItem>
+
+<TabItem value="python">
+
+```python
+from cardinal_sdk.filters import HealthElementFilters, union, intersection, SortableFilterOptions
+from cardinal_sdk import CardinalSdk
+from cardinal_sdk.model import Patient, DecryptedHealthElement, HealthElement
+from cardinal_sdk.pagination.PaginatedListIterator import PaginatedListIterator
+
+def get_sorted_acute_or_long_covid_diagnoses_for_patient(sdk: CardinalSdk, patient: Patient) -> PaginatedListIterator[DecryptedHealthElement]:
+	filter_options: SortableFilterOptions[HealthElement] = intersection(
+		HealthElementFilters.by_patients_opening_date_for_self(
+			[patient],
+			descending=True
+		),
+		union(
+			HealthElementFilters.by_code_for_self(
+				"SNOMED",
+				"1119302008"
+			),
+			HealthElementFilters.by_code_for_self(
+				"SNOMED",
+				"1119304009"
+			)
+		)
+	)
+	return sdk.health_element.filterHealthElementsBySorted(filter_options)
+```
+
+</TabItem>
+
+</LanguageTabs>
+
+## Cross-entity queries
+
+Sometimes you need to perform queries that span across multiple types of entities.
+For example, you may want to get all heart rate measurements (services) for patients born between within a certain year
+range.
+
+In iCure, you can achieve this by querying first for one entity, then use the result of the first query to build the
+filter options for the second entity.
+Referring back to the previous example, we first get all patients born within the chosen range (in the code sample
+1990 and 2000), then we get all the services that have a tag for heart rate measurement and are linked to one of the
+retrieved patients.
+
+<LanguageTabs>
+
+<TabItem value="kotlin">
+
+```kotlin
+import com.icure.cardinal.sdk.CardinalSdk
+import com.icure.cardinal.sdk.filters.PatientFilters
+import com.icure.cardinal.sdk.filters.ServiceFilters
+import com.icure.cardinal.sdk.filters.intersection
+import com.icure.cardinal.sdk.model.embed.DecryptedService
+import com.icure.cardinal.sdk.utils.pagination.PaginatedListIterator
+
+suspend fun getHeartRateMeasurements(sdk: CardinalSdk): PaginatedListIterator<DecryptedService> {
+	val allMatchingPatients = sdk.patient.getPatients(
+		sdk.patient.matchPatientsBy(PatientFilters.byDateOfBirthBetweenForSelf(19900101, 19991231))
+	)
+	val serviceFilter = intersection(
+		ServiceFilters.byPatientsForSelf(allMatchingPatients),
+		ServiceFilters.byTagAndValueDateForSelf("SNOMED", "364075005")
+	)
+	return sdk.contact.filterServicesBy(serviceFilter)
+}
+```
+
+</TabItem>
+
+<TabItem value="typescript">
+
+```typescript
+import {
+	DecryptedService,
+	CardinalSdk,
+	intersection,
+	PaginatedListIterator,
+	PatientFilters,
+	ServiceFilters
+} from "@icure/cardinal-sdk";
+
+async function getHeartRateMeasurements(sdk: CardinalSdk): Promise<PaginatedListIterator<DecryptedService>> {
+	const allMatchingPatients = await sdk.patient.getPatients(
+		await sdk.patient.matchPatientsBy(PatientFilters.byDateOfBirthBetweenForSelf(19900101, 19991231))
+	)
+	const serviceFilter = intersection(
+		ServiceFilters.byPatientsForSelf(allMatchingPatients),
+		ServiceFilters.byTagAndValueDateForSelf("SNOMED", { tagCode: "364075005" })
+	)
+	return sdk.contact.filterServicesBy(serviceFilter)
+}
+```
+
+</TabItem>
+
+<TabItem value="python">
+
+```python
+from cardinal_sdk.filters import ServiceFilters, PatientFilters, intersection
+from cardinal_sdk import CardinalSdk
+from cardinal_sdk.model import DecryptedService
+from cardinal_sdk.pagination.PaginatedListIterator import PaginatedListIterator
+
+def get_heart_rate_measurements(sdk: CardinalSdk) -> PaginatedListIterator[DecryptedService]:
+	all_matching_patients = sdk.patient.get_patients_blocking(
+		sdk.patient.matchPatientsBy(PatientFilters.by_date_of_birth_between_for_self(19900101, 19991231))
+	)
+	service_filter = intersection(
+		ServiceFilters.by_patients_for_self(all_matching_patients),
+		ServiceFilters.by_tag_and_value_date_for_self("SNOMED", "364075005")
+	)
+	return sdk.contact.filter_services_by_blocking(service_filter)
+```
+
+</TabItem>
+
+</LanguageTabs>
+
+Note that this requires that the user performing the query has access to all the [secret ids](/explanations/encrypted-links) of the patients
+obtained from the first query.
+If not, some items will be missing from the final result.
+
+### Cross-entity queries with data denormalization.
+
+An alternative approach to the two-step query proposed early is to denormalize your data: if you know that you will
+often need to query services based on the gender and age of the patient, you may start adding some custom tags to each
+service containing the patient's year of birth.
+
+An advantage of this approach is that you wouldn't need to get the patients to perform a patient-service cross-entity
+query, and more importantly, you don't need to have access to the secret ids of the patients.
+
+However, this approach has some major flaws.
+
+The first and most obvious flaw is that the duplicated has some cost, in terms of storage space, amounts of data
+transferred, but most importantly maintenance: today you want to filter services using only the age of the patients, but
+what if tomorrow you also want to filter depending on the gender of the patient?
+If you only added a tag for the patient's year of birth, you will have to either update all the services or go back to
+performing the query in two steps.
+
+The other flaw of this approach is that any patient information we add to the service could be used to de-anonymize
+the patients.
+Today (in the 2020s) if we add to the services a tag that says the patient was born between the years 1940 and 1950,
+we're significantly restricting the set of patients that the service could be referring to.
+We're still probably within a safe range, but what about 10 years from now?
+The number of patients born between 1940 and 1950 will be drastically reduced, making de-anonymization of these patients
+simpler and simpler, especially when this information is combined with the metadata added by iCure.
+
+In general, this approach is much more challenging to manage and implement properly.
+Unless you're certain that this brings value to your solution, and that it will not harm the privacy of your users we
+recommend you to avoid this.

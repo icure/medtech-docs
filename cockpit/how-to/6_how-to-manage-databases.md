@@ -96,11 +96,11 @@ If you are absolutely sure you want to delete this custom property, click the **
 ![Custom property delete](./img/database-interactions/custom-property/edit-custom-property-modal.png)
 
 ### Global administrators
-Global administrators are the ones who are able to manage your whole iCure account environment, including solutions, 
+Global administrators are the ones who are able to manage your whole Cardinal account environment, including solutions, 
 databases, ...
 
-For now, it is not possible to add new global administrators. It will only be the primary user who created your 
-iCure environment. 
+For now, it is not possible to add new global administrators. It will only be the primary user who created your
+Cardinal environment. 
 
 ### Solution administrators
 Solution administrators are able to manage a particular solution. Meaning they will be able to:
@@ -161,7 +161,7 @@ In this zone, you will find all functionalities considered as dangerous:
 - The Deletion of your database
 
 #### Update indexes
-During the lifetime of your database, we will continue improving the iCure solution by introducing new functionalities. 
+During the lifetime of your database, we will continue improving the Cardinal solution by introducing new functionalities. 
 These will sometimes require new database design documents, new database views, that won't be automatically added to 
 your database. 
 

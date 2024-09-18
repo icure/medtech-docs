@@ -219,3 +219,7 @@ html[data-theme='dark'] {
     border: 1px solid var(--ifm-color-primary);
   }
 }
+
+.prism-code {
+  tab-size: 4;
+}

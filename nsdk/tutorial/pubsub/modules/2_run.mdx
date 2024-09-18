@@ -1,0 +1,117 @@
+---
+slug: pubsub-tutorial-run-the-example
+---
+
+import {LanguageTabs} from "@site/src/components/LanguageTabs";
+import TabItem from "@theme/TabItem";
+
+# Run the Example
+
+You can run the example by executing the Subscriber application and then the Publisher application. Below you will 
+find the instruction on how to run them in the different programming languages.
+
+Be sure of running the Subscriber first, as the subscription will only be triggered by services created after the 
+initialization.
+
+:::warning
+Both the Publisher and the Subscriber will ask for a login and a password. You can use the email and an authentication
+token for a healthcare party user [created through the Cockpit](/cockpit/how-to/how-to-manage-hcp).
+
+Make sure to use the same credentials for both the Publisher and Subscriber. The patient created in the Publisher will 
+share data with the healthcare party associated with the logged-in credentials, and the Subscriber can only access the 
+services that have been shared with that same healthcare party.
+:::
+
+:::info
+The Publisher and Subscriber are fully interoperable, even if they are written in different programming languages. 
+For example, you could run the Publisher in Kotlin and the Subscriber in Python, and you would achieve the same result 
+as if both were written in the same language.
+:::
+
+## Prerequisite
+
+Clone the [GitHub repository](https://github.com/icure/cardinal-real-time-analysis-tutorial) and navigate to the folder:
+
+```bash
+git clone https://github.com/icure/cardinal-real-time-analysis-tutorial.git
+cd cardinal-real-time-analysis-tutorial
+```
+
+## Launch the Tutorial using Kotlin
+
+Open the project folder using [IntelliJ](https://www.jetbrains.com/idea/) and wait for the indexing to finish.
+When it finishes, run the `main` function in the `Subscriber.kt` file to run the Subscriber and the `main` functon in 
+the `Publisher.kt` file to run the Publisher.
+
+## Launch the Tutorial using Python
+
+To launch the tutorial in Python, navigate to the `python` folder in the tutorial repository. The minimum supported 
+Python version is 3.9.
+
+```bash
+cd python
+```
+
+It is a good practice to set up a virtual environment to avoid conflict in dependencies.
+
+```bash
+python3 -m venv venv
+source venv/bin/activate
+```
+
+Then, install the Cardinal sdk from PyPi.
+
+```bash
+pip install cardinal-sdk
+```
+
+Then you can run the Subscriber.
+
+```bash
+python src/subscriber.py
+```
+
+Finally, open a new terminal, navigate again to the python folder and ensure that the virtual environment is activated.
+
+```bash
+cd cardinal-real-time-analysis-tutorial/python
+source venv/bin/activate
+```
+
+Now you can run the Publisher.
+
+```bash
+python src/publisher.py
+```
+
+## Launch the Tutorial using Typescript
+
+To launch the Publisher and Subscriber in Typescript, you need a version of node >= 19. You can install it using
+[nvm](https://github.com/nvm-sh/nvm). You will also need the `yarn` package manager.
+
+```bash
+nvm install 19
+nvm use 19
+npm install -G yarn
+```
+
+Now, navigate to the `typescript` directory in the repository and install the dependencies.
+
+```bash
+cd typescript
+yarn install
+```
+
+You can now run the Subscriber:
+
+```bash
+yarn ts-node --esm src/subscriber.ts
+```
+
+Then, open another terminal, navigate to the `typescript` folder, activate node 19 and run the Publisher.
+
+```bash
+cd cardinal-real-time-analysis-tutorial/python
+nvm use 19
+yarn ts-node --esm src/publisher.ts
+```

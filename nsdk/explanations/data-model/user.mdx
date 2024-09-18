@@ -1,0 +1,117 @@
+# User
+
+A User is a non-encryptable, root-level entity that represents an actor that can log in to the system and perform actions
+according to their permissions.
+
+Only a user that is a data owner (i.e. is associated to a HealthcareParty, Patient, or Device) and has initialized their
+own encryption keys can perform operations on the encryptable fields of encryptable entities. A user that is an admin or
+that has the correct permission can access encryptable entities, but they will only be able to read and write the 
+non-encryptable fields.
+
+For more information, check the explanation on [data owners and access control](nsdk/explanations/data-owners-and-access-control).
+
+## Login Credentials
+In order to login, a user must provide valid credentials (namely, a login and a password) to the Cardinal SDK.
+Any of these field of the User entity is valid as login:
+- `id`
+- `login`
+- `email`
+- `mobilePhone`
+
+As for the password, it is possible both to set a password (in the `passwordHash` field) or to use a [temporary token](/how-to/remember-me). 
+
+## Roles
+The roles assigned to a User are stored in a nested object inside the `systemMetadata` property. Any update to this 
+property will be prohibited by the backend.
+
+To learn how to update the roles on a user, check this [how to](/how-to/define-user-roles).
+
+
+## Data Owner Users
+A User is a **Data Owner** User if exactly one of the following is true:
+
+- They have the id of a valid [HealthcareParty](/explanations/data-model/healthcareparty) in the `healthcarePartyId` field.
+- They have the id of a valid [Patient](/explanations/data-model/patient) in the `patientId` field.
+- They have the id of a valid [Device](/explanations/data-model/device) in the `deviceId` field.
+
+:::warning
+A User can be associate either to a HealthcareParty, or to a Patient, or to a Device, and it cannot be associated to 
+more than one of those entities.
+:::
+
+When a Data Owner logs in, the SDK loads their available encryption keys or creates new one if no key is available.
+Then, the user will be able to create, modify and search encrypted data. You can read more about data owner users [here](/explanations/data-owners-and-access-control)
+
+## Properties
+
+Below you will find an explanation of the most commonly used properties in the entity that are not among the
+[shared fields](/explanations/data-model/#shared-fields). For a full list, check the [references](TODO).
+
+### authenticationTokens
+Contains all the active authentication tokens for the user, where the hash of the token is replaced by the character
+`*`.
+
+This field is useful to check how many tokens are currently active and their duration, and it can be used to remove an
+active token, by deleting it from the map.
+
+While it is possible to manually creating a token by adding it to this map, it is preferable to use the `getToken` method
+of the SDK. More information about application tokens can be found in [this how to](/how-to/remember-me).
+
+### deviceId
+The id of the [Device](/explanations/data-model/device) associated to this User. If this field is not null,
+then the `healthcarePartyId` and `patientId` fields should be null.
+
+:::info
+A User where this field is not null is a **Data Owner** User.
+:::
+
+### email
+The email of the User. It can be used as username to log in.
+
+### groupId
+The id of the group where this user belongs.
+
+### healthcarePartyId
+The id of the [HealthcareParty](/explanations/data-model/healthcareparty) associated to this User. If this field
+is not null, then the `patientId` and `deviceId` fields should be null.
+
+:::info
+A User where this field is not null is a **Data Owner** User.
+:::
+
+### login
+A username for the User. This field can be used in the log in phase.
+
+### mobilePhone
+The mobilePhone of the User. It can be used as username to log in.
+
+### name
+A free-text field that contains the name of the User.
+
+### passwordHash
+If the current User has a password, this field will contain the character `*`, otherwise it will be null.
+This field can be used to create or update the password for the User. When the user is created or updated, if this field
+contains a clear-text password, the backend will store it hashed and salted.
+
+:::note
+If a User logged in with a long token (i.e. an authentication token with a duration > 5 minutes), they will not be able
+to create or update their own password or the password of any other user, even if they have the permission to do so.
+:::
+
+### patientId
+The id of the [Patient](/explanations/data-model/patient) associated to this User. If this field is not null, 
+then the `healthcarePartyId` and `deviceId` fields should be null.
+
+:::info
+A User where this field is not null is a **Data Owner** User.
+:::
+
+### systemMetadata
+This field contains internal information about the User, such as the roles. It is an internal field that cannot be
+modified manually.
+
+To change the roles of a User, check this [how to](/how-to/define-user-roles).
+
+### status
+The status of the User. The values can be `Active`, `Disabled`, or `Registering`. Note that if a User has a `Disabled` 
+status, it will not be able to log in.

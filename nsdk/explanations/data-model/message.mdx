@@ -1,0 +1,52 @@
+# Message
+
+A Message is an encryptable, root-level entity that can be use to implement an encrypted messaging systems between users
+and, in combinations with [Topic](/explanations/data-model/topic), chat-like features.
+
+## Fields Encrypted by Default
+By default, the following fields of this entity will be encrypted:
+- `subject`
+
+You can customize the encrypted fields as [explained in this how to](/how-to/initialize-the-sdk/configure-what-to-encrypt).
+
+## Properties
+
+Below you will find an explanation of the most commonly used properties in the entity that are not among the
+[shared fields](/explanations/data-model/#shared-fields). For a full list, check the [references](TODO).
+
+### fromAddress
+Any identifier that can be used to uniquely retrieve the User that sent the message. It can be the user id, the email,
+the login or any other property that fits your domain of application. 
+
+:::note
+If you choose a property that is not the user id, the email or the login, it will be your responsibility to ensure its 
+uniqueness.
+:::
+
+### parentId
+The id of a parent Message. This feature can be used to implement a "reply" functions. In this case, the `parentId` of a
+Message will be the id of the Message the user is replying to.
+
+### received
+The timestamp of when the Message was received.
+
+### readStatus
+A data structure that associates the user id of each recipient to the information about when the message was read by them.
+
+### sent
+The timestamp of when the Message was sent.
+
+### subject
+A short text containing the subject of the message.
+
+### toAddresses
+A collection of identifiers that can be used to uniquely retrieve the Users that are the recipients of the message. 
+It can be the user id, the email, the login or any other property that fits your domain of application.
+
+:::note
+If you choose a property that is not the user id, the email or the login, it will be your responsibility to ensure its
+uniqueness.
+:::
+
+### transportGuid
+The id of the [Topic](/explanations/data-model/topic) that contains the Message. 

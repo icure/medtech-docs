@@ -1,0 +1,1214 @@
+import TabItem from "@theme/TabItem";
+import {LanguageTabs} from "@site/src/components/LanguageTabs";
+
+# Basic operations on entities
+
+When using the Cardinal SDK you will be working mostly with end-to-end encrypted data.
+The patients, the encounters with practitioners, diagnoses, appointments, the exam results and more.
+All the entities used to represent these concepts are at least in part encrypted to protect the privacy of the end 
+users.
+
+Usually end-to-end encryption comes with many challenges, but the Cardinal SDK abstracts this complexity away, allowing
+you to work almost as if there was no encryption happening.
+
+In this page we cover the basic operations that you can do when working with the Cardinal SDK
+
+:::note
+
+All entities directly connected to patients and medical data in the Cardinal SDK are encrypted end-to-end.
+However, there are also some entities like `HealthcareParty` that are never encrypted.
+We will refer to the first kind of entities as "encryptable", and to the second kind as "non-encryptable".
+
+:::
+
+## Creating new entities
+
+
+You can create non-encryptable entities by instantiating an instance of their model class and then passing it to the 
+create method of the corresponding api, which "commits" the creation and saves the new entity in the backend.
+
+<LanguageTabs>
+
+<TabItem value="kotlin">
+
+```kotlin
+import com.icure.cardinal.sdk.CardinalSdk
+import com.icure.cardinal.sdk.model.HealthcareParty
+import com.icure.kryptom.crypto.defaultCryptoService
+
+suspend fun createDoctor(sdk: CardinalSdk, firstName: String, lastName: String): HealthcareParty {
+	return sdk.healthcareParty.createHealthcareParty(
+		HealthcareParty(
+			id = defaultCryptoService.strongRandom.randomUUID(),
+			firstName = firstName,
+			lastName = lastName
+		)
+	)
+}
+```
+
+</TabItem>
+
+<TabItem value="typescript">
+
+```typescript
+import {CardinalSdk, HealthcareParty, randomUuid} from "@icure/cardinal-sdk";
+
+async function createDoctor(sdk: CardinalSdk, firstName: string, lastName: string): Promise<HealthcareParty> {
+	return sdk.healthcareParty.createHealthcareParty(
+		new HealthcareParty({
+			id: randomUuid(),
+			firstName: firstName,
+			lastName: lastName
+		})
+	)
+}
+```
+
+</TabItem>
+
+<TabItem value="python">
+
+```python
+import uuid
+from cardinal_sdk import CardinalSdk
+from cardinal_sdk.model import HealthcareParty
+
+def create_doctor(sdk: CardinalSdk, first_name: str, last_name: str) -> HealthcareParty:
+	return sdk.healthcare_party.create_healthcare_party_blocking(
+		HealthcareParty(
+			id=str(uuid.uuid4()),
+			first_name=first_name,
+			last_name=last_name
+		)
+	)
+```
+
+</TabItem>
+
+</LanguageTabs>
+
+For encryptable entities, however, you will also need to initialize some metadata used for encryption and access 
+control before you can create the entity.
+You can do this using the `withEncryptionMetadata` method of the corresponding api.
+Note that you will still have to commit the creation using the create method after initializing the metadata.
+
+<LanguageTabs>
+
+<TabItem value="kotlin">
+
+```kotlin
+import com.icure.cardinal.sdk.CardinalSdk
+import com.icure.cardinal.sdk.model.DecryptedPatient
+import com.icure.kryptom.crypto.defaultCryptoService
+
+suspend fun createPatient(sdk: CardinalSdk, firstName: String, lastName: String): DecryptedPatient {
+	// Initialize the metadata for the patient. Note that this doesn't save the patient in the backend.
+	val initializedPatient = sdk.patient.withEncryptionMetadata(
+		DecryptedPatient(
+			id = defaultCryptoService.strongRandom.randomUUID(),
+			firstName = firstName,
+			lastName = lastName,
+		)
+	)
+	// Save the patient. If you didn't initialize the metadata this method will throw an exception.
+	return sdk.patient.createPatient(initializedPatient)
+}
+```
+
+</TabItem>
+
+<TabItem value="typescript">
+
+```typescript
+import {CardinalSdk, DecryptedPatient, randomUuid} from "@icure/cardinal-sdk";
+
+async function createPatient(sdk: CardinalSdk, firstName: string, lastName: string): Promise<DecryptedPatient> {
+	// Initialize the metadata for the patient. Note that this doesn't save the patient in the backend.
+	const initializedPatient = await sdk.patient.withEncryptionMetadata(
+		new DecryptedPatient({
+			id: randomUuid(),
+			firstName: firstName,
+			lastName: lastName,
+		})
+	)
+	// Save the patient. If you didn't initialize the metadata this method will throw an exception.
+	return sdk.patient.createPatient(initializedPatient)
+}
+```
+
+</TabItem>
+
+<TabItem value="python">
+
+```python
+import uuid
+from cardinal_sdk import CardinalSdk
+from cardinal_sdk.model import DecryptedPatient
+
+def create_patient(sdk: CardinalSdk, first_name: str, last_name: str) -> DecryptedPatient:
+	# Initialize the metadata for the patient. Note that this doesn't save the patient in the backend.
+	initialized_patient = sdk.patient.with_encryption_metadata_blocking(
+		DecryptedPatient(
+			id=str(uuid.uuid4()),
+			first_name=first_name,
+			last_name=last_name
+		)
+	)
+	# Save the patient. If you didn't initialize the metadata this method will throw an exception.
+	return sdk.patient.create_patient_blocking(initialized_patient)
+
+```
+
+</TabItem>
+
+</LanguageTabs>
+
+The result of the create methods (for both encryptable and non-encryptable entities) is the input entity with an 
+updated revision (`rev`).
+This revision value is used for optimistic locking by the methods that modify entities. 
+ 
+### Encryptable entity initialization
+
+The encryptable entities initialization method can take in input various parameters: 
+
+#### Linked entities
+
+Some types of encryptable entities can be linked to other entities; for example, each health element is always linked to 
+a patient.
+These links are always encrypted to protect the privacy of the patients, and for this reason they're initialized with
+the rest of the encryption metadata.
+
+For example, when you initialize the encryption metadata of a health element, you also have to pass the linked patient.
+
+<LanguageTabs>
+
+<TabItem value="kotlin">
+
+```kotlin
+import com.icure.cardinal.sdk.CardinalSdk
+import com.icure.cardinal.sdk.model.DecryptedHealthElement
+import com.icure.cardinal.sdk.model.Patient
+import com.icure.kryptom.crypto.defaultCryptoService
+
+suspend fun createHealthElementForPatient(
+	sdk: CardinalSdk,
+	patient: Patient,
+	description: String
+): DecryptedHealthElement {
+	val initializedHealthElement = sdk.healthElement.withEncryptionMetadata(
+		DecryptedHealthElement(
+			id = defaultCryptoService.strongRandom.randomUUID(),
+			descr= description
+		),
+		patient // This is mandatory
+	)
+	return sdk.healthElement.createHealthElement(initializedHealthElement)
+}
+```
+
+</TabItem>
+
+<TabItem value="typescript">
+
+```typescript
+import {CardinalSdk, DecryptedHealthElement, Patient, randomUuid} from "@icure/cardinal-sdk";
+
+async function createHealthElementForPatient(
+	sdk: CardinalSdk,
+	patient: Patient,
+	description: string
+): Promise<DecryptedHealthElement> {
+	const initializedHealthElement = await sdk.healthElement.withEncryptionMetadata(
+		new DecryptedHealthElement({
+			id: randomUuid(),
+			descr: description
+		}),
+		patient // This is mandatory
+	)
+	return sdk.healthElement.createHealthElement(initializedHealthElement)
+}
+```
+
+</TabItem>
+
+<TabItem value="python">
+
+```python
+import uuid
+from cardinal_sdk import CardinalSdk
+from cardinal_sdk.model import Patient, DecryptedHealthElement
+
+def create_health_element_for_patient(
+	sdk: CardinalSdk,
+	patient: Patient,
+	description: str
+) -> DecryptedHealthElement:
+	initialized_health_element = sdk.health_element.with_encryption_metadata_blocking(
+		DecryptedHealthElement(
+			id=str(uuid.uuid4()),
+			descr=description
+		),
+		patient  # This is mandatory
+	)
+	return sdk.health_element.create_patient_blocking(initialized_health_element)
+```
+
+</TabItem>
+
+</LanguageTabs>
+
+:::info
+
+Refer to the [encrypted links explanation page](/explanations/encrypted-links) to learn more about how the
+encrypted links works.
+
+:::
+
+:::note
+
+Encrypted links are "directional", and you have to pass the linked entity only for one direction of the link.
+
+For example, in the Patient-HealthElement link you only pass the patient when initializing the health element, and you 
+never pass health elements when initializing the patient.
+
+:::
+
+#### A base for the entity to initialize:
+
+The entity with initialized metadata will copy its content from the base (as shown in the previous example).
+
+If not passed, the returned entity will only have the id and encryption metadata set, and you will have to modify it
+to add your content before commiting the entity creation.
+
+<LanguageTabs>
+
+<TabItem value="kotlin">
+
+```kotlin
+import com.icure.cardinal.sdk.CardinalSdk
+import com.icure.cardinal.sdk.model.DecryptedPatient
+
+suspend fun createPatient(sdk: CardinalSdk, firstName: String, lastName: String): DecryptedPatient {
+	val patientWithInitializedMetadata = sdk.patient.withEncryptionMetadata(base = null)
+	val initializedPatient = patientWithInitializedMetadata.copy(
+		firstName = firstName,
+		lastName = lastName,
+	)
+	return sdk.patient.createPatient(initializedPatient)
+}
+```
+
+</TabItem>
+
+<TabItem value="typescript">
+
+```typescript
+import {CardinalSdk, DecryptedPatient} from "@icure/cardinal-sdk";
+
+async function createPatient(sdk: CardinalSdk, firstName: string, lastName: string): Promise<DecryptedPatient> {
+	const initializedPatient = await sdk.patient.withEncryptionMetadata(null)
+	initializedPatient.firstName = firstName
+	initializedPatient.lastName = lastName
+	return sdk.patient.createPatient(initializedPatient)
+}
+```
+
+</TabItem>
+
+<TabItem value="python">
+
+```python
+from cardinal_sdk import CardinalSdk
+from cardinal_sdk.model import DecryptedPatient
+
+def create_patient(sdk: CardinalSdk, first_name: str, last_name: str) -> DecryptedPatient:
+	initialized_patient = sdk.patient.with_encryption_metadata_blocking(None)
+	initialized_patient.first_name = first_name
+	initialized_patient.last_name = last_name
+	return sdk.patient.create_patient_blocking()
+```
+
+</TabItem>
+
+</LanguageTabs>
+
+#### Initial delegates for the entity {#initial-delegates}
+
+This is a map of other data owners (delegates) that will immediately have access to the entity as soon as it is created. 
+For each of them, you can specify the access level granted on the entity (read or read+write).
+When sharing an entity this way, all the encrypted information of the entity will be shared as well, including any 
+information for the resolution of encrypted links.
+
+You can always [share an entity with the delegates at a later point](#sharing).
+However, if you know already that the entity should be shared with someone else, and you want to fully share the entity
+encrypted information, it is better to do it while initializing the metadata. 
+This is especially the case if you want the other delegates to be able to [listen to the creation event for that entity](/how-to/realtime).
+
+<LanguageTabs>
+
+<TabItem value="kotlin">
+
+```kotlin
+import com.icure.cardinal.sdk.CardinalSdk
+import com.icure.cardinal.sdk.model.DecryptedPatient
+import com.icure.cardinal.sdk.model.embed.AccessLevel
+import com.icure.kryptom.crypto.defaultCryptoService
+
+suspend fun createPatient(sdk: CardinalSdk, firstName: String, lastName: String, sharedWith: String?): DecryptedPatient {
+	val initializedPatient = sdk.patient.withEncryptionMetadata(
+		DecryptedPatient(
+			id = defaultCryptoService.strongRandom.randomUUID(),
+			firstName = firstName,
+			lastName = lastName,
+		),
+		delegates = sharedWith?.let { mapOf(it to AccessLevel.Write) }.orEmpty()
+	)
+	return sdk.patient.createPatient(initializedPatient)
+}
+```
+
+</TabItem>
+
+<TabItem value="typescript">
+
+```typescript
+import {AccessLevel, CardinalSdk, DecryptedPatient, randomUuid} from "@icure/cardinal-sdk";
+
+async function createPatient(
+	sdk: CardinalSdk,
+	firstName: string,
+	lastName: string,
+	sharedWith: string | null
+): Promise<DecryptedPatient> {
+	const initializedPatient = await sdk.patient.withEncryptionMetadata(
+		new DecryptedPatient({
+			id: randomUuid(),
+			firstName: firstName,
+			lastName: lastName,
+		}),
+		{
+			delegates: sharedWith != null ? { [sharedWith]: AccessLevel.Write } : {}
+		}
+	)
+	return sdk.patient.createPatient(initializedPatient)
+}
+```
+
+</TabItem>
+
+<TabItem value="python">
+
+```python
+import uuid
+from cardinal_sdk import CardinalSdk
+from cardinal_sdk.model import DecryptedPatient, AccessLevel
+from typing import Optional
+
+def create_patient(
+		sdk: CardinalSdk,
+		first_name: str,
+		last_name: str,
+		shared_with: Optional[str]
+) -> DecryptedPatient:
+	initialized_patient = sdk.patient.with_encryption_metadata_blocking(
+		DecryptedPatient(
+			id=str(uuid.uuid4()),
+			first_name=first_name,
+			last_name=last_name
+		),
+		delegates={
+			shared_with: AccessLevel.Write
+		} if shared_with is not None else {}
+	)
+	return sdk.patient.create_patient_blocking(initialized_patient)
+
+```
+
+</TabItem>
+
+</LanguageTabs>
+
+#### Auto delegations {#auto-delegations}
+
+If you're using the auto-delegations system (:construction:) you can pass the current sdk user instance (with the configured
+auto-delegations).
+
+If you do, any auto-delegation setup for the user will be used in addition to any provided initial-delegate.
+Auto-delegations will be ignored if you don't pass the user.
+
+:::warning
+
+The configuration for initial delegates takes priority over auto-delegations. 
+If the same data owner appears in both the auto-delegations and initial delegates the SDK will use the configuration
+provided through the initial delegates. 
+
+:::
+
+<LanguageTabs>
+
+<TabItem value="kotlin">
+
+```kotlin
+import com.icure.cardinal.sdk.CardinalSdk
+import com.icure.cardinal.sdk.model.DecryptedPatient
+import com.icure.cardinal.sdk.model.User
+import com.icure.kryptom.crypto.defaultCryptoService
+
+suspend fun createPatient(sdk: CardinalSdk, currentUser: User, firstName: String, lastName: String): DecryptedPatient {
+	val initializedPatient = sdk.patient.withEncryptionMetadata(
+		DecryptedPatient(
+			id = defaultCryptoService.strongRandom.randomUUID(),
+			firstName = firstName,
+			lastName = lastName,
+		),
+		user = currentUser
+	)
+	return sdk.patient.createPatient(initializedPatient)
+}
+```
+
+</TabItem>
+
+<TabItem value="typescript">
+
+```typescript
+import {CardinalSdk, DecryptedPatient, randomUuid, User} from "@icure/cardinal-sdk";
+
+async function createPatient(
+	sdk: CardinalSdk,
+	currentUser: User,
+	firstName: string,
+	lastName: string
+): Promise<DecryptedPatient> {
+	const initializedPatient = await sdk.patient.withEncryptionMetadata(
+		new DecryptedPatient({
+			id: randomUuid(),
+			firstName: firstName,
+			lastName: lastName,
+		}),
+		{ user: currentUser }
+	)
+	return sdk.patient.createPatient(initializedPatient)
+}
+```
+
+</TabItem>
+
+<TabItem value="python">
+
+```python
+import uuid
+from cardinal_sdk import CardinalSdk
+from cardinal_sdk.model import DecryptedPatient, AccessLevel, User
+
+def create_patient(
+		sdk: CardinalSdk,
+		current_user: User,
+		first_name: str,
+		last_name: str,
+) -> DecryptedPatient:
+	initialized_patient = sdk.patient.with_encryption_metadata_blocking(
+		DecryptedPatient(
+			id=str(uuid.uuid4()),
+			first_name=first_name,
+			last_name=last_name
+		),
+		user=current_user
+	)
+	return sdk.patient.create_patient_blocking(initialized_patient)
+```
+
+</TabItem>
+
+</LanguageTabs>
+
+## Retrieving entities
+
+You can retrieve an entity by using the get of the corresponding api. 
+The SDK will automatically decrypt any retrieved encryptable entity.
+
+<LanguageTabs>
+
+<TabItem value="kotlin">
+
+```kotlin
+import com.icure.cardinal.sdk.CardinalSdk
+import com.icure.cardinal.sdk.model.DecryptedPatient
+import com.icure.cardinal.sdk.model.User
+
+suspend fun getPatientOfUser(sdk: CardinalSdk, user: User): DecryptedPatient {
+	return sdk.patient.getPatient(requireNotNull(user.patientId) { "Not a patient user"})
+}
+```
+
+</TabItem>
+
+<TabItem value="typescript">
+
+```typescript
+import {CardinalSdk, DecryptedPatient, User} from "@icure/cardinal-sdk";
+
+async function getPatientOfUser(sdk: CardinalSdk, user: User): Promise<DecryptedPatient> {
+	if (!user.patientId) throw new Error("Not a patient user")
+	return sdk.patient.getPatient(user.patientId)
+}
+```
+
+</TabItem> 
+
+<TabItem value="python">
+
+```python
+from cardinal_sdk import CardinalSdk
+from cardinal_sdk.model import DecryptedPatient, User
+
+def get_patient_of_user(sdk: CardinalSdk, user: User) -> DecryptedPatient:
+	if user.patient_id is None: raise Exception("Not a patient user")
+	return sdk.patient.get_patient_blocking(user.patient_id)
+```
+
+</TabItem>
+
+</LanguageTabs>
+
+The Cardinal SDK also provides a filtering system that allows you to query the backend for entities matching certain
+characteristics:
+
+<LanguageTabs>
+
+<TabItem value="kotlin">
+
+```kotlin
+import com.icure.cardinal.sdk.CardinalSdk
+import com.icure.cardinal.sdk.filters.ContactFilters
+import com.icure.cardinal.sdk.model.DecryptedContact
+import com.icure.cardinal.sdk.model.Patient
+
+suspend fun getContactsOfPatient(sdk: CardinalSdk, patient: Patient, limit: Int): List<DecryptedContact> {
+	val contactsIterator = sdk.contact.filterContactsBy(ContactFilters.byPatientsForSelf(listOf(patient)))
+	return contactsIterator.next(limit)
+}
+```
+
+</TabItem>
+
+<TabItem value="typescript">
+
+```typescript
+import {CardinalSdk, ContactFilters, DecryptedContact, Patient} from "@icure/cardinal-sdk";
+
+async function getContactsOfPatient(sdk: CardinalSdk, patient: Patient, limit: number): Promise<DecryptedContact[]> {
+	const contactsIterator = await sdk.contact.filterContactsBy(ContactFilters.byPatientsForSelf([patient]))
+	return contactsIterator.next(limit)
+}
+```
+
+</TabItem>
+
+<TabItem value="python">
+
+```python
+from typing import List
+from cardinal_sdk import CardinalSdk
+from cardinal_sdk.filters import ContactFilters
+from cardinal_sdk.model import DecryptedContact, Patient
+
+def get_contacts_of_patient(sdk: CardinalSdk, patient: Patient, limit: int) -> List[DecryptedContact]:
+	contact_iterator = sdk.contact.filter_contacts_by_blocking(ContactFilters.by_patients_for_self([patient]))
+	return contact_iterator.next_blocking(limit)
+```
+
+</TabItem>
+
+</LanguageTabs>
+
+If you want to learn more about the querying system refer to the [dedicated page](/how-to/querying-data).
+
+## Updating entities
+
+You can update an entity using the update method of the corresponding API. 
+
+<LanguageTabs>
+
+<TabItem value="kotlin">
+
+```kotlin
+import com.icure.cardinal.sdk.CardinalSdk
+import com.icure.cardinal.sdk.model.DecryptedPatient
+
+suspend fun setPatientNote(sdk: CardinalSdk, patient: DecryptedPatient, newNote: String): DecryptedPatient {
+	return sdk.patient.modifyPatient(patient.copy(note = newNote))
+}
+```
+
+</TabItem>
+
+<TabItem value="typescript">
+
+```typescript
+import {CardinalSdk, DecryptedPatient} from "@icure/cardinal-sdk";
+
+async function setPatientNote(sdk: CardinalSdk, patient: DecryptedPatient, newNote: string): Promise<DecryptedPatient> {
+	return sdk.patient.modifyPatient(new DecryptedPatient({ ...patient, note: newNote }))
+}
+```
+
+</TabItem>
+
+<TabItem value="python">
+
+```python
+from copy import copy
+from typing import List
+from cardinal_sdk import CardinalSdk
+from cardinal_sdk.model import DecryptedPatient
+
+def set_patient_note(sdk: CardinalSdk, patient: DecryptedPatient, new_note: str) -> List[DecryptedPatient]:
+	updated_patient = copy(patient)
+	updated_patient.note = new_note
+	return sdk.patient.modify_patient_blocking(updated_patient)
+```
+
+</TabItem>
+
+</LanguageTabs>
+
+The update method returns the updated entity with a new revision.
+
+This method requires that the revision of the entity you pass matches the revision stored in the backend. 
+In case of a mismatch, the method will throw an exception.
+This could happen if another user updated the entity after you retrieved it and before you committed the update, which
+in a collaborative environment could be a normal occurrence.
+
+If the logic of your application could allow multiple users to work on a single entity at the same time, you should 
+handle the conflict exceptions, requesting the end-user help if necessary:
+
+<LanguageTabs>
+
+<TabItem value="kotlin">
+
+```kotlin
+import com.icure.cardinal.sdk.CardinalSdk
+import com.icure.cardinal.sdk.exceptions.RevisionConflictException
+import com.icure.cardinal.sdk.model.DecryptedPatient
+
+tailrec suspend fun setPatientNote(sdk: CardinalSdk, patient: DecryptedPatient, newNote: String): DecryptedPatient {
+	val updatedPatient = try {
+		sdk.patient.modifyPatient(patient.copy(note = newNote))
+	} catch (_: RevisionConflictException) {
+		null
+	}
+	return if (updatedPatient != null) updatedPatient else {
+		val latestPatient = sdk.patient.getPatient(patient.id)
+		when (latestPatient.note) {
+			newNote -> latestPatient
+			patient.note -> setPatientNote(sdk, latestPatient, newNote)
+			else -> setPatientNote(
+				sdk,
+				latestPatient,
+				askUserToResolveNoteConflict(latestPatient.note, newNote) // Implement this yourself
+			)
+		}
+	}
+}
+```
+
+</TabItem>
+
+<TabItem value="typescript">
+
+```typescript
+import {CardinalSdk, DecryptedPatient, RevisionConflictException} from "@icure/cardinal-sdk";
+
+async function setPatientNote(sdk: CardinalSdk, patient: DecryptedPatient, newNote: string): Promise<DecryptedPatient> {
+	try {
+		return await sdk.patient.modifyPatient(new DecryptedPatient({ ...patient, note: newNote }))
+	} catch (e) {
+		if (!(e instanceof RevisionConflictException)) throw e
+		const latestPatient = await sdk.patient.getPatient(patient.id)
+		if (latestPatient.note == newNote) {
+			return latestPatient
+		} else if (latestPatient.note == patient.note) {
+			return setPatientNote(sdk, latestPatient, newNote)
+		} else {
+			return setPatientNote(
+				sdk,
+				latestPatient,
+				askUserToResolveNoteConflict(latestPatient.note, newNote) // Implement this yourself
+			)
+		}
+	}
+}
+```
+
+</TabItem>
+
+<TabItem value="python">
+
+```python
+from copy import copy
+from typing import List
+from cardinal_sdk import CardinalSdk
+from cardinal_sdk.model import DecryptedPatient
+from cardinal_sdk.errors import RevisionConflictError
+
+def set_patient_note(sdk: CardinalSdk, patient: DecryptedPatient, new_note: str) -> List[DecryptedPatient]:
+	updated_patient = copy(patient)
+	updated_patient.note = new_note
+	try:
+		return sdk.patient.modify_patient_blocking(updated_patient)
+	except RevisionConflictError:
+		latest_patient = sdk.patient.get_patient_blocking(patient.id)
+		if latest_patient.note == new_note:
+			return latest_patient
+		elif latest_patient.note == patient.note:
+			return set_patient_note(sdk, latest_patient, new_note)
+		else:
+			return set_patient_note(
+				sdk,
+				latest_patient,
+				ask_user_to_resolve_note_conflict(latest_patient.note, new_note) # Implement yourself
+			)
+```
+
+</TabItem>
+
+</LanguageTabs>
+
+:::note
+
+The revision of an entity changes on every update of that entity.
+This includes updates that only modify the metadata of the entity, such as updates following a request to share the 
+entity with other delegates.
+
+:::
+
+### Updating encryptable entities
+
+By default, you can only update encryptable entities if you have Write access to the entity.
+This is only possible if you created the entity or if another user shared the entity with you granting you also Write
+access.
+
+Some permissions allow users to bypass this requirement. 
+For example, admin user can update any encryptable entity, even if it wasn't shared with them.
+
+### Bulk update
+ 
+The SDK also provides bulk update methods.
+Differently from the single entity update methods, the bulk methods don't throw an exception in case of revision 
+conflict.
+Instead, any conflicting entity will be ignored and won't be included in the returned entities.
+
+## Delete
+
+:::info
+
+:construction: We're currently reviewing the delete logic in the Cardinal SDK. 
+There will be some improvements in a future version. 
+
+:::
+
+You can delete entities by passing the entity id to the delete method of the corresponding API. 
+
+### Soft-delete
+
+By default, the delete method in the Cardinal SDK is actually a "soft" delete.
+This means that the data is not destroyed, instead it is hidden.
+
+When you soft-delete an entity, it will not be returned anymore when you query data using standard filters, but you can
+still retrieve data by id or by using filters specifically designed to lookup soft-deleted entities.
+
+:construction: We're working on exposing "undelete" methods, that will allow you to undo the deletion of a soft-deleted 
+entity.  
+
+### Hard-delete :construction:
+
+Unlike soft-delete the hard-delete method actually destroys the deleted data. 
+You will not be able to undo this action. 
+
+:construction: We're working on exposing hard delete methods.
+
+:::warning
+
+Even when you hard delete data, there is a period where it will actually still be available in the backend's database.
+The data will be completely destroyed when the next compaction completes.
+
+:::
+
+### Deleted with revision :construction:
+
+Currently, when you delete an entity, you only have to provide the id. 
+This could be problematic if the entity was changed since you last retrieved it, because the entity may now contain some
+data that may change your intentions.
+
+We're working on adding a revision parameter to the delete methods, that will work like the revision of the update 
+methods (the delete method will succeed only if the revision you provided matches the revision of the stored entity). 
+This will be initially optional, but the methods delete without the revision will be deprecated.
+In future the revision parameter will be mandatory for all delete methods.
+
+## Flavours
+
+By default, the Cardinal SDK decrypts all retrieved entities.
+
+However, you don't always need access to the encrypted content of an entity, and since the decryption could be a slow
+process, it would be better to skip it when unnecessary.
+
+Similarly, your application may have situation where a user sometimes has access only to the unencrypted part of an 
+entity, and other times has access to the full entity.
+In both situations, you want to show as much as possible of the entity to your user.
+
+To help you cover all these scenarios, the encryptable entities and corresponding apis come in three "flavors".
+
+For each encryptable entity, the SDK model provides three different types: a decrypted type (for example 
+`DecryptedPatient`), an encrypted type (`EncryptedPatient`), and a polymorphic type (`Patient`).
+These types are de-facto identical; the division exists only to support the development of applications by providing 
+better type checking.
+
+:::info
+
+Depending on the language you're using, the encryptable entities flavors will be represents in different ways.
+
+For example, in kotlin the polymorphic type is a sealed interface, and the encrypted and decrypted types are classes.
+
+Instead, in python and typescript, the encrypted and decrypted types are classes, and the polymorphic type is a union 
+type of the two implementations.
+
+:::
+
+Similarly, the api for each encryptable entity comes in three flavors. 
+Most methods that you use directly from the api take/return the decrypted flavor of the corresponding entity, but you
+can use the `encrypted` and the `tryAndRecover` properties of the api to access versions of the methods that work with 
+the encrypted and polymorphic flavors of the entity, respectively.
+
+:::note
+
+Not all methods of the main api are available in the multiple flavors.
+For example, the methods for the creation of entities are available only in the decrypted flavor.
+
+:::
+
+The following table summarizes the behavior of the APIs' flavors.
+
+|                             | Input                                                                                                                                                                                 | Output                                                                                                                 | Example use case                                                                                           |
+|-----------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------|
+| Decrypted                   | Encrypts the entities, fails if not possible for some entity (the user can't access the encryption key of the entity).                                                                | Decrypts the entities, fails if not possible for some entity (the user can't access the encryption key of the entity). | You need to access the encrypted content of an entity                                                      |
+| Encrypted                   | Best-effort validation to verify that the entities don't contain any data which should be encrypted according to the configuration. Fails if some entity doesn't pass the validation. | Returns the entities as is.                                                                                            | You don't need the encrypted content of an entity                                                          |
+| Polymorphic (tryAndRecover) | Encrypts or validate the entity depending on the actual type. Fails if some entity can't be encrypted or doesn't pass validation.                                                     | Tries to decrypt the entities, any entity that can't be decrypted is returned as is.                                   | You don't know if the user can decrypt the entity but you want to display as much information as possible. |
+
+
+:::warning
+
+The validation of encrypted input performed by the encrypted and polymorphic flavors of the apis are best-effort and
+may not always be accurate.
+There are some edge cases where you can perform illegal changes to an entity that the SDK can't detect.
+
+The goal of this validation is only to help identify mistakes in the logic of your application, and you shouldn't
+rely solely on it for validation.
+For example, you should avoid allowing your user to freely modify an encrypted entity and then passing the updated
+entity to the api wrapping the call in a `try catch` to recover from illegal changes.
+You should instead design your UI in a way that prevents the user from modifying the fields that need to be encrypted.
+
+:::
+
+<LanguageTabs>
+
+<TabItem value="kotlin">
+
+```kotlin
+import com.icure.cardinal.sdk.CardinalSdk
+import com.icure.cardinal.sdk.filters.FilterOptions
+import com.icure.cardinal.sdk.model.DecryptedPatient
+import com.icure.cardinal.sdk.model.Patient
+
+suspend fun printMatchingPatientNames(
+	sdk: CardinalSdk,
+	filter: FilterOptions<Patient>,
+	limit: Int
+) {
+	// Names aren't encrypted in the configuration of this application, no need to decrypt
+	val iterator = sdk.patient.encrypted.filterPatientsBy(filter)
+	iterator.next(limit).forEach { println("${it.firstName} ${it.lastName}") }
+	if (iterator.hasNext()) println("...")
+}
+
+suspend fun printPatientDetails(
+	sdk: CardinalSdk,
+	patientId: String
+) {
+	// This application doesn't encrypt the name but encrypts the note
+	val patient = sdk.patient.tryAndRecover.getPatient(patientId)
+	println("First name: ${patient.firstName}")
+	println("Last name: ${patient.lastName}")
+	if (patient is DecryptedPatient) {
+		println("Note: ${patient.note}")
+	} else {
+		println("Encrypted data is not accessible")
+	}
+}
+```
+
+</TabItem>
+
+<TabItem value="typescript">
+
+```typescript
+import {CardinalSdk, DecryptedPatient, FilterOptions, Patient} from "@icure/cardinal-sdk";
+
+async function printMatchingPatientNames(
+	sdk: CardinalSdk,
+	filter: FilterOptions<Patient>,
+	limit: number
+) {
+	// Names aren't encrypted in the configuration of this application, no need to decrypt
+	const iterator = await sdk.patient.encrypted.filterPatientsBy(filter)
+	for (const p of (await iterator.next(limit))) {
+		console.log(`${p.firstName} ${p.lastName}`)
+	}
+	if (await iterator.hasNext()) console.log("...")
+}
+
+async function printPatientDetails(
+	sdk: CardinalSdk,
+	patientId: string
+) {
+	// This application doesn't encrypt the name but encrypts the note
+	const patient = await sdk.patient.tryAndRecover.getPatient(patientId)
+	console.log(`First name: ${patient.firstName}`)
+	console.log(`Last name: ${patient.lastName}`)
+	if (patient instanceof DecryptedPatient) {
+		console.log(`Note: ${patient.note}`)
+	} else {
+		console.log("Encrypted data is not accessible")
+	}
+}
+```
+
+</TabItem>
+
+<TabItem value="python">
+
+```python
+from cardinal_sdk import CardinalSdk
+from cardinal_sdk.filters import FilterOptions
+from cardinal_sdk.model import DecryptedPatient, Patient
+
+def print_matching_patient_names(
+	sdk: CardinalSdk,
+	data_filter: FilterOptions<Patient>,
+	limit: int
+):
+	# Names aren't encrypted in the configuration of this application, no need to decrypt
+	iterator = sdk.patient.encrypted.filter_patients_by_blocking(data_filter)
+	for p in iterator.next_blocking(limit):
+		print(f"{p.firstName} {p.lastName}")
+	if iterator.has_next_blocking():
+		print("...")
+
+def print_patient_details(
+	sdk: CardinalSdk,
+	patient_id: str
+):
+	# This application doesn't encrypt the name but encrypts the note
+	patient = sdk.patient.try_and_recover.get_patient_blocking(patient_id)
+	print(f"First name: {patient.firstName}")
+	print(f"Last name: {patient.lastName}")
+	if isinstance(patient, DecryptedPatient):
+		print(f"Note: {patient.note}")
+	else:
+		print("Encrypted data is not accessible")
+```
+
+</TabItem>
+
+</LanguageTabs>
+
+## Sharing entities {#sharing}
+
+The Cardinal SDK is controlled using an entity-based access control for encryptable entities.
+Each encryptable entity is by default accessible only to its creator unless it is shared with other data owners.
+
+We already saw that you can share entities with other data owners at creation time using 
+[initial delegates](#initial-delegates) or [auto-delegations](#auto-delegations), but you can also share an existing 
+entity using the share method of the corresponding api.
+
+### Configuration options
+
+When you share an entity this way, you have to pass some "share options" that allow you to configure how the entity
+is shared with the new delegate.
+
+The exact parameters you can configure depend on the type of entity being shared, but the possible options are the
+following:
+
+#### `shareEncryptionKey` (always present)
+
+This configuration specifies if the share method should share the entity encryption key with the delegate, or if it 
+should share only the unencrypted data.
+
+Possible values for this configuration are:
+- `ShareMetadataBehaviour.Required`: the delegator will share the encryption key with the delegate. 
+  If the delegator can't access the encryption key of the entity, the sharing will fail.
+- `ShareMetadataBehaviour.IfAvailable`: the delegator will share the encryption key with the delegate if it is available.
+  If the delegator can't access the encryption key of the entity, then it won't be shared.
+- `ShareMetadataBehaviour.Never`: the delegator will not share the encryption key with the delegate, even if it is available.
+
+The default configuration for this option is always `ShareMetadataBehaviour.IfAvailable`.
+
+#### `requestedPermissions` (always present)
+
+This configuration option specifies if the delegate will have only read access to the entity or also write access. 
+
+Possible values for this configuration are:
+- `RequestedPermission.FullWrite`: the delegate will get write access to the full entity. 
+  If the delegator is not allowed to give write access, the sharing will fail
+- `RequestedPermission.MaxWrite`: the delegate will get the highest permissions that the current user can grant. 
+  In the current version of the SDK this means that if the delegator can grant full write access,
+  the delegate will have full write access, otherwise the delegate will have full read access.
+- `RequestedPermission.FullRead`: gives the delegate full read access to the entity, failing if the delegator can't
+  grant read access to the full entity.
+  In the current version of the SDK this can never fail (as long as the delegator has access to the entity).
+- `RequestedPermission.MaxRead`: gives the delegate as much read access to the entity as the delegator can give.
+  In the current version of the SDK as long this is equivalent to FullRead.
+
+The default configuration for this option is always `RequestedPermission.MaxWrite`.
+
+#### `shareSecretIds` (always present)
+
+This configuration option specifies which secret ids of the entity will be shared with the delegate.
+
+Possible values for this configuration are
+- `SecretIdShareOptions.AllAvailable(requireAtLeastOne)`: share all secret ids of the entity that are available to the
+  current user.
+  If `requireAtLeastOne` is true and the current user can't access any secret id of the entity the sharing will fail.
+- `SecretIdShareOptions.UseExactly(secretIds, createUnknownSecretIds)`: share exactly the provided `secretIds`.
+  If some of the provided secret ids aren't found by the SDK using the keys of the current user and 
+  `createUnknownSecretIds` is false the sharing will fail, otherwise the SDK will create new secret ids.
+ 
+The default configuration for this option is always `SecretIdShareOptions.AllAvailable(false)`
+
+#### `share[OwningEntity]Ids`
+
+This configuration option is only present for entity types that can have an encrypted link to other entities, and the
+exact name of this option depends on the type of the linked entity. 
+For example, in the share options for contacts you have the option `sharePatientIds`.
+  
+This configuration option uses the same values as the `shareEncryptionKey`
+
+When present, the default configuration for this option is always `ShareMetadataBehaviour.IfAvailable`.
+
+### Example
+
+
+<LanguageTabs>
+
+<TabItem value="kotlin">
+
+```kotlin
+import com.icure.cardinal.sdk.CardinalSdk
+import com.icure.cardinal.sdk.crypto.entities.HealthElementShareOptions
+import com.icure.cardinal.sdk.crypto.entities.SecretIdShareOptions
+import com.icure.cardinal.sdk.crypto.entities.ShareMetadataBehaviour
+import com.icure.cardinal.sdk.model.DecryptedHealthElement
+import com.icure.cardinal.sdk.model.requests.RequestedPermission
+
+const val STATISTICS_DATA_OWNER_ID = "..."
+
+// Example: the statistics data owner is used by a script that compiles some statistics about your data.
+suspend fun shareHealthElementForStatistics(
+	sdk: CardinalSdk,
+	healthElement: DecryptedHealthElement
+): DecryptedHealthElement =
+	sdk.healthElement.shareWith(
+		// You already know the data owner id
+		STATISTICS_DATA_OWNER_ID,
+		healthElement,
+		HealthElementShareOptions(
+			// The statistics script doesn't need to modify data
+			requestedPermissions = RequestedPermission.FullRead,
+			// The statistics script doesn't need to link patients with health elements
+			sharePatientId = ShareMetadataBehaviour.Never,
+			// The statistics script needs access to the encrypted content
+			shareEncryptionKey = ShareMetadataBehaviour.Required,
+			// The statistics script doesn't need the secret ids of the health element
+			shareSecretIds = SecretIdShareOptions.UseExactly(emptySet(), false)
+		)
+	)
+```
+
+</TabItem>
+
+<TabItem value="typescript">
+
+```typescript
+import {
+	CardinalSdk,
+	DecryptedHealthElement,
+	HealthElementShareOptions,
+	RequestedPermission, 
+	SecretIdShareOptions,
+	ShareMetadataBehaviour
+} from "@icure/cardinal-sdk";
+
+const STATISTICS_DATA_OWNER_ID = "..."
+
+// Example: the statistics data owner is used by a script that compiles some statistics about your data.
+async function shareHealthElementForStatistics(
+	sdk: CardinalSdk,
+	healthElement: DecryptedHealthElement
+): Promise<DecryptedHealthElement> {
+	return sdk.healthElement.shareWith(
+		// You already know the data owner id
+		STATISTICS_DATA_OWNER_ID,
+		healthElement,
+		{
+			options: new HealthElementShareOptions({
+				// The statistics script doesn't need to modify data
+				requestedPermissions: RequestedPermission.FullRead,
+				// The statistics script doesn't need to link patients with health elements
+				sharePatientId: ShareMetadataBehaviour.Never,
+				// The statistics script needs access to the encrypted content
+				shareEncryptionKey: ShareMetadataBehaviour.Required,
+				// The statistics script doesn't need the secret ids of the health element
+				shareSecretIds: new SecretIdShareOptions.UseExactly({ secretIds: [], createUnknownSecretIds: false })
+			})
+		}
+	)
+}
+```
+
+</TabItem>
+
+<TabItem value="python">
+
+```python
+from cardinal_sdk import CardinalSdk
+from cardinal_sdk.model import DecryptedHealthElement, HealthElementShareOptions, RequestedPermission, \
+	ShareMetadataBehaviour, SecretIdShareOptionsUseExactly
+
+__STATISTICS_DATA_OWNER_ID = "..."
+
+# Example: the statistics data owner is used by a script that compiles some statistics about your data.
+def share_health_element_for_statistics(
+	sdk: CardinalSdk,
+	health_element: DecryptedHealthElement
+) -> DecryptedHealthElement:
+	return sdk.health_element.share_with_blocking(
+		# You already know the data owner id
+		__STATISTICS_DATA_OWNER_ID,
+		health_element,
+		HealthElementShareOptions(
+			# The statistics script doesn't need to modify data
+			requested_permissions=RequestedPermission.FullRead,
+			# The statistics script doesn't need to link patients with health elements
+			share_patient_id=ShareMetadataBehaviour.Never,
+			# The statistics script needs access to the encrypted content
+			share_encryption_key=ShareMetadataBehaviour.Required,
+			# The statistics script doesn't need the secret ids of the health element
+			share_secret_ids=SecretIdShareOptionsUseExactly(secret_ids=[], create_unknown_secret_ids=False)
+		)
+	)
+```
+
+</TabItem>
+
+</LanguageTabs>

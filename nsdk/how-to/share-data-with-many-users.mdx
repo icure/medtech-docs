@@ -1,0 +1,166 @@
+import TabItem from "@theme/TabItem";
+import {LanguageTabs} from "@site/src/components/LanguageTabs";
+
+# Sharing data between many data owners
+
+In some applications, you have groups of collaborating doctors each sharing the data of their patients with all their
+colleagues.
+
+A basic implementation for this scenario could have each doctor sharing each patient and piece of medical data they
+create with all their colleagues.
+However, every time a piece of data is shared between two users, the Cardinal SDK adds some metadata to the shared 
+entity.
+As long as there are few doctors involved in these collaborating groups, or as long as only a few documents require full
+sharing between all the doctors, the space overhead used by the sharing metadata should be negligible.
+In other cases, however, the overhead may start to become significant. 
+
+An alternative solution to cover these cases would be instead to use hierarchical data owners.
+
+## Hierarchical data owners
+
+Healthcare parties can be organized hierarchically using a tree structure, where each healthcare party can have a 
+parent.
+You can use these hierarchies to group the healthcare parties.
+For example, you can have an HCP representing the hospital at the root. 
+Then you have HCPs representing different departments such as cardiology or radiology as children to the hospital HCP.
+Finally, you have the actual doctors that are children to the HCP representing their department.
+
+This hierarchy could be used to represent the organization of a hospital, but this is not its main purpose.
+Instead, the main purpose of healthcare party hierarchies is to provide more flexibility in the entity sharing processes
+and access control when working in complex scenarios.
+Normally, healthcare parties have access only to the data that was created by or directly shared with them.
+If you enable hierarchical data owners for your application, however, the healthcare parties will also gain access to
+all data that was created by or shared with any of their ancestors.
+
+This allows more easily sharing data with large groups of doctors: if a doctor needs to share data with its entire 
+department instead of sharing it with each other doctor in the department, they only need to share it with the 
+HCP for their department.
+
+:::info
+
+Currently, only healthcare parties can be part of data owner hierarchies.
+
+However, the general concepts for data owner hierarchies could apply also to other types of data owners if implemented 
+in the future.
+
+:::
+
+### Set up hierarchical data owners
+
+Setting up hierarchical data owners for your application, you need to:
+
+1. Configure the hierarchy in the data owners entity
+2. Assign the hierarchical data owner roles to the affected users
+3. Configure the SDK initialization to use the hierarchical data owners 
+4. Have key pairs for the parent data owners and distribute them to the children  
+
+#### Configuring the data owners hierarchy
+
+You will have to decide a hierarchy that is suitable for your use case and apply it to any existing healthcare party,
+using a user with the appropriate permissions.
+When working with the default roles only admins and users with the `HCP_USER_MANAGER` role can do this.
+
+You will also have to make sure that you properly set the parent id when creating the new users. 
+
+#### Assigning roles
+
+The HCPs need special permissions to be allowed to retrieve data shared with their parents.
+When using default roles, you can provide these permissions through the `HIERARCHICAL_DATA_OWNER` role.
+
+We recommend that you use the cockpit to configure the default roles for healthcare parties in your group to include the
+`HIERARCHICAL_DATA_OWNER` role (:construction:).
+
+#### Configure the SDK
+
+When initializing the SDK you will have to say that you want to use hierarchical data owners, to have it load and use
+all the keypairs for parent data owners.
+
+This is done by setting `useHierarchicalDataOwners` to true in the `SdkOptions`:
+
+<LanguageTabs>
+
+<TabItem value = "kotlin">
+
+```kotlin
+import com.icure.cardinal.sdk.CardinalSdk
+import com.icure.cardinal.sdk.auth.UsernamePassword
+import com.icure.cardinal.sdk.options.AuthenticationMethod
+import com.icure.cardinal.sdk.options.EncryptedFieldsConfiguration
+import com.icure.cardinal.sdk.options.SdkOptions
+import com.icure.cardinal.sdk.storage.impl.FileStorageFacade
+
+suspend fun initializeMySdk(username: String, password: String) =
+	CardinalSdk.initialize(
+		"MyCardinalApp",
+		"https://api.icure.cloud",
+		AuthenticationMethod.UsingCredentials(UsernamePassword(username, password)),
+		FileStorageFacade("/path/to/storage/directory"),
+		SdkOptions(
+			useHierarchicalDataOwners = true
+		)
+	)
+```
+
+</TabItem>
+
+<TabItem value="typescript">
+
+```typescript
+import {AuthenticationMethod, CardinalSdk, StorageFacade} from "@icure/cardinal-sdk";
+
+function initializeMySdk(username: string, password: string): Promise<CardinalSdk> {
+	return CardinalSdk.initialize(
+		"MyCardinalApp",
+		"https://api.icure.cloud",
+		new AuthenticationMethod.UsingCredentials.UsernamePassword(username, password),
+		StorageFacade.usingFileSystem("/path/to/storage/directory"),
+		{
+			useHierarchicalDataOwners: true
+		}
+	)
+}
+```
+
+</TabItem>
+
+<TabItem value="python">
+
+```python
+from cardinal_sdk import CardinalSdk
+from cardinal_sdk.authentication import UsernamePassword
+from cardinal_sdk.storage import FileSystemStorage
+from cardinal_sdk.options import SdkOptions, EncryptedFieldsConfiguration
+
+sdk = CardinalSdk(
+	"MyCardinalApp",
+	"https://api.icure.cloud",
+	UsernamePassword("username", "password"),
+	FileSystemStorage("/path/to/storage/directory"),
+	SdkOptions(
+		use_hierarchical_data_owners=True
+	)
+)
+```
+
+</TabItem>
+
+</LanguageTabs>
+
+#### Configure keypairs for the parent data owners
+
+Healthcare parties can't create keypairs for their parents: the initialization of the keypairs for a parent data owner
+can instead be done by an administrator of the organization.
+
+### Sharing data with parents and siblings
+
+Sharing data with other healthcare parties in a hierarchical environment is done using in the same way as in any other
+environment. 
+The only thing you should consider is that when a user is sharing data with another data owner, they're implicitly
+sharing data also with all the children of that data owner.
+
+Therefore, if a doctor wants to share data with all other doctors in the hospital they can share the data with the
+hospital HCP.
+If, instead, the doctor only wants to share data with a specific colleague they will have to share the data directly 
+only with that colleague.
+
+<!-- TODO find somewhere to talk about partitioning using (confidential) secret id --> 
