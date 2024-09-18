@@ -3,7 +3,7 @@ slug: how-to-manage-solutions
 ---
 
 # Handling solutions
-In iCure, a **Solution** represents a **medical system, software or platform** in which users' medical data are potentially managed through multiple IT stakeholders.
+In Cardinal, a **Solution** represents a **medical system, software or platform** in which users' medical data are potentially managed through multiple IT stakeholders.
 
 For example, let's take Petra Corp, developing solutions to help patients follow their menstruation cycle and share medical information linked to it with their gynecologist. 
 
@@ -17,7 +17,7 @@ Here is an example of Solutions Petra Corp could want to create:
 
 | Solutions created on Cockpit | Valid | Remarks                                                                                                                                                                                                                                       |
 |-------------------------|------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Petra, Petra Doc        |  ❌  | This scheme is inefficient, as patient data will have to be duplicated between Petra and Petra Doc. Moreover, as iCure allows you to share or not data with other actors, it will be easy in one Solution to define who can access which data |
+| Petra, Petra Doc        |  ❌  | This scheme is inefficient, as patient data will have to be duplicated between Petra and Petra Doc. Moreover, as Cardinal allows you to share or not data with other actors, it will be easy in one Solution to define who can access which data |
 | Petra, Petra Invoicing | ✅   | This scheme seems efficient, as Petra Corp doesn't need medical data to create its invoices. Therefore, medical data can be isolated in one Solution, and invoicing information in another                                                    | 
 | Petra, Petra Invoicing, Hospital ABC | ✅ | In case a hospital would like to work with Petra Corp and have a dedicated environment for their patients, Petra Corp could create a dedicated Solution for Hospital ABC                                                                      |
 
@@ -45,7 +45,7 @@ At the end of the process, you will receive a series of information :
 - the **EXTERNAL_SERVICES_SPEC_ID**, identifying your Solution in our Authentication component;
 - the **EMAIL_AUTHENTICATION_PROCESS_ID**, identifying the email template to send to your users during their registration or login;
 - the **PARENT_ORGANISATION_ID**, identifying your organization as the responsible of the created users.
-- the **FRIENDLY_CAPTCHA_SITE_KEY**, if you chose to use the Friendly-Captcha temporarily provided by iCure.
+- the **FRIENDLY_CAPTCHA_SITE_KEY**, if you chose to use the Friendly-Captcha temporarily provided by Cardinal.
 
 Information that you will need when you'll want to start the development of your app. 
 
@@ -69,7 +69,7 @@ Fill in the new solution name and click on the **Save** button.
 
 ## Transfer ownership of a solution
 
-iCure offers you the flexibility to transfer ownership of your solution to another environment seamlessly. This feature enables you to relocate your solution to a new environment while ensuring the safety of all your critical data, including databases, Health Care Providers (HCP), patient information, devices, and more.
+Cardinal offers you the flexibility to transfer ownership of your solution to another environment seamlessly. This feature enables you to relocate your solution to a new environment while ensuring the safety of all your critical data, including databases, Health Care Providers (HCP), patient information, devices, and more.
 
 ![Transfer solution option](./img/solution-interactions/transfer-solution-option.png)
 

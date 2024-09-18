@@ -25,11 +25,11 @@ If your product needs to process some of your patients data to create additional
 You can find how configure your parent organisation to allow patients sharing data with it [here](../ehr-lite-sdk/quick-start#optional-configure-your-parent-organization-to-allow-patients-to-share-data-with-it). 
 
 ## External Service
-An **External Service** is a service not directly managed by iCure but needed to guarantee the functioning of your whole solution. 
+An **External Service** is a service not directly managed by Cardinal but needed to guarantee the functioning of your whole solution. 
 
-When creating your product, you'll need to use some services next to iCure to manage other aspects than the security of your data (communication with the clients, ...). 
+When creating your product, you'll need to use some services next to Cardinal to manage other aspects than the security of your data (communication with the clients, ...). 
 
-iCure already manages for you certain functionalities of those services and lets you choose which provider you would like to use by providing the information of your selected external services. 
+Cardinal already manages for you certain functionalities of those services and lets you choose which provider you would like to use by providing the information of your selected external services. 
 
 ## Environment
 An **Environment** groups a series of solutions, databases, ... that your Cockpit account can access. 
