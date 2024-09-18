@@ -100,7 +100,7 @@ async function createConfig() {
                     },
                     {
                         name: 'twitter:title',
-                        content: 'Cardinal SDK Documentation | Start to build your Medical Device or EHR App with Cardinal SDK'
+                        content: 'Cardinal Documentation | Start to build your Medical Device or EHR App with iCure'
                     },
                     {
                         name: 'twitter:description',
@@ -112,7 +112,7 @@ async function createConfig() {
                     },
                     {
                         property: "og:title",
-                        content: 'Cardinal SDK Documentation | Start to build your Medical Device or EHR App with Cardinal SDK'
+                        content: 'Cardinal Documentation | Start to build your Medical Device or EHR App with iCure'
                     },
                     {
                         property: 'og:description',
