@@ -4,7 +4,7 @@ slug: how-to-manage-your-account
 
 # Managing your account
 
-You can access the details of your account from anywhere in Cockpit. For this, just click on the button on the top right of your screen, mentioning **Hey, <your_user_name> !**.
+You can access the details of your account from anywhere in Cockpit. For this, just click on the button on the top right of your screen, mentioning **Hey, YOUR_USER_NAME !**.
 
 In the dropdown will appear a few entries. Click on the button **Manage account** to see the details of your account 
 and edit them.

@@ -36,7 +36,7 @@ An **Environment** groups a series of solutions, databases, ... that your Cockpi
 
 A Cockpit account can access multiple environments, in case an email was used to create multiple users (One to create a global organisation and one to be the administrator of a database for example). 
 
-You can change the environment you're working on Cockpit at anytime by clicking on **Hey, <your-user-name"> !** \> **Change Environment**. 
+You can change the environment you're working on Cockpit at anytime by clicking on **Hey, YOUR_USER_NAME !** **Change Environment**. 
 
 ## Authentication Process
 An **Authentication Process** is a communication template you will use to communicate the 6-digits code to your users during their registration / login flows. You can create a process to communicate either by email either by SMS with your users. 

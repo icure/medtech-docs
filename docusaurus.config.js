@@ -14,8 +14,8 @@ async function createConfig() {
 
     /** @type {import('@docusaurus/types').Config} */
     return {
-        title: 'iCure Documentation',
-        url: 'https://docs.icure.com',
+        title: 'CardinalSDK Documentation',
+        url: 'https://docs.cardinalsdk.com',
         baseUrl: '/',
         onBrokenLinks: 'throw',
         onBrokenMarkdownLinks: 'warn',
@@ -35,18 +35,6 @@ async function createConfig() {
         },
 
         plugins: [
-            // [
-            //     '@docusaurus/plugin-client-redirects',
-            //     {
-            //         redirects: [
-            //             // /docs/oldDoc -> /docs/newDoc
-            //             {
-            //                 to: '/',
-            //                 from: '/sdk',
-            //             },
-            //         ],
-            //     },
-            // ],
             [
                 'content-docs',
                 {
@@ -165,6 +153,13 @@ async function createConfig() {
                             type: 'doc',
                             docId: 'intro',
                             position: 'right',
+                            label: 'New SDK 🚧',
+                            docsPluginId: 'nsdk',
+                        },
+                        {
+                            type: 'doc',
+                            docId: 'intro',
+                            position: 'right',
                             label: 'Cockpit',
                             docsPluginId: 'cockpit',
                         },
@@ -175,13 +170,6 @@ async function createConfig() {
                         //     label: 'iCure API',
                         //     docsPluginId: 'api',
                         // },
-                        {
-                            type: 'doc',
-                            docId: 'intro',
-                            position: 'right',
-                            label: 'New SDK 🚧',
-                            docsPluginId: 'nsdk',
-                        },
                         {
                             type: 'search',
                             position: 'right',

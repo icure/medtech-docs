@@ -10,7 +10,7 @@ This FAQ section explains where you can find back those information in Cockpit o
 
 ### Find my EXTERNAL_SERVICES_ID
 
-Go to the details of your account by clicking on the button on the top right of your screen, mentioning **Hey, <your_user_name> !**.
+Go to the details of your account by clicking on the button on the top right of your screen, mentioning **Hey, YOUR_USER_NAME !**.
 
 Click on **Manage account**. 
 
@@ -19,7 +19,7 @@ Go to the **External Services** tab.
 Your **EXTERNAL_SERVICES_ID** is displayed there, along with your external services settings. 
 
 ### Find the iCure Demo FRIENDLY_CAPTCHA_SITE_KEY
-Go to the details of your account by clicking on the button on the top right of your screen, mentioning **Hey, <your_user_name> !**.
+Go to the details of your account by clicking on the button on the top right of your screen, mentioning **Hey, YOUR_USER_NAME !**.
 
 Click on **Manage account**. 
 

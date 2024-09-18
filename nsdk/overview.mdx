@@ -1,5 +1,5 @@
-import SdkCode from "../src/components/SdkCode/SdkCode";
-import Python from "../src/components/SdkCode/Python";
+import {LanguageTabs} from "@site/src/components/LanguageTabs";
+import TabItem from "@theme/TabItem";
 
 # Overview
 
@@ -43,8 +43,10 @@ for each encryptable entity which fields should be encrypted.
 
 <!--TODO table of optional parameters?-->
 
-<SdkCode>
-    <Python>
+<LanguageTabs>
+
+<TabItem value="python">
+
 {`from icure.authentication import UsernamePassword
 from icure.storage import FileSystemStorage
 from icure import IcureSdk, CryptoStrategies, KeyDataRecoveryRequest, RecoveredKeyData, ExportedKeyData, KeyGenerationRequestResult, KeyGenerationRequestResultAllow
@@ -85,8 +87,9 @@ sdk = IcureSdk(
     # If you don't provide an executor you can only use the blocking variants of methods.
     executor=executor
 )`}
-    </Python>
-</SdkCode>
+
+</TabItem>
+</LanguageTabs>
 
 ## Overview on entities
 
@@ -202,8 +205,10 @@ entity.
 - Your current user if you want to use the auto-delegations set on the user in addition to any initial delegate provided.
 
 
-<SdkCode>
-    <Python>
+<LanguageTabs>
+
+<TabItem value="python">
+
 {`from icure.model import DecryptedPatient, AccessLevel
 import uuid\n
 patient_with_initialised_metadata = sdk.patient.with_encryption_metadata_blocking(
@@ -222,8 +227,10 @@ patient_with_initialised_metadata = sdk.patient.with_encryption_metadata_blockin
     delegates={organisationId:AccessLevel.Write}
 )
 created_patient = sdk.patient.create_patient_blocking(patient_with_initialised_metadata)`}
-    </Python>
-</SdkCode>
+
+</TabItem>
+
+</LanguageTabs>
 
 Some entities have encrypted links to other entities, for example each `Contact` and `HealthElement` must always be
 linked to a patient, and for security reasons this link is encrypted. We will provide more information about encrypted
@@ -231,8 +238,9 @@ links in a later chapter.
 
 When initialising the encryption metadata of an entity with an encrypted link you also have to provide the linked entity.
 
-<SdkCode>
-    <Python>
+<LanguageTabs>
+<TabItem value="python">
+
 {`from icure.model import DecryptedHealthElement\n
 health_element = sdk.health_element.create_health_element_blocking(
     sdk.health_element.with_encryption_metadata_blocking(
@@ -243,8 +251,9 @@ health_element = sdk.health_element.create_health_element_blocking(
         patient=created_patient
     )
 )`}
-    </Python>
-</SdkCode>
+
+</TabItem>
+</LanguageTabs>
 
 ### Api and entity *flavours*
 
@@ -292,14 +301,17 @@ The following table summarises the behaviour of the flavours of the api
 
 
 
-<SdkCode>
-    <Python>
+<LanguageTabs>
+<TabItem value="python">
+
 {`encrypted_patient = sdk.patient.encrypted.get_patient_blocking(created_patient.id)
 maybe_decrypted_health_element = sdk.health_element.tryAndRecover.get_health_element_blocking(health_element.id)
 # You can check if the health element was decrypted by using \`isinstance\`
 health_element_is_decrypted = isintance(maybeDecryptedHealthElement, DecryptedHealthElement)`}
-    </Python>
-</SdkCode>
+
+</TabItem>
+</LanguageTabs>
+
 
 :::warning
 
@@ -331,26 +343,32 @@ In the following example we build a filter that returns all patients that have j
 the 1st January 1990 and the 31st December 1999, sorting them by date of birth. You can refer to the code documentation
 on the builders to learn more about the available filters.
 
-<SdkCode>
-    <Python>
+<LanguageTabs>
+<TabItem value="python">
+
 {`from icure.filters import PatientFilters\n
 john_filter = PatientFilters.Builder(sdk).contains_fuzzy("john").date_of_birth_between(
     from_date=19900101,
     to_date=19991231,
     sort=True
 ).build()`}
-    </Python>
-</SdkCode>
+
+</TabItem>
+</LanguageTabs>
+
 
 You can use the filters by passing them to the *filter* methods in the respective api. The result of a filtering
 operation is an iterator, which can be used to retrieve all entities matching the filter in pages.
 
-<SdkCode>
-    <Python>
+<LanguageTabs>
+<TabItem value="python">
+
 {`filter_iterator = sdk.patient.filter_patients_by_blocking(john_filter)
 print(filter_iterator.next_blocking(100))`}
-    </Python>
-</SdkCode>
+
+</TabItem>
+</LanguageTabs>
+
 
 ### Encrypted entity links
 
@@ -372,12 +390,15 @@ a more advanced topic and won't be covered in this page.
 You can use filters to find the *many* entities linked through secret ids to a *one* entity, for example you can create
 a filter to get all the health elements linked to a patient in the following way:
 
-<SdkCode>
-    <Python>
+<LanguageTabs>
+<TabItem value="python">
+
 {`from icure.filters import HealthElementFilters\n
 health_elements_for_patient_filter = HealthElementFilters.Builder(sdk).by_patients([created_patient]).build()`}
-    </Python>
-</SdkCode>
+
+</TabItem>
+</LanguageTabs>
+
 
 In addition to the secret id we also encrypt and add the normal id of the *one* entity on each of the *many*. This value
 is kept separate from the other encrypted content of the entity in order to allow for the sharing of only the full
@@ -387,12 +408,15 @@ share some exam results without sharing the patient they belong to.
 You can use sdk methods to decrypt a linked entity id from an entity when you need it (it will not be automatically
 decrypted like the entity content), for example to get the id of the patient that a health element refers to:
 
-<SdkCode>
-    <Python>
+<LanguageTabs>
+<TabItem value="python">
+
 {`# A list containing the id of the patient if it could be decrypted, or empty if the current user can't decrypt it
 patient_of_health_element = sdk.health_element.decrypt_patient_id_of_blocking(health_element)`}
-    </Python>
-</SdkCode>
+
+</TabItem>
+</LanguageTabs>
+
 
 ### Sharing an existing entity
 
@@ -406,8 +430,9 @@ entity. Additionally, you can give:
 - Access to the encrypted id of an entity linked by an encrypted link (if the entity is on the *many* side of the one-to-many relationship)
 - Access to some specific secret id of the entity (if the entity is on the *one* side of an encrypted link for a one-to-many relationship)
 
-<SdkCode>
-    <Python>
+<LanguageTabs>
+<TabItem value="python">
+
 {`from icure.model import RequestedPermission, ShareMetadataBehaviour\n
 # Get the secret ids of the patient
 patient_secret_ids = sdk.patient.get_secret_ids_of_blocking(created_patient)
@@ -435,8 +460,10 @@ shared_health_element = sdk.health_element.share_with_blocking(
         requested_permissions=RequestedPermission.FullWrite
     )
 )`}
-    </Python>
-</SdkCode>
+
+</TabItem>
+</LanguageTabs>
+
 
 ## Working with non encryptable entities
 
