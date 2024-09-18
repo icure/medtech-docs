@@ -32,9 +32,8 @@ Below you will find an explanation of the most commonly used properties in the e
 [shared fields](/nsdk/explanations/data-model/#shared-fields). For a full list, check the [references](TODO).
 
 ### closingDate
-The `closingDate` represent the moment when the Contact ended. It is a timestamp, precise to the second,
-encoded as a *FuzzyDate*, i.e. a number in the `YYYYMMDDhhmmss` format. A Contact with a non-null `closingDate` is
-considered close.
+The `closingDate` represent the moment when the Contact ended. 
+It is encoded as a [FuzzyDateTime](/nsdk/explanations/data-model/#fuzzydatetime).
 
 ### descr
 A human-readable description for the Contact.
@@ -53,8 +52,8 @@ share the same `groupId`. This use case is explained in more details in [this ho
 A list of textual remarks related to this Contact.
 
 ### openingDate
-The `openingDate` represent the starting moment of the event of the Contact. It is a timestamp, precise to the second,
-encoded as a *FuzzyDate*, i.e. a number in the `YYYYMMDDhhmmss` format.
+The `openingDate` represent the starting moment of the event of the Contact. 
+It is encoded as a [FuzzyDateTime](/nsdk/explanations/data-model/#fuzzydatetime).
 
 ### participants
 The ids of all the other Data Owners that participated in this encounter, associated to their role in the encounter. 

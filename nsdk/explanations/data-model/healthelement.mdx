@@ -22,8 +22,8 @@ A collection of object that contain information about all the healthcare actor r
 HealthcareElement.
 
 ### closingDate
-The `closingDate` represent the moment when the HealthElement ended. It is a timestamp, precise to the second,
-encoded as a *FuzzyDate*, i.e. a number in the `YYYYMMDDhhmmss` format.
+The `closingDate` represent the moment when the HealthElement ended.
+It is encoded as a [FuzzyDateTime](/nsdk/explanations/data-model/#fuzzydatetime).
 
 ### descr
 A human-readable description for the HealthElement.
@@ -51,8 +51,12 @@ A textual note to include in the HealthElement.
 Additional textual notes to include in the HealthElement.
 
 ### openingDate
-The `openingDate` represent the starting moment of the event of the HealthElement. It is a timestamp, precise to the second,
-encoded as a *FuzzyDate*, i.e. a number in the `YYYYMMDDhhmmss` format.
+The `openingDate` represent the starting moment of the event of the HealthElement.
+It is encoded as a [FuzzyDateTime](/nsdk/explanations/data-model/#fuzzydatetime).
 
 ### plansOfAction
 A collection of objects that contain information about all the healthcare approaches related to this HealthElement.
+
+### valueDate
+If the HealthElement was opened and closed on the same date, this field can be used instead of `openingDate` and `closingDate`.
+It is encoded as a [FuzzyDateTime](/nsdk/explanations/data-model/#fuzzydatetime).

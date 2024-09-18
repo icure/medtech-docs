@@ -213,3 +213,29 @@ about deleting entities, check the [related how to](/nsdk/how-to/basic-operation
 ### Identifiers
 A collection of [Identifier](/nsdk/explanations/data-model/identfier) that can be used to connect an entity with external
 resources as per the [FHIR specification](https://build.fhir.org/datatypes.html#Identifier).
+
+## Internal Unstructured Data Types
+
+The information in some field are not represented through their own data type, but as primitive type with some rules
+for formatting. An example of this is the `dateOfBirth` field in the Patient entity: it is a date, precise to the day,
+stored as a number in the `YYYYMMDD` format. 
+
+Below, you will find a list of all such types. 
+
+### FuzzyDate
+A date, precise to the day, stored as a number in the `YYYYMMDD` format. If either the month or day information is 
+unknown or unavailable, `00` should be used instead.
+
+:::note
+This format will be replaced by a data type in the near future.
+:::
+
+### FuzzyDateTime
+A timestamp, precise to the second, stored as a number in the `YYYYMMDDhhmmss` format. If any part of the date, except 
+for the year is unknown `00` can be used instead. Therefore:
+- `20240101230000` encodes `2024/01/01` at 23 hours, but minutes and seconds are unknown
+- `20240101235960` encodes `2024/01/02` at `00:00:00`
+
+:::note
+This format will be replaced by a data type in the near future.
+:::

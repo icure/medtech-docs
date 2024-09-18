@@ -45,15 +45,14 @@ The name of the company the Patient is part of.
 A boolean field that indicates whether the patient is deceased.
 
 ### dateOfBirth
-The date of birth of the Patient as number in the `YYYYMMDD`. If the day or the month are unknown, `00` is a valid 
-placeholder value.
+The date of birth of the Patient as a [FuzzyDate](/nsdk/explanations/data-model/#fuzzydate).
 
 ### dateOfDeath
-The date of death of the Patient as number in the `YYYYMMDD`. If the day or the month are unknown, `00` is a valid
-placeholder value.
+The date of death of the Patient as a [FuzzyDate](/nsdk/explanations/data-model/#fuzzydate).
 
 ### deactivationDate
-If the `active` field is false, this should contain the date of the deactivation of the patient as a number in the `YYYYMMDD` format.
+If the `active` field is false, this should contain the date of the deactivation of the patient.
+It is encoded as a [FuzzyDate](/nsdk/explanations/data-model/#fuzzydate).
 
 ### deactivationReason
 If the `active` field is false, this should contain the reason of deactivation of the patient.
