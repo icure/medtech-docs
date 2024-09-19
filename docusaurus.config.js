@@ -129,7 +129,7 @@ async function createConfig() {
                 navbar: {
                     // title: 'iCure MedTech Docs',
                     logo: {
-                        alt: 'iCure Logo',
+                        alt: 'Cardinal Logo',
                         src: 'img/logo_bigger_blue.svg',
                         srcDark: 'img/logo_bigger.svg',
                         className: 'logoBtn'
@@ -153,7 +153,7 @@ async function createConfig() {
                             type: 'doc',
                             docId: 'intro',
                             position: 'right',
-                            label: 'New SDK 🚧',
+                            label: 'CardinalSDK 🚧',
                             docsPluginId: 'nsdk',
                         },
                         {
