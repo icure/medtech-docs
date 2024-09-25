@@ -1,3 +1,228 @@
-# Set up 2FA for users
+import TabItem from "@theme/TabItem";
+import {LanguageTabs} from "@site/src/components/LanguageTabs";
 
-🚧 This page is under construction 🚧
+# Set up and use 2FA
+
+The Cardinal SDK already includes all the functionalities to set up and use two-factor authentication for the user. A 
+user of your platform can be asked to provide their 2FA token for all the operations that require an elevated security
+context (🚧).
+
+## Set up 2FA
+
+To enable 2FA for a user, you need to specify the length of the OTP that the backend should expect and the key used to 
+generate and verify the OTP. The key should be generated using a Sha256-based HMAC algorithm and encoded as a Base32 
+string.
+
+The following example uses our Kotlin multiplatform OTP library (🚧) to generate the key.
+
+:::note
+Enabling the 2FA for a user is a security-critical operation that requires the permission to edit the user and an
+[elevated security context](/how-to/initialize-the-sdk/authentication-with-secret-provider).
+:::
+
+<LanguageTabs>
+
+<TabItem value="kotlin">
+
+```kotlin
+import com.icure.cardinal.sdk.model.security.Enable2faRequest
+import com.icure.kotp.Totp
+
+val userId = // The id of the user
+val otpLength = 8 
+val otpSecret = Totp.generateTOTPSecret(32, HmacAlgorithm.HmacSha256)
+sdk.user.enable2faForUser(userId, Enable2faRequest(otpSecret, otpLength))
+```
+
+</TabItem>
+
+<TabItem value="typescript">
+
+```typescript
+import {Enable2faRequest} from "@icure/cardinal-sdk";
+
+const userId = // The id of the user
+const otpLength = 8
+const otpSecret = // A Base32-encoded HMAC-Sha256 key
+await sdk.user.enable2faForUser(userId, Enable2faRequest(otpSecret, otpLength))
+```
+
+</TabItem>
+
+<TabItem value="python">
+
+```python
+from cardinal_sdk.model import Enable2faRequest
+
+user_id =  # The id of the user
+otp_length = 8
+otp_secret =  # A Base32-encoded HMAC-Sha256 key
+sdk.user.enable_2fa_for_user_blocking(user_id, Enable2faRequest(otp_length, otp_secret))
+```
+
+</TabItem>
+
+</LanguageTabs>
+
+## Use 2FA with the Smart Authentication Manager
+
+The Cardinal SDK will ask you for the 2FA OTP whenever you try to execute an operation that is critical for security.
+You can define how your applications asks the OTP by defining a `SecretProvider` and passing to the SDK when you 
+instantiate it.
+
+Below you will find an example of a basic SecretProvider that asks for the 2FA token. To learn more about the SecretProvider,
+check this [how to](/how-to/initialize-the-sdk/authentication-with-secret-provider)
+
+:::note
+This functionality is not available on Python.
+:::
+
+<LanguageTabs>
+
+<TabItem value="kotlin">
+
+```kotlin
+import com.icure.cardinal.sdk.auth.AuthSecretProvider
+import com.icure.cardinal.sdk.model.embed.AuthenticationClass
+import com.icure.cardinal.sdk.auth.AuthSecretDetails
+import com.icure.cardinal.sdk.auth.AuthenticationProcessApi
+
+fun askOneTimeCode(): String {
+	// This function will ask the user to enter their OTP
+}
+
+val authSecretProvider = object : AuthSecretProvider {
+	override suspend fun getSecret(
+		acceptedSecrets: Set<AuthenticationClass>,
+		previousAttempts: List<AuthSecretDetails>,
+		authProcessApi: AuthenticationProcessApi
+	): AuthSecretDetails {
+		if(acceptedSecrets.contains(AuthenticationClass.TwoFactorAuthentication)) {
+			val otp = askOneTimeCode()
+			return AuthSecretDetails.TwoFactorAuthTokenDetails(otp)
+		} else {
+			throw IllegalStateException("2FA cannot be used for this operation")
+		}
+	}
+}
+```
+
+</TabItem>
+
+<TabItem value="typescript">
+
+```typescript
+import {AuthenticationProcessApi, AuthSecretDetails, AuthenticationClass, AuthSecretProvider} from "@icure/cardinal-sdk";
+
+const askOneTimeCode = (): string => {
+	// This function will ask the user to enter their OTP
+}
+
+const authSecretProvider: AuthSecretProvider = {
+	getSecret: (
+		acceptedSecrets: Array<AuthenticationClass>,
+		previousAttempts: Array<AuthSecretDetails>,
+		authProcessApi: AuthenticationProcessApi
+	): Promise<AuthSecretDetails> => {
+		if(acceptedSecrets.includes(AuthenticationClass.TwoFactorAuthentication)) {
+			const otp = askOneTimeCode()
+			return AuthSecretDetails.TwoFactorAuthTokenDetails(otp)
+		} else {
+			throw new Error("2FA cannot be used for this operation")
+		}
+	}
+}
+```
+
+</TabItem>
+
+</LanguageTabs>
+
+The `getSecret` method of the AuthSecretProvider will be called internally by the SDK whenever there is the need to ask
+the user for a more secure token. This implementation first checks if the 2FA can be used to fulfill the request, then,
+it asks the OTP of the 2FA to the user and returns it. 
+
+The AuthSecretProvider can be used to instantiate the Cardinal SDK:
+
+<LanguageTabs>
+
+<TabItem value="kotlin">
+
+```kotlin
+import com.icure.cardinal.sdk.options.AuthenticationMethod
+import com.icure.cardinal.sdk.storage.impl.FileStorageFacade
+import com.icure.cardinal.sdk.CardinalSdk
+
+val sdk = CardinalSdk.initialize(
+	applicationId = /* Your application id */,
+	baseUrl = "https://api.icure.cloud",
+	authenticationMethod = AuthenticationMethod.UsingSecretProvider(
+		loginUsername = /* The login of the user */,
+		initialSecret = AuthenticationMethod.UsingSecretProvider.InitialSecret.Password(/* The password of the user */),
+		secretProvider = authSecretProvider
+	),
+	baseStorage = FileStorageFacade("./scratch/storage")
+)
+```
+
+</TabItem>
+
+<TabItem value="typescript">
+
+```typescript
+const sdk = await CardinalSdk.initialize(
+	/* Your application id */,
+	"https://api.icure.cloud",
+	new AuthenticationMethod.UsingSecretProvider(
+		authSecretProvider,
+		{ 
+			loginUsername: /* The login of the user */, 
+			initialSecret: new SecretProviderAuthenticationOptions.InitialSecret.Password(/* The password of the user */)
+		}
+	),
+	StorageFacade.usingFileSystem("./scratch/test")
+)
+```
+
+</TabItem>
+
+</LanguageTabs> 
+
+## Disable 2FA
+The two-factor authentication configuration can be also removed from a user:
+
+<LanguageTabs>
+
+<TabItem value="kotlin">
+
+```kotlin
+val userId = // The id of the user
+sdk.user.disable2faForUser(userId)
+```
+
+</TabItem>
+
+<TabItem value="typescript">
+
+```typescript
+const userId = // The id of the user
+await sdk.user.disable2faForUser(userId)
+```
+
+</TabItem>
+
+<TabItem value="python">
+
+```python
+user_id =  # The id of the user
+sdk.user.disable_2fa_for_user_blocking(user_id)
+```
+
+</TabItem>
+
+</LanguageTabs>
+
+:::note
+Disabling the 2FA for a user is a security-critical operation that requires the permission to edit the user and an
+[elevated security context](/how-to/initialize-the-sdk/authentication-with-secret-provider).
+:::
