@@ -1,6 +1,37 @@
 # Store unstructured data
 
-🚧 This page is under construction 🚧
+While building your application, you may need to store data that do not fit in the Cardinal SDK data model, like medical
+documents or images. To encrypt and store them, you can leverage the Attachment mechanism of the Document entity.
+
+An Attachment can contain any type of unstructured data of any size and is part of a Document, even though it is stored 
+separately to avoid performance loss when querying and retrieving data.
+
+## Creating an attachment
+To upload an Attachment, first you have to create a Document:
+
+TODO Code sample
+
+You can find more information about the Document entity in the [explanation](/explanations/data-model/document).
+
+Then, you can store your data (in this case, a JSON document) as the primary attachment of the document:
+
+TODO Code sample
+
+Any attachment needs to be converted to a byte array before being encrypted and saved. In addition, you will also have
+to specify the [UTI](https://developer.apple.com/library/archive/documentation/FileManagement/Conceptual/understanding_utis/understand_utis_conc/understand_utis_conc.html#//apple_ref/doc/uid/TP40001319-CH202-CHDHIJDE)s that describe the type of data being saved.
+
+You can also store the Attachment unencrypted, using the appropriate method:
+
+TODO Code sample
+
+Each Document can one main attachment and many secondary attachments. Each secondary attachment must be identified by
+a unique identifier and can be stored both as an encrypted or unencrypted byte array.
+
+TODO Code sample
+
+## Retrieving an attachment
+Once an attachment is created 
+
 
 [//]: # (- Create document, add attachment)
 
