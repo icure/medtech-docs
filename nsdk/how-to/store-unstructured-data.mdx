@@ -157,7 +157,7 @@ sdk.document.set_raw_main_attachment_blocking(document.id, document.rev, ["publi
 
 </LanguageTabs>
 
-Each Document can one main attachment and many secondary attachments. Each secondary attachment must be identified by
+Each Document can have one main attachment and many secondary attachments. Each secondary attachment must be identified by
 a unique identifier and can be stored both as an encrypted or unencrypted byte array.
 
 <LanguageTabs>
@@ -172,7 +172,7 @@ val attachmentId = "medical-image-20240609161200"
 val decryptedAttachmentId = "decrypted-medical-image-20240609161200"
 
 val documentWithSecondaryAttachment = sdk.document.encryptAndSetSecondaryAttachment(documentWithMainAttachment, attachmentId, listOf("public.tiff"), image)
-val documentWithDecryptedSecondaryAttachment = sdk.document.setRawSecondaryAttachment(documentWithSecondaryAttachment.id, decryptedAttachmentId, checkNotNull(documentWithSecondaryAttachment.rev), listOf("public.tiff"), image, false)
+val documentWithUnencryptedSecondaryAttachment = sdk.document.setRawSecondaryAttachment(documentWithSecondaryAttachment.id, decryptedAttachmentId, checkNotNull(documentWithSecondaryAttachment.rev), listOf("public.tiff"), image, false)
 ```
 
 </TabItem>
@@ -185,7 +185,7 @@ const attachmentId = "medical-image-20240609161200"
 const decryptedAttachmentId = "decrypted-medical-image-20240609161200"
 
 const documentWithSecondaryAttachment = await sdk.document.encryptAndSetSecondaryAttachment(documentWithMainAttachment, attachmentId, ["public.tiff"], image)
-const documentWithDecryptedSecondaryAttachment = await sdk.document.setRawSecondaryAttachment(documentWithSecondaryAttachment.id, decryptedAttachmentId, documentWithSecondaryAttachment.rev, ["public.tiff"], image, false)
+const documentWithUnencryptedSecondaryAttachment = await sdk.document.setRawSecondaryAttachment(documentWithSecondaryAttachment.id, decryptedAttachmentId, documentWithSecondaryAttachment.rev, ["public.tiff"], image, false)
 ```
 
 </TabItem>
@@ -200,7 +200,7 @@ attachment_id = "medical-image-20240609161200"
 decrypted_attachment_id = "decrypted-medical-image-20240609161200"
 
 document_with_secondary_attachment = sdk.document.encrypt_and_set_secondary_attachment_blocking(document_with_main_attachment, attachment_id, ["public.tiff"], image)
-document_with_encrypted_secondary_attachment = sdk.document.set_raw_secondary_attachment_blocking(document_with_secondary_attachment.id, decrypted_attachment_id, document_with_secondary_attachment.rev, ["public.tiff"], image, False)
+document_with_unencrypted_secondary_attachment = sdk.document.set_raw_secondary_attachment_blocking(document_with_secondary_attachment.id, decrypted_attachment_id, document_with_secondary_attachment.rev, ["public.tiff"], image, False)
 ```
 
 </TabItem>
