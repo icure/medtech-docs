@@ -13,8 +13,6 @@ To enable 2FA for a user, you need to specify the length of the OTP that the bac
 generate and verify the OTP. The key should be generated using a Sha256-based HMAC algorithm and encoded as a Base32 
 string.
 
-The following example uses our Kotlin multiplatform OTP library (:construction:) to generate the key.
-
 :::note
 Enabling the 2FA for a user is a security-critical operation that requires the permission to edit the user and an
 [elevated security context](/how-to/initialize-the-sdk/authentication-with-secret-provider).
@@ -30,7 +28,7 @@ import com.icure.kotp.Totp
 
 val userId = // The id of the user
 val otpLength = 8 
-val otpSecret = Totp.generateTOTPSecret(32, HmacAlgorithm.HmacSha256)
+val otpSecret = // A Base32-encoded HMAC-Sha256 key
 sdk.user.enable2faForUser(userId, Enable2faRequest(otpSecret, otpLength))
 ```
 
