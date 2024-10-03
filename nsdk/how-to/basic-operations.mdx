@@ -628,6 +628,28 @@ def get_contacts_of_patient(sdk: CardinalSdk, patient: Patient, limit: int) -> L
 
 If you want to learn more about the querying system refer to the [dedicated page](/how-to/querying-data).
 
+### Required permissions
+
+Access to non-encryptable entities is restricted only by the permissions available to the user.
+Some types of non-encryptable entities are fully accessible to all users regardless of their permissions (such as codes)
+while others require specific permissions (devices).
+There are also entities that have partially restricted access. 
+For example, any user may get an `HealthcareParty`, regardless of their permissions, but if the user doesn't have the
+`HealthcarePartyManagement.FullRead` permission part of the returned entity content will be omitted.
+Finally, for some types of entities, there is a "Search" permission that is required to use the various query methods. 
+
+For encryptable entities, instead, the user needs to have explicit access to the retrieved entity. 
+This is only possible if the user created the entity, or if another user with access to the entity [shared](#sharing) it with
+the user. 
+There are some permissions that allow to relax or bypass this restriction. 
+For example in the case of `Patient`s:
+- If the user has the `PatientManagement.ExtendedRead.Any` permission they can get any patient, regardless of whether
+  they have explicit read access to the entity or not.
+  This permission is also necessary to use certain filters that don't restrict the search to only entities shared with 
+  the user.
+- If the user has the `PatientManagement.ExtendedRead.DelegatedToParents` permission they can get also patient that are
+  shared with one of their [parent data owners](/how-to/share-data-with-many-users).
+
 ## Updating entities
 
 You can update an entity using the update method of the corresponding API. 
@@ -680,7 +702,7 @@ def set_patient_note(sdk: CardinalSdk, patient: DecryptedPatient, new_note: str)
 The update method returns the updated entity with a new revision.
 
 This method requires that the revision of the entity you pass matches the revision stored in the backend. 
-In case of a mismatch, the method will throw an exception.
+In case of a mismatch, the method will fail and throw a *Conflict* exception.
 This could happen if another user updated the entity after you retrieved it and before you committed the update, which
 in a collaborative environment could be a normal occurrence.
 
@@ -787,68 +809,134 @@ entity with other delegates.
 
 :::
 
-### Updating encryptable entities
+### Required permissions
 
-By default, you can only update encryptable entities if you have Write access to the entity.
-This is only possible if you created the entity or if another user shared the entity with you granting you also Write
-access.
+For each non-encryptable entity type there are permissions that allow users to update the entities.
 
-Some permissions allow users to bypass this requirement. 
-For example, admin user can update any encryptable entity, even if it wasn't shared with them.
+For encryptable entities, the user instead needs to have write access to the entity being updated.
+This is the case if the user created the entity or if another user with write access to the entity shared it with the 
+user and granted the write access.
+Similarly to the read permissions, there are also extended update permissions that allow to bypass or relax this 
+requirement. 
 
-### Bulk update
- 
-The SDK also provides bulk update methods.
-Differently from the single entity update methods, the bulk methods don't throw an exception in case of revision 
-conflict.
-Instead, any conflicting entity will be ignored and won't be included in the returned entities.
+Finally, for both encryptable and non-encryptable entities, there are some fields that are protected by additional 
+permissions: to modify these fields, the user needs the standard update permission and the permission to modify that 
+piece of protected content.
 
 ## Delete
 
-:::info
+The cardinal SDK supports two different kinds of deletion: "soft" deletion and "hard" deletion.
 
-:construction: We're currently reviewing the delete logic in the Cardinal SDK. 
-There will be some improvements in a future version. 
+Soft deletion adds a marker on the deleted entity but doesn't destroy its data.
+This marker will hide the deleted entity from most filters, but it will still be possible to get the entity by id, or by
+using filters specifically designed to find (soft) deleted entity.
+Removing the marker from a soft deleted entity restores it.
+You can soft-delete entities using the `delete` methods and you can restore soft-deleted entities using the `undelete`
+methods.
 
-:::
+Hard deletion, instead, destroys the data. 
+When you hard-delete an entity, it will be removed from the database, and you won't be able to restore its content 
+anymore.
+You can hard-delete entities using the `purge` methods.
 
-You can delete entities by passing the entity id to the delete method of the corresponding API. 
+Similarly to the update methods, the `delete`, `undelete`, and `purge` methods requires that you provide the latest 
+revision of the affected entity, or the method will fail and throw a *conflict* exception.
+Each of these methods comes in two variants: one variant takes in input the full entity to update, and the other 
+(*byId*) takes directly the id and rev of the entity.
 
-### Soft-delete
+<LanguageTabs>
+<TabItem value = "kotlin">
 
-By default, the delete method in the Cardinal SDK is actually a "soft" delete.
-This means that the data is not destroyed, instead it is hidden.
+```kotlin
+import com.icure.cardinal.sdk.CardinalSdk
+import com.icure.cardinal.sdk.model.DecryptedPatient
+import com.icure.cardinal.sdk.model.Patient
+import com.icure.cardinal.sdk.model.User
+import com.icure.cardinal.sdk.model.couchdb.DocIdentifier
 
-When you soft-delete an entity, it will not be returned anymore when you query data using standard filters, but you can
-still retrieve data by id or by using filters specifically designed to lookup soft-deleted entities.
+suspend fun deletePatient(sdk: CardinalSdk, patient: Patient) {
+  val deletedInfo: DocIdentifier = sdk.patient.deletePatient(patient)
+  println("Delete patient ${deletedInfo.id}, to undelete use revision ${deletedInfo.rev}")
+}
 
-:construction: We're working on exposing "undelete" methods, that will allow you to undo the deletion of a soft-deleted 
-entity.  
+suspend fun undeletePatient(sdk: CardinalSdk, patientId: String, patientRev: String): DecryptedPatient {
+  return sdk.patient.undeletePatientById(patientId, patientRev)
+}
 
-### Hard-delete :construction:
+suspend fun purgeUser(sdk: CardinalSdk, user: User) {
+  sdk.user.purgeUser(user) // purge returns nothing
+}
+```
 
-Unlike soft-delete the hard-delete method actually destroys the deleted data. 
-You will not be able to undo this action. 
+</TabItem>
 
-:construction: We're working on exposing hard delete methods.
+<TabItem value="typescript">
 
-:::warning
+```typescript
+import {
+	CardinalSdk,
+	DecryptedPatient,
+	DocIdentifier,
+	Patient,
+	User
+} from "@icure/cardinal-sdk";
 
-Even when you hard delete data, there is a period where it will actually still be available in the backend's database.
-The data will be completely destroyed when the next compaction completes.
+async function deletePatient(sdk: CardinalSdk, patient: Patient): Promise<void> {
+	const deletedInfo: DocIdentifier = await sdk.patient.deletePatient(patient)
+	console.log(`Delete patient ${deletedInfo.id}, to undelete use revision ${deletedInfo.rev}`)
+}
 
-:::
+async function undeletePatient(sdk: CardinalSdk, patientId: string, patientRev: string): Promise<DecryptedPatient> {
+	return sdk.patient.undeletePatientById(patientId, patientRev)
+}
 
-### Deleted with revision :construction:
+async function purgeUser(sdk: CardinalSdk, user: User) {
+	await sdk.user.purgeUser(user) // purge returns nothing
+}
+```
 
-Currently, when you delete an entity, you only have to provide the id. 
-This could be problematic if the entity was changed since you last retrieved it, because the entity may now contain some
-data that may change your intentions.
+</TabItem>
 
-We're working on adding a revision parameter to the delete methods, that will work like the revision of the update 
-methods (the delete method will succeed only if the revision you provided matches the revision of the stored entity). 
-This will be initially optional, but the methods delete without the revision will be deprecated.
-In future the revision parameter will be mandatory for all delete methods.
+<TabItem value="python">
+
+```python
+from cardinal_sdk import CardinalSdk
+from cardinal_sdk.model import Patient, DocIdentifier, DecryptedPatient, User
+
+def delete_patient(sdk: CardinalSdk, patient: Patient):
+	deleted_info: DocIdentifier = sdk.patient.delete_patient_blocking(patient)
+	print(f"Delete patient {deleted_info.id}, to undelete use revision {deleted_info.rev}")
+
+def undelete_patient(sdk: CardinalSdk, patient_id: str, patient_rev: str) -> DecryptedPatient:
+	return sdk.patient.undelete_patient_by_id_blocking(patient_id, patient_rev)
+
+def purge_user(sdk: CardinalSdk, user: User):
+	return sdk.user.purge_user_blocking(user)  # purge returns nothing
+```
+
+</TabItem>
+
+</LanguageTabs>
+
+### Required permissions
+
+For both encryptable and non-encryptable entities the (soft) delete and undelete methods use the same permissions as the
+update method.
+
+For the purge methods on non-encryptable entities there is a corresponding permission.
+
+On encryptable entities the user needs write access and the purge permission for that entity (for example 
+`PatientManagement.Purge` for purging patients).
+Like for the retrieve and update methods, there are extended purge permissions that allow to relax or bypass the entity
+access requirements.
+
+## Bulk methods
+
+The Cardinal SDK provides bulk methods for the basic CRUD operations.
+
+The bulk read, update, and delete methods, unlike their single-entity counterparts, won't throw an exception in case
+you don't have access to one of the entities or (for update and delete) in case you provide the wrong revision.
+Instead, any inaccessible or conflicting entity will be ignored and won't be included in the returned entities.
 
 ## Flavours
 
