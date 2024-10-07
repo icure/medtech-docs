@@ -21,11 +21,14 @@ Any of these field of the User entity is valid as login:
 As for the password, it is possible both to set a password (in the `passwordHash` field) or to use a [temporary token](/how-to/remember-me). 
 
 ## Roles
-The roles assigned to a User are stored in a nested object inside the `systemMetadata` property. Any update to this 
-property will be prohibited by the backend.
+The roles assigned to a User are stored in a nested object inside the `systemMetadata` property. It has 3 properties:
 
-To learn how to update the roles on a user, check this [how to](/how-to/define-user-roles).
+- `isAdmin` is a boolean field that is `true` if the user is an admin.
+- `roles` is a set of the names of all the roles assigned to the user.
+- `inheritsRoles` is a boolean field that is `true` if the user has no role set and so inherits the roles from the group
+configuration.
 
+Any update to this property will be prohibited by the backend. To learn how to update the roles on a user, check this [how to](/how-to/define-user-roles).
 
 ## Data Owner Users
 A User is a **Data Owner** User if exactly one of the following is true:
@@ -107,10 +110,14 @@ A User where this field is not null is a **Data Owner** User.
 :::
 
 ### systemMetadata
-This field contains internal information about the User, such as the roles. It is an internal field that cannot be
-modified manually.
+This field contains internal information about the User. It has 3 properties:
 
-To change the roles of a User, check this [how to](/how-to/define-user-roles).
+- `isAdmin` is a boolean field that is `true` if the user is an admin.
+- `roles` is a set of the ids of all the roles assigned to the user.
+- `inheritsRoles` is a boolean field that is `true` if the user has no role set and so inherits the roles from the group
+  configuration.
+
+Any update to this property will be prohibited by the backend. To learn how to update the roles on a user, check this [how to](/how-to/define-user-roles).
 
 ### status
 The status of the User. The values can be `Active`, `Disabled`, or `Registering`. Note that if a User has a `Disabled` 

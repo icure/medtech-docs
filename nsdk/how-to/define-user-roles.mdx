@@ -1,3 +1,150 @@
-# Set user roles
+import TabItem from "@theme/TabItem";
+import {LanguageTabs} from "@site/src/components/LanguageTabs";
 
-🚧 This page is under construction 🚧
+# Modify user roles
+
+The operations that a user can do on an entity are determined by two factors:
+
+- The roles of the user.
+- Whether the entity was shared with the user (if the entity is encryptable and the user a Data Owner).
+
+This how-to focuses on assigning and removing roles from a user. You can read more about permissions and Data Owner
+users in [this explanation](/explanations/data-owners-and-access-control).
+
+## Check user roles
+The user roles information are stored in the [systemMetadata](/explanations/data-model/user#systemmetadata) property.
+This property has 3 fields: 
+
+- `isAdmin` is a boolean field that is `true` if the user is an admin.
+- `roles` is a set of the ids of all the roles assigned to the user.
+- `inheritsRoles` is a boolean field that is `true` if the user has no role set and so inherits the default roles from 
+the group configuration.
+
+## Default Roles
+Each database has its own default roles, that are set when the group is created. You can edit the default roles and 
+check which permissions they grant in the Cockpit (:construction:).
+
+Roles are assigned based on the user type:
+
+- If the user is a HealthcareParty user (i.e. the `healthcarePartyId` field is not empty), it will receive all the `HCP` roles.
+- If the user is a Patient user (i.e. the `patientId` field is not empty), it will receive all the `PATIENT` roles.
+- If the user is a Device user (i.e. the `deviceId` field is not empty), it will receive all the `DEVICE` roles.
+- If the user is not a Data Owner user, it will receive all the `USER` roles.
+
+If you assign a new role to a User, it will lose all the default roles.
+
+## Assign a role to a user
+To assign a role to a user, you first need to identify which role you want to give. You can retrieve all the available
+roles using the `getAllRoles` method in the `role` section of the sdk.
+
+<LanguageTabs>
+
+<TabItem value="kotlin">
+
+```kotlin
+val allRoles = sdk.role.getAllRoles()
+```
+
+</TabItem>
+
+<TabItem value="typescript">
+
+```typescript
+const allRoles = await sdk.role.getAllRoles()
+```
+
+</TabItem>
+
+<TabItem value="python">
+
+```python
+all_roles = sdk.role.get_all_roles_blocking()
+```
+
+</TabItem>
+
+</LanguageTabs>
+
+Then, you can update the roles for a user adding the id of the new role to the existing ones for the user. For the 
+sake of the example, we will use the first role in the result.
+
+<LanguageTabs>
+
+<TabItem value="kotlin">
+
+```kotlin
+val userId = // The id of the user to update
+val user = sdk.user.getUser(userId)
+sdk.user.addRolesToUser(userId, user.systemMetadata.roles + allRoles.first())
+```
+
+</TabItem>
+
+<TabItem value="typescript">
+
+```typescript
+const userId = // The id of the user to update
+const user = await sdk.user.getUser(userId)
+await sdk.user.addRolesToUser(userId, user.systemMetadata.roles + allRoles[0])
+```
+
+</TabItem>
+
+<TabItem value="python">
+
+```python
+user_id =  # The id of the user to update
+user = sdk.user.get_user_blocking(user_id)
+sdk.user.add_roles_to_user_blocking(userId, user.system_metadata.roles + [all_roles[0]])
+```
+
+</TabItem>
+
+</LanguageTabs>
+
+Now the users has all their previous roles plus the new one.
+
+:::warning
+This operation sets the roles for a user, so it can be used both to add and remove roles: to add a role, just like in 
+the example, you have to pass all the previous roles plus the ones that you want to add. To remove a role, you have to 
+pass all the previous roles except for the one that you want to remove.
+:::
+:::note
+You can also modify the roles of a user manually in the Cockpit (:construction:)
+:::
+
+## Reset user roles
+To remove any role configuration from a user and revert it to the configuration defined in the group, you can use the 
+`removeRolesFromUser` method of the SDK:
+
+<LanguageTabs>
+
+<TabItem value="kotlin">
+
+```kotlin
+sdk.user.removeRolesFromUser(userId)
+```
+
+</TabItem>
+
+<TabItem value="typescript">
+
+```typescript
+await sdk.user.removeRolesFromUser(userId)
+```
+
+</TabItem>
+
+<TabItem value="python">
+
+```python
+sdk.user.remove_roles_from_user_blocking(userId)
+```
+
+</TabItem>
+
+</LanguageTabs>
+
+## Creating custom roles
+It is not possible to create custom roles from existing permissions using Cardinal. However, this feature will be added
+in a release in the near future.

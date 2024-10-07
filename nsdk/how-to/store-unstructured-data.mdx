@@ -1,7 +1,389 @@
+import TabItem from "@theme/TabItem";
+import {LanguageTabs} from "@site/src/components/LanguageTabs";
+
 # Store unstructured data
 
-🚧 This page is under construction 🚧
+While building your application, you may need to store data that do not fit in the Cardinal SDK data model, like medical
+documents or images. To encrypt and store them, you can leverage the Attachment mechanism of the Document entity.
 
-[//]: # (- Create document, add attachment)
+An Attachment can contain any type of unstructured data of any size and is part of a Document, even though it is stored 
+separately to avoid performance loss when querying and retrieving data.
 
-[//]: # (- What happens to attachments when deleted / purged?)
+## Creating an attachment
+To upload an Attachment, first you have to create a Document:
+
+<LanguageTabs>
+
+<TabItem value="kotlin">
+
+```kotlin
+import com.icure.cardinal.sdk.model.DecryptedDocument
+import java.util.UUID
+
+val document = sdk.document.createDocument(
+	sdk.document.withEncryptionMetadata(
+		DecryptedDocument(
+			id = UUID.randomUUID().toString(),
+			name = "My medical document"
+		),
+		null
+	)
+)
+```
+
+</TabItem>
+
+<TabItem value="typescript">
+
+```typescript
+import {DecryptedDocument} from "@icure/cardinal-sdk";
+import {v4 as uuid} from 'uuid';
+
+const document = await sdk.document.createDocument(
+	await sdk.document.withEncryptionMetadata(
+		new DecryptedDocument({
+			id: uuid(),
+			name: "My medical document"
+		}),
+		null
+	)
+)
+```
+
+</TabItem>
+
+<TabItem value="python">
+
+```python
+import uuid
+from cardinal_sdk.model import DecryptedDocument
+
+document = sdk.document.create_document_blocking(
+	sdk.document.with_encryption_metadata_blocking(
+		DecryptedDocument(
+			id=str(uuid.uuid4()),
+			name="My medical document"
+		),
+		None
+	)
+)
+```
+
+</TabItem>
+
+</LanguageTabs>
+
+You can find more information about the Document entity in the [explanation](/explanations/data-model/document).
+
+Then, you can store your data (in this case, an XML document) as the primary attachment of the document:
+
+<LanguageTabs>
+
+<TabItem value="kotlin">
+
+```kotlin
+val xmlData = """
+		<root>
+		    <data>Very important data</data>
+		    <value>42</value>
+		</root>
+	""".trimIndent()
+
+val documentWithMainAttachment = sdk.document.encryptAndSetMainAttachment(document, listOf("public.xml"), xmlData.toByteArray(Charsets.UTF_8))
+```
+
+</TabItem>
+
+<TabItem value="typescript">
+
+```typescript
+const xmlData = `
+		<root>
+			<data>Very important data</data>
+			<value>42</value>
+		</root>
+	`
+const documentWithMainAttachment = await sdk.document.encryptAndSetMainAttachment(document, ["public.xml"], new Int8Array(new TextEncoder().encode(xmlData)))
+```
+
+</TabItem>
+
+<TabItem value="python">
+
+```python
+xml_data = """
+		<root>
+			<data>Very important data</data>
+			<value>42</value>
+		</root>
+	"""
+document_with_main_attachment = sdk.document.encrypt_and_set_main_attachment_blocking(document, ["public.xml"], bytearray(xml_data, 'utf-8'))
+```
+
+</TabItem>
+
+</LanguageTabs>
+
+Any attachment needs to be converted to a byte array before being encrypted and saved. In addition, you will also have
+to specify the [UTI](https://developer.apple.com/library/archive/documentation/FileManagement/Conceptual/understanding_utis/understand_utis_conc/understand_utis_conc.html#//apple_ref/doc/uid/TP40001319-CH202-CHDHIJDE)s that describe the type of data being saved.
+
+You can also store the Attachment unencrypted, using the appropriate method:
+
+<LanguageTabs>
+
+<TabItem value="kotlin">
+
+```kotlin
+sdk.document.setRawMainAttachment(document.id, checkNotNull(document.rev), listOf("public.xml"), xmlData.toByteArray(Charsets.UTF_8), false)
+```
+
+</TabItem>
+
+<TabItem value="typescript">
+
+```typescript
+await sdk.document.setRawMainAttachment(document.id, document.rev!, ["public.xml"], new Int8Array(new TextEncoder().encode(xmlData)), false)
+```
+
+</TabItem>
+
+<TabItem value="python">
+
+```python
+sdk.document.set_raw_main_attachment_blocking(document.id, document.rev, ["public.xml"], bytearray(xml_data, 'utf-8'), False)
+```
+
+</TabItem>
+
+</LanguageTabs>
+
+Each Document can have one main attachment and many secondary attachments. Each secondary attachment must be identified by
+a unique identifier and can be stored both as an encrypted or unencrypted byte array.
+
+<LanguageTabs>
+
+<TabItem value="kotlin">
+
+```kotlin
+import kotlin.random.Random
+
+val image = Random.nextBytes(100)
+val attachmentId = "medical-image-20240609161200"
+val decryptedAttachmentId = "decrypted-medical-image-20240609161200"
+
+val documentWithSecondaryAttachment = sdk.document.encryptAndSetSecondaryAttachment(documentWithMainAttachment, attachmentId, listOf("public.tiff"), image)
+val documentWithUnencryptedSecondaryAttachment = sdk.document.setRawSecondaryAttachment(documentWithSecondaryAttachment.id, decryptedAttachmentId, checkNotNull(documentWithSecondaryAttachment.rev), listOf("public.tiff"), image, false)
+```
+
+</TabItem>
+
+<TabItem value="typescript">
+
+```typescript
+const image = new Int8Array(100)
+const attachmentId = "medical-image-20240609161200"
+const decryptedAttachmentId = "decrypted-medical-image-20240609161200"
+
+const documentWithSecondaryAttachment = await sdk.document.encryptAndSetSecondaryAttachment(documentWithMainAttachment, attachmentId, ["public.tiff"], image)
+const documentWithUnencryptedSecondaryAttachment = await sdk.document.setRawSecondaryAttachment(documentWithSecondaryAttachment.id, decryptedAttachmentId, documentWithSecondaryAttachment.rev, ["public.tiff"], image, false)
+```
+
+</TabItem>
+
+<TabItem value="python">
+
+```python
+import secrets
+
+image = bytearray(secrets.token_bytes(100))
+attachment_id = "medical-image-20240609161200"
+decrypted_attachment_id = "decrypted-medical-image-20240609161200"
+
+document_with_secondary_attachment = sdk.document.encrypt_and_set_secondary_attachment_blocking(document_with_main_attachment, attachment_id, ["public.tiff"], image)
+document_with_unencrypted_secondary_attachment = sdk.document.set_raw_secondary_attachment_blocking(document_with_secondary_attachment.id, decrypted_attachment_id, document_with_secondary_attachment.rev, ["public.tiff"], image, False)
+```
+
+</TabItem>
+
+</LanguageTabs>
+
+## Retrieving an attachment
+Once an attachment is created, you can choose whether to retrieve it encrypted or decrypted.
+
+<LanguageTabs>
+
+<TabItem value="kotlin">
+
+```kotlin
+val retrievedDocument = sdk.document.getDocument(document.id)
+val retrievedMainAttachment = sdk.document.getAndDecryptMainAttachment(retrievedDocument)
+val retrievedEncryptedMainAttachment = sdk.document.getRawMainAttachment(retrievedDocument.id)
+```
+
+</TabItem>
+
+<TabItem value="typescript">
+
+```typescript
+const retrievedDocument = await sdk.document.getDocument(document.id)
+const retrievedMainAttachment = await sdk.document.getAndDecryptMainAttachment(retrievedDocument)
+const retrievedEncryptedMainAttachment = await sdk.document.getRawMainAttachment(retrievedDocument.id)
+```
+
+</TabItem>
+
+<TabItem value="python">
+
+```python
+retrieved_document = sdk.document.get_document_blocking(document.id)
+retrieved_main_attachment = sdk.document.get_and_decrypt_main_attachment_blocking(retrieved_document)
+retrieved_encrypted_main_attachment = sdk.document.get_raw_main_attachment_blocking(retrieved_document.id)
+```
+
+</TabItem>
+
+</LanguageTabs>
+
+
+:::info
+The `getAndDecryptMainAttachment` function has an optional secondary parameter that is a function that takes as input 
+the decrypted attachment and returns true if the document was decrypted correctly and false otherwise.
+
+This can help in advanced use-cases where there are Documents edited manually with multiple encryption keys for multiple
+attachments.
+
+<LanguageTabs>
+
+<TabItem value="kotlin">
+
+```kotlin
+val retrievedDocument = sdk.document.getDocument(document.id)
+fun isValidXml(xmlAsBytes: ByteArray): Boolean {
+	// This is an XML validator
+	return true
+}
+sdk.document.getAndDecryptMainAttachment(retrievedDocument) { decryptedAttachment ->
+	isValidXml(decryptedAttachment)
+}
+```
+
+</TabItem>
+
+<TabItem value="typescript">
+
+```typescript
+const retrievedDocument = await sdk.document.getDocument(document.id)
+
+function isValidXml(xmlAsBytes: Int8Array): Promise<boolean> {
+	// This is an XML validator
+	return Promise.resolve(true)
+}
+
+await sdk.document.getAndDecryptMainAttachment(retrievedDocument, { decryptedAttachmentValidator: isValidXml })
+```
+
+</TabItem>
+
+<TabItem value="python">
+
+```python
+retrieved_document = sdk.document.get_document_blocking(document.id)
+
+def is_valid_xml(xml_as_bytes: bytearray) -> bool:
+	# This is an XML validator
+	return True
+
+sdk.document.get_and_decrypt_main_attachment_blocking(retrieved_document, is_valid_xml)
+```
+
+</TabItem>
+
+</LanguageTabs>
+:::
+
+To retrieve a secondary attachment, you also need the identifier of the attachment:
+
+<LanguageTabs>
+
+<TabItem value="kotlin">
+
+```kotlin
+val retrievedSecondaryAttachment = sdk.document.getAndDecryptSecondaryAttachment(retrievedDocument, attachmentId)
+val retrievedEncryptedSecondaryAttachment = sdk.document.getRawSecondaryAttachment(retrievedDocument.id, attachmentId)
+```
+
+</TabItem>
+
+<TabItem value="typescript">
+
+```typescript
+const retrievedSecondaryAttachment = await sdk.document.getAndDecryptSecondaryAttachment(retrievedDocument, attachmentId)
+const retrievedDecryptedSecondaryAttachment = await sdk.document.getRawSecondaryAttachment(retrievedDocument.id, attachmentId)
+```
+
+</TabItem>
+
+<TabItem value="python">
+
+```python
+retrieved_secondary_attachment = sdk.document.get_and_decrypt_secondary_attachment_blocking(retrieved_document, attachment_id)
+retrieved_encrypted_secondary_attachment = sdk.document.get_raw_secondary_attachment_blocking(retrieved_document.id, attachment_id)
+```
+
+</TabItem>
+
+</LanguageTabs>
+
+## Deleting an attachment
+The following call will allow you to delete the attachments associated to a document:
+
+<LanguageTabs>
+
+<TabItem value="kotlin">
+
+```kotlin
+val documentWithoutMainAttachment = sdk.document.deleteMainAttachment(retrievedDocument.id, checkNotNull(retrievedDocument.rev))
+val documentWithoutAttachments = sdk.document.deleteSecondaryAttachment(documentWithoutMainAttachment.id, attachmentId, checkNotNull(documentWithoutMainAttachment.rev))
+
+println(documentWithoutAttachments.deletedAttachments)
+```
+
+</TabItem>
+
+<TabItem value="typescript">
+
+```typescript
+const documentWithoutMainAttachment = await sdk.document.deleteMainAttachment(retrievedDocument.id, retrievedDocument.rev)
+const documentWithoutAttachments = await sdk.document.deleteSecondaryAttachment(documentWithoutMainAttachment.id, attachmentId, documentWithoutMainAttachment.rev)
+
+console.log(documentWithoutAttachments.deletedAttachments)
+```
+
+</TabItem>
+
+<TabItem value="python">
+
+```python
+document_without_main_attachment = sdk.document.delete_main_attachment_blocking(retrieved_document.id, retrieved_document.rev)
+document_without_attachments = sdk.document.delete_secondary_attachment_blocking(document_without_main_attachment.id, attachment_id, document_without_main_attachment.rev)
+
+print(document_without_attachments.deleted_attachments)
+```
+
+</TabItem>
+
+</LanguageTabs>
+
+The information about deleted attachment, including id and deletion date, is stored in the `deletedAttachments` property
+of the document.
+
+:::note
+Once an attachment is deleted, there is no way of recovering it. Also, the deletion process may not be immediate: you may 
+still be able to read the attachment content for some time after deletion.
+:::
+
+## What happens if the Document is deleted or purged?
+When a Document is deleted, nothing happens to its attachments: you may always decide to undelete the document at a 
+later time, so the attachment will stay available as the rest of the Document content.
+
+Instead, if you purge a Document, all its attachment will be irrevocably purged as well.
