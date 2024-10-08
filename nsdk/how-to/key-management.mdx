@@ -1,0 +1,702 @@
+import {LanguageTabs} from "@site/src/components/LanguageTabs";
+import TabItem from "@theme/TabItem";
+
+# Key management and data recovery 
+
+The Cardinal SDK uses end-to-end encryption to protect your end-users' data, ensuring that only the original creator and
+their authorized users can decrypt it.
+Neither the Cardinal team nor you will be able to access the encrypted data unless explicitly authorized by the creator.
+
+A drawback of this approach, however, is that if the user loses their key, they will also lose access to their data, and
+neither you nor the cardinal team can help to recover it.
+
+When using the Cardinal SDK you should educate the user on the importance of their key, and provide backup and recovery
+solutions to prevent catastrophic loss of data. 
+The Cardinal SDK provides support for different backup and recovery options so that you can use the best solution for 
+your application.
+
+In general, there are three categories of approaches you can take:
+- Create backup of the user keys
+- Share data with multiple users and ask for access back in case of key loss
+- Use the notary system to safely share a backup of the key with other people
+  
+:::danger
+
+If a user loses their key and can't get it back through a backup or through notaries, any data they've created and 
+haven't shared with other users will be permanently lost.
+
+:::
+
+## Creating and using key backups
+
+The Cardinal SDK automatically stores and retrieves keys using the (key) storage facade provided during initialization.
+However, if the storage is cleared, you will need to recover the user's keys before they can access their data. 
+This could occur, for instance, if you're building a web app that uses local storage, and the user deletes their 
+browsing data.
+In mobile or desktop applications, this might happen if the user changes their device.
+
+To prevent data loss, we recommend including a solution in your application to export/backup and recover user keys 
+before release.
+
+### Exporting available keys
+
+You can use the `currentDataOwnerKeys` method from the crypto api to access all the keys for the current data owner 
+available to the SDK.
+If you're using [hierarchical data owners](/how-to/share-data-with-many-users) the SDK will also give all keys available 
+for parent data owners.
+
+The method returns the keys as a map `data owner id (self or parent) → key fingerprint → private key in pkcs8 format`.
+You can export the keys any way you think fits your application, but we suggest keeping this structure as it will 
+simplify the re-import process.
+
+<LanguageTabs>
+
+<TabItem value="kotlin">
+
+On kotlin/jvm we can encode the map as json, encoding the pkcs8 key bytes as base64, then save it to a file 
+
+```kotlin
+import com.icure.cardinal.sdk.CardinalSdk
+import com.icure.cardinal.sdk.utils.base64Encode
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
+import java.io.FileWriter
+
+suspend fun exportKeysToFile(
+	sdk: CardinalSdk,
+	filename: String
+) {
+	val encodedKeys = sdk.crypto.currentDataOwnerKeys().mapValues { (_, keysByFingerprint) ->
+		keysByFingerprint.mapValues { (_, pkcs8Key) ->
+			pkcs8Key.base64Encode()
+		}
+	}.let { Json.encodeToString(it) }
+	withContext(Dispatchers.IO) {
+		FileWriter(filename).use { fw -> fw.write(encodedKeys) }
+	}
+}
+```
+
+</TabItem>
+
+</LanguageTabs>
+
+### Restore keys backups
+
+During initialization, the Cardinal SDK automatically checks if all the keys of the current data owner (and parents) are
+available.
+If one or more keys are missing, the SDK will try to use the `CryptoStrategies` to recover any missing keys.
+
+:::note
+
+In this how-to we cover only the basic principles of key recovery. 
+We recommend reading the [crypto strategies](/explanations/crypto-strategies) documentation to have a better 
+understanding about how to customize the way the Cardinal SDK manages the user keys and handles end-to-end encryption.
+
+:::
+
+You can provide custom crypto strategies to the api initialization method that allow the user to re-import keys exported
+using a past instance of the SDK.
+
+<LanguageTabs>
+
+<TabItem value="kotlin">
+
+On kotlin/jvm we ask the user to provide the file with the exported keys and load it.
+
+```kotlin
+import com.icure.cardinal.sdk.CardinalSdk
+import com.icure.cardinal.sdk.auth.UsernamePassword
+import com.icure.cardinal.sdk.crypto.CryptoStrategies
+import com.icure.cardinal.sdk.crypto.KeyPairRecoverer
+import com.icure.cardinal.sdk.model.CryptoActorStubWithType
+import com.icure.cardinal.sdk.model.DataOwnerType
+import com.icure.cardinal.sdk.model.DataOwnerWithType
+import com.icure.cardinal.sdk.model.specializations.Base64String
+import com.icure.cardinal.sdk.model.specializations.KeypairFingerprintV1String
+import com.icure.cardinal.sdk.model.specializations.SpkiHexString
+import com.icure.cardinal.sdk.options.AuthenticationMethod
+import com.icure.cardinal.sdk.options.SdkOptions
+import com.icure.cardinal.sdk.storage.impl.FileStorageFacade
+import com.icure.cardinal.sdk.utils.decode
+import com.icure.kryptom.crypto.CryptoService
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import kotlinx.serialization.json.Json
+import java.io.File
+
+class MyCryptoStrategies : CryptoStrategies {
+	override suspend fun recoverAndVerifySelfHierarchyKeys(
+		keysData: List<CryptoStrategies.KeyDataRecoveryRequest>,
+		cryptoPrimitives: CryptoService,
+		keyPairRecoverer: KeyPairRecoverer
+	): Map<String, CryptoStrategies.RecoveredKeyData> {
+		// Load the keys from the exported keys file
+		val backupFile = promptUserForBackupFile()
+		val recoveredKeys = if (backupFile != null) {
+			Json.decodeFromString<Map<String, Map<KeypairFingerprintV1String, Base64String>>>(
+				withContext(Dispatchers.IO) { backupFile.readText() }
+			)
+		} else emptyMap()
+		// If any of the unavailable keys are in exported keys file return them
+		return keysData.associate { recoveryRequest ->
+			val dataOwner = recoveryRequest.dataOwnerDetails.dataOwner
+			dataOwner.id to CryptoStrategies.RecoveredKeyData(
+				recoveredKeys = recoveryRequest.unavailableKeys.mapNotNull { unavailableKeyInfo ->
+					val fp = unavailableKeyInfo.publicKey.fingerprintV1()
+					recoveredKeys[dataOwner.id]?.get(fp)?.let { recoveredKeyB64 ->
+						fp to cryptoPrimitives.rsa.loadKeyPairPkcs8(
+							unavailableKeyInfo.keyAlgorithm,
+							recoveredKeyB64.decode()
+						)
+					}
+				}.toMap(),
+				keyAuthenticity = emptyMap()
+			)
+		}
+		// No need to save recovered keys: they will automatically be saved to the storage
+	}
+
+	private suspend fun promptUserForBackupFile(): File? {
+		TODO("Implement this yourself")
+	}
+
+	// Same behavior as default crypto strategies for other methods
+
+	override suspend fun generateNewKeyForDataOwner(
+		self: DataOwnerWithType,
+		cryptoPrimitives: CryptoService
+	): CryptoStrategies.KeyGenerationRequestResult =
+		CryptoStrategies.KeyGenerationRequestResult.Allow
+
+	override suspend fun verifyDelegatePublicKeys(
+		delegate: CryptoActorStubWithType,
+		publicKeys: List<SpkiHexString>,
+		cryptoPrimitives: CryptoService
+	): List<SpkiHexString> =
+		publicKeys
+
+	override suspend fun dataOwnerRequiresAnonymousDelegation(dataOwner: CryptoActorStubWithType): Boolean =
+		dataOwner.type != DataOwnerType.Hcp
+}
+
+suspend fun initializeSdk(
+	username: String,
+	password: String
+): CardinalSdk = CardinalSdk.initialize(
+	"MyApplication",
+	"https://api.icure.cloud",
+	AuthenticationMethod.UsingCredentials(UsernamePassword(username, password)),
+	FileStorageFacade("/path/to/key/storage"),
+	// Provide the crypto strategies with the recovery method
+	SdkOptions(cryptoStrategies = MyCryptoStrategies())
+)
+```
+
+</TabItem>
+
+</LanguageTabs>
+
+### Export newly created key
+
+During initialization, the SDK ensures that the logged user has at least a key available. 
+If the user doesn't have a key, or if none of their keys was found in the storage or recovered by the crypto strategies,
+the SDK needs to create a new key.
+
+When this happens, the SDK uses the `generateNewKeyForDataOwner` to confirm to notify your application that a new key
+is necessary and confirm that this is allowed by your application logic.
+You can use this method to prompt the user to export the newly created key.
+
+:::note
+
+The SDK can only create a new key for the current data owner.
+If you're using hierarchical data owners, and there is no key available for one of the parent data owners, the SDK
+initialization will fail.
+
+:::
+
+
+#### Example: export after initialization
+
+In this example, we mark in the crypto strategies if a key was generated, then after initialization we check if a new
+key was generated and ask the user if they want to export it.
+
+<LanguageTabs>
+
+<TabItem value="kotlin">
+
+```kotlin
+import com.icure.cardinal.sdk.CardinalSdk
+import com.icure.cardinal.sdk.auth.UsernamePassword
+import com.icure.cardinal.sdk.crypto.CryptoStrategies
+import com.icure.cardinal.sdk.model.DataOwnerWithType
+import com.icure.cardinal.sdk.options.AuthenticationMethod
+import com.icure.cardinal.sdk.options.SdkOptions
+import com.icure.cardinal.sdk.storage.impl.FileStorageFacade
+import com.icure.kryptom.crypto.CryptoService
+
+class MyCryptoStrategies : CryptoStrategies {
+	var createdNewKey = false
+		private set
+
+	override suspend fun generateNewKeyForDataOwner(
+		self: DataOwnerWithType,
+		cryptoPrimitives: CryptoService
+	): CryptoStrategies.KeyGenerationRequestResult {
+		createdNewKey = true
+		return CryptoStrategies.KeyGenerationRequestResult.Allow
+	}
+
+	// Other methods omitted for brevity
+}
+
+suspend fun promptUserForNewExportedKeysFilePath(): String? =
+	TODO("Implement this yourself")
+
+suspend fun initializeSdkAndExportNewKeys(
+	username: String,
+	password: String
+): CardinalSdk {
+	val cryptoStrategies = MyCryptoStrategies()
+	val sdk = CardinalSdk.initialize(
+		"MyApplication",
+		"https://api.icure.cloud",
+		AuthenticationMethod.UsingCredentials(UsernamePassword(username, password)),
+		FileStorageFacade("/path/to/key/storage"),
+		SdkOptions(cryptoStrategies = cryptoStrategies)
+	)
+	if (cryptoStrategies.createdNewKey) {
+		promptUserForNewExportedKeysFilePath()?.also {
+			exportKeysToFile(sdk, it) // From previous example
+		}
+	}
+	return sdk
+}
+```
+
+</TabItem>
+
+</LanguageTabs> 
+
+#### Example: export during initialization
+
+In this example, we generate and export the key directly from the crypto strategies
+
+<LanguageTabs>
+
+<TabItem value="kotlin">
+
+```kotlin
+import com.icure.cardinal.sdk.CardinalSdk
+import com.icure.cardinal.sdk.auth.UsernamePassword
+import com.icure.cardinal.sdk.crypto.CryptoStrategies
+import com.icure.cardinal.sdk.crypto.impl.exportSpkiHex
+import com.icure.cardinal.sdk.model.DataOwnerWithType
+import com.icure.cardinal.sdk.model.base.CryptoActor
+import com.icure.cardinal.sdk.model.specializations.KeypairFingerprintV1String
+import com.icure.cardinal.sdk.options.AuthenticationMethod
+import com.icure.cardinal.sdk.options.SdkOptions
+import com.icure.cardinal.sdk.storage.impl.FileStorageFacade
+import com.icure.kryptom.crypto.CryptoService
+import com.icure.kryptom.crypto.RsaAlgorithm
+
+class MyCryptoStrategies : CryptoStrategies {
+	override suspend fun generateNewKeyForDataOwner(
+		self: DataOwnerWithType,
+		cryptoPrimitives: CryptoService
+	): CryptoStrategies.KeyGenerationRequestResult {
+		val newKeypair = cryptoPrimitives.rsa.generateKeyPair(RsaAlgorithm.RsaEncryptionAlgorithm.OaepWithSha256)
+		exportKeyToFile(
+			self.dataOwner,
+			cryptoPrimitives.rsa.exportSpkiHex(newKeypair.public).fingerprintV1(),
+			cryptoPrimitives.rsa.exportPrivateKeyPkcs8(newKeypair.private)
+		)
+		return CryptoStrategies.KeyGenerationRequestResult.Use(newKeypair)
+	}
+
+	// Other methods omitted for brevity
+}
+
+suspend fun exportKeyToFile(
+	dataOwner: CryptoActor,
+	fingerprint: KeypairFingerprintV1String,
+	pkcs8PrivateKey: ByteArray
+) {
+	TODO("Implement this yourself")
+}
+
+suspend fun initializeSdkAndExportNewKeys(
+	username: String,
+	password: String
+): CardinalSdk = CardinalSdk.initialize(
+		"MyApplication",
+		"https://api.icure.cloud",
+		AuthenticationMethod.UsingCredentials(UsernamePassword(username, password)),
+		FileStorageFacade("/path/to/key/storage"),
+		SdkOptions(cryptoStrategies = MyCryptoStrategies())
+	)
+}
+```
+
+</TabItem>
+
+</LanguageTabs>
+
+### Keys backup representation
+
+Exporting the keys of the user as files, like shown in the previous examples, can work in desktop applications.
+However, managing files on a mobile device is often a cumbersome operation.
+A more user-friendly solution for mobile applications could be to use QR codes: you could allow your users to instantly
+recover keys using a QR code generated in the past, or generated on-the-fly by another device that has the key.
+However, if you try to generate a QR code for an RSA key, you can see that the resulting code is quite big, and older or 
+low-end devices may have troubles reading it.
+
+To help with this issue, you can use the recovery data system of the Cardinal SDK.
+The recovery data system allows storing encrypted data on the Cardinal backend using a small encryption key (AES-128 or
+AES-256 &rarr; 16 or 32 bytes).
+Your user can create recovery data containing his private keys and save the encryption key for the recovery data 
+somewhere.
+At a later moment, if the user loses their private keys, they can login and use the recovery data key to get them back.
+
+This way, instead of having to provide all the missing keys the user has to provide only the recovery data key.
+This allows recovery with smaller QR codes, or even with manual input if you encode the recovery key using 
+human-friendly representation such as base32.
+
+<LanguageTabs>
+
+<TabItem value="kotlin"> 
+
+```kotlin
+import com.icure.cardinal.sdk.CardinalSdk
+import com.icure.cardinal.sdk.crypto.entities.RecoveryKeySize
+
+suspend fun createRecoveryDataAndPrintKey(
+	sdk: CardinalSdk
+) {
+	val recoveryKey = sdk.recovery.createRecoveryInfoForAvailableKeyPairs(
+		includeParentsKeys = true,
+		recoveryKeySize = RecoveryKeySize.Bytes32,
+	)
+	println("Your new recovery key is: ${recoveryKey.asBase32().chunked(4).joinToString("-")}")
+	// Your new recovery key is: UALR-WKWD-NWLX-AWOK-KRUQ-G42Q-WUPS-EOHC-TMPP-CXP7-HDDV-XFAE-LWGQ
+}
+```
+
+</TabItem>
+
+</LanguageTabs>
+
+You can use the recovery data key to directly in the crypto strategies through the `keyPairRecoverer` parameter.
+
+<LanguageTabs>
+
+<TabItem value="kotlin">
+
+```kotlin
+import com.icure.cardinal.sdk.crypto.CryptoStrategies
+import com.icure.cardinal.sdk.crypto.KeyPairRecoverer
+import com.icure.cardinal.sdk.crypto.entities.RecoveryDataKey
+import com.icure.cardinal.sdk.crypto.entities.RecoveryResult
+import com.icure.cardinal.sdk.model.specializations.SpkiHexString
+import com.icure.kryptom.crypto.CryptoService
+import com.icure.kryptom.crypto.RsaAlgorithm
+import com.icure.kryptom.crypto.RsaKeypair
+
+class MyCryptoStrategies : CryptoStrategies {
+	override suspend fun recoverAndVerifySelfHierarchyKeys(
+		keysData: List<CryptoStrategies.KeyDataRecoveryRequest>,
+		cryptoPrimitives: CryptoService,
+		keyPairRecoverer: KeyPairRecoverer
+	): Map<String, CryptoStrategies.RecoveredKeyData> {
+		var recoveryResult: RecoveryResult<Map<String, Map<SpkiHexString, RsaKeypair<RsaAlgorithm.RsaEncryptionAlgorithm>>>>
+		do {
+			recoveryResult = keyPairRecoverer.recoverWithRecoveryKey(
+				RecoveryDataKey.fromBase32(promptUserForRecoveryKey()),
+				autoDelete = true // true -> the recovery data to be deleted after use
+			)
+		} while (!recoveryResult.isSuccess)
+		return keysData.associate { recoveryRequest ->
+			val dataOwner = recoveryRequest.dataOwnerDetails.dataOwner
+			dataOwner.id to CryptoStrategies.RecoveredKeyData(
+				recoveredKeys = recoveryRequest.unavailableKeys.mapNotNull { unavailableKeyInfo ->
+					val pub = unavailableKeyInfo.publicKey
+					recoveryResult.value[dataOwner.id]?.get(pub)?.let { recoveredKey ->
+						pub.fingerprintV1() to recoveredKey
+					}
+				}.toMap(),
+				keyAuthenticity = emptyMap()
+			)
+		}
+	}
+
+	private suspend fun promptUserForRecoveryKey(): String {
+		TODO("Implement this yourself")
+	}
+
+	// other methods omitted for brevity
+}
+```
+
+</TabItem>
+
+</LanguageTabs>
+
+### Multi-device key management
+
+If a user is using the cardinal SDK from multiple devices, you should make sure the same private keys are available on
+both devices.
+If the same user is logged in on two different devices with different available private keys, the data available on a
+device could be different from the data available on the other. 
+
+To prevent this situation from happening, we suggest that you provide a simple way to copy keys from a device to another.
+For example, you could use the recovery data mechanism explained previously to create some short-lived key recovery
+data.
+
+<LanguageTabs>
+
+<TabItem value="kotlin">
+
+```kotlin
+import com.icure.cardinal.sdk.CardinalSdk
+import com.icure.cardinal.sdk.crypto.entities.RecoveryKeySize
+
+suspend fun createShortRecoveryDataAndPrintKey(
+	sdk: CardinalSdk
+) {
+	val recoveryKey = sdk.recovery.createRecoveryInfoForAvailableKeyPairs(
+		includeParentsKeys = true,
+		// We want to use a shorter recovery data key to simplify the transfer
+		recoveryKeySize = RecoveryKeySize.Bytes16,
+		// Since we're creating this recovery data only to transfer keys between devices,
+		// we should give it a limited lifespan
+		lifetimeSeconds = 5 * 60
+	)
+	println("Your temporary recovery key is: ${recoveryKey.asBase32().chunked(4).joinToString("-")}")
+	// Your temporary recovery key is: NQ2I-HTJ7-Y3CK-GUIH-EMKK-M7CY-HA
+}
+```
+
+</TabItem>
+
+</LanguageTabs>
+
+
+## Regaining access to shared data after key loss
+
+If the user has completely lost their key, and can't recover it, they could still be able to regain access to their
+data if they had previously shared it with other users.
+
+The user will have to create a new keypair during the initialization of the SDK, then notify the other users that he
+shared data with (or that shared data with him) that he needs access back to the entities.
+We call this a "give access back" request.
+You can do this using some external method that suits your application, or internally to the Cardinal SDK by using
+maintenance tasks.
+
+<LanguageTabs>
+
+<TabItem value="kotlin">
+
+```kotlin
+import com.icure.cardinal.sdk.CardinalSdk
+import com.icure.cardinal.sdk.auth.UsernamePassword
+import com.icure.cardinal.sdk.crypto.CryptoStrategies
+import com.icure.cardinal.sdk.crypto.impl.exportSpkiHex
+import com.icure.cardinal.sdk.model.DataOwnerWithType
+import com.icure.cardinal.sdk.model.extensions.publicKeysSpki
+import com.icure.cardinal.sdk.model.specializations.SpkiHexString
+import com.icure.cardinal.sdk.options.AuthenticationMethod
+import com.icure.cardinal.sdk.options.SdkOptions
+import com.icure.cardinal.sdk.storage.impl.FileStorageFacade
+import com.icure.kryptom.crypto.CryptoService
+import com.icure.kryptom.crypto.RsaAlgorithm
+
+class MyCryptoStrategies : CryptoStrategies {
+	var generatedFirstKey = false
+		private set
+	var newPubKey: SpkiHexString? = null
+		private set
+
+	override suspend fun generateNewKeyForDataOwner(
+		self: DataOwnerWithType,
+		cryptoPrimitives: CryptoService
+	): CryptoStrategies.KeyGenerationRequestResult {
+		generatedFirstKey = self.dataOwner.publicKeysSpki.isEmpty()
+		val newKey = cryptoPrimitives.rsa.generateKeyPair(RsaAlgorithm.RsaEncryptionAlgorithm.OaepWithSha256)
+		newPubKey = cryptoPrimitives.rsa.exportSpkiHex(newKey.public)
+		return CryptoStrategies.KeyGenerationRequestResult.Use(newKey)
+	}
+
+	// Other methods omitted for brevity
+}
+
+suspend fun initializeSdkAndCreateMaintenanceTaskIfNeeded(
+	username: String,
+	password: String
+): CardinalSdk {
+	val cryptoStrategies = MyCryptoStrategies()
+	val sdk = CardinalSdk.initialize(
+		"MyApplication",
+		"https://api.icure.cloud",
+		AuthenticationMethod.UsingCredentials(UsernamePassword(username, password)),
+		FileStorageFacade("/path/to/key/storage"),
+		SdkOptions(cryptoStrategies = cryptoStrategies)
+	)
+	cryptoStrategies.newPubKey?.also {
+		if (!cryptoStrategies.generatedFirstKey) {
+			sdk.cardinalMaintenanceTask.createKeyPairUpdateNotificationsToAllDelegationCounterparts(it)
+		}
+	}
+	return sdk
+}
+```
+
+</TabItem>
+
+</LanguageTabs>
+
+Now the recipient of the give-access-back can respond to it and give back access to the user: this can be done either 
+directly by updating the give-access-back with the new public key of the requester, or indirectly by using the recovery
+data system.
+
+:::info
+
+Both give-access-back solutions don't need to directly update the medical data.
+Even if you have thousands of contacts and patients with different encryption keys shared between the sender and
+recipient of the give-access-back request, there is no need to update them to resolve the request.
+
+The only entities updated by the give-access-back request are the metadata entities used to store the 
+[exchange keys](/explanations/cryptography-details).
+
+:::
+
+### Indirect give-access-back with recovery data
+
+The recovery data mechanism explained earlier for recovery of private keys can also be used with the give-access-back
+mechanism.
+In this case, the recipient of the give-access-back request can create recovery data containing the decrypted
+[exchange keys](/explanations/cryptography-details) between the sender and recipient of the request.
+The recipient can now share the recovery data key with the sender, which the sender can use to access again all exchange
+keys, and in turn all entities, shared between them.
+
+<LanguageTabs>
+
+<TabItem value="kotlin">
+
+```kotlin
+import com.icure.cardinal.sdk.CardinalSdk
+import com.icure.cardinal.sdk.crypto.entities.RecoveryDataKey
+
+// Used by the recipient of the give-access-back request
+suspend fun createRecoveryDataForGiveAccessBackAndPrint(
+	sdk: CardinalSdk,
+	dataOwnerWithLostKeyId: String
+) {
+	val recoveryKey = sdk.recovery.createExchangeDataRecoveryInfo(delegateId = dataOwnerWithLostKeyId)
+	println("Share this recovery key with $dataOwnerWithLostKeyId: ${recoveryKey.asBase32()}")
+}
+
+//Used by the sender of the give-access-back after getting a recovery key
+suspend fun useRecoveryDataFromGiveAccessBack(
+	sdk: CardinalSdk,
+	recoveryKey: String
+) {
+	val recoveryResult = sdk.recovery.recoverExchangeData(RecoveryDataKey.fromBase32(recoveryKey))
+	if (recoveryResult != null) throw IllegalArgumentException(
+		"Failed to use recovery key $recoveryKey for reason: $recoveryResult"
+	)
+}
+```
+
+</TabItem>
+
+</LanguageTabs>
+
+:::info
+
+When using the exchange data recovery key the SDK will automatically update the exchange data between the sender and 
+recipient of the give-access-back request, so that the sender can access it with their new private key.
+
+:::
+
+### Direct give-access-back using new public key
+
+If the give-access-back request includes the public key of the sender, then the recipient can directly update the
+[exchange keys](/explanations/cryptography-details) to allow the sender to access them through their new personal key.
+
+This could be done, for example, if the give-access-back request was done through maintenance tasks:
+
+<LanguageTabs>
+
+<TabItem value="kotlin">
+
+```kotlin
+import com.icure.cardinal.sdk.CardinalSdk
+import com.icure.cardinal.sdk.filters.MaintenanceTaskFilters
+import com.icure.cardinal.sdk.model.MaintenanceTask
+import com.icure.cardinal.sdk.model.sdk.KeyPairUpdateNotification
+import com.icure.cardinal.sdk.utils.pagination.forEach
+
+suspend fun resolveGiveAccessBackRequests(sdk: CardinalSdk) {
+	var maintenanceTasksToDelete = mutableListOf<MaintenanceTask>()
+	try {
+		val selfId = sdk.dataOwner.getCurrentDataOwnerId()
+		val giveAccessBackRequests = sdk.maintenanceTask.filterMaintenanceTasksBy(
+			MaintenanceTaskFilters.byTypeForSelf(KeyPairUpdateNotification.TASK_TYPE)
+		)
+		giveAccessBackRequests.forEach { rawMaintenanceTask ->
+			val parsedRequest = KeyPairUpdateNotification.parseFromMaintenanceTask(rawMaintenanceTask)
+			// The filter could also retrieve maintenance tasks created by the current data owner
+			if (parsedRequest.concernedDataOwnerId != selfId && promptGiveAccessBackConfirmation(parsedRequest)) {
+				sdk.cardinalMaintenanceTask.applyKeyPairUpdate(parsedRequest)
+				maintenanceTasksToDelete.add(rawMaintenanceTask)
+			}
+		}
+	} finally {
+		// Delete the resolved maintenance tasks so we don't check them next time.
+		sdk.maintenanceTask.deleteMaintenanceTasks(maintenanceTasksToDelete)
+	}
+}
+
+suspend fun promptGiveAccessBackConfirmation(request: KeyPairUpdateNotification): Boolean {
+	TODO("Implement this yourself")
+}
+```
+
+</TabItem>
+
+</LanguageTabs>
+
+:::danger
+
+We strongly recommend using this give-access-back solution only if you're using external solutions to verify the
+authenticity of the public keys stored in the Cardinal backend.
+
+For more information, we recommend reading the [end-to-end encryption explanation page](/explanations/end-to-end-encryption) 
+
+:::
+
+## Notary system
+
+:construction: This section is under construction :construction:
+
+The notary system is an alternative to key backups.
+Instead of (or in addition to) a private backup of the key, a user can designate a group of trusted notaries that each 
+will hold a piece of the user's private key.
+If the user loses his key, he can ask the notaries for the piece of key they were holding and reconstruct the full key.
+
+At its base, this system uses [shamir's secret sharing algorithm](https://en.wikipedia.org/wiki/Shamir%27s_secret_sharing).
+This allows also specifying a threshold of pieces needed to reconstruct the keys that is lower than the number of pieces
+created.
+This system is safer than directly sharing a key backup or medical data because even if some notaries (depending on the
+chosen threshold) become untrustworthy, the data remains secure.
+
+The notaries system enables secure data recovery even when the data was never explicitly shared with other users, a 
+critical requirement for some systems. 
+For instance, consider a Cardinal-based EHR application used by a solo GP. 
+The data is end-to-end encrypted, meaning only the GP can read it.
+If the GP were to go missing, patient data would be lost permanently, which would not only be a disservice to most 
+patients but could also delay treatment to patients with life-threatening conditions.
+However, if the GP had designated notaries, the private key can be recovered, allowing access to patient data even in 
+this extreme scenario.
