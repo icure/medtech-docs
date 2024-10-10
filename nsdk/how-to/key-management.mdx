@@ -81,6 +81,30 @@ suspend fun exportKeysToFile(
 
 </TabItem>
 
+<TabItem value="typescript">
+
+On browser you can export the keys as json and let the user download them as a file.
+
+```typescript
+import { CardinalSdk, base64Encode } from "@icure/cardinal-sdk";
+
+async function exportAndDownloadKeysFile(sdk: CardinalSdk) {
+	const keysJson = JSON.stringify(
+		await sdk.crypto.currentDataOwnerKeys(),
+		(key, value) => {
+			if (value instanceof Int8Array) {
+				return base64Encode(value)
+			} else return value
+		}
+	)
+	const blob = new Blob([keysJson], { type: 'application/octet-stream' });
+	const url = window.URL.createObjectURL(blob);
+	window.open(url);
+}
+```
+
+</TabItem>
+
 </LanguageTabs>
 
 ### Restore keys backups
@@ -111,12 +135,8 @@ import com.icure.cardinal.sdk.CardinalSdk
 import com.icure.cardinal.sdk.auth.UsernamePassword
 import com.icure.cardinal.sdk.crypto.CryptoStrategies
 import com.icure.cardinal.sdk.crypto.KeyPairRecoverer
-import com.icure.cardinal.sdk.model.CryptoActorStubWithType
-import com.icure.cardinal.sdk.model.DataOwnerType
-import com.icure.cardinal.sdk.model.DataOwnerWithType
 import com.icure.cardinal.sdk.model.specializations.Base64String
 import com.icure.cardinal.sdk.model.specializations.KeypairFingerprintV1String
-import com.icure.cardinal.sdk.model.specializations.SpkiHexString
 import com.icure.cardinal.sdk.options.AuthenticationMethod
 import com.icure.cardinal.sdk.options.SdkOptions
 import com.icure.cardinal.sdk.storage.impl.FileStorageFacade
@@ -162,24 +182,6 @@ class MyCryptoStrategies : CryptoStrategies {
 	private suspend fun promptUserForBackupFile(): File? {
 		TODO("Implement this yourself")
 	}
-
-	// Same behavior as default crypto strategies for other methods
-
-	override suspend fun generateNewKeyForDataOwner(
-		self: DataOwnerWithType,
-		cryptoPrimitives: CryptoService
-	): CryptoStrategies.KeyGenerationRequestResult =
-		CryptoStrategies.KeyGenerationRequestResult.Allow
-
-	override suspend fun verifyDelegatePublicKeys(
-		delegate: CryptoActorStubWithType,
-		publicKeys: List<SpkiHexString>,
-		cryptoPrimitives: CryptoService
-	): List<SpkiHexString> =
-		publicKeys
-
-	override suspend fun dataOwnerRequiresAnonymousDelegation(dataOwner: CryptoActorStubWithType): Boolean =
-		dataOwner.type != DataOwnerType.Hcp
 }
 
 suspend fun initializeSdk(
@@ -197,6 +199,118 @@ suspend fun initializeSdk(
 
 </TabItem>
 
+<TabItem value="typescript">
+
+On browser you can ask the user to upload the file with the previously exported keys. 
+
+```typescript
+import {
+	CryptoStrategies,
+	KeyPairRecoverer,
+	SpkiHexString,
+	XCryptoService,
+	XRsaKeypair,
+	KeypairFingerprintV1String,
+	spkiHexKeyToFingerprintV1,
+	RecoveryResult,
+	CardinalSdk,
+	AuthenticationMethod,
+	StorageFacade,
+	DataOwnerWithType,
+	base64Decode
+} from "@icure/cardinal-sdk";
+
+class MyCryptoStrategies extends CryptoStrategies {
+	async recoverAndVerifySelfHierarchyKeys(
+		keysData: Array<CryptoStrategies.KeyDataRecoveryRequest>,
+		cryptoPrimitives: XCryptoService,
+		keyPairRecoverer: KeyPairRecoverer
+	): Promise<{[dataOwnerId: string]: CryptoStrategies.RecoveredKeyData}> {
+		let recoveredResult: RecoveryResult<{ [dataOwnerId: string]: { [pub: SpkiHexString]: XRsaKeypair } }>
+		const recoveredFromFile = await this.loadKeysFromFile(await this.askKeyBackupFile())
+		// If any of the unavailable keys are in exported keys file return them
+		const result: { [dataOwnerId: string]: CryptoStrategies.RecoveredKeyData } = {}
+		for (const recoveryRequest of keysData) {
+			const dataOwner = recoveryRequest.dataOwnerDetails.dataOwner
+			const currDataOwnerRecoveredData = recoveredFromFile[dataOwner.id]
+			const currRecoveryResult: { [fp: KeypairFingerprintV1String]: XRsaKeypair } = {}
+			if (currDataOwnerRecoveredData != undefined) {
+				for (const unavailableKeyInfo of recoveryRequest.unavailableKeys) {
+					const fingerprint = spkiHexKeyToFingerprintV1(unavailableKeyInfo.publicKey)
+					const recoveredKey = currDataOwnerRecoveredData[fingerprint]
+					if (recoveredKey != undefined) {
+						currRecoveryResult[fingerprint] = await cryptoPrimitives.rsa.loadKeyPairPkcs8(
+							unavailableKeyInfo.keyAlgorithm,
+							base64Decode(recoveredKey)
+						)
+					}
+				}
+			}
+			result[dataOwner.id] = {
+				recoveredKeys: currRecoveryResult,
+				keyAuthenticity: {}
+			}
+		}
+		// No need to save recovered keys: they will automatically be saved to the storage
+		return result
+	}
+
+	async loadKeysFromFile(
+		file: File
+	): Promise<{ [dataOwnerId: string ]: { [keyFp: KeypairFingerprintV1String]: string }}> {
+		const content = await new Promise<string>((resolve, reject) => {
+			const reader = new FileReader();
+			reader.onload = () => {
+				if (typeof reader.result === 'string') {
+					resolve(reader.result);
+				} else {
+					reject(new Error('Unexpected result type'));
+				}
+			};
+			reader.onerror = () => {
+				reject(new Error('Error reading file'));
+			};
+			reader.readAsText(file);
+		})
+		let contentJson: any
+		try {
+			contentJson = JSON.parse(content)
+		} catch {
+			throw new Error("Invalid key backup file")
+		}
+		if (
+			typeof contentJson !== 'object' ||
+			Object.values(contentJson).some((dataOwnerKeys: any) => {
+				return typeof dataOwnerKeys !== 'object' || Object.values(dataOwnerKeys).some((key) => {
+					return typeof key !== 'string'
+				})
+			})
+		) throw new Error("Invalid key backup file")
+		return contentJson
+	}
+
+	async askKeyBackupFile(): Promise<File> {
+		throw new Error("Implement this yourself")
+	}
+}
+
+async function initializeSdk(
+	username: string,
+	password: string
+) {
+	const sdk = await CardinalSdk.initialize(
+		"MyApplication",
+		"https://api.icure.cloud",
+		new AuthenticationMethod.UsingCredentials.UsernameLongToken(username, password),
+		StorageFacade.usingBrowserLocalStorage(),
+		// Provide the crypto strategies with the recovery method
+		{ cryptoStrategies: new MyCryptoStrategies() }
+	)
+}
+```
+
+</TabItem>
+
 </LanguageTabs>
 
 ### Export newly created key
@@ -205,9 +319,9 @@ During initialization, the SDK ensures that the logged user has at least a key a
 If the user doesn't have a key, or if none of their keys was found in the storage or recovered by the crypto strategies,
 the SDK needs to create a new key.
 
-When this happens, the SDK uses the `generateNewKeyForDataOwner` to confirm to notify your application that a new key
-is necessary and confirm that this is allowed by your application logic.
-You can use this method to prompt the user to export the newly created key.
+If this happened, after the rest of the SDK is successfully initialized, the method `notifyNewKeyCreated` will be called
+with the newly created key.
+You can use this method to prompt the user to export key.
 
 :::note
 
@@ -217,126 +331,74 @@ initialization will fail.
 
 :::
 
-
-#### Example: export after initialization
-
-In this example, we mark in the crypto strategies if a key was generated, then after initialization we check if a new
-key was generated and ask the user if they want to export it.
-
 <LanguageTabs>
 
 <TabItem value="kotlin">
 
 ```kotlin
-import com.icure.cardinal.sdk.CardinalSdk
-import com.icure.cardinal.sdk.auth.UsernamePassword
+import com.icure.cardinal.sdk.CardinalApis
 import com.icure.cardinal.sdk.crypto.CryptoStrategies
-import com.icure.cardinal.sdk.model.DataOwnerWithType
-import com.icure.cardinal.sdk.options.AuthenticationMethod
-import com.icure.cardinal.sdk.options.SdkOptions
-import com.icure.cardinal.sdk.storage.impl.FileStorageFacade
 import com.icure.kryptom.crypto.CryptoService
+import com.icure.kryptom.crypto.RsaAlgorithm
+import com.icure.kryptom.crypto.RsaKeypair
 
 class MyCryptoStrategies : CryptoStrategies {
-	var createdNewKey = false
-		private set
-
-	override suspend fun generateNewKeyForDataOwner(
-		self: DataOwnerWithType,
+	override suspend fun notifyNewKeyCreated(
+		apis: CardinalApis,
+		key: RsaKeypair<RsaAlgorithm.RsaEncryptionAlgorithm.OaepWithSha256>,
 		cryptoPrimitives: CryptoService
-	): CryptoStrategies.KeyGenerationRequestResult {
-		createdNewKey = true
-		return CryptoStrategies.KeyGenerationRequestResult.Allow
-	}
-
-	// Other methods omitted for brevity
-}
-
-suspend fun promptUserForNewExportedKeysFilePath(): String? =
-	TODO("Implement this yourself")
-
-suspend fun initializeSdkAndExportNewKeys(
-	username: String,
-	password: String
-): CardinalSdk {
-	val cryptoStrategies = MyCryptoStrategies()
-	val sdk = CardinalSdk.initialize(
-		"MyApplication",
-		"https://api.icure.cloud",
-		AuthenticationMethod.UsingCredentials(UsernamePassword(username, password)),
-		FileStorageFacade("/path/to/key/storage"),
-		SdkOptions(cryptoStrategies = cryptoStrategies)
-	)
-	if (cryptoStrategies.createdNewKey) {
-		promptUserForNewExportedKeysFilePath()?.also {
-			exportKeysToFile(sdk, it) // From previous example
+	) {
+		promptUserForNewExportedKeysFilePath()?.also { filename ->
+			// Like previous example
+			val encodedKeys = apis.crypto.currentDataOwnerKeys().mapValues { (_, keysByFingerprint) ->
+				keysByFingerprint.mapValues { (_, pkcs8Key) ->
+					pkcs8Key.base64Encode()
+				}
+			}.let { Json.encodeToString(it) }
+			withContext(Dispatchers.IO) {
+				FileWriter(filename).use { fw -> fw.write(encodedKeys) }
+			}
 		}
 	}
-	return sdk
+
+	suspend fun promptUserForNewExportedKeysFilePath(): String? =
+		TODO("Implement this yourself")
 }
 ```
 
 </TabItem>
 
-</LanguageTabs> 
+<TabItem value="typescript">
 
-#### Example: export during initialization
+```typescript
+import {
+	CryptoStrategies,
+	XCryptoService,
+	XRsaKeypair,
+	CardinalApis, base64Encode
+} from "@icure/cardinal-sdk";
 
-In this example, we generate and export the key directly from the crypto strategies
-
-<LanguageTabs>
-
-<TabItem value="kotlin">
-
-```kotlin
-import com.icure.cardinal.sdk.CardinalSdk
-import com.icure.cardinal.sdk.auth.UsernamePassword
-import com.icure.cardinal.sdk.crypto.CryptoStrategies
-import com.icure.cardinal.sdk.crypto.impl.exportSpkiHex
-import com.icure.cardinal.sdk.model.DataOwnerWithType
-import com.icure.cardinal.sdk.model.base.CryptoActor
-import com.icure.cardinal.sdk.model.specializations.KeypairFingerprintV1String
-import com.icure.cardinal.sdk.options.AuthenticationMethod
-import com.icure.cardinal.sdk.options.SdkOptions
-import com.icure.cardinal.sdk.storage.impl.FileStorageFacade
-import com.icure.kryptom.crypto.CryptoService
-import com.icure.kryptom.crypto.RsaAlgorithm
-
-class MyCryptoStrategies : CryptoStrategies {
-	override suspend fun generateNewKeyForDataOwner(
-		self: DataOwnerWithType,
-		cryptoPrimitives: CryptoService
-	): CryptoStrategies.KeyGenerationRequestResult {
-		val newKeypair = cryptoPrimitives.rsa.generateKeyPair(RsaAlgorithm.RsaEncryptionAlgorithm.OaepWithSha256)
-		exportKeyToFile(
-			self.dataOwner,
-			cryptoPrimitives.rsa.exportSpkiHex(newKeypair.public).fingerprintV1(),
-			cryptoPrimitives.rsa.exportPrivateKeyPkcs8(newKeypair.private)
-		)
-		return CryptoStrategies.KeyGenerationRequestResult.Use(newKeypair)
+class MyCryptoStrategies extends CryptoStrategies {
+	async notifyNewKeyCreated(apis: CardinalApis, key: XRsaKeypair, cryptoPrimitives: XCryptoService): Promise<void> {
+		if (await this.askUserToDownloadNewKey()) {
+			// Like previous example
+			const keysJson = JSON.stringify(
+				await apis.crypto.currentDataOwnerKeys(),
+				(key, value) => {
+					if (value instanceof Int8Array) {
+						return base64Encode(value)
+					} else return value
+				}
+			)
+			const blob = new Blob([keysJson], { type: 'application/octet-stream' });
+			const url = window.URL.createObjectURL(blob);
+			window.open(url);
+		}
 	}
 
-	// Other methods omitted for brevity
-}
-
-suspend fun exportKeyToFile(
-	dataOwner: CryptoActor,
-	fingerprint: KeypairFingerprintV1String,
-	pkcs8PrivateKey: ByteArray
-) {
-	TODO("Implement this yourself")
-}
-
-suspend fun initializeSdkAndExportNewKeys(
-	username: String,
-	password: String
-): CardinalSdk = CardinalSdk.initialize(
-		"MyApplication",
-		"https://api.icure.cloud",
-		AuthenticationMethod.UsingCredentials(UsernamePassword(username, password)),
-		FileStorageFacade("/path/to/key/storage"),
-		SdkOptions(cryptoStrategies = MyCryptoStrategies())
-	)
+	askUserToDownloadNewKey(): Promise<boolean> {
+		throw new Error("Implement this yourself")
+	}
 }
 ```
 
@@ -380,6 +442,28 @@ suspend fun createRecoveryDataAndPrintKey(
 		recoveryKeySize = RecoveryKeySize.Bytes32,
 	)
 	println("Your new recovery key is: ${recoveryKey.asBase32().chunked(4).joinToString("-")}")
+	// Your new recovery key is: UALR-WKWD-NWLX-AWOK-KRUQ-G42Q-WUPS-EOHC-TMPP-CXP7-HDDV-XFAE-LWGQ
+}
+```
+
+</TabItem>
+
+<TabItem value="typescript">
+
+```typescript
+import {
+	CardinalSdk,
+	RecoveryKeySize
+} from "@icure/cardinal-sdk";
+
+async function createRecoveryDataAndPrintKey(sdk: CardinalSdk): Promise<void> {
+	const recoveryKey = await sdk.recovery.createRecoveryInfoForAvailableKeyPairs({
+		includeParentsKeys: true,
+		recoveryKeySize: RecoveryKeySize.Bytes32,
+	});
+
+	const formattedKey = recoveryKey.asBase32().match(/.{1,4}/g)?.join('-');
+	console.log(`Your new recovery key is: ${formattedKey}`);
 	// Your new recovery key is: UALR-WKWD-NWLX-AWOK-KRUQ-G42Q-WUPS-EOHC-TMPP-CXP7-HDDV-XFAE-LWGQ
 }
 ```
@@ -434,8 +518,63 @@ class MyCryptoStrategies : CryptoStrategies {
 	private suspend fun promptUserForRecoveryKey(): String {
 		TODO("Implement this yourself")
 	}
+}
+```
 
-	// other methods omitted for brevity
+</TabItem>
+
+<TabItem value="typescript">
+
+```typescript
+import {
+	CryptoStrategies,
+	KeyPairRecoverer,
+	SpkiHexString,
+	RecoveryDataKey,
+	XCryptoService,
+	XRsaKeypair,
+	KeypairFingerprintV1String,
+	spkiHexKeyToFingerprintV1,
+	RecoveryResult
+} from "@icure/cardinal-sdk";
+
+class MyCryptoStrategies extends CryptoStrategies {
+	async recoverAndVerifySelfHierarchyKeys(
+		keysData: Array<CryptoStrategies.KeyDataRecoveryRequest>,
+		cryptoPrimitives: XCryptoService,
+		keyPairRecoverer: KeyPairRecoverer
+	): Promise<{[dataOwnerId: string]: CryptoStrategies.RecoveredKeyData}> {
+		let recovered: RecoveryResult<{ [dataOwnerId: string]: { [pub: SpkiHexString]: XRsaKeypair } }>
+		do {
+			recovered = await keyPairRecoverer.recoverWithRecoveryKey(
+				RecoveryDataKey.fromBase32(await this.promptUserForRecoveryKey()),
+				false
+			)
+		} while (recovered instanceof RecoveryResult.Failure)
+		const result: { [dataOwnerId: string]: CryptoStrategies.RecoveredKeyData } = {}
+		for (const recoveryRequest of keysData) {
+			const dataOwner = recoveryRequest.dataOwnerDetails.dataOwner
+			const currDataOwnerRecoveredData = recovered.data[dataOwner.id]
+			const currRecoveryResult: { [fp: KeypairFingerprintV1String]: XRsaKeypair } = {}
+			if (currDataOwnerRecoveredData != undefined) {
+				for (const unavailableKeyInfo of recoveryRequest.unavailableKeys) {
+					const recoveredKey = currDataOwnerRecoveredData[unavailableKeyInfo.publicKey]
+					if (recoveredKey != undefined) {
+						currRecoveryResult[spkiHexKeyToFingerprintV1(unavailableKeyInfo.publicKey)] = recoveredKey
+					}
+				}
+			}
+			result[dataOwner.id] = {
+				recoveredKeys: currRecoveryResult,
+				keyAuthenticity: {}
+			}
+		}
+		return result
+	}
+
+	private async promptUserForRecoveryKey(): Promise<string> {
+		throw new Error("Implement this yourself")
+	}
 }
 ```
 
@@ -480,6 +619,32 @@ suspend fun createShortRecoveryDataAndPrintKey(
 
 </TabItem>
 
+<TabItem value="typescript">
+
+```typescript
+import {
+	CardinalSdk,
+	RecoveryKeySize
+} from "@icure/cardinal-sdk";
+
+async function createShortRecoveryDataAndPrintKey(sdk: CardinalSdk): Promise<void> {
+	const recoveryKey = await sdk.recovery.createRecoveryInfoForAvailableKeyPairs({
+		includeParentsKeys: true,
+		// We want to use a shorter recovery data key to simplify the transfer
+		recoveryKeySize: RecoveryKeySize.Bytes16,
+		// Since we're creating this recovery data only to transfer keys between devices,
+		// we should give it a limited lifespan
+		lifetimeSeconds: 5 * 60
+	});
+
+	const formattedKey = recoveryKey.asBase32().match(/.{1,4}/g)?.join('-');
+	console.log(`Your temporary recovery key is: ${formattedKey}`);
+	// Your temporary recovery key is: NQ2I-HTJ7-Y3CK-GUIH-EMKK-M7CY-HA
+}
+```
+
+</TabItem>
+
 </LanguageTabs>
 
 
@@ -500,55 +665,58 @@ maintenance tasks.
 
 ```kotlin
 import com.icure.cardinal.sdk.CardinalSdk
-import com.icure.cardinal.sdk.auth.UsernamePassword
 import com.icure.cardinal.sdk.crypto.CryptoStrategies
 import com.icure.cardinal.sdk.crypto.impl.exportSpkiHex
-import com.icure.cardinal.sdk.model.DataOwnerWithType
 import com.icure.cardinal.sdk.model.extensions.publicKeysSpki
-import com.icure.cardinal.sdk.model.specializations.SpkiHexString
-import com.icure.cardinal.sdk.options.AuthenticationMethod
-import com.icure.cardinal.sdk.options.SdkOptions
-import com.icure.cardinal.sdk.storage.impl.FileStorageFacade
 import com.icure.kryptom.crypto.CryptoService
 import com.icure.kryptom.crypto.RsaAlgorithm
+import com.icure.kryptom.crypto.RsaKeypair
 
 class MyCryptoStrategies : CryptoStrategies {
-	var generatedFirstKey = false
-		private set
-	var newPubKey: SpkiHexString? = null
-		private set
-
-	override suspend fun generateNewKeyForDataOwner(
-		self: DataOwnerWithType,
+	override suspend fun notifyNewKeyCreated(
+		sdk: CardinalSdk,
+		key: RsaKeypair<RsaAlgorithm.RsaEncryptionAlgorithm.OaepWithSha256>,
 		cryptoPrimitives: CryptoService
-	): CryptoStrategies.KeyGenerationRequestResult {
-		generatedFirstKey = self.dataOwner.publicKeysSpki.isEmpty()
-		val newKey = cryptoPrimitives.rsa.generateKeyPair(RsaAlgorithm.RsaEncryptionAlgorithm.OaepWithSha256)
-		newPubKey = cryptoPrimitives.rsa.exportSpkiHex(newKey.public)
-		return CryptoStrategies.KeyGenerationRequestResult.Use(newKey)
-	}
-
-	// Other methods omitted for brevity
-}
-
-suspend fun initializeSdkAndCreateMaintenanceTaskIfNeeded(
-	username: String,
-	password: String
-): CardinalSdk {
-	val cryptoStrategies = MyCryptoStrategies()
-	val sdk = CardinalSdk.initialize(
-		"MyApplication",
-		"https://api.icure.cloud",
-		AuthenticationMethod.UsingCredentials(UsernamePassword(username, password)),
-		FileStorageFacade("/path/to/key/storage"),
-		SdkOptions(cryptoStrategies = cryptoStrategies)
-	)
-	cryptoStrategies.newPubKey?.also {
-		if (!cryptoStrategies.generatedFirstKey) {
-			sdk.cardinalMaintenanceTask.createKeyPairUpdateNotificationsToAllDelegationCounterparts(it)
+	) {
+		val pubKeyHex = cryptoPrimitives.rsa.exportSpkiHex(key.public)
+		val self = sdk.dataOwner.getCurrentDataOwnerStub().stub
+		if (self.publicKeysSpki.size > 1) {
+			// This is not the first key created for the user
+			// We may have some data shared with other users using a previous key
+			sdk.cardinalMaintenanceTask.createKeyPairUpdateNotificationsToAllDelegationCounterparts(pubKeyHex)
 		}
 	}
-	return sdk
+}
+```
+
+</TabItem>
+
+<TabItem value="typescript">
+
+```typescript
+import {
+	CardinalSdk,
+	CryptoStrategies,
+	XRsaKeypair,
+	XCryptoService,
+	hexEncode,
+	allPublicKeysOf
+} from "@icure/cardinal-sdk";
+
+class MyCryptoStrategies extends CryptoStrategies {
+	override async notifyNewKeyCreated(
+		sdk: CardinalSdk,
+		key: XRsaKeypair,
+		cryptoPrimitives: XCryptoService
+	) {
+		const pubKeyHex = hexEncode(await cryptoPrimitives.rsa.exportPublicKeySpki(key.public))
+		const self = (await sdk.dataOwner.getCurrentDataOwnerStub()).stub
+		if (allPublicKeysOf(self).length > 1) {
+			// This is not the first key created for the user
+			// We may have some data shared with other users using a previous key
+			await sdk.cardinalMaintenanceTask.createKeyPairUpdateNotificationsToAllDelegationCounterparts(pubKeyHex)
+		}
+	}
 }
 ```
 
@@ -611,6 +779,34 @@ suspend fun useRecoveryDataFromGiveAccessBack(
 
 </TabItem>
 
+<TabItem value="typescript">
+
+```typescript
+import { CardinalSdk, RecoveryDataKey } from "@icure/cardinal-sdk";
+
+// Used by the recipient of the give-access-back request
+async function createRecoveryDataForGiveAccessBackAndPrint(
+	sdk: CardinalSdk,
+	dataOwnerWithLostKeyId: string
+): Promise<void> {
+	const recoveryKey = await sdk.recovery.createExchangeDataRecoveryInfo(dataOwnerWithLostKeyId)
+	console.log(`Share this recovery key with ${dataOwnerWithLostKeyId}: ${recoveryKey.asBase32()}`)
+}
+
+//Used by the sender of the give-access-back after getting a recovery key
+async function useRecoveryDataFromGiveAccessBack(
+	sdk: CardinalSdk,
+	recoveryKey: string
+): Promise<void> {
+	const recoveryResult = await sdk.recovery.recoverExchangeData(RecoveryDataKey.fromBase32(recoveryKey))
+	if (recoveryResult != undefined) {
+		throw new Error(`Failed to use recovery key ${recoveryKey} for reason: ${recoveryResult}`)
+	}
+}
+```
+
+</TabItem>
+
 </LanguageTabs>
 
 :::info
@@ -661,6 +857,49 @@ suspend fun resolveGiveAccessBackRequests(sdk: CardinalSdk) {
 
 suspend fun promptGiveAccessBackConfirmation(request: KeyPairUpdateNotification): Boolean {
 	TODO("Implement this yourself")
+}
+```
+
+</TabItem>
+
+<TabItem value="typescript">
+
+```typescript
+import {
+	CardinalSdk,
+	KeyPairUpdateNotification,
+	MaintenanceTask,
+	MaintenanceTaskFilters,
+} from "@icure/cardinal-sdk";
+
+async function resolveGiveAccessBackRequests(sdk: CardinalSdk): Promise<void> {
+	const maintenanceTasksToDelete: MaintenanceTask[] = [];
+
+	try {
+		const selfId = await sdk.dataOwner.getCurrentDataOwnerId();
+		const giveAccessBackRequests = await sdk.maintenanceTask.filterMaintenanceTasksBy(
+			MaintenanceTaskFilters.byTypeForSelf(KeyPairUpdateNotification.TASK_TYPE)
+		);
+		while (await giveAccessBackRequests.hasNext()) {
+			const rawMaintenanceTaskBatch = await giveAccessBackRequests.next(100)
+			for (const rawMaintenanceTask of rawMaintenanceTaskBatch) {
+				const parsedRequest = KeyPairUpdateNotification.parseFromMaintenanceTask(rawMaintenanceTask);
+
+				// The filter could also retrieve maintenance tasks created by the current data owner
+				if (parsedRequest.concernedDataOwnerId !== selfId && await promptGiveAccessBackConfirmation(parsedRequest)) {
+					await sdk.cardinalMaintenanceTask.applyKeyPairUpdate(parsedRequest);
+					maintenanceTasksToDelete.push(rawMaintenanceTask);
+				}
+			}
+		}
+	} finally {
+		// Delete the resolved maintenance tasks so we don't check them next time.
+		await sdk.maintenanceTask.deleteMaintenanceTasks(maintenanceTasksToDelete);
+	}
+}
+
+async function promptGiveAccessBackConfirmation(request: KeyPairUpdateNotification): Promise<boolean> {
+	throw new Error("Implement this yourself");
 }
 ```
 
