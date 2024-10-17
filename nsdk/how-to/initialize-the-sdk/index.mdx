@@ -257,6 +257,106 @@ authentication and initialize the SDK.
 
 To initialize the SDK with an authentication process you need to provide some additional parameters.
 
+
+ <LanguageTabs>
+
+ <TabItem value="kotlin">
+
+ ```kotlin
+ import com.icure.cardinal.sdk.CardinalSdk
+ import com.icure.cardinal.sdk.auth.AuthenticationProcessCaptchaType
+ import com.icure.cardinal.sdk.auth.AuthenticationProcessTelecomType
+ import com.icure.cardinal.sdk.auth.AuthenticationProcessTemplateParameters
+ import com.icure.cardinal.sdk.options.EncryptedFieldsConfiguration
+ import com.icure.cardinal.sdk.options.SdkOptions
+ import com.icure.cardinal.sdk.storage.impl.FileStorageFacade
+
+ suspend fun initializeMySdk(
+ 	userEmail: String,
+ 	captchaToken: String
+ ): CardinalSdk {
+ 	// The authentication with a process uses a different method, with additional parameters.
+ 	val authenticationStep = CardinalSdk.initializeWithProcess(
+ 		"MyCardinalApp",
+ 		"https://api.icure.cloud",
+ 		"https://msg-gw.icure.cloud/",
+ 		// Retrieve this from the cockpit, constant for your application.
+ 		specId,
+ 		// Retrieve this from the cockpit, constant for your application.
+ 		processId,
+ 		AuthenticationProcessTelecomType.Email,
+ 		userEmail,
+ 		AuthenticationProcessCaptchaType.FriendlyCaptcha,
+ 		CaptchaOptions.Kerberus.Delegated { progress -> println("Progress: ${progress * 100}%") },
+ 		FileStorageFacade("/path/to/storage/directory"),
+ 		// Process template parameters are additional parameters which
+ 		// may be used by the SMS/email template to the user.
+ 		// If you are not using them in your template you can omit them.
+ 		AuthenticationProcessTemplateParameters(),
+ 		SdkOptions(
+ 			encryptedFields = EncryptedFieldsConfiguration(
+ 				patient = setOf("notes", "addresses")
+ 			)
+ 		)
+ 	)
+ 	// The authentication is not yet complete.
+ 	// The user will receive a mail with the validation code required to proceed.
+ 	val validationCode = askValidationCode()
+ 	return authenticationStep.completeAuthentication(validationCode)
+ }
+ ```
+
+ </TabItem>
+
+ <TabItem value="typescript">
+
+ ```typescript
+ import {
+ 	AuthenticationProcessCaptchaType,
+ 	AuthenticationProcessTelecomType,
+ 	CardinalSdk,
+ 	StorageFacade
+ } from "@icure/cardinal-sdk";
+
+ async function initializeMySdk(
+ 	userEmail: string,
+ 	captchaToken: string
+ ): Promise<CardinalSdk> {
+ 	// The authentication with a process uses a different method, with additional parameters.
+ 	const authenticationStep = await CardinalSdk.initializeWithProcess(
+ 		"MyCardinalApp",
+ 		"https://api.icure.cloud",
+ 		"https://msg-gw.icure.cloud/",
+ 		// Retrieve this from the cockpit, constant for your application.
+ 		specId,
+ 		// Retrieve this from the cockpit, constant for your application.
+ 		processId,
+ 		AuthenticationProcessTelecomType.Email,
+ 		userEmail,
+ 		AuthenticationProcessCaptchaType.FriendlyCaptcha,
+		new CaptchaOptions.Kerberus.Delegated({onProgress: (x) => console.log('Progress', x)}),
+ 		StorageFacade.usingFileSystem("/path/to/storage/directory"),
+ 		// Process template parameters are additional parameters which
+ 		// may be used by the SMS/email template to the user.
+ 		// If you are not using them in your template you can omit them.
+ 		{},
+ 		{
+ 			encryptedFields: {
+ 				patient: ["notes", "addresses"]
+ 			}
+ 		}
+ 	)
+ 	// The authentication is not yet complete.
+ 	// The user will receive a mail with the validation code required to proceed.
+ 	const validationCode = await askValidationCode()
+ 	return authenticationStep.completeAuthentication(validationCode)
+ }
+ ```
+
+ </TabItem>
+
+ </LanguageTabs>
+
 #### Message gateway URL
 
 The message gateway is the component of Cardinal backend that generates one-time tokens and sends them to the users.
