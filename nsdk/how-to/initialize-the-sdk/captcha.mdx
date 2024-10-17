@@ -124,20 +124,13 @@ const authenticationStep = await CardinalSdk.initializeWithProcess(
 
 ### Kerberus
 
-Kerberus is an open-source Kotlin Multiplatform proof of work captcha library. It is designed around this paper
-[mCaptcha: Replacing Captchas with Rate limiters to Improve Security and Accessibility](https://dl.acm.org/doi/full/10.1145/3660628)
+Kerberus is an open-source Kotlin Multiplatform proof of work captcha library. You can use it without any UI elements.
+You can check it out [here](https://github.com/icure/kerberus)
 
-Kerberus is designed on top of Kryptom, a Kotlin Multiplatform cryptography library. Check it out [here](https://github.com/icure/kryptom)
+## How to use Kerberus with the Cardinal SDK?
 
-Part of the implementation is based on the [mCaptcha implementation](https://github.com/mCaptcha/pow_wasm/blob/cb6bbd0e05078e1dadf546de5848d30f5d11a00c/src/lib.rs)
-
-## How to use Kerberus ?
-
-In this section, we will see how to use Kerberus with the Cardinal SDK.
-
-### How to use Kerberus with the Cardinal SDK?
-
-By default, you can use Kerberus directly by initializing the Cardinal SDK.
+The easiet way to use Kerberus is by using the `Delegated` option in the Cardinal SDK. This option will automatically
+handle the challenge and resolution of the Kerberus captcha.
 
 <LanguageTabs>
 
@@ -191,27 +184,36 @@ const authenticationStep = await CardinalSdk.initializeWithProcess(
 
 </LanguageTabs>
 
-And there you go! During the initialization of the Cardinal SDK, Kerberus will be used for authentication processes.
+:::tip
 
-:::note
-
-In this case, the challenge and resolution will be automatically handled by the Cardinal SDK. The resolution time will
-depend on the complexity of the challenge. If you wish to manually manage the challenge and resolution, please refer to
-the section [How to use a pre-computed Kerberus Solution in Cardinal SDK?](#how-to-use-a-pre-computed-kerberus-solution-in-cardinal-sdk)
+`onProgress` callback is optional.
 
 :::
 
-### How to use a pre-computed Kerberus Solution in Cardinal SDK?
+### Smoothening the user experience
 
-To speed up the authentication process for your users, you can pre-compute the Kerberus challenge solution before
-initializing the Cardinal SDK.
+If you use the `Kerberus.Delegated` captcha options, the SDK automatically handles the challenge request and resolution,
+but this means that after the user provides their information for login or registration, there will be an additional
+delay before authentication continues.
+
+As an alternative, you can request and begin solving the challenge while the user is still filling in their information,
+which will smoothen the user experience. You can provide the pre-computed solution using the `Kerberus.Computed` captcha
+options.
 
 To do so, you need to:
 
-1. Retrieve the Kerberus challenge by making a `GET` request to the URL `https://msg-gw.icure.cloud/{SPECID}/challenge`.
-2. Calculate the challenge solution using the method `resolveChallenge`.
+1. Request a new Kerberus challenge by making a `GET` request to the URL `https://msg-gw.icure.cloud/{SPECID}/challenge`.
+2. Compute the challenge solution using the method `resolveChallenge`.
 3. Initialize the Cardinal SDK with the pre-computed solution.
 
+:::warning
+
+In Expo, you must pass the `CryptoService` to the `resolveChallenge` method.
+
+You can refer to the [dedicated documentation page](./expo) to learn how to get the
+`CryptoService` and why it is required.
+
+:::
 <LanguageTabs>
 
 <TabItem value = "kotlin">
@@ -274,12 +276,4 @@ const authenticationStep = await CardinalSdk.initializeWithProcess(
 
 </LanguageTabs>
 
-### How to use Kerberus as a standalone library in Expo?
-
-
-:::note
-
-:construction: Work in progress :construction:
-
-:::
 
