@@ -206,15 +206,15 @@ the section [How to use a pre-computed Kerberus Solution in Cardinal SDK?](#how-
 To speed up the authentication process for your users, you can pre-compute the Kerberus challenge solution before
 initializing the Cardinal SDK.
 
-<LanguageTabs>
-
-<TabItem value = "kotlin">
-
 To do so, you need to:
 
 1. Retrieve the Kerberus challenge by making a `GET` request to the URL `https://msg-gw.icure.cloud/{SPECID}/challenge`.
-2. Calculate the challenge solution using the method `resolveChallenge(config: Challenge, serializedInput: String, cryptoService: CryptoService?, onProgress: (Double) => Unit): Solution`.
+2. Calculate the challenge solution using the method `resolveChallenge`.
 3. Initialize the Cardinal SDK with the pre-computed solution.
+
+<LanguageTabs>
+
+<TabItem value = "kotlin">
 
 ```kotlin
 import com.icure.cardinal.sdk.CardinalSdk
@@ -245,12 +245,6 @@ val process = CardinalSdk.initializeWithProcess(
 
 <TabItem value = "typescript">
 
-To do so, you need to:
-
-1.	Retrieve the Kerberus challenge by making a `GET` request to the URL `https://msg-gw.icure.cloud/{SPECID}/challenge`.
-2.	Calculate the challenge solution using the method `resolveChallenge(config: Challenge, serializedInput: string, cryptoService?: XCryptoService, onProgress: (progress: number) => void): Solution`.
-3.	Initialize the Cardinal SDK with the pre-computed solution.
-
 ```typescript
 import {
   AuthenticationProcessTelecomType,
@@ -261,7 +255,7 @@ import {
 
 const challenge: Challenge = undefined as any // This is a placeholder for the challenge that you will fetch
 
-const solution = await resolveChallenge(challenge, "SPEC_ID")
+const solution = await resolveChallenge(challenge, "SPEC_ID", undefined, (progress) => console.log(`Progress: ${progress * 100}%`))
 
 const authenticationStep = await CardinalSdk.initializeWithProcess(
 	"APP_ID",
