@@ -28,7 +28,7 @@ import com.icure.cardinal.sdk.storage.impl.FileStorageFacade
 
 suspend fun initializeMySdk(username: String, password: String) =
 	CardinalSdk.initialize(
-		"MyCardinalApp",
+		"com.mycompany.mycardinalapp",
 		"https://api.icure.cloud",
 		AuthenticationMethod.UsingCredentials(UsernamePassword(username, password)),
 		FileStorageFacade("/path/to/storage/directory"),
@@ -49,7 +49,7 @@ import {AuthenticationMethod, CardinalSdk, StorageFacade} from "@icure/cardinal-
 
 function initializeMySdk(username: string, password: string): Promise<CardinalSdk> {
 	return CardinalSdk.initialize(
-		"MyCardinalApp",
+		"com.mycompany.mycardinalapp",
 		"https://api.icure.cloud",
 		new AuthenticationMethod.UsingCredentials.UsernamePassword(username, password),
 		StorageFacade.usingFileSystem("/path/to/storage/directory"),
@@ -73,7 +73,7 @@ from cardinal_sdk.storage import FileSystemStorage
 from cardinal_sdk.options import SdkOptions, EncryptedFieldsConfiguration
 
 sdk = CardinalSdk(
-	"MyCardinalApp",
+	"com.mycompany.mycardinalapp",
 	"https://api.icure.cloud",
 	UsernamePassword("username", "password"),
 	FileSystemStorage("/path/to/storage/directory"),
@@ -277,7 +277,7 @@ To initialize the SDK with an authentication process you need to provide some ad
  ): CardinalSdk {
  	// The authentication with a process uses a different method, with additional parameters.
  	val authenticationStep = CardinalSdk.initializeWithProcess(
- 		"MyCardinalApp",
+ 		"com.mycompany.mycardinalapp",
  		"https://api.icure.cloud",
  		"https://msg-gw.icure.cloud/",
  		// Retrieve this from the cockpit, constant for your application.
@@ -324,7 +324,7 @@ To initialize the SDK with an authentication process you need to provide some ad
  ): Promise<CardinalSdk> {
  	// The authentication with a process uses a different method, with additional parameters.
  	const authenticationStep = await CardinalSdk.initializeWithProcess(
- 		"MyCardinalApp",
+ 		"com.mycompany.mycardinalapp",
  		"https://api.icure.cloud",
  		"https://msg-gw.icure.cloud/",
  		// Retrieve this from the cockpit, constant for your application.

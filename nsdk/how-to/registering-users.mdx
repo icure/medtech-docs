@@ -62,7 +62,7 @@ suspend fun registerAndLogin(
 	captcha: String
 ): CardinalSdk {
 	val authStep = CardinalSdk.initializeWithProcess(
-		"MyCardinalApp",
+		"com.mycompany.mycardinalapp",
 		"https://api.icure.cloud",
 		"https://msg-gw.icure.cloud/",
 		SPEC_ID,
@@ -105,7 +105,7 @@ async function registerAndLogin(
 	captcha: string
 ): Promise<CardinalSdk> {
 	const authStep = await CardinalSdk.initializeWithProcess(
-		"MyCardinalApp",
+		"com.mycompany.mycardinalapp",
 		"https://api.icure.cloud",
 		"https://msg-gw.icure.cloud/",
 		SPEC_ID,
@@ -258,7 +258,7 @@ suspend fun login(
 	captcha: String
 ): CardinalSdk {
 	val authStep = CardinalSdk.initializeWithProcess(
-		"MyCardinalApp",
+		"com.mycompany.mycardinalapp",
 		"https://api.icure.cloud",
 		"https://msg-gw.icure.cloud/",
 		SPEC_ID,
@@ -296,7 +296,7 @@ async function login(
 	captcha: string
 ): Promise<CardinalSdk> {
 	const authStep = await CardinalSdk.initializeWithProcess(
-		"MyCardinalApp",
+		"com.mycompany.mycardinalapp",
 		"https://api.icure.cloud",
 		"https://msg-gw.icure.cloud/",
 		SPEC_ID,
@@ -352,7 +352,7 @@ import com.icure.cardinal.sdk.storage.impl.FileStorageFacade
 
 suspend fun initializePatientSdk(username: String, password: String): CardinalSdk {
 	val sdk = CardinalSdk.initialize(
-		"MyCardinalApp",
+		"com.mycompany.mycardinalapp",
 		"https://api.icure.cloud",
 		AuthenticationMethod.UsingCredentials(UsernamePassword(username, password)),
 		FileStorageFacade("/path/to/storage/directory")
@@ -375,7 +375,7 @@ import {
 
 async function initializePatientSdk(username: string, password: string): Promise<CardinalSdk> {
 	const sdk = await CardinalSdk.initialize(
-		"MyCardinalApp",
+		"com.mycompany.mycardinalapp",
 		"https://api.icure.cloud",
 		new AuthenticationMethod.UsingCredentials.UsernamePassword(username, password),
 		StorageFacade.usingFileSystem("/Users/trema/pthonto/storage")
@@ -396,7 +396,7 @@ from cardinal_sdk.storage import FileSystemStorage
 
 def initialize_patient_sdk(username: str, password: str) -> CardinalSdk:
 	sdk = CardinalSdk(
-		"MyCardinalApp",
+		"com.mycompany.mycardinalapp",
 		"https://api.icure.cloud",
 		UsernamePassword(username, password),
 		FileSystemStorage("/path/to/storage/directory")
@@ -576,7 +576,7 @@ suspend fun initializePatientSdkAfterInvite(
 	captcha: String,
 ): CardinalSdk {
 	val sdkInitializationStep = CardinalSdk.initializeWithProcess(
-		"MyCardinalApp",
+		"com.mycompany.mycardinalapp",
 		"https://api.icure.cloud",
 		"https://msg-gw.icure.cloud",
 		SPEC_ID,
@@ -621,7 +621,7 @@ async function initializePatientSdkAfterInvite(
 	captcha: string,
 ): Promise<CardinalSdk> {
 	const sdkInitializationStep = await CardinalSdk.initializeWithProcess(
-		"MyCardinalApp",
+		"com.mycompany.mycardinalapp",
 		"https://api.icure.cloud",
 		"https://msg-gw.icure.cloud",
 		SPEC_ID,
