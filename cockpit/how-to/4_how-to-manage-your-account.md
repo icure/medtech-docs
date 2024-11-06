@@ -78,7 +78,7 @@ To delete your account, click on the **Delete** button. You will afterwards see 
 
 To confirm the deletion of your account, copy the name showed in the modal in the dedicated input and click on the **Delete** button.
 
-:::warning
+:::danger
 
 Once you delete your account, there is no going back. Be sure it is what you want before deleting it.
 

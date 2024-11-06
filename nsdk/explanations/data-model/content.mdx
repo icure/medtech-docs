@@ -1,6 +1,6 @@
 # Content
 
-A Content is an encryptable nested entity that contains the value of the medical data to store in the cloud. It is nested 
+A Content is an encryptable nested entity that contains the value of the medical data to store in the cloud. It is nested
 inside [Service](/explanations/data-model/service), and it will always be encrypted before being saved in the cloud.
 
 ## Properties
@@ -14,9 +14,9 @@ Raw bytes to store in the Content.
 - In Python, it is a `bytearray`.
 - In Typescript, it is a `Int8Array`.
 
-:::warning
+:::caution
 This field is meant to contain only a short byte content (up to few kilobytes). Storing large amount of data in this field
-can affect the performance of retrieving your data. 
+can affect the performance of retrieving your data.
 
 Also, it is not possible to store any entity with a total size > 16Mb.
 
@@ -30,8 +30,8 @@ More information about how to store large files are available in [this how to](/
 A boolean value to store in the Content.
 
 ### compoundValue
-This field is used to store any complex structure that does not fit in any other field as a collection of nested 
-[Service](/explanations/data-model/service)s. 
+This field is used to store any complex structure that does not fit in any other field as a collection of nested
+[Service](/explanations/data-model/service)s.
 
 ### documentId
 The id of a [Document](/explanations/data-model/document) entity. This can be used to store large files as medical
@@ -47,14 +47,14 @@ A timestamp to store in the Content.
  - In Typescript, it is the timestamp as `number`.
 
 ### measureValue
-The result of a measurement to store in the Content. Differently from `numberValue`, that only stores the value, in 
+The result of a measurement to store in the Content. Differently from `numberValue`, that only stores the value, in
 this field is also possible to store additional information about the measure, like the unit and the reference range.
 
 ### medicationValue
 The details of a prescribed or suggested medication to store in the Content.
 
 ### numberValue
-A raw numeric value to store in the Content. 
+A raw numeric value to store in the Content.
  - In Kotlin, it is a `Double`.
  - In Python, it is a `float`.
  - In Typescript, it is a `number`.
@@ -65,4 +65,3 @@ Textual value to store in the Content.
 ### timeSeries
 A Content can store also time series / signal-like data, like the result of an [electrocardiography](https://en.wikipedia.org/wiki/Electrocardiography).
 This field can store any 1-dimensional and 2-dimensional signals, along with aggregated measures.
-

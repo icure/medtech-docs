@@ -42,7 +42,7 @@ HCPs (Healthcare Professionals or Organizations) can be managed within any datab
 
   ![Delete user](./img/hcp-interactions/delete-option.jpg)
 
-:::warning
+:::danger
 Deletion is permanent and cannot be undone.
 :::
 
@@ -105,7 +105,7 @@ The HCP ID or Organization ID corresponds to the **PARENT_ORGANISATION_ID** used
 :::info
 **Generate Keys Only for Direct Use:** Please generate keys only for the HCP you will use directly. Doctors and other HCPs should create their own keys when they start using your application.
 :::
-:::warning
+:::danger
 **Private Key Security:** You will not be able to see the private key again, as we do not store it on our servers. If you lose your private key, you will lose access to your data.
 :::
 

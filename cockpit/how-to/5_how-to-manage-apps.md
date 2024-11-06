@@ -90,7 +90,7 @@ A modal appear.
 
 To definitely delete the solution, write back its name into the dedicated input and click on **Delete** button.
 
-:::warning
+:::danger
 
 Once you delete a solution, there is no going back: You won't be able to access the data contained in all databases of this solution anymore.
 Be aware that all children databases of this solution will also be affected by this operation. 
