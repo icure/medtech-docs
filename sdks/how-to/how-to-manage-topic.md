@@ -156,7 +156,7 @@ To remove `Observations` from a `Topic`, you must use the `removeObservations` f
 </details>
 
 
-:::warning
+:::caution
 
 The `Observations` are not deleted from the platform. They are simply unlinked from the `Topic`. However, the sharing of access to the `Observations` is not removed.
 
@@ -197,7 +197,7 @@ To remove `Conditions` from a `Topic`, you must use the `removeConditions` funct
 <summary>topicWithRemovedConditions</summary>
 </details>
 
-:::warning
+:::caution
 
 The `Conditions` are not deleted from the platform. They are simply unlinked from the `Topic`. However, the sharing of access to the `Conditions` is not removed.
 

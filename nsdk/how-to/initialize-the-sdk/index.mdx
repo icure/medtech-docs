@@ -651,7 +651,7 @@ When initializing the SDK you can provide some optional configurations through t
 
 Not all optional configuration parameters are available on all platforms.
 
-:::warning
+:::caution
 
 The parameters marked as occasionally required in the following sections are actually required if certain conditions
 are met, and the SDK initialization will fail if they aren't provided.
@@ -824,7 +824,7 @@ that the users are sharing data with who they intend.
 
 These topics are a bit advanced, but we recommend that you read about them after you've familiarized with the cardinal SDK.
 The parameters that allow you to configure the cryptographic operations of the Cardinal SDK are:
-- `cryptoStrategies`: allows you to provide custom key generation, recovery and verification solutions (:construction:). 
+- `cryptoStrategies`: allows you to provide custom key generation, recovery and verification solutions (:construction:).
 - `createTransferKeys`: allows you to disable the automatic creation of information that allows to recover newly created
 keys using previously existing lost but verified keys of the user (:construction:).
 - `useHierarchicalDataOwners`: enables the hierarchical data owners key management when set to true.
