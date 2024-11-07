@@ -81,7 +81,7 @@ import com.icure.cardinal.sdk.storage.impl.FileStorageFacade
 
 suspend fun initializeMySdk(username: String, password: String) =
 	CardinalSdk.initialize(
-		"MyCardinalApp",
+		"com.mycompany.mycardinalapp",
 		"https://api.icure.cloud",
 		AuthenticationMethod.UsingCredentials(UsernamePassword(username, password)),
 		FileStorageFacade("/path/to/storage/directory"),
@@ -103,7 +103,7 @@ import {AuthenticationMethod, CardinalSdk, StorageFacade} from "@icure/cardinal-
 
 function initializeMySdk(username: string, password: string): Promise<CardinalSdk> {
 	return CardinalSdk.initialize(
-		"MyCardinalApp",
+		"com.mycompany.mycardinalapp",
 		"https://api.icure.cloud",
 		new AuthenticationMethod.UsingCredentials.UsernamePassword(username, password),
 		StorageFacade.usingFileSystem("/path/to/storage/directory"),
@@ -128,7 +128,7 @@ from cardinal_sdk.storage import FileSystemStorage
 from cardinal_sdk.options import SdkOptions, EncryptedFieldsConfiguration
 
 sdk = CardinalSdk(
-	"MyCardinalApp",
+	"com.mycompany.mycardinalapp",
 	"https://api.icure.cloud",
 	UsernamePassword("username", "password"),
 	FileSystemStorage("/path/to/storage/directory"),
@@ -139,6 +139,33 @@ sdk = CardinalSdk(
 		)
 	)
 )
+```
+
+</TabItem>
+
+<TabItem value="dart">
+
+```python
+import 'package:cardinal_sdk/auth/authentication_method.dart';
+import 'package:cardinal_sdk/auth/credentials.dart';
+import 'package:cardinal_sdk/cardinal_sdk.dart';
+import 'package:cardinal_sdk/options/sdk_options.dart';
+import 'package:cardinal_sdk/options/storage_options.dart';
+
+Future<CardinalSdk> initializeMySdk(String username, String password) {
+	return CardinalSdk.initialize(
+		"com.mycompany.mycardinalapp",
+		"https://api.icure.cloud",
+		AuthenticationMethod.UsingCredentials(Credentials.UsernamePassword(username, password)),
+		StorageOptions.PlatformDefault,
+		options: SdkOptions(
+			encryptedFields: EncryptedFieldsConfiguration(
+				patient: {"notes", "addresses"},
+				document: {"name"}
+			)
+		)
+	);
+}
 ```
 
 </TabItem>
@@ -178,10 +205,10 @@ The grammar for each encrypted field entry is the following:
 
 ```
 fieldName :=
-  regex([a-zA-Z_][a-zA-Z0-9_]+)
+	regex([a-zA-Z_][a-zA-Z0-9_]+)
 encryptedField :=
-  fieldName
-  | fieldName + ("." | ".*." | "[].") + encryptedField
+	fieldName
+	| fieldName + ("." | ".*." | "[].") + encryptedField
 ```
 
 This grammar allows you to specify the fields to encrypt for the object and recursively for nested objects.
@@ -199,7 +226,7 @@ This grammar allows you to specify the fields to encrypt for the object and recu
 
 :::danger
 
-You can't encrypt the security and encrypted links metadata added automatically by the SDK.
+You can't encrypt the security and encrypted links metadata added automatically by the SDK.	
 
 :::
 
@@ -209,24 +236,24 @@ Consider the following object
 
 ```json
 {
-  a: { x: 0, y: 1 },
-  b: "hello",
-  c: [ { public: "a", secret: "b" }, { public: "c", secret: "d" } ],
-  d: "ok",
-  e: {
-    info: "something",
-    private: "secret",
-    dataMap: {
-      "en": {
-        a: 1,
-        b: 2
-      },
-      "fr": {
-        a: 3,
-        b: 4
-      }
-    }
-  }
+	a: { x: 0, y: 1 },
+	b: "hello",
+	c: [ { public: "a", secret: "b" }, { public: "c", secret: "d" } ],
+	d: "ok",
+	e: {
+		info: "something",
+		private: "secret",
+		dataMap: {
+			"en": {
+				a: 1,
+				b: 2
+			},
+			"fr": {
+				a: 3,
+				b: 4
+			}
+		}
+	}
 }
 ```
 
@@ -234,31 +261,31 @@ and encryption keys
 
 ```json
 [
-  "a",
-  "c[].secret",
-  "d",
-  "e.private",
-  "e.datamap.*.a"
+	"a",
+	"c[].secret",
+	"d",
+	"e.private",
+	"e.datamap.*.a"
 ]
 ```
 
 The encrypted entity json will have the following form:
 ```json
 {
-  b: "hello",
-  c: [
-    { public: "a", encryptedSelf: "encrypted+encoded({ secret: \"b\" })" },
-    { public: "c", encryptedSelf: "encrypted+encoded({ secret: \"d\" })" }
-  ],
-  e: {
-    info: "something",
-    dataMap: {
-      "en": { b: 2, encryptedSelf: "encrypted+encoded({ a: 1 })" },
-      "fr": { b: 4, encryptedSelf: "encrypted+encoded({ a: 3 })" }
-    },
-    encryptedSelf: "encrypted+encoded({ private: \"secret\" })"
-  },
-  encryptedSelf: "encrypted+encoded({ a: { x: 0, y: 1 }, d: \"ok\" })"
+	b: "hello",
+	c: [
+		{ public: "a", encryptedSelf: "encrypted+encoded({ secret: \"b\" })" },
+		{ public: "c", encryptedSelf: "encrypted+encoded({ secret: \"d\" })" }
+	],
+	e: {
+		info: "something",
+		dataMap: {
+			"en": { b: 2, encryptedSelf: "encrypted+encoded({ a: 1 })" },
+			"fr": { b: 4, encryptedSelf: "encrypted+encoded({ a: 3 })" }
+		},
+		encryptedSelf: "encrypted+encoded({ private: \"secret\" })"
+	},
+	encryptedSelf: "encrypted+encoded({ a: { x: 0, y: 1 }, d: \"ok\" })"
 }
 ```
 
@@ -267,14 +294,18 @@ The encrypted entity json will have the following form:
 You can also group encrypted fields having the same prefix by concatenating to the prefix the JSON representation of an
 array of all the postfixes.
 For example, the following encrypted fields:
+
 ```json
 ["a.b.c.d.e.f1", "a.b.c.d.e.f2", "a.b.c.d.e.f3", "a.b.c.d.e.f4"]
 ```
+
 can be shortened to
+
 ```json
 ["a.b.c.d.e.[\"f1\",\"f2\",\"f3\",\"f4\"]"]
 ```
-Note that if you use the shortened representation you may need to escape nested json representations.
+
+Note that if you use the shortened representation, you may need to escape nested json representations.
 
 ### Contact, service, and service content encryption
 

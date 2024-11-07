@@ -13,7 +13,7 @@ The main purpose of the SDK is the **end-to-end encryption**: it encrypts the da
 it decrypts when retrieving. The only exceptions are the [base entities](/explanations/data-model/#base-entities) as
 they are not supposed to contain sensitive data.
 
-The SDK is currently available for Kotlin, Python, and Typescript. In each article of this documentation, you will find
+The SDK is currently available for Kotlin, Python, Typescript, and Dart. In each article of this documentation, you will find
 the examples for all the languages.
 
 This documentation is structured as follows:
