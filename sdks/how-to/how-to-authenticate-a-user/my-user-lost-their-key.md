@@ -57,7 +57,7 @@ The previous key of Daenaerys is lost, meaning she shouldn't be able to access h
 However, thanks to iCure advanced cryptography, she can still hope to find it back, by asking the data 
 owners with whom she shared her data to give her access back.
 
-:::warning
+:::danger
 
 Of course, if Daenaerys didn't share her data with anyone, it is definitely lost. She won't be able to access it 
 again. 
@@ -94,7 +94,7 @@ Once Jorah has the list of notifications, he will treat them one by one, decidin
 provided user or not. 
 
 ### Give access back to another data owner
-:::warning
+:::danger
 
 Before giving access back to a user, the data owner must ensure that the user is really who they meant to be.
 
