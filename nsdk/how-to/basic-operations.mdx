@@ -1,3 +1,6 @@
+---
+sidebar_position: 1
+---
 import TabItem from "@theme/TabItem";
 import {LanguageTabs} from "@site/src/components/LanguageTabs";
 
@@ -5,7 +8,7 @@ import {LanguageTabs} from "@site/src/components/LanguageTabs";
 
 When using the Cardinal SDK you will be working mostly with end-to-end encrypted data.
 The patients, the encounters with practitioners, diagnoses, appointments, the exam results and more.
-All the entities used to represent these concepts are at least in part encrypted to protect the privacy of the end 
+All the entities used to represent these concepts are at least in part encrypted to protect the privacy of the end
 users.
 
 Usually end-to-end encryption comes with many challenges, but the Cardinal SDK abstracts this complexity away, allowing
@@ -24,7 +27,7 @@ We will refer to the first kind of entities as "encryptable", and to the second 
 ## Creating new entities
 
 
-You can create non-encryptable entities by instantiating an instance of their model class and then passing it to the 
+You can create non-encryptable entities by instantiating an instance of their model class and then passing it to the
 create method of the corresponding api, which "commits" the creation and saves the new entity in the backend.
 
 <LanguageTabs>
@@ -88,7 +91,7 @@ def create_doctor(sdk: CardinalSdk, first_name: str, last_name: str) -> Healthca
 
 </LanguageTabs>
 
-For encryptable entities, however, you will also need to initialize some metadata used for encryption and access 
+For encryptable entities, however, you will also need to initialize some metadata used for encryption and access
 control before you can create the entity.
 You can do this using the `withEncryptionMetadata` method of the corresponding api.
 Note that you will still have to commit the creation using the create method after initializing the metadata.
@@ -164,17 +167,17 @@ def create_patient(sdk: CardinalSdk, first_name: str, last_name: str) -> Decrypt
 
 </LanguageTabs>
 
-The result of the create methods (for both encryptable and non-encryptable entities) is the input entity with an 
+The result of the create methods (for both encryptable and non-encryptable entities) is the input entity with an
 updated revision (`rev`).
-This revision value is used for optimistic locking by the methods that modify entities. 
- 
+This revision value is used for optimistic locking by the methods that modify entities.
+
 ### Encryptable entity initialization
 
-The encryptable entities initialization method can take in input various parameters: 
+The encryptable entities initialization method can take in input various parameters:
 
 #### Linked entities
 
-Some types of encryptable entities can be linked to other entities; for example, each health element is always linked to 
+Some types of encryptable entities can be linked to other entities; for example, each health element is always linked to
 a patient.
 These links are always encrypted to protect the privacy of the patients, and for this reason they're initialized with
 the rest of the encryption metadata.
@@ -269,7 +272,7 @@ encrypted links works.
 
 Encrypted links are "directional", and you have to pass the linked entity only for one direction of the link.
 
-For example, in the Patient-HealthElement link you only pass the patient when initializing the health element, and you 
+For example, in the Patient-HealthElement link you only pass the patient when initializing the health element, and you
 never pass health elements when initializing the patient.
 
 :::
@@ -335,14 +338,14 @@ def create_patient(sdk: CardinalSdk, first_name: str, last_name: str) -> Decrypt
 
 #### Initial delegates for the entity {#initial-delegates}
 
-This is a map of other data owners (delegates) that will immediately have access to the entity as soon as it is created. 
+This is a map of other data owners (delegates) that will immediately have access to the entity as soon as it is created.
 For each of them, you can specify the access level granted on the entity (read or read+write).
-When sharing an entity this way, all the encrypted information of the entity will be shared as well, including any 
+When sharing an entity this way, all the encrypted information of the entity will be shared as well, including any
 information for the resolution of encrypted links.
 
 You can always [share an entity with the delegates at a later point](#sharing).
 However, if you know already that the entity should be shared with someone else, and you want to fully share the entity
-encrypted information, it is better to do it while initializing the metadata. 
+encrypted information, it is better to do it while initializing the metadata.
 This is especially the case if you want the other delegates to be able to [listen to the creation event for that entity](/how-to/how-to-subscribe-to-events).
 
 <LanguageTabs>
@@ -437,11 +440,11 @@ auto-delegations).
 If you do, any auto-delegation setup for the user will be used in addition to any provided initial-delegate.
 Auto-delegations will be ignored if you don't pass the user.
 
-:::warning
+:::caution
 
-The configuration for initial delegates takes priority over auto-delegations. 
+The configuration for initial delegates takes priority over auto-delegations.
 If the same data owner appears in both the auto-delegations and initial delegates the SDK will use the configuration
-provided through the initial delegates. 
+provided through the initial delegates.
 
 :::
 
@@ -525,7 +528,7 @@ def create_patient(
 
 ## Retrieving entities
 
-You can retrieve an entity by using the get of the corresponding api. 
+You can retrieve an entity by using the get of the corresponding api.
 The SDK will automatically decrypt any retrieved encryptable entity.
 
 <LanguageTabs>
@@ -555,7 +558,7 @@ async function getPatientOfUser(sdk: CardinalSdk, user: User): Promise<Decrypted
 }
 ```
 
-</TabItem> 
+</TabItem>
 
 <TabItem value="python">
 
@@ -627,7 +630,7 @@ If you want to learn more about the querying system refer to the [dedicated page
 
 ## Updating entities
 
-You can update an entity using the update method of the corresponding API. 
+You can update an entity using the update method of the corresponding API.
 
 <LanguageTabs>
 
@@ -676,12 +679,12 @@ def set_patient_note(sdk: CardinalSdk, patient: DecryptedPatient, new_note: str)
 
 The update method returns the updated entity with a new revision.
 
-This method requires that the revision of the entity you pass matches the revision stored in the backend. 
+This method requires that the revision of the entity you pass matches the revision stored in the backend.
 In case of a mismatch, the method will throw an exception.
 This could happen if another user updated the entity after you retrieved it and before you committed the update, which
 in a collaborative environment could be a normal occurrence.
 
-If the logic of your application could allow multiple users to work on a single entity at the same time, you should 
+If the logic of your application could allow multiple users to work on a single entity at the same time, you should
 handle the conflict exceptions, requesting the end-user help if necessary:
 
 <LanguageTabs>
@@ -779,7 +782,7 @@ def set_patient_note(sdk: CardinalSdk, patient: DecryptedPatient, new_note: str)
 :::note
 
 The revision of an entity changes on every update of that entity.
-This includes updates that only modify the metadata of the entity, such as updates following a request to share the 
+This includes updates that only modify the metadata of the entity, such as updates following a request to share the
 entity with other delegates.
 
 :::
@@ -790,13 +793,13 @@ By default, you can only update encryptable entities if you have Write access to
 This is only possible if you created the entity or if another user shared the entity with you granting you also Write
 access.
 
-Some permissions allow users to bypass this requirement. 
+Some permissions allow users to bypass this requirement.
 For example, admin user can update any encryptable entity, even if it wasn't shared with them.
 
 ### Bulk update
- 
+
 The SDK also provides bulk update methods.
-Differently from the single entity update methods, the bulk methods don't throw an exception in case of revision 
+Differently from the single entity update methods, the bulk methods don't throw an exception in case of revision
 conflict.
 Instead, any conflicting entity will be ignored and won't be included in the returned entities.
 
@@ -804,12 +807,12 @@ Instead, any conflicting entity will be ignored and won't be included in the ret
 
 :::info
 
-:construction: We're currently reviewing the delete logic in the Cardinal SDK. 
-There will be some improvements in a future version. 
+:construction: We're currently reviewing the delete logic in the Cardinal SDK.
+There will be some improvements in a future version.
 
 :::
 
-You can delete entities by passing the entity id to the delete method of the corresponding API. 
+You can delete entities by passing the entity id to the delete method of the corresponding API.
 
 ### Soft-delete
 
@@ -819,17 +822,17 @@ This means that the data is not destroyed, instead it is hidden.
 When you soft-delete an entity, it will not be returned anymore when you query data using standard filters, but you can
 still retrieve data by id or by using filters specifically designed to lookup soft-deleted entities.
 
-:construction: We're working on exposing "undelete" methods, that will allow you to undo the deletion of a soft-deleted 
-entity.  
+:construction: We're working on exposing "undelete" methods, that will allow you to undo the deletion of a soft-deleted
+entity.
 
 ### Hard-delete :construction:
 
-Unlike soft-delete the hard-delete method actually destroys the deleted data. 
-You will not be able to undo this action. 
+Unlike soft-delete the hard-delete method actually destroys the deleted data.
+You will not be able to undo this action.
 
 :construction: We're working on exposing hard delete methods.
 
-:::warning
+:::danger
 
 Even when you hard delete data, there is a period where it will actually still be available in the backend's database.
 The data will be completely destroyed when the next compaction completes.
@@ -838,12 +841,12 @@ The data will be completely destroyed when the next compaction completes.
 
 ### Deleted with revision :construction:
 
-Currently, when you delete an entity, you only have to provide the id. 
+Currently, when you delete an entity, you only have to provide the id.
 This could be problematic if the entity was changed since you last retrieved it, because the entity may now contain some
 data that may change your intentions.
 
-We're working on adding a revision parameter to the delete methods, that will work like the revision of the update 
-methods (the delete method will succeed only if the revision you provided matches the revision of the stored entity). 
+We're working on adding a revision parameter to the delete methods, that will work like the revision of the update
+methods (the delete method will succeed only if the revision you provided matches the revision of the stored entity).
 This will be initially optional, but the methods delete without the revision will be deprecated.
 In future the revision parameter will be mandatory for all delete methods.
 
@@ -854,15 +857,15 @@ By default, the Cardinal SDK decrypts all retrieved entities.
 However, you don't always need access to the encrypted content of an entity, and since the decryption could be a slow
 process, it would be better to skip it when unnecessary.
 
-Similarly, your application may have situation where a user sometimes has access only to the unencrypted part of an 
+Similarly, your application may have situation where a user sometimes has access only to the unencrypted part of an
 entity, and other times has access to the full entity.
 In both situations, you want to show as much as possible of the entity to your user.
 
 To help you cover all these scenarios, the encryptable entities and corresponding apis come in three "flavors".
 
-For each encryptable entity, the SDK model provides three different types: a decrypted type (for example 
+For each encryptable entity, the SDK model provides three different types: a decrypted type (for example
 `DecryptedPatient`), an encrypted type (`EncryptedPatient`), and a polymorphic type (`Patient`).
-These types are de-facto identical; the division exists only to support the development of applications by providing 
+These types are de-facto identical; the division exists only to support the development of applications by providing
 better type checking.
 
 :::info
@@ -871,14 +874,14 @@ Depending on the language you're using, the encryptable entities flavors will be
 
 For example, in kotlin the polymorphic type is a sealed interface, and the encrypted and decrypted types are classes.
 
-Instead, in python and typescript, the encrypted and decrypted types are classes, and the polymorphic type is a union 
+Instead, in python and typescript, the encrypted and decrypted types are classes, and the polymorphic type is a union
 type of the two implementations.
 
 :::
 
-Similarly, the api for each encryptable entity comes in three flavors. 
+Similarly, the api for each encryptable entity comes in three flavors.
 Most methods that you use directly from the api take/return the decrypted flavor of the corresponding entity, but you
-can use the `encrypted` and the `tryAndRecover` properties of the api to access versions of the methods that work with 
+can use the `encrypted` and the `tryAndRecover` properties of the api to access versions of the methods that work with
 the encrypted and polymorphic flavors of the entity, respectively.
 
 :::note
@@ -897,7 +900,7 @@ The following table summarizes the behavior of the APIs' flavors.
 | Polymorphic (tryAndRecover) | Encrypts or validate the entity depending on the actual type. Fails if some entity can't be encrypted or doesn't pass validation.                                                     | Tries to decrypt the entities, any entity that can't be decrypted is returned as is.                                   | You don't know if the user can decrypt the entity but you want to display as much information as possible. |
 
 
-:::warning
+:::caution
 
 The validation of encrypted input performed by the encrypted and polymorphic flavors of the apis are best-effort and
 may not always be accurate.
@@ -1028,8 +1031,8 @@ def print_patient_details(
 The Cardinal SDK is controlled using an entity-based access control for encryptable entities.
 Each encryptable entity is by default accessible only to its creator unless it is shared with other data owners.
 
-We already saw that you can share entities with other data owners at creation time using 
-[initial delegates](#initial-delegates) or [auto-delegations](#auto-delegations), but you can also share an existing 
+We already saw that you can share entities with other data owners at creation time using
+[initial delegates](#initial-delegates) or [auto-delegations](#auto-delegations), but you can also share an existing
 entity using the share method of the corresponding api.
 
 ### Configuration options
@@ -1042,11 +1045,11 @@ following:
 
 #### `shareEncryptionKey` (always present)
 
-This configuration specifies if the share method should share the entity encryption key with the delegate, or if it 
+This configuration specifies if the share method should share the entity encryption key with the delegate, or if it
 should share only the unencrypted data.
 
 Possible values for this configuration are:
-- `ShareMetadataBehaviour.Required`: the delegator will share the encryption key with the delegate. 
+- `ShareMetadataBehaviour.Required`: the delegator will share the encryption key with the delegate.
   If the delegator can't access the encryption key of the entity, the sharing will fail.
 - `ShareMetadataBehaviour.IfAvailable`: the delegator will share the encryption key with the delegate if it is available.
   If the delegator can't access the encryption key of the entity, then it won't be shared.
@@ -1056,12 +1059,12 @@ The default configuration for this option is always `ShareMetadataBehaviour.IfAv
 
 #### `requestedPermissions` (always present)
 
-This configuration option specifies if the delegate will have only read access to the entity or also write access. 
+This configuration option specifies if the delegate will have only read access to the entity or also write access.
 
 Possible values for this configuration are:
-- `RequestedPermission.FullWrite`: the delegate will get write access to the full entity. 
+- `RequestedPermission.FullWrite`: the delegate will get write access to the full entity.
   If the delegator is not allowed to give write access, the sharing will fail
-- `RequestedPermission.MaxWrite`: the delegate will get the highest permissions that the current user can grant. 
+- `RequestedPermission.MaxWrite`: the delegate will get the highest permissions that the current user can grant.
   In the current version of the SDK this means that if the delegator can grant full write access,
   the delegate will have full write access, otherwise the delegate will have full read access.
 - `RequestedPermission.FullRead`: gives the delegate full read access to the entity, failing if the delegator can't
@@ -1081,17 +1084,17 @@ Possible values for this configuration are
   current user.
   If `requireAtLeastOne` is true and the current user can't access any secret id of the entity the sharing will fail.
 - `SecretIdShareOptions.UseExactly(secretIds, createUnknownSecretIds)`: share exactly the provided `secretIds`.
-  If some of the provided secret ids aren't found by the SDK using the keys of the current user and 
+  If some of the provided secret ids aren't found by the SDK using the keys of the current user and
   `createUnknownSecretIds` is false the sharing will fail, otherwise the SDK will create new secret ids.
- 
+
 The default configuration for this option is always `SecretIdShareOptions.AllAvailable(false)`
 
 #### `share[OwningEntity]Ids`
 
 This configuration option is only present for entity types that can have an encrypted link to other entities, and the
-exact name of this option depends on the type of the linked entity. 
+exact name of this option depends on the type of the linked entity.
 For example, in the share options for contacts you have the option `sharePatientIds`.
-  
+
 This configuration option uses the same values as the `shareEncryptionKey`
 
 When present, the default configuration for this option is always `ShareMetadataBehaviour.IfAvailable`.
@@ -1144,7 +1147,7 @@ import {
 	CardinalSdk,
 	DecryptedHealthElement,
 	HealthElementShareOptions,
-	RequestedPermission, 
+	RequestedPermission,
 	SecretIdShareOptions,
 	ShareMetadataBehaviour
 } from "@icure/cardinal-sdk";

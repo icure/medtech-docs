@@ -259,7 +259,7 @@ const bloodPressureService = new DecryptedService({
 In this case, a free-text `label` provides a description for the `Service`, and an `identifier` allows for a
 more structured labeling.
 
-:::warning
+:::caution
 When adding sensitive information to an encryptable entity, always remember that not all fields are encrypted.
 You can customize the encrypted fields as explained in [this how to](/how-to/initialize-the-sdk/configure-what-to-encrypt).
 :::
@@ -739,4 +739,3 @@ const finalContact = await sdk.contact.modifyContact(
 </LanguageTabs>
 
 Like `openingDate`, the `closingDate` is an instant, precise to the second, represented in the `YYYYMMDDhhmmss` format.
-

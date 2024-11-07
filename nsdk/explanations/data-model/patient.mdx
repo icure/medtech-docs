@@ -26,7 +26,7 @@ A boolean field that indicates whether the patient is active.
 A list of addresses for this Patient.
 
 ### administrativeNote
-Any additional remark about the patient for administrative and organizational purposes. It should not contain any 
+Any additional remark about the patient for administrative and organizational purposes. It should not contain any
 confidential or sensitive information.
 
 ### alias
@@ -77,15 +77,15 @@ A collection of the [ISO codes](https://www.loc.gov/standards/iso639-2/ISO-639-2
 this Patient.
 
 ### lastName
-The official surname of the Patient. The surname contained in this field is the one that should be used for all the 
+The official surname of the Patient. The surname contained in this field is the one that should be used for all the
 administrative purposes.
 
 ### maidenName
-If the Patient is married and acquired their spouse name, this field should contain the last name of the Patient 
+If the Patient is married and acquired their spouse name, this field should contain the last name of the Patient
 before marriage.
 
 ### names
-This collection should contain all the names for a Patient. It is a good practice to sort them by preference of use, 
+This collection should contain all the names for a Patient. It is a good practice to sort them by preference of use,
 with the official name being the first entry.
 
 ### nationality
@@ -111,7 +111,7 @@ Represents the Patient current social or relationship status (e.g. married, sing
 ### picture
 An image associated to the Patient as array of bytes.
 
-:::warning
+:::caution
 This field is meant to contain only a short byte array (a few kilobytes). Using it to store bigger data may result in
 a loss of performance while querying your database.
 :::

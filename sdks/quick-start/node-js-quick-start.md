@@ -85,7 +85,7 @@ professional. Therefore, creating a new keypair will override your previous key 
 
 Check if the location of your localStorage didn't change or if your .env file is complete. 
 
-:::warning
+:::danger
 If you really wish to force the re-creation of your parent healthcare professioonal cryptographic keys, you can call `http://127.0.0.1:3000?forceKeysCreation=true`. Be aware you will not be able to decrypt the data shared with your previous RSA key anymore ! You should do this operation for tests purpose-only.  
 :::
 

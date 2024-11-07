@@ -185,7 +185,7 @@ To delete your database, click on the **Delete** button. A modal will appear.
 
 To definitely delete the database, write back its name into the dedicated input and click on **Delete** button.
 
-:::warning
+:::danger
 
 Once you delete a database, there is no going back: You won't be able to access the data contained in this database anymore.
 

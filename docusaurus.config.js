@@ -47,6 +47,7 @@ async function createConfig() {
                     remarkPlugins: [
                         [remarkKroki, krokiConfig]
                     ],
+                    admonitions: true,
                 },
             ],
             [
@@ -61,6 +62,7 @@ async function createConfig() {
                     remarkPlugins: [
                         [remarkKroki, krokiConfig]
                     ],
+                    admonitions: true,
                 },
             ],
             [
@@ -125,6 +127,8 @@ async function createConfig() {
                 ],
                 colorMode: {
                     defaultMode: 'dark',
+                    disableSwitch: true,
+                    respectPrefersColorScheme: false,
                 },
                 navbar: {
                     // title: 'iCure MedTech Docs',

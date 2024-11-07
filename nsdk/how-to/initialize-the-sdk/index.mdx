@@ -1,3 +1,7 @@
+---
+sidebar_position: 0
+---
+
 import TabItem from "@theme/TabItem";
 import {LanguageTabs} from "@site/src/components/LanguageTabs";
 
@@ -253,6 +257,106 @@ authentication and initialize the SDK.
 
 To initialize the SDK with an authentication process you need to provide some additional parameters.
 
+
+ <LanguageTabs>
+
+ <TabItem value="kotlin">
+
+ ```kotlin
+ import com.icure.cardinal.sdk.CardinalSdk
+ import com.icure.cardinal.sdk.auth.AuthenticationProcessCaptchaType
+ import com.icure.cardinal.sdk.auth.AuthenticationProcessTelecomType
+ import com.icure.cardinal.sdk.auth.AuthenticationProcessTemplateParameters
+ import com.icure.cardinal.sdk.options.EncryptedFieldsConfiguration
+ import com.icure.cardinal.sdk.options.SdkOptions
+ import com.icure.cardinal.sdk.storage.impl.FileStorageFacade
+
+ suspend fun initializeMySdk(
+ 	userEmail: String,
+ 	captchaToken: String
+ ): CardinalSdk {
+ 	// The authentication with a process uses a different method, with additional parameters.
+ 	val authenticationStep = CardinalSdk.initializeWithProcess(
+ 		"MyCardinalApp",
+ 		"https://api.icure.cloud",
+ 		"https://msg-gw.icure.cloud/",
+ 		// Retrieve this from the cockpit, constant for your application.
+ 		specId,
+ 		// Retrieve this from the cockpit, constant for your application.
+ 		processId,
+ 		AuthenticationProcessTelecomType.Email,
+ 		userEmail,
+ 		AuthenticationProcessCaptchaType.FriendlyCaptcha,
+ 		CaptchaOptions.Kerberus.Delegated { progress -> println("Progress: ${progress * 100}%") },
+ 		FileStorageFacade("/path/to/storage/directory"),
+ 		// Process template parameters are additional parameters which
+ 		// may be used by the SMS/email template to the user.
+ 		// If you are not using them in your template you can omit them.
+ 		AuthenticationProcessTemplateParameters(),
+ 		SdkOptions(
+ 			encryptedFields = EncryptedFieldsConfiguration(
+ 				patient = setOf("notes", "addresses")
+ 			)
+ 		)
+ 	)
+ 	// The authentication is not yet complete.
+ 	// The user will receive a mail with the validation code required to proceed.
+ 	val validationCode = askValidationCode()
+ 	return authenticationStep.completeAuthentication(validationCode)
+ }
+ ```
+
+ </TabItem>
+
+ <TabItem value="typescript">
+
+ ```typescript
+ import {
+ 	AuthenticationProcessCaptchaType,
+ 	AuthenticationProcessTelecomType,
+ 	CardinalSdk,
+ 	StorageFacade
+ } from "@icure/cardinal-sdk";
+
+ async function initializeMySdk(
+ 	userEmail: string,
+ 	captchaToken: string
+ ): Promise<CardinalSdk> {
+ 	// The authentication with a process uses a different method, with additional parameters.
+ 	const authenticationStep = await CardinalSdk.initializeWithProcess(
+ 		"MyCardinalApp",
+ 		"https://api.icure.cloud",
+ 		"https://msg-gw.icure.cloud/",
+ 		// Retrieve this from the cockpit, constant for your application.
+ 		specId,
+ 		// Retrieve this from the cockpit, constant for your application.
+ 		processId,
+ 		AuthenticationProcessTelecomType.Email,
+ 		userEmail,
+ 		AuthenticationProcessCaptchaType.FriendlyCaptcha,
+		new CaptchaOptions.Kerberus.Delegated({onProgress: (x) => console.log('Progress', x)}),
+ 		StorageFacade.usingFileSystem("/path/to/storage/directory"),
+ 		// Process template parameters are additional parameters which
+ 		// may be used by the SMS/email template to the user.
+ 		// If you are not using them in your template you can omit them.
+ 		{},
+ 		{
+ 			encryptedFields: {
+ 				patient: ["notes", "addresses"]
+ 			}
+ 		}
+ 	)
+ 	// The authentication is not yet complete.
+ 	// The user will receive a mail with the validation code required to proceed.
+ 	const validationCode = await askValidationCode()
+ 	return authenticationStep.completeAuthentication(validationCode)
+ }
+ ```
+
+ </TabItem>
+
+ </LanguageTabs>
+
 #### Message gateway URL
 
 The message gateway is the component of Cardinal backend that generates one-time tokens and sends them to the users.
@@ -281,114 +385,13 @@ but you can also configure your services and custom processes.
 
 To prevent abuse of the messaging system when using the authentication with a process also requires that you provide
 a captcha.
-Currently, the Cardinal SDK supports [reCAPTCHA v3](https://developers.google.com/recaptcha/docs/v3) and
-[FriendlyCaptcha](https://friendlycaptcha.com/).
+
+Currently, the Cardinal SDK supports [reCAPTCHA v3](https://developers.google.com/recaptcha/docs/v3),
+[FriendlyCaptcha](https://friendlycaptcha.com/) and [Kerberus](https://github.com/icure/kerberus).
 You can configure which service to use through the cockpit, but if you're using the demo setup you will need to use
-friendly captcha.
-Refer to the official documentation of the chosen captcha provider to learn how to integrate them in your application.
+Kerberus.
 
-#### Example
-
-<!-- TODO example with wrong code given by user? -->
-
-<LanguageTabs>
-
-<TabItem value="kotlin">
-
-```kotlin
-import com.icure.cardinal.sdk.CardinalSdk
-import com.icure.cardinal.sdk.auth.AuthenticationProcessCaptchaType
-import com.icure.cardinal.sdk.auth.AuthenticationProcessTelecomType
-import com.icure.cardinal.sdk.auth.AuthenticationProcessTemplateParameters
-import com.icure.cardinal.sdk.options.EncryptedFieldsConfiguration
-import com.icure.cardinal.sdk.options.SdkOptions
-import com.icure.cardinal.sdk.storage.impl.FileStorageFacade
-
-suspend fun initializeMySdk(
-	userEmail: String,
-	captchaToken: String
-): CardinalSdk {
-	// The authentication with a process uses a different method, with additional parameters.
-	val authenticationStep = CardinalSdk.initializeWithProcess(
-		"MyCardinalApp",
-		"https://api.icure.cloud",
-		"https://msg-gw.icure.cloud/",
-		// Retrieve this from the cockpit, constant for your application.
-		specId,
-		// Retrieve this from the cockpit, constant for your application.
-		processId,
-		AuthenticationProcessTelecomType.Email,
-		userEmail,
-		AuthenticationProcessCaptchaType.FriendlyCaptcha,
-		captchaToken,
-		FileStorageFacade("/path/to/storage/directory"),
-		// Process template parameters are additional parameters which
-		// may be used by the SMS/email template to the user.
-		// If you are not using them in your template you can omit them.
-		AuthenticationProcessTemplateParameters(),
-		SdkOptions(
-			encryptedFields = EncryptedFieldsConfiguration(
-				patient = setOf("notes", "addresses")
-			)
-		)
-	)
-	// The authentication is not yet complete.
-	// The user will receive a mail with the validation code required to proceed.
-	val validationCode = askValidationCode()
-	return authenticationStep.completeAuthentication(validationCode)
-}
-```
-
-</TabItem>
-
-<TabItem value="typescript">
-
-```typescript
-import {
-	AuthenticationProcessCaptchaType,
-	AuthenticationProcessTelecomType,
-	CardinalSdk,
-	StorageFacade
-} from "@icure/cardinal-sdk";
-
-async function initializeMySdk(
-	userEmail: string,
-	captchaToken: string
-): Promise<CardinalSdk> {
-	// The authentication with a process uses a different method, with additional parameters.
-	const authenticationStep = await CardinalSdk.initializeWithProcess(
-		"MyCardinalApp",
-		"https://api.icure.cloud",
-		"https://msg-gw.icure.cloud/",
-		// Retrieve this from the cockpit, constant for your application.
-		specId,
-		// Retrieve this from the cockpit, constant for your application.
-		processId,
-		AuthenticationProcessTelecomType.Email,
-		userEmail,
-		AuthenticationProcessCaptchaType.FriendlyCaptcha,
-		captchaToken,
-		StorageFacade.usingFileSystem("/path/to/storage/directory"),
-		// Process template parameters are additional parameters which
-		// may be used by the SMS/email template to the user.
-		// If you are not using them in your template you can omit them.
-		{},
-		{
-			encryptedFields: {
-				patient: ["notes", "addresses"]
-			}
-		}
-	)
-	// The authentication is not yet complete.
-	// The user will receive a mail with the validation code required to proceed.
-	const validationCode = await askValidationCode()
-	return authenticationStep.completeAuthentication(validationCode)
-}
-```
-
-</TabItem>
-
-</LanguageTabs>
+Refer to the documentation [here](./captcha) to learn how to integrate them in your application.
 
 ### Authentication with secret provider
 
@@ -648,7 +651,7 @@ When initializing the SDK you can provide some optional configurations through t
 
 Not all optional configuration parameters are available on all platforms.
 
-:::warning
+:::caution
 
 The parameters marked as occasionally required in the following sections are actually required if certain conditions
 are met, and the SDK initialization will fail if they aren't provided.
@@ -821,7 +824,7 @@ that the users are sharing data with who they intend.
 
 These topics are a bit advanced, but we recommend that you read about them after you've familiarized with the cardinal SDK.
 The parameters that allow you to configure the cryptographic operations of the Cardinal SDK are:
-- `cryptoStrategies`: allows you to provide custom key generation, recovery and verification solutions (:construction:). 
+- `cryptoStrategies`: allows you to provide custom key generation, recovery and verification solutions (:construction:).
 - `createTransferKeys`: allows you to disable the automatic creation of information that allows to recover newly created
 keys using previously existing lost but verified keys of the user (:construction:).
 - `useHierarchicalDataOwners`: enables the hierarchical data owners key management when set to true.
