@@ -1,8 +1,5 @@
 name: Licenses report
 on:
-  push:
-    branches:
-      - "ci/fix-license-report-workflow"
   pull_request:
     types:
       - closed
