@@ -37,13 +37,13 @@ git clone https://github.com/icure/cardinal-real-time-analysis-tutorial.git
 cd cardinal-real-time-analysis-tutorial
 ```
 
-## Launch the Tutorial using Kotlin
+## Launch the tutorial using Kotlin
 
 Open the project folder using [IntelliJ](https://www.jetbrains.com/idea/) and wait for the indexing to finish.
 When it finishes, run the `main` function in the `Subscriber.kt` file to run the Subscriber and the `main` functon in
 the `Publisher.kt` file to run the Publisher.
 
-## Launch the Tutorial using Python
+## Launch the tutorial using Python
 
 To launch the tutorial in Python, navigate to the `python` folder in the tutorial repository. The minimum supported
 Python version is 3.9.
@@ -84,7 +84,7 @@ Now you can run the Publisher.
 python src/publisher.py
 ```
 
-## Launch the Tutorial using Typescript
+## Launch the tutorial using Typescript
 
 To launch the Publisher and Subscriber in Typescript, you need a version of node >= 19. You can install it using
 [nvm](https://github.com/nvm-sh/nvm). You will also need the `yarn` package manager.
@@ -114,4 +114,29 @@ Then, open another terminal, navigate to the `typescript` folder, activate node 
 cd cardinal-real-time-analysis-tutorial/python
 nvm use 19
 yarn ts-node --esm src/publisher.ts
+```
+
+## Launch the tutorial using Dart
+
+:::caution
+As the Subscriber part of this tutorial is designed to represent the use case of a back-end application and so it was 
+not implemented in Dart.
+
+You can still run the Publisher part in Dart, using the subscriber from any other language.
+:::
+
+To launch the Publisher in dart, clone the [dart tutorial repository](https://github.com/icure/cardinal-dart-real-time-analysis-tutorial).
+Then, open a terminal and install the dependencies using pub and the iOS pod:
+
+```bash
+cd cardinal-dart-real-time-analysis-tutorial
+flutter pub get
+cd ios
+pod install
+cd ..
+```
+Now you can run the application using flutter:
+
+```bash
+flutter run
 ```
