@@ -13,7 +13,7 @@ The Publisher is any application that a patient can use to create medical data. 
 creates samples simulating a device that measures the sugar level in blood.
 
 Since patient users cannot be created directly through the cockpit and to keep this tutorial self-contained, the
-application will first log in as a healthcare party to create the patient user. This newly created patient user will 
+application will first log in as a healthcare party to create the patient user. This newly created patient user will
 then be used for the rest of the example.
 
 ## Create the Patient User
@@ -120,7 +120,7 @@ const createdPatient = await sdk.patient.createPatient(patientWithMetadata)
 </TabItem>
 </LanguageTabs>
 
-Then, it creates a user associated to the patient. The healthcare party also creates a temporary token that will allow 
+Then, it creates a user associated to the patient. The healthcare party also creates a temporary token that will allow
 the new user to log in.
 
 <LanguageTabs>
@@ -314,7 +314,7 @@ const patientSdk = await CardinalSdk.initialize(
 </TabItem>
 </LanguageTabs>
 
-:::warning
+:::caution
 This registration flow makes sense only in the context of this example, to make it self-contained.
 To learn how to register a Patient in a real context, check [this how to](/how-to/registering-users).
 :::
@@ -322,7 +322,7 @@ To learn how to register a Patient in a real context, check [this how to](/how-t
 ## Create Medical Data
 
 The patient user is now completely initialized and can start creating data. The Publisher simulates a medical
-device capable of measuring glycemia. This measurement is stored through the Cardinal SDK as a `Service` inside of a 
+device capable of measuring glycemia. This measurement is stored through the Cardinal SDK as a `Service` inside of a
 `Contact`, as explained in the [previous tutorial](/tutorial/basic/modules/basic-tutorial-create-medical-data).
 
 <LanguageTabs>
@@ -464,7 +464,7 @@ const contact = new DecryptedContact({
 </TabItem>
 </LanguageTabs>
 
-Three different codifications were used in the Service: 
+Three different codifications were used in the Service:
 
 - One (`UCUM|mmol/L|1`) was used in the `Measure` to associate to the number the [UCUM](https://ucum.org/ucum) code for mmol/L, the standard unit for glycemia tests.
 - Another (`LOINC|2339-0|1`) was used to include the information that the service represents a glycemia test. For that, a [LOINC code](https://loinc.org/) (2339-0) was used.
@@ -524,7 +524,7 @@ At the same time, the Subscriber will immediately receive the created entity and
 ## Review the Analysis Result
 
 In the full code example available on the repository, the user will be able to register multiple glycemia measurements.
-After that, they will be asked if they want to display the results of the analysis performed by the Subscriber, that 
+After that, they will be asked if they want to display the results of the analysis performed by the Subscriber, that
 will add a [SNOMED-CT](https://www.snomed.org/what-is-snomed-ct) code for the diagnosis and an internal code to signal
 that a Service has been analyzed.
 

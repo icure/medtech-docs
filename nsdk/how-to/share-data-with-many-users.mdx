@@ -91,7 +91,7 @@ import com.icure.cardinal.sdk.storage.impl.FileStorageFacade
 
 suspend fun initializeMySdk(username: String, password: String) =
 	CardinalSdk.initialize(
-		"MyCardinalApp",
+		"com.mycompany.mycardinalapp",
 		"https://api.icure.cloud",
 		AuthenticationMethod.UsingCredentials(UsernamePassword(username, password)),
 		FileStorageFacade("/path/to/storage/directory"),
@@ -110,7 +110,7 @@ import {AuthenticationMethod, CardinalSdk, StorageFacade} from "@icure/cardinal-
 
 function initializeMySdk(username: string, password: string): Promise<CardinalSdk> {
 	return CardinalSdk.initialize(
-		"MyCardinalApp",
+		"com.mycompany.mycardinalapp",
 		"https://api.icure.cloud",
 		new AuthenticationMethod.UsingCredentials.UsernamePassword(username, password),
 		StorageFacade.usingFileSystem("/path/to/storage/directory"),
@@ -132,7 +132,7 @@ from cardinal_sdk.storage import FileSystemStorage
 from cardinal_sdk.options import SdkOptions, EncryptedFieldsConfiguration
 
 sdk = CardinalSdk(
-	"MyCardinalApp",
+	"com.mycompany.mycardinalapp",
 	"https://api.icure.cloud",
 	UsernamePassword("username", "password"),
 	FileSystemStorage("/path/to/storage/directory"),

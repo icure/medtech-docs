@@ -14,14 +14,14 @@ encrypted fields configuration syntax.
 
 ## Choosing what to encrypt
 
-We recommend that you encrypt at least everything that could contain identifying information. 
-In particular, you should encrypt data coming from free text fields and raw documents (such as pdfs and pictures), 
+We recommend that you encrypt at least everything that could contain identifying information.
+In particular, you should encrypt data coming from free text fields and raw documents (such as pdfs and pictures),
 since these entries may contain the patient name or other similar information.
 
 :::note
 
 The Cardinal SDK automatically creates and encrypts links between entities when needed.
-For example, when creating medical data, the SDK will automatically create a link to the patient. 
+For example, when creating medical data, the SDK will automatically create a link to the patient.
 You don't need to manually add the patient id to the medical data, and you don't need to explicitly request for the
 link to be encrypted.
 
@@ -29,16 +29,16 @@ link to be encrypted.
 
 You can always configure the SDK to encrypt more than the content potentially containing identifying information,
 however, you should consider that in some cases the additional encryption may have some negative impact on your
-application. 
+application.
 
 ### Impact on querying
 
 The biggest and most impactful downside of encryption in the Cardinal SDK is that encrypted data is not queryable.
-All the filtering options provided by the [querying system](/how-to/querying-data) work only if the properties 
+All the filtering options provided by the [querying system](/how-to/querying-data) work only if the properties
 used by the filter are readable by the backend: if you encrypt them the filter will not work.
 
 The default configuration of the SDK leaves all properties used by filter options unencrypted, including some sensitive
-information such as the patients' addresses. 
+information such as the patients' addresses.
 However, if you don't need to use the filters that depend on these sensitive properties, you can configure the SDK to
 encrypt them.
 
@@ -61,10 +61,10 @@ For these reasons, we recommend that you leave any non-sensitive data you may ne
 
 ## Encrypted fields configuration
 
-You can configure which parts of entities need to be encrypted when you initialize the SDK by providing an instance of 
-`EncryptedFieldsConfiguration` through the `SdkOptions`. 
+You can configure which parts of entities need to be encrypted when you initialize the SDK by providing an instance of
+`EncryptedFieldsConfiguration` through the `SdkOptions`.
 For example, the following configuration customizes how patients and documents are encrypted, while all other entities
-use the default configuration. 
+use the default configuration.
 
 
 <LanguageTabs>
@@ -81,7 +81,7 @@ import com.icure.cardinal.sdk.storage.impl.FileStorageFacade
 
 suspend fun initializeMySdk(username: String, password: String) =
 	CardinalSdk.initialize(
-		"MyCardinalApp",
+		"com.mycompany.mycardinalapp",
 		"https://api.icure.cloud",
 		AuthenticationMethod.UsingCredentials(UsernamePassword(username, password)),
 		FileStorageFacade("/path/to/storage/directory"),
@@ -103,7 +103,7 @@ import {AuthenticationMethod, CardinalSdk, StorageFacade} from "@icure/cardinal-
 
 function initializeMySdk(username: string, password: string): Promise<CardinalSdk> {
 	return CardinalSdk.initialize(
-		"MyCardinalApp",
+		"com.mycompany.mycardinalapp",
 		"https://api.icure.cloud",
 		new AuthenticationMethod.UsingCredentials.UsernamePassword(username, password),
 		StorageFacade.usingFileSystem("/path/to/storage/directory"),
@@ -128,7 +128,7 @@ from cardinal_sdk.storage import FileSystemStorage
 from cardinal_sdk.options import SdkOptions, EncryptedFieldsConfiguration
 
 sdk = CardinalSdk(
-	"MyCardinalApp",
+	"com.mycompany.mycardinalapp",
 	"https://api.icure.cloud",
 	UsernamePassword("username", "password"),
 	FileSystemStorage("/path/to/storage/directory"),
@@ -143,14 +143,41 @@ sdk = CardinalSdk(
 
 </TabItem>
 
+<TabItem value="dart">
+
+```python
+import 'package:cardinal_sdk/auth/authentication_method.dart';
+import 'package:cardinal_sdk/auth/credentials.dart';
+import 'package:cardinal_sdk/cardinal_sdk.dart';
+import 'package:cardinal_sdk/options/sdk_options.dart';
+import 'package:cardinal_sdk/options/storage_options.dart';
+
+Future<CardinalSdk> initializeMySdk(String username, String password) {
+	return CardinalSdk.initialize(
+		"com.mycompany.mycardinalapp",
+		"https://api.icure.cloud",
+		AuthenticationMethod.UsingCredentials(Credentials.UsernamePassword(username, password)),
+		StorageOptions.PlatformDefault,
+		options: SdkOptions(
+			encryptedFields: EncryptedFieldsConfiguration(
+				patient: {"notes", "addresses"},
+				document: {"name"}
+			)
+		)
+	);
+}
+```
+
+</TabItem>
+
 </LanguageTabs>
 
-:::warning
+:::caution
 
-If you're developing multiple applications connected to the same database, you should make sure that the encrypted 
+If you're developing multiple applications connected to the same database, you should make sure that the encrypted
 fields configuration between the applications is aligned: if not, you may have inconsistent behaviors.
 
-For example, you may have an application creating data with some encrypted sensitive content, and the other application 
+For example, you may have an application creating data with some encrypted sensitive content, and the other application
 modifying the data and leaving the sensitive content unencrypted.
 
 :::
@@ -168,7 +195,7 @@ The json names of properties, unless specified otherwise, are always the camel c
 
 If you're using the kotlin or typescript SDK the model classes properties names are the same as the json names.
 
-If you're using python you will need to convert the snake_case representation. 
+If you're using python you will need to convert the snake_case representation.
 For example if you want to encrypt the patient `first_name` you need to use `firstName` in the encrypted fields
 configuration.
 
@@ -178,28 +205,28 @@ The grammar for each encrypted field entry is the following:
 
 ```
 fieldName :=
-  regex([a-zA-Z_][a-zA-Z0-9_]+)
+	regex([a-zA-Z_][a-zA-Z0-9_]+)
 encryptedField :=
-  fieldName
-  | fieldName + ("." | ".*." | "[].") + encryptedField
+	fieldName
+	| fieldName + ("." | ".*." | "[].") + encryptedField
 ```
 
 This grammar allows you to specify the fields to encrypt for the object and recursively for nested objects.
 - A string containing only a single `fieldName` will encrypt the field with the given name.
 - A string starting with `fieldName.` allows to specify the encrypted fields of a nested object.
   The encrypted values of the fields in the nested object will be saved in the nested object.
-- A string starting with `fieldName.*.` treats `fieldName` as a map/dictionary data structure and allows to specify the 
+- A string starting with `fieldName.*.` treats `fieldName` as a map/dictionary data structure and allows to specify the
   encrypted fields of map values.
   Note that the values of the map must be objects as well.
   The encrypted content of each map value is stored in that value.
 - A string starting with `fieldName[].` treats `fieldName` as an array and allows to specify the encrypted fields for
   the array values.
-  Note that the values of the array must be objects as well. 
+  Note that the values of the array must be objects as well.
   The encrypted content of each array element is stored in that element.
 
-:::warning
+:::danger
 
-You can't encrypt the security and encrypted links metadata added automatically by the SDK.  
+You can't encrypt the security and encrypted links metadata added automatically by the SDK.	
 
 :::
 
@@ -209,24 +236,24 @@ Consider the following object
 
 ```json
 {
-  a: { x: 0, y: 1 },
-  b: "hello",
-  c: [ { public: "a", secret: "b" }, { public: "c", secret: "d" } ],
-  d: "ok",
-  e: {
-    info: "something",
-    private: "secret",
-    dataMap: {
-      "en": {
-        a: 1,
-        b: 2
-      },
-      "fr": {
-        a: 3,
-        b: 4
-      }
-    }
-  }
+	a: { x: 0, y: 1 },
+	b: "hello",
+	c: [ { public: "a", secret: "b" }, { public: "c", secret: "d" } ],
+	d: "ok",
+	e: {
+		info: "something",
+		private: "secret",
+		dataMap: {
+			"en": {
+				a: 1,
+				b: 2
+			},
+			"fr": {
+				a: 3,
+				b: 4
+			}
+		}
+	}
 }
 ```
 
@@ -234,51 +261,55 @@ and encryption keys
 
 ```json
 [
-  "a",
-  "c[].secret",
-  "d",
-  "e.private",
-  "e.datamap.*.a"
+	"a",
+	"c[].secret",
+	"d",
+	"e.private",
+	"e.datamap.*.a"
 ]
 ```
 
 The encrypted entity json will have the following form:
 ```json
 {
-  b: "hello",
-  c: [
-    { public: "a", encryptedSelf: "encrypted+encoded({ secret: \"b\" })" },
-    { public: "c", encryptedSelf: "encrypted+encoded({ secret: \"d\" })" }
-  ],
-  e: {
-    info: "something",
-    dataMap: {
-      "en": { b: 2, encryptedSelf: "encrypted+encoded({ a: 1 })" },
-      "fr": { b: 4, encryptedSelf: "encrypted+encoded({ a: 3 })" }
-    },
-    encryptedSelf: "encrypted+encoded({ private: \"secret\" })"
-  },
-  encryptedSelf: "encrypted+encoded({ a: { x: 0, y: 1 }, d: \"ok\" })"
+	b: "hello",
+	c: [
+		{ public: "a", encryptedSelf: "encrypted+encoded({ secret: \"b\" })" },
+		{ public: "c", encryptedSelf: "encrypted+encoded({ secret: \"d\" })" }
+	],
+	e: {
+		info: "something",
+		dataMap: {
+			"en": { b: 2, encryptedSelf: "encrypted+encoded({ a: 1 })" },
+			"fr": { b: 4, encryptedSelf: "encrypted+encoded({ a: 3 })" }
+		},
+		encryptedSelf: "encrypted+encoded({ private: \"secret\" })"
+	},
+	encryptedSelf: "encrypted+encoded({ a: { x: 0, y: 1 }, d: \"ok\" })"
 }
 ```
 
 #### Shortened representation
 
 You can also group encrypted fields having the same prefix by concatenating to the prefix the JSON representation of an
-array of all the postfixes. 
+array of all the postfixes.
 For example, the following encrypted fields:
+
 ```json
 ["a.b.c.d.e.f1", "a.b.c.d.e.f2", "a.b.c.d.e.f3", "a.b.c.d.e.f4"]
 ```
+
 can be shortened to
+
 ```json
 ["a.b.c.d.e.[\"f1\",\"f2\",\"f3\",\"f4\"]"]
 ```
-Note that if you use the shortened representation you may need to escape nested json representations. 
+
+Note that if you use the shortened representation, you may need to escape nested json representations.
 
 ### Contact, service, and service content encryption
 
-You can't customize the encryption of services through the contacts' encrypted fields configuration. 
+You can't customize the encryption of services through the contacts' encrypted fields configuration.
 Instead, the encrypted fields configuration has a dedicated entry for the configuration of services encryption.
 This allows more easily handling the potentially recursive nature of services (services can be recursively nested using
 the `compoundValue` in their content).

@@ -28,7 +28,7 @@ import com.icure.cardinal.sdk.storage.impl.FileStorageFacade
 
 suspend fun initializeMySdk(username: String, password: String) =
 	CardinalSdk.initialize(
-		"MyCardinalApp",
+		"com.mycompany.mycardinalapp",
 		"https://api.icure.cloud",
 		AuthenticationMethod.UsingCredentials(UsernamePassword(username, password)),
 		FileStorageFacade("/path/to/storage/directory"),
@@ -49,7 +49,7 @@ import {AuthenticationMethod, CardinalSdk, StorageFacade} from "@icure/cardinal-
 
 function initializeMySdk(username: string, password: string): Promise<CardinalSdk> {
 	return CardinalSdk.initialize(
-		"MyCardinalApp",
+		"com.mycompany.mycardinalapp",
 		"https://api.icure.cloud",
 		new AuthenticationMethod.UsingCredentials.UsernamePassword(username, password),
 		StorageFacade.usingFileSystem("/path/to/storage/directory"),
@@ -73,7 +73,7 @@ from cardinal_sdk.storage import FileSystemStorage
 from cardinal_sdk.options import SdkOptions, EncryptedFieldsConfiguration
 
 sdk = CardinalSdk(
-	"MyCardinalApp",
+	"com.mycompany.mycardinalapp",
 	"https://api.icure.cloud",
 	UsernamePassword("username", "password"),
 	FileSystemStorage("/path/to/storage/directory"),
@@ -87,10 +87,48 @@ sdk = CardinalSdk(
 
 </TabItem>
 
+<TabItem value="dart">
+
+```dart
+import 'package:cardinal_sdk/auth/authentication_method.dart';
+import 'package:cardinal_sdk/auth/credentials.dart';
+import 'package:cardinal_sdk/cardinal_sdk.dart';
+import 'package:cardinal_sdk/options/sdk_options.dart';
+import 'package:cardinal_sdk/options/storage_options.dart';
+
+Future<CardinalSdk> initializeMySdk(String username, String password) {
+	return CardinalSdk.initialize(
+		"com.mycompany.mycardinalapp",
+		"https://api.icure.cloud",
+		AuthenticationMethod.UsingCredentials(Credentials.UsernamePassword(username, password)),
+		StorageOptions.PlatformDefault,
+		options: SdkOptions(
+			encryptedFields: EncryptedFieldsConfiguration(
+				patient: {"notes", "addresses"}
+			)
+		)
+	);
+}
+```
+
+</TabItem>
+
 </LanguageTabs>
 
 The SDK initialization process will automatically log in the user to the Cardinal backend and load or initialize his
 cryptographic keys.
+
+## Application id
+
+The application id is used to isolate different applications.
+If the authentication method of a user allows accessing different databases, only those matching the provided
+application id will be considered.
+
+You can configure the application id for your solution through the cockpit, and different solutions can use the same
+application ids.
+
+We recommend using reverse domain name notation for application ids (for example `com.mycompany.myapp`).
+You can configure the application id for your
 
 ## Backend URL
 
@@ -157,6 +195,17 @@ auth = UsernamePassword("username", "password")
 
 </TabItem>
 
+<TabItem value="dart">
+
+```dart
+import 'package:cardinal_sdk/auth/authentication_method.dart';
+import 'package:cardinal_sdk/auth/credentials.dart';
+
+final auth = AuthenticationMethod.UsingCredentials(Credentials.UsernamePassword("username", "password"));
+```
+
+</TabItem>
+
 </LanguageTabs>
 
 #### Username + login token
@@ -195,6 +244,17 @@ const auth = new AuthenticationMethod.UsingCredentials.UsernameLongToken("userna
 from cardinal_sdk.authentication import UsernameLongToken
 
 auth = UsernameLongToken("username", "token")
+```
+
+</TabItem>
+
+<TabItem value="dart">
+
+```dart
+import 'package:cardinal_sdk/auth/authentication_method.dart';
+import 'package:cardinal_sdk/auth/credentials.dart';
+
+final auth = AuthenticationMethod.UsingCredentials(Credentials.UsernameLongToken("username", "token"));
 ```
 
 </TabItem>
@@ -239,23 +299,182 @@ auth = ThirdPartyAuthentication("google-token", ThirdPartyProvider.GOOGLE)
 
 </TabItem>
 
+<TabItem value="dart">
+
+```dart
+import 'package:cardinal_sdk/auth/authentication_method.dart';
+import 'package:cardinal_sdk/auth/credentials.dart';
+
+final auth = AuthenticationMethod.UsingCredentials(
+	Credentials.ThirdPartyAuthentication("google-token", ThirdPartyProvider.google)
+);
+```
+
+</TabItem>
+
 </LanguageTabs>
 
 ### Authentication with a process
 
-:::note
+You can use authentication processes to authenticate users using one-time tokens sent via email or SMS.
+
+In this case authentication is done in two steps: the first step will generate a one-time token and send it to the user
+via email or sms, then, once the user provides the received token, the second step will actually complete the
+authentication and initialize the SDK.
+
+To initialize the SDK with an authentication process, you need to use a different initialization method which also 
+requires some additional parameters.
+
+<LanguageTabs>
+
+<TabItem value="kotlin">
+
+```kotlin
+import com.icure.cardinal.sdk.CardinalSdk
+import com.icure.cardinal.sdk.auth.AuthenticationProcessTelecomType
+import com.icure.cardinal.sdk.auth.AuthenticationProcessTemplateParameters
+import com.icure.cardinal.sdk.auth.CaptchaOptions
+import com.icure.cardinal.sdk.options.EncryptedFieldsConfiguration
+import com.icure.cardinal.sdk.options.SdkOptions
+import com.icure.cardinal.sdk.storage.impl.FileStorageFacade
+
+suspend fun initializeMySdk(
+	userEmail: String
+): CardinalSdk {
+	// The authentication with a process uses a different method, with additional parameters.
+	val authenticationStep = CardinalSdk.initializeWithProcess(
+		"com.mycompany.mycardinalapp",
+		"https://api.icure.cloud",
+		"https://msg-gw.icure.cloud/",
+		// Retrieve this from the cockpit, constant for your application.
+		specId,
+		// Retrieve this from the cockpit, constant for your application.
+		processId,
+		AuthenticationProcessTelecomType.Email,
+		userEmail,
+		CaptchaOptions.Kerberus.Delegated { progress -> println("Progress: ${progress * 100}%") },
+		FileStorageFacade("/path/to/storage/directory"),
+		// Process template parameters are additional parameters which
+		// may be used by the SMS/email template to the user.
+		// If you are not using them in your template you can omit them.
+		AuthenticationProcessTemplateParameters(),
+		SdkOptions(
+			encryptedFields = EncryptedFieldsConfiguration(
+				patient = setOf("notes", "addresses")
+			)
+		)
+	)
+	// The authentication is not yet complete.
+	// The user will receive a mail with the validation code required to proceed.
+	val validationCode = askValidationCode()
+	return authenticationStep.completeAuthentication(validationCode)
+}
+```
+
+</TabItem>
+
+<TabItem value="typescript">
+
+```typescript
+import {
+	AuthenticationProcessTelecomType,
+	CardinalSdk,
+	StorageFacade,
+	CaptchaOptions
+} from "@icure/cardinal-sdk";
+
+async function initializeMySdk(
+	userEmail: string
+): Promise<CardinalSdk> {
+	// The authentication with a process uses a different method, with additional parameters.
+	const authenticationStep = await CardinalSdk.initializeWithProcess(
+		"com.mycompany.mycardinalapp",
+		"https://api.icure.cloud",
+		"https://msg-gw.icure.cloud/",
+		// Retrieve this from the cockpit, constant for your application.
+		specId,
+		// Retrieve this from the cockpit, constant for your application.
+		processId,
+		AuthenticationProcessTelecomType.Email,
+		userEmail,
+		new CaptchaOptions.Kerberus.Delegated({onProgress: (x) => console.log('Progress', x)}),
+		StorageFacade.usingFileSystem("/path/to/storage/directory"),
+		// Process template parameters are additional parameters which
+		// may be used by the SMS/email template to the user.
+		// If you are not using them in your template you can omit them.
+		{},
+		{
+			encryptedFields: {
+				patient: ["notes", "addresses"]
+			}
+		}
+	)
+	// The authentication is not yet complete.
+	// The user will receive a mail with the validation code required to proceed.
+	const validationCode = await askValidationCode()
+	return authenticationStep.completeAuthentication(validationCode)
+}
+```
+
+</TabItem>
+
+<TabItem value="python">
+
+:::info
 
 This authentication method is unavailable on the Cardinal python SDK
 
 :::
 
-You can use authentication processes to authenticate users using one-time tokens sent via email or SMS.
+</TabItem>
 
-In this case authentication is done in two steps: the first step will generate a one-time token and sends it to the user
-via email or sms, then once the user provides the received token the second step will actually complete the
-authentication and initialize the SDK.
+<TabItem value="dart">
 
-To initialize the SDK with an authentication process you need to provide some additional parameters.
+```dart
+import 'package:cardinal_sdk/auth/authentication_process_telecom_type.dart';
+import 'package:cardinal_sdk/auth/authentication_process_template_parameters.dart';
+import 'package:cardinal_sdk/auth/captcha_options.dart';
+import 'package:cardinal_sdk/cardinal_sdk.dart';
+import 'package:cardinal_sdk/options/sdk_options.dart';
+import 'package:cardinal_sdk/options/storage_options.dart';
+
+Future<CardinalSdk> initializeMySdk(
+	String userEmail,
+	String captchaToken
+) async {
+	// The authentication with a process uses a different method, with additional parameters.
+	final authenticationStep = await CardinalSdk.initializeWithProcess(
+		"com.mycompany.mycardinalapp",
+		"https://api.icure.cloud",
+		"https://msg-gw.icure.cloud/",
+		// Retrieve this from the cockpit, constant for your application.
+		specId,
+		// Retrieve this from the cockpit, constant for your application.
+		processId,
+		AuthenticationProcessTelecomType.email,
+		userEmail,
+		CaptchaOptions.KerberusDelegated(),
+		StorageOptions.PlatformDefault,
+		// Process template parameters are additional parameters which
+		// may be used by the SMS/email template to the user.
+		// If you are not using them in your template you can omit them.
+		authenticationProcessTemplateParameters: const AuthenticationProcessTemplateParameters(),
+		options: SdkOptions(
+			encryptedFields: EncryptedFieldsConfiguration(
+				patient: { "notes", "addresses" }
+			)
+		)
+	);
+	// The authentication is not yet complete.
+	// The user will receive a mail with the validation code required to proceed.
+	final validationCode = await askValidationCode();
+	return await authenticationStep.completeAuthentication(validationCode);
+} 
+```
+
+</TabItem>
+
+</LanguageTabs>
 
 #### Message gateway URL
 
@@ -285,122 +504,15 @@ but you can also configure your services and custom processes.
 
 To prevent abuse of the messaging system when using the authentication with a process also requires that you provide
 a captcha.
-Currently, the Cardinal SDK supports [reCAPTCHA v3](https://developers.google.com/recaptcha/docs/v3) and
-[FriendlyCaptcha](https://friendlycaptcha.com/).
+
+Currently, the Cardinal SDK supports [reCAPTCHA v3](https://developers.google.com/recaptcha/docs/v3),
+[FriendlyCaptcha](https://friendlycaptcha.com/) and [Kerberus](https://github.com/icure/kerberus).
 You can configure which service to use through the cockpit, but if you're using the demo setup you will need to use
-friendly captcha.
-Refer to the official documentation of the chosen captcha provider to learn how to integrate them in your application.
+Kerberus.
 
-#### Example
-
-<!-- TODO example with wrong code given by user? -->
-
-<LanguageTabs>
-
-<TabItem value="kotlin">
-
-```kotlin
-import com.icure.cardinal.sdk.CardinalSdk
-import com.icure.cardinal.sdk.auth.AuthenticationProcessCaptchaType
-import com.icure.cardinal.sdk.auth.AuthenticationProcessTelecomType
-import com.icure.cardinal.sdk.auth.AuthenticationProcessTemplateParameters
-import com.icure.cardinal.sdk.options.EncryptedFieldsConfiguration
-import com.icure.cardinal.sdk.options.SdkOptions
-import com.icure.cardinal.sdk.storage.impl.FileStorageFacade
-
-suspend fun initializeMySdk(
-	userEmail: String,
-	captchaToken: String
-): CardinalSdk {
-	// The authentication with a process uses a different method, with additional parameters.
-	val authenticationStep = CardinalSdk.initializeWithProcess(
-		"MyCardinalApp",
-		"https://api.icure.cloud",
-		"https://msg-gw.icure.cloud/",
-		// Retrieve this from the cockpit, constant for your application.
-		specId,
-		// Retrieve this from the cockpit, constant for your application.
-		processId,
-		AuthenticationProcessTelecomType.Email,
-		userEmail,
-		AuthenticationProcessCaptchaType.FriendlyCaptcha,
-		captchaToken,
-		FileStorageFacade("/path/to/storage/directory"),
-		// Process template parameters are additional parameters which
-		// may be used by the SMS/email template to the user.
-		// If you are not using them in your template you can omit them.
-		AuthenticationProcessTemplateParameters(),
-		SdkOptions(
-			encryptedFields = EncryptedFieldsConfiguration(
-				patient = setOf("notes", "addresses")
-			)
-		)
-	)
-	// The authentication is not yet complete.
-	// The user will receive a mail with the validation code required to proceed.
-	val validationCode = askValidationCode()
-	return authenticationStep.completeAuthentication(validationCode)
-}
-```
-
-</TabItem>
-
-<TabItem value="typescript">
-
-```typescript
-import {
-	AuthenticationProcessCaptchaType,
-	AuthenticationProcessTelecomType,
-	CardinalSdk,
-	StorageFacade
-} from "@icure/cardinal-sdk";
-
-async function initializeMySdk(
-	userEmail: string,
-	captchaToken: string
-): Promise<CardinalSdk> {
-	// The authentication with a process uses a different method, with additional parameters.
-	const authenticationStep = await CardinalSdk.initializeWithProcess(
-		"MyCardinalApp",
-		"https://api.icure.cloud",
-		"https://msg-gw.icure.cloud/",
-		// Retrieve this from the cockpit, constant for your application.
-		specId,
-		// Retrieve this from the cockpit, constant for your application.
-		processId,
-		AuthenticationProcessTelecomType.Email,
-		userEmail,
-		AuthenticationProcessCaptchaType.FriendlyCaptcha,
-		captchaToken,
-		StorageFacade.usingFileSystem("/path/to/storage/directory"),
-		// Process template parameters are additional parameters which
-		// may be used by the SMS/email template to the user.
-		// If you are not using them in your template you can omit them.
-		{},
-		{
-			encryptedFields: {
-				patient: ["notes", "addresses"]
-			}
-		}
-	)
-	// The authentication is not yet complete.
-	// The user will receive a mail with the validation code required to proceed.
-	const validationCode = await askValidationCode()
-	return authenticationStep.completeAuthentication(validationCode)
-}
-```
-
-</TabItem>
-
-</LanguageTabs>
+Refer to the documentation [here](./captcha) to learn how to integrate them in your application.
 
 ### Authentication with secret provider
-
-:::note
-
-This authentication method is unavailable on the Cardinal python SDK
-
-:::
 
 The last authentication method supported by the SDK is based on a secret provider.
 
@@ -507,6 +619,26 @@ const auth = new AuthenticationMethod.UsingSecretProvider(
 	{ loginUsername: username }
 )
 ```
+
+</TabItem>
+
+<TabItem value="python">
+
+:::note
+
+This authentication method is unavailable on the Cardinal python SDK
+
+:::
+
+</TabItem>
+
+<TabItem value="dart">
+
+:::note
+
+This authentication method is currently unavailable on the Cardinal dart SDK
+
+:::
 
 </TabItem>
 
@@ -644,6 +776,25 @@ customStorage: StorageOptions = MyVolatileStorage()
 
 </TabItem>
 
+<TabItem value="dart">
+
+On dart currently the only storage option is the "platform default".
+This option uses the DataStore on Android and the UserDefaults on iOs.
+
+:::info
+
+The platform default will use local storage on web.  
+
+:::
+
+```dart
+import 'package:cardinal_sdk/options/storage_options.dart';
+
+final storageOptions = StorageOptions.PlatformDefault;
+```
+
+</TabItem>
+
 </LanguageTabs>
 
 ## Optional parameters
@@ -652,7 +803,7 @@ When initializing the SDK you can provide some optional configurations through t
 
 Not all optional configuration parameters are available on all platforms.
 
-:::warning
+:::caution
 
 The parameters marked as occasionally required in the following sections are actually required if certain conditions
 are met, and the SDK initialization will fail if they aren't provided.
@@ -718,6 +869,20 @@ options = SdkOptions(
 
 </TabItem>
 
+<TabItem value="dart">
+
+```dart
+import 'package:cardinal_sdk/options/sdk_options.dart';
+
+final options = SdkOptions(
+	encryptedFields: EncryptedFieldsConfiguration(
+		patient: { "notes", "addresses" }
+	)
+);
+```
+
+</TabItem>
+
 </LanguageTabs>
 
 ### Key storage
@@ -774,6 +939,16 @@ const jwkEncodedKeyStorage =
 
 </TabItem>
 
+<TabItem value="dart">
+
+:::note
+
+Custom key storage facades aren't supported on the dart SDK.
+
+:::
+
+</TabItem>
+
 </LanguageTabs>
 
 ### Group selector (occasionally required)
@@ -825,7 +1000,7 @@ that the users are sharing data with who they intend.
 
 These topics are a bit advanced, but we recommend that you read about them after you've familiarized with the cardinal SDK.
 The parameters that allow you to configure the cryptographic operations of the Cardinal SDK are:
-- `cryptoStrategies`: allows you to provide custom key generation, recovery and verification solutions (:construction:). 
+- `cryptoStrategies`: allows you to provide custom key generation, recovery and verification solutions (:construction:).
 - `createTransferKeys`: allows you to disable the automatic creation of information that allows to recover newly created
 keys using previously existing lost but verified keys of the user (:construction:).
 - `useHierarchicalDataOwners`: enables the hierarchical data owners key management when set to true.

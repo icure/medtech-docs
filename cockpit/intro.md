@@ -26,4 +26,4 @@ In Cockpit, you will be able for example to:
 
 ## Starting to use Cockpit
 
-In the [how-to](/how-to/index) section, you will find more detailed information on how to use Cockpit to perform the most common tasks.
+In the [how-to](/cockpit/how-to/index) section, you will find more detailed information on how to use Cockpit to perform the most common tasks.

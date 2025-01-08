@@ -8,6 +8,7 @@ const valueToLabel = {
   "typescript": "Typescript",
   "python": "Python",
   "swift": "Swift",
+  "dart": "Dart"
 }
 
 export function LanguageTabs({ children }) {

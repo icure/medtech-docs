@@ -5,7 +5,7 @@ according to their permissions.
 
 Only a user that is a data owner (i.e. is associated to a HealthcareParty, Patient, or Device) and has initialized their
 own encryption keys can perform operations on the encryptable fields of encryptable entities. A user that is an admin or
-that has the correct permission can access encryptable entities, but they will only be able to read and write the 
+that has the correct permission can access encryptable entities, but they will only be able to read and write the
 non-encryptable fields.
 
 For more information, check the explanation on [data owners and access control](/explanations/data-owners-and-access-control).
@@ -18,14 +18,17 @@ Any of these field of the User entity is valid as login:
 - `email`
 - `mobilePhone`
 
-As for the password, it is possible both to set a password (in the `passwordHash` field) or to use a [temporary token](/how-to/remember-me). 
+As for the password, it is possible both to set a password (in the `passwordHash` field) or to use a [temporary token](/how-to/remember-me).
 
 ## Roles
-The roles assigned to a User are stored in a nested object inside the `systemMetadata` property. Any update to this 
-property will be prohibited by the backend.
+The roles assigned to a User are stored in a nested object inside the `systemMetadata` property. It has 3 properties:
 
-To learn how to update the roles on a user, check this [how to](/how-to/define-user-roles).
+- `isAdmin` is a boolean field that is `true` if the user is an admin.
+- `roles` is a set of the names of all the roles assigned to the user.
+- `inheritsRoles` is a boolean field that is `true` if the user has no role set and so inherits the roles from the group
+configuration.
 
+Any update to this property will be prohibited by the backend. To learn how to update the roles on a user, check this [how to](/how-to/define-user-roles).
 
 ## Data Owner Users
 A User is a **Data Owner** User if exactly one of the following is true:
@@ -34,8 +37,8 @@ A User is a **Data Owner** User if exactly one of the following is true:
 - They have the id of a valid [Patient](/explanations/data-model/patient) in the `patientId` field.
 - They have the id of a valid [Device](/explanations/data-model/device) in the `deviceId` field.
 
-:::warning
-A User can be associate either to a HealthcareParty, or to a Patient, or to a Device, and it cannot be associated to 
+:::caution
+A User can be associate either to a HealthcareParty, or to a Patient, or to a Device, and it cannot be associated to
 more than one of those entities.
 :::
 
@@ -99,7 +102,7 @@ to create or update their own password or the password of any other user, even i
 :::
 
 ### patientId
-The id of the [Patient](/explanations/data-model/patient) associated to this User. If this field is not null, 
+The id of the [Patient](/explanations/data-model/patient) associated to this User. If this field is not null,
 then the `healthcarePartyId` and `deviceId` fields should be null.
 
 :::info
@@ -107,11 +110,15 @@ A User where this field is not null is a **Data Owner** User.
 :::
 
 ### systemMetadata
-This field contains internal information about the User, such as the roles. It is an internal field that cannot be
-modified manually.
+This field contains internal information about the User. It has 3 properties:
 
-To change the roles of a User, check this [how to](/how-to/define-user-roles).
+- `isAdmin` is a boolean field that is `true` if the user is an admin.
+- `roles` is a set of the ids of all the roles assigned to the user.
+- `inheritsRoles` is a boolean field that is `true` if the user has no role set and so inherits the roles from the group
+  configuration.
+
+Any update to this property will be prohibited by the backend. To learn how to update the roles on a user, check this [how to](/how-to/define-user-roles).
 
 ### status
-The status of the User. The values can be `Active`, `Disabled`, or `Registering`. Note that if a User has a `Disabled` 
+The status of the User. The values can be `Active`, `Disabled`, or `Registering`. Note that if a User has a `Disabled`
 status, it will not be able to log in.

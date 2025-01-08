@@ -7,11 +7,12 @@ import TabItem from "@theme/TabItem";
 
 # Create a Patient
 
-In Cardinal, a patient is represented by the `Patient` entity. In the following example, the user reads a first name and
-last name from the standard input and creates a patient:
+In Cardinal, a patient is represented by the `Patient` entity.
 
 <LanguageTabs>
 <TabItem value="kotlin">
+
+In the following example, the user reads a first name and last name from the standard input and instantiates a patient entity:
 
 ```kotlin
 val firstName = readln().trim()
@@ -27,6 +28,8 @@ val patient = DecryptedPatient(
 </TabItem>
 <TabItem value="python">
 
+In the following example, the user reads a first name and last name from the standard input and instantiates a patient entity:
+
 ```python
 first_name = input("First name: ")
 last_name = input("Last name: ")
@@ -40,6 +43,8 @@ patient = DecryptedPatient(
 </TabItem>
 <TabItem value="typescript">
 
+In the following example, the user reads a first name and last name from the standard input and instantiates a patient entity:
+
 ```typescript
 const firstName = await readLn("First name: ")
 const lastName = await readLn("Last name: ")
@@ -48,6 +53,20 @@ const patient = new DecryptedPatient({
 	firstName: firstName,
 	lastName: lastName,
 })
+```
+
+</TabItem>
+<TabItem value="dart">
+
+In the following example, the user instantiates a patient entity using a `firstName` and `lastName` that are provided by 
+the UI:
+
+```dart
+final patient = DecryptedPatient(
+  generateUuid(),
+  firstName: firstName,
+  lastName: lastName,
+);
 ```
 
 </TabItem>
@@ -82,6 +101,13 @@ const patientWithMetadata = await sdk.patient.withEncryptionMetadata(patient)
 ```
 
 </TabItem>
+<TabItem value="dart">
+
+```dart
+final patientWithMetadata = await sdk.patient.withEncryptionMetadata(patient);
+```
+
+</TabItem>
 </LanguageTabs>
 
 This step is mandatory and also shares the newly created Patient with the user creating it, who will initially be the only
@@ -111,13 +137,20 @@ const createdPatient = await sdk.patient.createPatient(patientWithMetadata)
 ```
 
 </TabItem>
-</LanguageTabs>
+<TabItem value="dart">
 
-Once created, the entity can be modified. In the following example, a date of birth is read from the standard input
-and added to the patient:
+```dart
+final createdPatient = await sdk.patient.createPatient(patientWithMetadata);
+```
+
+</TabItem>
+</LanguageTabs>
 
 <LanguageTabs>
 <TabItem value="kotlin">
+
+Once created, the entity can be modified. In the following example, a date of birth is read from the standard input
+and added to the patient:
 
 ```kotlin
 print("Date of birth (YYYYMMDD): ")
@@ -131,6 +164,9 @@ val updatedPatient = sdk.patient.modifyPatient(patientWithBirth)
 </TabItem>
 <TabItem value="python">
 
+Once created, the entity can be modified. In the following example, a date of birth is read from the standard input
+and added to the patient:
+
 ```python
 date_of_birth = int(input("Date of birth (YYYYMMDD): "))
 created_patient.date_of_birth = date_of_birth
@@ -140,6 +176,9 @@ updated_patient = sdk.patient.modify_patient_blocking(created_patient)
 </TabItem>
 <TabItem value="typescript">
 
+Once created, the entity can be modified. In the following example, a date of birth is read from the standard input
+and added to the patient:
+
 ```typescript
 const dateOfBirth = parseInt((await readLn("Date of birth (YYYYMMDD): ")).trim())
 const patientWithBirth = new DecryptedPatient({
@@ -147,6 +186,18 @@ const patientWithBirth = new DecryptedPatient({
 	dateOfBirth: dateOfBirth,
 })
 const updatedPatient = await sdk.patient.modifyPatient(patientWithBirth)
+```
+
+</TabItem>
+<TabItem value="dart">
+
+Once created, the entity can be modified. In the following example, a date of birth is retrieved from the UI
+and added to the patient:
+
+```dart
+int dateAsYYYYMMDD = // This is provided by the user through the UI
+createdPatient.dateOfBirth = dateAsYYYYMMDD;
+final updatedPatient = await sdk.patient.modifyPatient(createdPatient);
 ```
 
 </TabItem>
@@ -181,6 +232,13 @@ retrieved_patient = sdk.patient.get_patient_blocking(updated_patient.id)
 ```typescript
 console.log("The retrieved patient is:")
 const retrievedPatient = await sdk.patient.getPatient(updatedPatient.id)
+```
+
+</TabItem>
+<TabItem value="dart">
+
+```dart
+final retrievedPatient = sdk.patient.getPatient(updatedPatient.id);
 ```
 
 </TabItem>
