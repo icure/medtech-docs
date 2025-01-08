@@ -1,28 +1,18 @@
-# Contact
+# Calendar item
 
-The Ag is an encryptable root-level entity that records the medical information about the patient. A visit to the patient's house, a
-consultation at the practice, a phone call between the patient and the healthcare party or integrating lab reports into
-the medical file are examples of when a contact can be recorded.
-
-A Contact can occur with or without direct interaction between the patient and the healthcare party. For example, when a
-healthcare party encodes data received from laboratory's test result, this is done in the absence of a patient.
-
-A Contact groups together pieces of information collected during one single event, for one single patient and for one or
-more healthcare parties. Patient's complaints, the diagnosis of a new problem, a surgical procedure, etc. are collected
-inside a Contact.
-
-## Modifying a Closed Contact
-Each Contact has an `openingDate` and `closingDate` that represent the moments when the moment of creation of medical
-data starts and ends.
-
-Once a contact is closed (i.e. its `closingDate` is not null), it is a good practice not to modify it anymore. Instead,
-a new Contact should be created.
+The CalendarItem is an encryptable root-level entity that records the an appointment for a the patient.
 
 ## Fields Encrypted by Default
+
 By default, the following fields of this entity will be encrypted:
-- `descr`
-- The `markdown` field in all the `notes`.
-- The Services in `service`, according to their [encryption configuration](/how-to/initialize-the-sdk/configure-what-to-encrypt#contact-service-and-service-content-encryption).
+- `details`
+- `title`
+- `patientId`
+- `phoneNumber`
+- `address`
+- `addressText`
+- `meetingTags[].*`
+- `flowItem`
 
 You can customize the encrypted fields as [explained in this how to](/how-to/initialize-the-sdk/configure-what-to-encrypt).
 
@@ -31,42 +21,35 @@ You can customize the encrypted fields as [explained in this how to](/how-to/ini
 Below you will find an explanation of the most commonly used properties in the entity that are not among the
 [shared fields](/explanations/data-model/#shared-fields). For a full list, check the reference documentation (:construction:).
 
-### closingDate
-The `closingDate` represent the moment when the Contact ended.
-It is encoded as a [FuzzyDateTime](/explanations/data-model/#fuzzydatetime).
+### title
 
-### descr
-A human-readable description for the Contact.
+A human-readable description for the purpose of the appointment.
 
-### encounterLocation
-An address to record where the Contact took place.
+### details
 
-### encounterType
-A [CodeStub](/explanations/data-model/codestub) to give a context to the type of Contact using a standard terminology.
+A human-readable description for the appointment with all the details that could be of interest for the practitioner.
 
-### groupId
-The medical information contained into a single "logical" Contact can be separated into multiple Contact entities that
-share the same `groupId`. This use case is explained in more details in [this how to](/how-to/contact-group-id).
+### homeVisit
 
-### notes
-A list of textual remarks related to this Contact.
+A boolean that indicates if the appointment is a home visit.
 
-### openingDate
-The `openingDate` represent the starting moment of the event of the Contact.
-It is encoded as a [FuzzyDateTime](/explanations/data-model/#fuzzydatetime).
+### phoneNumber
 
-### participants
-The ids of all the other Data Owners that participated in this encounter, associated to their role in the encounter.
+The phone number of the patient.
 
-:::warning
-This field is not encrypted by default, so be sure of not including any Patient id in this field as it will break the
-anonymization between Contact and Patient.
-:::
+### addressText
 
-### services
-A collection of [Service](/explanations/data-model/service)s that contain the value of the examinations performed
-during the encounter.
+A human-readable description of the address where the appointment will take place.
 
-### subContacts
-A collection of [SubContact](/explanations/data-model/subcontact) to link to the containing Contact additional
-medical context, like [HealthElement](/explanations/data-model/healthelement)s or therapeutic plans.
+### duration
+
+The duration of the appointment.
+
+### agendaId
+
+The id of the Agenda where the appointment is scheduled.
+
+### hcpId
+
+The id of the healthcare party that will take care of the patient during the appointment.
+
