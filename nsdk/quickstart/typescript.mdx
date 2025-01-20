@@ -17,10 +17,41 @@ developing your application.
 To use the Cardinal SDK on node, you need node 19 or greater.
 
 :::
+## Template app
+
+We provide a [template for TypeScript](https://github.com/icure/cardinal-introductory-tutorial) that showcases several self-contained use cases that highlight the main features of the Cardinal SDK.
+
+### Launching the Tutorial in Typescript
+To run the tutorial in Typescript, clone this repository:
+
+```typescript
+git clone https://github.com/icure/cardinal-introductory-tutorial.git
+cd cardinal-introductory-tutorial
+```
+
+The minimum supported Node version is 19. You can install it using [nvm](https://github.com/nvm-sh/nvm).
+
+```typescript
+nvm install 19
+nvm use 19
+```
+
+Then, you can navigate to the typescript directory and install the required dependencies using yarn.
+
+```typescript
+cd typescript
+yarn install
+```
+
+Finally, run the example Typescript code using [yarn](https://yarnpkg.com/):
+
+```typescript
+yarn ts-node --esm src/main.ts
+```
 
 ## Boilerplate
 
-We provide boilerplates for [React](https://github.com/icure/cardinal-sdk-react-js-template) and [Node.js](https://github.com/icure/icure-medical-device-node-js-boilerplate-app-template/) that already includes
+We provide a [boilerplate for React](https://github.com/icure/cardinal-sdk-react-js-template) that already includes
 the dependencies, the registration/login flow, and some example usage of the sdk.
 
 ## Cardinal SDK Introductory Tutorial
