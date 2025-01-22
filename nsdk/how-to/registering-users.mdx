@@ -64,7 +64,7 @@ suspend fun registerAndLogin(
 	val authStep = CardinalSdk.initializeWithProcess(
 		"com.mycompany.mycardinalapp",
 		"https://api.icure.cloud",
-		"https://msg-gw.icure.cloud/",
+		"https://msg-gw.icure.cloud",
 		SPEC_ID,
 		REGISTRATION_PROCESS_ID,
 		AuthenticationProcessTelecomType.Email,
@@ -107,7 +107,7 @@ async function registerAndLogin(
 	const authStep = await CardinalSdk.initializeWithProcess(
 		"com.mycompany.mycardinalapp",
 		"https://api.icure.cloud",
-		"https://msg-gw.icure.cloud/",
+		"https://msg-gw.icure.cloud",
 		SPEC_ID,
 		REGISTRATION_PROCESS_ID,
 		AuthenticationProcessTelecomType.Email,
@@ -260,7 +260,7 @@ suspend fun login(
 	val authStep = CardinalSdk.initializeWithProcess(
 		"com.mycompany.mycardinalapp",
 		"https://api.icure.cloud",
-		"https://msg-gw.icure.cloud/",
+		"https://msg-gw.icure.cloud",
 		SPEC_ID,
 		LOGIN_PROCESS_ID,
 		AuthenticationProcessTelecomType.Email,
@@ -298,7 +298,7 @@ async function login(
 	const authStep = await CardinalSdk.initializeWithProcess(
 		"com.mycompany.mycardinalapp",
 		"https://api.icure.cloud",
-		"https://msg-gw.icure.cloud/",
+		"https://msg-gw.icure.cloud",
 		SPEC_ID,
 		LOGIN_PROCESS_ID,
 		AuthenticationProcessTelecomType.Email,
