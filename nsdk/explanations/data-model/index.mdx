@@ -48,16 +48,18 @@ In the following section, the chronological entities and different structural el
 ```mermaid
 erDiagram
     Patient ||--o{ HealthElement : has
+    Patient ||--o{ Form : has
     Patient ||--o{ Contact : has
     Contact ||--o{ Sub-Contact : divided-in
     Sub-Contact }o--o{ Service : contains
     Contact ||--o{ Service : contains
     Sub-Contact }o--o| HealthElement : linked
+    Sub-Contact }o--o| Form : linked
 ```
 
 #### Contact
 
-Every time a patient consults a healthcare party or every time a healthcare party accesses a patient's medical file, the actions performed are recorded and collected inside a _contact_. The _contact_ is the entity that records the medical information about the _patient_ chronologically. A visit to the patient's house, a consultation at the practice, a phone call between the patient and the HCP or integrating lab reports into the medical file are examples of when a _contact _can be recorded.
+Every time a patient consults a healthcare party or every time a healthcare party accesses a patient's medical file, the actions performed are recorded and collected inside a _contact_. The _contact_ is the entity that records the medical information about the _patient_ chronologically. A visit to the patient's house, a consultation at the practice, a phone call between the patient and the HCP or integrating lab reports into the medical file are examples of when a _contact_ can be recorded.
 
 A contact can occur with or without direct interaction between the patient and the HCP. For example, when a healthcare party encodes data received from laboratory's test result, this is done in the absence of a patient.
 
