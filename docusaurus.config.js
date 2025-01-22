@@ -202,7 +202,7 @@ async function createConfig() {
                 prism: {
                     theme: lightCodeTheme,
                     darkTheme: darkCodeTheme,
-                    additionalLanguages: ["kotlin"]
+                    additionalLanguages: ["kotlin", "dart"]
                 },
                 algolia: {
                     // The application ID provided by Algolia

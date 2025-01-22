@@ -207,6 +207,12 @@ val process = CardinalSdk.initializeWithProcess(
 )
 ```
 
+:::tip
+
+The `onProgress` callback is optional.
+
+:::
+
 </TabItem>
 
 <TabItem value = "typescript">
@@ -232,15 +238,15 @@ const authenticationStep = await CardinalSdk.initializeWithProcess(
 )
 ```
 
+:::tip
+
+The `onProgress` callback is optional.
+
+:::
+
 </TabItem>
 
 <TabItem value="dart">
-
-:::note
-
-The Cardinal dart SDK doesn't support the onProgress callback.
-
-:::
 
 ```dart
 import 'package:cardinal_sdk/auth/authentication_process_telecom_type.dart';
@@ -261,15 +267,15 @@ final authenticationStep = CardinalSdk.initializeWithProcess(
 );
 ```
 
+:::note
+
+The Cardinal dart SDK doesn't support the onProgress callback for Kerberus delegated captcha options.
+
+:::
+
 </TabItem>
 
 </LanguageTabs>
-
-:::tip
-
-`onProgress` callback is optional.
-
-:::
 
 ### Smoothening the user experience
 
@@ -400,7 +406,15 @@ async function getAndSolveKerberusChallenge(): Promise<Solution> {
 
 <TabItem value="dart">
 
+:::note
 
+You will need to add the [kerberus package](https://pub.dev/packages/kerberus).
+
+```bash
+flutter pub add kerberus 
+```
+
+:::
 
 ```dart
 import 'package:cardinal_sdk/auth/authentication_process_telecom_type.dart';
@@ -417,32 +431,32 @@ const specId = "SPEC_ID"; // fill from cockpit
 const processId = "PROCESS_ID"; // fill from cockpit
 
 Future<AuthenticationWithProcessStep> startSdkAuth(
-    String userEmail
-    ) async {
-  return CardinalSdk.initializeWithProcess(
-    "com.mycompany.mycardinalapp",
-    "https://api.icure.cloud",
-    msgGwUrl,
-    specId,
-    processId,
-    AuthenticationProcessTelecomType.email,
-    userEmail,
-    CaptchaOptions.KerberusComputed(await getAndSolveKerberusChallenge()),
-    StorageOptions.PlatformDefault,
-  );
+	String userEmail
+) async {
+	return CardinalSdk.initializeWithProcess(
+		"com.mycompany.mycardinalapp",
+		"https://api.icure.cloud",
+		msgGwUrl,
+		specId,
+		processId,
+		AuthenticationProcessTelecomType.email,
+		userEmail,
+		CaptchaOptions.KerberusComputed(await getAndSolveKerberusChallenge()),
+		StorageOptions.PlatformDefault,
+	);
 }
 
 Future<Solution> getAndSolveKerberusChallenge() async {
-  final challengeRequestResponse = await http.get(Uri.parse("$msgGwUrl/$specId/challenge"));
-  if (challengeRequestResponse.statusCode != 200) {
-    throw Exception('Failed to get challenge');
-  }
-  final kerberusSolution = await resolveChallenge(
-      Challenge.fromJsonString(challengeRequestResponse.body),
-      specId,
-      onProgress: (progress) => print(progress)
-  );
-  return Solution(kerberusSolution.id, kerberusSolution.nonces);
+	final challengeRequestResponse = await http.get(Uri.parse("$msgGwUrl/$specId/challenge"));
+	if (challengeRequestResponse.statusCode != 200) {
+		throw Exception('Failed to get challenge');
+	}
+	final kerberusSolution = await resolveChallenge(
+		Challenge.fromJsonString(challengeRequestResponse.body),
+		specId,
+		onProgress: (progress) => print(progress)
+	);
+	return Solution(kerberusSolution.id, kerberusSolution.nonces);
 }
 ```
 
