@@ -170,7 +170,7 @@ Access control with the legacy delegations is very limited: once a data owner ga
 - When a data owner creates a new delegation for an entity he creates it as a child to his delegation
 - Children delegations can not have higher permissions than their parent delegations: if a data owner has read-only permissions on an entity he is not allowed to share the entity with read-write permissions.
 - Data owners can only modify their delegations or descendants of their delegations
-- A data owner can't increase the permissions on his delegation, but can freely modify the permissions in his descendants as long as the permissions of each delegation is lower or equal to the parent. In cases where a data owner has a delegation that is also a descendant to another of his delegations he may freely modify it (still respecting the child permission <= parent permissions relationship).
+- A data owner can't increase the permissions on his delegation, but can freely modify the permissions in his descendants as long as the permissions of each delegation is lower or equal to the parent. In cases where a data owner has a delegation that is also a descendant to another of his delegations he may freely modify it (still respecting the child permission ≤ parent permissions relationship).
 
 :::info
 
