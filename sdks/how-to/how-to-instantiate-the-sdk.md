@@ -75,9 +75,9 @@ When instantiating the `Simple{{CodeSdkName}}CryptoStrategies` you can pass the 
   is available here, and if yes it will load it in the storage.
 - `anonymousDataOwnerTypes`: the types of data owner types which should remain "anonymous" in the sharing metadata of 
   entities (by default only Patient data owners). You can learn about why this is needed and what anonymous data sharing
-  implies by reading the [corresponding section in the in-depth crypto strategies documentation](/{{sdk}}/explanations/crypto-strategies#anonymous-data-sharing).  
+  implies by reading the [corresponding section in the in-depth crypto strategies documentation](/{{sdk}}/explanations/end-to-end-encryption/crypto-strategies#anonymous-data-sharing).  
 
 To learn more about the Crypto Strategies, their purpose and how to implement them for your own application you can read 
-the [dedicated page](/{{sdk}}/explanations/crypto-strategies).
+the [dedicated page](/{{sdk}}/explanations/end-to-end-encryption/crypto-strategies).
 
 

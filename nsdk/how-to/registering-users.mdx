@@ -6,15 +6,15 @@ import {LanguageTabs} from "@site/src/components/LanguageTabs";
 There are two primary approaches you can use to enroll new users in your application using the Cardinal SDK:
 self-registration and invitation-based registration.
 
-The self-registration approach allows new users to register autonomously through your application by providing basic 
+The self-registration approach allows new users to register autonomously through your application by providing basic
 information such as their email address, name, and other details.
-For example, you could do use this approach in a patient-oriented digital wellbeing application. 
+For example, you could do use this approach in a patient-oriented digital wellbeing application.
 
-The invitation-based approach, on the other hand, requires that new users are invited by administrators or other users 
+The invitation-based approach, on the other hand, requires that new users are invited by administrators or other users
 with certain permissions.
 For example, you could use this approach in an EHR application for general practitioners, which will be invited directly
 by you.
-Meanwhile, a related application that allows patients to view digital prescriptions created through the first 
+Meanwhile, a related application that allows patients to view digital prescriptions created through the first
 application could have the doctors inviting their patients.
 
 You can also combine both approaches in your applications.
@@ -26,9 +26,9 @@ For example, HCP users might require an invitation, while patient users can regi
 If you want to allow users to self-register in your application, you first need to create a registration process for the
 application through the cockpit (:construction:).
 
-You can register the user to your application by initializing an instance of the Cardinal SDK using the registration 
-process id. 
-For more information on how to instantiate the SDK using a process, refer to the 
+You can register the user to your application by initializing an instance of the Cardinal SDK using the registration
+process id.
+For more information on how to instantiate the SDK using a process, refer to the
 [SDK initialization documentation](/how-to/initialize-the-sdk/#authentication-with-a-process).
 
 :::note
@@ -128,7 +128,7 @@ async function registerAndLogin(
 
 :::info
 
-After registration, the user can login again using the same process as for registration, since registration processes 
+After registration, the user can login again using the same process as for registration, since registration processes
 can also work as login processes.
 However, if you want to use a different template for the login email or sms you will need to create a login process.
 
@@ -141,12 +141,12 @@ to use for future login.
 
 If you want to allow users to register only through invitation, you first need to create a login process for the
 application or for the solution through the cockpit (:construction:).
-Make sure to not create a registration process instead, as this could allow malicious actors to retrieve the process 
+Make sure to not create a registration process instead, as this could allow malicious actors to retrieve the process
 ID from your application and use it to register users bypassing the invitation requirement.
 
 To implement the invitation system, you will have to use the Cardinal SDK to create the data owner for the new user (if
-it doesn't already exist), and a user linked to the data owner. 
-You need to specify at least the email or mobile phone for the newly created user, otherwise they will not be able to 
+it doesn't already exist), and a user linked to the data owner.
+You need to specify at least the email or mobile phone for the newly created user, otherwise they will not be able to
 login.
 
 <LanguageTabs>
@@ -227,11 +227,11 @@ def invite_existing_patient_as_user(
 
 </LanguageTabs>
 
-After that the new user can login using the provided email/phone and a login process for your application or solution.  
+After that the new user can login using the provided email/phone and a login process for your application or solution.
 
 :::note
 
-You can invite users from the Cardinal python SDK, but they will only be able to login using other SDKs, since 
+You can invite users from the Cardinal python SDK, but they will only be able to login using other SDKs, since
 authentication with processes is not supported on python.
 
 :::
@@ -334,7 +334,7 @@ Since this is usually an issue for most applications, the SDK provides a method 
 encryption metadata of the current user's patient.
 The `ensureEncryptionMetadataForSelfIsInitialized` method of the patient api will:
 - Initialize an encryption key and secret id for the patient if there is no encryption metadata initialized
-- Initialize a secret id for the patient if the encryption metadata is already initialized, and there is no secret id 
+- Initialize a secret id for the patient if the encryption metadata is already initialized, and there is no secret id
   available to the current user.
 - If there is already a secret id available to the current user the method does nothing.
 
@@ -419,13 +419,13 @@ of creating a new secret id through the `ensureEncryptionMetadataForSelfIsInitia
 ### Ensuring the doctor can find data created by the patient
 
 If there was already some encryption metadata initialized for the current user's patient, and the
-`ensureEncryptionMetadataForSelfIsInitialized` created a new [secret id](/explanations/encrypted-links) for it,
-any data owner that had access to the patient won't be able to find new data you created by the patient when they use 
+`ensureEncryptionMetadataForSelfIsInitialized` created a new [secret id](/explanations/end-to-end-encryption/encrypted-links) for it,
+any data owner that had access to the patient won't be able to find new data you created by the patient when they use
 [filters](/how-to/querying-data).
 
 If you want to make sure that other users will be able to find the data created by the patient user you can pass the
 id of those data owners to the `ensureEncryptionMetadataForSelfIsInitialized` method.
-This will cause any encryption metadata created by that method to be immediately shared with these data owners (note 
+This will cause any encryption metadata created by that method to be immediately shared with these data owners (note
 that this also includes the encryption key if the patient had no encryption metadata initialized).
 
 ## Pre-sharing data with invited patients {#pre-share}
@@ -434,7 +434,7 @@ A common scenario that may occur in your application is a patient being invited 
 In this scenario the doctor wants to immediately share the data from the current visit (and potentially past visits)
 with the patient so that they can see it as soon as they log in.
 However, the patient typically won't log in during the visit and, as a result, won't have any keypair generated.
-Since the SDK forbids sharing data with data owners who don't have a keypair (as this is usually a mistake), the 
+Since the SDK forbids sharing data with data owners who don't have a keypair (as this is usually a mistake), the
 doctor will be unable to share the data right after inviting the patient using the standard sharing mechanisms.
 
 To cover this specific scenario, the Cardinal SDK provides a method to allow you to forcefully start sharing data with a
@@ -442,22 +442,22 @@ patient even if they don't have yet initialized a keypair.
 
 The full process is:
 
-1. Use the doctor SDK to call the `forceInitializeExchangeDataToNewlyInvitedPatient` method on the patient API. 
+1. Use the doctor SDK to call the `forceInitializeExchangeDataToNewlyInvitedPatient` method on the patient API.
    This will initialize the metadata necessary to share data from the doctor to the patient even if the patient has no
    keypair, returning true if it was indeed necessary.
-2. Use the doctor SDK to share all data that the patient needs to access using the standard "share with" methods of the 
+2. Use the doctor SDK to share all data that the patient needs to access using the standard "share with" methods of the
    various [entities apis](/how-to/basic-operations#sharing).
 3. If the method at step 1 returned `true`, the exchange data that was forcefully initialized (and therefore all data
-   shared at step 2) will not be immediately accessible to the patient. 
+   shared at step 2) will not be immediately accessible to the patient.
    To complete the sharing procedure, you will need to:
    1. Create exchange data recovery information for the patient using the doctor's SDK.
    2. Give the key to the recovery data to the patient.
-      This could be done using physical means, such as a custom QR code, or using an email. 
-   3. When the patient logins and initializes a keypair they can provide the recovery key to get access to all the 
+      This could be done using physical means, such as a custom QR code, or using an email.
+   3. When the patient logins and initializes a keypair they can provide the recovery key to get access to all the
       pre-shared.
-      In this case you shouldn't use the `ensureEncryptionMetadataForSelfIsInitialized` until after using the recovery 
+      In this case you shouldn't use the `ensureEncryptionMetadataForSelfIsInitialized` until after using the recovery
       key, since the doctor may have pre-shared the patient, or if you're certain of it, there is no need to use the
-      method at all.  
+      method at all.
 4. The doctor can still share more data like in step 2 without having to recreate the exchange data recovery information.
 
 The process on the doctor app side could be:

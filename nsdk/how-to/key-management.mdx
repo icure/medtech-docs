@@ -1,7 +1,7 @@
 import {LanguageTabs} from "@site/src/components/LanguageTabs";
 import TabItem from "@theme/TabItem";
 
-# Key management and data recovery 
+# Key management and data recovery
 
 The Cardinal SDK uses end-to-end encryption to protect your end-users' data, ensuring that only the original creator and
 their authorized users can decrypt it.
@@ -11,18 +11,18 @@ A drawback of this approach, however, is that if the user loses their key, they 
 neither you nor the cardinal team can help to recover it.
 
 When using the Cardinal SDK you should educate the user on the importance of their key, and provide backup and recovery
-solutions to prevent catastrophic loss of data. 
-The Cardinal SDK provides support for different backup and recovery options so that you can use the best solution for 
+solutions to prevent catastrophic loss of data.
+The Cardinal SDK provides support for different backup and recovery options so that you can use the best solution for
 your application.
 
 In general, there are three categories of approaches you can take:
 - Create backup of the user keys
 - Share data with multiple users and ask for access back in case of key loss
 - Use the notary system to safely share a backup of the key with other people
-  
+
 :::danger
 
-If a user loses their key and can't get it back through a backup or through notaries, any data they've created and 
+If a user loses their key and can't get it back through a backup or through notaries, any data they've created and
 haven't shared with other users will be permanently lost.
 
 :::
@@ -30,30 +30,30 @@ haven't shared with other users will be permanently lost.
 ## Creating and using key backups
 
 The Cardinal SDK automatically stores and retrieves keys using the (key) storage facade provided during initialization.
-However, if the storage is cleared, you will need to recover the user's keys before they can access their data. 
-This could occur, for instance, if you're building a web app that uses local storage, and the user deletes their 
+However, if the storage is cleared, you will need to recover the user's keys before they can access their data.
+This could occur, for instance, if you're building a web app that uses local storage, and the user deletes their
 browsing data.
 In mobile or desktop applications, this might happen if the user changes their device.
 
-To prevent data loss, we recommend including a solution in your application to export/backup and recover user keys 
+To prevent data loss, we recommend including a solution in your application to export/backup and recover user keys
 before release.
 
 ### Exporting available keys
 
-You can use the `currentDataOwnerKeys` method from the crypto api to access all the keys for the current data owner 
+You can use the `currentDataOwnerKeys` method from the crypto api to access all the keys for the current data owner
 available to the SDK.
-If you're using [hierarchical data owners](/how-to/share-data-with-many-users) the SDK will also give all keys available 
+If you're using [hierarchical data owners](/how-to/share-data-with-many-users) the SDK will also give all keys available
 for parent data owners.
 
 The method returns the keys as a map `data owner id (self or parent) → key fingerprint → private key in pkcs8 format`.
-You can export the keys any way you think fits your application, but we suggest keeping this structure as it will 
+You can export the keys any way you think fits your application, but we suggest keeping this structure as it will
 simplify the re-import process.
 
 <LanguageTabs>
 
 <TabItem value="kotlin">
 
-On kotlin/jvm we can encode the map as json, encoding the pkcs8 key bytes as base64, then save it to a file 
+On kotlin/jvm we can encode the map as json, encoding the pkcs8 key bytes as base64, then save it to a file
 
 ```kotlin
 import com.icure.cardinal.sdk.CardinalSdk
@@ -115,8 +115,8 @@ If one or more keys are missing, the SDK will try to use the `CryptoStrategies` 
 
 :::note
 
-In this how-to we cover only the basic principles of key recovery. 
-We recommend reading the [crypto strategies](/explanations/crypto-strategies) documentation to have a better 
+In this how-to we cover only the basic principles of key recovery.
+We recommend reading the [crypto strategies](/explanations/end-to-end-encryption/crypto-strategies) documentation to have a better
 understanding about how to customize the way the Cardinal SDK manages the user keys and handles end-to-end encryption.
 
 :::
@@ -201,7 +201,7 @@ suspend fun initializeSdk(
 
 <TabItem value="typescript">
 
-On browser you can ask the user to upload the file with the previously exported keys. 
+On browser you can ask the user to upload the file with the previously exported keys.
 
 ```typescript
 import {
@@ -315,7 +315,7 @@ async function initializeSdk(
 
 ### Export newly created key
 
-During initialization, the SDK ensures that the logged user has at least a key available. 
+During initialization, the SDK ensures that the logged user has at least a key available.
 If the user doesn't have a key, or if none of their keys was found in the storage or recovered by the crypto strategies,
 the SDK needs to create a new key.
 
@@ -412,23 +412,23 @@ Exporting the keys of the user as files, like shown in the previous examples, ca
 However, managing files on a mobile device is often a cumbersome operation.
 A more user-friendly solution for mobile applications could be to use QR codes: you could allow your users to instantly
 recover keys using a QR code generated in the past, or generated on-the-fly by another device that has the key.
-However, if you try to generate a QR code for an RSA key, you can see that the resulting code is quite big, and older or 
+However, if you try to generate a QR code for an RSA key, you can see that the resulting code is quite big, and older or
 low-end devices may have troubles reading it.
 
 To help with this issue, you can use the recovery data system of the Cardinal SDK.
 The recovery data system allows storing encrypted data on the Cardinal backend using a small encryption key (AES-128 or
 AES-256 &rarr; 16 or 32 bytes).
-Your user can create recovery data containing his private keys and save the encryption key for the recovery data 
+Your user can create recovery data containing his private keys and save the encryption key for the recovery data
 somewhere.
 At a later moment, if the user loses their private keys, they can login and use the recovery data key to get them back.
 
 This way, instead of having to provide all the missing keys the user has to provide only the recovery data key.
-This allows recovery with smaller QR codes, or even with manual input if you encode the recovery key using 
+This allows recovery with smaller QR codes, or even with manual input if you encode the recovery key using
 human-friendly representation such as base32.
 
 <LanguageTabs>
 
-<TabItem value="kotlin"> 
+<TabItem value="kotlin">
 
 ```kotlin
 import com.icure.cardinal.sdk.CardinalSdk
@@ -587,7 +587,7 @@ class MyCryptoStrategies extends CryptoStrategies {
 If a user is using the cardinal SDK from multiple devices, you should make sure the same private keys are available on
 both devices.
 If the same user is logged in on two different devices with different available private keys, the data available on a
-device could be different from the data available on the other. 
+device could be different from the data available on the other.
 
 To prevent this situation from happening, we suggest that you provide a simple way to copy keys from a device to another.
 For example, you could use the recovery data mechanism explained previously to create some short-lived key recovery
@@ -724,7 +724,7 @@ class MyCryptoStrategies extends CryptoStrategies {
 
 </LanguageTabs>
 
-Now the recipient of the give-access-back can respond to it and give back access to the user: this can be done either 
+Now the recipient of the give-access-back can respond to it and give back access to the user: this can be done either
 directly by updating the give-access-back with the new public key of the requester, or indirectly by using the recovery
 data system.
 
@@ -734,8 +734,8 @@ Both give-access-back solutions don't need to directly update the medical data.
 Even if you have thousands of contacts and patients with different encryption keys shared between the sender and
 recipient of the give-access-back request, there is no need to update them to resolve the request.
 
-The only entities updated by the give-access-back request are the metadata entities used to store the 
-[exchange keys](/explanations/cryptography-details).
+The only entities updated by the give-access-back request are the metadata entities used to store the
+[exchange keys](/explanations/end-to-end-encryption/cryptography-details).
 
 :::
 
@@ -744,7 +744,7 @@ The only entities updated by the give-access-back request are the metadata entit
 The recovery data mechanism explained earlier for recovery of private keys can also be used with the give-access-back
 mechanism.
 In this case, the recipient of the give-access-back request can create recovery data containing the decrypted
-[exchange keys](/explanations/cryptography-details) between the sender and recipient of the request.
+[exchange keys](/explanations/end-to-end-encryption/cryptography-details) between the sender and recipient of the request.
 The recipient can now share the recovery data key with the sender, which the sender can use to access again all exchange
 keys, and in turn all entities, shared between them.
 
@@ -811,7 +811,7 @@ async function useRecoveryDataFromGiveAccessBack(
 
 :::info
 
-When using the exchange data recovery key the SDK will automatically update the exchange data between the sender and 
+When using the exchange data recovery key the SDK will automatically update the exchange data between the sender and
 recipient of the give-access-back request, so that the sender can access it with their new private key.
 
 :::
@@ -819,7 +819,7 @@ recipient of the give-access-back request, so that the sender can access it with
 ### Direct give-access-back using new public key
 
 If the give-access-back request includes the public key of the sender, then the recipient can directly update the
-[exchange keys](/explanations/cryptography-details) to allow the sender to access them through their new personal key.
+[exchange keys](/explanations/end-to-end-encryption/cryptography-details) to allow the sender to access them through their new personal key.
 
 This could be done, for example, if the give-access-back request was done through maintenance tasks:
 
@@ -912,7 +912,7 @@ async function promptGiveAccessBackConfirmation(request: KeyPairUpdateNotificati
 We strongly recommend using this give-access-back solution only if you're using external solutions to verify the
 authenticity of the public keys stored in the Cardinal backend.
 
-For more information, we recommend reading the [end-to-end encryption explanation page](/explanations/end-to-end-encryption) 
+For more information, we recommend reading the [end-to-end encryption explanation page](/explanations/end-to-end-encryption)
 
 :::
 
@@ -921,7 +921,7 @@ For more information, we recommend reading the [end-to-end encryption explanatio
 :construction: This section is under construction :construction:
 
 The notary system is an alternative to key backups.
-Instead of (or in addition to) a private backup of the key, a user can designate a group of trusted notaries that each 
+Instead of (or in addition to) a private backup of the key, a user can designate a group of trusted notaries that each
 will hold a piece of the user's private key.
 If the user loses his key, he can ask the notaries for the piece of key they were holding and reconstruct the full key.
 
@@ -931,11 +931,11 @@ created.
 This system is safer than directly sharing a key backup or medical data because even if some notaries (depending on the
 chosen threshold) become untrustworthy, the data remains secure.
 
-The notaries system enables secure data recovery even when the data was never explicitly shared with other users, a 
-critical requirement for some systems. 
-For instance, consider a Cardinal-based EHR application used by a solo GP. 
+The notaries system enables secure data recovery even when the data was never explicitly shared with other users, a
+critical requirement for some systems.
+For instance, consider a Cardinal-based EHR application used by a solo GP.
 The data is end-to-end encrypted, meaning only the GP can read it.
-If the GP were to go missing, patient data would be lost permanently, which would not only be a disservice to most 
+If the GP were to go missing, patient data would be lost permanently, which would not only be a disservice to most
 patients but could also delay treatment to patients with life-threatening conditions.
-However, if the GP had designated notaries, the private key can be recovered, allowing access to patient data even in 
+However, if the GP had designated notaries, the private key can be recovered, allowing access to patient data even in
 this extreme scenario.

@@ -80,7 +80,7 @@ And that's it ! You're now all set to add new functionalities in your Python Ser
 When you called `http://127.0.0.1:3000` for the first time, as no cryptographic keys could be detected, neither in the localStorage location, neither in the `config.ini` file, 
 the `IcureSDk` logic created a new keypair for your parent organisation and saved them in the localStorage folder.
 
-You can find the details of this implementation in the file `src/sdk.py`, in the `MyCryptoStrategies` class. You can learn more about how to customize this behaviour in the [CryptoStrategies explanation](../explanations/crypto-strategies).
+You can find the details of this implementation in the file `src/sdk.py`, in the `MyCryptoStrategies` class. You can learn more about how to customize this behaviour in the [CryptoStrategies explanation](../explanations/end-to-end-encryption/crypto-strategies).
 
 Calling `http://127.0.0.1:3000/` a second time, the keys being already created, no additional operation is needed and the information of your {{hcp}} are directly returned. 
 

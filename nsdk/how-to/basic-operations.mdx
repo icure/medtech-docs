@@ -263,7 +263,7 @@ def create_health_element_for_patient(
 
 :::info
 
-Refer to the [encrypted links explanation page](/explanations/encrypted-links) to learn more about how the
+Refer to the [encrypted links explanation page](/explanations/end-to-end-encryption/encrypted-links) to learn more about how the
 encrypted links works.
 
 :::
@@ -633,19 +633,19 @@ If you want to learn more about the querying system refer to the [dedicated page
 Access to non-encryptable entities is restricted only by the permissions available to the user.
 Some types of non-encryptable entities are fully accessible to all users regardless of their permissions (such as codes)
 while others require specific permissions (devices).
-There are also entities that have partially restricted access. 
+There are also entities that have partially restricted access.
 For example, any user may get an `HealthcareParty`, regardless of their permissions, but if the user doesn't have the
 `HealthcarePartyManagement.FullRead` permission part of the returned entity content will be omitted.
-Finally, for some types of entities, there is a "Search" permission that is required to use the various query methods. 
+Finally, for some types of entities, there is a "Search" permission that is required to use the various query methods.
 
-For encryptable entities, instead, the user needs to have explicit access to the retrieved entity. 
+For encryptable entities, instead, the user needs to have explicit access to the retrieved entity.
 This is only possible if the user created the entity, or if another user with access to the entity [shared](#sharing) it with
-the user. 
-There are some permissions that allow to relax or bypass this restriction. 
+the user.
+There are some permissions that allow to relax or bypass this restriction.
 For example in the case of `Patient`s:
 - If the user has the `PatientManagement.ExtendedRead.Any` permission they can get any patient, regardless of whether
   they have explicit read access to the entity or not.
-  This permission is also necessary to use certain filters that don't restrict the search to only entities shared with 
+  This permission is also necessary to use certain filters that don't restrict the search to only entities shared with
   the user.
 - If the user has the `PatientManagement.ExtendedRead.DelegatedToParents` permission they can get also patient that are
   shared with one of their [parent data owners](/how-to/share-data-with-many-users).
@@ -701,7 +701,7 @@ def set_patient_note(sdk: CardinalSdk, patient: DecryptedPatient, new_note: str)
 
 The update method returns the updated entity with a new revision.
 
-This method requires that the revision of the entity you pass matches the revision stored in the backend. 
+This method requires that the revision of the entity you pass matches the revision stored in the backend.
 In case of a mismatch, the method will fail and throw a *Conflict* exception.
 
 This could happen if another user updated the entity after you retrieved it and before you committed the update, which
@@ -815,13 +815,13 @@ entity with other delegates.
 For each non-encryptable entity type there are permissions that allow users to update the entities.
 
 For encryptable entities, the user instead needs to have write access to the entity being updated.
-This is the case if the user created the entity or if another user with write access to the entity shared it with the 
+This is the case if the user created the entity or if another user with write access to the entity shared it with the
 user and granted the write access.
-Similarly to the read permissions, there are also extended update permissions that allow to bypass or relax this 
-requirement. 
+Similarly to the read permissions, there are also extended update permissions that allow to bypass or relax this
+requirement.
 
-Finally, for both encryptable and non-encryptable entities, there are some fields that are protected by additional 
-permissions: to modify these fields, the user needs the standard update permission and the permission to modify that 
+Finally, for both encryptable and non-encryptable entities, there are some fields that are protected by additional
+permissions: to modify these fields, the user needs the standard update permission and the permission to modify that
 piece of protected content.
 
 Some permissions allow users to bypass this requirement.
@@ -838,14 +838,14 @@ Removing the marker from a soft deleted entity restores it.
 You can soft-delete entities using the `delete` methods and you can restore soft-deleted entities using the `undelete`
 methods.
 
-Hard deletion, instead, destroys the data. 
-When you hard-delete an entity, it will be removed from the database, and you won't be able to restore its content 
+Hard deletion, instead, destroys the data.
+When you hard-delete an entity, it will be removed from the database, and you won't be able to restore its content
 anymore.
 You can hard-delete entities using the `purge` methods.
 
-Similarly to the update methods, the `delete`, `undelete`, and `purge` methods requires that you provide the latest 
+Similarly to the update methods, the `delete`, `undelete`, and `purge` methods requires that you provide the latest
 revision of the affected entity, or the method will fail and throw a *conflict* exception.
-Each of these methods comes in two variants: one variant takes in input the full entity to update, and the other 
+Each of these methods comes in two variants: one variant takes in input the full entity to update, and the other
 (*byId*) takes directly the id and rev of the entity.
 
 <LanguageTabs>
@@ -929,7 +929,7 @@ update method.
 
 For the purge methods on non-encryptable entities there is a corresponding permission.
 
-On encryptable entities the user needs write access and the purge permission for that entity (for example 
+On encryptable entities the user needs write access and the purge permission for that entity (for example
 `PatientManagement.Purge` for purging patients).
 Like for the retrieve and update methods, there are extended purge permissions that allow to relax or bypass the entity
 access requirements.

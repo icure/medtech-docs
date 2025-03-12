@@ -9,19 +9,19 @@ The operations that a user can do on an entity are determined by two factors:
 - Whether the entity was shared with the user (if the entity is encryptable and the user a Data Owner).
 
 This how-to focuses on assigning and removing roles from a user. You can read more about permissions and Data Owner
-users in [this explanation](/explanations/data-owners-and-access-control).
+users in [this explanation](/explanations/end-to-end-encryption/data-owners-and-access-control).
 
 ## Check user roles
 The user roles information are stored in the [systemMetadata](/explanations/data-model/user#systemmetadata) property.
-This property has 3 fields: 
+This property has 3 fields:
 
 - `isAdmin` is a boolean field that is `true` if the user is an admin.
 - `roles` is a set of the ids of all the roles assigned to the user.
-- `inheritsRoles` is a boolean field that is `true` if the user has no role set and so inherits the default roles from 
+- `inheritsRoles` is a boolean field that is `true` if the user has no role set and so inherits the default roles from
 the group configuration.
 
 ## Default Roles
-Each database has its own default roles, that are set when the group is created. You can edit the default roles and 
+Each database has its own default roles, that are set when the group is created. You can edit the default roles and
 check which permissions they grant in the Cockpit (:construction:).
 
 Roles are assigned based on the user type:
@@ -65,7 +65,7 @@ all_roles = sdk.role.get_all_roles_blocking()
 
 </LanguageTabs>
 
-Then, you can update the roles for a user adding the id of the new role to the existing ones for the user. For the 
+Then, you can update the roles for a user adding the id of the new role to the existing ones for the user. For the
 sake of the example, we will use the first role in the result.
 
 <LanguageTabs>
@@ -105,8 +105,8 @@ sdk.user.add_roles_to_user_blocking(userId, user.system_metadata.roles + [all_ro
 Now the users has all their previous roles plus the new one.
 
 :::warning
-This operation sets the roles for a user, so it can be used both to add and remove roles: to add a role, just like in 
-the example, you have to pass all the previous roles plus the ones that you want to add. To remove a role, you have to 
+This operation sets the roles for a user, so it can be used both to add and remove roles: to add a role, just like in
+the example, you have to pass all the previous roles plus the ones that you want to add. To remove a role, you have to
 pass all the previous roles except for the one that you want to remove.
 :::
 :::note
@@ -114,7 +114,7 @@ You can also modify the roles of a user manually in the Cockpit (:construction:)
 :::
 
 ## Reset user roles
-To remove any role configuration from a user and revert it to the configuration defined in the group, you can use the 
+To remove any role configuration from a user and revert it to the configuration defined in the group, you can use the
 `removeRolesFromUser` method of the SDK:
 
 <LanguageTabs>
