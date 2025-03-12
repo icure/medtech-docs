@@ -126,6 +126,42 @@ await sdk.code.createCodes([
 ```
 
 </TabItem>
+<TabItem value="dart">
+
+```dart
+await sdk.code.createCode(Code(
+	"INTERNAL|ANALYSIS|1",
+	type: "INTERNAL",
+	code: "ANALYSIS",
+	version: "1",
+	label: {"en": "Internal analysis code"}
+));
+await sdk.code.createCodes([
+	Code(
+		"SNOMED|45007003|1",
+		type: "SNOMED",
+		code: "45007003",
+		version: "1",
+		label: {"en": "Low blood pressure"}
+	),
+	Code(
+		"SNOMED|38341003|1",
+		type: "SNOMED",
+		code: "38341003",
+		version: "1",
+		label: {"en": "High blood pressure"}
+	),
+	Code(
+		"SNOMED|2004005|1",
+		type: "SNOMED",
+		code: "2004005",
+		version: "1",
+		label: {"en": "Normal blood pressure"}
+	)
+]);
+```
+
+</TabItem>
 </LanguageTabs>
 
 :::note
@@ -346,6 +382,70 @@ const createdContact = await sdk.contact.createContact(
 ```
 
 </TabItem>
+<TabItem value="dart">
+
+```dart
+final codeIterator = await sdk.code.filterCodesBy(
+	await CodeFilters.byLanguageTypeLabelRegion(
+		"en",
+		"SNOMED",
+		label: "blood",
+	)
+);
+
+Code? selectedCode;
+while ((await codeIterator.hasNext()) && selectedCode == null) {
+	final code = (await codeIterator.next(1)).first;
+	displayCodeOnTheUI(code);
+	final use = await checkForUserConfirmation();
+	if (use) {
+		selectedCode = code;
+	}
+}
+
+final patient = await sdk.patient.createPatient(
+	await sdk.patient.withEncryptionMetadata(
+		DecryptedPatient(
+			generateUuid(),
+			firstName: "Annabelle",
+			lastName: "Hall",
+		)
+	)
+);
+
+final contact = DecryptedContact(
+	generateUuid(),
+	descr: "Blood pressure measurement",
+	openingDate: currentDateAsYYYYMMddHHmmSS(),
+	services: {
+		DecryptedService(
+			generateUuid(),
+			label: "Blood pressure",
+			content: {
+				"en": DecryptedContent(
+					measureValue: Measure(
+						value: (80 + Random().nextInt(41)).toDouble(),
+						unit: "mmHg"
+					)
+				)
+			},
+			tags: {
+				CodeStub(
+					id: selectedCode.id,
+					type: selectedCode.type,
+					code: selectedCode.code,
+					version: selectedCode.version
+				)
+			}
+		)
+	}
+);
+final createdContact = await sdk.contact.createContact(
+	await sdk.contact.withEncryptionMetadata(contact, patient)
+);
+```
+
+</TabItem>
 </LanguageTabs>
 
 In this snippet, the user can choose a `Code` from all the SNOMED codes that contain the word "blood"  in their label 
@@ -404,6 +504,23 @@ console.log(`Result of searching Services by code: ${selectedCode.id}`)
 while (await serviceIterator.hasNext()) {
 	const service = (await serviceIterator.next(1))[0]
 	prettyPrintService(service)
+}
+```
+
+</TabItem>
+<TabItem value="dart">
+
+```dart
+final serviceIterator = await sdk.contact.filterServicesBy(
+	await ServiceFilters.byTagAndValueDateForSelf(
+		selectedCode.type!,
+		tagCode: selectedCode.code
+	)
+);
+
+while (await serviceIterator.hasNext()) {
+	final service = (await serviceIterator.next(1)).first;
+	displayServiceToUI(service);
 }
 ```
 

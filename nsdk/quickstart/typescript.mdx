@@ -9,7 +9,52 @@ You can also use npm:
 npm install @icure/cardinal-sdk
 ```
 
+We strongly recommend using [strict null checks](https://www.typescriptlang.org/tsconfig/#strictNullChecks) when 
+developing your application.
+
 :::note
-To use the Cardinal SDK in node, you need node 19 or greater.
+
+To use the Cardinal SDK on node, you need node 19 or greater.
+
 :::
 
+## Template app
+
+We provide a [template for TypeScript](https://github.com/icure/cardinal-introductory-tutorial) that showcases several self-contained use cases that highlight the main features of the Cardinal SDK.
+
+### Launching the Tutorial in Typescript
+To run the tutorial in Typescript, clone this repository:
+
+```typescript
+git clone https://github.com/icure/cardinal-introductory-tutorial.git
+cd cardinal-introductory-tutorial
+```
+
+The minimum supported Node version is 19. You can install it using [nvm](https://github.com/nvm-sh/nvm).
+
+```typescript
+nvm install 19
+nvm use 19
+```
+
+Then, you can navigate to the typescript directory and install the required dependencies using yarn.
+
+```typescript
+cd typescript
+yarn install
+```
+
+Finally, run the example Typescript code using [yarn](https://yarnpkg.com/):
+
+```typescript
+yarn ts-node --esm src/main.ts
+```
+
+## Boilerplate
+
+We provide a [boilerplate for React](https://github.com/icure/cardinal-sdk-react-js-template) that already includes
+the dependencies, the registration/login flow, and some example usage of the sdk.
+
+## Cardinal SDK Introductory Tutorial
+
+Please proceed to the [Introductory Tutorial](/tutorial/basic/sdk-basic-tutorial/) to discover how the Cardinal solution enables you to create, search, and share medical data. This will guide you in understanding your next steps toward integrating Cardinal.

@@ -1,3 +1,700 @@
-# Share different parts of the same medical event with different people
+import TabItem from "@theme/TabItem";
+import {LanguageTabs} from "@site/src/components/LanguageTabs";
 
-🚧 This page is under construction 🚧
+# Share different parts of the same medical event with different actors
+
+## Overview
+
+In some cases, you may want to share different parts of the same Contact with different actors. Let's consider this
+example:
+
+A doctor visit a patient, measure their blood pressure, their heart rate, and finally adds a diagnosis and a prescription
+for a pill.
+
+Using the Cardinal SDK, this translates to create a [Contact](/explanations/data-model/contact) with 3 [Service](/explanations/data-model/service)s
+(one for the blood pressure, one for the [ECG](https://en.wikipedia.org/wiki/Electrocardiography), one for the prescription), and a note for the diagnosis.
+
+Then the doctor asks the patient if they want to participate in a research study. For the study, the patient
+has to share their ECG with the doctor responsible for the study.
+
+This is not possible if only one Contact is created, as it is not possible to share different entities with different
+data owners. Instead, the data should be split into different Contacts. All of these contacts should have the same
+[groupId](/explanations/data-model/contact#groupId), that marks them as belonging to the same "Logical Contact".
+
+When retrieving multiple Contacts with the same group, you can decide to combine them after retrieval for an easier 
+visualization.
+
+Below, you will find a code example for this use case.
+
+## Prerequisites
+
+For this use case example, let's consider to doctors: the first that is performing the visit and the second that is 
+responsible for the research study. They both have to log in and initialize the SDK.
+
+<LanguageTabs>
+
+<TabItem value="kotlin">
+
+```kotlin
+import com.icure.cardinal.sdk.CardinalSdk
+import com.icure.cardinal.sdk.auth.UsernamePassword
+import com.icure.cardinal.sdk.options.AuthenticationMethod
+import com.icure.cardinal.sdk.storage.impl.FileStorageFacade
+
+val CARDINAL_URL = "https://api.icure.cloud"
+
+val visitingDoctorUsername = <VISITING_DOCTOR_USERNAME>
+val visitingDoctorPassword = <VISITING_DOCTOR_PASSWORD>
+
+val researchDoctorUsername = <RESEARCH_DOCTOR_USERNAME>
+val researchDoctorPassword = <RESEARCH_DOCTOR_PASSWORD>
+
+val visitingDoctorSdk = CardinalSdk.initialize(
+	applicationId = null,
+	baseUrl = CARDINAL_URL,
+	authenticationMethod = AuthenticationMethod.UsingCredentials(
+		UsernamePassword(visitingDoctorUsername, visitingDoctorPassword)
+	),
+	baseStorage = FileStorageFacade("./scratch/storage")
+)
+val researchDoctorSdk = CardinalSdk.initialize(
+	applicationId = null,
+	baseUrl = CARDINAL_URL,
+	authenticationMethod = AuthenticationMethod.UsingCredentials(
+		UsernamePassword(researchDoctorUsername, researchDoctorPassword)
+	),
+	baseStorage = FileStorageFacade("./scratch/storage")
+)
+```
+
+</TabItem>
+
+<TabItem value="typescript">
+
+```typescript
+import {AuthenticationMethod, CardinalSdk, StorageFacade} from "@icure/cardinal-sdk";
+
+const CARDINAL_URL = "https://api.icure.cloud"
+
+const visitingDoctorUsername = <VISITING_DOCTOR_USERNAME>
+const visitingDoctorPassword = <VISITING_DOCTOR_PASSWORD>
+
+const researchDoctorUsername = <RESEARCH_DOCTOR_USERNAME>
+const researchDoctorPassword = <RESEARCH_DOCTOR_PASSWORD>
+
+const visitingDoctorSdk = await CardinalSdk.initialize(
+	undefined,
+	CARDINAL_URL,
+	new AuthenticationMethod.UsingCredentials.UsernamePassword(visitingDoctorUsername, visitingDoctorPassword),
+	StorageFacade.usingFileSystem("../scratch/storage")
+)
+const researchDoctorSdk = await CardinalSdk.initialize(
+	undefined,
+	CARDINAL_URL,
+	new AuthenticationMethod.UsingCredentials.UsernamePassword(researchDoctorUsername, researchDoctorPassword),
+	StorageFacade.usingFileSystem("../scratch/storage")
+)
+```
+
+</TabItem>
+
+<TabItem value="python">
+
+```python
+from cardinal_sdk import CardinalSdk
+from cardinal_sdk.authentication.AuthenticationMethod import UsernamePassword
+from cardinal_sdk.storage.StorageFacadeOptions import FileSystemStorage
+
+CARDINAL_URL = "https://api.icure.cloud"
+
+visiting_doctor_username = <VISITING_DOCTOR_USERNAME>
+visiting_doctor_password = <VISITING_DOCTOR_PASSWORD>
+
+research_doctor_username = <RESEARCH_DOCTOR_USERNAME>
+research_doctor_password = <RESEARCH_DOCTOR_PASSWORD>
+
+visiting_doctor_sdk = CardinalSdk(
+	application_id=None,
+	baseurl=CARDINAL_URL,
+	authentication_method=UsernamePassword(visiting_doctor_username, visiting_doctor_password),
+	storage_facade=FileSystemStorage("../scratch/storage")
+)
+research_doctor_sdk = CardinalSdk(
+	application_id=None,
+	baseurl=CARDINAL_URL,
+	authentication_method=UsernamePassword(research_doctor_username, research_doctor_password),
+	storage_facade=FileSystemStorage("../scratch/storage")
+)
+```
+
+</TabItem>
+
+</LanguageTabs>
+
+Then, we assume that the patient is not registered yet in the system, so the doctor that is doing the examination creates
+it.
+
+Notice that the doctor does not set up any delegation for the patient when creating it, meaning that the doctor responsible
+for the research study will not be able to access it.
+
+<LanguageTabs>
+
+<TabItem value="kotlin">
+
+```kotlin
+import com.icure.cardinal.sdk.model.DecryptedPatient
+import java.util.UUID
+
+val patientToCreate = DecryptedPatient(
+	id = UUID.randomUUID().toString(),
+	firstName = "Rupert",
+	lastName = "Venables",
+)
+val patient = visitingDoctorSdk.patient.createPatient(
+	visitingDoctorSdk.patient.withEncryptionMetadata(patientToCreate)
+)
+```
+
+</TabItem>
+
+<TabItem value="typescript">
+
+```typescript
+import {DecryptedPatient} from "@icure/cardinal-sdk";
+import {v4 as uuid} from 'uuid';
+
+const patientToCreate = new DecryptedPatient({
+	id: uuid(),
+	firstName: "Rupert",
+	lastName: "Venables",
+})
+const patient = await visitingDoctorSdk.patient.createPatient(
+	await visitingDoctorSdk.patient.withEncryptionMetadata(patientToCreate)
+)
+```
+
+</TabItem>
+
+<TabItem value="python">
+
+```python
+import uuid
+from cardinal_sdk.model import DecryptedPatient
+
+patient_to_create = DecryptedPatient(
+	id=str(uuid.uuid4()),
+	first_name="Rupert",
+	last_name="Venables"
+)
+patient = visiting_doctor_sdk.patient.create_patient_blocking(
+	visiting_doctor_sdk.patient.with_encryption_metadata_blocking(patient_to_create)
+)
+```
+
+</TabItem>
+
+</LanguageTabs>
+
+Finally, the doctor performing the visit needs the id of the doctor responsible for the research study to share data 
+with them. In a real case, this means searching for the doctor and getting the id but, for the sake of the example, we
+assume that this already happened before.
+
+<LanguageTabs>
+
+<TabItem value="kotlin">
+
+```kotlin
+// In a real scenario, the first doctor would need to search for the other doctor.
+// For the sake of the example, it will be in the following variable
+val researchDoctorId = researchDoctorSdk.healthcareParty.getCurrentHealthcareParty().id
+```
+
+</TabItem>
+
+<TabItem value="typescript">
+
+```typescript
+// In a real scenario, the first doctor would need to search for the other doctor.
+// For the sake of the example, it will be in the following variable
+const researchDoctorId = (await researchDoctorSdk.healthcareParty.getCurrentHealthcareParty()).id
+```
+
+</TabItem>
+
+<TabItem value="python">
+
+```python
+# In a real scenario, the first doctor would need to search for the other doctor.
+# For the sake of the example, it will be in the following variable
+research_doctor_id = research_doctor_sdk.healthcare_party.get_current_healthcare_party_blocking().id
+```
+
+</TabItem>
+
+</LanguageTabs>
+
+## Dividing the result of the examination in multiple contacts
+
+Now, the doctor has to register the data acquired during the examination: the heart rate, the blood pressure, and the 
+medication prescribed. The doctor will instantiate a Service for each of those.
+
+<LanguageTabs>
+
+<TabItem value="kotlin">
+
+```kotlin
+import com.icure.cardinal.sdk.model.embed.DecryptedContent
+import com.icure.cardinal.sdk.model.embed.DecryptedService
+import com.icure.cardinal.sdk.model.embed.Measure
+import com.icure.cardinal.sdk.model.embed.Medication
+import com.icure.cardinal.sdk.model.embed.Substanceproduct
+import com.icure.cardinal.sdk.model.embed.TimeSeries
+import java.util.UUID
+
+val bloodPressureService = DecryptedService(
+	id = UUID.randomUUID().toString(),
+	label = "Blood pressure",
+	valueDate = 20240920154600,
+	content = mapOf(
+		"en" to DecryptedContent(
+			measureValue = Measure(
+				value = Random.nextInt(80, 120).toDouble(),
+				unit = "mmHg"
+			)
+		)
+	)
+)
+
+val ecgSignal = List(10) { Random.nextInt(0, 100) / 100.0 }
+val heartRateService = DecryptedService(
+	id = UUID.randomUUID().toString(),
+	label = "Heart rate",
+	valueDate = 20240920154600,
+	content = mapOf(
+		"en" to DecryptedContent(
+			timeSeries = TimeSeries(
+				samples = listOf(ecgSignal)
+			)
+		)
+	)
+)
+
+val medicationService = DecryptedService(
+	id = UUID.randomUUID().toString(),
+	label = "Prescription",
+	valueDate = 20240920154600,
+	content = mapOf(
+		"en" to DecryptedContent(
+			medicationValue = Medication(
+				substanceProduct = Substanceproduct(
+					deliveredname = "lisinopril"
+				),
+				instructionForPatient = "10mg before breakfast."
+			)
+		)
+	)
+)
+```
+
+</TabItem>
+
+<TabItem value="typescript">
+
+```typescript
+import {
+	DecryptedContent,
+	DecryptedService,
+	Measure,
+	Medication, 
+	Substanceproduct,
+	TimeSeries
+} from "@icure/cardinal-sdk";
+import {v4 as uuid} from 'uuid';
+
+const bloodPressureService = new DecryptedService({
+	id: uuid(),
+	label: "Blood pressure",
+	valueDate: 20240920154600,
+	content: {
+		"en": new DecryptedContent({
+			measureValue: new Measure({
+				value: Math.floor(Math.random() * (80 - 120 + 1)) + 120,
+				unit: "mmHg"
+			})
+		})
+	}
+})
+
+const ecgSignal = Array.from({ length: 10 }, () => (Math.floor(Math.random() * (0 - 100 + 1)) + 100)/100.0 )
+const heartRateService = new DecryptedService({
+	id: uuid(),
+	label: "Heart rate",
+	valueDate: 20240920154600,
+	content:{
+		"en": new DecryptedContent({
+			timeSeries: new TimeSeries({
+				samples: [ecgSignal]
+			})
+		})
+	}
+})
+
+const medicationService = new DecryptedService({
+	id: uuid(),
+	label: "Prescription",
+	valueDate: 20240920154600,
+	content: {
+		"en": new DecryptedContent({
+			medicationValue: new Medication({
+				substanceProduct: new Substanceproduct({
+					deliveredname: "lisinopril"
+				}),
+				instructionForPatient: "10mg before breakfast."
+			})
+		})
+	}
+})
+```
+
+</TabItem>
+
+<TabItem value="python">
+
+```python
+import uuid
+from cardinal_sdk.model import DecryptedContent, DecryptedService, Measure, Medication, Substanceproduct, TimeSeries
+
+blood_pressure_service = DecryptedService(
+	id=str(uuid.uuid4()),
+	label="Blood pressure",
+	value_date=20240920154600,
+	content={
+		"en": DecryptedContent(
+			measure_value=Measure(
+				value=float(random.randint(80, 120)),
+				unit="mmHg"
+			)
+		)
+	}
+)
+
+ecg_signal = [round(float(random.uniform(0, 1)), 2) for _ in range(10)]
+heart_rate_service = DecryptedService(
+	id=str(uuid.uuid4()),
+	label="Heart rate",
+	value_date=20240920154600,
+	content={
+		"en": DecryptedContent(
+			time_series=TimeSeries(
+				samples=[ecg_signal]
+			)
+		)
+	}
+)
+
+medication_service = DecryptedService(
+	id=str(uuid.uuid4()),
+	label="Prescription",
+	value_date=20240920154600,
+	content={
+		"en": DecryptedContent(
+			medication_value=Medication(
+				substance_product=Substanceproduct(
+					deliveredname="lisinopril"
+				),
+				instruction_for_patient="10mg before breakfast."
+			)
+		)
+	}
+)
+```
+
+</TabItem>
+
+</LanguageTabs>
+
+Then, the doctor will divide these Services into 2 Contacts: one containing the blood pressure, the prescription, and the
+diagnosis as a note, the other only containing the result of the ECG. The first contact will not be shared with the 
+other doctor, while the second one will be shared with the other doctor with read permission.
+
+Both Contacts will share the same `groupId`: this way, they can be recognized as part of a single examination.
+
+<LanguageTabs>
+
+<TabItem value="kotlin">
+
+```kotlin
+import com.icure.cardinal.sdk.model.DecryptedContact
+import com.icure.cardinal.sdk.model.embed.AccessLevel
+import com.icure.cardinal.sdk.model.embed.Annotation
+import java.util.UUID
+
+// The id of the "Logical Contact"
+val groupId = UUID.randomUUID().toString()
+
+val contactForResearch = DecryptedContact(
+	id = UUID.randomUUID().toString(),
+	openingDate = 20240920154460,
+	groupId = groupId, // This indicates that the Contact is part of a "Logical Contact"
+	services = setOf(
+		heartRateService
+	)
+)
+
+val contact = DecryptedContact(
+	id = UUID.randomUUID().toString(),
+	closingDate = 20240920164460,
+	groupId = groupId, // This indicates that the Contact is part of a "Logical Contact"
+	notes = listOf(
+		Annotation(
+			id = UUID.randomUUID().toString(),
+			markdown = mapOf(
+				"en" to "The Patient has hypertension."
+			)
+		)
+
+	),
+	services = setOf(
+		bloodPressureService,
+		medicationService
+	)
+)
+
+visitingDoctorSdk.contact.createContact(
+	visitingDoctorSdk.contact.withEncryptionMetadata(contact, patient)
+)
+
+visitingDoctorSdk.contact.createContact(
+	visitingDoctorSdk.contact.withEncryptionMetadata(
+		contactForResearch,
+		patient,
+		delegates = mapOf(researchDoctorId to AccessLevel.Read)
+	)
+)
+```
+
+</TabItem>
+
+<TabItem value="typescript">
+
+```typescript
+import {AccessLevel, Annotation, DecryptedContact} from "@icure/cardinal-sdk";
+import {v4 as uuid} from 'uuid';
+
+// The id of the "Logical Contact"
+const groupId = uuid()
+
+const contactForResearch = new DecryptedContact({
+	id: uuid(),
+	openingDate: 20240920154460,
+	groupId: groupId, // This indicates that the Contact is part of a "Logical Contact"
+	services: [heartRateService]
+})
+
+const contact = new DecryptedContact({
+	id: uuid(),
+	closingDate: 20240920164460,
+	groupId: groupId, // This indicates that the Contact is part of a "Logical Contact"
+	notes: [
+		new Annotation({
+			id: uuid(),
+			markdown: {"en": "The Patient has hypertension."}
+		})
+	],
+	services: [bloodPressureService, medicationService]
+})
+
+await visitingDoctorSdk.contact.createContact(
+	await visitingDoctorSdk.contact.withEncryptionMetadata(contact, patient)
+)
+
+await visitingDoctorSdk.contact.createContact(
+	await visitingDoctorSdk.contact.withEncryptionMetadata(
+		contactForResearch,
+		patient,
+		{ delegates: {[researchDoctorId]: AccessLevel.Read} }
+	)
+)
+```
+
+</TabItem>
+
+<TabItem value="python">
+
+```python
+import uuid
+from cardinal_sdk.model import AccessLevel, Annotation, DecryptedContact
+
+# The id of the "Logical Contact"
+group_id = str(uuid.uuid4())
+
+contact_for_research = DecryptedContact(
+	id=str(uuid.uuid4()),
+	opening_date=20240920154460,
+	group_id=group_id,  # This indicates that the Contact is part of a "Logical Contact"
+	services=[heart_rate_service]
+)
+
+contact = DecryptedContact(
+	id=str(uuid.uuid4()),
+	closing_date=20240920164460,
+	group_id=group_id,  # This indicates that the Contact is part of a "Logical Contact"
+	notes=[
+		Annotation(
+			id=str(uuid.uuid4()),
+			markdown={"en": "The Patient has hypertension."}
+		)
+	],
+	services=[blood_pressure_service, medication_service]
+)
+
+visiting_doctor_sdk.contact.create_contact_blocking(
+	visiting_doctor_sdk.contact.with_encryption_metadata_blocking(contact, patient)
+)
+
+visiting_doctor_sdk.contact.create_contact_blocking(
+	visiting_doctor_sdk.contact.with_encryption_metadata_blocking(
+		contact_for_research,
+		patient,
+		delegates={research_doctor_id: AccessLevel.Read}
+	)
+)
+```
+
+</TabItem>
+
+</LanguageTabs>
+
+## Retrieving the data
+
+Now both doctors can retrieve the part of that medical examination they can access.
+
+The doctor that performed the visit has full access to both Contacts and to the Patient, so it will retrieve all the 
+Services based on the [link with the Patient](/explanations/encrypted-links) using a filter.
+
+<LanguageTabs>
+
+<TabItem value="kotlin">
+
+```kotlin
+import com.icure.cardinal.sdk.filters.ServiceFilters
+
+val allServicesIterator = visitingDoctorSdk.contact.filterServicesBy(
+	ServiceFilters.byPatientsForSelf(listOf(patient))
+)
+
+while (allServicesIterator.hasNext()) {
+	allServicesIterator.next(10).forEach { service ->
+		println(service)
+	}
+}
+```
+
+</TabItem>
+
+<TabItem value="typescript">
+
+```typescript
+import {ServiceFilters} from "@icure/cardinal-sdk";
+
+const allServicesIterator = await visitingDoctorSdk.contact.filterServicesBy(
+	ServiceFilters.byPatientsForSelf([patient])
+)
+
+while (await allServicesIterator.hasNext()) {
+	(await allServicesIterator.next(10)).forEach( service =>
+		console.log(service)
+	)
+}
+```
+
+</TabItem>
+
+<TabItem value="python">
+
+```python
+from cardinal_sdk.filters import ServiceFilters
+
+all_services_iterator = visiting_doctor_sdk.contact.filter_services_by_blocking(
+	ServiceFilters.by_patients_for_self([patient])
+)
+
+while all_services_iterator.has_next_blocking():
+	for service in all_services_iterator.next_blocking(10):
+		print(service)
+```
+
+</TabItem>
+
+</LanguageTabs>
+
+On the other hand, the doctor responsible for the research study cannot access the Patient, but only the anonymous part
+of the Contact shared with them. Therefore, they will search based on the `openingDate` of the Contact using a filter.
+This will return only the Contact that they can access, the one with the ECG result.
+
+<LanguageTabs>
+
+<TabItem value="kotlin">
+
+```kotlin
+import com.icure.cardinal.sdk.filters.ContactFilters
+
+val researchContactIterator = researchDoctorSdk.contact.filterContactsBy(
+	ContactFilters.byOpeningDateForSelf(
+		startDate = 20240920000000
+	)
+)
+
+while (researchContactIterator.hasNext()) {
+	researchContactIterator.next(10).forEach { researchContact ->
+		researchContact.services.forEach { service ->
+			println(service)
+		}
+	}
+}
+```
+
+</TabItem>
+
+<TabItem value="typescript">
+
+```typescript
+import {ContactFilters} from "@icure/cardinal-sdk";
+
+const researchContactIterator = await researchDoctorSdk.contact.filterContactsBy(
+	ContactFilters.byOpeningDateForSelf(
+		{startDate: 20240920000000}
+	)
+)
+
+while (await researchContactIterator.hasNext()) {
+	(await researchContactIterator.next(10)).forEach(researchContact =>
+		researchContact.services.forEach(service =>
+			console.log(service)
+		)
+	)
+}
+```
+
+</TabItem>
+
+<TabItem value="python">
+
+```python
+from cardinal_sdk.filters import ContactFilters
+
+research_contact_iterator = research_doctor_sdk.contact.filter_contacts_by_blocking(
+	ContactFilters.by_opening_date_for_self(
+		start_date=20240920000000
+	)
+)
+
+while research_contact_iterator.has_next_blocking():
+	for research_contact in research_contact_iterator.next_blocking(10):
+		for service in research_contact.services:
+			print(service)
+```
+
+</TabItem>
+
+</LanguageTabs>

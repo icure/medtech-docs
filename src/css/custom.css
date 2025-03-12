@@ -6,55 +6,107 @@
 
 /* You can override the default Infima variables here. */
 :root {
-  --ifm-color-primary: #009290;
-  --ifm-color-primary-dark: #008382;
-  --ifm-color-primary-darker: #007c7a;
-  --ifm-color-primary-darkest: #006665;
-  --ifm-color-primary-light: #00a19e;
-  --ifm-color-primary-lighter: #00a8a6;
-  --ifm-color-primary-lightest: #00bebb;
+  --ifm-color-primary: #EF762F;
+  --ifm-color-primary-dark: #D36422;
+  --ifm-color-primary-darker: #BE5111;
+  --ifm-color-primary-darkest: #963B06;
+  --ifm-color-primary-light: #F08343;
+  --ifm-color-primary-lighter: #F29158;
+  --ifm-color-primary-lightest: #FED2B9;
+
   --ifm-code-font-size: 95%;
-  --ifm-background-color: #fbfdff;
-  --ifm-navbar-background-color: #fbfdff;
-  --ifm-heading-color: #090d1f;
-  --ifm-color-content: #090d1f;
-  --ifm-menu-color: #090d1f;
-  --ifm-toc-link-color: #090d1f;
-  --ifm-global-shadow-lw: 0 1px 2px 0 #ccd0e0;
-  --ifm-toc-border-color: #ccd0e0;
+  --ifm-font-family-base: 'Poppins', sans-serif;
+
+  --ifm-background-color: #FEFEFD;
+  --ifm-navbar-background-color: #FEFEFD;
+
+  --ifm-heading-color: #1B0D02;
+  --ifm-color-content: #1B0D02;
+  --ifm-menu-color: #1B0D02;
+  --ifm-toc-link-color: #1B0D02;
+
+  --ifm-global-shadow-lw: 0 1px 2px 0 #D7D7D7;
+  --ifm-toc-border-color: #D7D7D7;
   --ifm-menu-link-sublist-icon: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><path fillRule='evenodd' clipRule='evenodd' d='M11.8831 9.85366C12.039 9.69169 12.039 9.42949 11.8831 9.26793L8.57779 5.84263C8.26559 5.51912 7.75912 5.51912 7.44693 5.84263L4.11704 9.29278C3.96274 9.45309 3.96064 9.71199 4.11294 9.87438C4.26843 10.0401 4.52477 10.0421 4.68266 9.87893L7.72954 6.72122C7.88584 6.55926 8.13887 6.55926 8.29517 6.72122L11.3178 9.85366C11.4737 10.0156 11.7272 10.0156 11.8831 9.85366Z' fill='black'/></svg>");
-  --ifm-hover-overlay: #f0f4f9;
+  --ifm-menu-link-sublist-icon-active: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><path fillRule='evenodd' clipRule='evenodd' d='M11.8831 9.85366C12.039 9.69169 12.039 9.42949 11.8831 9.26793L8.57779 5.84263C8.26559 5.51912 7.75912 5.51912 7.44693 5.84263L4.11704 9.29278C3.96274 9.45309 3.96064 9.71199 4.11294 9.87438C4.26843 10.0401 4.52477 10.0421 4.68266 9.87893L7.72954 6.72122C7.88584 6.55926 8.13887 6.55926 8.29517 6.72122L11.3178 9.85366C11.4737 10.0156 11.7272 10.0156 11.8831 9.85366Z' fill='orange'/></svg>");
+  --ifm-menu-link-sublist-icon-hover: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><path fillRule='evenodd' clipRule='evenodd' d='M11.8831 9.85366C12.039 9.69169 12.039 9.42949 11.8831 9.26793L8.57779 5.84263C8.26559 5.51912 7.75912 5.51912 7.44693 5.84263L4.11704 9.29278C3.96274 9.45309 3.96064 9.71199 4.11294 9.87438C4.26843 10.0401 4.52477 10.0421 4.68266 9.87893L7.72954 6.72122C7.88584 6.55926 8.13887 6.55926 8.29517 6.72122L11.3178 9.85366C11.4737 10.0156 11.7272 10.0156 11.8831 9.85366Z' fill='white'/></svg>");
+  --ifm-hover-overlay: #e9f3f9;
   --ifm-menu-link-padding-vertical: 10px;
   --custom-secondary-bg: #e9f3f9;
-  --custom-primary-btn-color-on-hover: #009290;
+  --custom-primary-btn-color-on-hover: var(--ifm-color-primary-darkest);
   --custom-primary-btn-bg-on-hover: rgba(0, 146, 144, 0.05);
   --ifm-footer-background-color: #e9f3f9;
-  --ifm-footer-color: #000000;
+  --ifm-footer-color: #1B0D02;
+
+  --ifm-menu-color-background-active: #EF762F;
+  --ifm-menu-color-active: #FCFFFE;
+
+  /*How to cards*/
+  --ifm-card-background-color: #e9f3f9;
+  --ifm-card-border-color: #CDDDE9;
+  --ifm-color-emphasis-300: #D7D7D7;
+
+  /*Sidebar navigation color-theme*/
+  --ifm-menu-link-sublist-bg: var(--ifm-color-primary);
+  --ifm-menu-link-sublist: var(--ifm-menu-color);
+  --ifm-menu-link-sublist-collapsable-active: var(--ifm-color-primary);
+  --ifm-menu-link-sublist-active: var(--ifm-menu-color-active);
+  --ifm-menu-link-sublist-active-hover: var(--ifm-menu-link-sublist-active);
+
+  /*Breadcrumbs active link*/
+ --ifm-breadcrumb-item-background-active: var(--ifm-menu-link-sublist-bg);
+ --ifm-breadcrumb-color-active: var(--ifm-menu-link-sublist-active);
+
+  /*Header navigation link*/
+  --ifm-navbar-link-background-active: var(--ifm-menu-link-sublist-bg);
+  --ifm-navbar-link-hover-color: var(--ifm-menu-link-sublist-active);
 }
 
 /* For readability concerns, you should choose a lighter palette in dark mode. */
 html[data-theme='dark'] {
-  --ifm-color-primary: #009290;
-  --ifm-color-primary-dark: #008382;
-  --ifm-color-primary-darker: #007c7a;
-  --ifm-color-primary-darkest: #006665;
-  --ifm-color-primary-light: #00a19e;
-  --ifm-color-primary-lighter: #00a8a6;
-  --ifm-color-primary-lightest: #00bebb;
-  --ifm-background-color: #090d1f;
-  --ifm-navbar-background-color: #090d1f;
+  --ifm-color-primary: #EF762F;
+  --ifm-color-primary-dark: #D36422;
+  --ifm-color-primary-darker: #BE5111;
+  --ifm-color-primary-darkest: #963B06;
+  --ifm-color-primary-light: #F08343;
+  --ifm-color-primary-lighter: #F29158;
+  --ifm-color-primary-lightest: #FED2B9;
+
+  --ifm-code-font-size: 95%;
+  --ifm-font-family-base: 'Poppins', sans-serif;
+
+  --ifm-menu-link-sublist-icon: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><path fillRule='evenodd' clipRule='evenodd' d='M11.8831 9.85366C12.039 9.69169 12.039 9.42949 11.8831 9.26793L8.57779 5.84263C8.26559 5.51912 7.75912 5.51912 7.44693 5.84263L4.11704 9.29278C3.96274 9.45309 3.96064 9.71199 4.11294 9.87438C4.26843 10.0401 4.52477 10.0421 4.68266 9.87893L7.72954 6.72122C7.88584 6.55926 8.13887 6.55926 8.29517 6.72122L11.3178 9.85366C11.4737 10.0156 11.7272 10.0156 11.8831 9.85366Z' fill='white'/></svg>");
+  --ifm-menu-link-sublist-icon-active: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><path fillRule='evenodd' clipRule='evenodd' d='M11.8831 9.85366C12.039 9.69169 12.039 9.42949 11.8831 9.26793L8.57779 5.84263C8.26559 5.51912 7.75912 5.51912 7.44693 5.84263L4.11704 9.29278C3.96274 9.45309 3.96064 9.71199 4.11294 9.87438C4.26843 10.0401 4.52477 10.0421 4.68266 9.87893L7.72954 6.72122C7.88584 6.55926 8.13887 6.55926 8.29517 6.72122L11.3178 9.85366C11.4737 10.0156 11.7272 10.0156 11.8831 9.85366Z' fill='orange'/></svg>");
+  --ifm-menu-link-sublist-icon-hover: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><path fillRule='evenodd' clipRule='evenodd' d='M11.8831 9.85366C12.039 9.69169 12.039 9.42949 11.8831 9.26793L8.57779 5.84263C8.26559 5.51912 7.75912 5.51912 7.44693 5.84263L4.11704 9.29278C3.96274 9.45309 3.96064 9.71199 4.11294 9.87438C4.26843 10.0401 4.52477 10.0421 4.68266 9.87893L7.72954 6.72122C7.88584 6.55926 8.13887 6.55926 8.29517 6.72122L11.3178 9.85366C11.4737 10.0156 11.7272 10.0156 11.8831 9.85366Z' fill='orange'/></svg>");
+
+  --ifm-background-color: #0D2237;
+  --ifm-navbar-background-color: #0D2237;
   --ifm-heading-color: #d7d7d7;
   --ifm-color-content: #d7d7d7;
   --ifm-menu-color: #d7d7d7;
   --ifm-toc-link-color: #d7d7d7;
-  --ifm-global-shadow-lw: 0 1px 2px 0 #303443;
-  --ifm-toc-border-color: #303443;
-  --ifm-hover-overlay: #1b2034;
+  --ifm-global-shadow-lw: 0 1px 2px 0 #1F3F5Do;
+  --ifm-toc-border-color: #1F3F5D;
+  --ifm-hover-overlay: #162D46;
   --custom-secondary-bg: #1b2034;
   --custom-primary-btn-color-on-hover: #ffffff;
   --custom-primary-btn-bg-on-hover: rgba(0, 146, 144, 0.25);
-  --ifm-footer-background-color: #1b2034;
+  --ifm-footer-background-color: #162D46;
   --ifm-footer-color: #d7d7d7;
+
+  --ifm-menu-color-background-active: #162D46;
+
+  /*How to cards*/
+  --ifm-card-background-color: var(--ifm-hover-overlay);
+  --ifm-card-border-color: var(--ifm-toc-border-color);
+  --ifm-color-emphasis-300: #1F3F5D;
+
+  /*Sidebar navigation color-theme*/
+  --ifm-menu-link-sublist-bg: var(--ifm-hover-overlay);
+  --ifm-menu-link-sublist: var(--ifm-menu-color);
+  --ifm-menu-link-sublist-active: var(--ifm-color-primary);
+  --ifm-menu-link-sublist-collapsable-active: var(--ifm-color-primary);
+  --ifm-menu-link-sublist-active-hover: var(--ifm-color-primary);
 }
 
 [data-theme='light'] img[src$='#dark'],
@@ -62,11 +114,18 @@ html[data-theme='dark'] {
   display: none;
 }
 
+.alert--secondary {
+  --ifm-alert-background-color: #1F3F5D;
+  --ifm-alert-background-color-highlight: rgb(84, 199, 236, 0.15);
+  --ifm-alert-foreground-color: #eef9fd;
+  --ifm-alert-border-color: #00B1FF;
+}
+
 .menu__caret:before,
 .menu__link--sublist-caret:after {
   content: '';
   background: var(--ifm-menu-link-sublist-icon) 50% / 1.5rem 1.5rem;
-  filter: var(--ifm-menu-link-sublist-icon-filter);
+  filter: none;
   height: 1rem;
   transform: rotate(180deg);
   width: 1rem;
@@ -74,11 +133,49 @@ html[data-theme='dark'] {
 }
 
 .menu__link--active {
-  color: var(--ifm-menu-color-active);
+  color: var(--ifm-menu-link-sublist-active)
+}
+
+.menu__link--active:hover {
+  color: var(--ifm-menu-link-sublist-active-hover)
+}
+
+.menu__list-item-collapsible .menu__link--active {
+  color: var(--ifm-menu-link-sublist-collapsable-active);
+}
+
+.menu__list-item-collapsible .menu__link--active + .menu__caret:before,
+.menu__list-item-collapsible .menu__link--active + .menu__link--sublist-caret:after{
+  background: var(--ifm-menu-link-sublist-icon-active) 50% / 1.5rem 1.5rem;
+}
+
+.menu__list-item-collapsible--active a{
+  color: var(--ifm-menu-link-sublist);
+}
+
+.menu__list-item-collapsible.menu__list-item-collapsible--active,
+.menu__list-item-collapsible.menu__list-item-collapsible--active:hover .menu__caret:hover,
+.menu__list-item-collapsible.menu__list-item-collapsible--active:hover .menu__link--sublist-caret:hover{
+  background: var(--ifm-menu-link-sublist-bg);
+}
+.menu__list-item-collapsible.menu__list-item-collapsible--active a{
+  color: var(--ifm-menu-link-sublist-active);
+}
+
+.menu__list-item-collapsible.menu__list-item-collapsible--active .menu__caret:before,
+.menu__list-item-collapsible.menu__list-item-collapsible--active .menu__link--sublist-caret:after,
+.menu__list-item-collapsible.menu__list-item-collapsible--active:hover .menu__caret:before,
+.menu__list-item-collapsible.menu__list-item-collapsible--active:hover .menu__link--sublist-caret:after{
+  background: var(--ifm-menu-link-sublist-icon-hover) 50% / 1.5rem 1.5rem;
+}
+
+.navbar {
+  box-shadow: none;
+  border-bottom: 1px solid var(--ifm-toc-border-color);
 }
 
 .navbar__items {
-  gap: 8px;
+  gap: 4px;
 }
 
 .navbar__link {
@@ -95,7 +192,7 @@ html[data-theme='dark'] {
 
 .navbar__link:hover,
 .navbar__link--active {
-  background: var(--ifm-hover-overlay);
+  background: var(--ifm-navbar-link-background-active);
 }
 
 /* mobile */
@@ -183,6 +280,10 @@ html[data-theme='dark'] {
   }
 }
 
+.gitHubBtn svg path {
+    fill: var(--ifm-color-primary);
+}
+
 @media (min-width: 997px) {
   .gitHubBtn {
     width: 34px;
@@ -222,4 +323,13 @@ html[data-theme='dark'] {
 
 .prism-code {
   tab-size: 4;
+}
+
+.card {
+  box-shadow: none !important;
+  border: 1px solid var(--ifm-card-border-color) !important;
+}
+
+.card:hover{
+  border-color: var(--ifm-color-primary) !important;
 }

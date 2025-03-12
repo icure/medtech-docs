@@ -1,0 +1,44 @@
+# Timetable
+
+The timetable is an encryptable root-level entity that describes a schedule window for taking appointments.
+
+## Fields Encrypted by Default
+
+By default, no field of this entity will be encrypted.
+
+You can customize the encrypted fields as [explained in this how to](/how-to/initialize-the-sdk/configure-what-to-encrypt).
+
+## Properties
+
+### name
+
+A human-readable description for the timetable.
+
+### agendaId
+
+The id of the Agenda to which the timetable relates.
+
+### startTime
+
+The time of the first possible appointment for this timetable. This is a long formatted as YYYYMMDDHHmmss.
+
+### endTime
+
+The time of the last possible appointment for this timetable. This is a long formatted as YYYYMMDDHHmmss.
+
+### items
+
+A collection of TimetableItems that represent the available schedules for appointments in this timetable.
+
+A TimetableItem is a nested entity that contains the following properties:
+
+- `rrule`: A RRule as described in https://datatracker.ietf.org/doc/html/rfc5545 that represents the recurrence rule for this schedule.
+- `notBeforeInMinutes`: The minimum time in minutes before the appointment that the patient can book it.
+- `notAfterInMinutes`: The maximum time in minutes before the appointment that the patient can book it.
+- `zoneId`: The id of the time zone where the schedule is defined.
+- `hours`: A collection of TimeTableHour that represents the available hours ranges for the appointment.
+
+A TimeTableHour is a nested entity that contains the following properties:
+
+- `startHour`: The start time of the available hours range. This is a long formatted as HHmmss.
+- `endHour`: The end time of the available hours range. This is a long formatted as HHmmss.

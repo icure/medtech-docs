@@ -1,0 +1,55 @@
+# Calendar item
+
+The CalendarItem is an encryptable root-level entity that records the an appointment for a the patient.
+
+## Fields Encrypted by Default
+
+By default, the following fields of this entity will be encrypted:
+- `details`
+- `title`
+- `patientId`
+- `phoneNumber`
+- `address`
+- `addressText`
+- `meetingTags[].*`
+- `flowItem`
+
+You can customize the encrypted fields as [explained in this how to](/how-to/initialize-the-sdk/configure-what-to-encrypt).
+
+## Properties
+
+Below you will find an explanation of the most commonly used properties in the entity that are not among the
+[shared fields](/explanations/data-model/#shared-fields). For a full list, check the reference documentation (:construction:).
+
+### title
+
+A human-readable description for the purpose of the appointment.
+
+### details
+
+A human-readable description for the appointment with all the details that could be of interest for the practitioner.
+
+### homeVisit
+
+A boolean that indicates if the appointment is a home visit.
+
+### phoneNumber
+
+The phone number of the patient.
+
+### addressText
+
+A human-readable description of the address where the appointment will take place.
+
+### duration
+
+The duration of the appointment.
+
+### agendaId
+
+The id of the Agenda where the appointment is scheduled.
+
+### hcpId
+
+The id of the healthcare party that will take care of the patient during the appointment.
+

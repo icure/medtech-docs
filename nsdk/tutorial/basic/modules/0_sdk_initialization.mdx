@@ -9,10 +9,11 @@ import TabItem from "@theme/TabItem";
 
 After you have [created a first database and a healthcare party user with a token](/tutorial/basic/sdk-basic-tutorial),
 you can use those credentials to instantiate a new iCure SDK.
-In the following example, the username and password are retrieved from the standard input:
 
 <LanguageTabs>
 <TabItem value="kotlin">
+
+In the following example, the username and password are retrieved from the standard input:
 
 ```kotlin
 private const val CARDINAL_URL = "https://api.icure.cloud"
@@ -30,8 +31,14 @@ val sdk = CardinalSdk.initialize(
 	baseStorage = FileStorageFacade("./scratch/storage")
 )
 ```
+
+The `initialize` function creates an instance of the SDK with the provided username and password. It also attempts to
+load existing cryptographic keys for the user from the `./scratch/storage` folder. If no key is found for the user in
+that folder, a new cryptographic key will be generated and stored there.
 </TabItem>
 <TabItem value="python">
+
+In the following example, the username and password are retrieved from the standard input:
 
 ```python
 CARDINAL_URL = "https://api.icure.cloud"
@@ -45,8 +52,14 @@ sdk = CardinalSdk(
 	storage_facade=FileSystemStorage("./scratch/storage")
 )
 ```
+
+The `initialize` function creates an instance of the SDK with the provided username and password. It also attempts to
+load existing cryptographic keys for the user from the `./scratch/storage` folder. If no key is found for the user in
+that folder, a new cryptographic key will be generated and stored there.
 </TabItem>
 <TabItem value="typescript">
+
+In the following example, the username and password are retrieved from the standard input:
 
 ```typescript
 const CARDINAL_URL = "https://api.icure.cloud"
@@ -60,10 +73,34 @@ const sdk = CardinalSdk.initialize(
 	StorageFacade.usingFileSystem("./scratch/storage")
 )
 ```
-</TabItem>
-</LanguageTabs>
 
 The `initialize` function creates an instance of the SDK with the provided username and password. It also attempts to
 load existing cryptographic keys for the user from the `./scratch/storage` folder. If no key is found for the user in
 that folder, a new cryptographic key will be generated and stored there.
+</TabItem>
+<TabItem value="dart">
+
+In the following example, the function initializes an SDK with a username and a password retrieved from the app UI:
+
+```dart
+const cardinalUrl = "https://api.icure.cloud";
+
+Future<CardinalSdk> createSdk(String username, String password) async {
+  final sdk = await CardinalSdk.initialize(
+      null,
+      cardinalUrl,
+      AuthenticationMethod.UsingCredentials(Credentials.UsernamePassword(username, password)),
+      StorageOptions.PlatformDefault
+  );
+  return sdk;
+}
+```
+
+The `initialize` function creates an instance of the SDK with the provided username and password. It also attempts to
+load existing cryptographic keys for the user from the native storage implementation (Androidx DataStore for Android,
+NSUserDefaults for iOS, iPadOS, macOS & watchOS). If no key is found for the user, a new cryptographic key will be generated 
+and stored.
+</TabItem>
+</LanguageTabs>
+
 If you want to know more about the SDK initialization parameters, check [this how to](/how-to/initialize-the-sdk/).
