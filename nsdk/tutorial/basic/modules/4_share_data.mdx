@@ -76,6 +76,21 @@ const otherHcp = await otherSdk.healthcareParty.getCurrentHealthcareParty()
 ```
 
 </TabItem>
+<TabItem value="dart">
+
+```dart
+final username = getUsernameFromUI();
+final otherPassword = getPasswordFromTheUI();
+final otherSdk = await CardinalSdk.initialize(
+	null,
+	cardinalUrl,
+	AuthenticationMethod.UsingCredentials(Credentials.UsernamePassword(username, otherPassword)),
+	StorageOptions.PlatformDefault
+);
+final otherHcp = await otherSdk.healthcareParty.getCurrentHealthcareParty();
+```
+
+</TabItem>
 </LanguageTabs>
 
 Consider a `Document` entity created with the initial Healthcare Party user:
@@ -122,6 +137,21 @@ const oldDocument = await sdk.document.createDocument(
 ```
 
 </TabItem>
+<TabItem value="dart">
+
+```dart
+final oldDocument = await sdk.document.createDocument(
+	await sdk.document.withEncryptionMetadata(
+		DecryptedDocument(
+			generateUuid(),
+			name: "An important document"
+		),
+		null
+	)
+);
+```
+
+</TabItem>
 </LanguageTabs>
 
 If the other Healthcare Party tries to access it using the ID, the operation will fail with an error:
@@ -155,6 +185,17 @@ try {
 	await otherSdk.document.getDocument(oldDocument.id)
 } catch (e) {
 	console.error("This means I am not authorized to read the document -> ", e)
+}
+```
+
+</TabItem>
+<TabItem value="dart">
+
+```dart
+try {
+	await otherSdk.document.getDocument(oldDocument.id);
+} on Exception catch (e) {
+	print("This means I am not authorized to read the document -> $e")
 }
 ```
 
@@ -195,6 +236,13 @@ updatedDocument = await sdk.document.shareWith(
 ```
 
 </TabItem>
+<TabItem value="dart">
+
+```dart
+final updatedDocument = await sdk.document.shareWith(otherHcp.id, oldDocument);
+```
+
+</TabItem>
 </LanguageTabs>
 
 At this point, the other Healthcare Party can access the document successfully:
@@ -218,6 +266,13 @@ old_document_other_hcp = other_sdk.document.get_document_blocking(old_document.i
 
 ```typescript
 const oldDocumentOtherHcp = await otherSdk.document.getDocument(oldDocument.id)
+```
+
+</TabItem>
+<TabItem value="dart">
+
+```dart
+final oldDocumentOtherHcp = await otherSdk.document.getDocument(oldDocument.id);
 ```
 
 </TabItem>
@@ -279,6 +334,22 @@ const createdNewDocument = await sdk.document.createDocument(newDocumentWithMeta
 ```
 
 </TabItem>
+<TabItem value="dart">
+
+```dart
+final newDocument = DecryptedDocument(
+	generateUuid(),
+	name: "Another important document"
+);
+final newDocumentWithMetadata = await sdk.document.withEncryptionMetadata(
+	newDocument,
+	null,
+	delegates: { otherHcp.id: AccessLevel.read }
+);
+final createdNewDocument = await sdk.document.createDocument(newDocumentWithMetadata);
+```
+
+</TabItem>
 </LanguageTabs>
 
 The other Healthcare Party is a delegate for the new `Document` with Read permissions. This means they can access the
@@ -303,6 +374,13 @@ new_document_other_hcp = other_sdk.document.get_document_blocking(created_new_do
 
 ```typescript
 const newDocumentOtherHcp = await otherSdk.document.getDocument(createdNewDocument.id)
+```
+
+</TabItem>
+<TabItem value="dart">
+
+```dart
+final newDocumentOtherHcp = await otherSdk.document.getDocument(createdNewDocument.id)
 ```
 
 </TabItem>
@@ -355,6 +433,19 @@ const createdPatient = await sdk.patient.createPatient(patientWithMetadata)
 ```
 
 </TabItem>
+<TabItem value="dart">
+
+```dart
+final newPatient = DecryptedPatient(
+	generateUuid(),
+	firstName: "Edmond",
+	lastName: "Dantes",
+);
+final patientWithMetadata = await sdk.patient.withEncryptionMetadata(newPatient);
+final createdPatient = await sdk.patient.createPatient(patientWithMetadata);
+```
+
+</TabItem>
 </LanguageTabs>
 
 Then, you need to create a User for that Patient. You can link the User to the Patient by setting the `patientId`
@@ -403,6 +494,20 @@ const createdUser = await sdk.user.createUser(patientUser)
 ```
 
 </TabItem>
+<TabItem value="dart">
+
+```dart
+final login = "edmond.dantes.${generateUuid().substring(0, 6)}@icure.com";
+final patientUser = User(
+	generateUuid(),
+	patientId: createdPatient.id,
+	login: login,
+	email: login
+);
+final createdUser = await sdk.user.createUser(patientUser);
+```
+
+</TabItem>
 </LanguageTabs>
 
 Finally, you have to create a temporary access token for the User, so that they can log in.
@@ -426,6 +531,13 @@ login_token = sdk.user.get_token_blocking(created_user.id, "login")
 
 ```typescript
 const loginToken = await sdk.user.getToken(createdUser.id, "login")
+```
+
+</TabItem>
+<TabItem value="dart">
+
+```dart
+final loginToken = await sdk.user.getToken(createdUser.id, "login");
 ```
 
 </TabItem>
@@ -472,6 +584,18 @@ await CardinalSdk.initialize(
 ```
 
 </TabItem>
+<TabItem value="dart">
+
+```dart
+await CardinalSdk.initialize(
+	null,
+	cardinalUrl,
+	AuthenticationMethod.UsingCredentials(Credentials.UsernamePassword(login, loginToken)),
+	StorageOptions.PlatformDefault
+);
+```
+
+</TabItem>
 </LanguageTabs>
 
 However, the Patient User cannot access itself, as the Patient entity could not be shared with them as the
@@ -482,12 +606,11 @@ can share the Patient:
 <TabItem value="kotlin">
 
 ```kotlin
-val patientSecretIds = sdk.patient.getSecretIdsOf(createdPatient)
 val patient = sdk.patient.shareWith(
 	delegateId = createdPatient.id,
 	patient = createdPatient,
 	options = PatientShareOptions(
-		shareSecretIds = patientSecretIds,
+		shareSecretIds = SecretIdShareOptions.AllAvailable(true),
 		shareEncryptionKey = ShareMetadataBehaviour.IfAvailable,
 		requestedPermissions = RequestedPermission.MaxWrite
 	)
@@ -498,12 +621,11 @@ val patient = sdk.patient.shareWith(
 <TabItem value="python">
 
 ```python
-patient_secret_ids = sdk.patient.get_secret_ids_of_blocking(created_patient)
 patient = sdk.patient.share_with_blocking(
 	delegate_id=created_patient.id,
 	patient=created_patient,
 	options=PatientShareOptions(
-		share_secret_ids=patient_secret_ids,
+		share_secret_ids=SecretIdShareOptionsAllAvailable(True),
 		share_encryption_key=ShareMetadataBehaviour.IfAvailable,
 		requested_permissions=RequestedPermission.MaxWrite
 	)
@@ -514,15 +636,33 @@ patient = sdk.patient.share_with_blocking(
 <TabItem value="typescript">
 
 ```typescript
-const patientSecretIds = await sdk.patient.getSecretIdsOf(createdPatient)
 const patient = await sdk.patient.shareWith(
 	createdPatient.id,
 	createdPatient,
-	new PatientShareOptions({
-		shareSecretIds: patientSecretIds,
-		shareEncryptionKey: ShareMetadataBehaviour.IfAvailable,
-		requestedPermissions: RequestedPermission.MaxWrite
-	})
+	{
+		options: new PatientShareOptions({
+			shareSecretIds: new SecretIdShareOptions.AllAvailable({requireAtLeastOne: true}),
+			shareEncryptionKey: ShareMetadataBehaviour.IfAvailable,
+			requestedPermissions: RequestedPermission.MaxWrite
+		})
+	}
+)
+```
+
+</TabItem>
+<TabItem value="dart">
+
+```dart
+const patient = await sdk.patient.shareWith(
+	createdPatient.id,
+	createdPatient,
+	{
+		options: new PatientShareOptions({
+			shareSecretIds: new SecretIdShareOptions.AllAvailable({requireAtLeastOne: true}),
+			shareEncryptionKey: ShareMetadataBehaviour.IfAvailable,
+			requestedPermissions: RequestedPermission.MaxWrite
+		})
+	}
 )
 ```
 
@@ -574,9 +714,21 @@ const patientSdk = await CardinalSdk.initialize(
 ```
 
 </TabItem>
+<TabItem value="dart">
+
+```dart
+const patientSdk = await CardinalSdk.initialize(
+	null,
+	cardinalUrl,
+	AuthenticationMethod.UsingCredentials(Credentials.UsernamePassword(login, loginToken)),
+	StorageOptions.PlatformDefault
+);
+```
+
+</TabItem>
 </LanguageTabs>
 
-:::warning
+:::caution
 This registration flow makes sense only in the context of this example, to make it self-contained.
 To learn how to register a Patient in a real context, check [this how to](/how-to/registering-users).
 :::
@@ -624,6 +776,18 @@ const createdHealthElement = await sdk.healthElement.createHealthElement(healthE
 ```
 
 </TabItem>
+<TabItem value="dart">
+
+```dart
+final healthElement = DecryptedHealthElement(
+	generateUuid(),
+	descr: "This is some medical context"
+);
+final healthElementWithMetadata = await sdk.healthElement.withEncryptionMetadata(healthElement, patient);
+final createdHealthElement = await sdk.healthElement.createHealthElement(healthElementWithMetadata);
+```
+
+</TabItem>
 </LanguageTabs>
 
 It is important to note that even though the `HealthElement` is linked to the patient by the encryption metadata,
@@ -658,6 +822,17 @@ try {
 	await patientSdk.healthElement.getHealthElement(createdHealthElement.id)
 } catch (e) {
 	console.error("This means the patient cannot get this health element", e)
+}
+```
+
+</TabItem>
+<TabItem value="dart">
+
+```dart
+try {
+	await patientSdk.healthElement.getHealthElement(createdHealthElement.id);
+} catch (e) {
+	print("This means the patient cannot get this health element -> $e");
 }
 ```
 
@@ -697,6 +872,13 @@ const healthElement = await sdk.healthElement.shareWith(
 ```
 
 </TabItem>
+<TabItem value="dart">
+
+```dart
+final healthElement = await sdk.healthElement.shareWith(patient.id, createdHealthElement);
+```
+
+</TabItem>
 </LanguageTabs>
 
 Finally, the Patient can access it:
@@ -720,6 +902,13 @@ patient_sdk.health_element.get_health_element_blocking(created_health_element.id
 
 ```typescript
 await patientSdk.healthElement.getHealthElement(createdHealthElement.id)
+```
+
+</TabItem>
+<TabItem value="dart">
+
+```dart
+await patientSdk.healthElement.getHealthElement(createdHealthElement.id);
 ```
 
 </TabItem>
@@ -781,6 +970,22 @@ const newCreatedHealthElement = await sdk.healthElement.createHealthElement(newH
 ```
 
 </TabItem>
+<TabItem value="dart">
+
+```dart
+final newHealthElement = DecryptedHealthElement(
+	generateUuid(),
+	descr: "This is some other medical context"
+);
+final newHealthElementWithMetadata = await sdk.healthElement.withEncryptionMetadata(
+	newHealthElement,
+	patient,
+	delegates: { patient.id: AccessLevel.write }
+);
+final newCreatedHealthElement = await sdk.healthElement.createHealthElement(newHealthElementWithMetadata);
+```
+
+</TabItem>
 </LanguageTabs>
 
 It is important to note that the Patient linked to an entity is entirely separate from a patient with a delegation for
@@ -808,6 +1013,13 @@ retrieved_health_element = patient_sdk.health_element.get_health_element_blockin
 
 ```typescript
 const retrievedHealthElement = await patientSdk.healthElement.getHealthElement(newCreatedHealthElement.id)
+```
+
+</TabItem>
+<TabItem value="dart">
+
+```dart
+final retrievedHealthElement = await patientSdk.healthElement.getHealthElement(newCreatedHealthElement.id)
 ```
 
 </TabItem>

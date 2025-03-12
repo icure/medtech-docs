@@ -48,7 +48,7 @@ export const {useCreateOrModifyUserMutation, useShareDataWithMutation, useStopSh
 Let's take a look at the `shareDataWith` endpoint will allow us to share the data of the current user with other users. We will use
 the `UserApi` to share the data and then we will update the current user in the store.
 
-:::warning
+:::caution
 
 Sharing data with/Adding auto-delegations to other users is not retroactive. It means that if you share your data with
 another user, the data that wasn't shared before will not be shared with the new user. It only concerns the data that
@@ -84,7 +84,7 @@ export const userApiRtk = createApi({
 The `stopSharingWith` endpoint will allow us to stop sharing the data of the current user with other users. We will use
 the `UserApi` to stop sharing the data and then we will update the current user in the store.
 
-:::warning
+:::caution
 
 Same principle for the `stopSharingWith` endpoint. It will only stop sharing the data that will be created after the
 call.

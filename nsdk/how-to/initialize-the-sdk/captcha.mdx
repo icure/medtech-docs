@@ -1,0 +1,451 @@
+import TabItem from "@theme/TabItem";
+import {LanguageTabs} from "@site/src/components/LanguageTabs";
+
+# Capctha options for authentication process
+
+In this section, we will see how to use the different captcha options available in the Cardinal SDK.
+
+:::note
+
+Authentication processes aren't supported on the Cardinal python SDK
+
+:::
+
+## Available captcha systems
+
+### Friendly Captcha (v1)
+
+You can use Friendly Captcha as a captcha option in the Cardinal SDK. Friendly Captcha is a privacy-focused captcha
+service that is GDPR compliant. You can check it out [here](https://developer.friendlycaptcha.com/docs/v1/)
+
+<LanguageTabs>
+
+<TabItem value = "kotlin">
+
+```kotlin
+import com.icure.cardinal.sdk.CardinalSdk
+import com.icure.cardinal.sdk.auth.AuthenticationProcessTelecomType
+import com.icure.cardinal.sdk.auth.CaptchaOptions
+import com.icure.cardinal.sdk.storage.impl.FileStorageFacade
+
+val process = CardinalSdk.initializeWithProcess(
+	applicationId = null,
+	baseUrl = "https://api.icure.cloud",
+	messageGatewayUrl = "https://msg-gw.icure.cloud",
+	externalServicesSpecId = specId,
+	processId = processId,
+	userTelecomType = AuthenticationProcessTelecomType.Email,
+	userTelecom = "johndoe@example.com",
+	captcha = CaptchaOptions.FriendlyCaptcha(friendlyCaptchaResponse),
+	baseStorage = FileStorageFacade("FILE_PATH"),
+)
+```
+
+</TabItem>
+
+<TabItem value = "typescript">
+
+```typescript
+import {
+	AuthenticationProcessTelecomType,
+	CaptchaOptions,
+	CardinalSdk,
+	StorageFacade
+} from "@icure/cardinal-sdk";
+
+const authenticationStep = await CardinalSdk.initializeWithProcess(
+	"com.mycompany.mycardinalapp",
+	"https://api.icure.cloud",
+	"https://msg-gw.icure.cloud",
+	specId,
+	processId,
+	AuthenticationProcessTelecomType.Email,
+	email,
+	new CaptchaOptions.FriendlyCaptcha({solution: friendlyCaptchaResponse}),
+	StorageFacade.usingBrowserLocalStorage(),
+)
+```
+
+</TabItem>
+
+<TabItem value = "dart">
+
+```dart
+import 'package:cardinal_sdk/auth/authentication_process_telecom_type.dart';
+import 'package:cardinal_sdk/auth/captcha_options.dart';
+import 'package:cardinal_sdk/cardinal_sdk.dart';
+import 'package:cardinal_sdk/options/storage_options.dart';
+
+final authenticationStep = CardinalSdk.initializeWithProcess(
+	"com.mycompany.mycardinalapp",
+	"https://api.icure.cloud",
+	"https://msg-gw.icure.cloud",
+	specId,
+	processId,
+	AuthenticationProcessTelecomType.email,
+	email,
+	CaptchaOptions.FriendlyCaptcha(friendlyCaptchaResponse),
+	StorageOptions.PlatformDefault,
+);
+```
+
+</TabItem>
+
+</LanguageTabs>
+
+
+### Google reCAPTCHA (v3)
+
+You can use Google reCAPTCHA as a captcha option in the Cardinal SDK. Google reCAPTCHA is a captcha service that is
+widely used across the internet. You can check it out [here](https://developers.google.com/recaptcha/docs/v3)
+
+<LanguageTabs>
+
+<TabItem value = "kotlin">
+
+```kotlin
+import com.icure.cardinal.sdk.CardinalSdk
+import com.icure.cardinal.sdk.auth.AuthenticationProcessTelecomType
+import com.icure.cardinal.sdk.auth.CaptchaOptions
+import com.icure.cardinal.sdk.storage.impl.FileStorageFacade
+
+val process = CardinalSdk.initializeWithProcess(
+	applicationId = null,
+	baseUrl = "https://api.icure.cloud",
+	messageGatewayUrl = "https://msg-gw.icure.cloud",
+	externalServicesSpecId = specId,
+	userTelecom = "johndoe@example.com",
+	userTelecomType = AuthenticationProcessTelecomType.Email,
+	baseStorage = FileStorageFacade("FILE_PATH"),
+	processId = processId,
+	captcha = CaptchaOptions.Recaptcha(reCaptchaResponse),
+)
+```
+
+</TabItem>
+
+<TabItem value = "typescript">
+
+```typescript
+import {
+	AuthenticationProcessTelecomType,
+	CaptchaOptions,
+	CardinalSdk,
+	StorageFacade
+} from "@icure/cardinal-sdk";
+
+const authenticationStep = await CardinalSdk.initializeWithProcess(
+	"com.mycompany.mycardinalapp",
+	"https://api.icure.cloud",
+	"https://msg-gw.icure.cloud",
+	specId,
+	processId,
+	AuthenticationProcessTelecomType.Email,
+	email,
+	new CaptchaOptions.Recaptcha({solution: reCaptchaResponse}),
+	StorageFacade.usingBrowserLocalStorage(),
+)
+```
+
+</TabItem>
+
+<TabItem value = "dart">
+
+```dart
+import 'package:cardinal_sdk/auth/authentication_process_telecom_type.dart';
+import 'package:cardinal_sdk/auth/captcha_options.dart';
+import 'package:cardinal_sdk/cardinal_sdk.dart';
+import 'package:cardinal_sdk/options/storage_options.dart';
+
+final authenticationStep = CardinalSdk.initializeWithProcess(
+	"com.mycompany.mycardinalapp",
+	"https://api.icure.cloud",
+	"https://msg-gw.icure.cloud",
+	specId,
+	processId,
+	AuthenticationProcessTelecomType.email,
+	email,
+	CaptchaOptions.Recaptcha(reCaptchaResponse),
+	StorageOptions.PlatformDefault,
+);
+```
+
+</TabItem>
+
+</LanguageTabs>
+
+### Kerberus
+
+Kerberus is an open-source Kotlin Multiplatform proof of work captcha library. You can use it without any UI elements.
+You can check it out [here](https://github.com/icure/kerberus)
+
+## How to use Kerberus with the Cardinal SDK?
+
+The easiet way to use Kerberus is by using the `Delegated` option in the Cardinal SDK. This option will automatically
+handle the challenge and resolution of the Kerberus captcha.
+
+<LanguageTabs>
+
+<TabItem value = "kotlin">
+
+```kotlin
+import com.icure.cardinal.sdk.CardinalSdk
+import com.icure.cardinal.sdk.auth.AuthenticationProcessTelecomType
+import com.icure.cardinal.sdk.auth.CaptchaOptions
+import com.icure.cardinal.sdk.storage.impl.FileStorageFacade
+
+val process = CardinalSdk.initializeWithProcess(
+	applicationId = "com.mycompany.mycardinalapp",
+	baseUrl = "https://api.icure.cloud",
+	messageGatewayUrl = "https://msg-gw.icure.cloud",
+	externalServicesSpecId = specId,
+	processId = processId,
+	userTelecomType = AuthenticationProcessTelecomType.Email,
+	userTelecom = "johndoe@example.be",
+	captcha = CaptchaOptions.Kerberus.Delegated { progress -> println("Progress: ${progress * 100}%") },
+	baseStorage = FileStorageFacade("FILE_PATH"),
+)
+```
+
+</TabItem>
+
+<TabItem value = "typescript">
+
+```typescript
+import {
+	AuthenticationProcessTelecomType,
+	CaptchaOptions,
+	CardinalSdk,
+	StorageFacade
+} from "@icure/cardinal-sdk";
+
+const authenticationStep = await CardinalSdk.initializeWithProcess(
+	"com.mycompany.mycardinalapp",
+	"https://api.icure.cloud",
+	"https://msg-gw.icure.cloud",
+	specId,
+	processId,
+	AuthenticationProcessTelecomType.Email,
+	email,
+	new CaptchaOptions.Kerberus.Delegated({onProgress: (x) => console.log('Progress', x)}),
+	StorageFacade.usingBrowserLocalStorage(),
+)
+```
+
+</TabItem>
+
+<TabItem value="dart">
+
+:::note
+
+The Cardinal dart SDK doesn't support the onProgress callback.
+
+:::
+
+```dart
+import 'package:cardinal_sdk/auth/authentication_process_telecom_type.dart';
+import 'package:cardinal_sdk/auth/captcha_options.dart';
+import 'package:cardinal_sdk/cardinal_sdk.dart';
+import 'package:cardinal_sdk/options/storage_options.dart';
+
+final authenticationStep = CardinalSdk.initializeWithProcess(
+	"com.mycompany.mycardinalapp",
+	"https://api.icure.cloud",
+	"https://msg-gw.icure.cloud",
+	specId,
+	processId,
+	AuthenticationProcessTelecomType.email,
+	email,
+	CaptchaOptions.KerberusDelegated(),
+	StorageOptions.PlatformDefault,
+);
+```
+
+</TabItem>
+
+</LanguageTabs>
+
+:::tip
+
+`onProgress` callback is optional.
+
+:::
+
+### Smoothening the user experience
+
+If you use the `Kerberus.Delegated` captcha options, the SDK automatically handles the challenge request and resolution,
+but this means that after the user provides their information for login or registration, there will be an additional
+delay before authentication continues.
+
+As an alternative, you can request and begin solving the challenge while the user is still filling in their information,
+which will smoothen the user experience. You can provide the pre-computed solution using the `Kerberus.Computed` captcha
+options.
+
+To do so, you need to:
+
+1. Request a new Kerberus challenge by making a `GET` request to the URL `https://msg-gw.icure.cloud/{SPECID}/challenge`.
+2. Compute the challenge solution using the method `resolveChallenge`.
+3. Initialize the Cardinal SDK with the pre-computed solution.
+
+:::caution
+
+In Expo, you need to pass the `CryptoService` to the `resolveChallenge` method.
+
+You can refer to the [dedicated documentation page](./expo) to learn how to get the
+`CryptoService` and why it is required.
+
+:::
+
+<LanguageTabs>
+
+<TabItem value = "kotlin">
+
+```kotlin
+import com.icure.cardinal.sdk.CardinalSdk
+import com.icure.cardinal.sdk.auth.AuthenticationProcessTelecomType
+import com.icure.cardinal.sdk.auth.CaptchaOptions
+import com.icure.cardinal.sdk.storage.impl.FileStorageFacade
+import com.icure.kerberus.Challenge
+import com.icure.kerberus.Solution
+import com.icure.kerberus.resolveChallenge
+import io.ktor.client.HttpClient
+import io.ktor.client.call.body
+import io.ktor.client.engine.cio.CIO
+import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.client.request.accept
+import io.ktor.client.request.get
+import io.ktor.http.ContentType
+import io.ktor.serialization.kotlinx.json.json
+
+val client = HttpClient(CIO) {
+	install(ContentNegotiation) {
+		json()
+	}
+}
+
+val msgGwUrl = "https://msg-gw.icure.cloud"
+val specId = "SPEC_ID" // Fill from cockpit
+val processId = "PROCESS_ID" // Fill from cockpit
+
+suspend fun startSdkAuth(
+	userEmail: String
+) = CardinalSdk.initializeWithProcess(
+	applicationId = "com.mycompany.mycardinalapp",
+	baseUrl = "https://api.icure.cloud",
+	messageGatewayUrl = msgGwUrl,
+	externalServicesSpecId = specId,
+	processId = processId,
+	userTelecomType = AuthenticationProcessTelecomType.Email,
+	userTelecom = userEmail,
+	captcha = CaptchaOptions.Kerberus.Computed(getAndSolveKerberusChallenge()),
+	baseStorage = FileStorageFacade("FILE_PATH"),
+)
+
+suspend fun getAndSolveKerberusChallenge(): Solution {
+	val challenge = client.get("${msgGwUrl}/${specId}/challenge"){
+		accept(ContentType.Application.Json)
+	}.body<Challenge>()
+	return resolveChallenge(challenge, specId) { progress ->
+		println("Progress: ${progress * 100}%")
+	}
+}
+
+```
+
+</TabItem>
+
+<TabItem value="typescript">
+
+```typescript
+import {
+	AuthenticationProcessTelecomType,
+	CaptchaOptions,
+	CardinalSdk, resolveChallenge, Solution,
+	StorageFacade
+} from "@icure/cardinal-sdk";
+
+const msgGwUrl = "https://msg-gw.icure.cloud"
+const specId = "SPEC_ID" // Fill from cockpit
+const processId = "PROCESS_ID" // Fill from cockpit
+
+export async function startSdkAuth(
+	userEmail: string
+) {
+	await CardinalSdk.initializeWithProcess(
+		"com.mycompany.mycardinalapp",
+		"https://api.icure.cloud",
+		msgGwUrl,
+		specId,
+		processId,
+		AuthenticationProcessTelecomType.Email,
+		userEmail,
+		new CaptchaOptions.Kerberus.Computed({ solution: await getAndSolveKerberusChallenge() }),
+		StorageFacade.usingBrowserLocalStorage(),
+	)
+}
+
+async function getAndSolveKerberusChallenge(): Promise<Solution> {
+	const challenge = await fetch(`${msgGwUrl}/${specId}/challenge`).then((x) => x.json())
+	return resolveChallenge(
+		challenge,
+		specId,
+		undefined,
+		(progress) => { console.log(`Progress: ${progress * 100}%`) }
+	)
+}
+
+```
+
+</TabItem>
+
+<TabItem value="dart">
+
+
+
+```dart
+import 'package:cardinal_sdk/auth/authentication_process_telecom_type.dart';
+import 'package:cardinal_sdk/auth/captcha_options.dart';
+import 'package:cardinal_sdk/cardinal_sdk.dart';
+import 'package:cardinal_sdk/options/storage_options.dart';
+import 'package:kerberus/challenge.dart';
+import 'package:kerberus/kerberus.dart';
+import 'package:http/http.dart' as http;
+
+
+const msgGwUrl = "https://msg-gw.icure.cloud";
+const specId = "SPEC_ID"; // fill from cockpit
+const processId = "PROCESS_ID"; // fill from cockpit
+
+Future<AuthenticationWithProcessStep> startSdkAuth(
+    String userEmail
+    ) async {
+  return CardinalSdk.initializeWithProcess(
+    "com.mycompany.mycardinalapp",
+    "https://api.icure.cloud",
+    msgGwUrl,
+    specId,
+    processId,
+    AuthenticationProcessTelecomType.email,
+    userEmail,
+    CaptchaOptions.KerberusComputed(await getAndSolveKerberusChallenge()),
+    StorageOptions.PlatformDefault,
+  );
+}
+
+Future<Solution> getAndSolveKerberusChallenge() async {
+  final challengeRequestResponse = await http.get(Uri.parse("$msgGwUrl/$specId/challenge"));
+  if (challengeRequestResponse.statusCode != 200) {
+    throw Exception('Failed to get challenge');
+  }
+  final kerberusSolution = await resolveChallenge(
+      Challenge.fromJsonString(challengeRequestResponse.body),
+      specId,
+      onProgress: (progress) => print(progress)
+  );
+  return Solution(kerberusSolution.id, kerberusSolution.nonces);
+}
+```
+
+</TabItem>
+
+</LanguageTabs>

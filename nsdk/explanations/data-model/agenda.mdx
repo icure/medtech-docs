@@ -1,0 +1,29 @@
+# Agenda
+
+The Agenda is a non-encryptable root-level entity that represents an agenda for a user.
+
+## Properties
+
+Below you will find an explanation of the most commonly used properties in the entity that are not among the
+[shared fields](/explanations/data-model/#shared-fields). For a full list, check the reference documentation (:construction:).
+
+### closingDate
+The `closingDate` represent the moment when the Agenda ended.
+It is encoded as a [FuzzyDateTime](/explanations/data-model/#fuzzydatetime).
+
+### name
+A human-readable description for the Agenda.
+
+### userId
+An optional link to a user that encodes the fact that the Agenda is related to a specific user.
+
+### rights
+A collection of Rights that define the rights of the user on the Agenda.
+
+A Right is a nested entity that contains the following properties:
+
+- `userId`: the id of the user that has the right.
+- `read`: if the user can read the agenda content
+- `write`: if the user can write in the agenda
+- `administration`: if the user can administer the agenda
+

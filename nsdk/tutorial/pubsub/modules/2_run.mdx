@@ -7,24 +7,24 @@ import TabItem from "@theme/TabItem";
 
 # Run the Example
 
-You can run the example by executing the Subscriber application and then the Publisher application. Below you will 
+You can run the example by executing the Subscriber application and then the Publisher application. Below you will
 find the instruction on how to run them in the different programming languages.
 
-Be sure of running the Subscriber first, as the subscription will only be triggered by services created after the 
+Be sure of running the Subscriber first, as the subscription will only be triggered by services created after the
 initialization.
 
-:::warning
+:::caution
 Both the Publisher and the Subscriber will ask for a login and a password. You can use the email and an authentication
 token for a healthcare party user [created through the Cockpit](/cockpit/how-to/how-to-manage-hcp).
 
-Make sure to use the same credentials for both the Publisher and Subscriber. The patient created in the Publisher will 
-share data with the healthcare party associated with the logged-in credentials, and the Subscriber can only access the 
+Make sure to use the same credentials for both the Publisher and Subscriber. The patient created in the Publisher will
+share data with the healthcare party associated with the logged-in credentials, and the Subscriber can only access the
 services that have been shared with that same healthcare party.
 :::
 
 :::info
-The Publisher and Subscriber are fully interoperable, even if they are written in different programming languages. 
-For example, you could run the Publisher in Kotlin and the Subscriber in Python, and you would achieve the same result 
+The Publisher and Subscriber are fully interoperable, even if they are written in different programming languages.
+For example, you could run the Publisher in Kotlin and the Subscriber in Python, and you would achieve the same result
 as if both were written in the same language.
 :::
 
@@ -40,12 +40,12 @@ cd cardinal-real-time-analysis-tutorial
 ## Launch the Tutorial using Kotlin
 
 Open the project folder using [IntelliJ](https://www.jetbrains.com/idea/) and wait for the indexing to finish.
-When it finishes, run the `main` function in the `Subscriber.kt` file to run the Subscriber and the `main` functon in 
+When it finishes, run the `main` function in the `Subscriber.kt` file to run the Subscriber and the `main` functon in
 the `Publisher.kt` file to run the Publisher.
 
 ## Launch the Tutorial using Python
 
-To launch the tutorial in Python, navigate to the `python` folder in the tutorial repository. The minimum supported 
+To launch the tutorial in Python, navigate to the `python` folder in the tutorial repository. The minimum supported
 Python version is 3.9.
 
 ```bash

@@ -49,6 +49,16 @@ const patientIterator = await sdk.patient.filterPatientsBy(
 ```
 
 </TabItem>
+<TabItem value="dart">
+
+```dart
+String nameToSearch = // This is provided by the user through the UI
+final patientIterator = await sdk.patient.filterPatientsBy(
+	await PatientFilters.byNameForSelf(nameToSearch)
+);
+```
+
+</TabItem>
 </LanguageTabs>
 
 `PatientFilters.byNameForSelf` defines the options used to retrieve the patients, while the `filterPatientsBy` method
@@ -117,6 +127,21 @@ if (patient == null) {
 ```
 
 </TabItem>
+<TabItem value="dart">
+
+```dart
+Patient? patient;
+while ((await patientIterator.hasNext()) && patient == null) {
+	final p = (await patientIterator.next(1)).first;
+	showPatientOnTheUi(p);
+	final use = readChoiceOfTheUser();
+	if (use) {
+		patient = p;
+	}
+}
+```
+
+</TabItem>
 </LanguageTabs>
 
 The same logic can be applied to medical data, where you can leverage the
@@ -176,6 +201,24 @@ while(await contactIterator.hasNext()) {
 	const contact = (await contactIterator.next(1))[0]
 	prettyPrintContact(contact)
 	await readLn("Press enter for next contact")
+}
+```
+
+</TabItem>
+<TabItem value="dart">
+
+```dart
+final contactIterator = await sdk.contact.filterContactsBy(
+	await ContactFilters.byPatientsForSelf([patient])
+);
+if (!(await contactIterator.hasNext())) {
+	showErrorMessageForNoContactsFound();
+}
+
+while(await contactIterator.hasNext()) {
+	final contact = (await contactIterator.next(1)).first;
+	showContactOnTheUI(contact);
+	await waitForUserConfirmationToShowNext();
 }
 ```
 
@@ -301,6 +344,38 @@ if (!(await serviceIterator.hasNext())) {
 while (await serviceIterator.hasNext()) {
 	const service = (await serviceIterator.next(1))[0]
 	prettyPrintService(service)
+	await readLn("Press enter for next service")
+}
+```
+
+</TabItem>
+<TabItem value="dart">
+
+```dart
+int choice = readChoiceFromUI();
+Identifier identifier;
+switch(choice) {
+	case 0:
+		identifier = Identifier(system: "cardinal", value: "bloodPressure");
+	case 1:
+		identifier = Identifier(system: "cardinal", value: "ecg");
+	case 2:
+		identifier = Identifier(system: "cardinal", value: "xRay");
+	default:
+		throw ArgumentError("Invalid choice");
+}
+
+final serviceIterator = await sdk.contact.filterServicesBy(
+	await ServiceFilters.byIdentifiersForSelf([identifier])
+);
+
+if (!(await serviceIterator.hasNext())) {
+	showErrorForNoContactsFound();
+}
+
+while (await serviceIterator.hasNext()) {
+	final service = (await serviceIterator.next(1)).first;
+	showServiceOnUI();
 	await readLn("Press enter for next service")
 }
 ```
