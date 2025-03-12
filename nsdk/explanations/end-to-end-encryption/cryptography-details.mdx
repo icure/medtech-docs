@@ -1,0 +1,97 @@
+---
+sidebar_position: 1
+---
+
+# E2E Cryptography in Cardinal
+
+:construction: This page is under construction :construction:
+
+# Secure Data Sharing with Explicit or Anonymous Actors
+
+## 1. Types of Actors
+
+- **Delegator**: The data owner who creates the exchange data to share information with another actor.
+- **Delegate**: The data owner who receives access to the shared data from the delegator.
+
+## 2. Type of keys
+
+### 1. Personal Encryption Keys (RSA)
+
+- **Purpose**: These keys are unique to each user and are used to decrypt exchange keys.
+- **Functionality**: A user's personal encryption key allows them to decrypt all exchange keys that involve them, facilitating secure communication and data sharing with other data owners.
+- **Storage**: Personal encryption keys are stored securely in the user's device, ensuring that only the user can access them. The management of those keys is not handled by the SDK even though it provides utility methods to store them in the secure storage of the device on mobile platforms.
+
+### 2. Exchange Keys (AES)
+
+- **Purpose**: These keys are used for encrypting data exchanged between two data owners.
+- **Functionality**: Exchange keys enable secure data sharing. They are encrypted using the personal encryption keys of the involved data owners, ensuring that only the intended recipients can decrypt and access the shared data.
+- **Storage**: Exchange keys are stored in the `ExchangeData` structure, which includes the encrypted keys and signatures for verification.
+
+### 3. Entity Encryption Keys (AES)
+
+- **Purpose**: These keys are used to encrypt the data of specific entities (e.g., documents, records).
+- **Functionality**: Entity encryption keys are decrypted using exchange keys. This allows users to access entities they have created or that have been shared with them, maintaining data confidentiality and integrity.
+- **Storage**: Entity AES encryption keys are stored in the `SecureDelegation` of the `SecurityMetadata` of the entity, ensuring that only authorized users can decrypt and access the data.
+
+### 4. Exchange Data Shared Signatures Keys (HMAC-SHA256)
+
+- An HMAC-SHA256 key shared between the delegate and delegator, allowing to guarantee the authenticity of the Exchange Keys and Access Control Secrets.
+
+## 3. Differences between explicit and anonymous sharing of data
+
+### Explicit Sharing
+
+- The delegator creates or reuses existing `ExchangeData` with the necessary keys and signatures.
+- The `ExchangeData` includes explicit IDs for both the delegator and delegate.
+- The `SecureDelegation` in the `SecurityMetadata` of the document includes explicit IDs for the delegator and delegate.
+- The delegate can use the `ExchangeData` to decrypt and access the shared data.
+
+### Anonymous Sharing
+
+- The delegator creates or reuses existing `ExchangeData` exactly the same way as for explicit sharing
+- The `SecureDelegation` in the `SecurityMetadata` does not include explicit IDs for the delegate and/or the delegator.
+- The `accessControlSecret` is used to generate a `securityMetadataKey`, which is an SHA-256 hash of the access control key. This key is used for access control without revealing the identities of the actors.
+- The delegate can access the data using the `securityMetadataKey` without knowing the explicit IDs of the delegator or other delegates.
+
+Details of anonymous sharing are explained in the [Secure Delegation](/explanations/end-to-end-encryption/secure-delegations) page.
+
+## 4. What is encrypted in Cardinal?
+
+If we were to encrypt all the data in Cardinal, we would not be able to search for it. This is why we only encrypt the data that is sensitive.
+
+We used pseudo-anonymisation to segregate medical data from personal data.
+
+In order to avoid de-anonymisation, we also encrypt the data that could be used to link the medical data to a person. This includes all typed data, such as names, addresses, and phone numbers, scanned documents or typed notes.
+Details of this process are explained in the [Pseudo-anonymisation of medical data](/explanations/end-to-end-encryption/encrypted-links) page.
+
+Ultimately, it is the choice of the developer to decide what data should be encrypted and what should not. The SDK documentation provides a way to easily do that. Details can be found on the [ADVANCED: Configure what is encrypted](/how-to/initialize-the-sdk/configure-what-to-encrypt) page.
+
+## 5. Data Sharing Workflow
+
+1. **Create Exchange Data**: The delegator generates exchange keys and access control secrets to create `ExchangeData` for sharing data with another data owner.
+2. **Create Entity Encryption Keys**: The delegator encrypts the entity encryption keys using the exchange keys, ensuring that only the delegate and himself can access the shared data.
+3. **Encrypt the content of the entity**: all or selected portions of the entity are encrypted using the Entity Encryption Key
+
+![Figure 1: Encrypting information](/img/encrypt.svg)
+
+## 6. Data Access Workflow
+
+1. **Decrypt Exchange Keys**: A user employs their personal encryption key to decrypt exchange keys, which are necessary for accessing shared data.
+2. **Access Shared Data**: Using the decrypted exchange keys, the user can then decrypt the entity encryption keys, granting them access to the encrypted data of specific entities.
+3. **Decrypt the content of the entity**: all or the encrypted portion of the entity is decrypted using the Entity Encryption Key
+
+![Figure 2: Decrypting information](/img/decrypt.svg)
+
+For an explicit sharing scenario, the user can easily identify the entities shared with them by the explicit IDs included in the `SecureDelegation`.
+
+For an anonymous sharing scenario, the user can access the data using the `securityMetadataKey` generated from the access control secret, without knowing the explicit IDs of the delegator or delegate.
+
+
+## 7. Key Verification
+
+Key verification is essential to ensure the authenticity of public keys used for encryption and decryption. It helps prevent unauthorized access to shared data by verifying the integrity of the keys involved in the data sharing process.
+
+Cardinal SDK provides mechanisms for verifying personal encryption keys, exchange keys, and other cryptographic keys to maintain data security and confidentiality even in the case where a database breach occurs and malicious actors attempt to insert fake keys.
+
+For more details on key verification, refer to the [Key Verification](/explanations/end-to-end-encryption/key-verification) page.
+

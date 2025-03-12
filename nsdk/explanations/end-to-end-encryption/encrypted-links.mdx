@@ -1,0 +1,79 @@
+---
+sidebar_position: 2
+---
+# Pseudo-anonymisation of medical data
+
+:construction: This page is under construction :construction:
+
+## General concept
+
+Some types of encryptable entities are linked with other encryptable entities.
+
+For example, each `Contact` is always linked to a `Patient`.
+
+In most applications, you will need to "navigate" these links.
+
+This is the case, for example, if you want to find all contacts assigned to a certain patient, or find the patient that
+a certain contact refers to.
+
+Cardinal allows you to represent these links in a secure way, so that unauthorized users cannot infer relationships between entities based on the encrypted data alone.
+This allows you to pseudo-anonymize the data and be able to access it only if you own the secret key used to encrypt the relationship.
+
+The encrypted link works by using secret ids. For each entity that can be on the one side of a one-to-many relationship we have a secret id, which is stored encrypted in the entity itself. This secret id will be added to the many linked entities, allowing for any user with access to the secret id of the one entity to search for the linked entities.
+
+:::note
+
+It is possible for a single entity to have multiple secret ids, which is useful in cases where you want to better separate the health data of patients that needs to be accessible to different groups of data owners. This however is a more advanced topic and won't be covered in this page.
+
+:::
+
+## Data Structures used for encrypted links
+
+### SecurityMetadata
+
+- **Purpose**: `SecurityMetadata` is used to store encrypted metadata for entities, including encryption keys and secret IDs that facilitate secure linking between entities. It consists of a series of secure delegations.
+
+- **Role in Encrypted Links**: The secure delegations hold two key components for encrypted links:
+    - **Secret IDs**: Each entity that can be on the "one" side of a one-to-many relationship has a secret ID. This ID is stored in an encrypted form within [SecureDelegation] of the entity itself (formerly `delegations`).
+    - **Owning Entity Ids**: Encrypted id of the entity which owns the entity holding this [SecureDelegation] (formerly `cryptedForeignKey`),
+   * such as the id of the patient for a contact or healthcare element.
+
+### ExchangeData
+
+- **Purpose**: `ExchangeData` facilitates the secure sharing of data between a delegator and a delegate by providing the necessary encryption keys and ensuring data integrity.
+
+- **Role in Encrypted Links**:
+    - **Exchange Keys**: These AES keys are used to encrypt the secret IDs and other metadata stored in `SecurityMetadata`. The exchange keys are themselves encrypted with the public keys of both the delegator and delegate, ensuring that only these parties can decrypt and use them.
+    - **Access Control Secret**: This secret is used to generate access control keys, which are part of the secure delegations in `SecurityMetadata`. It ensures that only authorized users can access the encrypted links.
+    - **Signatures**: `ExchangeData` includes signatures to verify the authenticity and integrity of the exchange keys and access control secrets, preventing tampering.
+
+### Implementation Process
+
+1. **Creation of Encrypted Links**:
+- When an entity (e.g., `Patient`) is created, a secret ID is generated and encrypted using an exchange key from `ExchangeData`.
+- This secret ID is stored in the entity's `SecurityMetadata`.
+
+2. **Linking Entities**:
+- When a related entity (e.g., `Contact`) is created:
+    - the public ID of the owning entity is encrypted and included in the related entity's metadata inside the `owningEntityIds`.
+    - the secret ID of the owning entity is stored **in clear** in the related entity's metadata inside the `secretIds`.
+
+3. **Accessing Linked Entities**:
+- Authorized users can decrypt the secret ID of the owning entity (e.g., `Patient`) using the appropriate exchange key from `ExchangeData`.
+- They can then use this secret ID to search for and access all the related entities (e.g., `Contacts`) that contain the same secret ID in their metadata.
+
+4. **Security and Privacy**:
+- The use of encrypted secret IDs and exchange keys ensures that only authorized users can navigate the links between entities.
+- This mechanism supports pseudo-anonymization by preventing unauthorized users from inferring relationships between entities based on the encrypted metadata alone.
+
+This approach ensures that the links between entities are secure and that sensitive data remains protected, even when navigating complex relationships in the data model.
+
+## Preventing Inference of Relationships
+
+Even if the explicit relationships between entities are encrypted, it is still possible for an attacker to infer relationships based on the structure of the data.
+
+For example, if a piece of medical data is shared explicitly with a certain patient, the attacker could infer that the patient is the owner of the data. Cardinal introduces the concept of secure delegations to prevent this kind of inference.
+The details of secure delegations are explained in the [Secure Delegation](/explanations/end-to-end-encryption/secure-delegations) page.
+
+Another way to infer the relationships is to use information explicitly included in the medical data that would divulge the owner of the data.
+Cardinal encrypts by default any typed or scanned information that could be used to infer the owner of the data, such as names, addresses, or any other uncontrolled piece of information.

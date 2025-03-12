@@ -41,8 +41,8 @@ owners, while {{hcps}}{{#medtech}} and devices {{/medtech}} will be *explicit* d
 
 :::
 
-The most visible difference between explicit and anonymous data owners is that explicit data owners have their id stored
-in clear in the sharing metadata, while the id of anonymous data owner does not appear in clear in any metadata.
+The most visible difference between explicit and pseudo-anonymised data owners is that explicit data owners have their id stored
+in clear in the sharing metadata, while the id of pseudo-anonymised data owner does not appear in clear in any metadata.
 
 :::info
 
@@ -94,18 +94,18 @@ the link between the patient and the data.
 
 :::note
 
-This does not mean that if you don't use anonymous data owners then anyone will be able to infer some information about
+This does not mean that if you don't use pseudo-anonymised data owners then anyone will be able to infer some information about
 your users from the tags and the sharing metadata, since the iCure server will still enforce access control.
 
 :::
 
-In conclusion the anonymous data owners serve two main purposes:
+In conclusion the pseudo-anonymised data owners serve two main purposes:
 - Provide an extra layer of protection in case of unauthorized access to the database.
 - Allow you to safely share medical data with the patients and with other data owners that should not be allowed to
 identify the patients that the data refers to (e.g. for the purpose of clinical research).
 <!-- TODO: we need to allow in the simplified SDKs to share only entity without link -->
 
-### Why not always use anonymous data owners? - The cost of anonymity
+### Why not always use pseudo-anonymised data owners? - The cost of anonymity
 
 Anonymous data sharing is great for the privacy of your users, but it comes at a cost, especially when it comes to
 access control.
@@ -129,11 +129,11 @@ iCure server.
 :::
 
 The issue with this approach is that since each AC key can only be known by a specific delegator and delegate pair, we
-have a key for each possible pair (although only pairs were at least one of the two is an anonymous data owner will
+have a key for each possible pair (although only pairs were at least one of the two is a pseudo-anonymised data owner will
 actually be used).
 
 Additionally, a user can't know in advance which AC key he should use to retrieve (or search for) an entity, therefore
-anonymous data owners will have to send ALL their keys for each request that uses delegation-based access control. For
+pseudo-anonymised data owners will have to send ALL their keys for each request that uses delegation-based access control. For
 this purpose the SDK will keep a cache of all the AC keys of the user.
 
 :::note
@@ -145,7 +145,7 @@ this cache is refreshed through the `cryptoApi.forceReload` method.
 
 :::
 
-The amount of AC keys that an anonymous data owner will use is proportional to the number of data owners involved in a
+The amount of AC keys that a pseudo-anonymised data owner will use is proportional to the number of data owners involved in a
 sharing relationship with him (as delegator or as delegate, regardless of the explicit/anonymous nature of the other
 data owner).
 Additionally, this number is also proportional to the number of key pairs that the data owner has: if the data owner
@@ -154,11 +154,11 @@ the data owner has regained access to his old data through the give-access-back 
 
 Although there is no theoretical limit to the number of AC keys that a user can have, there is a practical limit due to
 the need for a cache of all AC keys on the client side and having to send all the keys on most requests.
-For this reason patients are usually good candidate for anonymous data owners, since they are usually going to share
+For this reason patients are usually good candidate for pseudo-anonymised data owners, since they are usually going to share
 data with at most ~10 other data owners and virtually never with more than 100.
 On the contrary in some applications HCP users will have to share data with thousands or even tens of thousands of other
 users (e.g. a general practitioner sharing prescriptions directly with the patient), and therefore they are not good
-candidates for anonymous data owners.
+candidates for pseudo-anonymised data owners.
 
 :::note
 
@@ -171,7 +171,7 @@ You can learn more about key recovery in the [key recovery and verification](#ke
 
 ### Implementation recommendations
 
-- Our recommendation is to have {{hcps}} as explicit data owners and patients as anonymous data owners. {{#medtech}}For
+- Our recommendation is to have {{hcps}} as explicit data owners and patients as pseudo-anonymised data owners. {{#medtech}}For
   medical devices it depends on your application: if a device is associated only a few patients (i.e. it is easy to draw
   a connection from a device to a patient) it should be anonymous; on the contrary, if the device can't be easily
   associated to patients it should be explicit. {{/medtech}}

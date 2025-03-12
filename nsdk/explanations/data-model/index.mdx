@@ -48,12 +48,14 @@ In the following section, the chronological entities and different structural el
 ```mermaid
 erDiagram
     Patient ||--o{ HealthElement : has
-    Patient ||--o{ Form : has
+    HealthElement ||--o{ HealthcareApproach : has
     Patient ||--o{ Contact : has
     Contact ||--o{ Sub-Contact : divided-in
     Sub-Contact }o--o{ Service : contains
+    Patient ||--o{ Form : has
     Contact ||--o{ Service : contains
     Sub-Contact }o--o| HealthElement : linked
+    Sub-Contact }o--o| HealthcareApproach : linked
     Sub-Contact }o--o| Form : linked
 ```
 
@@ -317,7 +319,7 @@ Where present, the `responsible` field contains the id of the Data Owner (Health
 created the entity. The backend will automatically fill this field when the entity is created. However, a Data Owner
 can opt out [when creating the sdk](/how-to/initialize-the-sdk/#optional-parameters) to avoid creating an
 unencrypted connection with the Contact. This may be the case for Patient users or when HealthcareParty users are
-defined as anonymous data owners.
+defined as pseudo-anonymised data owners.
 
 ### Deletion Date
 Where present, the `deletionDate` field contains the timestamp of soft-deletion of an entity. For more information

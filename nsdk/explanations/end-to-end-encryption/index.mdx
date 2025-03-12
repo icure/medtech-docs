@@ -1,0 +1,52 @@
+---
+sidebar_position: 0
+---
+# End-to-End Encryption
+
+End-to-end (E2E) encryption is a security model that ensures data is encrypted on the sender's device and only decrypted on the recipient's device.
+This approach provides robust protection for data in transit and at rest. Here's how E2E encryption protects data inside Cardinal:
+
+## 1. Data Confidentiality
+
+- **Encryption**: Data is encrypted using strong cryptographic algorithms (e.g., AES) before it leaves the sender's device. Only the intended recipient, who possesses the decryption key, can read the data.
+- **Key Management**: In E2E encryption, keys are managed securely. Private keys are never shared or transmitted, ensuring that only the key holders can access the encrypted data.
+
+## 2. Protection Against Interception
+
+- **Secure Transmission**: Even if data is intercepted during transmission, it remains encrypted and unreadable to anyone without the decryption key. This protects against man-in-the-middle attacks and eavesdropping.
+
+## 3. Compliance and Privacy
+
+- **Regulatory Compliance**: E2E encryption helps organizations comply with data protection regulations (e.g., GDPR, HIPAA) by ensuring that sensitive data is protected both in transit and at rest.
+- **User Privacy**: By keeping data encrypted until it reaches the recipient, E2E encryption enhances user privacy, as even the service providers cannot access the plaintext data.
+
+## 4. Reduced Attack Surface
+
+- **Minimized Exposure**: Since data is only decrypted on the recipient's device, the attack surface is significantly reduced. Attackers would need to compromise the recipient's device or obtain the decryption key to access the data.
+
+## Application in the Healthcare Framework
+
+In the context of the healthcare data-sharing framework you described, E2E encryption ensures that:
+
+- **Patient Data**: Sensitive medical information is encrypted and can only be accessed by authorized healthcare providers or patients, protecting patient privacy.
+- **Access Control**: The use of access control secrets and secure delegations ensures that only authorized users can access specific data, even within the same system.
+
+Overall, E2E encryption is a critical component in protecting sensitive data from unauthorized access and ensuring the confidentiality and integrity of communications.
+
+# Why End-to-End encryption could not be enough for a Zero-Trust Architecture and what can you do about it
+
+Cardinal uses end-to-end encryption to protect data at rest. Keys integrity is ensured by considering that the Cardinal databases that hold the keys are not compromised.
+
+However, if the database is compromised and this breach is not detected in time, a series of attacks become possible.
+
+In this scenario, there is no guarantee that the public keys stored in the iCure database are authentic, i.e. created by the data owner they are associated to.
+
+This is because the database admins or a malicious attacker may have added his own public keys to the data owner's public keys.
+Sharing any kind of data using unverified public keys could potentially cause a data leak: this is why when creating new exchange keys or when creating recovery data only verified keys will be considered. For decrypting existing data instead unverified keys will be used without issues.
+
+Cardinal proposes a series of hooks that can be used to perform out of the library verification of public keys and identities.
+
+Details can be found in the [Key Verification](/explanations/end-to-end-encryption/key-verification) page.
+
+<!-- How to go completely zero-trust with separate PGP keys server -->
+
