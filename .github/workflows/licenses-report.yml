@@ -1,8 +1,10 @@
 name: Licenses report
 on:
-  push:
-    branches: [main]
-  workflow_dispatch:
+  pull_request:
+    types:
+      - closed
+    branches:
+      - 'main'
 
 jobs:
   licenses_report:
