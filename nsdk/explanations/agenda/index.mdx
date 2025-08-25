@@ -55,16 +55,40 @@ schedules, and calculation of availabilities.
 
 Timetable items for the same resource group are collected into `ResourceGroupAllocationSchedule`s which are then
 embedded in `Agenda.schedules`.
-A `ResourceGroupAllocationSchedule` can also specify a period of time when it is active, and inside an agenda there may 
-be multiple schedules for the same resource group, as long as two schedules for the same group are not active in 
-overlapping periods of time.
-Normally a resource group should appear in only one Agenda, but a single agenda's schedule could have multiple resource groups.
+
+A `ResourceGroupAllocationSchedule` can also specify a period of time when it is active.
+This way `ResourceGroupAllocationSchedule` a serves two purposes:
+- Group timetable items that use the same resource group
+- Divide timetable items that have different periods of validity. This is useful if you want to represent seasonal 
+  changes to the schedule, or in general upcoming significant changes to the schedule. 
+
+For example, assuming today is April 2025, if you have an agenda that has the schedule for two groups (group1, group2)
+and the schedule for both groups is going to change on the 1st December 2025, you will have four
+`ResourceGroupAllocationSchedule`:
+- A schedule for group 1 valid until the 1st December 2025 (excluded)
+- A schedule for group 2 valid until the 1st December 2025 (excluded)
+- A schedule for group 1 valid since the 1st December 2025 (included)
+- A schedule for group 2 valid since the 1st December 2025 (included)
 
 :::info
 
 When you have multiple resource groups in an agenda you should specify explicitly the resource group for each 
 `ResourceGroupAllocationSchedule`. You can do this by using codes to identify different resource groups, and 
 setting the corresponding `CodeStub` in `ResourceGroupAllocationSchedule.resourceGroup`.
+
+:::
+
+:::info
+
+If in an agenda there are multiple entries of `ResourceGroupAllocationSchedule` for the same resource group the entries
+must be active at different and non-overlapping times.
+
+:::
+
+:::info
+
+A single agenda's schedule can have `ResourceGroupAllocationSchedule` for different resource groups, but normally a
+resource group should appear in only one agenda.
 
 :::
 
@@ -181,8 +205,8 @@ understand how to properly deal with irregular appointments.
 
 In general, there is availability for an appointment in an agenda if:
 - There is at least one timetable in the agenda that can serve the appointment (in terms of type and time), and 
-- All other appointments in the agenda can be assigned to timetable items in a way that still leaves at least one of
-   the timetable items from step 1 available during the time of the appointment.
+- All other appointments (calendar items) in the agenda can be assigned to timetable items in a way that still leaves at
+  least one of the timetable items from step 1 available during the time of the appointment.
 
 Normally, the algorithm can assign an existing appointment to a timetable item if:
 - The timetable item can serve the appointment, and
@@ -190,9 +214,10 @@ Normally, the algorithm can assign an existing appointment to a timetable item i
 
 These rules make up what we call the `strict` assignment strategy.
 
-However, there are two situations when the algorithm will use a `loose` assignment strategy:
-- The calendar item is an off-schedule appointment and doesn't explicitly require strict assignment, or
-- The calendar item explicitly requires loose assignment
+However, for some calendar items the availabilities algorithm will instead use a `loose` assignment strategy.
+This is for 
+- The calendar item is an off-schedule appointment and doesn't explicitly request *strict* assignment, or
+- The calendar item explicitly requests *loose* assignment
 
 :::info
 
@@ -235,7 +260,7 @@ assignment.
 
 :::
 
-:::note
+:::warning
 
 Off-schedule calendar items that have no overlap with any timetable item are ignored by the availabilities algorithm.
 
@@ -345,4 +370,19 @@ calculating availabilities.
 
 :::
 
-For significant and long lasting changes to the schedule, it is generally better to modify the agenda instead.
+:::note
+
+Reducing availabilities can cause existing appointments to turn into overbookings.
+
+To avoid this, you may configure the agenda to ignore availabilities that are too far into the future by using 
+`EmbeddedTimeTableItem.notBeforeInMinutes`.  
+For example, if a healthcare party schedules leave with enough notice, this setting ensures that no conflicting 
+appointments (created by unprivileged users) will exist.
+
+:::
+
+For significant and long-lasting changes to the schedule, it is generally better to modify the agenda instead.
+
+## Slotting of availabilities
+
+TODO
