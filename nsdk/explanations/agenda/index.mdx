@@ -1,0 +1,348 @@
+---
+sidebar_position: 50
+---
+
+# Agenda system
+
+Cardinal’s agenda system lets you schedule and manage user appointments.
+
+The core entities are `Agenda` and `CalendarItem`.
+
+- **CalendarItem**: Represents an event or appointment scheduled at a specific time within an agenda.
+- **Agenda**: A container for calendar items, which can include basic metadata such as a name and an owner.
+
+For example, a doctor might have an agenda to track patient appointments by adding calendar items.  
+If your application involves only a small, trusted group of users, creating calendar items by manipulating directly 
+these models may be sufficient.
+
+However, if you need to allow less-trusted users to book appointments, you can use **availabilities discovery** and 
+**safe booking** features.  
+By defining a schedule for an agenda, you enable any user to:
+1. Query available time slots.
+2. Book appointments that align with those availabilities.
+
+This page explains how to model the agenda schedule in ways that can best represent your use cases.
+
+## Basics 
+
+### Schedules model
+
+The core element for defining an agenda schedule is the `EmbeddedTimeTableItem`.
+
+An `EmbeddedTimeTableItem` defines part of a schedule by specifying:
+- One or more start–end hour pairs that define the hours when the timetable item has availability.
+- An [iCalendar recurrence rule](https://datatracker.ietf.org/doc/html/rfc5545#section-3.3.10) that define the days when
+- the timetable item has availability.
+- A set of `CalendarItemType` IDs that indicate which types of appointments can be booked during those times.
+- The number of availabilities for appointments that happen at the same time.
+
+If a schedule has different hours on different days, or serves different types of appointments at different times, you 
+will need to use multiple timetable items to build the schedule.
+
+Every timetable item is also implicitly tied to a **resource group**.  
+A resource group is the group of people (usually healthcare parties) or other resources (such as medical devices) that 
+can handle appointments with times and types matching what is defined by the timetable item.  
+Typically, the number of parallel availabilities for a timetable item should match the number of resources in the 
+associated group.  
+Resource groups and their effect on availabilities are explained in more detail in a later section.
+
+:::note
+
+There is no entity in cardinal that represents resource groups; it is instead only a concept used in the design of agendas' 
+schedules, and calculation of availabilities.
+
+:::
+
+Timetable items for the same resource group are collected into `ResourceGroupAllocationSchedule`s which are then
+embedded in `Agenda.schedules`.
+A `ResourceGroupAllocationSchedule` can also specify a period of time when it is active, and inside an agenda there may 
+be multiple schedules for the same resource group, as long as two schedules for the same group are not active in 
+overlapping periods of time.
+Normally a resource group should appear in only one Agenda, but a single agenda's schedule could have multiple resource groups.
+
+:::info
+
+When you have multiple resource groups in an agenda you should specify explicitly the resource group for each 
+`ResourceGroupAllocationSchedule`. You can do this by using codes to identify different resource groups, and 
+setting the corresponding `CodeStub` in `ResourceGroupAllocationSchedule.resourceGroup`.
+
+:::
+
+### Appointments
+
+Appointments are represented by calendar items.
+
+When a user wants to take an appointment they have to choose an agenda, query the availabilities for the type of 
+appointment they want, and finally create a calendar item linked to the agenda, and at the time of the availability.
+*Note that in this case the calendar item is linked only to the agenda*.
+
+:::note
+
+Calendar items are never linked directly to timetable items or resource group allocation schedules.
+
+Users with special privileges can link calendar items to certain resource groups in addition to the agenda, but this
+should be done only under special circumstances, which will be explained in later sections; most calendar items should 
+be linked only to agendas.
+
+:::
+
+## Agenda schedule design recommendations
+
+When designing agenda schedules, the first question to consider is what choices you want to leave to the end users.
+
+For example, in a system where patients can book doctor visits, the schedule design determines whether users can:
+- Select a specific doctor for their appointment, or
+- Select only the type of appointment, while the system (or another process) assigns the doctor at a later moment.
+
+The design of agendas for the first kind of system is straightforward: you have an agenda for each doctor, and each 
+agenda uses only one resource group in the schedule, that is the group consisting of only that doctor.
+
+:::note
+
+Agendas can define multiple `ResourceGroupAllocationSchedule`s even if there is only one resource group.
+In such cases different schedules can be used to represent significant changes to the schedule, for example due to
+seasonal changes in working hours.    
+
+:::
+
+To design the agendas for the second type of system you will have to first divide your doctors in resource groups, based
+on their competences (i.e. the types of appointments that they can handle) and working hours.
+Doctors with the same exact set of competences and working hours should be part of the same group.
+
+:::warning
+
+We strongly recommend you follow the above rules in the design of resource groups, otherwise you may get unexpected 
+results when querying agendas availabilities, especially in the presence of irregular appointments (discussed later).
+
+:::
+
+You should then divide the groups in agendas: if two groups can serve the same type of calendar item at overlapping 
+times you can put them in the same agenda.
+This allows for significant flexibility in the availabilities, as the appointments are not assigned to a specific group
+and can *slide* depending on the needs of other appointments.
+
+<details>
+<summary>Example</summary>
+
+Consider an agenda with the following groups:
+- Group 1 on Monday between 09:00 and 12:00 can serve calendar items of type `t0` or `t1`, with one availability
+- Group 2 on Monday between 10:00 and 13:00 can serve calendar items of type `t0` or `t2`, with one availability
+
+If there is an appointment of type `t1` between 10:00 and 10:30 then the at that time there is only one availability for
+type `t0` or `t2`.
+
+However, if the appointment is of type `t0` then the availability will be for any of types `t0`, `t1`, or `t2`; this is
+because the existing appointment is not linked to group 1 or group 2, and could be performed by either of them.
+If there is a new appointment between 10:00 and 10:30 of type `t1` then the original `t0` appointment will be performed
+by group 2; if the new appointment is instead of type `t2` the original appointment will be performed by group 1.
+
+This kind of flexibility is not possible if group 1 and group 2 are on separate agendas; the group that will take care
+of the `t0` appointment is chosen at the moment the calendar item is created, since the calendar item will be linked
+directly to the agenda of one of the groups.
+
+</details>
+
+If you don't have any overlaps between groups, or don't care for this kind of flexibility, you will have an agenda per
+group, which has no significant differences from the design where the end-user picks the doctor.
+
+:::warning
+
+You should include multiple resource groups in the same agenda only if their schedules overlap in a way that allows
+flexible assignment of certain calendar items.
+
+Adding unrelated resource groups to the same agenda provides no benefit. 
+On the contrary, it increases the complexity of availability calculations. 
+The more complex the agenda, the slower availability queries will be, and, in extreme cases, some availabilities may not
+be found at all.
+
+::: 
+
+## Irregular appointments
+
+Most appointments in an agenda will follow its schedule. 
+However, some may not fit within it exactly; these are called **irregular appointments**.
+
+There are two types of irregular appointments:
+- **Off-schedule appointments**: Calendar items that either fall (partly or fully) outside the scheduled times, or use
+  a `CalendarItemType` that is not permitted at that time.
+- **Overbookings**: Occur when multiple appointments individually fit the schedule, but together exceed its capacity.
+
+Irregular appointments can occur in two situations:
+- A privileged user creates an appointment directly, bypassing the safe booking process.
+- The schedule is modified after appointments have already been booked.
+
+Even when irregular appointments exist, Cardinal will still attempt to provide reasonable availability results.  
+However, there are a few considerations you can follow to achieve the best outcomes.
+
+### Availabilities algorithm overview
+
+This section provides an overview of how Cardinal calculates availabilities for an agenda, which will help you better
+understand how to properly deal with irregular appointments.
+
+In general, there is availability for an appointment in an agenda if:
+- There is at least one timetable in the agenda that can serve the appointment (in terms of type and time), and 
+- All other appointments in the agenda can be assigned to timetable items in a way that still leaves at least one of
+   the timetable items from step 1 available during the time of the appointment.
+
+Normally, the algorithm can assign an existing appointment to a timetable item if:
+- The timetable item can serve the appointment, and
+- The timetable item still has availabilities leftover after considering the items that have already been assigned to it
+
+These rules make up what we call the `strict` assignment strategy.
+
+However, there are two situations when the algorithm will use a `loose` assignment strategy:
+- The calendar item is an off-schedule appointment and doesn't explicitly require strict assignment, or
+- The calendar item explicitly requires loose assignment
+
+:::info
+
+Privileged users can instruct the availability algorithm to use a specific assignment strategy for certain calendar
+items by setting the corresponding value in the `CalendarItem.availabilitiesAssignmentStrategy` field.
+
+:::
+
+A calendar item can be assigned loosely to a timetable item if:
+- The calendar item has at least a partial overlap with the timetable item hours
+- The resource group of the timetable item is eligible for assignment of that calendar item, that is:
+  - The calendar item is explicitly linked to the timetable item's group, or
+  - The calendar item is not linked to any resource group, and the resource group seems like an appropriate fit for the
+    calendar item according to some heuristics
+
+:::info
+
+The heuristics used when deciding if a resource group is suitable for loose assignment of calendar item consider 
+information such as:
+- Does the resource group have a competence for the calendar item type (i.e. is there a timetable item for that 
+  resource group that can serve that calendar item type).
+- Does the resource group have a timetable item that can fully serve the calendar item times, even if it doesn't serve
+  the calendar item type during that time.
+- Does the resource group have a timetable item that can partially serve the calendar item times, and serves that 
+  calendar item type during that time.
+
+This is one reason why it is important to model resource groups in the appropriate way.
+
+The exact heuristics and priorities used are an implementation detail that may change without notice; this is why
+you should always specify explicitly the resource group when possible, as the availabilities detected may otherwise
+change between different versions of the cardinal backend.
+
+:::
+
+:::note
+
+Loose assignment doesn't require that the timetable item has enough remaining availabilities for the calendar item (by
+considering the other assignments), however, the loose assignment will still reduce the availabilities for strict 
+assignment.
+
+:::
+
+:::note
+
+Off-schedule calendar items that have no overlap with any timetable item are ignored by the availabilities algorithm.
+
+:::
+
+
+### Off-schedule appointments
+
+Off-schedule appointments unless otherwise specified are always assigned using loose assignment when searching for 
+availabilities, which is a middle ground between ignoring the inconsistencies and blocking completely the agenda.  
+
+However, loose assignment can sometimes be too permissive, especially with calendar items that are not explicitly linked
+to a resource group.
+
+For example, given an agenda with the following groups:
+- Group 1 from 09:00 to 12:00 1 availability for calendar item type 0 or 1
+- Group 2 from 09:00 to 12:00 1 availability for calendar item type 0 or 2
+
+If you have two off-schedule calendar items from 11:30 to 12:30 of type 0 with no resource group specified explicitly,
+they could both be assigned to the same group: this is because when a calendar item is assigned loosely the potential
+conflicts with other calendar items are not checked. 
+This means there will still be availabilities for type 0, 1, or 2, for the entire day (09:00–12:00).
+
+Linking one of the calendar items to group 1 and the other to group 2 instead would change the availabilities to 
+09:00–11:30, as you would expect.
+
+When creating new off-schedule appointments, or when changing a schedule in a way that may turn existing regular
+appointments into off-schedule, you should always make sure to set an appropriate resource group on the calendar item.
+
+### Overbooking
+
+In case of overbooking it will always be impossible to assign all calendar items of an agenda in the search of 
+availabilities; this would be a major issue, as even a short overbooking would completely block an agenda.
+
+However, what actually happens in Cardinal is that in case of overbooking only the times covered by the overbooking 
+calendar items and calendar items whose assignment depends on the overbooking calendar items will be blocked.
+
+This can minimize the impact that overbooking has on availability. 
+For example, the following diagram shows a potential overbooking situation, in an agenda that has 2 availabilities.
+
+![Example diagram of overbooking](./overbooking_example.svg)
+
+Since there are only 2 availabilities but at a certain time there are 3 calendar items overlapping (`2`, `3`, and `4`)
+we have an overbooking.
+
+Even though there would be an availability during the second half of calendar item `5` the overbooking blocks that
+availability; however since calendar items `1` and `6` are independent from the group of calendar items in overbooking
+(`2-5`) the availabilities at that time are unaffected.
+
+This situation is particularly favorable as the overbooking could be solved by moving the calendar item `4` to match the
+same times as calendar item `5`, and even if this is not done users will still be able to take appointments at 
+appropriate times.
+
+In some cases however, this system may be too permissive.
+Considering again an agenda with 2 availabilities and the following calendar items:
+
+![Example diagram of overbooking 2](./big_overbooking.svg)
+
+In this case the overbooking could be solved by moving one of the calendar items in the overbooked group to the same 
+times of calendar item `1`, and one of the calendar items to the same times of `6`.
+Until you do this change, however, people can still book appointments; if one more appointment is booked before you
+fix the overbooking it will be impossible to resolve it.
+
+#### Dependent calendar items assignment clarifications
+
+Two calendar items are considered **dependent** if assigning one of them to a timetable item can affect how the other
+is assigned, but only calendar items that use strict assignment strategy are considered when checking dependencies.
+
+A calendar item is dependent to:
+- All calendar items (for the same agenda) that have scheduled time overlapping with it. For the sake of this
+  we call this a direct dependency, but this has no impact on the availabilities.
+- All calendar items that are dependent directly or indirectly with one of its dependencies (indirect dependency).
+
+Note that two tangent calendar items (i.e. the start of one is equal to the end of the other) are not directly
+dependent.
+
+The following diagram shows different groups of dependent calendar items in different colors.
+
+![Diagram of dependent calendar items](./calendar_items_groups.svg)
+
+#### Blocking more slots 
+
+In situations where the system is too permissive, you can create fake calendar items to block people from booking 
+calendar items in a larger period than what the overbooking normally affects.
+
+The simplest option is to create a calendar item with `strict` assignment strategy, spanning the times you want to block
+(and including the times of the overbooking).
+
+This will essentially artificially increase the group of calendar-items that are dependent to the calendar items in 
+overbooking, which in turn increases the period of time that will be blocked by it.
+
+## Temporary changes in availabilities
+
+Sometimes you'll have to represent temporary changes in the availabilities, for example, if a healthcare party is on
+leave.
+
+The preferred way of doing this is to create calendar items matching the period of the unavailability.
+If the unavailable resource is part of an agenda with multiple resource groups, you should link the calendar item to the
+resource group.
+You don't have to match exactly the start/end hours of the schedule, you can use an off-schedule calendar item in this
+case.
+
+:::warning
+
+You should avoid creating calendar items lasting longer than 1 year; these calendar items will be ignored when 
+calculating availabilities.
+
+:::
+
+For significant and long lasting changes to the schedule, it is generally better to modify the agenda instead.
