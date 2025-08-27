@@ -121,14 +121,6 @@ For example, in a system where patients can book doctor visits, the schedule des
 The design of agendas for the first kind of system is straightforward: you have an agenda for each doctor, and each 
 agenda uses only one resource group in the schedule, that is the group consisting of only that doctor.
 
-:::note
-
-Agendas can define multiple `ResourceGroupAllocationSchedule`s even if there is only one resource group.
-In such cases different schedules can be used to represent significant changes to the schedule, for example due to
-seasonal changes in working hours.    
-
-:::
-
 To design the agendas for the second type of system you will have to first divide your doctors in resource groups, based
 on their competences (i.e. the types of appointments that they can handle) and working hours.
 Doctors with the same exact set of competences and working hours should be part of the same group.
@@ -148,9 +140,9 @@ and can *slide* depending on the needs of other appointments.
 <details>
 <summary>Example</summary>
 
-Consider an agenda with the following groups:
-- Group 1 on Monday between 09:00 and 12:00 can serve calendar items of type `t0` or `t1`, with one availability
-- Group 2 on Monday between 10:00 and 13:00 can serve calendar items of type `t0` or `t2`, with one availability
+Consider an agenda with the following:
+- A schedule for Group 1, with one availability on Monday between 09:00 and 12:00 for calendar items of type `t0` or `t1`.
+- A schedule for Group 2, with one availability on Monday between 10:00 and 13:00 for calendar items of type `t0` or `t2`.
 
 If there is an appointment of type `t1` between 10:00 and 10:30 then the at that time there is only one availability for
 type `t0` or `t2`.
@@ -179,7 +171,21 @@ On the contrary, it increases the complexity of availability calculations.
 The more complex the agenda, the slower availability queries will be, and, in extreme cases, some availabilities may not
 be found at all.
 
-::: 
+:::info
+
+You can combine these design with frontend logic to create more complex systems.
+
+For example, you can create a system where the user can choose between searching for availabilities of specific doctors
+or searching for available doctors for the type of appointment.
+
+On the side of cardinal this would use one agenda per doctor, and this would work out-of-the-box for the search of 
+availabilities for specific doctors.
+
+The search for available doctors for the type of appointment instead would do multiple queries: first the client
+will search for agendas matching the requirements (based on the type of appointments served, but usually also based on
+the location), then query the availabilities for the individual agendas. 
+
+:::
 
 ## Irregular appointments
 
@@ -200,25 +206,31 @@ However, there are a few considerations you can follow to achieve the best outco
 
 ### Availabilities algorithm overview
 
-This section provides an overview of how Cardinal calculates availabilities for an agenda, which will help you better
-understand how to properly deal with irregular appointments.
+This section explains how Cardinal calculates availabilities for an agenda, which will help you understand how to handle
+irregular appointments.
 
-In general, there is availability for an appointment in an agenda if:
-- There is at least one timetable in the agenda that can serve the appointment (in terms of type and time), and 
-- All other appointments (calendar items) in the agenda can be assigned to timetable items in a way that still leaves at
-  least one of the timetable items from step 1 available during the time of the appointment.
+In general, an appointment is considered available in an agenda if:
+- At least one timetable item in the agenda can serve it (both in type and time), and
+- Adding the appointment does not create conflicts with other appointments already booked in that agenda.
 
-Normally, the algorithm can assign an existing appointment to a timetable item if:
-- The timetable item can serve the appointment, and
-- The timetable item still has availabilities leftover after considering the items that have already been assigned to it
+To check for conflicts, Cardinal simulates an assignment process: each existing calendar item is "assigned" to timetable
+items in the agenda.  
+If the algorithm can assign all existing calendar items in a way that leaves a timetable item with free capacity during
+a certain time frame, then that time frame is considered available: creating a calendar item during that time won't
+cause conflicts.
 
-These rules make up what we call the `strict` assignment strategy.
+Normally, the assignment algorithm can assign a calendar item to a timetable item only if:
+- The timetable item can fully accommodate the appointment (both in type and time), and
+- The timetable item still has available capacity for that appointment, after considering the capacity used to serve
+  the other appointments that were already assigned to it.
 
-However, for some calendar items the availabilities algorithm will instead use a `loose` assignment strategy.
-This is for 
-- The calendar item is an off-schedule appointment and doesn't explicitly request *strict* assignment, or
-- The calendar item explicitly requests *loose* assignment
-
+These rules make up what we call the **strict** assignment strategy; however, in some cases the algorithm uses the 
+**loose** assignment strategy.
+The choice between strict and loose is made individually for each calendar item; by default the strict strategy is used,
+but the algorithm uses the loose strategy if:
+- The calendar item is an off-schedule appointment and does not explicitly request strict assignment, or
+- The calendar item explicitly requests loose assignment.
+ 
 :::info
 
 Privileged users can instruct the availability algorithm to use a specific assignment strategy for certain calendar
@@ -226,13 +238,20 @@ items by setting the corresponding value in the `CalendarItem.availabilitiesAssi
 
 :::
 
-A calendar item can be assigned loosely to a timetable item if:
-- The calendar item has at least a partial overlap with the timetable item hours
-- The resource group of the timetable item is eligible for assignment of that calendar item, that is:
-  - The calendar item is explicitly linked to the timetable item's group, or
-  - The calendar item is not linked to any resource group, and the resource group seems like an appropriate fit for the
-    calendar item according to some heuristics
+A calendar item can be **loose**ly assigned to a timetable item if:
+- Its time at least partially overlaps with the timetable item’s hours, and
+- The timetable item’s resource group is eligible for the assignment, which is true if:
+  - The calendar item is explicitly linked to that resource group, or
+  - The calendar item is not explicitly linked to any resource group, but the resource group is considered a suitable 
+    match based on internal heuristics.
 
+:::note
+
+Loose assignment doesn't require that the timetable item has enough remaining capacity for the calendar item, however,
+the loose assignment will still affect the remaining capacity for strict assignment.
+
+:::
+    
 :::info
 
 The heuristics used when deciding if a resource group is suitable for loose assignment of calendar item consider 
@@ -249,14 +268,6 @@ This is one reason why it is important to model resource groups in the appropria
 The exact heuristics and priorities used are an implementation detail that may change without notice; this is why
 you should always specify explicitly the resource group when possible, as the availabilities detected may otherwise
 change between different versions of the cardinal backend.
-
-:::
-
-:::note
-
-Loose assignment doesn't require that the timetable item has enough remaining availabilities for the calendar item (by
-considering the other assignments), however, the loose assignment will still reduce the availabilities for strict 
-assignment.
 
 :::
 
