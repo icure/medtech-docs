@@ -92,6 +92,25 @@ resource group should appear in only one agenda.
 
 :::
 
+Finally, an agenda schedule must define how available time frames should be converted into bookable slots, using
+`Agenda.slottingAlgorithm`.  
+The slotting algorithm ensures that appointments are booked at regular times rather than at arbitrary offsets.
+
+For example, if doctor visits last 20 minutes and working hours are 09:00–12:00, you wouldn’t want a booking from
+09:15–09:35, as it would leave no room before 09:15.  
+With an appropriate slotting algorithm, users could only book in 20-minute intervals starting at 09:00 (e.g., 09:00,
+09:20, 09:40, …).
+
+:::info  
+
+Currently, the only supported slotting algorithm generates slots at fixed intervals of a configurable length.  
+However, this may not always be ideal for agendas where appointments can have different durations.
+
+We plan to develop additional slotting algorithms to allow covering more use cases.
+If you have specific needs, please contact us to share your use case.
+
+:::
+
 ### Appointments
 
 Appointments are represented by calendar items.
@@ -170,6 +189,8 @@ Adding unrelated resource groups to the same agenda provides no benefit.
 On the contrary, it increases the complexity of availability calculations. 
 The more complex the agenda, the slower availability queries will be, and, in extreme cases, some availabilities may not
 be found at all.
+
+:::
 
 :::info
 
@@ -393,7 +414,3 @@ appointments (created by unprivileged users) will exist.
 :::
 
 For significant and long-lasting changes to the schedule, it is generally better to modify the agenda instead.
-
-## Slotting of availabilities
-
-TODO
