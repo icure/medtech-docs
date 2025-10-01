@@ -1,0 +1,21 @@
+# Troubleshooting
+
+### I cannot load my parent’s keys
+
+If you are trying to load your parent’s keys and you get an error, it is likely that you haven't set the parentId in the healthcare party linked to your user.
+Another common mistake is to forget to set the useHierarchicalDataOwners flag to true in the SDK options.
+
+Because re-sharing all the information of a medical institution can be tedious, Cardinal allows you to automatically share information with a hierarchy of healthcare parties.
+For example, if a doctor belongs to a hospital, you can set the hospital as the parent of the doctor.
+
+When the doctor logs in, they will automatically get access to all the information shared with them and with the hospital.
+
+### Could not decrypt any encryption key for ...
+
+This error means that the you have the permissions to access an entity but you do not have any valid encryption key to decrypt the entity.
+This can happen for several reasons:
+
+* The data owner of the entity did not share the entity with you.
+* You haven't load the key of the healthcare party with whom the entity was shared.
+* You have load the key of the healthcare party with whom the entity was shared, but you have not set the key as verified.
+
