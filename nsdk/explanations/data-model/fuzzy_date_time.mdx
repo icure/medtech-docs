@@ -1,0 +1,62 @@
+---
+sidebar_position: 100
+---
+
+# Fuzzy Dates and Times
+
+Some entities in iCure use as data types for time information the types `FuzzyDate`, `FuzzyDateTime`, or `FuzzyTime`.
+
+:construction: Currently these types do not have a proper representation as classes in the Cardinal SDK, and are instead 
+represented by simple numbers:
+- 64-bit integers are used for `FuzzyDateTime` in languages that support it, 64-bit floating point otherwise.
+- 32-bit integers are used for `FuzzyDate` and `FuzzyTime` in languages that support it, 64-bit integer or 64-bit 
+  floating point otherwise.
+
+In the future we are planning to provide for each language of the SDK proper classes to represent these data types and 
+to allow interoperability with each language's standard time libraries.
+
+## Representation
+
+All fuzzy date/time values are considered local, therefore, they don't contain information about the time zone.
+ 
+A fuzzy date is represented by an 8 digits number:
+- The first 4 digits represent the (gregorian calendar) year
+- The next 2 digits represent the month (1 being January, 12 December)
+- The last 2 digits represent the day (starting from 1)
+
+A fuzzy time is represented by a 6 digits number:
+- The first 2 digits represent the hours (0–23)
+- The next 2 digits represent the minutes (0–59)
+- The last 2 digits represent the seconds (0–59)
+
+A fuzzy date time is the concatenation of a fuzzy date and fuzzy time.
+
+## Encoding the precision
+
+Normally `FuzzyDate`s are precise to the day, while `FuzzyDateTime`s and `FuzzyTime`s are precise to the second.  
+
+However, when the exact time for something such as an health element's value date is not known or not relevant, you can
+use special values to indicate that the fuzzy date/time is using a different precision:
+- For year precision the year is set and all other digits are 0 (e.g. 20250000000000 is a `FuzzyDateTime` representing the year 2025 and unknown month/day/time)
+- For month precision the year and month are set, and all other digits are 0 (e.g. 20250100 is a `FuzzyDate` representing the January 2025 and an unknown day)
+- For day precision (on `FuzzyDateTime`) the day is set to one day before the actual date, and the remaining digits are set to 240000 (e.g. 20250131240000 represents Febraury 1st 2025, at unknown time)
+- For hour precision the hour is set to one before the actual hour, and the remaining digits are set to 6000 (e.g. 20250131236000 represents Febraury 1st 2025 during the first hour of the day but unknown minute and seconds)
+- For minute precision the minute is set to one before the actual minute, and the seconds are set to 60 (e.g. 162960 represents 16:30 at unknown seconds)
+
+:::note
+
+Fuzzy dates and times with precision information are not always acceptable values.
+
+For some entities such as agendas' schedules and calendar items times the fuzzy dates and times must use the full
+precision.
+
+:::
+
+:::note
+
+Combinations of the special values are not allowed; for example you can't have a `FuzzyDateTime` with unknown month and day but known year and time.
+
+:::
+
+
+

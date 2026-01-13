@@ -1,0 +1,338 @@
+import TabItem from "@theme/TabItem";
+import {LanguageTabs} from "@site/src/components/LanguageTabs";
+
+# Set up a Basic Agenda System
+
+This guide walks you through configuring a simple agenda system in Cardinal, where doctors define their schedules and 
+patients can book appointments during the available times.
+
+:::info  
+
+For a deeper explanation of how Cardinal’s agenda system works, or for guidance on setting up more complex 
+configurations, refer to the [Agenda System explanation page](../explanations/agenda).  
+
+:::
+
+## Creating the schedules for a doctor
+
+To define the schedules of a doctor you use `Agenda` and `CalendarItemType` entities.
+- `CalendarItemType`s are used to represent different kinds of appointments offered by doctors (e.g. General
+  consultation, Vaccination / immunization, ...)
+- `Agenda`s define the times when doctors are available for appointments.
+
+<LanguageTabs>
+
+<TabItem value="kotlin">
+
+```kotlin
+val generalConsultationType = api.calendarItemType.createCalendarItemType(
+	CalendarItemType(
+		id = defaultCryptoService.strongRandom.randomUUID(),
+		duration = 20, // Duratio for appointments of this type In minutes
+		name = "General consultation"
+	)
+)
+val agenda = api.agenda.createAgenda(
+	Agenda(
+		id = defaultCryptoService.strongRandom.randomUUID(),
+		userRights = mapOf(currentUserId to UserAccessLevel.Admin),
+		schedules = listOf(
+			ResourceGroupAllocationSchedule(
+				items = listOf(
+					EmbeddedTimeTableItem(
+						calendarItemTypesIds = setOf(generalConsultationType.id),
+						rrule = "FREQ=WEEKLY;BYDAY=MO,WE,FR",
+						notBeforeInMinutes = 60 * 24 * 31,
+						notAfterInMinutes = 60,
+						hours = listOf(
+							EmbeddedTimeTableHour(9_00_00, 13_00_00),
+							EmbeddedTimeTableHour(14_00_00, 18_00_00),
+						),
+						public = true
+					),
+					EmbeddedTimeTableItem(
+						calendarItemTypesIds = setOf(generalConsultationType.id),
+						rrule = "FREQ=WEEKLY;BYDAY=TU,TH",
+						notBeforeInMinutes = 60 * 24 * 31,
+						notAfterInMinutes = 60,
+						hours = listOf(
+							EmbeddedTimeTableHour(9_00_00, 13_00_00),
+						),
+						public = true
+					)
+				)
+			)
+		),
+		slottingAlgorithm = AgendaSlottingAlgorithm.FixedIntervals(20),
+		publicBookingQuota = 5,
+		properties = setOf(
+			DecryptedPropertyStub(
+				id = "practitioner",
+				typedValue = DecryptedTypedValue(
+					stringValue = currentHcpId
+				)
+			)
+		)
+	)
+)
+```
+
+</TabItem>
+
+</LanguageTabs>
+
+In this example we set up an agenda for the current HCP:
+- The `userRights` specify which users can read the non-public information of this agenda, and which users can modify it
+- The schedules specify the times of the agenda, through the `ResourceGroupAllocationSchedule` and
+  `EmbeddedTimeTableItem` (for more info on `ResourceGroupAllocationSchedule` refer to the [agenda explanation page](../explanations/agenda)) 
+  - We use two timetable items to represent differences in schedules between Monday / Wednesday / Friday and Tuesday / Thursday
+  - The `rrule` specifies the days of validity of the timetable items. The syntax used is the one specified by the [iCalendar RFC](https://datatracker.ietf.org/doc/html/rfc5545#section-3.3.10). 
+    Note that this `rrule` is not allowed to specify time information, but only dates/days information.
+  - The `hours` are used to specify the hours when the schedule is active. These are ranges of [FuzzyTime with second precision](../explanations/data-model/fuzzy_date_time).
+  - Both timetable items are public, meaning all users can see availabilities and book appointments during the specified 
+    times
+  - During these timetable items users can only take appointments for the *General consultation* calendar item type
+  - The `notBeforeInMinutes` and `notAfterInMinutes` set limits on how early or late users can take appointments on 
+    this agenda. In this example users will not be able to take appointments more than 31 days before the appointment's
+    date or less than 60 minutes before it.
+- The `slottingAlgorithm` specifies how availabilities for this agenda should be converted into bookable slots. The
+  `FixedIntervals` algorithm will divide a range of available times into slots of equal length. In this example the 
+  slots are 20 minutes long, which ensures each slot can fit perfectly a *General consultation* appointment.
+- The `publicBookingQuota` allows to limit the amount of appointments each user can take on this agenda each month. 
+  Note that the quota considers the time when the appointment is taken, not the time when the appointment will be 
+  performed.
+- The `properties` can be used when searching agendas. In this example we want to allow users to search for the agendas
+  of certain HCPs, therefore, we create a property with the HCP id in the agenda.
+
+## Searching for agendas and querying availabilities
+
+We want to let users search for HCPs, their agendas and respective availabilities.
+
+One option to do this is to mark the HCPs with agendas as public. 
+This will allow even unregistered users to search the HCPs and find the availabilities.
+
+:::note
+
+Registration is still required to book an appointment after finding the availability.
+
+:::
+
+<LanguageTabs>
+
+<TabItem value="kotlin">
+
+```kotlin
+api.healthcareParty.modifyHealthcareParty(
+	api.healthcareParty.getCurrentHealthcareParty().copy(public = true)
+)
+```
+
+</TabItem>
+
+</LanguageTabs>
+
+You can then use the anonymous apis to:
+1. Search for the public hcps in a group
+2. Search for agendas where the practitioner is the chosen hcp
+3. Query the availabilities of the agenda
+
+<LanguageTabs>
+
+<TabItem value="kotlin">
+
+```kotlin
+val anonymousApis = CardinalAnonymousSdk.initialize("https://api.icure.cloud")
+val allPublicHcps = anonymousApis.healthcareParty.getPublicHealthcarePartiesInGroup(groupId)
+val chosenHcp: HealthcareParty = queryUserForHcpChoice(allPublicHcps) // Implement this yourself
+val publicAgendas = anonymousApis.agenda.listAnonymousAgendaAndAppointmentTypes(
+	groupId = groupId,
+	propertyId = "practitioner",
+	propertyValue = chosenHcp.id
+)
+val chosenAgenda: Agenda = queryUserForAgendaChoice(publicAgendas) // Implement this yourself
+val availabilities = anonymousApis.agenda.listAnonymousAvailabilities(
+	groupId = groupId,
+	agendaId = chosenAgenda.id,
+	calendarItemTypeId = generalConsultationTypeId,
+	startDate = 2025_09_01_00_00_00,
+	endDate = 2025_10_01_00_00_00,
+)
+```
+
+</TabItem>
+
+</LanguageTabs>
+
+<details>
+
+<summary>Get public healthcare parties result</summary>
+
+```json
+[
+   {
+      "id":"b75518e6-9383-49f4-ac80-f31305e3899c",
+      "lastName":"Doe",
+      "firstName":"John",
+      "addresses":[
+         {
+            "addressType":"work",
+            "telecoms":[
+               {
+                  "telecomType":"email",
+                  "telecomNumber":"john.doe@icure.com"
+               }
+            ]
+         }
+      ]
+   }
+]
+```
+
+</details>
+
+<details>
+
+<summary>Get anonymous agendas result</summary>
+
+```json
+{
+   "agendas":[
+      {
+         "id":"7f067362-4fad-4da4-9ae2-1b5cf7c2412c",
+         "slottingAlgorithm":{
+            "type":"FixedIntervals",
+            "intervalMinutes":20
+         },
+         "properties":[
+            {
+               "id":"practitioner",
+               "typedValue":{
+                  "stringValue":"b75518e6-9383-49f4-ac80-f31305e3899c"
+               }
+            }
+         ],
+         "schedules":[
+            {
+               "items":[
+                  {
+                     "rrule":"FREQ=WEEKLY;BYDAY=MO,WE,FR",
+                     "hours":[
+                        {
+                           "startHour":90000,
+                           "endHour":130000
+                        }
+                     ],
+                     "calendarItemTypesIds":[
+                        "ddae3141-c106-4e9b-b73e-ba9abc81a263"
+                     ],
+                     "public":true
+                  },
+                  {
+                     "rrule":"FREQ=WEEKLY;BYDAY=TU,TH",
+                     "hours":[
+                        {
+                           "startHour":90000,
+                           "endHour":130000
+                        },
+                        {
+                           "startHour":140000,
+                           "endHour":180000
+                        }
+                     ],
+                     "calendarItemTypesIds":[
+                        "ddae3141-c106-4e9b-b73e-ba9abc81a263"
+                     ],
+                     "public":true
+                  }
+               ]
+            }
+         ]
+      }
+   ],
+   "calendarItemTypes":[
+      {
+         "id":"ddae3141-c106-4e9b-b73e-ba9abc81a263",
+         "name":"General consultation",
+         "duration":20
+      }
+   ]
+}
+```
+
+</details>
+
+<details>
+
+<summary>Get availabilities result</summary>
+
+```json
+[
+  20250901090000,
+  20250901092000,
+  20250901094000,
+  20250901100000,
+  20250901102000,
+  // ...
+]
+```
+
+</details>
+
+## Booking an appointment
+
+After finding availability registered users can book appointments using the `CalendarItemApi.bookCalendarItemCheckingAvailability` method.
+
+This method requires that the calendar item specifies values for `agendaId`, `calendarItemTypeId`, and `startTime` that 
+match the availability. For this reason these properties can't be encrypted.
+
+<LanguageTabs>
+
+<TabItem value="kotlin">
+
+```kotlin
+val self = (patientApi.dataOwner.getCurrentDataOwner() as DataOwnerWithType.PatientDataOwner).dataOwner
+patientApi.calendarItem.bookCalendarItemCheckingAvailability(
+	patientApi.calendarItem.withEncryptionMetadata(
+		DecryptedCalendarItem(
+			id = defaultCryptoService.strongRandom.randomUUID(),
+			agendaId = agendaId,
+			calendarItemTypeId = generalConsultationTypeId,
+			startTime = 2025_09_01_09_40_00,
+		),
+		self,
+		secretId = SecretIdUseOption.UseNone
+	)
+)
+```
+
+</TabItem>
+
+</LanguageTabs>
+
+:::note
+
+If you are not sure whether the patient will have access to its own secret ids or not you can use 
+`SecretIdUseOption.UseNone` when initializing the calendar item encryption metadata.
+
+You will still be able to find the patient of a calendar item, however you won't be able to search all calendar items 
+linked to a patient unless a separate process with access to the calendar item and corresponding patient secret ids
+fills the `secretForeignKeys`. 
+
+:::
+
+## Booking appointments without initializing an encryption key for the patient
+
+Normally in Cardinal each data owner, whether he is an HCP, patient or device, has a personal encryption keypair.
+This, however, requires that the users all safely store the keypair, without losing it or leaking it to third parties.
+
+If in your application patients are only allowed to create calendar items and never access any medical data, it might
+be better to use the *keyless api* feature for patient users.
+This allows the patients to create data and share it with healthcare parties without having to create and manage a
+personal keypair.
+
+:::info
+
+:construction: A documentation page for the keyless API mode is currently under construction. If you want to know more
+about this feel free to contact us directly :construction:
+
+:::
