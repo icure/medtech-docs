@@ -23,7 +23,7 @@ A TypeScript generator script that reads all MDX files, extracts TypeScript code
 A TypeScript script executed via `tsx` that:
 
 1. Recursively scans `sdk/**/*.mdx` for all MDX files
-2. Extracts every `` ```typescript `` fenced code block, recording its source line number
+2. Extracts every `` ```typescript `` fenced code block using line-by-line plain-text fence detection (not an MDX/AST parser). This is sufficient because TypeScript fences in these files are always direct children of `<TabItem value="typescript">` — there are no nested or commented-out fences to worry about. Blocks with `no-test` in the fence info string are skipped. Each extracted block records its source line number
 3. Collects all import statements across all blocks in all files, deduplicates them by merging named imports per source module into a single superset
 4. For each MDX file containing at least one TypeScript block, generates a `.test.ts` file into `generated/`, mirroring the directory structure
 
@@ -76,6 +76,8 @@ Edge cases handled:
 - **Default imports** (`import Foo from "bar"`) — kept as-is, deduplicated by module
 - **Side-effect imports** (`import "foo"`) — collected and deduplicated
 - **Type-only imports** (`import type { Foo }`) — kept as separate `import type` statements (not merged into value imports) to preserve TypeScript semantics
+- **Name collisions** — if two different modules export the same named import, the generator emits a warning and keeps both (the second import will shadow the first; the TypeScript compiler will catch any real issues)
+- **Unused imports** — suppressed via `tsconfig.json` (`strict: false`, no `noUnusedLocals`). Every file gets the full superset even if it only uses a subset
 
 ### Shared Test Helper (`sample-tests/helpers/sdk-fixture.ts`)
 
@@ -170,12 +172,24 @@ Each TypeScript code block that does not have `no-test` must be:
 ### On the Generator
 
 - The generator must be idempotent — running it at any time overwrites `generated/` with current state
-- `generated/` is gitignored — regenerated before every test run. The `generated/.gitkeep` file is preserved to ensure the directory exists after clone.
+- When clearing `generated/`, the generator preserves `generated/.gitkeep` (or re-creates it) to ensure the directory exists after clone
+- `generated/` is gitignored — regenerated before every test run
+- The generator emits a warning for any extracted block that contains `readLn`, `prompt`, or other known interactive patterns, as these will fail at test time
 - Tests require a real backend — credentials provided via environment variables (`CARDINAL_URL`, `CARDINAL_USERNAME`, `CARDINAL_PASSWORD` — exact names defined in `helpers/sdk-fixture.ts`)
 
 ## TypeScript Configuration
 
 `sample-tests/tsconfig.json` must include `"types": ["vitest/globals"]` so that `test`, `beforeAll`, `describe` etc. are available without explicit imports in generated files.
+
+## Phased Rollout
+
+The current MDX code blocks are **not** self-contained — many are sequential steps with inter-block dependencies, function definitions without invocations, or use interactive `readLn()`. Refactoring all blocks at once is impractical.
+
+**Phase 1 — Infrastructure:** Build the generator and test runner. Most existing blocks get `no-test` annotations. A handful of already-compliant blocks serve as proof the pipeline works end-to-end.
+
+**Phase 2 — Progressive refactoring:** MDX files are refactored one at a time to make their TypeScript blocks self-contained and testable. Each refactored file removes its `no-test` annotations. Priority: how-to guides first (most API surface), then tutorials.
+
+This means initial test coverage will be low and grows as docs are refactored. The generator always processes all files — `no-test` blocks just don't produce tests.
 
 ## Workflow
 
