@@ -115,7 +115,7 @@ import { defineConfig } from 'vitest/config'
 
 export default defineConfig({
   test: {
-    include: ['generated/**/*.test.ts'],
+    include: ['generated/**/*.test.ts', 'src/__tests__/**/*.test.ts'],
     globals: true,
     testTimeout: 30000,
   },
@@ -389,12 +389,18 @@ export function parseImportLine(line: string): ParsedImport | null {
   return null
 }
 
-export function mergeImports(importLines: string[]): MergedImports {
+export function mergeImports(
+  importLines: string[],
+  onWarning?: (message: string) => void,
+): MergedImports {
   const result: MergedImports = {
     named: new Map(),
     defaults: new Map(),
     sideEffects: new Set(),
   }
+
+  // Track which module each named import came from, for collision detection
+  const nameToSource = new Map<string, string>()
 
   for (const line of importLines) {
     const parsed = parseImportLine(line)
@@ -418,6 +424,13 @@ export function mergeImports(importLines: string[]): MergedImports {
         }
         const entry = result.named.get(key)!
         for (const name of parsed.names) {
+          const baseName = name.includes(' as ') ? name.split(' as ')[1].trim() : name
+          const existingSource = nameToSource.get(baseName)
+          if (existingSource && existingSource !== parsed.source) {
+            const warn = onWarning ?? ((msg: string) => console.warn(msg))
+            warn(`Import name collision: "${baseName}" imported from both "${existingSource}" and "${parsed.source}"`)
+          }
+          nameToSource.set(baseName, parsed.source)
           entry.names.add(name)
         }
         break
@@ -1108,9 +1121,8 @@ export async function getTestSdk(): Promise<CardinalSdk> {
   // The exact initialization API depends on the SDK version.
   // Example:
   //   cachedSdk = await CardinalSdk.initialize(url, username, password)
+  //   return cachedSdk
   throw new Error('SDK initialization not yet implemented — update helpers/sdk-fixture.ts')
-
-  return cachedSdk
 }
 ```
 
@@ -1149,7 +1161,7 @@ Expected: test files are discovered and attempted. Tests fail with "SDK initiali
 cd sample-tests && yarn test 2>&1 | head -40
 ```
 
-Expected: same as above — generates then runs. The script chain works.
+Expected: exits non-zero — all tests fail with "SDK initialization not yet implemented". This is expected and confirms the full pipeline works (generate → discover → attempt to run).
 
 - [ ] **Step 4: Commit any remaining changes**
 
@@ -1166,7 +1178,7 @@ git commit -m "chore(sample-tests): verify full generate + test pipeline"
 |---|---|
 | `sample-tests/package.json` | Dependencies and scripts (`generate`, `test`, `test:watch`) |
 | `sample-tests/tsconfig.json` | TypeScript config with `vitest/globals` types |
-| `sample-tests/vitest.config.ts` | Vitest config: includes `generated/**/*.test.ts`, 30s timeout, globals |
+| `sample-tests/vitest.config.ts` | Vitest config: includes `generated/**/*.test.ts` + `src/__tests__/**/*.test.ts`, 30s timeout, globals |
 | `sample-tests/.gitignore` | Ignores `generated/` (except `.gitkeep`), `node_modules/` |
 | `sample-tests/generate-tests.ts` | Main entry point: scans MDX, builds import superset, writes test files |
 | `sample-tests/src/import-parser.ts` | Parses and merges import statements into a deduplicated superset |
