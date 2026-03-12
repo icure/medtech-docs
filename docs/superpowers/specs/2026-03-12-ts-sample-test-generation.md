@@ -75,7 +75,7 @@ Example merge:
 Edge cases handled:
 - **Default imports** (`import Foo from "bar"`) — kept as-is, deduplicated by module
 - **Side-effect imports** (`import "foo"`) — collected and deduplicated
-- **Type-only imports** (`import type { Foo }`) — merged alongside value imports
+- **Type-only imports** (`import type { Foo }`) — kept as separate `import type` statements (not merged into value imports) to preserve TypeScript semantics
 
 ### Shared Test Helper (`sample-tests/helpers/sdk-fixture.ts`)
 
@@ -146,12 +146,36 @@ Generous timeout since tests hit a real backend.
 - **Runtime:** `@icure/cardinal-sdk`, `uuid`
 - **Dev:** `vitest`, `tsx`, `typescript`, `@types/uuid`
 
+## Skipping Blocks
+
+Some code blocks should not be tested (pseudo-code, incomplete snippets, non-TypeScript-runnable examples). The generator supports an opt-out annotation:
+
+````markdown
+```typescript no-test
+// this block will be skipped by the generator
+```
+````
+
+The generator checks the fence info string for `no-test` and excludes matching blocks from test generation.
+
 ## Constraints
 
-- MDX code blocks must be **self-contained executable statements** (not just function definitions) so they can run as real tests
+### On MDX Authors
+
+Each TypeScript code block that does not have `no-test` must be:
+- **Self-contained** — it must not depend on variables defined in other code blocks. All state it needs must be created within the block itself (or use the `sdk` variable provided by the test fixture).
+- **Non-interactive** — no `readLn()`, `prompt()`, or other interactive I/O. Use hardcoded test values instead.
+- **Executable** — it must be runnable statements, not just function/type definitions. If showing a function, include a call to it.
+
+### On the Generator
+
 - The generator must be idempotent — running it at any time overwrites `generated/` with current state
-- `generated/` is gitignored — regenerated before every test run
-- Tests require a real backend — credentials provided via environment variables
+- `generated/` is gitignored — regenerated before every test run. The `generated/.gitkeep` file is preserved to ensure the directory exists after clone.
+- Tests require a real backend — credentials provided via environment variables (`CARDINAL_URL`, `CARDINAL_USERNAME`, `CARDINAL_PASSWORD` — exact names defined in `helpers/sdk-fixture.ts`)
+
+## TypeScript Configuration
+
+`sample-tests/tsconfig.json` must include `"types": ["vitest/globals"]` so that `test`, `beforeAll`, `describe` etc. are available without explicit imports in generated files.
 
 ## Workflow
 
