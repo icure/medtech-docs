@@ -15,7 +15,7 @@ async function createConfig() {
     /** @type {import('@docusaurus/types').Config} */
     return {
         title: 'CardinalSDK Documentation',
-        url: 'https://docs.cardinalsdk.com',
+        url: 'https://docs.icure.com',
         baseUrl: '/',
         onBrokenLinks: 'throw',
         onBrokenMarkdownLinks: 'warn',
@@ -53,8 +53,8 @@ async function createConfig() {
             [
                 'content-docs',
                 {
-                    id: 'nsdk',
-                    path: './nsdk',
+                    id: 'sdk',
+                    path: './sdk',
                     routeBasePath: '/',
                     sidebarPath: require.resolve('./sidebarsNsdk.js'),
                     editUrl:
@@ -158,7 +158,7 @@ async function createConfig() {
                             docId: 'intro',
                             position: 'right',
                             label: 'CardinalSDK 🚧',
-                            docsPluginId: 'nsdk',
+                            docsPluginId: 'sdk',
                         },
                         {
                             type: 'doc',
