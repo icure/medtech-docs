@@ -123,6 +123,24 @@ describe('stripImportsFromBlock', () => {
     expect(stripped).toContain('const x = await sdk.patient.getPatient')
   })
 
+  test('removes multi-line import statements', () => {
+    const code = [
+      'import {',
+      '\tCardinalSdk,',
+      '\tDecryptedPatient,',
+      '} from "@icure/cardinal-sdk"',
+      '',
+      'const x = await sdk.patient.getPatient("123")',
+    ].join('\n')
+
+    const stripped = stripImportsFromBlock(code)
+    expect(stripped).not.toContain('import')
+    expect(stripped).not.toContain('CardinalSdk')
+    expect(stripped).not.toContain('DecryptedPatient')
+    expect(stripped).not.toContain('@icure/cardinal-sdk')
+    expect(stripped).toContain('const x = await sdk.patient.getPatient')
+  })
+
   test('preserves non-import lines exactly', () => {
     const code = [
       'const x = 1',

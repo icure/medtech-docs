@@ -26,6 +26,49 @@ export interface MergedImports {
   sideEffects: Set<string>
 }
 
+/**
+ * Join multi-line import statements into single lines.
+ * Handles patterns like:
+ *   import {
+ *     Foo,
+ *     Bar,
+ *   } from "module"
+ */
+export function joinMultiLineImports(lines: string[]): string[] {
+  const result: string[] = []
+  let i = 0
+
+  while (i < lines.length) {
+    const trimmed = lines[i].trim()
+
+    // Detect start of a multi-line import: starts with 'import' and has '{' but no '}'
+    if (
+      (trimmed.startsWith('import ') || trimmed.startsWith('import\t')) &&
+      trimmed.includes('{') &&
+      !trimmed.includes('}')
+    ) {
+      const parts = [lines[i].trimEnd()]
+      i++
+      while (i < lines.length) {
+        parts.push(lines[i].trimEnd())
+        if (lines[i].includes('}')) {
+          i++
+          break
+        }
+        i++
+      }
+      // Join into a single line, collapsing whitespace
+      const joined = parts.join(' ').replace(/\s+/g, ' ').trim()
+      result.push(joined)
+    } else {
+      result.push(lines[i])
+      i++
+    }
+  }
+
+  return result
+}
+
 export function parseImportLine(line: string): ParsedImport | null {
   const trimmed = line.trim()
 

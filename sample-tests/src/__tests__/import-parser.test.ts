@@ -1,5 +1,5 @@
 import { describe, test, expect } from 'vitest'
-import { parseImportLine, mergeImports, renderImports } from '../import-parser'
+import { parseImportLine, mergeImports, renderImports, joinMultiLineImports } from '../import-parser'
 
 describe('parseImportLine', () => {
   test('parses named imports', () => {
@@ -54,6 +54,54 @@ describe('parseImportLine', () => {
   test('returns null for non-import lines', () => {
     expect(parseImportLine('const x = 1')).toBeNull()
     expect(parseImportLine('// import { Foo } from "bar"')).toBeNull()
+  })
+})
+
+describe('joinMultiLineImports', () => {
+  test('joins a multi-line import into a single line', () => {
+    const lines = [
+      'import {',
+      '\tCardinalSdk,',
+      '\tDecryptedPatient,',
+      '\tDocIdentifier,',
+      '} from "@icure/cardinal-sdk"',
+    ]
+    const result = joinMultiLineImports(lines)
+    expect(result).toHaveLength(1)
+    const parsed = parseImportLine(result[0])
+    expect(parsed).not.toBeNull()
+    expect(parsed!.kind).toBe('named')
+    if (parsed!.kind === 'named') {
+      expect(parsed!.names).toContain('CardinalSdk')
+      expect(parsed!.names).toContain('DecryptedPatient')
+      expect(parsed!.names).toContain('DocIdentifier')
+      expect(parsed!.source).toBe('@icure/cardinal-sdk')
+    }
+  })
+
+  test('leaves single-line imports unchanged', () => {
+    const lines = [
+      'import { Foo, Bar } from "baz"',
+      'const x = 1',
+    ]
+    const result = joinMultiLineImports(lines)
+    expect(result).toEqual(lines)
+  })
+
+  test('handles mix of single and multi-line imports', () => {
+    const lines = [
+      'import { Foo } from "foo"',
+      'import {',
+      '  Bar,',
+      '  Baz,',
+      '} from "bar"',
+      'const x = 1',
+    ]
+    const result = joinMultiLineImports(lines)
+    expect(result).toHaveLength(3)
+    expect(result[0]).toBe('import { Foo } from "foo"')
+    expect(result[2]).toBe('const x = 1')
+    expect(parseImportLine(result[1])).not.toBeNull()
   })
 })
 

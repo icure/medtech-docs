@@ -2,7 +2,7 @@ import { readFileSync, writeFileSync, mkdirSync, readdirSync, rmSync, existsSync
 import { resolve, relative, dirname, join, basename } from 'path'
 import { fileURLToPath } from 'url'
 import { extractTypeScriptBlocks, isImportLine } from './src/mdx-extractor'
-import { mergeImports, renderImports } from './src/import-parser'
+import { joinMultiLineImports, mergeImports, renderImports } from './src/import-parser'
 import { generateTestFileContent } from './src/test-generator'
 
 const __dirname_val = dirname(fileURLToPath(import.meta.url))
@@ -45,7 +45,9 @@ for (const mdxPath of mdxFiles) {
   const sourcePath = relative(REPO_ROOT, mdxPath)
 
   for (const block of blocks) {
-    for (const line of block.code.split('\n')) {
+    // Join multi-line imports into single lines before collecting
+    const normalizedLines = joinMultiLineImports(block.code.split('\n'))
+    for (const line of normalizedLines) {
       if (isImportLine(line)) {
         allImportLines.push(line.trim())
       }

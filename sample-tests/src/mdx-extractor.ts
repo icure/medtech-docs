@@ -52,13 +52,33 @@ export function isImportLine(line: string): boolean {
   return (trimmed.startsWith('import ') || trimmed.startsWith('import\t')) && !trimmed.startsWith('import(')
 }
 
+/**
+ * Remove import statements from a code block, including multi-line imports.
+ * Strips leading/trailing blank lines from the result.
+ */
 export function stripImportsFromBlock(code: string): string {
   const lines = code.split('\n')
   const bodyLines: string[] = []
+  let i = 0
 
-  for (const line of lines) {
-    if (!isImportLine(line)) {
-      bodyLines.push(line)
+  while (i < lines.length) {
+    const trimmed = lines[i].trim()
+
+    if (isImportLine(lines[i])) {
+      // Check if this is a multi-line import (has '{' but no '}')
+      if (trimmed.includes('{') && !trimmed.includes('}')) {
+        // Skip all lines until we find the closing '}'
+        i++
+        while (i < lines.length && !lines[i].includes('}')) {
+          i++
+        }
+        i++ // skip the closing '}' line
+      } else {
+        i++ // single-line import
+      }
+    } else {
+      bodyLines.push(lines[i])
+      i++
     }
   }
 
