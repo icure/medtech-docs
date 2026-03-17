@@ -1,5 +1,5 @@
 steps:
-  -   name: 'node:18'
+  -   name: 'node:24'
       entrypoint: sh
       args: [ '-c', 'yarn install && yarn run build' ]
 
