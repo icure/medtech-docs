@@ -10,7 +10,40 @@ const REPO_ROOT = resolve(__dirname_val, '..')
 const SDK_DIR = join(REPO_ROOT, 'sdk')
 const GENERATED_DIR = join(__dirname_val, 'generated')
 
+const HELPERS_DIR = join(__dirname_val, 'helpers')
 const INTERACTIVE_PATTERNS = ['readLn(', 'readLn (', 'prompt(', 'prompt (']
+
+interface HelperInfo {
+  modulePath: string
+  absolutePath: string
+}
+
+/**
+ * Check if a helper file exists for a given source path.
+ * For sdk/how-to/basic-operations.mdx, checks helpers/how-to/basic-operations.ts
+ * Returns the relative import path from the generated test file, or undefined.
+ */
+function findHelperInfo(sourcePath: string, testFilePath: string): HelperInfo | undefined {
+  const withoutSdk = sourcePath.replace(/^sdk\//, '')
+  const helperFile = join(HELPERS_DIR, withoutSdk.replace(/\.mdx$/, '.ts'))
+  if (!existsSync(helperFile)) return undefined
+  const testDir = dirname(testFilePath)
+  let rel = relative(testDir, helperFile).replace(/\.ts$/, '')
+  if (!rel.startsWith('.')) rel = './' + rel
+  return { modulePath: rel, absolutePath: helperFile }
+}
+
+/**
+ * Dynamically import a helper module and read its preTestProvides export.
+ */
+async function loadPreTestProvides(helperAbsolutePath: string): Promise<Record<string, string[]>> {
+  try {
+    const mod = await import(helperAbsolutePath)
+    return mod.preTestProvides ?? {}
+  } catch {
+    return {}
+  }
+}
 
 /** Recursively collect all .mdx files under a directory. */
 function findMdxFiles(dir: string): string[] {
@@ -78,15 +111,23 @@ writeFileSync(join(GENERATED_DIR, '.gitkeep'), '', 'utf8')
 let generated = 0
 
 for (const fileData of fileDataList) {
+  const relToSdk = relative(SDK_DIR, fileData.mdxPath)
+  const testFileName = relToSdk.replace(/\.mdx$/, '.test.ts')
+  const outPath = join(GENERATED_DIR, testFileName)
+
+  const helperInfo = findHelperInfo(fileData.sourcePath, outPath)
+  let preTestProvides: Record<string, string[]> | undefined
+  if (helperInfo) {
+    preTestProvides = await loadPreTestProvides(helperInfo.absolutePath)
+  }
+
   const content = generateTestFileContent({
     sourcePath: fileData.sourcePath,
     blocks: fileData.blocks,
     importSuperset,
+    helperModulePath: helperInfo?.modulePath,
+    preTestProvides,
   })
-
-  const relToSdk = relative(SDK_DIR, fileData.mdxPath)
-  const testFileName = relToSdk.replace(/\.mdx$/, '.test.ts')
-  const outPath = join(GENERATED_DIR, testFileName)
 
   mkdirSync(dirname(outPath), { recursive: true })
   writeFileSync(outPath, content, 'utf8')
