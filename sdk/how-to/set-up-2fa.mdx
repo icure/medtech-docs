@@ -3,14 +3,14 @@ import {LanguageTabs} from "@site/src/components/LanguageTabs";
 
 # Set up and use 2FA
 
-The Cardinal SDK already includes all the functionalities to set up and use two-factor authentication for the user. A 
+The Cardinal SDK already includes all the functionalities to set up and use two-factor authentication for the user. A
 user of your platform can be asked to provide their 2FA token for all the operations that require an elevated security
 context (:construction:).
 
 ## Set up 2FA
 
-To enable 2FA for a user, you need to specify the length of the OTP that the backend should expect and the key used to 
-generate and verify the OTP. The key should be generated using a Sha256-based HMAC algorithm and encoded as a Base32 
+To enable 2FA for a user, you need to specify the length of the OTP that the backend should expect and the key used to
+generate and verify the OTP. The key should be generated using a Sha256-based HMAC algorithm and encoded as a Base32
 string.
 
 :::note
@@ -26,9 +26,9 @@ Enabling the 2FA for a user is a security-critical operation that requires the p
 import com.icure.cardinal.sdk.model.security.Enable2faRequest
 import com.icure.kotp.Totp
 
-val userId = // The id of the user
-val otpLength = 8 
-val otpSecret = // A Base32-encoded HMAC-Sha256 key
+// val userId = The id of the user
+val otpLength = 8
+// val otpSecret = A Base32-encoded HMAC-Sha256 key
 sdk.user.enable2faForUser(userId, Enable2faRequest(otpSecret, otpLength))
 ```
 
@@ -39,9 +39,9 @@ sdk.user.enable2faForUser(userId, Enable2faRequest(otpSecret, otpLength))
 ```typescript
 import {Enable2faRequest} from "@icure/cardinal-sdk";
 
-const userId = // The id of the user
+// const userId = The id of the user
 const otpLength = 8
-const otpSecret = // A Base32-encoded HMAC-Sha256 key
+// const otpSecret = A Base32-encoded HMAC-Sha256 key
 await sdk.user.enable2faForUser(userId, Enable2faRequest(otpSecret, otpLength))
 ```
 
@@ -52,9 +52,9 @@ await sdk.user.enable2faForUser(userId, Enable2faRequest(otpSecret, otpLength))
 ```python
 from cardinal_sdk.model import Enable2faRequest
 
-user_id =  # The id of the user
+# user_id = The id of the user
 otp_length = 8
-otp_secret =  # A Base32-encoded HMAC-Sha256 key
+# otp_secret =  A Base32-encoded HMAC-Sha256 key
 sdk.user.enable_2fa_for_user_blocking(user_id, Enable2faRequest(otp_length, otp_secret))
 ```
 
@@ -65,7 +65,7 @@ sdk.user.enable_2fa_for_user_blocking(user_id, Enable2faRequest(otp_length, otp_
 ## Use 2FA with the Smart Authentication Manager
 
 The Cardinal SDK will ask you for the 2FA OTP whenever you try to execute an operation that is critical for security.
-You can define how your applications asks the OTP by defining a `SecretProvider` and passing to the SDK when you 
+You can define how your applications asks the OTP by defining a `SecretProvider` and passing to the SDK when you
 instantiate it.
 
 Below you will find an example of a basic SecretProvider that asks for the 2FA token. To learn more about the SecretProvider,
@@ -138,7 +138,7 @@ const authSecretProvider: AuthSecretProvider = {
 
 The `getSecret` method of the AuthSecretProvider will be called internally by the SDK whenever there is the need to ask
 the user for a more secure token. This implementation first checks if the 2FA can be used to fulfill the request, then,
-it asks the OTP of the 2FA to the user and returns it. 
+it asks the OTP of the 2FA to the user and returns it.
 
 The AuthSecretProvider can be used to instantiate the Cardinal SDK:
 
@@ -173,8 +173,8 @@ const sdk = await CardinalSdk.initialize(
 	"https://api.icure.cloud",
 	new AuthenticationMethod.UsingSecretProvider(
 		authSecretProvider,
-		{ 
-			loginUsername: /* The login of the user */, 
+		{
+			loginUsername: /* The login of the user */,
 			initialSecret: new SecretProviderAuthenticationOptions.InitialSecret.Password(/* The password of the user */)
 		}
 	),
@@ -184,7 +184,7 @@ const sdk = await CardinalSdk.initialize(
 
 </TabItem>
 
-</LanguageTabs> 
+</LanguageTabs>
 
 ## Disable 2FA
 The two-factor authentication configuration can be also removed from a user:
@@ -194,7 +194,7 @@ The two-factor authentication configuration can be also removed from a user:
 <TabItem value="kotlin">
 
 ```kotlin
-val userId = // The id of the user
+// val userId = The id of the user
 sdk.user.disable2faForUser(userId)
 ```
 
@@ -203,7 +203,7 @@ sdk.user.disable2faForUser(userId)
 <TabItem value="typescript">
 
 ```typescript
-const userId = // The id of the user
+// const userId = The id of the user
 await sdk.user.disable2faForUser(userId)
 ```
 
@@ -212,7 +212,7 @@ await sdk.user.disable2faForUser(userId)
 <TabItem value="python">
 
 ```python
-user_id =  # The id of the user
+# user_id = The id of the user
 sdk.user.disable_2fa_for_user_blocking(user_id)
 ```
 

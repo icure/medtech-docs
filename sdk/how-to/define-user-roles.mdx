@@ -73,7 +73,7 @@ sake of the example, we will use the first role in the result.
 <TabItem value="kotlin">
 
 ```kotlin
-val userId = // The id of the user to update
+// val userId = The id of the user to update
 val user = sdk.user.getUser(userId)
 sdk.user.addRolesToUser(userId, user.systemMetadata.roles + allRoles.first())
 ```
@@ -83,7 +83,7 @@ sdk.user.addRolesToUser(userId, user.systemMetadata.roles + allRoles.first())
 <TabItem value="typescript">
 
 ```typescript
-const userId = // The id of the user to update
+// const userId = The id of the user to update
 const user = await sdk.user.getUser(userId)
 await sdk.user.addRolesToUser(userId, user.systemMetadata.roles + allRoles[0])
 ```
@@ -93,7 +93,7 @@ await sdk.user.addRolesToUser(userId, user.systemMetadata.roles + allRoles[0])
 <TabItem value="python">
 
 ```python
-user_id =  # The id of the user to update
+# user_id =  The id of the user to update
 user = sdk.user.get_user_blocking(user_id)
 sdk.user.add_roles_to_user_blocking(userId, user.system_metadata.roles + [all_roles[0]])
 ```
