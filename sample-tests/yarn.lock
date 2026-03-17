@@ -132,10 +132,10 @@
   resolved "https://registry.yarnpkg.com/@esbuild/win32-x64/-/win32-x64-0.27.3.tgz#0eaf705c941a218a43dba8e09f1df1d6cd2f1f17"
   integrity sha512-4uJGhsxuptu3OcpVAzli+/gWusVGwZZHTlS63hh++ehExkVT8SgiEf7/uC/PclrPPkLhZqGgCTjd0VWLo6xMqA==
 
-"@icure/cardinal-sdk@^2.1.0":
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/@icure/cardinal-sdk/-/cardinal-sdk-2.1.1.tgz#dd343225ed1e5a966cc86b20d6ab2e7a9b25ae7d"
-  integrity sha512-qBIxBIBOmYBlVTgFPVCEYdQ5Ncm1t9Bar+YxkIeeP1riPQq7V+f/yYOyP2UK691/k9E5KJPls2qPcEPTTUIxdw==
+"@icure/cardinal-sdk@^2.1.3":
+  version "2.1.3"
+  resolved "https://registry.yarnpkg.com/@icure/cardinal-sdk/-/cardinal-sdk-2.1.3.tgz#4a817e12b3fee5089337892f72129eedf5364ff7"
+  integrity sha512-g6rbTkNNhri5HxZ7G4WrkrrWvWsKN3juLAjq2MNbNG6r/uLIEH5gzak7n9Tu7cFQBkANiMSH/32pknpLcZLrog==
   dependencies:
     "@js-joda/core" "3.2.0"
     ws "8.18.0"

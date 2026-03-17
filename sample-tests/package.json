@@ -9,7 +9,7 @@
     "test:watch": "vitest"
   },
   "dependencies": {
-    "@icure/cardinal-sdk": "^2.1.0",
+    "@icure/cardinal-sdk": "^2.1.3",
     "uuid": "^9.0.0"
   },
   "devDependencies": {
