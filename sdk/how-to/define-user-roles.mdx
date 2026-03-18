@@ -75,7 +75,7 @@ sake of the example, we will use the first role in the result.
 ```kotlin
 // val userId = The id of the user to update
 val user = sdk.user.getUser(userId)
-sdk.user.addRolesToUser(userId, user.systemMetadata.roles + allRoles.first())
+sdk.user.setUserRoles(userId, user.systemMetadata.roles + allRoles.first())
 ```
 
 </TabItem>
@@ -85,7 +85,7 @@ sdk.user.addRolesToUser(userId, user.systemMetadata.roles + allRoles.first())
 ```typescript
 // const userId = The id of the user to update
 const user = await sdk.user.getUser(userId)
-await sdk.user.addRolesToUser(userId, user.systemMetadata.roles + allRoles[0])
+await sdk.user.setUserRoles(userId, user.systemMetadata.roles + allRoles[0])
 ```
 
 </TabItem>
@@ -95,7 +95,7 @@ await sdk.user.addRolesToUser(userId, user.systemMetadata.roles + allRoles[0])
 ```python
 # user_id =  The id of the user to update
 user = sdk.user.get_user_blocking(user_id)
-sdk.user.add_roles_to_user_blocking(userId, user.system_metadata.roles + [all_roles[0]])
+sdk.user.set_user_roles_blocking(userId, user.system_metadata.roles + [all_roles[0]])
 ```
 
 </TabItem>
@@ -122,7 +122,7 @@ To remove any role configuration from a user and revert it to the configuration 
 <TabItem value="kotlin">
 
 ```kotlin
-sdk.user.removeRolesFromUser(userId)
+sdk.user.resetUserRoles(userId)
 ```
 
 </TabItem>
@@ -130,7 +130,7 @@ sdk.user.removeRolesFromUser(userId)
 <TabItem value="typescript">
 
 ```typescript
-await sdk.user.removeRolesFromUser(userId)
+await sdk.user.resetUserRoles(userId)
 ```
 
 </TabItem>
@@ -138,7 +138,7 @@ await sdk.user.removeRolesFromUser(userId)
 <TabItem value="python">
 
 ```python
-sdk.user.remove_roles_from_user_blocking(userId)
+sdk.user.reset_user_roles_blocking(userId)
 ```
 
 </TabItem>

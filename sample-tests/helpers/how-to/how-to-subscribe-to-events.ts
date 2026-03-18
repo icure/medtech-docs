@@ -1,4 +1,11 @@
-import { CardinalSdk } from '@icure/cardinal-sdk'
+import {
+	CardinalSdk,
+	EntitySubscription,
+	EntitySubscriptionCloseReason,
+	EntitySubscriptionEvent,
+	HealthElement,
+} from '@icure/cardinal-sdk'
+import EntityNotification = EntitySubscriptionEvent.EntityNotification;
 
 // ── preTestProvides ──────────────────────────────────────────────────
 
@@ -9,31 +16,29 @@ export const preTestProvides: Record<string, string[]> = {
 
 // ── preTest ──────────────────────────────────────────────────────────
 
-export const preTest: Record<string, (sdk: CardinalSdk) => Promise<Record<string, any>>> = {
-	'how-to-subscribe-to-events block 1 (line 95)': async () => ({}),
-	'how-to-subscribe-to-events block 2 (line 256)': async () => ({
+export const preTest = {
+	'how-to-subscribe-to-events block 1 (line 95)': async (sdk: CardinalSdk): Promise<Record<string, never>> => ({}),
+	'how-to-subscribe-to-events block 2 (line 256)': async (sdk: CardinalSdk): Promise<{
+		subscription: Pick<EntitySubscription<HealthElement>, 'closeReason' | 'close'>
+	}> => ({
 		subscription: {
-			closeReason: null,
+			closeReason: null as EntitySubscriptionCloseReason | null,
 			close: async () => {},
 		},
 	}),
-	'how-to-subscribe-to-events block 3 (line 390)': async () => ({
-		EntityNotification: class EntityNotification {
-			type: string
-			entity: any
-			constructor(type: string, entity: any) {
-				this.type = type
-				this.entity = entity
-			}
-		},
+	'how-to-subscribe-to-events block 3 (line 390)': async (sdk: CardinalSdk): Promise<{
+		EntityNotification: typeof EntityNotification
+		addToQueueToProcess: (he: HealthElement) => Promise<void>
+	}> => ({
+		EntityNotification: EntityNotification,
 		addToQueueToProcess: async () => {},
 	}),
 }
 
 // ── postTest ─────────────────────────────────────────────────────────
 
-export const postTest: Record<string, (...args: any[]) => void | Promise<void>> = {
-	'how-to-subscribe-to-events block 1 (line 95)': async (_sdk: CardinalSdk, subscription: any) => {
+export const postTest: Record<string, (sdk: CardinalSdk, ...args: unknown[]) => void | Promise<void>> = {
+	'how-to-subscribe-to-events block 1 (line 95)': async (_sdk, subscription) => {
 		expect(subscription).toBeDefined()
 	},
 
@@ -41,7 +46,7 @@ export const postTest: Record<string, (...args: any[]) => void | Promise<void>> 
 		// no-op — block just inspects subscription.closeReason
 	},
 
-	'how-to-subscribe-to-events block 3 (line 390)': async (_sdk: CardinalSdk, getMissedEvents: any, subscription: any) => {
+	'how-to-subscribe-to-events block 3 (line 390)': async (_sdk, getMissedEvents, subscription) => {
 		expect(getMissedEvents).toBeDefined()
 		expect(subscription).toBeDefined()
 	},
