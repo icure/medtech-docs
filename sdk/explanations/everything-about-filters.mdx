@@ -12,40 +12,9 @@ type hierarchy, combinators, date format conventions, and every filter method fo
 
 For a gentler introduction to querying, see [Querying data](/how-to/querying-data).
 
-## Filter type hierarchy
-
-The SDK provides four filter option types arranged by two axes: **scoped vs unscoped** and **sortable vs unsortable**.
-
-```mermaid
-graph TD
-    BFO["BaseFilterOptions&lt;T&gt;<br/><i>unscoped, unsortable</i>"]
-    BSFO["BaseSortableFilterOptions&lt;T&gt;<br/><i>unscoped, sortable</i>"]
-    FO["FilterOptions&lt;T&gt;<br/><i>scoped, unsortable</i>"]
-    SFO["SortableFilterOptions&lt;T&gt;<br/><i>scoped, sortable</i>"]
-
-    BSFO -->|extends| BFO
-    FO -->|extends| BFO
-    SFO -->|extends| BSFO
-    SFO -->|extends| FO
-```
-
-| Type                           | Scoped? | Sortable? | Typical factory suffix                              |
-|--------------------------------|---------|-----------|-----------------------------------------------------|
-| `BaseFilterOptions<T>`         | No      | No        | `ForDataOwner`, `ForDataOwnerInGroup`, or no suffix |
-| `BaseSortableFilterOptions<T>` | No      | Yes       | `ForDataOwner`, `ForDataOwnerInGroup`, or no suffix |
-| `FilterOptions<T>`             | Yes     | No        | `ForSelf`                                           |
-| `SortableFilterOptions<T>`     | Yes     | Yes       | `ForSelf`                                           |
-
-**Scoped** filter options (`FilterOptions`, `SortableFilterOptions`) are bound to the current SDK user's session. They
-are produced by `ForSelf` factory methods. **Unscoped** options (`Base*`) require an explicit data owner id and can be
-used by administrators or across groups.
-
-You can always pass a more-specific type where a less-specific type is expected (e.g. a `SortableFilterOptions` wherever
-a `BaseFilterOptions` is expected).
-
 ## Data owner variants
 
-Most filter factories for EBAC entities (Patient, Contact, Service, HealthElement, Document, etc.) come in three variants:
+Most filter factories for EBAC (Entity Based Access Control) entities (Patient, Contact, Service, HealthElement, Document, etc.) come in three variants:
 
 | Suffix                | When to use                                                                                         |
 |-----------------------|-----------------------------------------------------------------------------------------------------|
@@ -54,6 +23,9 @@ Most filter factories for EBAC entities (Patient, Contact, Service, HealthElemen
 | `ForDataOwnerInGroup` | Cross-group queries. Takes an `EntityReferenceInGroup` to target a data owner in a different group. |
 
 For more details, see [Data owners and access control](/explanations/end-to-end-encryption/data-owners-and-access-control).
+
+## Sorting
+Some filters return `SortableFilterOptions` (or `BaseSortableFilterOptions`) that can be used to sort results by specific criteria. The sorting rules are documented in the tables below.
 
 ## Combining filters
 
@@ -172,6 +144,13 @@ filter = difference(of_filter, subtracting_filter)
 
 </LanguageTabs>
 
+### Performance considerations
+
+- **intersection** can sometimes be misleading in terms of performance. If the first filter is very broad and the second filter is very selective, the backend may still need to execute the first filter and possibly collect a huge number of entity ids, before being able to apply the second filter.
+However, in some cases, the backend could optimized by the backend if the first filter is highly selective (i.e. it narrows down to a small set of entities). In that case, the backend could apply the second filter only to that small set, improving performance. This optimisation is not yet available in the Cardinl backend (but  we are working on it). It is something to keep in mind when using `intersection` with very broad filters.
+
+- **difference** can also be costly if the `subtracting` filter is very broad. Even if the final number of entities returned by the difference is small, the backend may still need to execute the `subtracting` filter and collect a large number of entity ids to determine which ones to exclude.
+
 ### Sortability rules
 
 | Combinator     | Sortable?                     | Rule                               |
@@ -182,9 +161,10 @@ filter = difference(of_filter, subtracting_filter)
 
 :::tip Kotlin infix syntax
 
-In Kotlin, `and` is shorthand for `intersection` and `or` for `union`. You can chain them:
+In Kotlin, `and` is shorthand for `intersection` and `or` for `union`. You can also use the minus `-` sign for difference. You can chain them:
 ```kotlin no-test
-val filter = (filterA and filterB) or (filterC and filterD)
+val filter = (filterA and filterB) or (filterC and (filterD - filterE))
+val sameFilter = intersection(filterA, filterB).union(intersection(filterC, difference(filterD, filterE)))
 ```
 
 :::

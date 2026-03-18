@@ -66,6 +66,13 @@ async function createConfig() {
                 },
             ],
             [
+                '@docusaurus/plugin-content-pages',
+                {
+                    path: './src/pages',
+                    routeBasePath: '/pages',
+                },
+            ],
+            [
                 '@docusaurus/plugin-sitemap',
                 {
                     changefreq: 'weekly',
@@ -174,6 +181,11 @@ async function createConfig() {
                         //     label: 'iCure API',
                         //     docsPluginId: 'api',
                         // },
+                        {
+                            to: '/pages/presentations',
+                            position: 'right',
+                            label: 'Presentations',
+                        },
                         {
                             type: 'search',
                             position: 'right',
