@@ -1,16 +1,53 @@
 import { CardinalSdk } from '@icure/cardinal-sdk'
 
+// ── additionalImports ───────────────────────────────────────────────
+
+export const additionalImports: string[] = [
+	'import { RecoveryKeyOptions } from "@icure/cardinal-sdk"',
+]
+
 // ── preTestProvides ──────────────────────────────────────────────────
 // All blocks are self-contained — no cross-block deps.
 
-export const preTestProvides: Record<string, string[]> = {}
+export const preTestProvides: Record<string, string[]> = {
+	'key-management block 1 (line 88)': ['window'],
+	'key-management block 2 (line 206)': ['FileReader'],
+	'key-management block 3 (line 373)': ['window'],
+}
 
 // ── preTest ──────────────────────────────────────────────────────────
 
 export const preTest: Record<string, (sdk: CardinalSdk) => Promise<Record<string, any>>> = {
-	'key-management block 1 (line 88)': async () => ({}),
-	'key-management block 2 (line 206)': async () => ({}),
-	'key-management block 3 (line 373)': async () => ({}),
+	'key-management block 1 (line 88)': async () => ({
+		window: {
+			URL: { createObjectURL: (_blob: Blob) => 'blob:mock-url' },
+			open: (_url: string) => {},
+		},
+	}),
+	'key-management block 2 (line 206)': async () => {
+		const mockFileContent = JSON.stringify({
+			'test-data-owner-id': {
+				'test-key-fingerprint': 'dGVzdC1rZXktZGF0YQ==',
+			},
+		})
+		return {
+			FileReader: class MockFileReader {
+				result: string | null = null
+				onload: ((ev: any) => void) | null = null
+				onerror: ((ev: any) => void) | null = null
+				readAsText(_file: any) {
+					this.result = mockFileContent
+					setTimeout(() => this.onload?.({} as any), 0)
+				}
+			},
+		}
+	},
+	'key-management block 3 (line 373)': async () => ({
+		window: {
+			URL: { createObjectURL: (_blob: Blob) => 'blob:mock-url' },
+			open: (_url: string) => {},
+		},
+	}),
 	'key-management block 4 (line 453)': async () => ({}),
 	'key-management block 5 (line 528)': async () => ({}),
 	'key-management block 6 (line 624)': async () => ({}),

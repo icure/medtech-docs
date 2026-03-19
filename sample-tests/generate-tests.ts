@@ -11,7 +11,7 @@ const SDK_DIR = join(REPO_ROOT, 'sdk')
 const GENERATED_DIR = join(__dirname_val, 'generated')
 
 const HELPERS_DIR = join(__dirname_val, 'helpers')
-const INTERACTIVE_PATTERNS = ['readLn(', 'readLn (', 'prompt(', 'prompt (']
+const INTERACTIVE_PATTERNS = []
 
 interface HelperInfo {
   modulePath: string
@@ -42,6 +42,18 @@ async function loadPreTestProvides(helperAbsolutePath: string): Promise<Record<s
     return mod.preTestProvides ?? {}
   } catch {
     return {}
+  }
+}
+
+/**
+ * Dynamically import a helper module and read its additionalImports export.
+ */
+async function loadAdditionalImports(helperAbsolutePath: string): Promise<string[]> {
+  try {
+    const mod = await import(helperAbsolutePath)
+    return mod.additionalImports ?? []
+  } catch {
+    return []
   }
 }
 
@@ -95,6 +107,25 @@ for (const mdxPath of mdxFiles) {
   }
 
   fileDataList.push({ mdxPath, sourcePath, blocks })
+}
+
+// Collect additional imports from helper files
+for (const fileData of fileDataList) {
+  const relToSdk = relative(SDK_DIR, fileData.mdxPath)
+  const testFileName = relToSdk.replace(/\.mdx$/, '.test.ts')
+  const outPath = join(GENERATED_DIR, testFileName)
+  const helperInfo = findHelperInfo(fileData.sourcePath, outPath)
+  if (helperInfo) {
+    const helperImports = await loadAdditionalImports(helperInfo.absolutePath)
+    for (const line of helperImports) {
+      const normalizedLines = joinMultiLineImports(line.split('\n'))
+      for (const normalized of normalizedLines) {
+        if (isImportLine(normalized)) {
+          allImportLines.push(normalized.trim())
+        }
+      }
+    }
+  }
 }
 
 const merged = mergeImports(allImportLines)
