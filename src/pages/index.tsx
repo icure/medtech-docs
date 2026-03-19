@@ -45,7 +45,7 @@ const AppsList: (code: string) => AppItem[] = (code) => [
     description: 'Use our template to start up your project integrating our Cardinal SDK. You will be ready to try the functionalities of our APIs in a matter of minutes.',
     button: {
       title: 'Quick start',
-      link: '/quickstart',
+      link: '/quickstart/index',
     },
     IllustrationNode: Code(code),
   },
