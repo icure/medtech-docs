@@ -18,7 +18,7 @@ async function createConfig() {
         url: 'https://docs.icure.com',
         baseUrl: '/',
         onBrokenLinks: 'throw',
-        onBrokenMarkdownLinks: 'warn',
+        onBrokenAnchors: 'warn',
         favicon: 'img/favicon.png',
 
         // GitHub pages deployment config.
@@ -96,7 +96,10 @@ async function createConfig() {
         ],
 
         markdown: {
-            mermaid: true
+            mermaid: true,
+            hooks: {
+                onBrokenMarkdownLinks: 'warn',
+            },
         },
 
         themeConfig:
