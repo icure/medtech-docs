@@ -3379,7 +3379,9 @@ section::after {
 
 <span class="hljs-comment">// Create medical data — encrypted before leaving the device</span>
 <span class="hljs-keyword">const</span> contact = <span class="hljs-keyword">new</span> <span class="hljs-title class_">DecryptedContact</span>({ <span class="hljs-attr">descr</span>: <span class="hljs-string">&quot;Annual checkup&quot;</span> })
-<span class="hljs-keyword">const</span> created = <span class="hljs-keyword">await</span> sdk.<span class="hljs-property">contact</span>.<span class="hljs-title function_">createContactWithPatient</span>(patient, contact)
+<span class="hljs-keyword">const</span> created = <span class="hljs-keyword">await</span> sdk.<span class="hljs-property">contact</span>.<span class="hljs-title function_">createContact</span>(
+  <span class="hljs-keyword">await</span> sdk.<span class="hljs-property">contact</span>.<span class="hljs-title function_">withEncryptionMetadata</span>(contact, patient)
+)
 
 <span class="hljs-comment">// Share with another doctor — key exchange happens behind the scenes</span>
 <span class="hljs-keyword">await</span> sdk.<span class="hljs-property">contact</span>.<span class="hljs-title function_">shareWith</span>(otherDoctorId, created)

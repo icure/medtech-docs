@@ -8772,10 +8772,10 @@ section::after {
 })
 
 <span class="hljs-comment">// SDK encrypts, creates delegations, manages keys</span>
-<span class="hljs-keyword">const</span> created = <span class="hljs-keyword">await</span> sdk.<span class="hljs-property">contact</span>.<span class="hljs-title function_">createContactWithPatient</span>(
-  patient,
-  contact,
-  { <span class="hljs-attr">delegates</span>: { [otherDoctorId]: <span class="hljs-title class_">AccessLevel</span>.<span class="hljs-property">Write</span> } }
+<span class="hljs-keyword">const</span> created = <span class="hljs-keyword">await</span> sdk.<span class="hljs-property">contact</span>.<span class="hljs-title function_">createContact</span>(
+  <span class="hljs-keyword">await</span> sdk.<span class="hljs-property">contact</span>.<span class="hljs-title function_">withEncryptionMetadata</span>(contact, patient,
+    { <span class="hljs-attr">delegates</span>: { [otherDoctorId]: <span class="hljs-title class_">AccessLevel</span>.<span class="hljs-property">Write</span> } }
+  )
 )
 
 <span class="hljs-comment">// SDK decrypts transparently on retrieval</span>

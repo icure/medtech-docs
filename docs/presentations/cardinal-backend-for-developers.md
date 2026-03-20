@@ -380,7 +380,9 @@ const patient = await sdk.patient.createOrModifyPatient(
 
 // Create medical data — encrypted before leaving the device
 const contact = new DecryptedContact({ descr: "Annual checkup" })
-const created = await sdk.contact.createContactWithPatient(patient, contact)
+const created = await sdk.contact.createContact(
+  await sdk.contact.withEncryptionMetadata(contact, patient)
+)
 
 // Share with another doctor — key exchange happens behind the scenes
 await sdk.contact.shareWith(otherDoctorId, created)

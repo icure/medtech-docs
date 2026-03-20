@@ -14,7 +14,7 @@ type AppItem = {
     title: string
     link: string
   }
-  IllustrationNode: JSX.Element
+  IllustrationNode: React.JSX.Element
 }
 
 type DocItem = {
@@ -125,7 +125,7 @@ This is post init script
   ],
 ] as [string, number, number][]
 
-export default function Home(): JSX.Element {
+export default function Home(): React.JSX.Element {
   const { siteConfig } = useDocusaurusContext()
 
   const [cursor, setCursor] = React.useState([0, 0])

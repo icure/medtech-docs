@@ -770,10 +770,10 @@ const contact = new DecryptedContact({
 })
 
 // SDK encrypts, creates delegations, manages keys
-const created = await sdk.contact.createContactWithPatient(
-  patient,
-  contact,
-  { delegates: { [otherDoctorId]: AccessLevel.Write } }
+const created = await sdk.contact.createContact(
+  await sdk.contact.withEncryptionMetadata(contact, patient,
+    { delegates: { [otherDoctorId]: AccessLevel.Write } }
+  )
 )
 
 // SDK decrypts transparently on retrieval
