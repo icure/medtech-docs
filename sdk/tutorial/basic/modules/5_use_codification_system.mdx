@@ -92,7 +92,7 @@ sdk.code.create_codes_blocking(
 </TabItem>
 <TabItem value="typescript">
 
-```typescript
+```typescript test-TIWU
 const internalCode = await sdk.code.createCode(new Code({
 	id: "INTERNAL|ANALYSIS|1",
 	type: "INTERNAL",
@@ -315,7 +315,7 @@ created_contact = sdk.contact.create_contact_blocking(
 </TabItem>
 <TabItem value="typescript">
 
-```typescript
+```typescript test-MEQI
 const codeIterator = await sdk.code.filterCodesBy(
 	CodeFilters.byLanguageTypeLabelRegion(
 		"en",
@@ -492,7 +492,7 @@ while service_iterator.has_next_blocking():
 </TabItem>
 <TabItem value="typescript">
 
-```typescript
+```typescript test-FIKE
 const serviceIterator = await sdk.contact.filterServicesBy(
 	ServiceFilters.byTagAndValueDateForSelf(
 		selectedCode.type,

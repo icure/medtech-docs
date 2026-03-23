@@ -61,12 +61,12 @@ that folder, a new cryptographic key will be generated and stored there.
 
 In the following example, the username and password are retrieved from the standard input:
 
-```typescript
+```typescript test-WAXO
 const CARDINAL_URL = "https://api.icure.cloud"
 
 const username = await readLn("Login: ")
 const password = await readLn("Password: ")
-const sdk = CardinalSdk.initialize(
+const sdk = await CardinalSdk.initialize(
 	undefined,
 	CARDINAL_URL,
 	new AuthenticationMethod.UsingCredentials.UsernamePassword(username, password),
@@ -98,7 +98,7 @@ Future<CardinalSdk> createSdk(String username, String password) async {
 
 The `initialize` function creates an instance of the SDK with the provided username and password. It also attempts to
 load existing cryptographic keys for the user from the native storage implementation (Androidx DataStore for Android,
-NSUserDefaults for iOS, iPadOS, macOS & watchOS). If no key is found for the user, a new cryptographic key will be generated 
+NSUserDefaults for iOS, iPadOS, macOS & watchOS). If no key is found for the user, a new cryptographic key will be generated
 and stored.
 </TabItem>
 </LanguageTabs>

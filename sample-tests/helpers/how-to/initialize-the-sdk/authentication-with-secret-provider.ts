@@ -4,28 +4,30 @@ import { CardinalSdk, AuthSecretDetails } from '@icure/cardinal-sdk'
 // Declarations that the code block references but doesn't define.
 
 export const preTestProvides: Record<string, string[]> = {
-	'authentication-with-secret-provider block 2 (line 291)': ['secretProvider'],
-	'authentication-with-secret-provider block 3 (line 380)': ['secretProvider'],
+	'authentication-with-secret-provider block 2 (FUPI)': ['secretProvider'],
+	'authentication-with-secret-provider block 3 (FOSE)': ['secretProvider', 'username', 'longToken'],
 }
 
 // ── preTest ──────────────────────────────────────────────────────────
 
-export const preTest: Record<string, (sdk: CardinalSdk) => Promise<Record<string, any>>> = {
-	'authentication-with-secret-provider block 1 (line 159)': async () => ({}),
-	'authentication-with-secret-provider block 2 (line 291)': async () => ({
+export const preTest: Record<string, (sdk?: CardinalSdk) => Promise<Record<string, any>>> = {
+	'authentication-with-secret-provider block 1 (ZATE)': async () => ({}),
+	'authentication-with-secret-provider block 2 (FUPI)': async () => ({
 		secretProvider: { getSecret: async () => new AuthSecretDetails.PasswordDetails('test') },
 	}),
-	'authentication-with-secret-provider block 3 (line 380)': async () => ({
+	'authentication-with-secret-provider block 3 (FOSE)': async () => ({
 		secretProvider: { getSecret: async () => new AuthSecretDetails.PasswordDetails('test') },
+		username: 'test-user@example.com',
+		longToken: 'mock-long-token',
 	}),
-	'authentication-with-secret-provider block 4 (line 425)': async () => ({}),
+	'authentication-with-secret-provider block 4 (BARU)': async () => ({}),
 }
 
 // ── postTest ─────────────────────────────────────────────────────────
 
 export const postTest: Record<string, (...args: any[]) => void | Promise<void>> = {
 	// Block 1: defines mock functions and secretProvider object
-	'authentication-with-secret-provider block 1 (line 159)': async (
+	'authentication-with-secret-provider block 1 (ZATE)': async (
 		_sdk: CardinalSdk,
 		_promptInvalidPasswordMessage: any,
 		_loadRememberMe: any,
@@ -41,13 +43,13 @@ export const postTest: Record<string, (...args: any[]) => void | Promise<void>> 
 	},
 
 	// Block 2: references secretProvider from block 1, SDK init would need real credentials
-	'authentication-with-secret-provider block 2 (line 291)': async (_sdk: CardinalSdk) => {},
+	'authentication-with-secret-provider block 2 (FUPI)': async (_sdk: CardinalSdk) => {},
 
 	// Block 3: references secretProvider from block 1, has syntax errors with placeholder values
-	'authentication-with-secret-provider block 3 (line 380)': async (_sdk: CardinalSdk) => {},
+	'authentication-with-secret-provider block 3 (FOSE)': async (_sdk: CardinalSdk) => {},
 
 	// Block 4: uses sdk.user.getCurrentUser() and sdk.user.getToken()
-	'authentication-with-secret-provider block 4 (line 425)': async (
+	'authentication-with-secret-provider block 4 (BARU)': async (
 		_sdk: CardinalSdk,
 		user: any,
 		token: any,

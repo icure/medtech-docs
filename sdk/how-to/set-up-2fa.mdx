@@ -36,13 +36,13 @@ sdk.user.enable2faForUser(userId, Enable2faRequest(otpSecret, otpLength))
 
 <TabItem value="typescript">
 
-```typescript
+```typescript test-WUCU
 import {Enable2faRequest} from "@icure/cardinal-sdk";
 
 // const userId = The id of the user
 const otpLength = 8
 // const otpSecret = A Base32-encoded HMAC-Sha256 key
-await sdk.user.enable2faForUser(userId, Enable2faRequest(otpSecret, otpLength))
+await sdk.user.enable2faForUser(userId, new Enable2faRequest({ secret: otpSecret, otpLength}))
 ```
 
 </TabItem>
@@ -109,26 +109,27 @@ val authSecretProvider = object : AuthSecretProvider {
 
 <TabItem value="typescript">
 
-```typescript
+```typescript test-KOLI
 import {AuthenticationProcessApi, AuthSecretDetails, AuthenticationClass, AuthSecretProvider} from "@icure/cardinal-sdk";
 
 const askOneTimeCode = (): string => {
 	// This function will ask the user to enter their OTP
+    return '123456'
 }
 
 const authSecretProvider: AuthSecretProvider = {
-	getSecret: (
-		acceptedSecrets: Array<AuthenticationClass>,
-		previousAttempts: Array<AuthSecretDetails>,
-		authProcessApi: AuthenticationProcessApi
-	): Promise<AuthSecretDetails> => {
-		if(acceptedSecrets.includes(AuthenticationClass.TwoFactorAuthentication)) {
-			const otp = askOneTimeCode()
-			return AuthSecretDetails.TwoFactorAuthTokenDetails(otp)
-		} else {
-			throw new Error("2FA cannot be used for this operation")
-		}
-	}
+  	getSecret: async (
+  		acceptedSecrets: Array<AuthenticationClass>,
+  		previousAttempts: Array<AuthSecretDetails>,
+  		authProcessApi: AuthenticationProcessApi
+  	): Promise<AuthSecretDetails> => {
+  		if(acceptedSecrets.includes(AuthenticationClass.TwoFactorAuthentication)) {
+  			const otp = askOneTimeCode()
+  			return new AuthSecretDetails.TwoFactorAuthTokenDetails(otp)
+  		} else {
+  			throw new Error("2FA cannot be used for this operation")
+  		}
+  	}
 }
 ```
 
@@ -167,15 +168,15 @@ val sdk = CardinalSdk.initialize(
 
 <TabItem value="typescript">
 
-```typescript
+```typescript test-GOSO
 const sdk = await CardinalSdk.initialize(
-	/* Your application id */,
+	"Your application id",
 	"https://api.icure.cloud",
 	new AuthenticationMethod.UsingSecretProvider(
 		authSecretProvider,
 		{
-			loginUsername: /* The login of the user */,
-			initialSecret: new SecretProviderAuthenticationOptions.InitialSecret.Password(/* The password of the user */)
+			loginUsername: "The login of the user",
+			initialSecret: new SecretProviderAuthenticationOptions.InitialSecret.Password("The password of the user")
 		}
 	),
 	StorageFacade.usingFileSystem("./scratch/test")
@@ -202,7 +203,7 @@ sdk.user.disable2faForUser(userId)
 
 <TabItem value="typescript">
 
-```typescript
+```typescript test-RAWE
 // const userId = The id of the user
 await sdk.user.disable2faForUser(userId)
 ```

@@ -93,13 +93,13 @@ function buildServices() {
 // can emit a destructuring assignment.
 
 export const preTestProvides: Record<string, string[]> = {
-	'contact-group-id block 1 (line 74)': ['VISITING_DOCTOR_USERNAME', 'VISITING_DOCTOR_PASSWORD', 'RESEARCH_DOCTOR_USERNAME', 'RESEARCH_DOCTOR_PASSWORD'],
-	'contact-group-id block 2 (line 162)': ['visitingDoctorSdk'],
-	'contact-group-id block 3 (line 216)': ['researchDoctorSdk'],
-	'contact-group-id block 4 (line 303)': [],
-	'contact-group-id block 5 (line 480)': ['visitingDoctorSdk', 'patient', 'heartRateService', 'bloodPressureService', 'medicationService', 'researchDoctorId'],
-	'contact-group-id block 6 (line 597)': ['visitingDoctorSdk', 'patient'],
-	'contact-group-id block 7 (line 661)': ['researchDoctorSdk'],
+	'contact-group-id block 1 (JUSO)': ['VISITING_DOCTOR_USERNAME', 'VISITING_DOCTOR_PASSWORD', 'RESEARCH_DOCTOR_USERNAME', 'RESEARCH_DOCTOR_PASSWORD'],
+	'contact-group-id block 2 (PUPA)': ['visitingDoctorSdk'],
+	'contact-group-id block 3 (GAWU)': ['researchDoctorSdk'],
+	'contact-group-id block 4 (TERO)': [],
+	'contact-group-id block 5 (NURA)': ['visitingDoctorSdk', 'patient', 'heartRateService', 'bloodPressureService', 'medicationService', 'researchDoctorId'],
+	'contact-group-id block 6 (SIJO)': ['visitingDoctorSdk', 'patient'],
+	'contact-group-id block 7 (VUNE)': ['researchDoctorSdk'],
 }
 
 // ── preTest ──────────────────────────────────────────────────────────
@@ -107,7 +107,7 @@ export const preTestProvides: Record<string, string[]> = {
 export const preTest: Record<string, (sdk: CardinalSdk) => Promise<Record<string, any>>> = {
 	// Block 1 has placeholder credentials in the MDX.
 	// Provide them from env vars (or test defaults) so the block can run.
-	'contact-group-id block 1 (line 74)': async (sdk) => {
+	'contact-group-id block 1 (JUSO)': async (sdk) => {
 		visitingDoctorSdk = sdk
 		researchDoctorSdk = sdk
 		return {
@@ -119,24 +119,24 @@ export const preTest: Record<string, (sdk: CardinalSdk) => Promise<Record<string
 	},
 
 	// Block 2 uses visitingDoctorSdk (set by block 1)
-	'contact-group-id block 2 (line 162)': async (sdk) => {
+	'contact-group-id block 2 (PUPA)': async (sdk) => {
 		if (!visitingDoctorSdk) visitingDoctorSdk = sdk
 		return { visitingDoctorSdk }
 	},
 
 	// Block 3 uses researchDoctorSdk
-	'contact-group-id block 3 (line 216)': async (sdk) => {
+	'contact-group-id block 3 (GAWU)': async (sdk) => {
 		if (!researchDoctorSdk) researchDoctorSdk = sdk
 		return { researchDoctorSdk }
 	},
 
 	// Block 4 is self-contained (only constructs objects)
-	'contact-group-id block 4 (line 303)': async () => {
+	'contact-group-id block 4 (TERO)': async () => {
 		return {}
 	},
 
 	// Block 5 uses visitingDoctorSdk, patient, services, researchDoctorId
-	'contact-group-id block 5 (line 480)': async (sdk) => {
+	'contact-group-id block 5 (NURA)': async (sdk) => {
 		if (!visitingDoctorSdk) visitingDoctorSdk = sdk
 		if (!patient) patient = await createTestPatient(visitingDoctorSdk)
 		const services = buildServices()
@@ -150,14 +150,14 @@ export const preTest: Record<string, (sdk: CardinalSdk) => Promise<Record<string
 	},
 
 	// Block 6 uses visitingDoctorSdk, patient
-	'contact-group-id block 6 (line 597)': async (sdk) => {
+	'contact-group-id block 6 (SIJO)': async (sdk) => {
 		if (!visitingDoctorSdk) visitingDoctorSdk = sdk
 		if (!patient) patient = await createTestPatient(visitingDoctorSdk)
 		return { visitingDoctorSdk, patient }
 	},
 
 	// Block 7 uses researchDoctorSdk
-	'contact-group-id block 7 (line 661)': async (sdk) => {
+	'contact-group-id block 7 (VUNE)': async (sdk) => {
 		if (!researchDoctorSdk) researchDoctorSdk = sdk
 		return { researchDoctorSdk }
 	},
@@ -168,7 +168,7 @@ export const preTest: Record<string, (sdk: CardinalSdk) => Promise<Record<string
 export const postTest: Record<string, (...args: any[]) => void | Promise<void>> = {
 	// Block 1: initialises visitingDoctorSdk, researchDoctorSdk
 	// Code has <PLACEHOLDER> syntax so it won't actually run.
-	'contact-group-id block 1 (line 74)': async (
+	'contact-group-id block 1 (JUSO)': async (
 		_sdk: CardinalSdk,
 		_CARDINAL_URL: string,
 		_visitingDoctorUsername: any,
@@ -189,7 +189,7 @@ export const postTest: Record<string, (...args: any[]) => void | Promise<void>> 
 	},
 
 	// Block 2: creates patientToCreate and patient
-	'contact-group-id block 2 (line 162)': async (
+	'contact-group-id block 2 (PUPA)': async (
 		_sdk: CardinalSdk,
 		patientToCreate: DecryptedPatient,
 		patientLocal: DecryptedPatient,
@@ -202,14 +202,14 @@ export const postTest: Record<string, (...args: any[]) => void | Promise<void>> 
 	},
 
 	// Block 3: gets researchDoctorId
-	'contact-group-id block 3 (line 216)': async (_sdk: CardinalSdk, researchDoctorIdLocal: string) => {
+	'contact-group-id block 3 (GAWU)': async (_sdk: CardinalSdk, researchDoctorIdLocal: string) => {
 		expect(researchDoctorIdLocal).toBeTruthy()
 		expect(typeof researchDoctorIdLocal).toBe('string')
 		researchDoctorId = researchDoctorIdLocal
 	},
 
 	// Block 4: constructs service objects
-	'contact-group-id block 4 (line 303)': async (
+	'contact-group-id block 4 (TERO)': async (
 		_sdk: CardinalSdk,
 		bloodPressureServiceLocal: DecryptedService,
 		ecgSignal: number[],
@@ -234,7 +234,7 @@ export const postTest: Record<string, (...args: any[]) => void | Promise<void>> 
 	},
 
 	// Block 5: creates two contacts with same groupId
-	'contact-group-id block 5 (line 480)': async (
+	'contact-group-id block 5 (NURA)': async (
 		_sdk: CardinalSdk,
 		groupId: string,
 		contactForResearch: DecryptedContact,
@@ -248,12 +248,12 @@ export const postTest: Record<string, (...args: any[]) => void | Promise<void>> 
 	},
 
 	// Block 6: iterates services for patient
-	'contact-group-id block 6 (line 597)': async (_sdk: CardinalSdk, allServicesIterator: any) => {
+	'contact-group-id block 6 (SIJO)': async (_sdk: CardinalSdk, allServicesIterator: any) => {
 		expect(allServicesIterator).toBeDefined()
 	},
 
 	// Block 7: iterates contacts by opening date
-	'contact-group-id block 7 (line 661)': async (_sdk: CardinalSdk, researchContactIterator: any) => {
+	'contact-group-id block 7 (VUNE)': async (_sdk: CardinalSdk, researchContactIterator: any) => {
 		expect(researchContactIterator).toBeDefined()
 	},
 }

@@ -44,7 +44,7 @@ suspend fun initializeMySdk(username: String, password: String) =
 
 <TabItem value="typescript">
 
-```typescript
+```typescript test-VETE
 import {AuthenticationMethod, CardinalSdk, StorageFacade} from "@icure/cardinal-sdk";
 
 function initializeMySdk(username: string, password: string): Promise<CardinalSdk> {
@@ -177,7 +177,7 @@ val auth = AuthenticationMethod.UsingCredentials(UsernamePassword("username", "p
 
 <TabItem value="typescript">
 
-```typescript
+```typescript test-NUQI
 import {AuthenticationMethod} from "@icure/cardinal-sdk";
 
 const auth = new AuthenticationMethod.UsingCredentials.UsernamePassword("username", "password")
@@ -230,7 +230,7 @@ val auth = AuthenticationMethod.UsingCredentials(UsernameLongToken("username", "
 
 <TabItem value="typescript">
 
-```typescript
+```typescript test-BADA
 import {AuthenticationMethod} from "@icure/cardinal-sdk";
 
 const auth = new AuthenticationMethod.UsingCredentials.UsernameLongToken("username", "token")
@@ -280,7 +280,7 @@ val auth = AuthenticationMethod.UsingCredentials(ExternalAuthenticationToken("my
 
 <TabItem value="typescript">
 
-```typescript
+```typescript test-JAJO
 import {AuthenticationMethod} from "@icure/cardinal-sdk";
 
 const auth = new AuthenticationMethod.UsingCredentials.ExternalAuthenticationToken("my-auth-config-id", "google-token")
@@ -374,7 +374,7 @@ suspend fun initializeMySdk(
 
 <TabItem value="typescript">
 
-```typescript
+```typescript test-ZIMO
 import {
 	AuthenticationProcessTelecomType,
 	CardinalSdk,
@@ -581,7 +581,7 @@ val auth = AuthenticationMethod.UsingSecretProvider(
 
 <TabItem value="typescript">
 
-```typescript
+```typescript test-LOVO
 import {
 	AuthenticationClass,
 	AuthenticationMethod,
@@ -599,7 +599,7 @@ const auth = new AuthenticationMethod.UsingSecretProvider(
 			// If we can use a secret that doesn't require user interaction we prioritize using that.
 			if (AuthenticationClass.LongLivedToken in acceptedSecrets) {
 				const cachedToken = getCachedToken()
-				if (cachedToken != null && previousAttempts.every((x) => x.secret != cachedToken) {
+				if (cachedToken != null && previousAttempts.every((x) => x.secret != cachedToken)) {
 					return new AuthSecretDetails.LongLivedTokenDetails(cachedToken)
 				}
 			}
@@ -712,7 +712,7 @@ Refer to the expo boilerplate for more information (:construction:).
 
 :::
 
-```typescript
+```typescript test-TECO
 import {StorageFacade, CardinalStorageOptions} from "@icure/cardinal-sdk";
 
 // On the typescript SDK the pre-implemented storage solutions are not available for use directly.
@@ -842,7 +842,7 @@ val options = SdkOptions(
 
 <TabItem value="typescript">
 
-```typescript
+```typescript test-GESA
 import {SdkOptions} from "@icure/cardinal-sdk";
 
 const options: SdkOptions = {
@@ -924,7 +924,7 @@ suspend fun jwkEncodedKeyStorage() =
 
 <TabItem value="typescript">
 
-```typescript
+```typescript test-NUCO
 import {KeyStorageFacade, StorageFacade} from "@icure/cardinal-sdk";
 
 // This is the same encoding method as the default, but you can use a different underlying storage facade,

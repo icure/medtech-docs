@@ -47,11 +47,13 @@ test("basic-operations block 1 (line 57)", async () => {
 })
 ```
 
-**Test name convention:** `<fileBaseName> block <n> (line <startLine>)`
+**Test name convention:** `<fileBaseName> block <n> (<testId>)`
 
 - `fileBaseName` is the MDX filename without extension.
 - `n` is the 1-based block index within the file.
-- `startLine` is the line number in the MDX where the code block begins.
+- `testId` is a stable 4-letter code from a `// @test: XXXX` comment on the first line of the code block. If no marker is present, the generator falls back to `line <startLine>`.
+
+**Stable test IDs:** Each TypeScript code block should have a `// @test: XXXX` comment as its first line (4 uppercase letters, e.g., `// @test: WITE`). This marker is stripped from the code before inclusion in the test and provides a stable identifier that doesn't change when surrounding content is edited. The code must be unique across all MDX files.
 
 ### 3. Pre/post hook injection
 
@@ -72,6 +74,8 @@ If `preTestProvides` has no entry (or an empty array) for the block, a plain cal
 ```typescript
 await preTest["block name"]?.(sdk)
 ```
+
+**Note:** If the code block declares its own `sdk` variable (e.g., `const sdk = await CardinalSdk.initialize(...)`), the generator omits the `sdk` argument from the pre-test call to avoid passing the outer `sdk` that will be shadowed. In that case the calls become `preTest["block name"]?.()` instead.
 
 #### Post-test call
 

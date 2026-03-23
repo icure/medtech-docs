@@ -59,7 +59,7 @@ else:
 </TabItem>
 <TabItem value="typescript">
 
-```typescript
+```typescript test-TAKI
 const patientId = await readLn("Insert the id of a Patient (blank to create a new one): ")
 let patient: DecryptedPatient
 if(patientId.length === 0) {
@@ -128,7 +128,7 @@ contact = DecryptedContact(
 </TabItem>
 <TabItem value="typescript">
 
-```typescript
+```typescript test-GOGU
 const description = await readLn("Examination description: ")
 const contact = new DecryptedContact({
 	id: uuid(),
@@ -175,7 +175,7 @@ contact_with_metadata = sdk.contact.with_encryption_metadata_blocking(contact, p
 </TabItem>
 <TabItem value="typescript">
 
-```typescript
+```typescript test-POBI
 const contactWithMetadata = await sdk.contact.withEncryptionMetadata(contact, patient)
 ```
 
@@ -213,7 +213,7 @@ created_contact = sdk.contact.create_contact_blocking(contact_with_metadata)
 </TabItem>
 <TabItem value="typescript">
 
-```typescript
+```typescript test-TUCU
 const createdContact = await sdk.contact.createContact(contactWithMetadata)
 ```
 
@@ -280,7 +280,7 @@ blood_pressure_service = DecryptedService(
 </TabItem>
 <TabItem value="typescript">
 
-```typescript
+```typescript test-FUVE
 const bloodPressureService = new DecryptedService({
 	id: uuid(),
 	label: "Blood pressure",
@@ -356,7 +356,7 @@ contact_with_blood_pressure = sdk.contact.modify_contact_blocking(
 </TabItem>
 <TabItem value="typescript">
 
-```typescript
+```typescript test-FELI
 const contactWithBloodPressure = await sdk.contact.modifyContact(
 	new DecryptedContact({
 		...createdContact,
@@ -435,7 +435,7 @@ contact_with_ecg = sdk.contact.modify_contact_blocking(contact_with_blood_pressu
 </TabItem>
 <TabItem value="typescript">
 
-```typescript
+```typescript test-COLU
 const ecgSignal = Array.from({ length: 10 }, () => random(0, 100)/100.0 )
 const heartRateService = new  DecryptedService({
 	id: uuid(),
@@ -523,7 +523,7 @@ document = DecryptedDocument(
 </TabItem>
 <TabItem value="typescript">
 
-```typescript
+```typescript test-SEGA
 const document = new DecryptedDocument({
 	id: uuid(),
 	documentType: DocumentType.Labresult
@@ -551,7 +551,7 @@ is encryptable, the encryption metadata must be initialized before it is created
 
 ```kotlin
 val createdDocument = sdk.document.createDocument(
-	sdk.document.withEncryptionMetadata(document, null)
+	sdk.document.withEncryptionMetadataUnlinked(document, null)
 )
 ```
 
@@ -567,9 +567,9 @@ created_document = sdk.document.create_document_blocking(
 </TabItem>
 <TabItem value="typescript">
 
-```typescript
+```typescript test-LOWU
 const createdDocument = await sdk.document.createDocument(
-	await sdk.document.withEncryptionMetadata(document, null)
+	await sdk.document.withEncryptionMetadataUnlinked(document)
 )
 ```
 
@@ -578,7 +578,7 @@ const createdDocument = await sdk.document.createDocument(
 
 ```dart
 final createdDocument = await sdk.document.createDocument(
-	await sdk.document.withEncryptionMetadata(document, null)
+	await sdk.document.withEncryptionMetadataUnlinked(document, null)
 );
 ```
 
@@ -619,7 +619,7 @@ document_with_attachment = sdk.document.encrypt_and_set_main_attachment_blocking
 </TabItem>
 <TabItem value="typescript">
 
-```typescript
+```typescript test-NIDA
 const xRayImage = new Int8Array(100)
 for (let i = 0; i < 100; i++) {
 	xRayImage[i] = random(-127, 128)
@@ -696,7 +696,7 @@ contact_with_image = sdk.contact.modify_contact_blocking(contact_with_ecg)
 </TabItem>
 <TabItem value="typescript">
 
-```typescript
+```typescript test-XEQU
 const xRayService = new DecryptedService({
 	id: uuid(),
 	label: "X-Ray image",
@@ -774,7 +774,7 @@ created_diagnosis = sdk.health_element.create_health_element_blocking(
 </TabItem>
 <TabItem value="typescript">
 
-```typescript
+```typescript test-LUKO
 const diagnosis = await readLn("What is the diagnosis?: ")
 const healthElement = new DecryptedHealthElement({
 	id: uuid(),
@@ -838,7 +838,7 @@ contact_with_diagnosis = sdk.contact.modify_contact_blocking(contact_with_image)
 </TabItem>
 <TabItem value="typescript">
 
-```typescript
+```typescript test-REHE
 const contactWithDiagnosis = await sdk.contact.modifyContact(
 	new DecryptedContact({
 		...contactWithImage,
@@ -904,7 +904,7 @@ final_contact = sdk.contact.modify_contact_blocking(contact_with_diagnosis)
 </TabItem>
 <TabItem value="typescript">
 
-```typescript
+```typescript test-MIZA
 const finalContact = await sdk.contact.modifyContact(
 	new DecryptedContact({
 		...contactWithDiagnosis,

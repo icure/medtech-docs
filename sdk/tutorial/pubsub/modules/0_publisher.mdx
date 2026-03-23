@@ -66,7 +66,7 @@ sdk = CardinalSdk(
 First, the user will be prompted to insert the credentials of a [healthcare party created through the cockpit](/cockpit/how-to/how-to-manage-hcp).
 An SDK instance will be initialized for that healthcare party.
 
-```typescript
+```typescript test-GOSI
 const CARDINAL_URL = "https://api.icure.cloud"
 
 const username = await readLn("Login: ")
@@ -131,7 +131,7 @@ created_patient = sdk.patient.create_patient_blocking(patient_with_metadata)
 </TabItem>
 <TabItem value="typescript">
 
-```typescript
+```typescript test-MIWE
 const newPatient = new DecryptedPatient({
 	id: uuid(),
 	firstName: "Edmond",
@@ -193,7 +193,7 @@ login_token = sdk.user.get_token_blocking(created_user.id, "login")
 </TabItem>
 <TabItem value="typescript">
 
-```typescript
+```typescript test-NUTE
 const login = `edmond.dantes.${uuid().substring(0, 6)}@icure.com`
 const patientUser = new User({
 	id: uuid(),
@@ -254,7 +254,7 @@ CardinalSdk(
 </TabItem>
 <TabItem value="typescript">
 
-```typescript
+```typescript test-FABE
 await CardinalSdk.initialize(
 	undefined,
 	CARDINAL_URL,
@@ -319,7 +319,7 @@ patient = sdk.patient.share_with_blocking(
 </TabItem>
 <TabItem value="typescript">
 
-```typescript
+```typescript test-QOHO
 const patient = await sdk.patient.shareWith(
 	createdPatient.id,
 	createdPatient,
@@ -380,7 +380,7 @@ patient_sdk = CardinalSdk(
 </TabItem>
 <TabItem value="typescript">
 
-```typescript
+```typescript test-ZORI
 const patientSdk = await CardinalSdk.initialize(
 	undefined,
 	CARDINAL_URL,
@@ -509,7 +509,7 @@ contact = DecryptedContact(
 </TabItem>
 <TabItem value="typescript">
 
-```typescript
+```typescript test-BIJA
 const glycemiaValue = random(60, 160)
 const contact = new DecryptedContact({
 	id: uuid(),
@@ -640,7 +640,7 @@ patient_sdk.contact.create_contact_blocking(contact_with_encryption_metadata)
 </TabItem>
 <TabItem value="typescript">
 
-```typescript
+```typescript test-JICE
 const recipientHcp = patient.responsible
 const contactWithEncryptionMetadata = await patientSdk.contact.withEncryptionMetadata(
 	contact,
@@ -705,7 +705,7 @@ service_iterator = patient_sdk.contact.filter_services_by_blocking(service_filte
 </TabItem>
 <TabItem value="typescript">
 
-```typescript
+```typescript test-MAZU
 const filter = ServiceFilters.byTagAndValueDateForSelf(
 	"CARDINAL",
 	{ tagCode: "ANALYZED" }
@@ -765,7 +765,7 @@ while service_iterator.has_next_blocking():
 </TabItem>
 <TabItem value="typescript">
 
-```typescript
+```typescript test-PEXO
 while(await serviceIterator.hasNext()) {
 	const service = (await serviceIterator.next(1))[0]
 	const diagnosisOrNull = service.tags.find( it => it.type == "SNOMED")

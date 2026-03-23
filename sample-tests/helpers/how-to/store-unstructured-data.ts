@@ -17,7 +17,7 @@ let attachmentId: string
 
 async function createTestDocument(sdk: CardinalSdk) {
 	return sdk.document.createDocument(
-		await sdk.document.withEncryptionMetadata(new DecryptedDocument({ id: uuid(), name: 'Test doc' }), null),
+		await sdk.document.withEncryptionMetadataUnlinked(new DecryptedDocument({ id: uuid(), name: 'Test doc' }), null),
 	)
 }
 
@@ -26,36 +26,36 @@ async function createTestDocument(sdk: CardinalSdk) {
 // can emit a destructuring assignment.
 
 export const preTestProvides: Record<string, string[]> = {
-	'store-unstructured-data block 2 (line 99)': ['document'],
-	'store-unstructured-data block 3 (line 144)': ['document', 'xmlData'],
-	'store-unstructured-data block 4 (line 182)': ['documentWithMainAttachment'],
-	'store-unstructured-data block 5 (line 227)': ['document'],
-	'store-unstructured-data block 6 (line 274)': ['document'],
-	'store-unstructured-data block 7 (line 319)': ['retrievedDocument', 'attachmentId'],
-	'store-unstructured-data block 8 (line 355)': ['retrievedDocument', 'attachmentId'],
+	'store-unstructured-data block 2 (MUFE)': ['document'],
+	'store-unstructured-data block 3 (BUZE)': ['document', 'xmlData'],
+	'store-unstructured-data block 4 (XUTA)': ['documentWithMainAttachment'],
+	'store-unstructured-data block 5 (DOLE)': ['document'],
+	'store-unstructured-data block 6 (QUCO)': ['document'],
+	'store-unstructured-data block 7 (TAFO)': ['retrievedDocument', 'attachmentId'],
+	'store-unstructured-data block 8 (MESA)': ['retrievedDocument', 'attachmentId'],
 }
 
 // ── preTest ──────────────────────────────────────────────────────────
 
 export const preTest: Record<string, (sdk: CardinalSdk) => Promise<Record<string, any>>> = {
 	// Block 1: self-contained — creates a document
-	'store-unstructured-data block 1 (line 38)': async () => ({}),
+	'store-unstructured-data block 1 (NUDI)': async () => ({}),
 
 	// Block 2: needs document from block 1
-	'store-unstructured-data block 2 (line 99)': async (sdk) => {
+	'store-unstructured-data block 2 (MUFE)': async (sdk) => {
 		if (!document) document = await createTestDocument(sdk)
 		return { document }
 	},
 
 	// Block 3: needs document and xmlData from prior blocks
-	'store-unstructured-data block 3 (line 144)': async (sdk) => {
+	'store-unstructured-data block 3 (BUZE)': async (sdk) => {
 		if (!document) document = await createTestDocument(sdk)
 		if (!xmlData) xmlData = '<xml>test</xml>'
 		return { document, xmlData }
 	},
 
 	// Block 4: needs documentWithMainAttachment from block 2
-	'store-unstructured-data block 4 (line 182)': async (sdk) => {
+	'store-unstructured-data block 4 (XUTA)': async (sdk) => {
 		if (!documentWithMainAttachment) {
 			if (!document) document = await createTestDocument(sdk)
 			documentWithMainAttachment = document
@@ -64,25 +64,25 @@ export const preTest: Record<string, (sdk: CardinalSdk) => Promise<Record<string
 	},
 
 	// Block 5: needs document from block 1
-	'store-unstructured-data block 5 (line 227)': async (sdk) => {
+	'store-unstructured-data block 5 (DOLE)': async (sdk) => {
 		if (!document) document = await createTestDocument(sdk)
 		return { document }
 	},
 
 	// Block 6: needs document from block 1
-	'store-unstructured-data block 6 (line 274)': async (sdk) => {
+	'store-unstructured-data block 6 (QUCO)': async (sdk) => {
 		if (!document) document = await createTestDocument(sdk)
 		return { document }
 	},
 
 	// Block 7: needs retrievedDocument and attachmentId from prior blocks
-	'store-unstructured-data block 7 (line 319)': async (sdk) => {
+	'store-unstructured-data block 7 (TAFO)': async (sdk) => {
 		if (!retrievedDocument || !attachmentId) {
 			if (!document) document = await createTestDocument(sdk)
 			// Add an attachment so we can retrieve it
 			const image = new ArrayBuffer(16)
 			const attId = uuid()
-			await sdk.document.encryptAndSetSecondaryAttachment(document.id, attId, ['public.tiff'], new Int8Array(new Uint8Array(image)))
+			await sdk.document.encryptAndSetSecondaryAttachment(document, attId, ['public.tiff'], new Int8Array(new Uint8Array(image)))
 			retrievedDocument = await sdk.document.getDocument(document.id)
 			attachmentId = attId
 		}
@@ -90,12 +90,12 @@ export const preTest: Record<string, (sdk: CardinalSdk) => Promise<Record<string
 	},
 
 	// Block 8: needs retrievedDocument and attachmentId from prior blocks
-	'store-unstructured-data block 8 (line 355)': async (sdk) => {
+	'store-unstructured-data block 8 (MESA)': async (sdk) => {
 		if (!retrievedDocument || !attachmentId) {
 			if (!document) document = await createTestDocument(sdk)
 			const image = new ArrayBuffer(16)
 			const attId = uuid()
-			await sdk.document.encryptAndSetSecondaryAttachment(document.id, attId, ['public.tiff'], new Int8Array(new Uint8Array(image)))
+			await sdk.document.encryptAndSetSecondaryAttachment(document, attId, ['public.tiff'], new Int8Array(new Uint8Array(image)))
 			retrievedDocument = await sdk.document.getDocument(document.id)
 			attachmentId = attId
 		}
@@ -107,14 +107,14 @@ export const preTest: Record<string, (sdk: CardinalSdk) => Promise<Record<string
 
 export const postTest: Record<string, (...args: any[]) => void | Promise<void>> = {
 	// Block 1: creates document
-	'store-unstructured-data block 1 (line 38)': async (sdk: CardinalSdk, documentLocal: DecryptedDocument) => {
+	'store-unstructured-data block 1 (NUDI)': async (sdk: CardinalSdk, documentLocal: DecryptedDocument) => {
 		expect(documentLocal).toBeDefined()
 		expect(documentLocal.id).toBeTruthy()
 		document = documentLocal
 	},
 
 	// Block 2: creates xmlData and documentWithMainAttachment
-	'store-unstructured-data block 2 (line 99)': async (
+	'store-unstructured-data block 2 (MUFE)': async (
 		sdk: CardinalSdk,
 		xmlDataLocal: any,
 		documentWithMainAttachmentLocal: DecryptedDocument,
@@ -125,10 +125,10 @@ export const postTest: Record<string, (...args: any[]) => void | Promise<void>> 
 	},
 
 	// Block 3: setRawMainAttachment returns void-ish — no-op
-	'store-unstructured-data block 3 (line 144)': async () => {},
+	'store-unstructured-data block 3 (BUZE)': async () => {},
 
 	// Block 4: creates image, attachmentId, decryptedAttachmentId, documentWithSecondaryAttachment, documentWithUnencryptedSecondaryAttachment
-	'store-unstructured-data block 4 (line 182)': async (
+	'store-unstructured-data block 4 (XUTA)': async (
 		sdk: CardinalSdk,
 		image: any,
 		attachmentIdLocal: string,
@@ -141,7 +141,7 @@ export const postTest: Record<string, (...args: any[]) => void | Promise<void>> 
 	},
 
 	// Block 5: retrieves document and attachments
-	'store-unstructured-data block 5 (line 227)': async (
+	'store-unstructured-data block 5 (DOLE)': async (
 		sdk: CardinalSdk,
 		retrievedDocumentLocal: DecryptedDocument,
 		retrievedMainAttachment: any,
@@ -154,7 +154,7 @@ export const postTest: Record<string, (...args: any[]) => void | Promise<void>> 
 	},
 
 	// Block 6: retrieves document and checks XML validity
-	'store-unstructured-data block 6 (line 274)': async (
+	'store-unstructured-data block 6 (QUCO)': async (
 		sdk: CardinalSdk,
 		retrievedDocumentLocal: DecryptedDocument,
 		isValidXml: any,
@@ -165,7 +165,7 @@ export const postTest: Record<string, (...args: any[]) => void | Promise<void>> 
 	},
 
 	// Block 7: retrieves secondary attachments
-	'store-unstructured-data block 7 (line 319)': async (
+	'store-unstructured-data block 7 (TAFO)': async (
 		sdk: CardinalSdk,
 		retrievedSecondaryAttachment: any,
 		retrievedDecryptedSecondaryAttachment: any,
@@ -175,7 +175,7 @@ export const postTest: Record<string, (...args: any[]) => void | Promise<void>> 
 	},
 
 	// Block 8: deletes attachments
-	'store-unstructured-data block 8 (line 355)': async (
+	'store-unstructured-data block 8 (MESA)': async (
 		sdk: CardinalSdk,
 		documentWithoutMainAttachment: any,
 		documentWithoutAttachments: any,

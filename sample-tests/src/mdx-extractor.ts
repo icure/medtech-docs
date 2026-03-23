@@ -1,6 +1,8 @@
 export interface ExtractedBlock {
   code: string
   startLine: number
+  /** Stable 4-letter test ID from `// @test: XXXX` on the first code line */
+  testId?: string
 }
 
 export function extractTypeScriptBlocks(mdxContent: string): ExtractedBlock[] {
@@ -24,6 +26,10 @@ export function extractTypeScriptBlocks(mdxContent: string): ExtractedBlock[] {
         continue
       }
 
+      // Extract test ID from fence info: ```typescript test-XXXX
+      const testIdMatch = fenceInfo.match(/\btest-(\w{4})\b/)
+      const testId = testIdMatch?.[1]
+
       const startLine = i + 1
       const codeLines: string[] = []
       i++
@@ -37,6 +43,7 @@ export function extractTypeScriptBlocks(mdxContent: string): ExtractedBlock[] {
       blocks.push({
         code: codeLines.join('\n'),
         startLine,
+        testId,
       })
     } else {
       i++
@@ -85,5 +92,8 @@ export function stripImportsFromBlock(code: string): string {
   while (bodyLines.length > 0 && bodyLines[0].trim() === '') bodyLines.shift()
   while (bodyLines.length > 0 && bodyLines[bodyLines.length - 1].trim() === '') bodyLines.pop()
 
-  return bodyLines.join('\n')
+  // Strip leading `export` keyword from declarations (invalid inside function bodies)
+  const strippedLines = bodyLines.map(line => line.replace(/^(\s*)export\s+(async\s+function|function|const|let|class)\s/, '$1$2 '))
+
+  return strippedLines.join('\n')
 }

@@ -175,12 +175,12 @@ health_element = sdk.health_element.get_health_element_blocking(health_element_i
 </TabItem>
 <TabItem value="typescript">
 
-```typescript
+```typescript test-SIHI
 const CARDINAL_URL = "https://api.icure.cloud"
 
 const username = await readLn("Login: ")
 const password = await readLn("Password: ")
-const sdk = CardinalSdk.initialize(
+const sdk = await CardinalSdk.initialize(
 	undefined,
 	CARDINAL_URL,
 	new AuthenticationMethod.UsingCredentials.UsernamePassword(username, password),

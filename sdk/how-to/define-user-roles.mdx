@@ -49,7 +49,7 @@ val allRoles = sdk.role.getAllRoles()
 
 <TabItem value="typescript">
 
-```typescript
+```typescript test-WEGE
 const allRoles = await sdk.role.getAllRoles()
 ```
 
@@ -82,7 +82,7 @@ sdk.user.setUserRoles(userId, user.systemMetadata.roles + allRoles.first())
 
 <TabItem value="typescript">
 
-```typescript
+```typescript test-JALU
 // const userId = The id of the user to update
 const user = await sdk.user.getUser(userId)
 await sdk.user.setUserRoles(userId, user.systemMetadata.roles + allRoles[0])
@@ -129,7 +129,7 @@ sdk.user.resetUserRoles(userId)
 
 <TabItem value="typescript">
 
-```typescript
+```typescript test-NUBU
 await sdk.user.resetUserRoles(userId)
 ```
 

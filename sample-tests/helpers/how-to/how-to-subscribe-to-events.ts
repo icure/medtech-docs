@@ -10,15 +10,15 @@ import EntityNotification = EntitySubscriptionEvent.EntityNotification;
 // ── preTestProvides ──────────────────────────────────────────────────
 
 export const preTestProvides: Record<string, string[]> = {
-	'how-to-subscribe-to-events block 2 (line 256)': ['subscription'],
-	'how-to-subscribe-to-events block 3 (line 390)': ['EntityNotification', 'addToQueueToProcess'],
+	'how-to-subscribe-to-events block 2 (HIHE)': ['subscription'],
+	'how-to-subscribe-to-events block 3 (KANU)': ['EntityNotification', 'addToQueueToProcess'],
 }
 
 // ── preTest ──────────────────────────────────────────────────────────
 
 export const preTest = {
-	'how-to-subscribe-to-events block 1 (line 95)': async (sdk: CardinalSdk): Promise<Record<string, never>> => ({}),
-	'how-to-subscribe-to-events block 2 (line 256)': async (sdk: CardinalSdk): Promise<{
+	'how-to-subscribe-to-events block 1 (DUNO)': async (sdk: CardinalSdk): Promise<Record<string, never>> => ({}),
+	'how-to-subscribe-to-events block 2 (HIHE)': async (sdk: CardinalSdk): Promise<{
 		subscription: Pick<EntitySubscription<HealthElement>, 'closeReason' | 'close'>
 	}> => ({
 		subscription: {
@@ -26,7 +26,7 @@ export const preTest = {
 			close: async () => {},
 		},
 	}),
-	'how-to-subscribe-to-events block 3 (line 390)': async (sdk: CardinalSdk): Promise<{
+	'how-to-subscribe-to-events block 3 (KANU)': async (sdk: CardinalSdk): Promise<{
 		EntityNotification: typeof EntityNotification
 		addToQueueToProcess: (he: HealthElement) => Promise<void>
 	}> => ({
@@ -38,15 +38,15 @@ export const preTest = {
 // ── postTest ─────────────────────────────────────────────────────────
 
 export const postTest: Record<string, (sdk: CardinalSdk, ...args: unknown[]) => void | Promise<void>> = {
-	'how-to-subscribe-to-events block 1 (line 95)': async (_sdk, subscription) => {
+	'how-to-subscribe-to-events block 1 (DUNO)': async (_sdk, subscription) => {
 		expect(subscription).toBeDefined()
 	},
 
-	'how-to-subscribe-to-events block 2 (line 256)': async () => {
+	'how-to-subscribe-to-events block 2 (HIHE)': async () => {
 		// no-op — block just inspects subscription.closeReason
 	},
 
-	'how-to-subscribe-to-events block 3 (line 390)': async (_sdk, getMissedEvents, subscription) => {
+	'how-to-subscribe-to-events block 3 (KANU)': async (_sdk, getMissedEvents, subscription) => {
 		expect(getMissedEvents).toBeDefined()
 		expect(subscription).toBeDefined()
 	},

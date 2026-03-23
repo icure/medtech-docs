@@ -63,7 +63,7 @@ other_hcp = other_sdk.healthcare_party.get_current_healthcare_party_blocking()
 </TabItem>
 <TabItem value="typescript">
 
-```typescript
+```typescript test-WITE
 const username = (await readLn("Login of the other hcp: ")).trim()
 const otherPassword = await readLn("Insert the password for this hcp: ")
 const otherSdk = await CardinalSdk.initialize(
@@ -104,7 +104,7 @@ val oldDocument = sdk.document.createDocument(
 		id = UUID.randomUUID().toString(),
 		name = "An important document"
 	).let {
-		sdk.document.withEncryptionMetadata(it, null)
+		sdk.document.withEncryptionMetadataUnlinked(it, null)
 	}
 )
 ```
@@ -125,13 +125,12 @@ old_document = sdk.document.create_document_blocking(
 </TabItem>
 <TabItem value="typescript">
 
-```typescript
+```typescript test-ZESO
 const oldDocument = await sdk.document.createDocument(
-	await sdk.document.withEncryptionMetadata(new DecryptedDocument({
+	await sdk.document.withEncryptionMetadataUnlinked(new DecryptedDocument({
 			id: uuid(),
 			name: "An important document"
-		}),
-		null
+		})
 	)
 )
 ```
@@ -141,7 +140,7 @@ const oldDocument = await sdk.document.createDocument(
 
 ```dart
 final oldDocument = await sdk.document.createDocument(
-	await sdk.document.withEncryptionMetadata(
+	await sdk.document.withEncryptionMetadataUnlinked(
 		DecryptedDocument(
 			generateUuid(),
 			name: "An important document"
@@ -180,7 +179,7 @@ except Exception as e:
 </TabItem>
 <TabItem value="typescript">
 
-```typescript
+```typescript test-KIXO
 try {
 	await otherSdk.document.getDocument(oldDocument.id)
 } catch (e) {
@@ -228,8 +227,8 @@ updated_document = sdk.document.share_with_blocking(
 </TabItem>
 <TabItem value="typescript">
 
-```typescript
-updatedDocument = await sdk.document.shareWith(
+```typescript test-VEKO
+const updatedDocument = await sdk.document.shareWith(
 	otherHcp.id,
 	oldDocument
 )
@@ -264,7 +263,7 @@ old_document_other_hcp = other_sdk.document.get_document_blocking(old_document.i
 </TabItem>
 <TabItem value="typescript">
 
-```typescript
+```typescript test-BUNA
 const oldDocumentOtherHcp = await otherSdk.document.getDocument(oldDocument.id)
 ```
 
@@ -292,7 +291,7 @@ val newDocument = DecryptedDocument(
 	name = "Another important document"
 )
 
-val newDocumentWithMetadata = sdk.document.withEncryptionMetadata(
+val newDocumentWithMetadata = sdk.document.withEncryptionMetadataUnlinked(
 	newDocument,
 	null,
 	delegates = mapOf(otherHcp.id to AccessLevel.Read)
@@ -320,14 +319,13 @@ created_new_document = sdk.document.create_document_blocking(new_document_with_m
 </TabItem>
 <TabItem value="typescript">
 
-```typescript
+```typescript test-GEJU
 const newDocument = new DecryptedDocument({
 	id: uuid(),
 	name: "Another important document"
 })
-const newDocumentWithMetadata = await sdk.document.withEncryptionMetadata(
+const newDocumentWithMetadata = await sdk.document.withEncryptionMetadataUnlinked(
 	newDocument,
-	null,
 	{ delegates: { [otherHcp.id]:  AccessLevel.Read } }
 )
 const createdNewDocument = await sdk.document.createDocument(newDocumentWithMetadata)
@@ -341,7 +339,7 @@ final newDocument = DecryptedDocument(
 	generateUuid(),
 	name: "Another important document"
 );
-final newDocumentWithMetadata = await sdk.document.withEncryptionMetadata(
+final newDocumentWithMetadata = await sdk.document.withEncryptionMetadataUnlinked(
 	newDocument,
 	null,
 	delegates: { otherHcp.id: AccessLevel.read }
@@ -372,7 +370,7 @@ new_document_other_hcp = other_sdk.document.get_document_blocking(created_new_do
 </TabItem>
 <TabItem value="typescript">
 
-```typescript
+```typescript test-HAJI
 const newDocumentOtherHcp = await otherSdk.document.getDocument(createdNewDocument.id)
 ```
 
@@ -422,7 +420,7 @@ created_patient = sdk.patient.create_patient_blocking(patient_with_metadata)
 </TabItem>
 <TabItem value="typescript">
 
-```typescript
+```typescript test-BACA
 const newPatient = new DecryptedPatient({
 	id: uuid(),
 	firstName: "Edmond",
@@ -482,7 +480,7 @@ created_user = sdk.user.create_user_blocking(patient_user)
 </TabItem>
 <TabItem value="typescript">
 
-```typescript
+```typescript test-TUNI
 const login = `edmond.dantes.${uuid().substring(0, 6)}@icure.com`
 const patientUser = new User({
 	id: uuid(),
@@ -529,7 +527,7 @@ login_token = sdk.user.get_token_blocking(created_user.id, "login")
 </TabItem>
 <TabItem value="typescript">
 
-```typescript
+```typescript test-GAZA
 const loginToken = await sdk.user.getToken(createdUser.id, "login")
 ```
 
@@ -574,7 +572,7 @@ CardinalSdk(
 </TabItem>
 <TabItem value="typescript">
 
-```typescript
+```typescript test-LUDI
 await CardinalSdk.initialize(
 	undefined,
 	CARDINAL_URL,
@@ -635,7 +633,7 @@ patient = sdk.patient.share_with_blocking(
 </TabItem>
 <TabItem value="typescript">
 
-```typescript
+```typescript test-BOKI
 const patient = await sdk.patient.shareWith(
 	createdPatient.id,
 	createdPatient,
@@ -704,7 +702,7 @@ patient_sdk = CardinalSdk(
 </TabItem>
 <TabItem value="typescript">
 
-```typescript
+```typescript test-LIHA
 const patientSdk = await CardinalSdk.initialize(
 	undefined,
 	CARDINAL_URL,
@@ -766,7 +764,7 @@ created_health_element = sdk.health_element.create_health_element_blocking(healt
 </TabItem>
 <TabItem value="typescript">
 
-```typescript
+```typescript test-FEHI
 const healthElement = new DecryptedHealthElement({
 	id: uuid(),
 	descr: "This is some medical context"
@@ -817,7 +815,7 @@ except Exception as e:
 </TabItem>
 <TabItem value="typescript">
 
-```typescript
+```typescript test-XALO
 try {
 	await patientSdk.healthElement.getHealthElement(createdHealthElement.id)
 } catch (e) {
@@ -864,7 +862,7 @@ health_element = sdk.health_element.share_with_blocking(
 </TabItem>
 <TabItem value="typescript">
 
-```typescript
+```typescript test-DUCO
 const healthElement = await sdk.healthElement.shareWith(
 	patient.id,
 	createdHealthElement
@@ -900,7 +898,7 @@ patient_sdk.health_element.get_health_element_blocking(created_health_element.id
 </TabItem>
 <TabItem value="typescript">
 
-```typescript
+```typescript test-KUFA
 await patientSdk.healthElement.getHealthElement(createdHealthElement.id)
 ```
 
@@ -956,7 +954,7 @@ new_created_health_element = sdk.health_element.create_health_element_blocking(n
 </TabItem>
 <TabItem value="typescript">
 
-```typescript
+```typescript test-XEFE
 const newHealthElement = new DecryptedHealthElement({
 	id: uuid(),
 	descr: "This is some other medical context"
@@ -1011,7 +1009,7 @@ retrieved_health_element = patient_sdk.health_element.get_health_element_blockin
 </TabItem>
 <TabItem value="typescript">
 
-```typescript
+```typescript test-NUZA
 const retrievedHealthElement = await patientSdk.healthElement.getHealthElement(newCreatedHealthElement.id)
 ```
 

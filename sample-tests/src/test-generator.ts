@@ -27,7 +27,7 @@ function computeSdkFixtureRelativePath(sourcePath: string): string {
  */
 export function extractFunctionNames(code: string): string[] {
   const names: string[] = []
-  const re = /^(?:async\s+)?function\s+(\w+)\s*\(/gm
+  const re = /^(?:export\s+)?(?:async\s+)?function\s+(\w+)\s*\(/gm
   let m: RegExpExecArray | null
   while ((m = re.exec(code)) !== null) {
     names.push(m[1])
@@ -74,7 +74,8 @@ export function generateTestFileContent(options: GenerateTestFileOptions): strin
 
   for (let i = 0; i < blocks.length; i++) {
     const block = blocks[i]
-    const testName = `${fileBaseName} block ${i + 1} (line ${block.startLine})`
+    const blockRef = block.testId ?? `line ${block.startLine}`
+    const testName = `${fileBaseName} block ${i + 1} (${blockRef})`
     const body = stripImportsFromBlock(block.code)
     const indentedBody = body
       .split('\n')
@@ -85,10 +86,12 @@ export function generateTestFileContent(options: GenerateTestFileOptions): strin
 
     if (helperModulePath !== undefined) {
       const provides = preTestProvides?.[testName] ?? []
+      const blockDeclaresOwnSdk = extractVariableNames(body).includes('sdk')
+      const preTestArg = blockDeclaresOwnSdk ? '' : 'sdk'
       if (provides.length > 0) {
-        lines.push(`  const { ${provides.join(', ')} } = await preTest["${testName}"]?.(sdk) ?? {}`)
+        lines.push(`  const { ${provides.join(', ')} } = await preTest["${testName}"]?.(${preTestArg}) ?? {}`)
       } else {
-        lines.push(`  await preTest["${testName}"]?.(sdk)`)
+        lines.push(`  await preTest["${testName}"]?.(${preTestArg})`)
       }
     }
 

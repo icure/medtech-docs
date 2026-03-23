@@ -71,7 +71,7 @@ val researchDoctorSdk = CardinalSdk.initialize(
 
 <TabItem value="typescript">
 
-```typescript
+```typescript test-JUSO
 import {AuthenticationMethod, CardinalSdk, StorageFacade} from "@icure/cardinal-sdk";
 
 const CARDINAL_URL = "https://api.icure.cloud"
@@ -159,7 +159,7 @@ val patient = visitingDoctorSdk.patient.createPatient(
 
 <TabItem value="typescript">
 
-```typescript
+```typescript test-PUPA
 import {DecryptedPatient} from "@icure/cardinal-sdk";
 import {v4 as uuid} from 'uuid';
 
@@ -213,7 +213,7 @@ val researchDoctorId = researchDoctorSdk.healthcareParty.getCurrentHealthcarePar
 
 <TabItem value="typescript">
 
-```typescript
+```typescript test-GAWU
 // In a real scenario, the first doctor would need to search for the other doctor.
 // For the sake of the example, it will be in the following variable
 const researchDoctorId = (await researchDoctorSdk.healthcareParty.getCurrentHealthcareParty()).id
@@ -300,7 +300,7 @@ val medicationService = DecryptedService(
 
 <TabItem value="typescript">
 
-```typescript
+```typescript test-TERO
 import {
 	DecryptedContent,
 	DecryptedService,
@@ -477,7 +477,7 @@ visitingDoctorSdk.contact.createContact(
 
 <TabItem value="typescript">
 
-```typescript
+```typescript test-NURA
 import {AccessLevel, Annotation, DecryptedContact} from "@icure/cardinal-sdk";
 import {v4 as uuid} from 'uuid';
 
@@ -594,7 +594,7 @@ while (allServicesIterator.hasNext()) {
 
 <TabItem value="typescript">
 
-```typescript
+```typescript test-SIJO
 import {ServiceFilters} from "@icure/cardinal-sdk";
 
 const allServicesIterator = await visitingDoctorSdk.contact.filterServicesBy(
@@ -658,7 +658,7 @@ while (researchContactIterator.hasNext()) {
 
 <TabItem value="typescript">
 
-```typescript
+```typescript test-VUNE
 import {ContactFilters} from "@icure/cardinal-sdk";
 
 const researchContactIterator = await researchDoctorSdk.contact.filterContactsBy(

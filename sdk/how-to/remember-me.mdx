@@ -59,7 +59,7 @@ saveCredentialsInPersistentStorage("username", longToken)
 
 <TabItem value="typescript">
 
-```typescript
+```typescript test-HOBU
 const deviceId = "remember-me-" + await getDeviceId();
 const currentUser = await sdk.user.getCurrentUser();
 const longToken = await sdk.user.getToken(
@@ -128,7 +128,7 @@ val sdk = CardinalSdk.initialize(
 
 <TabItem value="typescript">
 
-```typescript
+```typescript test-TILA
 import {AuthenticationMethod, CardinalSdk, StorageFacade} from "@icure/cardinal-sdk";
 
 const [username, longToken] = await getCredentialsFromPersistentStorage();

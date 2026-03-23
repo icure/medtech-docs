@@ -1,11 +1,11 @@
 import { CardinalSdk } from '@icure/cardinal-sdk'
 
 export const preTestProvides: Record<string, string[]> = {
-	'index block 1 (line 178)': ['readLn', 'healthElementId'],
+	'index block 1 (SIHI)': ['readLn', 'healthElementId'],
 }
 
-export const preTest: Record<string, (sdk: CardinalSdk) => Promise<Record<string, any>>> = {
-	'index block 1 (line 178)': async () => {
+export const preTest: Record<string, (sdk?: CardinalSdk) => Promise<Record<string, any>>> = {
+	'index block 1 (SIHI)': async () => {
 		const responses: Record<string, string> = {
 			'Login: ': 'test-user@example.com',
 			'Password: ': 'test-password',
@@ -18,5 +18,5 @@ export const preTest: Record<string, (sdk: CardinalSdk) => Promise<Record<string
 }
 
 export const postTest: Record<string, (...args: any[]) => void | Promise<void>> = {
-	'index block 1 (line 178)': async () => {},
+	'index block 1 (SIHI)': async () => {},
 }

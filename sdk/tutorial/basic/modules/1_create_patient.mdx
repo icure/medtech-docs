@@ -45,7 +45,7 @@ patient = DecryptedPatient(
 
 In the following example, the user reads a first name and last name from the standard input and instantiates a patient entity:
 
-```typescript
+```typescript test-SOGI
 const firstName = await readLn("First name: ")
 const lastName = await readLn("Last name: ")
 const patient = new DecryptedPatient({
@@ -96,7 +96,7 @@ patient_with_metadata = sdk.patient.with_encryption_metadata_blocking(patient)
 </TabItem>
 <TabItem value="typescript">
 
-```typescript
+```typescript test-MOJO
 const patientWithMetadata = await sdk.patient.withEncryptionMetadata(patient)
 ```
 
@@ -132,7 +132,7 @@ created_patient = sdk.patient.create_patient_blocking(patient_with_metadata)
 </TabItem>
 <TabItem value="typescript">
 
-```typescript
+```typescript test-BOZE
 const createdPatient = await sdk.patient.createPatient(patientWithMetadata)
 ```
 
@@ -179,7 +179,7 @@ updated_patient = sdk.patient.modify_patient_blocking(created_patient)
 Once created, the entity can be modified. In the following example, a date of birth is read from the standard input
 and added to the patient:
 
-```typescript
+```typescript test-JIDO
 const dateOfBirth = parseInt((await readLn("Date of birth (YYYYMMDD): ")).trim())
 const patientWithBirth = new DecryptedPatient({
 	...createdPatient,
@@ -229,7 +229,7 @@ retrieved_patient = sdk.patient.get_patient_blocking(updated_patient.id)
 </TabItem>
 <TabItem value="typescript">
 
-```typescript
+```typescript test-QISU
 console.log("The retrieved patient is:")
 const retrievedPatient = await sdk.patient.getPatient(updatedPatient.id)
 ```

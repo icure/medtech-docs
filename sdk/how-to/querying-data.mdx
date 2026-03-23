@@ -27,7 +27,7 @@ val hcpWithName = HealthcarePartyFilters.byName("joh")
 
 <TabItem value="typescript">
 
-```typescript
+```typescript test-WUVO
 import {HealthcarePartyFilters} from "@icure/cardinal-sdk";
 
 const hcpWithName = HealthcarePartyFilters.byName("joh")
@@ -175,7 +175,7 @@ val myFilterWithOperators = (
 
 <TabItem value="typescript">
 
-```typescript
+```typescript test-POMO
 import {PatientFilters,Gender,intersection,union} from "@icure/cardinal-sdk";
 
 const myFilter = union(
@@ -239,7 +239,7 @@ suspend fun getIdsOfPatientsMatching(sdk: CardinalSdk, patientFilterOptions: Fil
 
 <TabItem value="typescript">
 
-```typescript
+```typescript test-TEWO
 import {FilterOptions, CardinalSdk, Patient} from "@icure/cardinal-sdk";
 
 function getIdsOfPatientsMatching(sdk: CardinalSdk, patientFilterOptions: FilterOptions<Patient>): Promise<Array<string>> {
@@ -308,7 +308,7 @@ suspend fun printAllPatientsBy10(patientsIterator: PaginatedListIterator<Patient
 
 <TabItem value="typescript">
 
-```typescript
+```typescript test-XICA
 import {
 	DecryptedPatient,
 	EncryptedPatient,
@@ -436,7 +436,7 @@ suspend fun getSortedAcuteOrLongCovidDiagnosesForPatient(sdk: CardinalSdk, patie
 
 <TabItem value="typescript">
 
-```typescript
+```typescript test-QOMO
 import {
 	DecryptedHealthElement,
 	HealthElement,
@@ -544,7 +544,7 @@ suspend fun getHeartRateMeasurements(sdk: CardinalSdk): PaginatedListIterator<De
 
 <TabItem value="typescript">
 
-```typescript
+```typescript test-FAJU
 import {
 	DecryptedService,
 	CardinalSdk,

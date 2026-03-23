@@ -45,7 +45,7 @@ val process = CardinalSdk.initializeWithProcess(
 
 <TabItem value = "typescript">
 
-```typescript
+```typescript test-FUFO
 import {
 	AuthenticationProcessTelecomType,
 	CaptchaOptions,
@@ -126,7 +126,7 @@ val process = CardinalSdk.initializeWithProcess(
 
 <TabItem value = "typescript">
 
-```typescript
+```typescript test-TUDA
 import {
 	AuthenticationProcessTelecomType,
 	CaptchaOptions,
@@ -211,7 +211,7 @@ val process = CardinalSdk.initializeWithProcess(
 
 <TabItem value = "typescript">
 
-```typescript
+```typescript test-SEDU
 import {
 	AuthenticationProcessTelecomType,
 	CaptchaOptions,
@@ -356,7 +356,7 @@ suspend fun getAndSolveKerberusChallenge(): Solution {
 
 <TabItem value="typescript">
 
-```typescript
+```typescript test-SEHU
 import {
 	AuthenticationProcessTelecomType,
 	CaptchaOptions,
@@ -368,7 +368,7 @@ const msgGwUrl = "https://msg-gw.icure.cloud"
 const specId = "SPEC_ID" // Fill from cockpit
 const processId = "PROCESS_ID" // Fill from cockpit
 
-export async function startSdkAuth(
+async function startSdkAuth(
 	userEmail: string
 ) {
 	await CardinalSdk.initializeWithProcess(
@@ -385,7 +385,7 @@ export async function startSdkAuth(
 }
 
 async function getAndSolveKerberusChallenge(): Promise<Solution> {
-	const challenge = await fetch(`${msgGwUrl}/${specId}/challenge`).then((x) => x.json())
+	const challenge = await fetch(`${msgGwUrl}/${specId}/challenge`).then((x) => x.json()) as any
 	return resolveChallenge(
 		challenge,
 		specId,

@@ -6,7 +6,7 @@ import {LanguageTabs} from "@site/src/components/LanguageTabs";
 While building your application, you may need to store data that do not fit in the Cardinal SDK data model, like medical
 documents or images. To encrypt and store them, you can leverage the Attachment mechanism of the Document entity.
 
-An Attachment can contain any type of unstructured data of any size and is part of a Document, even though it is stored 
+An Attachment can contain any type of unstructured data of any size and is part of a Document, even though it is stored
 separately to avoid performance loss when querying and retrieving data.
 
 ## Creating an attachment
@@ -21,7 +21,7 @@ import com.icure.cardinal.sdk.model.DecryptedDocument
 import java.util.UUID
 
 val document = sdk.document.createDocument(
-	sdk.document.withEncryptionMetadata(
+	sdk.document.withEncryptionMetadataUnlinked(
 		DecryptedDocument(
 			id = UUID.randomUUID().toString(),
 			name = "My medical document"
@@ -35,12 +35,12 @@ val document = sdk.document.createDocument(
 
 <TabItem value="typescript">
 
-```typescript
+```typescript test-NUDI
 import {DecryptedDocument} from "@icure/cardinal-sdk";
 import {v4 as uuid} from 'uuid';
 
 const document = await sdk.document.createDocument(
-	await sdk.document.withEncryptionMetadata(
+	await sdk.document.withEncryptionMetadataUnlinked(
 		new DecryptedDocument({
 			id: uuid(),
 			name: "My medical document"
@@ -96,7 +96,7 @@ val documentWithMainAttachment = sdk.document.encryptAndSetMainAttachment(docume
 
 <TabItem value="typescript">
 
-```typescript
+```typescript test-MUFE
 const xmlData = `
 		<root>
 			<data>Very important data</data>
@@ -141,7 +141,7 @@ sdk.document.setRawMainAttachment(document.id, checkNotNull(document.rev), listO
 
 <TabItem value="typescript">
 
-```typescript
+```typescript test-BUZE
 await sdk.document.setRawMainAttachment(document.id, document.rev!, ["public.xml"], new Int8Array(new TextEncoder().encode(xmlData)), false)
 ```
 
@@ -179,7 +179,7 @@ val documentWithUnencryptedSecondaryAttachment = sdk.document.setRawSecondaryAtt
 
 <TabItem value="typescript">
 
-```typescript
+```typescript test-XUTA
 const image = new Int8Array(100)
 const attachmentId = "medical-image-20240609161200"
 const decryptedAttachmentId = "decrypted-medical-image-20240609161200"
@@ -224,7 +224,7 @@ val retrievedEncryptedMainAttachment = sdk.document.getRawMainAttachment(retriev
 
 <TabItem value="typescript">
 
-```typescript
+```typescript test-DOLE
 const retrievedDocument = await sdk.document.getDocument(document.id)
 const retrievedMainAttachment = await sdk.document.getAndDecryptMainAttachment(retrievedDocument)
 const retrievedEncryptedMainAttachment = await sdk.document.getRawMainAttachment(retrievedDocument.id)
@@ -246,7 +246,7 @@ retrieved_encrypted_main_attachment = sdk.document.get_raw_main_attachment_block
 
 
 :::info
-The `getAndDecryptMainAttachment` function has an optional secondary parameter that is a function that takes as input 
+The `getAndDecryptMainAttachment` function has an optional secondary parameter that is a function that takes as input
 the decrypted attachment and returns true if the document was decrypted correctly and false otherwise.
 
 This can help in advanced use-cases where there are Documents edited manually with multiple encryption keys for multiple
@@ -271,7 +271,7 @@ sdk.document.getAndDecryptMainAttachment(retrievedDocument) { decryptedAttachmen
 
 <TabItem value="typescript">
 
-```typescript
+```typescript test-QUCO
 const retrievedDocument = await sdk.document.getDocument(document.id)
 
 function isValidXml(xmlAsBytes: Int8Array): Promise<boolean> {
@@ -316,7 +316,7 @@ val retrievedEncryptedSecondaryAttachment = sdk.document.getRawSecondaryAttachme
 
 <TabItem value="typescript">
 
-```typescript
+```typescript test-TAFO
 const retrievedSecondaryAttachment = await sdk.document.getAndDecryptSecondaryAttachment(retrievedDocument, attachmentId)
 const retrievedDecryptedSecondaryAttachment = await sdk.document.getRawSecondaryAttachment(retrievedDocument.id, attachmentId)
 ```
@@ -352,7 +352,7 @@ println(documentWithoutAttachments.deletedAttachments)
 
 <TabItem value="typescript">
 
-```typescript
+```typescript test-MESA
 const documentWithoutMainAttachment = await sdk.document.deleteMainAttachment(retrievedDocument.id, retrievedDocument.rev)
 const documentWithoutAttachments = await sdk.document.deleteSecondaryAttachment(documentWithoutMainAttachment.id, attachmentId, documentWithoutMainAttachment.rev)
 
@@ -378,12 +378,12 @@ The information about deleted attachment, including id and deletion date, is sto
 of the document.
 
 :::note
-Once an attachment is deleted, there is no way of recovering it. Also, the deletion process may not be immediate: you may 
+Once an attachment is deleted, there is no way of recovering it. Also, the deletion process may not be immediate: you may
 still be able to read the attachment content for some time after deletion.
 :::
 
 ## What happens if the Document is deleted or purged?
-When a Document is deleted, nothing happens to its attachments: you may always decide to undelete the document at a 
+When a Document is deleted, nothing happens to its attachments: you may always decide to undelete the document at a
 later time, so the attachment will stay available as the rest of the Document content.
 
 Instead, if you purge a Document, all its attachment will be irrevocably purged as well.

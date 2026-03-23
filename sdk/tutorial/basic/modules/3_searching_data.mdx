@@ -41,7 +41,7 @@ patient_iterator = sdk.patient.filter_patients_by_blocking(
 </TabItem>
 <TabItem value="typescript">
 
-```typescript
+```typescript test-FENA
 const nameToSearch = await readLn("Enter a name: ")
 const patientIterator = await sdk.patient.filterPatientsBy(
 	PatientFilters.byNameForSelf(nameToSearch)
@@ -109,7 +109,7 @@ if patient is None:
 </TabItem>
 <TabItem value="typescript">
 
-```typescript
+```typescript test-NOTO
 let patient: Patient | null = null
 while ((await patientIterator.hasNext()) && patient == null) {
 	const p = (await patientIterator.next(1))[0]
@@ -188,7 +188,7 @@ while contact_iterator.has_next_blocking():
 </TabItem>
 <TabItem value="typescript">
 
-```typescript
+```typescript test-SAGU
 const contactIterator = await sdk.contact.filterContactsBy(
 	ContactFilters.byPatientsForSelf([patient])
 )
@@ -311,7 +311,7 @@ while service_iterator.has_next_blocking():
 </TabItem>
 <TabItem value="typescript">
 
-```typescript
+```typescript test-MOKA
 let choice = -1
 while (choice < 0 || choice >= 3) {
 	console.log("0. blood pressure")

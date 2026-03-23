@@ -85,7 +85,7 @@ suspend fun exportKeysToFile(
 
 On browser you can export the keys as json and let the user download them as a file.
 
-```typescript
+```typescript test-KOGO
 import { CardinalSdk, base64Encode } from "@icure/cardinal-sdk";
 
 async function exportAndDownloadKeysFile(sdk: CardinalSdk) {
@@ -203,7 +203,7 @@ suspend fun initializeSdk(
 
 On browser you can ask the user to upload the file with the previously exported keys.
 
-```typescript
+```typescript test-ZUFE
 import {
 	CryptoStrategies,
 	KeyPairRecoverer,
@@ -370,7 +370,7 @@ class MyCryptoStrategies : CryptoStrategies {
 
 <TabItem value="typescript">
 
-```typescript
+```typescript test-SUTU
 import {
 	CryptoStrategies,
 	XCryptoService,
@@ -450,7 +450,7 @@ suspend fun createRecoveryDataAndPrintKey(
 
 <TabItem value="typescript">
 
-```typescript
+```typescript test-XIKU
 import {
 	CardinalSdk,
 	RecoveryKeySize
@@ -459,7 +459,9 @@ import {
 async function createRecoveryDataAndPrintKey(sdk: CardinalSdk): Promise<void> {
 	const recoveryKey = await sdk.recovery.createRecoveryInfoForAvailableKeyPairs({
 		includeParentsKeys: true,
-		recoveryKeySize: RecoveryKeySize.Bytes32,
+		recoveryKeyOptions: new RecoveryKeyOptions.Generate({
+			recoveryKeySize: RecoveryKeySize.Bytes32,
+		}),
 	});
 
 	const formattedKey = recoveryKey.asBase32().match(/.{1,4}/g)?.join('-');
@@ -525,7 +527,7 @@ class MyCryptoStrategies : CryptoStrategies {
 
 <TabItem value="typescript">
 
-```typescript
+```typescript test-HIRA
 import {
 	CryptoStrategies,
 	KeyPairRecoverer,
@@ -621,7 +623,7 @@ suspend fun createShortRecoveryDataAndPrintKey(
 
 <TabItem value="typescript">
 
-```typescript
+```typescript test-ZUNO
 import {
 	CardinalSdk,
 	RecoveryKeySize
@@ -631,7 +633,9 @@ async function createShortRecoveryDataAndPrintKey(sdk: CardinalSdk): Promise<voi
 	const recoveryKey = await sdk.recovery.createRecoveryInfoForAvailableKeyPairs({
 		includeParentsKeys: true,
 		// We want to use a shorter recovery data key to simplify the transfer
-		recoveryKeySize: RecoveryKeySize.Bytes16,
+		recoveryKeyOptions: new RecoveryKeyOptions.Generate({
+			recoveryKeySize: RecoveryKeySize.Bytes16,
+		}),
 		// Since we're creating this recovery data only to transfer keys between devices,
 		// we should give it a limited lifespan
 		lifetimeSeconds: 5 * 60
@@ -693,7 +697,7 @@ class MyCryptoStrategies : CryptoStrategies {
 
 <TabItem value="typescript">
 
-```typescript
+```typescript test-TELU
 import {
 	CardinalSdk,
 	CryptoStrategies,
@@ -709,7 +713,7 @@ class MyCryptoStrategies extends CryptoStrategies {
 		key: XRsaKeypair,
 		cryptoPrimitives: XCryptoService
 	) {
-		const pubKeyHex = hexEncode(await cryptoPrimitives.rsa.exportPublicKeySpki(key.public))
+		const pubKeyHex = hexEncode(await cryptoPrimitives.rsa.exportPublicKeySpki(key.public)) as SpkiHexString
 		const self = (await sdk.dataOwner.getCurrentDataOwnerStub()).stub
 		if (allPublicKeysOf(self).length > 1) {
 			// This is not the first key created for the user
@@ -781,7 +785,7 @@ suspend fun useRecoveryDataFromGiveAccessBack(
 
 <TabItem value="typescript">
 
-```typescript
+```typescript test-WACE
 import { CardinalSdk, RecoveryDataKey } from "@icure/cardinal-sdk";
 
 // Used by the recipient of the give-access-back request
@@ -864,7 +868,7 @@ suspend fun promptGiveAccessBackConfirmation(request: KeyPairUpdateNotification)
 
 <TabItem value="typescript">
 
-```typescript
+```typescript test-KUFO
 import {
 	CardinalSdk,
 	KeyPairUpdateNotification,

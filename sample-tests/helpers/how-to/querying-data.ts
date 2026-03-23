@@ -8,29 +8,29 @@ export const preTestProvides: Record<string, string[]> = {}
 // ── preTest ──────────────────────────────────────────────────────────
 
 export const preTest: Record<string, (sdk: CardinalSdk) => Promise<Record<string, any>>> = {
-	'querying-data block 1 (line 30)': async () => ({}),
-	'querying-data block 2 (line 178)': async () => ({}),
-	'querying-data block 3 (line 242)': async () => ({}),
-	'querying-data block 4 (line 311)': async () => ({}),
-	'querying-data block 5 (line 439)': async () => ({}),
-	'querying-data block 6 (line 547)': async () => ({}),
+	'querying-data block 1 (WUVO)': async () => ({}),
+	'querying-data block 2 (POMO)': async () => ({}),
+	'querying-data block 3 (TEWO)': async () => ({}),
+	'querying-data block 4 (XICA)': async () => ({}),
+	'querying-data block 5 (QOMO)': async () => ({}),
+	'querying-data block 6 (FAJU)': async () => ({}),
 }
 
 // ── postTest ─────────────────────────────────────────────────────────
 
 export const postTest: Record<string, (...args: any[]) => void | Promise<void>> = {
 	// Block 1: hcpWithName filter variable
-	'querying-data block 1 (line 30)': async (sdk: CardinalSdk, hcpWithName: any) => {
+	'querying-data block 1 (WUVO)': async (sdk: CardinalSdk, hcpWithName: any) => {
 		expect(hcpWithName).toBeDefined()
 	},
 
 	// Block 2: myFilter using union/intersection of PatientFilters
-	'querying-data block 2 (line 178)': async (sdk: CardinalSdk, myFilter: any) => {
+	'querying-data block 2 (POMO)': async (sdk: CardinalSdk, myFilter: any) => {
 		expect(myFilter).toBeDefined()
 	},
 
 	// Block 3: getIdsOfPatientsMatching function
-	'querying-data block 3 (line 242)': async (
+	'querying-data block 3 (TEWO)': async (
 		sdk: CardinalSdk,
 		getIdsOfPatientsMatching: (sdk: CardinalSdk, filterOptions: any) => Promise<any>,
 	) => {
@@ -38,7 +38,7 @@ export const postTest: Record<string, (...args: any[]) => void | Promise<void>> 
 	},
 
 	// Block 4: four iterator/pagination functions
-	'querying-data block 4 (line 311)': async (
+	'querying-data block 4 (XICA)': async (
 		sdk: CardinalSdk,
 		getDecryptedPatientsIterator: (...args: any[]) => any,
 		getEncryptedPatientsIterator: (...args: any[]) => any,
@@ -52,7 +52,7 @@ export const postTest: Record<string, (...args: any[]) => void | Promise<void>> 
 	},
 
 	// Block 5: getSortedAcuteOrLongCovidDiagnosesForPatient
-	'querying-data block 5 (line 439)': async (
+	'querying-data block 5 (QOMO)': async (
 		sdk: CardinalSdk,
 		getSortedAcuteOrLongCovidDiagnosesForPatient: (sdk: CardinalSdk, patient: any) => Promise<any>,
 	) => {
@@ -60,7 +60,7 @@ export const postTest: Record<string, (...args: any[]) => void | Promise<void>> 
 	},
 
 	// Block 6: getHeartRateMeasurements
-	'querying-data block 6 (line 547)': async (
+	'querying-data block 6 (FAJU)': async (
 		sdk: CardinalSdk,
 		getHeartRateMeasurements: (sdk: CardinalSdk) => Promise<any>,
 	) => {

@@ -85,7 +85,7 @@ suspend fun registerAndLogin(
 
 <TabItem value="typescript">
 
-```typescript
+```typescript test-XIMO
 import {
 	AuthenticationProcessTelecomType,
 	CaptchaOptions,
@@ -159,7 +159,7 @@ import com.icure.kryptom.crypto.defaultCryptoService
 
 suspend fun inviteExistingPatientAsUser(
 	doctorSdk: CardinalSdk,
-	email: String,
+	email: string,
 	patient: Patient
 ) {
 	// The user logged in to the SDK must have the UserManagement.Create.Patient permission
@@ -178,12 +178,12 @@ suspend fun inviteExistingPatientAsUser(
 
 <TabItem value="typescript">
 
-```typescript
+```typescript test-QOJA
 import {CardinalSdk, Patient, randomUuid, User} from "@icure/cardinal-sdk";
 
 async function inviteExistingPatientAsUser(
 	doctorSdk: CardinalSdk,
-	email: String,
+	email: string,
 	patient: Patient
 ) {
 	// The user logged in to the SDK must have the UserManagement.Create.Patient permission
@@ -276,7 +276,7 @@ suspend fun login(
 
 <TabItem value="typescript">
 
-```typescript
+```typescript test-BEQO
 // Take these ids from the cockpit.
 import {
 	AuthenticationProcessTelecomType,
@@ -362,7 +362,7 @@ suspend fun initializePatientSdk(username: String, password: String): CardinalSd
 
 <TabItem value="typescript">
 
-```typescript
+```typescript test-VOMA
 import {
 	AuthenticationMethod,
 	CardinalSdk,
@@ -475,7 +475,7 @@ import com.icure.kryptom.crypto.defaultCryptoService
 suspend fun invitePatientAndPreShare(
 	doctorSdk: CardinalSdk,
 	patient: DecryptedPatient,
-	patientEmail: String
+	patientEmail: string
 ) {
 	doctorSdk.user.createUser(
 		User(
@@ -506,7 +506,7 @@ suspend fun invitePatientAndPreShare(
 
 <TabItem value="typescript">
 
-```typescript
+```typescript test-GIZU
 import {
 	CardinalSdk,
 	DecryptedPatient,
@@ -534,11 +534,11 @@ async function invitePatientAndPreShare(
 	await doctorSdk.patient.shareWith(
 		patient.id,
 		patient,
-		new PatientShareOptions({
-			requestedPermissions = RequestedPermission.FullWrite,
-			shareEncryptionKey = ShareMetadataBehaviour.Required,
-			shareSecretIds = new SecretIdShareOptions.AllAvailable({ requireAtLeastOne: true })
-		})
+        { options: new PatientShareOptions({
+			requestedPermissions: RequestedPermission.FullWrite,
+			shareEncryptionKey: ShareMetadataBehaviour.Required,
+			shareSecretIds: new SecretIdShareOptions.AllAvailable({ requireAtLeastOne: true })
+		}) }
 	)
 	// You can do this before or after sharing
 	if (didForceInitialize) {
@@ -600,7 +600,7 @@ suspend fun initializePatientSdkAfterInvite(
 
 <TabItem value="typescript">
 
-```typescript
+```typescript test-GANO
 import {
 	AuthenticationProcessTelecomType,
 	CaptchaOptions,

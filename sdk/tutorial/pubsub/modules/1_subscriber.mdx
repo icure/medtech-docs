@@ -60,7 +60,7 @@ sdk = CardinalSdk(
 </TabItem>
 <TabItem value="typescript">
 
-```typescript
+```typescript test-MIXI
 const CARDINAL_URL = "https://api.icure.cloud"
 
 const username = await readLn("Login: ")
@@ -117,7 +117,7 @@ service_filter = intersection(
 </TabItem>
 <TabItem value="typescript">
 
-```typescript
+```typescript test-JOGA
 const filter = intersection(
 	ServiceFilters.byTagAndValueDateForSelf(
 		"LOINC",
@@ -159,7 +159,7 @@ subscription = sdk.contact.subscribe_to_service_create_or_update_events_blocking
 </TabItem>
 <TabItem value="typescript">
 
-```typescript
+```typescript test-GOQU
 const subscription = await sdk.contact.subscribeToServiceCreateOrUpdateEvents(
 	filter
 )
@@ -193,7 +193,7 @@ while subscription.get_close_reason() is None:
 </TabItem>
 <TabItem value="typescript">
 
-```typescript
+```typescript test-CEGU
 while (!subscription.isClosed) {
 	const event = await subscription.waitForEvent(10 * 1000)
 	// The code for handling the event will go here
@@ -242,7 +242,7 @@ while subscription.get_close_reason() is None:
 </TabItem>
 <TabItem value="typescript">
 
-```typescript
+```typescript test-WIPO
 while (!subscription.isClosed) {
 	const event = await subscription.waitForEvent(10 * 1000)
 	if (event === null) {
@@ -286,8 +286,8 @@ elif event.type == EntitySubscriptionEvent.Type.EntityNotification:
 </TabItem>
 <TabItem value="typescript">
 
-```typescript
-else if (event instanceof EntitySubscriptionEvent.EntityNotification) {
+```typescript test-LUXI
+if (event instanceof EntitySubscriptionEvent.EntityNotification) {
 	const service = await sdk.contact.decryptService(event.entity)
 	console.log(`Received service ${service.id}`)
 	// The rest of the code to handle the entity will go here
@@ -382,8 +382,8 @@ elif event.type == EntitySubscriptionEvent.Type.EntityNotification:
 </TabItem>
 <TabItem value="typescript">
 
-```typescript
-else if (event instanceof EntitySubscriptionEvent.EntityNotification) {
+```typescript test-WUNI
+if (event instanceof EntitySubscriptionEvent.EntityNotification) {
 	const service = await sdk.contact.decryptService(event.entity)
 	console.log(`Received service ${service.id}`)
 	const measure = service.content["en"]?.measureValue?.value
@@ -551,8 +551,8 @@ elif event.type == EntitySubscriptionEvent.Type.EntityNotification:
 </TabItem>
 <TabItem value="typescript">
 
-```typescript
-else if (event instanceof EntitySubscriptionEvent.EntityNotification) {
+```typescript test-DUPI
+if (event instanceof EntitySubscriptionEvent.EntityNotification) {
 	const service = await sdk.contact.decryptService(event.entity)
 	console.log(`Received service ${service.id}`)
 	const measure = service.content["en"]?.measureValue?.value
@@ -596,8 +596,9 @@ else if (event instanceof EntitySubscriptionEvent.EntityNotification) {
 				.filter(it => it.type !== "CARDINAL" || it.code !== "TO_BE_ANALYZED")
 				.concat(inferenceResult, analyzedCodeStub)
 		})
-		if (!!updatedService.contactId) {
-			const contact = await sdk.contact.getContact(service.contactId)
+		const contactId = (service as any).contactId as string | undefined
+		if (!!contactId) {
+			const contact = await sdk.contact.getContact(contactId)
 			await sdk.contact.modifyContact(
 				new DecryptedContact({
 					...contact,
@@ -759,7 +760,7 @@ while subscription.get_close_reason() is None:
 </TabItem>
 <TabItem value="typescript">
 
-```typescript
+```typescript test-JEXO
 while (!subscription.isClosed) {
 	const event = await subscription.waitForEvent(10 * 1000)
 	if (event === null) {
@@ -809,8 +810,9 @@ while (!subscription.isClosed) {
 					.filter(it => it.type !== "CARDINAL" || it.code !== "TO_BE_ANALYZED")
 					.concat(inferenceResult, analyzedCodeStub)
 			})
-			if (!!updatedService.contactId) {
-				const contact = await sdk.contact.getContact(service.contactId)
+			const contactId = (service as any).contactId as string | undefined
+			if (!!contactId) {
+				const contact = await sdk.contact.getContact(contactId)
 				await sdk.contact.modifyContact(
 					new DecryptedContact({
 						...contact,

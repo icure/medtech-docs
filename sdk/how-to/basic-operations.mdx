@@ -54,7 +54,7 @@ suspend fun createDoctor(sdk: CardinalSdk, firstName: String, lastName: String):
 
 <TabItem value="typescript">
 
-```typescript
+```typescript test-MANE
 import {CardinalSdk, HealthcareParty, randomUuid} from "@icure/cardinal-sdk";
 
 async function createDoctor(sdk: CardinalSdk, firstName: string, lastName: string): Promise<HealthcareParty> {
@@ -123,7 +123,7 @@ suspend fun createPatient(sdk: CardinalSdk, firstName: String, lastName: String)
 
 <TabItem value="typescript">
 
-```typescript
+```typescript test-LOXO
 import {CardinalSdk, DecryptedPatient, randomUuid} from "@icure/cardinal-sdk";
 
 async function createPatient(sdk: CardinalSdk, firstName: string, lastName: string): Promise<DecryptedPatient> {
@@ -214,7 +214,7 @@ suspend fun createHealthElementForPatient(
 
 <TabItem value="typescript">
 
-```typescript
+```typescript test-TELE
 import {CardinalSdk, DecryptedHealthElement, Patient, randomUuid} from "@icure/cardinal-sdk";
 
 async function createHealthElementForPatient(
@@ -306,7 +306,7 @@ suspend fun createPatient(sdk: CardinalSdk, firstName: String, lastName: String)
 
 <TabItem value="typescript">
 
-```typescript
+```typescript test-NUHA
 import {CardinalSdk, DecryptedPatient} from "@icure/cardinal-sdk";
 
 async function createPatient(sdk: CardinalSdk, firstName: string, lastName: string): Promise<DecryptedPatient> {
@@ -375,7 +375,7 @@ suspend fun createPatient(sdk: CardinalSdk, firstName: String, lastName: String,
 
 <TabItem value="typescript">
 
-```typescript
+```typescript test-XINO
 import {AccessLevel, CardinalSdk, DecryptedPatient, randomUuid} from "@icure/cardinal-sdk";
 
 async function createPatient(
@@ -475,7 +475,7 @@ suspend fun createPatient(sdk: CardinalSdk, currentUser: User, firstName: String
 
 <TabItem value="typescript">
 
-```typescript
+```typescript test-QIWA
 import {CardinalSdk, DecryptedPatient, randomUuid, User} from "@icure/cardinal-sdk";
 
 async function createPatient(
@@ -549,7 +549,7 @@ suspend fun getPatientOfUser(sdk: CardinalSdk, user: User): DecryptedPatient {
 
 <TabItem value="typescript">
 
-```typescript
+```typescript test-VOCO
 import {CardinalSdk, DecryptedPatient, User} from "@icure/cardinal-sdk";
 
 async function getPatientOfUser(sdk: CardinalSdk, user: User): Promise<DecryptedPatient> {
@@ -598,7 +598,7 @@ suspend fun getContactsOfPatient(sdk: CardinalSdk, patient: Patient, limit: Int)
 
 <TabItem value="typescript">
 
-```typescript
+```typescript test-MECI
 import {CardinalSdk, ContactFilters, DecryptedContact, Patient} from "@icure/cardinal-sdk";
 
 async function getContactsOfPatient(sdk: CardinalSdk, patient: Patient, limit: number): Promise<DecryptedContact[]> {
@@ -671,7 +671,7 @@ suspend fun setPatientNote(sdk: CardinalSdk, patient: DecryptedPatient, newNote:
 
 <TabItem value="typescript">
 
-```typescript
+```typescript test-WERU
 import {CardinalSdk, DecryptedPatient} from "@icure/cardinal-sdk";
 
 async function setPatientNote(sdk: CardinalSdk, patient: DecryptedPatient, newNote: string): Promise<DecryptedPatient> {
@@ -744,7 +744,7 @@ tailrec suspend fun setPatientNote(sdk: CardinalSdk, patient: DecryptedPatient, 
 
 <TabItem value="typescript">
 
-```typescript
+```typescript test-KONE
 import {CardinalSdk, DecryptedPatient, RevisionConflictException} from "@icure/cardinal-sdk";
 
 async function setPatientNote(sdk: CardinalSdk, patient: DecryptedPatient, newNote: string): Promise<DecryptedPatient> {
@@ -876,7 +876,7 @@ suspend fun purgeUser(sdk: CardinalSdk, user: User) {
 
 <TabItem value="typescript">
 
-```typescript
+```typescript test-FESE
 import {
 	CardinalSdk,
 	DecryptedPatient,
@@ -1047,7 +1047,7 @@ suspend fun printPatientDetails(
 
 <TabItem value="typescript">
 
-```typescript
+```typescript test-GACE
 import {CardinalSdk, DecryptedPatient, FilterOptions, Patient} from "@icure/cardinal-sdk";
 
 async function printMatchingPatientNames(
@@ -1234,7 +1234,7 @@ suspend fun shareHealthElementForStatistics(
 
 <TabItem value="typescript">
 
-```typescript
+```typescript test-XELU
 import {
 	CardinalSdk,
 	DecryptedHealthElement,
