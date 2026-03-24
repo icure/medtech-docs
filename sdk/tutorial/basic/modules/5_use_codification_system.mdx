@@ -16,7 +16,7 @@ codification systems:
 <LanguageTabs>
 <TabItem value="kotlin">
 
-```kotlin
+```kotlin test-AAEC
 sdk.code.createCode(Code(
 	id = "INTERNAL|ANALYSIS|1",
 	type = "INTERNAL",
@@ -187,7 +187,7 @@ codes of a certain type searching for a word that is present in the label for a 
 <LanguageTabs>
 <TabItem value="kotlin">
 
-```kotlin
+```kotlin test-AAED
 val codeIterator = sdk.code.filterCodesBy(
 	CodeFilters.byLanguageTypeLabelRegion(
 		language = "en",
@@ -206,6 +206,7 @@ while (codeIterator.hasNext() && selectedCode == null) {
 		selectedCode = code
 	}
 }
+requireNotNull(selectedCode) { "No code was selected" }
 
 val patient = sdk.patient.createPatient(
 	DecryptedPatient(
@@ -458,10 +459,10 @@ includes only the `type`, `code`, and `version`.
 <LanguageTabs>
 <TabItem value="kotlin">
 
-```kotlin
+```kotlin test-AAEE
 val serviceIterator = sdk.contact.filterServicesBy(
 	ServiceFilters.byTagAndValueDateForSelf(
-		tagType = selectedCode.type,
+		tagType = selectedCode.type!!,
 		tagCode = selectedCode.code
 	)
 )

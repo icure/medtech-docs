@@ -18,7 +18,7 @@ details, and some optional additional configurations that you can provide throug
 
 <TabItem value = "kotlin">
 
-```kotlin
+```kotlin test-AACB
 import com.icure.cardinal.sdk.CardinalSdk
 import com.icure.cardinal.sdk.auth.UsernamePassword
 import com.icure.cardinal.sdk.options.AuthenticationMethod
@@ -165,7 +165,7 @@ You can provide different types of user credentials:
 
 <TabItem value="kotlin">
 
-```kotlin
+```kotlin test-AACC
 import com.icure.cardinal.sdk.auth.UsernamePassword
 import com.icure.cardinal.sdk.options.AuthenticationMethod
 
@@ -219,7 +219,7 @@ Login tokens can be revoked, but any JWTs generated through that login token won
 
 <TabItem value="kotlin">
 
-```kotlin
+```kotlin test-AACD
 import com.icure.cardinal.sdk.auth.UsernameLongToken
 import com.icure.cardinal.sdk.options.AuthenticationMethod
 
@@ -269,7 +269,7 @@ final auth = AuthenticationMethod.UsingCredentials(Credentials.UsernameLongToken
 
 <TabItem value="kotlin">
 
-```kotlin
+```kotlin test-AACE
 import com.icure.cardinal.sdk.auth.ExternalAuthenticationToken
 import com.icure.cardinal.sdk.options.AuthenticationMethod
 
@@ -328,7 +328,7 @@ requires some additional parameters.
 
 <TabItem value="kotlin">
 
-```kotlin
+```kotlin test-AACF
 import com.icure.cardinal.sdk.CardinalSdk
 import com.icure.cardinal.sdk.auth.AuthenticationProcessTelecomType
 import com.icure.cardinal.sdk.auth.AuthenticationProcessTemplateParameters
@@ -540,7 +540,7 @@ If you want more information on authentication with a secret provider refer to t
 
 <TabItem value="kotlin">
 
-```kotlin
+```kotlin test-AACG
 import com.icure.cardinal.sdk.auth.AuthSecretDetails
 import com.icure.cardinal.sdk.auth.AuthSecretProvider
 import com.icure.cardinal.sdk.auth.AuthenticationProcessApi
@@ -666,7 +666,7 @@ outside of node).
 
 On kotlin/js the SDK also provides a storage implementation which uses the browser local storage.
 
-```kotlin
+```kotlin test-AACH no-test
 import com.icure.cardinal.sdk.storage.StorageFacade
 import com.icure.cardinal.sdk.storage.impl.FileStorageFacade
 import com.icure.cardinal.sdk.storage.impl.LocalStorageStorageFacade
@@ -827,7 +827,7 @@ refer to the [dedicated documentation page](/how-to/initialize-the-sdk/configure
 
 <TabItem value="kotlin">
 
-```kotlin
+```kotlin test-AACI
 import com.icure.cardinal.sdk.options.EncryptedFieldsConfiguration
 import com.icure.cardinal.sdk.options.SdkOptions
 
@@ -906,7 +906,7 @@ Custom key storage facades aren't yet supported on the python SDK.
 
 <TabItem value="kotlin">
 
-```kotlin
+```kotlin test-AACJ no-test
 import com.icure.cardinal.sdk.storage.impl.FileStorageFacade
 import com.icure.cardinal.sdk.storage.impl.JsonAndBase64KeyStorage
 import com.icure.cardinal.sdk.storage.impl.JwkKeyStorage

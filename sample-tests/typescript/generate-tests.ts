@@ -6,7 +6,7 @@ import { joinMultiLineImports, mergeImports, renderImports } from './src/import-
 import { generateTestFileContent } from './src/test-generator'
 
 const __dirname_val = dirname(fileURLToPath(import.meta.url))
-const REPO_ROOT = resolve(__dirname_val, '..')
+const REPO_ROOT = resolve(__dirname_val, '../..')
 const SDK_DIR = join(REPO_ROOT, 'sdk')
 const GENERATED_DIR = join(__dirname_val, 'generated')
 

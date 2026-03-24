@@ -20,7 +20,7 @@ with the current user will be returned:
 <LanguageTabs>
 <TabItem value="kotlin">
 
-```kotlin
+```kotlin test-AAFN
 print("Enter a name: ")
 val nameToSearch = readln()
 val patientIterator = sdk.patient.filterPatientsBy(
@@ -71,7 +71,7 @@ Here’s an example of how to use this iterator:
 <LanguageTabs>
 <TabItem value="kotlin">
 
-```kotlin
+```kotlin test-AAFO
 var patient: Patient? = null
 while (patientIterator.hasNext() && patient == null) {
 	val p = patientIterator.next(1).first()
@@ -84,8 +84,7 @@ while (patientIterator.hasNext() && patient == null) {
 }
 
 if (patient == null) {
-	println("No matching patient found")
-	return
+	error("No matching patient found")
 }
 ```
 
@@ -151,7 +150,7 @@ a patient and another entity:
 <LanguageTabs>
 <TabItem value="kotlin">
 
-```kotlin
+```kotlin test-AAFP
 val contactIterator = sdk.contact.filterContactsBy(
 	ContactFilters.byPatientsForSelf(listOf(patient))
 )
@@ -241,7 +240,7 @@ can also be used for filtering:
 <LanguageTabs>
 <TabItem value="kotlin">
 
-```kotlin
+```kotlin test-AAFQ
 var choice = -1
 while (choice < 0 || choice >= 3) {
 	println("0. blood pressure")

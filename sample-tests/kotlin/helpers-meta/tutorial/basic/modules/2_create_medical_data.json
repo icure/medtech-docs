@@ -1,0 +1,52 @@
+{
+  "preTestProvides": {
+    "2_create_medical_data block 3 (AAFA)": ["contact", "patient"],
+    "2_create_medical_data block 4 (AAFB)": ["contactWithMetadata"],
+    "2_create_medical_data block 6 (AAFD)": ["createdContact", "bloodPressureService"],
+    "2_create_medical_data block 7 (AAFE)": ["contactWithBloodPressure"],
+    "2_create_medical_data block 9 (AAFG)": ["document"],
+    "2_create_medical_data block 10 (AAFH)": ["createdDocument"],
+    "2_create_medical_data block 11 (AAFI)": ["documentWithAttachment", "contactWithECG"],
+    "2_create_medical_data block 12 (AAFJ)": ["patient"],
+    "2_create_medical_data block 13 (AAFK)": ["contactWithImage", "createdDiagnosis"],
+    "2_create_medical_data block 14 (AAFL)": ["contactWithDiagnosis", "formatter"]
+  },
+  "preTestProvideTypes": {
+    "2_create_medical_data block 3 (AAFA)": {
+      "contact": "DecryptedContact",
+      "patient": "DecryptedPatient"
+    },
+    "2_create_medical_data block 4 (AAFB)": {
+      "contactWithMetadata": "DecryptedContact"
+    },
+    "2_create_medical_data block 6 (AAFD)": {
+      "createdContact": "DecryptedContact",
+      "bloodPressureService": "DecryptedService"
+    },
+    "2_create_medical_data block 7 (AAFE)": {
+      "contactWithBloodPressure": "DecryptedContact"
+    },
+    "2_create_medical_data block 9 (AAFG)": {
+      "document": "DecryptedDocument"
+    },
+    "2_create_medical_data block 10 (AAFH)": {
+      "createdDocument": "DecryptedDocument"
+    },
+    "2_create_medical_data block 11 (AAFI)": {
+      "documentWithAttachment": "DecryptedDocument",
+      "contactWithECG": "DecryptedContact"
+    },
+    "2_create_medical_data block 12 (AAFJ)": {
+      "patient": "DecryptedPatient"
+    },
+    "2_create_medical_data block 13 (AAFK)": {
+      "contactWithImage": "DecryptedContact",
+      "createdDiagnosis": "DecryptedHealthElement"
+    },
+    "2_create_medical_data block 14 (AAFL)": {
+      "contactWithDiagnosis": "DecryptedContact",
+      "formatter": "DateTimeFormatter"
+    }
+  },
+  "additionalImports": []
+}

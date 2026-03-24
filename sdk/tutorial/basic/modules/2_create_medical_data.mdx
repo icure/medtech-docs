@@ -21,7 +21,7 @@ As the first step, the user can choose to use an existing Patient or create a ne
 <LanguageTabs>
 <TabItem value="kotlin">
 
-```kotlin
+```kotlin test-AAEY
 print("Insert the id of a Patient (blank to create a new one): ")
 val patientId = readlnOrNull()
 val patient = if (patientId.isNullOrBlank()) {
@@ -102,7 +102,7 @@ Next, a new `Contact` is instantiated with a custom description provided by the 
 <LanguageTabs>
 <TabItem value="kotlin">
 
-```kotlin
+```kotlin test-AAEZ
 val formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss")
 print("Examination description: ")
 val description = readln().trim()
@@ -161,7 +161,7 @@ Being an encryptable entity, the encryption metadata need to be initialized befo
 <LanguageTabs>
 <TabItem value="kotlin">
 
-```kotlin
+```kotlin test-AAFA
 val contactWithMetadata = sdk.contact.withEncryptionMetadata(contact, patient)
 ```
 
@@ -199,7 +199,7 @@ Finally, the `Contact` can be encrypted and stored in the cloud:
 <LanguageTabs>
 <TabItem value="kotlin">
 
-```kotlin
+```kotlin test-AAFB
 val createdContact = sdk.contact.createContact(contactWithMetadata)
 ```
 
@@ -242,7 +242,9 @@ result of the exam:
 <LanguageTabs>
 <TabItem value="kotlin">
 
-```kotlin
+```kotlin test-AAFC
+import kotlin.random.Random
+
 val bloodPressureService = DecryptedService(
 	id = UUID.randomUUID().toString(),
 	label = "Blood pressure",
@@ -335,7 +337,7 @@ The `Service` can now be added to the existing `Contact`:
 <LanguageTabs>
 <TabItem value="kotlin">
 
-```kotlin
+```kotlin test-AAFD
 val contactWithBloodPressure = sdk.contact.modifyContact(
 	createdContact.copy(
 		services = setOf(bloodPressureService)
@@ -390,7 +392,7 @@ added to the `Contact` through a `Service`:
 <LanguageTabs>
 <TabItem value="kotlin">
 
-```kotlin
+```kotlin test-AAFE
 val ecgSignal = List(10) { Random.nextInt(0, 100) / 100.0 }
 val heartRateService = DecryptedService(
 	id = UUID.randomUUID().toString(),
@@ -503,7 +505,7 @@ A `Document` is an encryptable entity that represents medical documents (e.g., r
 <LanguageTabs>
 <TabItem value="kotlin">
 
-```kotlin
+```kotlin test-AAFF
 val document = DecryptedDocument(
 	id = UUID.randomUUID().toString(),
 	documentType = DocumentType.Labresult
@@ -549,7 +551,7 @@ is encryptable, the encryption metadata must be initialized before it is created
 <LanguageTabs>
 <TabItem value="kotlin">
 
-```kotlin
+```kotlin test-AAFG
 val createdDocument = sdk.document.createDocument(
 	sdk.document.withEncryptionMetadataUnlinked(document, null)
 )
@@ -595,7 +597,7 @@ multiple secondary attachments. In this case, an "image" is loaded as the main a
 <LanguageTabs>
 <TabItem value="kotlin">
 
-```kotlin
+```kotlin test-AAFH
 val xRayImage = Random.nextBytes(100)
 val documentWithAttachment = sdk.document.encryptAndSetMainAttachment(
 	document = createdDocument,
@@ -657,7 +659,7 @@ Finally, it is possible to link this `Document` with a new `Service` representin
 <LanguageTabs>
 <TabItem value="kotlin">
 
-```kotlin
+```kotlin test-AAFI
 val xRayService = DecryptedService(
 	id = UUID.randomUUID().toString(),
 	label = "X-Ray image",
@@ -745,7 +747,7 @@ diagnosis elaborated after the examination.
 <LanguageTabs>
 <TabItem value="kotlin">
 
-```kotlin
+```kotlin test-AAFJ
 print("What is the diagnosis?: ")
 val diagnosis = readln().trim()
 val healthElement = DecryptedHealthElement(
@@ -811,7 +813,7 @@ It is possible to associate the `HealthElement` with a `Contact` by linking it t
 <LanguageTabs>
 <TabItem value="kotlin">
 
-```kotlin
+```kotlin test-AAFK
 val contactWithDiagnosis = sdk.contact.modifyContact(
 	contactWithImage.copy(
 		subContacts = setOf(DecryptedSubContact(
@@ -885,7 +887,7 @@ modified further.
 <LanguageTabs>
 <TabItem value="kotlin">
 
-```kotlin
+```kotlin test-AAFL
 val finalContact = sdk.contact.modifyContact(
 	contactWithDiagnosis.copy(
 		closingDate = LocalDateTime.now().format(formatter).toLong()

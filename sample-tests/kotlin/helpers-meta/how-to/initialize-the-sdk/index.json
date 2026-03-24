@@ -1,0 +1,18 @@
+{
+  "preTestProvides": {
+    "index block 5 (AACF)": ["specId", "processId", "askValidationCode"],
+    "index block 6 (AACG)": ["username", "getCachedToken", "askUserPassword"]
+  },
+  "preTestProvideTypes": {
+    "index block 5 (AACF)": {
+      "specId": "String",
+      "processId": "String",
+      "askValidationCode": "suspend () -> String"
+    },
+    "index block 6 (AACG)": {
+      "username": "String",
+      "getCachedToken": "suspend () -> String?",
+      "askUserPassword": "suspend () -> String"
+    }
+  }
+}

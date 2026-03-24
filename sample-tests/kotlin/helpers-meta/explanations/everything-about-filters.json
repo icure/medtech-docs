@@ -1,0 +1,31 @@
+{
+  "preTestProvides": {
+    "everything-about-filters block 1 (AAGB)": ["filterA", "filterB", "filterC"],
+    "everything-about-filters block 2 (AAGC)": ["filterA", "filterB"],
+    "everything-about-filters block 3 (AAGD)": ["ofFilter", "subtractingFilter"],
+    "everything-about-filters block 4 (AAGE)": ["filterA", "filterB", "filterC", "filterD", "filterE"]
+  },
+  "preTestProvideTypes": {
+    "everything-about-filters block 1 (AAGB)": {
+      "filterA": "FilterOptions<com.icure.cardinal.sdk.model.Patient>",
+      "filterB": "FilterOptions<com.icure.cardinal.sdk.model.Patient>",
+      "filterC": "FilterOptions<com.icure.cardinal.sdk.model.Patient>"
+    },
+    "everything-about-filters block 2 (AAGC)": {
+      "filterA": "FilterOptions<com.icure.cardinal.sdk.model.Patient>",
+      "filterB": "FilterOptions<com.icure.cardinal.sdk.model.Patient>"
+    },
+    "everything-about-filters block 3 (AAGD)": {
+      "ofFilter": "FilterOptions<com.icure.cardinal.sdk.model.Patient>",
+      "subtractingFilter": "FilterOptions<com.icure.cardinal.sdk.model.Patient>"
+    },
+    "everything-about-filters block 4 (AAGE)": {
+      "filterA": "FilterOptions<com.icure.cardinal.sdk.model.Patient>",
+      "filterB": "FilterOptions<com.icure.cardinal.sdk.model.Patient>",
+      "filterC": "FilterOptions<com.icure.cardinal.sdk.model.Patient>",
+      "filterD": "FilterOptions<com.icure.cardinal.sdk.model.Patient>",
+      "filterE": "FilterOptions<com.icure.cardinal.sdk.model.Patient>"
+    }
+  },
+  "additionalImports": []
+}

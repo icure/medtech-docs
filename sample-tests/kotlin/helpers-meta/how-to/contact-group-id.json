@@ -1,0 +1,39 @@
+{
+  "preTestProvides": {
+    "contact-group-id block 1 (AAAN)": ["VISITING_DOCTOR_USERNAME", "VISITING_DOCTOR_PASSWORD", "RESEARCH_DOCTOR_USERNAME", "RESEARCH_DOCTOR_PASSWORD"],
+    "contact-group-id block 2 (AAAO)": ["visitingDoctorSdk"],
+    "contact-group-id block 3 (AAAP)": ["researchDoctorSdk"],
+    "contact-group-id block 5 (AAAR)": ["visitingDoctorSdk", "patient", "researchDoctorId", "heartRateService", "bloodPressureService", "medicationService"],
+    "contact-group-id block 6 (AAAS)": ["visitingDoctorSdk", "patient"],
+    "contact-group-id block 7 (AAAT)": ["researchDoctorSdk"]
+  },
+  "preTestProvideTypes": {
+    "contact-group-id block 1 (AAAN)": {
+      "VISITING_DOCTOR_USERNAME": "String",
+      "VISITING_DOCTOR_PASSWORD": "String",
+      "RESEARCH_DOCTOR_USERNAME": "String",
+      "RESEARCH_DOCTOR_PASSWORD": "String"
+    },
+    "contact-group-id block 2 (AAAO)": {
+      "visitingDoctorSdk": "com.icure.cardinal.sdk.CardinalSdk"
+    },
+    "contact-group-id block 3 (AAAP)": {
+      "researchDoctorSdk": "com.icure.cardinal.sdk.CardinalSdk"
+    },
+    "contact-group-id block 5 (AAAR)": {
+      "visitingDoctorSdk": "com.icure.cardinal.sdk.CardinalSdk",
+      "patient": "com.icure.cardinal.sdk.model.DecryptedPatient",
+      "researchDoctorId": "String",
+      "heartRateService": "com.icure.cardinal.sdk.model.embed.DecryptedService",
+      "bloodPressureService": "com.icure.cardinal.sdk.model.embed.DecryptedService",
+      "medicationService": "com.icure.cardinal.sdk.model.embed.DecryptedService"
+    },
+    "contact-group-id block 6 (AAAS)": {
+      "visitingDoctorSdk": "com.icure.cardinal.sdk.CardinalSdk",
+      "patient": "com.icure.cardinal.sdk.model.DecryptedPatient"
+    },
+    "contact-group-id block 7 (AAAT)": {
+      "researchDoctorSdk": "com.icure.cardinal.sdk.CardinalSdk"
+    }
+  }
+}

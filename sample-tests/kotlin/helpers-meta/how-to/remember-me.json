@@ -1,0 +1,15 @@
+{
+  "preTestProvides": {
+    "remember-me block 1 (AABD)": ["getDeviceId", "saveCredentialsInPersistentStorage"],
+    "remember-me block 2 (AABE)": ["getCredentialsFromPersistentStorage"]
+  },
+  "preTestProvideTypes": {
+    "remember-me block 1 (AABD)": {
+      "getDeviceId": "suspend () -> String",
+      "saveCredentialsInPersistentStorage": "suspend (String, String) -> Unit"
+    },
+    "remember-me block 2 (AABE)": {
+      "getCredentialsFromPersistentStorage": "suspend () -> Pair<String, String>"
+    }
+  }
+}

@@ -39,11 +39,11 @@ Returns entities that match **all** provided filters. Requires at least two filt
 
 <TabItem value="kotlin">
 
-```kotlin no-test
+```kotlin test-AAGB
 // Function call
 val filter = intersection(filterA, filterB, filterC)
 // Infix shorthand
-val filter = filterA and filterB and filterC
+val filter2 = filterA and filterB and filterC
 ```
 
 </TabItem>
@@ -78,10 +78,10 @@ Returns entities that match **at least one** of the provided filters. Requires a
 
 <TabItem value="kotlin">
 
-```kotlin no-test
+```kotlin test-AAGC
 val filter = union(filterA, filterB)
 // Infix shorthand
-val filter = filterA or filterB
+val filter2 = filterA or filterB
 ```
 
 </TabItem>
@@ -116,7 +116,7 @@ Returns entities that match the first filter (`of`) but **not** the second (`sub
 
 <TabItem value="kotlin">
 
-```kotlin no-test
+```kotlin test-AAGD
 val filter = difference(ofFilter, subtractingFilter)
 ```
 
@@ -162,9 +162,9 @@ However, in some cases, the backend could optimized by the backend if the first 
 :::tip Kotlin infix syntax
 
 In Kotlin, `and` is shorthand for `intersection` and `or` for `union`. You can also use the minus `-` sign for difference. You can chain them:
-```kotlin no-test
+```kotlin test-AAGE
 val filter = (filterA and filterB) or (filterC and (filterD - filterE))
-val sameFilter = intersection(filterA, filterB).union(intersection(filterC, difference(filterD, filterE)))
+val sameFilter = union(intersection(filterA, filterB), intersection(filterC, difference(filterD, filterE)))
 ```
 
 :::
@@ -455,7 +455,7 @@ query: first find patients matching demographic criteria, then check their healt
 
 <TabItem value="kotlin">
 
-```kotlin no-test
+```kotlin test-AAGF
 import com.icure.cardinal.sdk.CardinalSdk
 import com.icure.cardinal.sdk.filters.HealthElementFilters
 import com.icure.cardinal.sdk.filters.PatientFilters
@@ -582,7 +582,7 @@ Find all contacts for a patient in the past 30 days, excluding contacts tagged a
 
 <TabItem value="kotlin">
 
-```kotlin no-test
+```kotlin test-AAGG
 import com.icure.cardinal.sdk.CardinalSdk
 import com.icure.cardinal.sdk.filters.ContactFilters
 import com.icure.cardinal.sdk.filters.difference
@@ -683,7 +683,7 @@ Retrieve all LOINC-coded blood glucose (code 2345-7) services for a patient in t
 
 <TabItem value="kotlin">
 
-```kotlin no-test
+```kotlin test-AAGH
 import com.icure.cardinal.sdk.CardinalSdk
 import com.icure.cardinal.sdk.filters.ServiceFilters
 import com.icure.cardinal.sdk.filters.intersection
@@ -786,7 +786,7 @@ specific parent organization.
 
 <TabItem value="kotlin">
 
-```kotlin no-test
+```kotlin test-AAGI
 import com.icure.cardinal.sdk.CardinalSdk
 import com.icure.cardinal.sdk.filters.HealthcarePartyFilters
 import com.icure.cardinal.sdk.filters.difference
@@ -864,7 +864,7 @@ then retrieve their medication services (tagged with ATC code system).
 
 <TabItem value="kotlin">
 
-```kotlin no-test
+```kotlin test-AAGJ
 import com.icure.cardinal.sdk.CardinalSdk
 import com.icure.cardinal.sdk.filters.HealthElementFilters
 import com.icure.cardinal.sdk.filters.PatientFilters

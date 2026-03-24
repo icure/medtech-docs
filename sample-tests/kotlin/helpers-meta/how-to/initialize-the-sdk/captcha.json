@@ -1,0 +1,23 @@
+{
+  "preTestProvides": {
+    "captcha block 1 (AABT)": ["specId", "processId", "friendlyCaptchaResponse"],
+    "captcha block 2 (AABU)": ["specId", "processId", "reCaptchaResponse"],
+    "captcha block 3 (AABV)": ["specId", "processId"]
+  },
+  "preTestProvideTypes": {
+    "captcha block 1 (AABT)": {
+      "specId": "String",
+      "processId": "String",
+      "friendlyCaptchaResponse": "String"
+    },
+    "captcha block 2 (AABU)": {
+      "specId": "String",
+      "processId": "String",
+      "reCaptchaResponse": "String"
+    },
+    "captcha block 3 (AABV)": {
+      "specId": "String",
+      "processId": "String"
+    }
+  }
+}

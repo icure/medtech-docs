@@ -1,0 +1,19 @@
+{
+  "preTestProvides": {
+    "how-to-subscribe-to-events block 2 (AABB)": ["subscription"],
+    "how-to-subscribe-to-events block 3 (AABC)": ["addToQueueToProcess", "INTERNAL_INFERENCE_STATUS", "TO_BE_STARTED"]
+  },
+  "preTestProvideTypes": {
+    "how-to-subscribe-to-events block 2 (AABB)": {
+      "subscription": "EntitySubscription<DecryptedHealthElement>"
+    },
+    "how-to-subscribe-to-events block 3 (AABC)": {
+      "addToQueueToProcess": "suspend (Any?) -> Unit",
+      "INTERNAL_INFERENCE_STATUS": "String",
+      "TO_BE_STARTED": "String"
+    }
+  },
+  "additionalImports": [
+    "import com.icure.cardinal.sdk.subscription.EntitySubscription"
+  ]
+}

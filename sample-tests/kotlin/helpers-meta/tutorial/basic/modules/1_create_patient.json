@@ -1,0 +1,22 @@
+{
+  "preTestProvides": {
+    "1_create_patient block 2 (AADY)": ["patient"],
+    "1_create_patient block 3 (AADZ)": ["patientWithMetadata"],
+    "1_create_patient block 4 (AAEA)": ["createdPatient"],
+    "1_create_patient block 5 (AAEB)": ["updatedPatient"]
+  },
+  "preTestProvideTypes": {
+    "1_create_patient block 2 (AADY)": {
+      "patient": "DecryptedPatient"
+    },
+    "1_create_patient block 3 (AADZ)": {
+      "patientWithMetadata": "DecryptedPatient"
+    },
+    "1_create_patient block 4 (AAEA)": {
+      "createdPatient": "DecryptedPatient"
+    },
+    "1_create_patient block 5 (AAEB)": {
+      "updatedPatient": "DecryptedPatient"
+    }
+  }
+}

@@ -41,7 +41,7 @@ roles using the `getAllRoles` method in the `role` section of the sdk.
 
 <TabItem value="kotlin">
 
-```kotlin
+```kotlin test-AABL
 val allRoles = sdk.role.getAllRoles()
 ```
 
@@ -72,10 +72,10 @@ sake of the example, we will use the first role in the result.
 
 <TabItem value="kotlin">
 
-```kotlin
+```kotlin test-AABM
 // val userId = The id of the user to update
-val user = sdk.user.getUser(userId)
-sdk.user.setUserRoles(userId, user.systemMetadata.roles + allRoles.first())
+val user = sdk.user.getUser(userId)!!
+sdk.user.setUserRoles(userId, (user.systemMetadata!!.roles + allRoles.first()).toList())
 ```
 
 </TabItem>
@@ -121,7 +121,7 @@ To remove any role configuration from a user and revert it to the configuration 
 
 <TabItem value="kotlin">
 
-```kotlin
+```kotlin test-AABN
 sdk.user.resetUserRoles(userId)
 ```
 

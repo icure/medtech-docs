@@ -1,0 +1,6 @@
+{
+  "preTestProvides": {},
+  "additionalImports": [
+    "import com.icure.docs.helpers.howto.askUserToResolveNoteConflict"
+  ]
+}

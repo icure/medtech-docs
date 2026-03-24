@@ -55,7 +55,7 @@ simplify the re-import process.
 
 On kotlin/jvm we can encode the map as json, encoding the pkcs8 key bytes as base64, then save it to a file
 
-```kotlin
+```kotlin test-AACL
 import com.icure.cardinal.sdk.CardinalSdk
 import com.icure.cardinal.sdk.utils.base64Encode
 import kotlinx.coroutines.Dispatchers
@@ -70,7 +70,7 @@ suspend fun exportKeysToFile(
 ) {
 	val encodedKeys = sdk.crypto.currentDataOwnerKeys().mapValues { (_, keysByFingerprint) ->
 		keysByFingerprint.mapValues { (_, pkcs8Key) ->
-			pkcs8Key.base64Encode()
+			pkcs8Key.bytes.base64Encode()
 		}
 	}.let { Json.encodeToString(it) }
 	withContext(Dispatchers.IO) {
@@ -130,7 +130,7 @@ using a past instance of the SDK.
 
 On kotlin/jvm we ask the user to provide the file with the exported keys and load it.
 
-```kotlin
+```kotlin test-AACM
 import com.icure.cardinal.sdk.CardinalSdk
 import com.icure.cardinal.sdk.auth.UsernamePassword
 import com.icure.cardinal.sdk.crypto.CryptoStrategies
@@ -335,7 +335,7 @@ initialization will fail.
 
 <TabItem value="kotlin">
 
-```kotlin
+```kotlin test-AACN
 import com.icure.cardinal.sdk.CardinalApis
 import com.icure.cardinal.sdk.crypto.CryptoStrategies
 import com.icure.kryptom.crypto.CryptoService
@@ -352,7 +352,7 @@ class MyCryptoStrategies : CryptoStrategies {
 			// Like previous example
 			val encodedKeys = apis.crypto.currentDataOwnerKeys().mapValues { (_, keysByFingerprint) ->
 				keysByFingerprint.mapValues { (_, pkcs8Key) ->
-					pkcs8Key.base64Encode()
+					pkcs8Key.bytes.base64Encode()
 				}
 			}.let { Json.encodeToString(it) }
 			withContext(Dispatchers.IO) {
@@ -430,8 +430,9 @@ human-friendly representation such as base32.
 
 <TabItem value="kotlin">
 
-```kotlin
+```kotlin test-AACO
 import com.icure.cardinal.sdk.CardinalSdk
+import com.icure.cardinal.sdk.crypto.entities.RecoveryKeyOptions
 import com.icure.cardinal.sdk.crypto.entities.RecoveryKeySize
 
 suspend fun createRecoveryDataAndPrintKey(
@@ -439,7 +440,7 @@ suspend fun createRecoveryDataAndPrintKey(
 ) {
 	val recoveryKey = sdk.recovery.createRecoveryInfoForAvailableKeyPairs(
 		includeParentsKeys = true,
-		recoveryKeySize = RecoveryKeySize.Bytes32,
+		recoveryKeyOptions = RecoveryKeyOptions.Generate(RecoveryKeySize.Bytes32),
 	)
 	println("Your new recovery key is: ${recoveryKey.asBase32().chunked(4).joinToString("-")}")
 	// Your new recovery key is: UALR-WKWD-NWLX-AWOK-KRUQ-G42Q-WUPS-EOHC-TMPP-CXP7-HDDV-XFAE-LWGQ
@@ -480,7 +481,7 @@ You can use the recovery data key to directly in the crypto strategies through t
 
 <TabItem value="kotlin">
 
-```kotlin
+```kotlin test-AACP
 import com.icure.cardinal.sdk.crypto.CryptoStrategies
 import com.icure.cardinal.sdk.crypto.KeyPairRecoverer
 import com.icure.cardinal.sdk.crypto.entities.RecoveryDataKey
@@ -599,8 +600,9 @@ data.
 
 <TabItem value="kotlin">
 
-```kotlin
+```kotlin test-AACQ
 import com.icure.cardinal.sdk.CardinalSdk
+import com.icure.cardinal.sdk.crypto.entities.RecoveryKeyOptions
 import com.icure.cardinal.sdk.crypto.entities.RecoveryKeySize
 
 suspend fun createShortRecoveryDataAndPrintKey(
@@ -608,11 +610,11 @@ suspend fun createShortRecoveryDataAndPrintKey(
 ) {
 	val recoveryKey = sdk.recovery.createRecoveryInfoForAvailableKeyPairs(
 		includeParentsKeys = true,
-		// We want to use a shorter recovery data key to simplify the transfer
-		recoveryKeySize = RecoveryKeySize.Bytes16,
 		// Since we're creating this recovery data only to transfer keys between devices,
 		// we should give it a limited lifespan
-		lifetimeSeconds = 5 * 60
+		lifetimeSeconds = 5 * 60,
+		// We want to use a shorter recovery data key to simplify the transfer
+		recoveryKeyOptions = RecoveryKeyOptions.Generate(RecoveryKeySize.Bytes16),
 	)
 	println("Your temporary recovery key is: ${recoveryKey.asBase32().chunked(4).joinToString("-")}")
 	// Your temporary recovery key is: NQ2I-HTJ7-Y3CK-GUIH-EMKK-M7CY-HA
@@ -667,8 +669,8 @@ maintenance tasks.
 
 <TabItem value="kotlin">
 
-```kotlin
-import com.icure.cardinal.sdk.CardinalSdk
+```kotlin test-AACR
+import com.icure.cardinal.sdk.CardinalApis
 import com.icure.cardinal.sdk.crypto.CryptoStrategies
 import com.icure.cardinal.sdk.crypto.impl.exportSpkiHex
 import com.icure.cardinal.sdk.model.extensions.publicKeysSpki
@@ -678,16 +680,16 @@ import com.icure.kryptom.crypto.RsaKeypair
 
 class MyCryptoStrategies : CryptoStrategies {
 	override suspend fun notifyNewKeyCreated(
-		sdk: CardinalSdk,
+		apis: CardinalApis,
 		key: RsaKeypair<RsaAlgorithm.RsaEncryptionAlgorithm.OaepWithSha256>,
 		cryptoPrimitives: CryptoService
 	) {
 		val pubKeyHex = cryptoPrimitives.rsa.exportSpkiHex(key.public)
-		val self = sdk.dataOwner.getCurrentDataOwnerStub().stub
+		val self = apis.dataOwner.getCurrentDataOwnerStub().stub
 		if (self.publicKeysSpki.size > 1) {
 			// This is not the first key created for the user
 			// We may have some data shared with other users using a previous key
-			sdk.cardinalMaintenanceTask.createKeyPairUpdateNotificationsToAllDelegationCounterparts(pubKeyHex)
+			apis.cardinalMaintenanceTask.createKeyPairUpdateNotificationsToAllDelegationCounterparts(pubKeyHex)
 		}
 	}
 }
@@ -756,7 +758,7 @@ keys, and in turn all entities, shared between them.
 
 <TabItem value="kotlin">
 
-```kotlin
+```kotlin test-AACS
 import com.icure.cardinal.sdk.CardinalSdk
 import com.icure.cardinal.sdk.crypto.entities.RecoveryDataKey
 
@@ -765,7 +767,7 @@ suspend fun createRecoveryDataForGiveAccessBackAndPrint(
 	sdk: CardinalSdk,
 	dataOwnerWithLostKeyId: String
 ) {
-	val recoveryKey = sdk.recovery.createExchangeDataRecoveryInfo(delegateId = dataOwnerWithLostKeyId)
+	val recoveryKey = sdk.recovery.createExchangeDataRecoveryInfo(delegateId = dataOwnerWithLostKeyId)!!
 	println("Share this recovery key with $dataOwnerWithLostKeyId: ${recoveryKey.asBase32()}")
 }
 
@@ -831,12 +833,16 @@ This could be done, for example, if the give-access-back request was done throug
 
 <TabItem value="kotlin">
 
-```kotlin
+```kotlin test-AACT
 import com.icure.cardinal.sdk.CardinalSdk
 import com.icure.cardinal.sdk.filters.MaintenanceTaskFilters
 import com.icure.cardinal.sdk.model.MaintenanceTask
 import com.icure.cardinal.sdk.model.sdk.KeyPairUpdateNotification
 import com.icure.cardinal.sdk.utils.pagination.forEach
+
+suspend fun promptGiveAccessBackConfirmation(request: KeyPairUpdateNotification): Boolean {
+	TODO("Implement this yourself")
+}
 
 suspend fun resolveGiveAccessBackRequests(sdk: CardinalSdk) {
 	var maintenanceTasksToDelete = mutableListOf<MaintenanceTask>()
@@ -857,10 +863,6 @@ suspend fun resolveGiveAccessBackRequests(sdk: CardinalSdk) {
 		// Delete the resolved maintenance tasks so we don't check them next time.
 		sdk.maintenanceTask.deleteMaintenanceTasks(maintenanceTasksToDelete)
 	}
-}
-
-suspend fun promptGiveAccessBackConfirmation(request: KeyPairUpdateNotification): Boolean {
-	TODO("Implement this yourself")
 }
 ```
 

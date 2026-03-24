@@ -135,7 +135,7 @@ root-level entity has its own section in the SDK, that exposes the operations th
 <LanguageTabs>
 <TabItem value="kotlin">
 
-```kotlin
+```kotlin test-AAFM no-test
 private const val CARDINAL_URL = "https://api.icure.cloud"
 
 print("Login: ")
@@ -143,7 +143,7 @@ val username = readln().trim()
 print("Password: ")
 val password = readln().trim()
 val sdk = CardinalSdk.initialize(
-	applicationId = null,
+	projectId = null,
 	baseUrl = CARDINAL_URL,
 	authenticationMethod = AuthenticationMethod.UsingCredentials(
 		UsernamePassword(username, password)

@@ -29,13 +29,13 @@ Once you have created the new user, log in to initialize their cryptographic key
 <LanguageTabs>
 <TabItem value="kotlin">
 
-```kotlin
+```kotlin test-AAEF
 print("Login of the other HCP: ")
 val username = readln().trim()
 print("Insert the password for this HCP: ")
 val otherPassword = readln()
 val otherSdk = CardinalSdk.initialize(
-	applicationId = null,
+	projectId = null,
 	baseUrl = CARDINAL_URL,
 	authenticationMethod = AuthenticationMethod.UsingCredentials(
 		UsernamePassword(username, otherPassword)
@@ -98,7 +98,7 @@ Consider a `Document` entity created with the initial Healthcare Party user:
 <LanguageTabs>
 <TabItem value="kotlin">
 
-```kotlin
+```kotlin test-AAEG
 val oldDocument = sdk.document.createDocument(
 	DecryptedDocument(
 		id = UUID.randomUUID().toString(),
@@ -158,7 +158,7 @@ If the other Healthcare Party tries to access it using the ID, the operation wil
 <LanguageTabs>
 <TabItem value="kotlin">
 
-```kotlin
+```kotlin test-AAEH
 try {
 	otherSdk.document.getDocument(oldDocument.id)
 } catch (e: Exception) {
@@ -207,7 +207,7 @@ the ID of the recipient Data Owner (i.e., the Healthcare Party, Patient, or Devi
 <LanguageTabs>
 <TabItem value="kotlin">
 
-```kotlin
+```kotlin test-AAEI
 val updatedDocument = sdk.document.shareWith(
 	delegateId = otherHcp.id,
 	document = oldDocument
@@ -249,7 +249,7 @@ At this point, the other Healthcare Party can access the document successfully:
 <LanguageTabs>
 <TabItem value="kotlin">
 
-```kotlin
+```kotlin test-AAEJ
 val oldDocumentOtherHcp = otherSdk.document.getDocument(oldDocument.id)
 ```
 
@@ -285,7 +285,7 @@ initializing the encryption metadata:
 <LanguageTabs>
 <TabItem value="kotlin">
 
-```kotlin
+```kotlin test-AAEK
 val newDocument = DecryptedDocument(
 	id = UUID.randomUUID().toString(),
 	name = "Another important document"
@@ -356,7 +356,7 @@ entity and read the encrypted information but cannot modify it:
 <LanguageTabs>
 <TabItem value="kotlin">
 
-```kotlin
+```kotlin test-AAEL
 val newDocumentOtherHcp = otherSdk.document.getDocument(createdNewDocument.id)
 ```
 
@@ -394,7 +394,7 @@ To create a Patient user, you first need to create a Patient:
 <LanguageTabs>
 <TabItem value="kotlin">
 
-```kotlin
+```kotlin test-AAEM
 val newPatient = DecryptedPatient(
 	id = UUID.randomUUID().toString(),
 	firstName = "Edmond",
@@ -452,7 +452,7 @@ property on the User to the id of the newly created Patient.
 <LanguageTabs>
 <TabItem value="kotlin">
 
-```kotlin
+```kotlin test-AAEN
 val login = "edmond.dantes.${UUID.randomUUID().toString().substring(0, 6)}@icure.com"
 val patientUser = User(
 	id = UUID.randomUUID().toString(),
@@ -513,7 +513,7 @@ Finally, you have to create a temporary access token for the User, so that they 
 <LanguageTabs>
 <TabItem value="kotlin">
 
-```kotlin
+```kotlin test-AAEO
 val loginToken = sdk.user.getToken(createdUser.id, "login")
 ```
 
@@ -546,9 +546,9 @@ Now, the User can log in to the SDK, initializing their cryptographic keys:
 <LanguageTabs>
 <TabItem value="kotlin">
 
-```kotlin
+```kotlin test-AAEP
 CardinalSdk.initialize(
-	applicationId = null,
+	projectId = null,
 	baseUrl = CARDINAL_URL,
 	authenticationMethod = AuthenticationMethod.UsingCredentials(
 		UsernamePassword(login, loginToken)
@@ -603,7 +603,7 @@ can share the Patient:
 <LanguageTabs>
 <TabItem value="kotlin">
 
-```kotlin
+```kotlin test-AAEQ
 val patient = sdk.patient.shareWith(
 	delegateId = createdPatient.id,
 	patient = createdPatient,
@@ -676,9 +676,9 @@ Now, the Patient can finally log in and have access to their full information:
 <LanguageTabs>
 <TabItem value="kotlin">
 
-```kotlin
+```kotlin test-AAER
 val patientSdk = CardinalSdk.initialize(
-	applicationId = null,
+	projectId = null,
 	baseUrl = CARDINAL_URL,
 	authenticationMethod = AuthenticationMethod.UsingCredentials(
 		UsernamePassword(login, loginToken)
@@ -739,7 +739,7 @@ needs to create an entity, such as a `HealthElement`, to represent a medical con
 <LanguageTabs>
 <TabItem value="kotlin">
 
-```kotlin
+```kotlin test-AAES
 val healthElement = DecryptedHealthElement(
 	id = UUID.randomUUID().toString(),
 	descr = "This is some medical context"
@@ -794,7 +794,7 @@ the Patient does not yet have the right to access it:
 <LanguageTabs>
 <TabItem value="kotlin">
 
-```kotlin
+```kotlin test-AAET
 try {
 	patientSdk.healthElement.getHealthElement(createdHealthElement.id)
 } catch (e: Exception) {
@@ -842,7 +842,7 @@ Next, the Healthcare Party can share the entity with the Patient:
 <LanguageTabs>
 <TabItem value="kotlin">
 
-```kotlin
+```kotlin test-AAEU
 val healthElement = sdk.healthElement.shareWith(
 	delegateId = patient.id,
 	healthElement = createdHealthElement
@@ -884,7 +884,7 @@ Finally, the Patient can access it:
 <LanguageTabs>
 <TabItem value="kotlin">
 
-```kotlin
+```kotlin test-AAEV
 patientSdk.healthElement.getHealthElement(createdHealthElement.id)
 ```
 
@@ -920,7 +920,7 @@ a newly created entity.
 <LanguageTabs>
 <TabItem value="kotlin">
 
-```kotlin
+```kotlin test-AAEW
 val newHealthElement = DecryptedHealthElement(
 	id = UUID.randomUUID().toString(),
 	descr = "This is some other medical context"
@@ -995,7 +995,7 @@ Now, the Patient has read and write access to the entity and can directly retrie
 <LanguageTabs>
 <TabItem value="kotlin">
 
-```kotlin
+```kotlin test-AAEX
 val retrievedHealthElement = patientSdk.healthElement.getHealthElement(newCreatedHealthElement.id)
 ```
 

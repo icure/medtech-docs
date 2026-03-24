@@ -24,7 +24,7 @@ then be used for the rest of the example.
 First, the user will be prompted to insert the credentials of a [healthcare party created through the cockpit](/cockpit/how-to/how-to-manage-hcp).
 An SDK instance will be initialized for that healthcare party.
 
-```kotlin
+```kotlin test-AADD
 private const val CARDINAL_URL = "https://api.icure.cloud"
 
 print("Login: ")
@@ -32,7 +32,7 @@ val username = readln().trim()
 print("Password: ")
 val password = readln().trim()
 val sdk = CardinalSdk.initialize(
-	applicationId = null,
+	projectId = null,
 	baseUrl = CARDINAL_URL,
 	authenticationMethod = AuthenticationMethod.UsingCredentials(
 		UsernamePassword(username, password)
@@ -105,7 +105,7 @@ Npw, the healthcare party user can create a Patient entity.
 <LanguageTabs>
 <TabItem value="kotlin">
 
-```kotlin
+```kotlin test-AADE
 val newPatient = DecryptedPatient(
 	id = UUID.randomUUID().toString(),
 	firstName = "Edmond",
@@ -163,7 +163,7 @@ the new user to log in.
 <LanguageTabs>
 <TabItem value="kotlin">
 
-```kotlin
+```kotlin test-AADF
 val login = "edmond.dantes.${UUID.randomUUID().toString().substring(0, 6)}@icure.com"
 val patientUser = User(
 	id = UUID.randomUUID().toString(),
@@ -228,9 +228,9 @@ Now, the patient user can log in and instantiate a new sdk. By doing so, they wi
 <LanguageTabs>
 <TabItem value="kotlin">
 
-```kotlin
+```kotlin test-AADG
 CardinalSdk.initialize(
-	applicationId = null,
+	projectId = null,
 	baseUrl = CARDINAL_URL,
 	authenticationMethod = AuthenticationMethod.UsingCredentials(
 		UsernamePassword(login, loginToken)
@@ -289,7 +289,7 @@ through Cardinal.
 <LanguageTabs>
 <TabItem value="kotlin">
 
-```kotlin
+```kotlin test-AADH
 val patient = sdk.patient.shareWith(
 	delegateId = createdPatient.id,
 	patient = createdPatient,
@@ -356,13 +356,15 @@ Now that the patient has the permission to access their own information, it can 
 <LanguageTabs>
 <TabItem value="kotlin">
 
-```kotlin
+```kotlin test-AADI
 val patientSdk = CardinalSdk.initialize(
-	applicationId = null,
+	projectId = null,
 	baseUrl = CARDINAL_URL,
 	authenticationMethod = AuthenticationMethod.UsingCredentials(
 		UsernamePassword(login, loginToken)
-	)
+	),
+	baseStorage = FileStorageFacade("./scratch/storage")
+)
 ```
 
 </TabItem>
@@ -418,7 +420,7 @@ device capable of measuring glycemia. This measurement is stored through the Car
 <LanguageTabs>
 <TabItem value="kotlin">
 
-```kotlin
+```kotlin test-AADJ
 val glycemiaValue = Random.nextInt(60, 160).toDouble()
 val formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss")
 val contact = DecryptedContact(
@@ -614,7 +616,7 @@ created it. For more information about sharing data, check our tutorial on [data
 <LanguageTabs>
 <TabItem value="kotlin">
 
-```kotlin
+```kotlin test-AADK
 val recipientHcp = patient.responsible ?: throw IllegalStateException("Patient has no responsible")
 val contactWithEncryptionMetadata = patientSdk.contact.withEncryptionMetadata(
 	base = contact,
@@ -683,7 +685,7 @@ To retrieve the Service where the Subscriber completed the analysis, the Publish
 <LanguageTabs>
 <TabItem value="kotlin">
 
-```kotlin
+```kotlin test-AADL
 val filter = ServiceFilters.byTagAndValueDateForSelf(
 	tagType = "CARDINAL",
 	tagCode = "ANALYZED"
@@ -735,12 +737,12 @@ cloud and the label is shown.
 <LanguageTabs>
 <TabItem value="kotlin">
 
-```kotlin
+```kotlin test-AADM
 while(serviceIterator.hasNext()) {
 	val service = serviceIterator.next(1).first()
 	val diagnosisOrNull = service.tags.firstOrNull { it.type == "SNOMED" }
 	if (diagnosisOrNull != null) {
-		val code = patientSdk.code.getCode(diagnosisOrNull.id!!)
+		val code = patientSdk.code.getCode(diagnosisOrNull.id!!)!!
 		println("The diagnosis for sample ${service.id} is ${code.label?.getValue("en")}")
 	} else {
 		println("No diagnosis for this sample")

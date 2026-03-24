@@ -22,14 +22,14 @@ service that is GDPR compliant. You can check it out [here](https://developer.fr
 
 <TabItem value = "kotlin">
 
-```kotlin
+```kotlin test-AABT
 import com.icure.cardinal.sdk.CardinalSdk
 import com.icure.cardinal.sdk.auth.AuthenticationProcessTelecomType
 import com.icure.cardinal.sdk.auth.CaptchaOptions
 import com.icure.cardinal.sdk.storage.impl.FileStorageFacade
 
 val process = CardinalSdk.initializeWithProcess(
-	applicationId = null,
+	projectId = null,
 	baseUrl = "https://api.icure.cloud",
 	messageGatewayUrl = "https://msg-gw.icure.cloud",
 	externalServicesSpecId = specId,
@@ -103,14 +103,14 @@ widely used across the internet. You can check it out [here](https://developers.
 
 <TabItem value = "kotlin">
 
-```kotlin
+```kotlin test-AABU
 import com.icure.cardinal.sdk.CardinalSdk
 import com.icure.cardinal.sdk.auth.AuthenticationProcessTelecomType
 import com.icure.cardinal.sdk.auth.CaptchaOptions
 import com.icure.cardinal.sdk.storage.impl.FileStorageFacade
 
 val process = CardinalSdk.initializeWithProcess(
-	applicationId = null,
+	projectId = null,
 	baseUrl = "https://api.icure.cloud",
 	messageGatewayUrl = "https://msg-gw.icure.cloud",
 	externalServicesSpecId = specId,
@@ -188,14 +188,14 @@ handle the challenge and resolution of the Kerberus captcha.
 
 <TabItem value = "kotlin">
 
-```kotlin
+```kotlin test-AABV
 import com.icure.cardinal.sdk.CardinalSdk
 import com.icure.cardinal.sdk.auth.AuthenticationProcessTelecomType
 import com.icure.cardinal.sdk.auth.CaptchaOptions
 import com.icure.cardinal.sdk.storage.impl.FileStorageFacade
 
 val process = CardinalSdk.initializeWithProcess(
-	applicationId = "com.mycompany.mycardinalapp",
+	projectId = "com.mycompany.mycardinalapp",
 	baseUrl = "https://api.icure.cloud",
 	messageGatewayUrl = "https://msg-gw.icure.cloud",
 	externalServicesSpecId = specId,
@@ -300,7 +300,7 @@ You can refer to the [dedicated documentation page](./expo) to learn how to get 
 
 <TabItem value = "kotlin">
 
-```kotlin
+```kotlin test-AABW no-test
 import com.icure.cardinal.sdk.CardinalSdk
 import com.icure.cardinal.sdk.auth.AuthenticationProcessTelecomType
 import com.icure.cardinal.sdk.auth.CaptchaOptions
@@ -330,7 +330,7 @@ val processId = "PROCESS_ID" // Fill from cockpit
 suspend fun startSdkAuth(
 	userEmail: String
 ) = CardinalSdk.initializeWithProcess(
-	applicationId = "com.mycompany.mycardinalapp",
+	projectId = "com.mycompany.mycardinalapp",
 	baseUrl = "https://api.icure.cloud",
 	messageGatewayUrl = msgGwUrl,
 	externalServicesSpecId = specId,

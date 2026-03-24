@@ -16,7 +16,7 @@ To upload an Attachment, first you have to create a Document:
 
 <TabItem value="kotlin">
 
-```kotlin
+```kotlin test-AACU
 import com.icure.cardinal.sdk.model.DecryptedDocument
 import java.util.UUID
 
@@ -81,7 +81,7 @@ Then, you can store your data (in this case, an XML document) as the primary att
 
 <TabItem value="kotlin">
 
-```kotlin
+```kotlin test-AACV
 val xmlData = """
 		<root>
 		    <data>Very important data</data>
@@ -133,7 +133,7 @@ You can also store the Attachment unencrypted, using the appropriate method:
 
 <TabItem value="kotlin">
 
-```kotlin
+```kotlin test-AACW
 sdk.document.setRawMainAttachment(document.id, checkNotNull(document.rev), listOf("public.xml"), xmlData.toByteArray(Charsets.UTF_8), false)
 ```
 
@@ -164,7 +164,7 @@ a unique identifier and can be stored both as an encrypted or unencrypted byte a
 
 <TabItem value="kotlin">
 
-```kotlin
+```kotlin test-AACX
 import kotlin.random.Random
 
 val image = Random.nextBytes(100)
@@ -214,8 +214,8 @@ Once an attachment is created, you can choose whether to retrieve it encrypted o
 
 <TabItem value="kotlin">
 
-```kotlin
-val retrievedDocument = sdk.document.getDocument(document.id)
+```kotlin test-AACY
+val retrievedDocument = sdk.document.getDocument(document.id)!!
 val retrievedMainAttachment = sdk.document.getAndDecryptMainAttachment(retrievedDocument)
 val retrievedEncryptedMainAttachment = sdk.document.getRawMainAttachment(retrievedDocument.id)
 ```
@@ -256,8 +256,8 @@ attachments.
 
 <TabItem value="kotlin">
 
-```kotlin
-val retrievedDocument = sdk.document.getDocument(document.id)
+```kotlin test-AACZ
+val retrievedDocument = sdk.document.getDocument(document.id)!!
 fun isValidXml(xmlAsBytes: ByteArray): Boolean {
 	// This is an XML validator
 	return true
@@ -307,7 +307,7 @@ To retrieve a secondary attachment, you also need the identifier of the attachme
 
 <TabItem value="kotlin">
 
-```kotlin
+```kotlin test-AADA
 val retrievedSecondaryAttachment = sdk.document.getAndDecryptSecondaryAttachment(retrievedDocument, attachmentId)
 val retrievedEncryptedSecondaryAttachment = sdk.document.getRawSecondaryAttachment(retrievedDocument.id, attachmentId)
 ```
@@ -341,7 +341,7 @@ The following call will allow you to delete the attachments associated to a docu
 
 <TabItem value="kotlin">
 
-```kotlin
+```kotlin test-AADB
 val documentWithoutMainAttachment = sdk.document.deleteMainAttachment(retrievedDocument.id, checkNotNull(retrievedDocument.rev))
 val documentWithoutAttachments = sdk.document.deleteSecondaryAttachment(documentWithoutMainAttachment.id, attachmentId, checkNotNull(documentWithoutMainAttachment.rev))
 

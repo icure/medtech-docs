@@ -24,7 +24,7 @@ that you obtained from the cockpit and those should be the same credentials you 
 <LanguageTabs>
 <TabItem value="kotlin">
 
-```kotlin
+```kotlin test-AADN
 private const val CARDINAL_URL = "https://api.icure.cloud"
 
 print("Login: ")
@@ -32,7 +32,7 @@ val username = readln().trim()
 print("Password: ")
 val password = readln().trim()
 val sdk = CardinalSdk.initialize(
-	applicationId = null,
+	projectId = null,
 	baseUrl = CARDINAL_URL,
 	authenticationMethod = AuthenticationMethod.UsingCredentials(
 		UsernamePassword(username, password)
@@ -86,7 +86,7 @@ The following filter includes all the service entities that are:
 <LanguageTabs>
 <TabItem value="kotlin">
 
-```kotlin
+```kotlin test-AADO
 val filter = ServiceFilters.byTagAndValueDateForSelf(
 	tagType = "LOINC",
 	tagCode = "2339-0"
@@ -141,7 +141,7 @@ For more information about subscriptions and events, check [this how-to](/how-to
 <LanguageTabs>
 <TabItem value="kotlin">
 
-```kotlin
+```kotlin test-AADP
 val subscription = sdk.contact.subscribeToServiceCreateOrUpdateEvents(
 	filter = filter
 )
@@ -175,7 +175,7 @@ Once the subscription is opened, the Subscriber can wait for the events to be pr
 <LanguageTabs>
 <TabItem value="kotlin">
 
-```kotlin
+```kotlin test-AADQ
 for (event in subscription.eventChannel) {
 	// The code for handling the event will go here
 }
@@ -209,7 +209,7 @@ this example, the Subscriber will handle only the events related to opening a co
 <LanguageTabs>
 <TabItem value="kotlin">
 
-```kotlin
+```kotlin test-AADR
 for (event in subscription.eventChannel) {
 	when (event) {
 		EntitySubscriptionEvent.Connected -> {
@@ -266,11 +266,14 @@ event is fired. The event also contains the encrypted entity, so the first step 
 <LanguageTabs>
 <TabItem value="kotlin">
 
-```kotlin
-is EntitySubscriptionEvent.EntityNotification -> {
-	val service = sdk.contact.decryptService(event.entity)
-	println("Received service ${service.id}")
-	// The rest of the code to handle the entity will go here
+```kotlin test-AADS
+when (event) {
+	is EntitySubscriptionEvent.EntityNotification -> {
+		val service = sdk.contact.decryptService(event.entity)
+		println("Received service ${service.id}")
+		// The rest of the code to handle the entity will go here
+	}
+	else -> {}
 }
 ```
 
@@ -303,42 +306,45 @@ to represent the diagnosis based on that value.
 <LanguageTabs>
 <TabItem value="kotlin">
 
-```kotlin
-is EntitySubscriptionEvent.EntityNotification -> {
-	val service = sdk.contact.decryptService(event.entity)
-	println("Received service ${service.id}")
-	val measureOrNull = service.content["en"]?.measureValue?.value
-	if (measureOrNull != null) {
-		val inferenceResult = when {
-			measureOrNull < 80 -> {
-				CodeStub( // Snomed code for Hypoglycemia
-					id = "SNOMED|302866003|1",
-					type = "SNOMED",
-					code = "302866003",
-					version = "1"
-				)
+```kotlin test-AADT
+when (event) {
+	is EntitySubscriptionEvent.EntityNotification -> {
+		val service = sdk.contact.decryptService(event.entity)
+		println("Received service ${service.id}")
+		val measureOrNull = service.content["en"]?.measureValue?.value
+		if (measureOrNull != null) {
+			val inferenceResult = when {
+				measureOrNull < 80 -> {
+					CodeStub( // Snomed code for Hypoglycemia
+						id = "SNOMED|302866003|1",
+						type = "SNOMED",
+						code = "302866003",
+						version = "1"
+					)
+				}
+				measureOrNull > 130 -> {
+					CodeStub( // Snomed code for Hyperglycemia
+						id = "SNOMED|80394007|1",
+						type = "SNOMED",
+						code = "80394007",
+						version = "1"
+					)
+				}
+				else -> {
+					CodeStub( // Snomed code for normal range
+						id = "SNOMED|260395002|1",
+						type = "SNOMED",
+						code = "260395002",
+						version = "1"
+					)
+				}
 			}
-			measureOrNull > 130 -> {
-				CodeStub( // Snomed code for Hyperglycemia
-					id = "SNOMED|80394007|1",
-					type = "SNOMED",
-					code = "80394007",
-					version = "1"
-				)
-			}
-			else -> {
-				CodeStub( // Snomed code for normal range
-					id = "SNOMED|260395002|1",
-					type = "SNOMED",
-					code = "260395002",
-					version = "1"
-				)
-			}
+			// The rest of the code to handle the entity will go here
+		} else {
+			println("Service with id ${service.id} does not contain a valid measure.")
 		}
-		// The rest of the code to handle the entity will go here
-	} else {
-		println("Service with id ${service.id} does not contain a valid measure.")
 	}
+	else -> {}
 }
 ```
 
@@ -434,65 +440,68 @@ service, that is automatically filled during the creation.
 <LanguageTabs>
 <TabItem value="kotlin">
 
-```kotlin
-is EntitySubscriptionEvent.EntityNotification -> {
-	val service = sdk.contact.decryptService(event.entity)
-	println("Received service ${service.id}")
-	val measureOrNull = service.content["en"]?.measureValue?.value
-	if (measureOrNull != null) {
-		val inferenceResult = when {
-			measureOrNull < 80 -> {
-				CodeStub( // Snomed code for Hypoglycemia
-					id = "SNOMED|302866003|1",
-					type = "SNOMED",
-					code = "302866003",
-					version = "1"
-				)
+```kotlin no-test
+when (event) {
+	is EntitySubscriptionEvent.EntityNotification -> {
+		val service = sdk.contact.decryptService(event.entity)
+		println("Received service ${service.id}")
+		val measureOrNull = service.content["en"]?.measureValue?.value
+		if (measureOrNull != null) {
+			val inferenceResult = when {
+				measureOrNull < 80 -> {
+					CodeStub( // Snomed code for Hypoglycemia
+						id = "SNOMED|302866003|1",
+						type = "SNOMED",
+						code = "302866003",
+						version = "1"
+					)
+				}
+				measureOrNull > 130 -> {
+					CodeStub( // Snomed code for Hyperglycemia
+						id = "SNOMED|80394007|1",
+						type = "SNOMED",
+						code = "80394007",
+						version = "1"
+					)
+				}
+				else -> {
+					CodeStub( // Snomed code for normal range
+						id = "SNOMED|260395002|1",
+						type = "SNOMED",
+						code = "260395002",
+						version = "1"
+					)
+				}
 			}
-			measureOrNull > 130 -> {
-				CodeStub( // Snomed code for Hyperglycemia
-					id = "SNOMED|80394007|1",
-					type = "SNOMED",
-					code = "80394007",
-					version = "1"
-				)
-			}
-			else -> {
-				CodeStub( // Snomed code for normal range
-					id = "SNOMED|260395002|1",
-					type = "SNOMED",
-					code = "260395002",
-					version = "1"
-				)
-			}
-		}
-		val analyzedCodeStub = CodeStub(
-			id = "CARDINAL|ANALYZED|1",
-			type = "CARDINAL",
-			code = "ANALYZED",
-			version = "1"
-		)
-		val updatedService = service.copy(
-			tags = service.tags.filterNot {
-				it.type == "CARDINAL" && it.code == "TO_BE_ANALYZED"
-			}.toSet() + setOf(inferenceResult, analyzedCodeStub)
-		)
-		if (service.contactId != null) {
-			val contact = sdk.contact.getContact(service.contactId!!)
-			sdk.contact.modifyContact(
-				contact.copy(
-					services = contact.services.filterNot {
-						it.id == updatedService.id
-					}.toSet() + setOf(updatedService)
-				)
+			val analyzedCodeStub = CodeStub(
+				id = "CARDINAL|ANALYZED|1",
+				type = "CARDINAL",
+				code = "ANALYZED",
+				version = "1"
 			)
-			println("Successfully updated contact")
+			val updatedService = service.copy(
+				tags = service.tags.filterNot {
+					it.type == "CARDINAL" && it.code == "TO_BE_ANALYZED"
+				}.toSet() + setOf(inferenceResult, analyzedCodeStub)
+			)
+			if (service.contactId != null) {
+				val contact = sdk.contact.getContact(service.contactId!!)
+				sdk.contact.modifyContact(
+					contact.copy(
+						services = contact.services.filterNot {
+							it.id == updatedService.id
+						}.toSet() + setOf(updatedService)
+					)
+				)
+				println("Successfully updated contact")
+			} else {
+				println("Cannot find parent contact")
+			}
 		} else {
-			println("Cannot find parent contact")
+			println("Service with id ${service.id} does not contain a valid measure.")
 		}
-	} else {
-		println("Service with id ${service.id} does not contain a valid measure.")
 	}
+	else -> {}
 }
 ```
 
@@ -627,7 +636,7 @@ Below, you will find the complete code of the loop for receiving and handling th
 <LanguageTabs>
 <TabItem value="kotlin">
 
-```kotlin
+```kotlin no-test
 	for (event in subscription.eventChannel) {
 	when (event) {
 		EntitySubscriptionEvent.Connected -> {

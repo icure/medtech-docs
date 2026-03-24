@@ -1,0 +1,23 @@
+{
+  "preTestProvides": {
+    "registering-users block 1 (AABF)": ["askUserValidationCode"],
+    "registering-users block 3 (AABH)": ["askUserValidationCode"],
+    "registering-users block 5 (AABJ)": ["showRecoveryKey"],
+    "registering-users block 6 (AABK)": ["askValidationCode", "askRecoveryKey"]
+  },
+  "preTestProvideTypes": {
+    "registering-users block 1 (AABF)": {
+      "askUserValidationCode": "suspend () -> String"
+    },
+    "registering-users block 3 (AABH)": {
+      "askUserValidationCode": "suspend () -> String"
+    },
+    "registering-users block 5 (AABJ)": {
+      "showRecoveryKey": "(String) -> Unit"
+    },
+    "registering-users block 6 (AABK)": {
+      "askValidationCode": "suspend () -> String",
+      "askRecoveryKey": "suspend () -> String"
+    }
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "preTestProvides": {
+    "3_searching_data block 2 (AAFO)": ["patientIterator", "prettyPrint"],
+    "3_searching_data block 3 (AAFP)": ["patient", "prettyPrint"],
+    "3_searching_data block 4 (AAFQ)": ["prettyPrint"]
+  },
+  "preTestProvideTypes": {
+    "3_searching_data block 2 (AAFO)": {
+      "patientIterator": "PaginatedListIterator<Patient>",
+      "prettyPrint": "(Any?) -> Unit"
+    },
+    "3_searching_data block 3 (AAFP)": {
+      "patient": "Patient",
+      "prettyPrint": "(Any?) -> Unit"
+    },
+    "3_searching_data block 4 (AAFQ)": {
+      "prettyPrint": "(Any?) -> Unit"
+    }
+  }
+}

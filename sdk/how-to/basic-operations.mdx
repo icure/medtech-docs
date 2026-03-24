@@ -34,7 +34,7 @@ create method of the corresponding api, which "commits" the creation and saves t
 
 <TabItem value="kotlin">
 
-```kotlin
+```kotlin test-AAAA
 import com.icure.cardinal.sdk.CardinalSdk
 import com.icure.cardinal.sdk.model.HealthcareParty
 import com.icure.kryptom.crypto.defaultCryptoService
@@ -100,7 +100,7 @@ Note that you will still have to commit the creation using the create method aft
 
 <TabItem value="kotlin">
 
-```kotlin
+```kotlin test-AAAB
 import com.icure.cardinal.sdk.CardinalSdk
 import com.icure.cardinal.sdk.model.DecryptedPatient
 import com.icure.kryptom.crypto.defaultCryptoService
@@ -188,7 +188,7 @@ For example, when you initialize the encryption metadata of a health element, yo
 
 <TabItem value="kotlin">
 
-```kotlin
+```kotlin test-AAAC
 import com.icure.cardinal.sdk.CardinalSdk
 import com.icure.cardinal.sdk.model.DecryptedHealthElement
 import com.icure.cardinal.sdk.model.Patient
@@ -288,7 +288,7 @@ to add your content before commiting the entity creation.
 
 <TabItem value="kotlin">
 
-```kotlin
+```kotlin test-AAAD
 import com.icure.cardinal.sdk.CardinalSdk
 import com.icure.cardinal.sdk.model.DecryptedPatient
 
@@ -352,7 +352,7 @@ This is especially the case if you want the other delegates to be able to [liste
 
 <TabItem value="kotlin">
 
-```kotlin
+```kotlin test-AAAE
 import com.icure.cardinal.sdk.CardinalSdk
 import com.icure.cardinal.sdk.model.DecryptedPatient
 import com.icure.cardinal.sdk.model.embed.AccessLevel
@@ -452,7 +452,7 @@ provided through the initial delegates.
 
 <TabItem value="kotlin">
 
-```kotlin
+```kotlin test-AAAF
 import com.icure.cardinal.sdk.CardinalSdk
 import com.icure.cardinal.sdk.model.DecryptedPatient
 import com.icure.cardinal.sdk.model.User
@@ -535,13 +535,13 @@ The SDK will automatically decrypt any retrieved encryptable entity.
 
 <TabItem value="kotlin">
 
-```kotlin
+```kotlin test-AAAG
 import com.icure.cardinal.sdk.CardinalSdk
 import com.icure.cardinal.sdk.model.DecryptedPatient
 import com.icure.cardinal.sdk.model.User
 
 suspend fun getPatientOfUser(sdk: CardinalSdk, user: User): DecryptedPatient {
-	return sdk.patient.getPatient(requireNotNull(user.patientId) { "Not a patient user"})
+	return sdk.patient.getPatient(requireNotNull(user.patientId) { "Not a patient user"})!!
 }
 ```
 
@@ -582,7 +582,7 @@ characteristics:
 
 <TabItem value="kotlin">
 
-```kotlin
+```kotlin test-AAAH
 import com.icure.cardinal.sdk.CardinalSdk
 import com.icure.cardinal.sdk.filters.ContactFilters
 import com.icure.cardinal.sdk.model.DecryptedContact
@@ -658,7 +658,7 @@ You can update an entity using the update method of the corresponding API.
 
 <TabItem value="kotlin">
 
-```kotlin
+```kotlin test-AAAI
 import com.icure.cardinal.sdk.CardinalSdk
 import com.icure.cardinal.sdk.model.DecryptedPatient
 
@@ -714,7 +714,7 @@ handle the conflict exceptions, requesting the end-user help if necessary:
 
 <TabItem value="kotlin">
 
-```kotlin
+```kotlin test-AAAJ
 import com.icure.cardinal.sdk.CardinalSdk
 import com.icure.cardinal.sdk.exceptions.RevisionConflictException
 import com.icure.cardinal.sdk.model.DecryptedPatient
@@ -726,7 +726,7 @@ tailrec suspend fun setPatientNote(sdk: CardinalSdk, patient: DecryptedPatient, 
 		null
 	}
 	return if (updatedPatient != null) updatedPatient else {
-		val latestPatient = sdk.patient.getPatient(patient.id)
+		val latestPatient = sdk.patient.getPatient(patient.id)!!
 		when (latestPatient.note) {
 			newNote -> latestPatient
 			patient.note -> setPatientNote(sdk, latestPatient, newNote)
@@ -851,15 +851,15 @@ Each of these methods comes in two variants: one variant takes in input the full
 <LanguageTabs>
 <TabItem value = "kotlin">
 
-```kotlin
+```kotlin test-AAAK
 import com.icure.cardinal.sdk.CardinalSdk
 import com.icure.cardinal.sdk.model.DecryptedPatient
 import com.icure.cardinal.sdk.model.Patient
 import com.icure.cardinal.sdk.model.User
-import com.icure.cardinal.sdk.model.couchdb.DocIdentifier
+import com.icure.cardinal.sdk.model.StoredDocumentIdentifier
 
 suspend fun deletePatient(sdk: CardinalSdk, patient: Patient) {
-  val deletedInfo: DocIdentifier = sdk.patient.deletePatient(patient)
+  val deletedInfo: StoredDocumentIdentifier = sdk.patient.deletePatient(patient)
   println("Delete patient ${deletedInfo.id}, to undelete use revision ${deletedInfo.rev}")
 }
 
@@ -1010,7 +1010,7 @@ You should instead design your UI in a way that prevents the user from modifying
 
 <TabItem value="kotlin">
 
-```kotlin
+```kotlin test-AAAL
 import com.icure.cardinal.sdk.CardinalSdk
 import com.icure.cardinal.sdk.filters.FilterOptions
 import com.icure.cardinal.sdk.model.DecryptedPatient
@@ -1032,7 +1032,7 @@ suspend fun printPatientDetails(
 	patientId: String
 ) {
 	// This application doesn't encrypt the name but encrypts the note
-	val patient = sdk.patient.tryAndRecover.getPatient(patientId)
+	val patient = sdk.patient.tryAndRecover.getPatient(patientId)!!
 	println("First name: ${patient.firstName}")
 	println("Last name: ${patient.lastName}")
 	if (patient is DecryptedPatient) {
@@ -1198,7 +1198,7 @@ When present, the default configuration for this option is always `ShareMetadata
 
 <TabItem value="kotlin">
 
-```kotlin
+```kotlin test-AAAM
 import com.icure.cardinal.sdk.CardinalSdk
 import com.icure.cardinal.sdk.crypto.entities.HealthElementShareOptions
 import com.icure.cardinal.sdk.crypto.entities.SecretIdShareOptions

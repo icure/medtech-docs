@@ -42,7 +42,7 @@ on python applications.
 
 <TabItem value = "kotlin">
 
-```kotlin
+```kotlin test-AABF
 import com.icure.cardinal.sdk.CardinalSdk
 import com.icure.cardinal.sdk.auth.AuthenticationProcessTelecomType
 import com.icure.cardinal.sdk.auth.AuthenticationProcessTemplateParameters
@@ -151,7 +151,7 @@ login.
 
 <TabItem value="kotlin">
 
-```kotlin
+```kotlin test-AABG
 import com.icure.cardinal.sdk.CardinalSdk
 import com.icure.cardinal.sdk.model.Patient
 import com.icure.cardinal.sdk.model.User
@@ -159,7 +159,7 @@ import com.icure.kryptom.crypto.defaultCryptoService
 
 suspend fun inviteExistingPatientAsUser(
 	doctorSdk: CardinalSdk,
-	email: string,
+	email: String,
 	patient: Patient
 ) {
 	// The user logged in to the SDK must have the UserManagement.Create.Patient permission
@@ -238,7 +238,7 @@ authentication with processes is not supported on python.
 
 <TabItem value="kotlin">
 
-```kotlin
+```kotlin test-AABH
 import com.icure.cardinal.sdk.CardinalSdk
 import com.icure.cardinal.sdk.auth.AuthenticationProcessTelecomType
 import com.icure.cardinal.sdk.auth.AuthenticationProcessTemplateParameters
@@ -340,7 +340,7 @@ This way you can be sure that the SDK will be able to at least create data linke
 
 <TabItem value="kotlin">
 
-```kotlin
+```kotlin test-AABI
 import com.icure.cardinal.sdk.CardinalSdk
 import com.icure.cardinal.sdk.auth.UsernamePassword
 import com.icure.cardinal.sdk.options.AuthenticationMethod
@@ -462,7 +462,7 @@ The process on the doctor app side could be:
 
 <TabItem value="kotlin">
 
-```kotlin
+```kotlin test-AABJ
 import com.icure.cardinal.sdk.CardinalSdk
 import com.icure.cardinal.sdk.crypto.entities.PatientShareOptions
 import com.icure.cardinal.sdk.crypto.entities.SecretIdShareOptions
@@ -475,7 +475,7 @@ import com.icure.kryptom.crypto.defaultCryptoService
 suspend fun invitePatientAndPreShare(
 	doctorSdk: CardinalSdk,
 	patient: DecryptedPatient,
-	patientEmail: string
+	patientEmail: String
 ) {
 	doctorSdk.user.createUser(
 		User(
@@ -496,8 +496,8 @@ suspend fun invitePatientAndPreShare(
 	)
 	// You can do this before or after sharing
 	if (didForceInitialize) {
-		val recoveryKey = doctorSdk.recovery.createExchangeDataRecoveryInfo(patient.id)
-		showRecoveryKey(recoveryKey) // Implement this yourself
+		val recoveryKey = doctorSdk.recovery.createExchangeDataRecoveryInfo(patient.id)!!
+		showRecoveryKey(recoveryKey.asBase32()) // Implement this yourself
 	}
 }
 ```
@@ -558,10 +558,11 @@ And on the patient side, after login:
 
 <TabItem value="kotlin">
 
-```kotlin
+```kotlin test-AABK
 import com.icure.cardinal.sdk.CardinalSdk
 import com.icure.cardinal.sdk.auth.AuthenticationProcessTelecomType
 import com.icure.cardinal.sdk.auth.CaptchaOptions
+import com.icure.cardinal.sdk.crypto.entities.RecoveryDataKey
 import com.icure.cardinal.sdk.storage.impl.FileStorageFacade
 
 private const val SPEC_ID = "..."
@@ -586,7 +587,7 @@ suspend fun initializePatientSdkAfterInvite(
 	val sdk = sdkInitializationStep.completeAuthentication(validationCode)
 
 	val recoveryKey = askRecoveryKey() // Implement this yourself
-	val recoveryResult = sdk.recovery.recoverExchangeData(recoveryKey)
+	val recoveryResult = sdk.recovery.recoverExchangeData(RecoveryDataKey.fromBase32(recoveryKey))
 	if (recoveryResult != null) throw IllegalArgumentException("Invalid recovery key for reason $recoveryResult")
 
 	// No need to `ensureEncryptionMetadataForSelfIsInitialized()` since the doctor always pre-shares the patient

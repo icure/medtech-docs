@@ -1,0 +1,90 @@
+{
+  "preTestProvides": {
+    "4_share_data block 1 (AAEF)": ["CARDINAL_URL"],
+    "4_share_data block 3 (AAEH)": ["otherSdk", "oldDocument"],
+    "4_share_data block 4 (AAEI)": ["otherHcp", "oldDocument"],
+    "4_share_data block 5 (AAEJ)": ["otherSdk", "oldDocument"],
+    "4_share_data block 6 (AAEK)": ["otherHcp"],
+    "4_share_data block 7 (AAEL)": ["otherSdk", "createdNewDocument"],
+    "4_share_data block 9 (AAEN)": ["createdPatient"],
+    "4_share_data block 10 (AAEO)": ["createdUser", "login"],
+    "4_share_data block 11 (AAEP)": ["CARDINAL_URL", "login", "loginToken"],
+    "4_share_data block 12 (AAEQ)": ["createdPatient"],
+    "4_share_data block 13 (AAER)": ["CARDINAL_URL", "login", "loginToken"],
+    "4_share_data block 14 (AAES)": ["patient"],
+    "4_share_data block 15 (AAET)": ["patientSdk", "createdHealthElement"],
+    "4_share_data block 16 (AAEU)": ["patient", "createdHealthElement"],
+    "4_share_data block 17 (AAEV)": ["patientSdk", "createdHealthElement"],
+    "4_share_data block 18 (AAEW)": ["patient"],
+    "4_share_data block 19 (AAEX)": ["patientSdk", "newCreatedHealthElement"]
+  },
+  "preTestProvideTypes": {
+    "4_share_data block 1 (AAEF)": {
+      "CARDINAL_URL": "String"
+    },
+    "4_share_data block 3 (AAEH)": {
+      "otherSdk": "CardinalSdk",
+      "oldDocument": "DecryptedDocument"
+    },
+    "4_share_data block 4 (AAEI)": {
+      "otherHcp": "HealthcareParty",
+      "oldDocument": "DecryptedDocument"
+    },
+    "4_share_data block 5 (AAEJ)": {
+      "otherSdk": "CardinalSdk",
+      "oldDocument": "DecryptedDocument"
+    },
+    "4_share_data block 6 (AAEK)": {
+      "otherHcp": "HealthcareParty"
+    },
+    "4_share_data block 7 (AAEL)": {
+      "otherSdk": "CardinalSdk",
+      "createdNewDocument": "DecryptedDocument"
+    },
+    "4_share_data block 9 (AAEN)": {
+      "createdPatient": "DecryptedPatient"
+    },
+    "4_share_data block 10 (AAEO)": {
+      "createdUser": "User",
+      "login": "String"
+    },
+    "4_share_data block 11 (AAEP)": {
+      "CARDINAL_URL": "String",
+      "login": "String",
+      "loginToken": "String"
+    },
+    "4_share_data block 12 (AAEQ)": {
+      "createdPatient": "DecryptedPatient"
+    },
+    "4_share_data block 13 (AAER)": {
+      "CARDINAL_URL": "String",
+      "login": "String",
+      "loginToken": "String"
+    },
+    "4_share_data block 14 (AAES)": {
+      "patient": "DecryptedPatient"
+    },
+    "4_share_data block 15 (AAET)": {
+      "patientSdk": "CardinalSdk",
+      "createdHealthElement": "DecryptedHealthElement"
+    },
+    "4_share_data block 16 (AAEU)": {
+      "patient": "DecryptedPatient",
+      "createdHealthElement": "DecryptedHealthElement"
+    },
+    "4_share_data block 17 (AAEV)": {
+      "patientSdk": "CardinalSdk",
+      "createdHealthElement": "DecryptedHealthElement"
+    },
+    "4_share_data block 18 (AAEW)": {
+      "patient": "DecryptedPatient"
+    },
+    "4_share_data block 19 (AAEX)": {
+      "patientSdk": "CardinalSdk",
+      "newCreatedHealthElement": "DecryptedHealthElement"
+    }
+  },
+  "additionalImports": [
+    "import java.io.ByteArrayInputStream"
+  ]
+}

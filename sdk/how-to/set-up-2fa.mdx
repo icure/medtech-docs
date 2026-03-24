@@ -22,7 +22,7 @@ Enabling the 2FA for a user is a security-critical operation that requires the p
 
 <TabItem value="kotlin">
 
-```kotlin
+```kotlin test-AABO
 import com.icure.cardinal.sdk.model.security.Enable2faRequest
 import com.icure.kotp.Totp
 
@@ -79,7 +79,7 @@ This functionality is not available on Python.
 
 <TabItem value="kotlin">
 
-```kotlin
+```kotlin test-AABP
 import com.icure.cardinal.sdk.auth.AuthSecretProvider
 import com.icure.cardinal.sdk.model.embed.AuthenticationClass
 import com.icure.cardinal.sdk.auth.AuthSecretDetails
@@ -87,6 +87,7 @@ import com.icure.cardinal.sdk.auth.AuthenticationProcessApi
 
 fun askOneTimeCode(): String {
 	// This function will ask the user to enter their OTP
+	return "00000000"
 }
 
 val authSecretProvider = object : AuthSecretProvider {
@@ -147,17 +148,17 @@ The AuthSecretProvider can be used to instantiate the Cardinal SDK:
 
 <TabItem value="kotlin">
 
-```kotlin
+```kotlin test-AABQ
 import com.icure.cardinal.sdk.options.AuthenticationMethod
 import com.icure.cardinal.sdk.storage.impl.FileStorageFacade
 import com.icure.cardinal.sdk.CardinalSdk
 
 val sdk = CardinalSdk.initialize(
-	applicationId = /* Your application id */,
-	baseUrl = "https://api.icure.cloud",
+	projectId = applicationId,
+	baseUrl = cardinalUrl,
 	authenticationMethod = AuthenticationMethod.UsingSecretProvider(
-		loginUsername = /* The login of the user */,
-		initialSecret = AuthenticationMethod.UsingSecretProvider.InitialSecret.Password(/* The password of the user */),
+		loginUsername = loginUsername,
+		initialSecret = AuthenticationMethod.UsingSecretProvider.InitialSecret.Password(loginPassword),
 		secretProvider = authSecretProvider
 	),
 	baseStorage = FileStorageFacade("./scratch/storage")
@@ -194,7 +195,7 @@ The two-factor authentication configuration can be also removed from a user:
 
 <TabItem value="kotlin">
 
-```kotlin
+```kotlin test-AABR
 // val userId = The id of the user
 sdk.user.disable2faForUser(userId)
 ```

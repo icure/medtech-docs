@@ -1,0 +1,23 @@
+{
+  "preTestProvides": {
+    "set-up-2fa block 1 (AABO)": ["userId", "otpSecret"],
+    "set-up-2fa block 3 (AABQ)": ["authSecretProvider", "applicationId", "cardinalUrl", "loginUsername", "loginPassword"],
+    "set-up-2fa block 4 (AABR)": ["userId"]
+  },
+  "preTestProvideTypes": {
+    "set-up-2fa block 1 (AABO)": {
+      "userId": "String",
+      "otpSecret": "String"
+    },
+    "set-up-2fa block 3 (AABQ)": {
+      "authSecretProvider": "com.icure.cardinal.sdk.auth.AuthSecretProvider",
+      "applicationId": "String?",
+      "cardinalUrl": "String",
+      "loginUsername": "String",
+      "loginPassword": "String"
+    },
+    "set-up-2fa block 4 (AABR)": {
+      "userId": "String"
+    }
+  }
+}

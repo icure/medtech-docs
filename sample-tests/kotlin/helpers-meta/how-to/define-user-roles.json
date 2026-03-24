@@ -1,0 +1,15 @@
+{
+  "preTestProvides": {
+    "define-user-roles block 2 (AABM)": ["userId", "allRoles"],
+    "define-user-roles block 3 (AABN)": ["userId"]
+  },
+  "preTestProvideTypes": {
+    "define-user-roles block 2 (AABM)": {
+      "userId": "String",
+      "allRoles": "Set<String>"
+    },
+    "define-user-roles block 3 (AABN)": {
+      "userId": "String"
+    }
+  }
+}

@@ -47,9 +47,11 @@ and the tag code `TO_BE_STARTED`.
 
 This method returns a `ReceiveChannel` that allows us to consume the events.
 
-```kotlin
+```kotlin test-AABA
 import com.icure.cardinal.sdk.filters.ServiceFilters
+import com.icure.cardinal.sdk.subscription.SubscriptionEventType
 import com.icure.cardinal.sdk.subscription.EntitySubscriptionConfiguration
+import kotlin.time.Duration.Companion.seconds
 import kotlinx.coroutines.channels.consumeEach
 
 sdk.healthElement.subscribeToEvents (
@@ -237,7 +239,7 @@ Possible close reasons are as follows:
 
 <TabItem value="kotlin">
 
-```kotlin
+```kotlin test-AABB
 import com.icure.cardinal.sdk.subscription.EntitySubscriptionCloseReason
 
 subscription.closeReason?.let {
@@ -330,7 +332,7 @@ In this example, the number of reconnection attempts is limited to 5. If the lim
 
 <TabItem value="kotlin">
 
-```kotlin
+```kotlin test-AABC
 import com.icure.cardinal.sdk.filters.HealthElementFilters
 import com.icure.cardinal.sdk.subscription.EntitySubscriptionConfiguration
 import com.icure.cardinal.sdk.subscription.EntitySubscriptionEvent

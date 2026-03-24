@@ -35,7 +35,7 @@ responsible for the research study. They both have to log in and initialize the 
 
 <TabItem value="kotlin">
 
-```kotlin
+```kotlin test-AAAN
 import com.icure.cardinal.sdk.CardinalSdk
 import com.icure.cardinal.sdk.auth.UsernamePassword
 import com.icure.cardinal.sdk.options.AuthenticationMethod
@@ -50,7 +50,7 @@ val researchDoctorUsername = RESEARCH_DOCTOR_USERNAME
 val researchDoctorPassword = RESEARCH_DOCTOR_PASSWORD
 
 val visitingDoctorSdk = CardinalSdk.initialize(
-	applicationId = null,
+	projectId = null,
 	baseUrl = CARDINAL_URL,
 	authenticationMethod = AuthenticationMethod.UsingCredentials(
 		UsernamePassword(visitingDoctorUsername, visitingDoctorPassword)
@@ -58,7 +58,7 @@ val visitingDoctorSdk = CardinalSdk.initialize(
 	baseStorage = FileStorageFacade("./scratch/storage")
 )
 val researchDoctorSdk = CardinalSdk.initialize(
-	applicationId = null,
+	projectId = null,
 	baseUrl = CARDINAL_URL,
 	authenticationMethod = AuthenticationMethod.UsingCredentials(
 		UsernamePassword(researchDoctorUsername, researchDoctorPassword)
@@ -141,7 +141,7 @@ for the research study will not be able to access it.
 
 <TabItem value="kotlin">
 
-```kotlin
+```kotlin test-AAAO
 import com.icure.cardinal.sdk.model.DecryptedPatient
 import java.util.UUID
 
@@ -203,7 +203,7 @@ assume that this already happened before.
 
 <TabItem value="kotlin">
 
-```kotlin
+```kotlin test-AAAP
 // In a real scenario, the first doctor would need to search for the other doctor.
 // For the sake of the example, it will be in the following variable
 val researchDoctorId = researchDoctorSdk.healthcareParty.getCurrentHealthcareParty().id
@@ -242,7 +242,7 @@ medication prescribed. The doctor will instantiate a Service for each of those.
 
 <TabItem value="kotlin">
 
-```kotlin
+```kotlin test-AAAQ
 import com.icure.cardinal.sdk.model.embed.DecryptedContent
 import com.icure.cardinal.sdk.model.embed.DecryptedService
 import com.icure.cardinal.sdk.model.embed.Measure
@@ -250,6 +250,7 @@ import com.icure.cardinal.sdk.model.embed.Medication
 import com.icure.cardinal.sdk.model.embed.Substanceproduct
 import com.icure.cardinal.sdk.model.embed.TimeSeries
 import java.util.UUID
+import kotlin.random.Random
 
 val bloodPressureService = DecryptedService(
 	id = UUID.randomUUID().toString(),
@@ -423,7 +424,7 @@ Both Contacts will share the same `groupId`: this way, they can be recognized as
 
 <TabItem value="kotlin">
 
-```kotlin
+```kotlin test-AAAR
 import com.icure.cardinal.sdk.model.DecryptedContact
 import com.icure.cardinal.sdk.model.embed.AccessLevel
 import com.icure.cardinal.sdk.model.embed.Annotation
@@ -576,7 +577,7 @@ Services based on the [link with the Patient](/explanations/end-to-end-encryptio
 
 <TabItem value="kotlin">
 
-```kotlin
+```kotlin test-AAAS
 import com.icure.cardinal.sdk.filters.ServiceFilters
 
 val allServicesIterator = visitingDoctorSdk.contact.filterServicesBy(
@@ -636,7 +637,7 @@ This will return only the Contact that they can access, the one with the ECG res
 
 <TabItem value="kotlin">
 
-```kotlin
+```kotlin test-AAAT
 import com.icure.cardinal.sdk.filters.ContactFilters
 
 val researchContactIterator = researchDoctorSdk.contact.filterContactsBy(

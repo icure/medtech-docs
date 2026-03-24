@@ -1,0 +1,44 @@
+{
+  "preTestProvides": {
+    "0_publisher block 3 (AADF)": ["createdPatient"],
+    "0_publisher block 4 (AADG)": ["CARDINAL_URL", "login", "loginToken"],
+    "0_publisher block 5 (AADH)": ["createdPatient"],
+    "0_publisher block 6 (AADI)": ["CARDINAL_URL", "login", "loginToken"],
+    "0_publisher block 8 (AADK)": ["patient", "patientSdk", "contact"],
+    "0_publisher block 9 (AADL)": ["patientSdk"],
+    "0_publisher block 10 (AADM)": ["serviceIterator", "patientSdk"]
+  },
+  "preTestProvideTypes": {
+    "0_publisher block 3 (AADF)": {
+      "createdPatient": "DecryptedPatient"
+    },
+    "0_publisher block 4 (AADG)": {
+      "CARDINAL_URL": "String",
+      "login": "String",
+      "loginToken": "String"
+    },
+    "0_publisher block 5 (AADH)": {
+      "createdPatient": "DecryptedPatient"
+    },
+    "0_publisher block 6 (AADI)": {
+      "CARDINAL_URL": "String",
+      "login": "String",
+      "loginToken": "String"
+    },
+    "0_publisher block 8 (AADK)": {
+      "patient": "DecryptedPatient",
+      "patientSdk": "CardinalSdk",
+      "contact": "DecryptedContact"
+    },
+    "0_publisher block 9 (AADL)": {
+      "patientSdk": "CardinalSdk"
+    },
+    "0_publisher block 10 (AADM)": {
+      "serviceIterator": "com.icure.cardinal.sdk.utils.pagination.PaginatedListIterator<DecryptedService>",
+      "patientSdk": "CardinalSdk"
+    }
+  },
+  "additionalImports": [
+    "import java.time.LocalDateTime"
+  ]
+}

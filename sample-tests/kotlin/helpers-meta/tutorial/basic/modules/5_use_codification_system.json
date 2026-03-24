@@ -1,0 +1,15 @@
+{
+  "preTestProvides": {
+    "5_use_codification_system block 2 (AAED)": ["prettyPrint"],
+    "5_use_codification_system block 3 (AAEE)": ["selectedCode", "prettyPrint"]
+  },
+  "preTestProvideTypes": {
+    "5_use_codification_system block 2 (AAED)": {
+      "prettyPrint": "(Any?) -> Unit"
+    },
+    "5_use_codification_system block 3 (AAEE)": {
+      "selectedCode": "Code",
+      "prettyPrint": "(Any?) -> Unit"
+    }
+  }
+}

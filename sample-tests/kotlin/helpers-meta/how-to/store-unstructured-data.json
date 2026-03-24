@@ -1,0 +1,37 @@
+{
+  "preTestProvides": {
+    "store-unstructured-data block 2 (AACV)": ["document"],
+    "store-unstructured-data block 3 (AACW)": ["document", "xmlData"],
+    "store-unstructured-data block 4 (AACX)": ["documentWithMainAttachment"],
+    "store-unstructured-data block 5 (AACY)": ["document"],
+    "store-unstructured-data block 6 (AACZ)": ["document"],
+    "store-unstructured-data block 7 (AADA)": ["retrievedDocument", "attachmentId"],
+    "store-unstructured-data block 8 (AADB)": ["retrievedDocument", "attachmentId"]
+  },
+  "preTestProvideTypes": {
+    "store-unstructured-data block 2 (AACV)": {
+      "document": "com.icure.cardinal.sdk.model.DecryptedDocument"
+    },
+    "store-unstructured-data block 3 (AACW)": {
+      "document": "com.icure.cardinal.sdk.model.DecryptedDocument",
+      "xmlData": "String"
+    },
+    "store-unstructured-data block 4 (AACX)": {
+      "documentWithMainAttachment": "com.icure.cardinal.sdk.model.DecryptedDocument"
+    },
+    "store-unstructured-data block 5 (AACY)": {
+      "document": "com.icure.cardinal.sdk.model.DecryptedDocument"
+    },
+    "store-unstructured-data block 6 (AACZ)": {
+      "document": "com.icure.cardinal.sdk.model.DecryptedDocument"
+    },
+    "store-unstructured-data block 7 (AADA)": {
+      "retrievedDocument": "com.icure.cardinal.sdk.model.DecryptedDocument",
+      "attachmentId": "String"
+    },
+    "store-unstructured-data block 8 (AADB)": {
+      "retrievedDocument": "com.icure.cardinal.sdk.model.DecryptedDocument",
+      "attachmentId": "String"
+    }
+  }
+}

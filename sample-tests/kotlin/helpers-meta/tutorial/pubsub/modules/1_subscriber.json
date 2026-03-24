@@ -1,0 +1,38 @@
+{
+  "preTestProvides": {
+    "1_subscriber block 3 (AADP)": ["filter"],
+    "1_subscriber block 4 (AADQ)": ["subscription"],
+    "1_subscriber block 5 (AADR)": ["subscription"],
+    "1_subscriber block 6 (AADS)": ["event"],
+    "1_subscriber block 7 (AADT)": ["event"],
+    "1_subscriber block 8 (AADU)": ["event"],
+    "1_subscriber block 9 (AADV)": ["subscription"]
+  },
+  "preTestProvideTypes": {
+    "1_subscriber block 3 (AADP)": {
+      "filter": "com.icure.cardinal.sdk.filters.FilterOptions<com.icure.cardinal.sdk.model.embed.Service>"
+    },
+    "1_subscriber block 4 (AADQ)": {
+      "subscription": "com.icure.cardinal.sdk.subscription.EntitySubscription<com.icure.cardinal.sdk.model.embed.EncryptedService>"
+    },
+    "1_subscriber block 5 (AADR)": {
+      "subscription": "com.icure.cardinal.sdk.subscription.EntitySubscription<com.icure.cardinal.sdk.model.embed.EncryptedService>"
+    },
+    "1_subscriber block 6 (AADS)": {
+      "event": "EntitySubscriptionEvent<com.icure.cardinal.sdk.model.embed.EncryptedService>"
+    },
+    "1_subscriber block 7 (AADT)": {
+      "event": "EntitySubscriptionEvent<com.icure.cardinal.sdk.model.embed.EncryptedService>"
+    },
+    "1_subscriber block 8 (AADU)": {
+      "event": "EntitySubscriptionEvent<com.icure.cardinal.sdk.model.embed.EncryptedService>"
+    },
+    "1_subscriber block 9 (AADV)": {
+      "subscription": "com.icure.cardinal.sdk.subscription.EntitySubscription<com.icure.cardinal.sdk.model.embed.EncryptedService>"
+    }
+  },
+  "additionalImports": [
+    "import com.icure.cardinal.sdk.subscription.EntitySubscription",
+    "import com.icure.cardinal.sdk.subscription.EntitySubscriptionEvent"
+  ]
+}
