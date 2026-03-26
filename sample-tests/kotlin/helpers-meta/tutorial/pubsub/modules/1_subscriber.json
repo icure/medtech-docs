@@ -5,8 +5,8 @@
     "1_subscriber block 5 (AADR)": ["subscription"],
     "1_subscriber block 6 (AADS)": ["event"],
     "1_subscriber block 7 (AADT)": ["event"],
-    "1_subscriber block 8 (AADU)": ["event"],
-    "1_subscriber block 9 (AADV)": ["subscription"]
+    "1_subscriber block 8 (AAGK)": ["event"],
+    "1_subscriber block 9 (AAGL)": ["subscription"]
   },
   "preTestProvideTypes": {
     "1_subscriber block 3 (AADP)": {
@@ -24,10 +24,10 @@
     "1_subscriber block 7 (AADT)": {
       "event": "EntitySubscriptionEvent<com.icure.cardinal.sdk.model.embed.EncryptedService>"
     },
-    "1_subscriber block 8 (AADU)": {
+    "1_subscriber block 8 (AAGK)": {
       "event": "EntitySubscriptionEvent<com.icure.cardinal.sdk.model.embed.EncryptedService>"
     },
-    "1_subscriber block 9 (AADV)": {
+    "1_subscriber block 9 (AAGL)": {
       "subscription": "com.icure.cardinal.sdk.subscription.EntitySubscription<com.icure.cardinal.sdk.model.embed.EncryptedService>"
     }
   },

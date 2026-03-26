@@ -440,7 +440,7 @@ service, that is automatically filled during the creation.
 <LanguageTabs>
 <TabItem value="kotlin">
 
-```kotlin no-test
+```kotlin test-AAGK
 when (event) {
 	is EntitySubscriptionEvent.EntityNotification -> {
 		val service = sdk.contact.decryptService(event.entity)
@@ -485,7 +485,7 @@ when (event) {
 				}.toSet() + setOf(inferenceResult, analyzedCodeStub)
 			)
 			if (service.contactId != null) {
-				val contact = sdk.contact.getContact(service.contactId!!)
+				val contact = sdk.contact.getContact(service.contactId!!)!!
 				sdk.contact.modifyContact(
 					contact.copy(
 						services = contact.services.filterNot {
@@ -636,7 +636,7 @@ Below, you will find the complete code of the loop for receiving and handling th
 <LanguageTabs>
 <TabItem value="kotlin">
 
-```kotlin no-test
+```kotlin test-AAGL
 	for (event in subscription.eventChannel) {
 	when (event) {
 		EntitySubscriptionEvent.Connected -> {
@@ -685,7 +685,7 @@ Below, you will find the complete code of the loop for receiving and handling th
 					}.toSet() + setOf(inferenceResult, analyzedCodeStub)
 				)
 				if (service.contactId != null) {
-					val contact = sdk.contact.getContact(service.contactId!!)
+					val contact = sdk.contact.getContact(service.contactId!!)!!
 					sdk.contact.modifyContact(
 						contact.copy(
 							services = contact.services.filterNot {

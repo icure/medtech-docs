@@ -1,7 +1,8 @@
 {
   "preTestProvides": {
     "index block 5 (AACF)": ["specId", "processId", "askValidationCode"],
-    "index block 6 (AACG)": ["username", "getCachedToken", "askUserPassword"]
+    "index block 6 (AACG)": ["username", "getCachedToken", "askUserPassword"],
+    "index block 7 (AACH)": ["LocalStorageStorageFacade"]
   },
   "preTestProvideTypes": {
     "index block 5 (AACF)": {
@@ -13,6 +14,9 @@
       "username": "String",
       "getCachedToken": "suspend () -> String?",
       "askUserPassword": "suspend () -> String"
+    },
+    "index block 7 (AACH)": {
+      "LocalStorageStorageFacade": "() -> com.icure.cardinal.sdk.storage.StorageFacade"
     }
   }
 }

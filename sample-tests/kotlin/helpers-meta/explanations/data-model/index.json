@@ -1,5 +1,10 @@
 {
   "preTestProvides": {
     "index block 1 (AAFM)": ["healthElementId"]
+  },
+  "preTestProvideTypes": {
+    "index block 1 (AAFM)": {
+      "healthElementId": "String"
+    }
   }
 }

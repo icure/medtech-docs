@@ -7,9 +7,6 @@ package com.icure.docs.generator
 private val EXCLUDED_IMPORT_PREFIXES = listOf(
     "import com.icure.kotp",
     "import com.icure.cardinal.sdk.storage.impl.LocalStorageStorageFacade",
-    "import com.icure.cardinal.sdk.storage.impl.JwkKeyStorage",
-    "import com.icure.cardinal.sdk.storage.impl.JsonAndBase64KeyStorage",
-    "import io.ktor.client.engine.cio",
 )
 
 fun isExcludedImport(line: String): Boolean {

@@ -76,8 +76,8 @@ object _1SubscriberHelper {
         "1_subscriber block 5 (AADR)" to ::preBlock5,
         "1_subscriber block 6 (AADS)" to ::preBlock6,
         "1_subscriber block 7 (AADT)" to ::preBlock7,
-        "1_subscriber block 8 (AADU)" to ::preBlock8,
-        "1_subscriber block 9 (AADV)" to ::preBlock9,
+        "1_subscriber block 8 (AAGK)" to ::preBlock8,
+        "1_subscriber block 9 (AAGL)" to ::preBlock9,
     )
     val postTest: Map<String, suspend (sdk: CardinalSdk, extracted: Map<String, Any?>) -> Unit> = mapOf(
         "1_subscriber block 2 (AADO)" to { _, extracted ->

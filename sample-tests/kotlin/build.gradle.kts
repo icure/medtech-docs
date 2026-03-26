@@ -11,8 +11,9 @@ repositories {
 dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.3")
 
-    testImplementation("com.icure:cardinal-sdk:2.1.3")
+    testImplementation("com.icure:cardinal-sdk:2.2.0")
     testImplementation("io.ktor:ktor-client-core:3.2.1")
+    testImplementation("io.ktor:ktor-client-cio:3.2.1")
     testImplementation("io.ktor:ktor-client-content-negotiation:3.2.1")
     testImplementation("io.ktor:ktor-serialization-kotlinx-json:3.2.1")
     testImplementation("org.jetbrains.kotlinx:kotlinx-datetime:0.6.2")

@@ -300,7 +300,7 @@ You can refer to the [dedicated documentation page](./expo) to learn how to get 
 
 <TabItem value = "kotlin">
 
-```kotlin test-AABW no-test
+```kotlin test-AABW
 import com.icure.cardinal.sdk.CardinalSdk
 import com.icure.cardinal.sdk.auth.AuthenticationProcessTelecomType
 import com.icure.cardinal.sdk.auth.CaptchaOptions
@@ -327,6 +327,15 @@ val msgGwUrl = "https://msg-gw.icure.cloud"
 val specId = "SPEC_ID" // Fill from cockpit
 val processId = "PROCESS_ID" // Fill from cockpit
 
+suspend fun getAndSolveKerberusChallenge(): Solution {
+	val challenge = client.get("${msgGwUrl}/${specId}/challenge"){
+		accept(ContentType.Application.Json)
+	}.body<Challenge>()
+	return resolveChallenge(challenge, specId) { progress ->
+		println("Progress: ${progress * 100}%")
+	}
+}
+
 suspend fun startSdkAuth(
 	userEmail: String
 ) = CardinalSdk.initializeWithProcess(
@@ -340,15 +349,6 @@ suspend fun startSdkAuth(
 	captcha = CaptchaOptions.Kerberus.Computed(getAndSolveKerberusChallenge()),
 	baseStorage = FileStorageFacade("FILE_PATH"),
 )
-
-suspend fun getAndSolveKerberusChallenge(): Solution {
-	val challenge = client.get("${msgGwUrl}/${specId}/challenge"){
-		accept(ContentType.Application.Json)
-	}.body<Challenge>()
-	return resolveChallenge(challenge, specId) { progress ->
-		println("Progress: ${progress * 100}%")
-	}
-}
 
 ```
 
