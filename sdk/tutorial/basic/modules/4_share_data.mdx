@@ -52,7 +52,7 @@ val otherHcp = otherSdk.healthcareParty.getCurrentHealthcareParty()
 username = input("Login of the other hcp: ").strip()
 other_password = input("Insert the password for this hcp: ")
 other_sdk = CardinalSdk(
-	application_id=None,
+	project_id=None,
 	baseurl=CARDINAL_URL,
 	authentication_method=UsernamePassword(username, other_password),
 	storage_facade=FileSystemStorage("./scratch/storage")
@@ -562,7 +562,7 @@ CardinalSdk.initialize(
 
 ```python
 CardinalSdk(
-	application_id=None,
+	project_id=None,
 	baseurl=CARDINAL_URL,
 	authentication_method=UsernamePassword(login, login_token),
 	storage_facade=FileSystemStorage("./scratch/storage")
@@ -692,7 +692,7 @@ val patientSdk = CardinalSdk.initialize(
 
 ```python
 patient_sdk = CardinalSdk(
-	application_id=None,
+	project_id=None,
 	baseurl=CARDINAL_URL,
 	authentication_method=UsernamePassword(login, login_token),
 	storage_facade=FileSystemStorage("./scratch/storage")
