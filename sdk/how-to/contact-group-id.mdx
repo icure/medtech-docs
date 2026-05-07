@@ -114,13 +114,13 @@ research_doctor_username = RESEARCH_DOCTOR_USERNAME
 research_doctor_password = RESEARCH_DOCTOR_PASSWORD
 
 visiting_doctor_sdk = CardinalSdk(
-	application_id=None,
+	project_id=None,
 	baseurl=CARDINAL_URL,
 	authentication_method=UsernamePassword(visiting_doctor_username, visiting_doctor_password),
 	storage_facade=FileSystemStorage("../scratch/storage")
 )
 research_doctor_sdk = CardinalSdk(
-	application_id=None,
+	project_id=None,
 	baseurl=CARDINAL_URL,
 	authentication_method=UsernamePassword(research_doctor_username, research_doctor_password),
 	storage_facade=FileSystemStorage("../scratch/storage")

@@ -53,7 +53,7 @@ CARDINAL_URL = "https://api.icure.cloud"
 username = input("Username: ")
 password = input("Password: ")
 sdk = CardinalSdk(
-	application_id=None,
+	project_id=None,
 	baseurl=CARDINAL_URL,
 	authentication_method=UsernamePassword(username, password),
 	storage_facade=FileSystemStorage("../scratch/storage")
@@ -244,7 +244,7 @@ CardinalSdk.initialize(
 
 ```python
 CardinalSdk(
-	application_id=None,
+	project_id=None,
 	baseurl=CARDINAL_URL,
 	authentication_method=UsernamePassword(login, login_token),
 	storage_facade=FileSystemStorage("../scratch/storage")
@@ -372,7 +372,7 @@ val patientSdk = CardinalSdk.initialize(
 
 ```python
 patient_sdk = CardinalSdk(
-	application_id=None,
+	project_id=None,
 	baseurl=CARDINAL_URL,
 	authentication_method=UsernamePassword(login, login_token),
 	storage_facade=FileSystemStorage("../scratch/storage")
