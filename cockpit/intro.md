@@ -4,6 +4,10 @@ sidebar_position: 1
 
 # Introduction
 
+:::caution
+This version of the documentation is not fully accurate, as it refers to the previous version of Cockpit. It can still give you a good idea of how to use Cockpit, since the logic of the application remains the same. An updated version of the documentation is coming soon.
+:::
+
 ## What is Cockpit ?
 
 The Cockpit is the Web Management application that lets you create data stores, manage users and authentication settings and processes.
