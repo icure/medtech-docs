@@ -28,5 +28,5 @@ Cardinal SDK, each one with code examples in all the supported languages.
 of the Cardinal SDK.
 
 :::note
-Before start using the Cardinal SDK, you have to [create your account on the Cockpit](cockpit/how-to/how-to-create-your-account)
+Before start using the Cardinal SDK, you have to [create your account on the Cockpit](/cockpit/register-and-log-in)
 :::
