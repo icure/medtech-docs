@@ -83,6 +83,18 @@ delegations**. Each entry reads as *category → delegate*. **Add auto delegatio
 - **Categories** — one or more [data categories](#data-categories-delegationtag) to share.
 - **Delegate** — the data owner to share with (search for a healthcare party).
 
+A delegate in a single category has one delete button; a delegate in **multiple categories** has two — remove
+them from that one category, or from all categories at once.
+
+:::danger
+A warning icon means the delegate has **no initialized key**. Data can't be shared with them, so any data the
+user creates for this delegation won't be saved. It's resolved once the delegate initializes their key by
+logging in through your app — or by removing the delegation. See [Recovery & Private Keys](/cockpit/recovery-and-private-keys).
+:::
+
+<!-- TODO(screenshot): users/auto-delegations — an expanded user row showing the Auto delegations list (with a
+     key-not-initialized warning) and the "Add auto delegation" modal (Categories + Delegate). -->
+
 You can remove a delegate from a single category or from all categories. See [Managing Users](/cockpit/managing-users).
 
 <!-- TODO(screenshot): users/auto-delegations — an expanded user row showing the Auto delegations list and
@@ -94,3 +106,5 @@ You can remove a delegate from a single category or from all categories. See [Ma
 - **[Recovery & Private Keys](/cockpit/recovery-and-private-keys)** — why the delegate needs an initialized key.
 - **[Authentication Processes (setup)](/cockpit/authentication-processes-setup)** — the auto-delegation-to-parent toggle.
 - **[Managing Users](/cockpit/managing-users)** — managing a user's auto-delegations in the expanded row.
+
+> Cardinal SDK reference: **[`Auto-delegations`](/how-to/basic-operations/#auto-delegations)**.

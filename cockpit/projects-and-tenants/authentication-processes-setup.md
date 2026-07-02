@@ -28,11 +28,18 @@ project the tenant is hidden, so you manage everything from the project's Config
 
 ## Creating a process
 
+**Gateways and channels.** A process sends its codes through a gateway you configure in
+[External Services](/cockpit/external-services-overview). You can still create a process *before* its gateway exists — Cockpit warns you in
+the modal and the process simply won't send on that channel until a matching gateway is set up.
+
 :::caution
-**Configure the matching gateway first.** A process can only use a channel you've set up in
-[External Services](/cockpit/external-services-overview) — you can't create an **email** process without an email gateway, or an **SMS**
-process without an SMS gateway. See [Email](/cockpit/external-services-email) and [SMS](/cockpit/external-services-sms).
+**On the demo setup, SMS is unavailable.** While only the demo SendGrid gateway is configured, the modal
+shows the demo reminder and the **SMS template** option is **disabled**: *"SMS is not available with the
+demo setup. To send SMS messages, configure an SMS gateway in External Services."* Add a real
+[SMS](/cockpit/external-services-sms) gateway to enable it.
 :::
+
+> See [Email](/cockpit/external-services-email), [SMS](/cockpit/external-services-sms) and [Demo setup](/cockpit/external-services-demo-setup).
 
 On the Processes tab, click **Create process** (or **Create project process** / **Create tenant process**)
 and fill in the form:

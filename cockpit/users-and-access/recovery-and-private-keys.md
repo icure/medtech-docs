@@ -23,7 +23,7 @@ is **gone for good**.
   keys through **your application** — typically automatically the first time they log in via an
   [authentication process](/cockpit/authentication-processes).
 - **The parent [organization](/cockpit/organization)'s** private key is initialized **automatically** during project creation,
-  so the users that share through it can work immediately.
+  so the users that share through it can work immediately. See [Create project / Ready to go](/cockpit/create-your-first-project#6-ready-to-go).
 - **Your own test/admin HCP** can be initialized manually in Cockpit (below).
 
 A user's **Enrolment status** in the Users table tells you which state they're in — **Initialized** or
