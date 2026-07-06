@@ -210,7 +210,7 @@ final auth = AuthenticationMethod.UsingCredentials(Credentials.UsernamePassword(
 
 #### Username + login token
 
-You can generate login token through the [cockpit](/cockpit/how-to/how-to-manage-hcp#generating-an-authentication-token)
+You can generate login token through the [cockpit](/cockpit/managing-users#authentication-tokens)
 or through the Cardinal SDK itself (:construction:).
 The lifespan of a login token is configurable, and there may be multiple login tokens associated with a user.
 Login tokens can be revoked, but any JWTs generated through that login token won't be automatically revoked.
@@ -496,7 +496,7 @@ on the type of process.
 The type of process you're using also determines whether you have to pass the email or phone number of the user.
 
 You can get the `specId` and `processId` from the cockpit.
-For a quick start, we suggest that you use the demo setup during the [cockpit onboarding](/cockpit/how-to/how-to-start),
+For a quick start, we suggest that you use the demo setup during the [cockpit onboarding](/cockpit/external-services-demo-setup),
 but you can also configure your services and custom processes.
 
 #### Captcha

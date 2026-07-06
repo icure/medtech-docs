@@ -121,6 +121,19 @@ html[data-theme='dark'] {
   --ifm-alert-border-color: #00B1FF;
 }
 
+/* Links inside admonitions/alerts (note, tip, info, warning, danger, …):
+   Infima forces them to the alert foreground color — keep them orange and bold instead. */
+.alert a,
+.theme-admonition a {
+  color: var(--ifm-color-primary) !important;
+  text-decoration: underline;
+}
+
+.alert a:hover,
+.theme-admonition a:hover {
+  color: var(--ifm-color-primary-dark) !important;
+}
+
 .menu__caret:before,
 .menu__link--sublist-caret:after {
   content: '';

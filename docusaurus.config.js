@@ -172,7 +172,7 @@ async function createConfig() {
                         },
                         {
                             type: 'doc',
-                            docId: 'intro',
+                            docId: 'getting-started/introduction',
                             position: 'right',
                             label: 'Cockpit',
                             docsPluginId: 'cockpit',
