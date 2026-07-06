@@ -15,7 +15,7 @@ from and how to safeguard them.
 Private keys are **security-critical**. They are **not stored by Cardinal**, are **shown only once**, and
 **cannot be recovered** if you lose your backup. The moment a key is generated, keep a safe copy of the
 private key itself (the `*.pem` file) — a recovery key is optional on top of that. Lose every copy and that
-owner's encrypted data is **gone for good**.
+owner's encrypted data is **gone for good**. If not shared with anyone else.
 :::
 
 ## How keys get initialized
