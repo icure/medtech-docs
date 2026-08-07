@@ -1,0 +1,32 @@
+# Backends and Release Cycle
+
+## Available Backends
+There are 4 backends available to connect to the Cardinal SDK:
+
+- `nightly.icure.cloud`: this version of the backend is always up to date with the latest development
+release. It is updated continuously without notice.
+- `pre-qa.icure.cloud`: this backend is updated monthly with the latest candidate stable release.
+- `qa.icure.cloud`: a semi-stable version of the backend, it is updated after one week of validation on
+`pre-qa.icure.cloud`.
+- `api.icure.cloud`: the stable version of the backend. It is updated each month to the previous version
+published, after validation on `qa.icure.cloud`.
+
+## Release Cycle
+
+### Backend
+A new version of the backend is released on the second Wednesday on each month and it is immediately
+published on `nightly.icure.cloud` and `pre-qa.icure.cloud`. 
+The changelog and the release notes of the new version is published on our dedicated [Discord channel](https://discord.com/channels/1195348643176255612/1415972175508148266).
+
+Two weeks after the release on `pre-qa.icure.cloud`, if no issue was detected on the new version, then the
+version is deployed on `qa.icure.cloud`.
+
+Finally, two weeks after the release on `qa.icure.cloud`, if no problem arose during the testing period,
+the release is published on `api.icure.cloud`.
+
+If a security problem is reported on a specific version of the backend, a hotfix may be released directly.
+In this case, this will also be announced on the Discord channel.
+
+#### Compatibility with the SDK version.
+The new versions of the backends are generally retro-compatible with all the SDK versions. Possible breaking
+changes or minimum version required to access new features will be highlighted in the release notes.
