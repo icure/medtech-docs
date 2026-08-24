@@ -176,7 +176,9 @@ A `Code` is defined by three properties:
 and a new version.
 
 A `Code` is uniquely identified by the `type`, `code`, `version` triple, so the ID of a `Code` is not a UUID but rather
-the string `type|code|version`.
+the string `type|code|version`. Note that the usual [validity rules for ids](/explanations/data-model/#what-is-a-valid-id)
+still apply: while `|` is allowed, `type`, `code`, and `version` cannot contain whitespace, control characters, or any
+of the characters `/` `\` `?` `#` `%` `;`.
 
 A `Code` can be used to add additional context to other entities. In the following example, it is used to add a tag to
 a `Service`.

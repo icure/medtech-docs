@@ -158,7 +158,11 @@ sdk.document.set_raw_main_attachment_blocking(document.id, document.rev, ["publi
 </LanguageTabs>
 
 Each Document can have one main attachment and many secondary attachments. Each secondary attachment must be identified by
-a unique identifier and can be stored both as an encrypted or unencrypted byte array.
+a unique identifier and can be stored both as an encrypted or unencrypted byte array. Since attachment ids, like entity
+ids, are used as path parameters when retrieving the attachment, follow the same rules as for
+[entity ids](/explanations/data-model/#what-is-a-valid-id): no whitespace, control characters, or any of the characters
+`/` `\` `?` `#` `%` `;`. A plain or base58-encoded [UUID v4](https://en.wikipedia.org/wiki/Universally_unique_identifier#Version_4_(random))
+is always safe.
 
 <LanguageTabs>
 

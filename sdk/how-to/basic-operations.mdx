@@ -30,6 +30,16 @@ We will refer to the first kind of entities as "encryptable", and to the second 
 You can create non-encryptable entities by instantiating an instance of their model class and then passing it to the
 create method of the corresponding api, which "commits" the creation and saves the new entity in the backend.
 
+:::note
+
+The `id` of a new entity is always chosen by the client. We recommend using a
+[UUID v4](https://en.wikipedia.org/wiki/Universally_unique_identifier#Version_4_(random)), plain or base58-encoded as a
+short UUID, as done in the examples below. Ids are used as path parameters in the URLs of the REST API, so an id cannot
+contain whitespace, control characters, or any of the characters `/` `\` `?` `#` `%` `;`: the creation of an entity
+with such an id will fail. See [what is a valid id](/explanations/data-model/#what-is-a-valid-id) for more details.
+
+:::
+
 <LanguageTabs>
 
 <TabItem value="kotlin">

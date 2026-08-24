@@ -75,7 +75,11 @@ final patient = DecryptedPatient(
 A `Patient` is an encryptable entity, meaning it will be encrypted on the device that creates it and then sent
 encrypted to the cloud. Since it is decrypted at the moment of creation, a `DecryptedPatient` is instantiated. Besides
 `firstName` and `lastName`, the `id` must also be set on the entity. Using a
-[UUID v4](https://en.wikipedia.org/wiki/Universally_unique_identifier) is strongly recommended.
+[UUID v4](https://en.wikipedia.org/wiki/Universally_unique_identifier), plain or base58-encoded as a short UUID, is
+strongly recommended: it avoids conflicts without coordination and is always a
+[valid id](/explanations/data-model/#what-is-a-valid-id). If you use any other format, keep in mind that an id cannot
+contain whitespace, control characters, or any of the characters `/` `\` `?` `#` `%` `;`, and that entity creation will
+fail if it does.
 
 Next, the metadata required for the encryption of the entity must be initialized:
 

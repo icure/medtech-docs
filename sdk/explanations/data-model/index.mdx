@@ -262,9 +262,31 @@ The following fields are common across most entities.
 
 ### Id
 
-A unique identifier for an entity. It is recommended to use a [UUID v4](https://en.wikipedia.org/wiki/Universally_unique_identifier#Version_4_(random))
-to avoid conflicts. The exception is the [Code](/explanations/data-model/code) entity, where the ID format
+A unique identifier for an entity. The id is a string chosen by the client when the entity is created. It is
+recommended to use a [UUID v4](https://en.wikipedia.org/wiki/Universally_unique_identifier#Version_4_(random)), either
+in its plain form (e.g. `1b4e2c8a-6d3f-4b7a-9c2e-8f5a1d0b3c6e`) or as a short UUID (a
+[base58](https://en.wikipedia.org/wiki/Binary-to-text_encoding#Base58)-encoded UUID, e.g. `AhqLoLZSFTCLGkAkjivBgV`) if
+you prefer a more compact representation. Both guarantee uniqueness without any coordination between clients and always
+satisfy the validity rules below. The exception is the [Code](/explanations/data-model/code) entity, where the ID format
 is `type|code|version`.
+
+#### What is a valid id?
+
+Entity ids are used as path parameters in the URLs of the REST API (e.g. `/rest/v2/patient/{patientId}`). Characters
+that have a special meaning in a URL path would either break the routing or be silently truncated, leaving an entity
+that could never be retrieved by its id. For this reason, the id is validated when the entity is created, and the
+creation fails with an error if the id contains any of the following:
+
+- `/` or `\`: path separators.
+- `?` or `#`: they mark the start of the query string and of the fragment.
+- `%`: it marks the start of a percent-encoded sequence (e.g. `%2F` decodes to `/`).
+- `;`: it marks the start of a matrix variable, and everything after it would be silently stripped from the path segment.
+- Any whitespace character (space, tab, new line, ...).
+- Any ISO control character.
+
+Any other character is allowed. In particular, `|` is allowed, as it is used in composite ids like the id of a
+[Code](/explanations/data-model/code) (`type|code|version`). If you cannot use a plain or base58-encoded UUID and have
+to derive the id from external data, make sure the result never contains any of the characters above.
 
 ### Rev
 
