@@ -23,7 +23,7 @@ The first time you arrive you create your account — and with it your own **[En
 space that holds everything you'll build. You become its sole
 [Environment-Access administrator](/cockpit/administrators-and-access-levels).
 
-1. On the [registration page](https://cockpit.icure.dev/register), fill in the form — first name, last
+1. On the [registration page](https://cockpit.icure.cloud/register), fill in the form — first name, last
    name, email, company name, and cluster — and accept the terms; or skip the typing and click
    **Register with Google**.
 2. Click **Register**.
@@ -31,7 +31,7 @@ space that holds everything you'll build. You become its sole
 
 ## Log in
 
-Once your account exists, the [login page](https://cockpit.icure.dev/) offers three ways back in —
+Once your account exists, the [login page](https://cockpit.icure.cloud/) offers three ways back in —
 pick whichever suits you:
 
 - **Email + one-time code** (the default) — enter your email, click **Request a one-time code**, then
