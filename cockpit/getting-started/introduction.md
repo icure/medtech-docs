@@ -13,7 +13,7 @@ application then uses the [Cardinal SDK](/) every day to read and write data.
 
 :::tip Open Cockpit
 Cockpit runs entirely in your browser — nothing to install.
-**[Open Cockpit → cockpit.icure.dev](https://cockpit.icure.dev/)** to register or sign in, then follow
+**[Open Cockpit → cockpit.icure.cloud](https://cockpit.icure.cloud/)** to register or sign in, then follow
 along in [Register & Log In](/cockpit/register-and-log-in).
 :::
 
