@@ -1,3 +1,7 @@
+---
+title: Migrating between SDK versions
+---
+
 <div className="proofread">
 
 # Migrating between SDK versions
