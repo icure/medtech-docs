@@ -1,13 +1,15 @@
 # Cardinal SDK — Complete Documentation Reference
 
-> **Purpose**: This document consolidates the entire Cardinal SDK documentation into a single reference 
-> optimized for LLM context. It is intended to be used by an AI assistant to create and improve an MCP 
+> **Purpose**: This document consolidates the entire Cardinal SDK documentation into a single reference
+> optimized for LLM context. It is intended to be used by an AI assistant to create and improve an MCP
 > server for the Cardinal SDK.
 >
-> **Cardinal SDK** is a multi-language SDK (Kotlin, TypeScript, Python, Dart) for building healthcare 
-> applications with end-to-end encryption. It provides CRUD operations, filtering/querying, real-time 
-> event subscriptions, and cryptographic key management for medical data entities like Patients, Contacts, 
+> **Cardinal SDK** is a multi-language SDK (Kotlin, TypeScript, Python, Dart) for building healthcare
+> applications with end-to-end encryption. It provides CRUD operations, filtering/querying, real-time
+> event subscriptions, and cryptographic key management for medical data entities like Patients, Contacts,
 > Services, HealthElements, Documents, and more.
+>
+> This file is generated from `sdk/` by `generate-sdk-md.mjs` (`yarn sdk-md`): edit the pages in `sdk/` instead.
 
 ---
 
@@ -15,10 +17,12 @@
 
 ## Part 1: Introduction
 - SDK Overview and purpose
+- What's new in each SDK release
+- Migration between SDK versions (breaking changes)
 
 ## Part 2: Quickstart Guides
 - Kotlin setup
-- TypeScript setup  
+- TypeScript setup
 - Python setup
 - Dart (Flutter) setup
 - React Native setup
@@ -45,7 +49,7 @@
 - Configuring encrypted fields
 - Expo/React Native setup
 
-### 4.2–4.15 Practical Guides
+### 4.2–4.17 Practical Guides
 - Basic CRUD operations (create, get, modify, delete, share)
 - Querying data with filters (filter options, combining, sorted, cross-entity)
 - Subscribing to real-time events (WebSocket subscriptions, buffering, reconnection)
@@ -57,12 +61,14 @@
 - User roles management
 - Two-factor authentication
 - Persistent sessions (remember-me)
+- Calendar items occupancy (appointment availability histograms)
 - Multi-group environment
 - Deleting user data
+- Using the Cardinal MCP server
 
 ## Part 5: Data Model Reference
 - Entity overview (base vs encryptable entities)
-- Patient, Contact, Service, Content, SubContact
+- Patient, RelatedPerson, Contact, Service, Content, SubContact
 - HealthElement, Document, Message, Topic
 - HealthcareParty, Device, User
 - Code, CodeStub, Identifier
@@ -116,9 +122,302 @@ Cardinal SDK, each one with code examples in all the supported languages.
 - In the [Explanation](/explanations/index) section, you will find additional material to understand the structure 
 of the Cardinal SDK.
 
-
 > **note:**
-Before start using the Cardinal SDK, you have to [create your account on the Cockpit](cockpit/how-to/how-to-create-your-account)
+Before start using the Cardinal SDK, you have to [create your account on the Cockpit](/cockpit/register-and-log-in)
+
+---
+
+<!-- Source: sdk/whats-new.md -->
+
+# What's new
+
+This page lists what each Cardinal SDK release has added, newest first. Changes that can break existing code are
+marked **Breaking** and come with migration instructions in
+[Migration](./migration.md).
+
+Releases that only contain internal, build or CI changes are not listed.
+
+## 2.14.0 — 2026-10-01
+
+- **Breaking (TypeScript and Kotlin/JS)**: the SDK requires Node.js 24 or later. The JavaScript build no longer uses
+  `eval`, so bundlers that reject it, such as Rolldown, can now bundle the SDK. See [Migration](./migration.md#2140).
+
+## 2.13.6 — 2026-10-01
+
+- **Breaking (TypeScript)**: the `onMalformedEntity` option introduced in 2.13.4 is replaced by
+  `entityListDecodingStrategy`, which takes `EntityListDecodingStrategy.Strict` (the default) or
+  `new EntityListDecodingStrategy.DiscardMalformed(handler)`, like in Kotlin.
+  See [Discard malformed entities in list reads](./how-to/initialize-the-sdk/index.mdx#discard-malformed-entities-in-list-reads).
+- TypeScript: the filter discovery API is now available as `sdk.filter`, as it already was in Kotlin.
+  See [Everything about filters](./explanations/everything-about-filters.mdx).
+
+## 2.13.5 — 2026-09-28
+
+- New read-only `Group.status` (`GroupStatus.Paying` or `GroupStatus.Free`). A group without an explicit status
+  inherits the status of its first ancestor that is `Paying` or `Free`, and is `Free` if there is none.
+- New `InvoicingCode.agreementNumber`: the reimbursement agreement number obtained during a pre-authorization.
+- Subscriptions: when the server drops the websocket without a closing frame, the subscription now emits
+  `EntitySubscriptionEvent.ConnectionError.ClosedByServer` instead of failing.
+
+## 2.13.4 — 2026-09-23
+
+- New option to discard the entities that can't be decoded in list and page reads, instead of failing the whole
+  request (Kotlin: `entityListDecodingStrategy`, TypeScript: `onMalformedEntity`). Not available in Python or Dart.
+  See [Discard malformed entities in list reads](./how-to/initialize-the-sdk/index.mdx#discard-malformed-entities-in-list-reads).
+
+## 2.13.3 — 2026-09-02
+
+- **Breaking**: `HealthElementAsserter.externalAsserterIdentifier` is now an `ExternalAsserterIdentifier`, which
+  wraps the `Identifier`.
+
+## 2.13.2 — 2026-08-12
+
+- **Breaking**: `HealthElementAsserter(asserterId, asserterType)` is replaced by
+  `HealthElementAsserter(localAsserterIdentifier, externalAsserterIdentifier)`. Exactly one of the two must be set.
+
+## 2.13.1 — 2026-08-11
+
+- Fix: the `asserters` of health elements are now correctly encrypted by default. 2.13.0 used an invalid
+  encrypted-field path.
+
+## 2.13.0 — 2026-08-11
+
+- New `HealthElement.qualifiedLinks`: typed links from a health element to other health elements, for example a
+  complication of another condition.
+- New `HealthElement.asserters`: who asserts that the condition is true (FHIR asserter): a patient, a healthcare
+  party or a related person. Asserters are encrypted by default.
+- See [HealthElement](./explanations/data-model/healthelement.mdx). These fields are not yet available in the
+  Dart SDK.
+
+## 2.12.1 — 2026-08-03
+
+- Fix: `calendarItem.linkToPatient` no longer fails on calendar items that are not linked to a patient yet. Before
+  this fix it also did not block calendar items that were already linked.
+
+## 2.12.0 — 2026-07-30
+
+- New `RelatedPerson` entity and `sdk.relatedPerson` API, with `RelatedPersonFilters`, to store a patient's
+  relatives and other contact persons. See [RelatedPerson](./explanations/data-model/relatedperson.mdx).
+- New `Partnership.partnerType` (`PartnerType`) to link a patient to a related person.
+- Python: the `lenient_json` option is renamed to `ignoreUnknownFields` (see 2.10.0).
+
+## 2.11.0 — 2026-07-26
+
+- New `withEncryptionMetadataAndDelegates` methods on all the APIs of encryptable entities, for fine-grained control
+  over what each delegate can access. See [Basic operations](./how-to/basic-operations.mdx).
+- New `user.removeUserMobilePhone(userId, previousMobilePhone)`. See [User](./explanations/data-model/user.mdx).
+- `accessLog.withEncryptionMetadata`: the patient is now optional. **Breaking (TypeScript)**: `patient` moved into
+  the options object.
+- New `receipt.listReceiptsBetweenDates` (and in-group variant), and in-group `getRawReceiptAttachment`.
+
+## 2.10.0 — 2026-07-06
+
+- New `ignoreUnknownFields` option, which replaces `lenientJson` (Kotlin and TypeScript) and now also applies to
+  decrypted content. A custom Kotlin `httpClient` now requires `httpClientJson`, and the other way round.
+  See [Ignore unknown fields](./how-to/initialize-the-sdk/index.mdx#ignore-unknown-fields).
+- **Breaking**: `Annotation` is split into `DecryptedAnnotation` and `EncryptedAnnotation`. This affects the `notes`
+  of contacts, health elements, patients, services and addresses.
+
+## 2.9.0 — 2026-07-02
+
+- New `InsuranceFilters` (`all`, `byIdentifiers`, `byCode`, `byTag`), with `insurance.matchInsurancesBy` and
+  `filterInsurancesBy[Sorted]`. See [Everything about filters](./explanations/everything-about-filters.mdx).
+- The calendar item occupancy methods are now also available on `CardinalSdk` (they were added to
+  `CardinalBaseSdk` in 2.8.0).
+
+## 2.8.0 — 2026-07-01
+
+- New calendar item occupancy histograms: `getCalendarItemsOccupancyByPeriodForSelf`, `…ForHealthcareParty` and
+  `…AndAgendaId` (on `CardinalBaseSdk`). See [Calendar items occupancy](./how-to/calendar-items-occupancy.mdx).
+
+## 2.7.0 — 2026-06-18
+
+- New `sdk.filter` API (`getFilterOptionsDefinitions`) and `FilterOptionsCatalog`, to discover the available filter
+  options at runtime, for example to build dynamic query builders. Kotlin only at first: TypeScript support came in
+  2.13.6, and Python has a `FilterApi` class since 2.11.0 but no `sdk.filter` property yet. See [Everything about filters](./explanations/everything-about-filters.mdx).
+
+## 2.6.0 — 2026-05-29
+
+- 2FA: `Enable2faRequest` now requires the current `otp` and accepts an optional `algorithm` (`Sha1` by default,
+  `Sha256` or `Sha512`). New `User.systemMetadata.uses2fa`. Initializing the SDK no longer fails when the user still
+  has to provide a 2FA code. See [Set up 2FA](./how-to/set-up-2fa.mdx).
+- **Breaking**: the sortability of filter options has been reviewed. Many filters (`byIdentifiers`, `byPatients…`,
+  code and tag filters, …) can no longer be used as the first argument of `filter…BySorted`.
+  See [Everything about filters](./explanations/everything-about-filters.mdx).
+
+## 2.5.0 — 2026-05-20
+
+- New `Role.description`, and a `description` parameter on `role.createRole`.
+  See [Define user roles](./how-to/define-user-roles.mdx).
+- **Breaking**: `Partnership` is split into `DecryptedPartnership` and `EncryptedPartnership`.
+- More fields are encrypted by default: the asserters, care team and episodes of health elements, and the
+  participants and locations of contacts.
+
+## 2.4.x — 2026-04-23 to 2026-05-04
+
+- **Breaking** (2.4.0): `healthcareParty.registerPatient` is renamed to `registerHealthcareParty`.
+- 2.4.0: the `macosX64` Kotlin target is removed. 2.4.1: a `linuxArm64` target is added.
+- 2.4.2: the multi-code service filters take a `Map<String, Set<String>>`.
+
+## 2.3.x — 2026-04-02 to 2026-04-10
+
+- 2.3.0: new `recovery.createRecoveryInfoForAvailableParentKeyPairs`, which lets a child data owner create recovery
+  data for its parent's keypairs. See [Share data with many users](./how-to/share-data-with-many-users.mdx).
+- 2.3.1: new `contact.decryptPatientIdOfService`, to find the patient of a service.
+- 2.3.2: new service filters on codes and tags combined with a value date (`byCodesAndValueDate`,
+  `byCodePrefixAndValueDate`, `byTagCodesAndValueDate`, `byTagPrefixAndValueDate` and their patient variants).
+- 2.3.2: the `Serialization.CardinalSerializerModule` used by the SDK is now public, for custom Kotlin `Json` instances.
+- **Breaking** (2.3.1): `Patient.preferredUserId` is removed.
+- **Breaking** (2.3.0): `group.createGroup` no longer takes a `role` parameter.
+
+## 2.2.0 — 2026-03-26
+
+- New `user.modifyUserPassword`, `modifyUserEmail` and `modifyUserMobilePhone`, which don't need the user revision
+  and work with a smart authentication provider. See [User](./explanations/data-model/user.mdx).
+
+---
+
+<!-- Source: sdk/migration.md -->
+
+# Migration
+
+This page lists the changes that may require you to update your code when you upgrade the Cardinal SDK, newest
+first. For the full list of novelties of each release, see [What's new](./whats-new.md).
+
+## 2.14.0
+
+### TypeScript and Kotlin/JS: Node.js 24 or later
+
+The JavaScript build of the SDK no longer uses `eval`, which some bundlers, such as Rolldown, reject. On Node.js, the
+file storage now loads `fs/promises` with `process.getBuiltinModule`, and the `package.json` of `@icure/cardinal-sdk`
+declares `"engines": { "node": ">=24" }`.
+
+- Run the SDK on Node.js 24 or later.
+- Install the package with Node.js 24 or later too: Yarn classic refuses to install a package whose `engines` field
+  doesn't match the current Node.js version, and npm prints a warning (an error with `engine-strict`).
+
+You don't need to change your code.
+
+## 2.13.6
+
+### TypeScript: `onMalformedEntity` replaced by `entityListDecodingStrategy`
+
+The `onMalformedEntity` callback option of `SdkOptions`, `BasicSdkOptions` and `AnonymousSdkOptions`, introduced in
+2.13.4, is replaced by `entityListDecodingStrategy`, as in Kotlin:
+
+```typescript
+// 2.13.4 - 2.13.5
+const options = { onMalformedEntity: (entity) => console.warn(entity.entityType, entity.entityId) }
+// 2.13.6 and later
+const options = {
+  entityListDecodingStrategy: new EntityListDecodingStrategy.DiscardMalformed((entity) => console.warn(entity.entityType, entity.entityId)),
+}
+```
+
+See [Discard malformed entities in list reads](./how-to/initialize-the-sdk/index.mdx#discard-malformed-entities-in-list-reads).
+
+## 2.13.2 and 2.13.3
+
+### `HealthElementAsserter` identifiers
+
+The shape of `HealthElementAsserter`, added in 2.13.0, changed in two patch releases:
+
+| Version | Shape |
+|---|---|
+| 2.13.0 - 2.13.1 | `HealthElementAsserter(asserterId: String, asserterType: AsserterType)` |
+| 2.13.2 | `HealthElementAsserter(localAsserterIdentifier: LocalAsserterIdentifier?, externalAsserterIdentifier: Identifier?)` |
+| 2.13.3 and later | `HealthElementAsserter(localAsserterIdentifier: LocalAsserterIdentifier?, externalAsserterIdentifier: ExternalAsserterIdentifier?)` |
+
+Replace `HealthElementAsserter(asserterId = id, asserterType = type)` with
+`HealthElementAsserter(localAsserterIdentifier = HealthElementAsserter.LocalAsserterIdentifier(id, type))`, and wrap
+external identifiers in `HealthElementAsserter.ExternalAsserterIdentifier(identifier)`. Exactly one of the two
+identifiers must be set. See [HealthElement](./explanations/data-model/healthelement.mdx).
+
+## 2.12.0
+
+### Python: `lenient_json` renamed to `ignoreUnknownFields`
+
+Replace `SdkOptions(lenient_json=True)` with `SdkOptions(ignoreUnknownFields=True)`.
+
+## 2.11.0
+
+### TypeScript: patient of `accessLog.withEncryptionMetadata`
+
+The patient of an access log is now optional, and in TypeScript it moved from a positional parameter to the options
+object:
+
+```typescript
+// before 2.11.0
+await sdk.accessLog.withEncryptionMetadata(base, patient, { user })
+// 2.11.0 and later
+await sdk.accessLog.withEncryptionMetadata(base, { patient, user })
+```
+
+In Kotlin the parameter order is unchanged, and in Python `patient` is now an optional keyword argument.
+
+## 2.10.0
+
+### `lenientJson` renamed to `ignoreUnknownFields`
+
+In Kotlin and TypeScript, the `lenientJson` option is deprecated (at error level) in favour of `ignoreUnknownFields`.
+The new option also applies when decoding decrypted content. In Kotlin, a custom `httpClient` must now be provided
+together with `httpClientJson`, and the other way round.
+See [Ignore unknown fields](./how-to/initialize-the-sdk/index.mdx#ignore-unknown-fields).
+
+### `Annotation` split into `DecryptedAnnotation` and `EncryptedAnnotation`
+
+`Annotation` is now a sealed interface. Create `DecryptedAnnotation` instances for the `notes` of contacts, health
+elements, patients, services and addresses: replace `Annotation(...)` with `DecryptedAnnotation(...)`.
+
+## 2.6.0
+
+### 2FA: `Enable2faRequest` requires the current OTP
+
+`Enable2faRequest` now has a mandatory `otp` field: the current code generated with the new secret, which proves the
+user configured their authenticator correctly. See [Set up 2FA](./how-to/set-up-2fa.mdx).
+
+### Filter options sortability
+
+Many filter options can no longer be used as the first argument of the `filter…BySorted` methods, among which
+`byIdentifiers`, `byPatients…`, `byPatientSecretIds…`, and the code and tag filters of patients, contacts, services,
+health elements, documents, messages and maintenance tasks. These options now return `FilterOptions` instead of
+`SortableFilterOptions`, so code passing them to a `BySorted` method no longer type-checks. Use the non-sorted method instead.
+See [Everything about filters](./explanations/everything-about-filters.mdx).
+
+## 2.5.0
+
+### `Partnership` split into `DecryptedPartnership` and `EncryptedPartnership`
+
+`Partnership` is now a sealed interface: replace `Partnership(...)` with `DecryptedPartnership(...)` when setting the
+partnerships of a patient.
+
+### `createRole` takes a description
+
+`role.createRole` and `createRoleInGroup` take a new `description` parameter. In TypeScript and Python it is a
+required positional parameter, placed before `inheritsUpTo`. See [Define user roles](./how-to/define-user-roles.mdx).
+
+### More fields encrypted by default
+
+The default encrypted fields of health elements (care team, episodes) and contacts (participants, locations) have
+been extended, so entities created after the upgrade store these fields encrypted. If you set a custom [encrypted fields configuration](./how-to/initialize-the-sdk/index.mdx#encrypted-fields-configuration),
+it is not affected.
+
+## 2.4.0
+
+### `registerPatient` renamed to `registerHealthcareParty`
+
+The method of `sdk.healthcareParty` that registers a new healthcare party was misnamed `registerPatient`. It is now
+`registerHealthcareParty`.
+
+### `macosX64` target removed
+
+The Kotlin Multiplatform library no longer publishes the `macosX64` target. A `linuxArm64` target is available since
+2.4.1.
+
+## 2.3.0 and 2.3.1
+
+- 2.3.1: `Patient.preferredUserId` is removed.
+- 2.3.0: `group.createGroup` no longer takes a `role` parameter.
 
 ---
 
@@ -133,11 +432,22 @@ Before start using the Cardinal SDK, you have to [create your account on the Coc
 
 To include the SDK in your kotlin project, you just need to add the dependency to your gradle configuration.
 
+
 ```bash
 dependencies {
-    implementation(group = "com.icure", name = "cardinal-sdk", version = "2.1.3")
+    implementation(group = "com.icure", name = "cardinal-sdk", version = "2.14.0")
 }
 ```
+
+The SDK is a Kotlin Multiplatform library supporting the following targets: JVM (Java 11+), Android, JS, iOS (`iosArm64`,
+`iosX64`, `iosSimulatorArm64`), macOS (`macosArm64`), Linux (`linuxX64`, `linuxArm64`) and Windows (`mingwX64`).
+
+> **note:**
+The Kotlin code samples of this documentation generate entity ids with `Uuid.random()` from `kotlin.uuid`, which is
+stable since Kotlin 2.4.0. With Kotlin 2.0.20 to 2.3, the `Uuid` API is experimental: opt in with
+`@OptIn(ExperimentalUuidApi::class)` or with the `-opt-in=kotlin.uuid.ExperimentalUuidApi` compiler option.
+
+
 ## Template app
 
 We provide a [template for Kotlin](https://github.com/icure/cardinal-introductory-tutorial) that showcases several self-contained use cases that highlight the main features of the Cardinal SDK.
@@ -162,21 +472,23 @@ Please proceed to the [Introductory Tutorial](/tutorial/basic/sdk-basic-tutorial
 
 # Typescript
 
+
 To use the Cardinal SDK in Typescript, you can install it using yarn:
 ```bash
-yarn add @icure/cardinal-sdk@2.1.3
+yarn add @icure/cardinal-sdk@2.14.0
 ```
 You can also use npm:
 ```bash
-npm install @icure/cardinal-sdk@2.1.3
+npm install @icure/cardinal-sdk@2.14.0
 ```
+
 
 We strongly recommend using [strict null checks](https://www.typescriptlang.org/tsconfig/#strictNullChecks) when 
 developing your application.
 
 
 > **note:**
-To use the Cardinal SDK on node, you need node 19 or greater.
+To use the Cardinal SDK on Node.js, you need Node.js 24 or greater (Node.js 19 or greater before SDK 2.14.0).
 
 
 ## Template app
@@ -228,10 +540,8 @@ Please proceed to the [Introductory Tutorial](/tutorial/basic/sdk-basic-tutorial
 
 To use the sdk in Python, you can install it from PyPi.
 
-
 > **note:**
-To use the Cardinal SDK, you need Python **3.9** or greater.
-
+To use the Cardinal SDK, you need Python **3.12** or greater.
 
 ```bash
 pip install cardinal-sdk
@@ -250,7 +560,9 @@ git clone https://github.com/icure/cardinal-introductory-tutorial.git
 cd cardinal-introductory-tutorial
 ```
 
-It is recommended to use a virtual environment, to avoid conflicting dependencies. The minimum supported Python version is 3.9.
+
+It is recommended to use a virtual environment, to avoid conflicting dependencies.
+
 
 ```python
 cd python
@@ -288,7 +600,6 @@ The Cardinal SDK is available as a flutter plugin.
 flutter pub add cardinal_sdk
 ```
 
-
 > **note:**
 The Cardinal Dart SDK currently supports only the Android and iOS platforms.
 Web support will come with a future update.
@@ -307,17 +618,15 @@ Please proceed to the [Introductory Tutorial](/tutorial/basic/sdk-basic-tutorial
 
 <!-- Source: sdk/quickstart/react-native.mdx -->
 
-# React Native
+ # React Native
 
 🚧 This page is under construction 🚧
-
 
 > **warning:**
 React Native is a bit special concerning the setup (Some changes are required on the cryptography since WebCrypto is not available).
 We provide a boilerplate project that you can clone and use as a starting point for your own project.
 
 You can find it here: [Cardinal React Native Boilerplate](https://github.com/icure/expo-medtech-boilerplate)
-
 
 ## Cardinal SDK Introductory Tutorial
 
@@ -351,11 +660,6 @@ information is created. The full code of the tutorial is available [here](https:
 
 ---
 
-
-================================================================================
-## 3.1 Introductory Tutorial
-================================================================================
-
 <!-- Source: sdk/tutorial/basic/index.mdx -->
 
 # Cardinal SDK Introductory Tutorial
@@ -363,19 +667,17 @@ information is created. The full code of the tutorial is available [here](https:
 In this tutorial, you will discover how the Cardinal solution can be used in common digital health scenarios to create,
 search and share medical data.
 
-Before starting, be sure to follow the [onboarding procedure](/cockpit/how-to/how-to-create-your-account) to register to
-Cardinal and create database and [create a healthcare party user to the database](/cockpit/how-to/how-to-manage-hcp).
+Before starting, be sure to follow the [onboarding procedure](/cockpit/create-your-first-project) to register to
+Cardinal and create database and [create a healthcare party user to the database](/cockpit/managing-users).
 
 The examples may use some functions (e.g. to create UUIDs or date in the YYYMMMDD format), that are not defined by the 
 language nor described in the code samples. This is intentional, to let the examples focus on the Cardinal SDK code, and 
 it is especially true for the Dart examples, where all the UI code is left out. You can check the full code examples in
 the GitHub repository to have the whole picture.
 
-
 > **note:**
-Be sure to [generate an authentication token](/cockpit/how-to/how-to-manage-hcp#generating-an-authentication-token) (i.e.
+Be sure to [generate an authentication token](/cockpit/managing-users#authentication-tokens) (i.e.
 a temporary password) for your healthcare party to be able to instantiate the SDK in the code examples.
-
 
 > **note:**
 The full code examples in Kotlin, Python, and TypeScript are available [in this repo](https://github.com/icure/cardinal-introductory-tutorial), 
@@ -391,7 +693,6 @@ The Dart code is available [in this repo](https://github.com/icure/cardinal-dart
 
 After you have [created a first database and a healthcare party user with a token](/tutorial/basic/sdk-basic-tutorial),
 you can use those credentials to instantiate a new iCure SDK.
-
 
 **kotlin:**
 
@@ -418,8 +719,6 @@ val sdk = CardinalSdk.initialize(
 The `initialize` function creates an instance of the SDK with the provided username and password. It also attempts to
 load existing cryptographic keys for the user from the `./scratch/storage` folder. If no key is found for the user in
 that folder, a new cryptographic key will be generated and stored there.
-
-
 **python:**
 
 
@@ -431,7 +730,7 @@ CARDINAL_URL = "https://api.icure.cloud"
 username = input("Username: ")
 password = input("Password: ")
 sdk = CardinalSdk(
-	application_id=None,
+	project_id=None,
 	baseurl=CARDINAL_URL,
 	authentication_method=UsernamePassword(username, password),
 	storage_facade=FileSystemStorage("./scratch/storage")
@@ -441,8 +740,6 @@ sdk = CardinalSdk(
 The `initialize` function creates an instance of the SDK with the provided username and password. It also attempts to
 load existing cryptographic keys for the user from the `./scratch/storage` folder. If no key is found for the user in
 that folder, a new cryptographic key will be generated and stored there.
-
-
 **typescript:**
 
 
@@ -464,8 +761,6 @@ const sdk = await CardinalSdk.initialize(
 The `initialize` function creates an instance of the SDK with the provided username and password. It also attempts to
 load existing cryptographic keys for the user from the `./scratch/storage` folder. If no key is found for the user in
 that folder, a new cryptographic key will be generated and stored there.
-
-
 **dart:**
 
 
@@ -490,7 +785,6 @@ load existing cryptographic keys for the user from the native storage implementa
 NSUserDefaults for iOS, iPadOS, macOS & watchOS). If no key is found for the user, a new cryptographic key will be generated
 and stored.
 
-
 If you want to know more about the SDK initialization parameters, check [this how to](/how-to/initialize-the-sdk/).
 
 ---
@@ -500,7 +794,6 @@ If you want to know more about the SDK initialization parameters, check [this ho
 # Create a Patient
 
 In Cardinal, a patient is represented by the `Patient` entity.
-
 
 **kotlin:**
 
@@ -512,12 +805,11 @@ val firstName = readln().trim()
 print("Last name: ")
 val lastName = readln().trim()
 val patient = DecryptedPatient(
-	id = UUID.randomUUID().toString(),
+	id = Uuid.random().toString(),
 	firstName = firstName,
 	lastName = lastName,
 )
 ```
-
 
 **python:**
 
@@ -534,7 +826,6 @@ patient = DecryptedPatient(
 )
 ```
 
-
 **typescript:**
 
 
@@ -549,7 +840,6 @@ const patient = new DecryptedPatient({
 	lastName: lastName,
 })
 ```
-
 
 **dart:**
 
@@ -569,10 +859,13 @@ final patient = DecryptedPatient(
 A `Patient` is an encryptable entity, meaning it will be encrypted on the device that creates it and then sent
 encrypted to the cloud. Since it is decrypted at the moment of creation, a `DecryptedPatient` is instantiated. Besides
 `firstName` and `lastName`, the `id` must also be set on the entity. Using a
-[UUID v4](https://en.wikipedia.org/wiki/Universally_unique_identifier) is strongly recommended.
+[UUID v4](https://en.wikipedia.org/wiki/Universally_unique_identifier), plain or base58-encoded as a short UUID, is
+strongly recommended: it avoids conflicts without coordination and is always a
+[valid id](/explanations/data-model/#what-is-a-valid-id). If you use any other format, keep in mind that an id cannot
+contain whitespace, control characters, or any of the characters `/` `\` `?` `#` `%` `;`, and that entity creation will
+fail if it does.
 
 Next, the metadata required for the encryption of the entity must be initialized:
-
 
 **kotlin:**
 
@@ -581,7 +874,6 @@ Next, the metadata required for the encryption of the entity must be initialized
 val patientWithMetadata = sdk.patient.withEncryptionMetadata(patient)
 ```
 
-
 **python:**
 
 
@@ -589,14 +881,12 @@ val patientWithMetadata = sdk.patient.withEncryptionMetadata(patient)
 patient_with_metadata = sdk.patient.with_encryption_metadata_blocking(patient)
 ```
 
-
 **typescript:**
 
 
 ```typescript test-MOJO
 const patientWithMetadata = await sdk.patient.withEncryptionMetadata(patient)
 ```
-
 
 **dart:**
 
@@ -611,14 +901,12 @@ one able to read the entity's encrypted fields.
 
 After this step, the entity can finally be encrypted and stored in the cloud:
 
-
 **kotlin:**
 
 
 ```kotlin test-AADZ
 val createdPatient = sdk.patient.createPatient(patientWithMetadata)
 ```
-
 
 **python:**
 
@@ -627,14 +915,12 @@ val createdPatient = sdk.patient.createPatient(patientWithMetadata)
 created_patient = sdk.patient.create_patient_blocking(patient_with_metadata)
 ```
 
-
 **typescript:**
 
 
 ```typescript test-BOZE
 const createdPatient = await sdk.patient.createPatient(patientWithMetadata)
 ```
-
 
 **dart:**
 
@@ -659,7 +945,6 @@ val patientWithBirth = createdPatient.copy(
 val updatedPatient = sdk.patient.modifyPatient(patientWithBirth)
 ```
 
-
 **python:**
 
 
@@ -671,7 +956,6 @@ date_of_birth = int(input("Date of birth (YYYYMMDD): "))
 created_patient.date_of_birth = date_of_birth
 updated_patient = sdk.patient.modify_patient_blocking(created_patient)
 ```
-
 
 **typescript:**
 
@@ -687,7 +971,6 @@ const patientWithBirth = new DecryptedPatient({
 })
 const updatedPatient = await sdk.patient.modifyPatient(patientWithBirth)
 ```
-
 
 **dart:**
 
@@ -709,7 +992,6 @@ to call `withEncryptionMetadata` again.
 After creation, it is also possible to retrieve the entity from the cloud. In the following example, the patient
 is retrieved using its ID:
 
-
 **kotlin:**
 
 
@@ -717,7 +999,6 @@ is retrieved using its ID:
 println("Retrieving patient by ID:")
 val retrievedPatient = sdk.patient.getPatient(updatedPatient.id)
 ```
-
 
 **python:**
 
@@ -727,7 +1008,6 @@ print("The retrieved patient is:")
 retrieved_patient = sdk.patient.get_patient_blocking(updated_patient.id)
 ```
 
-
 **typescript:**
 
 
@@ -735,7 +1015,6 @@ retrieved_patient = sdk.patient.get_patient_blocking(updated_patient.id)
 console.log("The retrieved patient is:")
 const retrievedPatient = await sdk.patient.getPatient(updatedPatient.id)
 ```
-
 
 **dart:**
 
@@ -765,7 +1044,6 @@ For more details, check the [Contact explanation](/explanations/data-model/conta
 
 As the first step, the user can choose to use an existing Patient or create a new one:
 
-
 **kotlin:**
 
 
@@ -775,7 +1053,7 @@ val patientId = readlnOrNull()
 val patient = if (patientId.isNullOrBlank()) {
 	sdk.patient.createPatient(
 		DecryptedPatient(
-			id = UUID.randomUUID().toString(),
+			id = Uuid.random().toString(),
 			firstName = "Annabelle",
 			lastName = "Hall",
 		).let { sdk.patient.withEncryptionMetadata(it) }
@@ -784,7 +1062,6 @@ val patient = if (patientId.isNullOrBlank()) {
 	sdk.patient.getPatient(patientId)
 }
 ```
-
 
 **python:**
 
@@ -804,7 +1081,6 @@ if len(patient_id) == 0:
 else:
 	patient = sdk.patient.get_patient_blocking(patient_id)
 ```
-
 
 **typescript:**
 
@@ -827,7 +1103,6 @@ if(patientId.length === 0) {
 }
 ```
 
-
 **dart:**
 
 
@@ -848,7 +1123,6 @@ final patient = patientId.trim().isEmpty
 
 Next, a new `Contact` is instantiated with a custom description provided by the user:
 
-
 **kotlin:**
 
 
@@ -857,12 +1131,11 @@ val formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss")
 print("Examination description: ")
 val description = readln().trim()
 val contact = DecryptedContact(
-	id = UUID.randomUUID().toString(),
+	id = Uuid.random().toString(),
 	descr = description,
 	openingDate = LocalDateTime.now().format(formatter).toLong()
 )
 ```
-
 
 **python:**
 
@@ -876,7 +1149,6 @@ contact = DecryptedContact(
 )
 ```
 
-
 **typescript:**
 
 
@@ -888,7 +1160,6 @@ const contact = new DecryptedContact({
 	openingDate: currentFuzzyDate()
 })
 ```
-
 
 **dart:**
 
@@ -909,14 +1180,12 @@ starts. Generally, it marks the beginning of the event during which medical data
 
 Being an encryptable entity, the encryption metadata need to be initialized before creating the `Contact`, just as with the `Patient`:
 
-
 **kotlin:**
 
 
 ```kotlin test-AAFA
 val contactWithMetadata = sdk.contact.withEncryptionMetadata(contact, patient)
 ```
-
 
 **python:**
 
@@ -925,14 +1194,12 @@ val contactWithMetadata = sdk.contact.withEncryptionMetadata(contact, patient)
 contact_with_metadata = sdk.contact.with_encryption_metadata_blocking(contact, patient)
 ```
 
-
 **typescript:**
 
 
 ```typescript test-POBI
 const contactWithMetadata = await sdk.contact.withEncryptionMetadata(contact, patient)
 ```
-
 
 **dart:**
 
@@ -949,14 +1216,12 @@ contact will be able to decipher it.
 
 Finally, the `Contact` can be encrypted and stored in the cloud:
 
-
 **kotlin:**
 
 
 ```kotlin test-AAFB
 val createdContact = sdk.contact.createContact(contactWithMetadata)
 ```
-
 
 **python:**
 
@@ -965,14 +1230,12 @@ val createdContact = sdk.contact.createContact(contactWithMetadata)
 created_contact = sdk.contact.create_contact_blocking(contact_with_metadata)
 ```
 
-
 **typescript:**
 
 
 ```typescript test-TUCU
 const createdContact = await sdk.contact.createContact(contactWithMetadata)
 ```
-
 
 **dart:**
 
@@ -994,15 +1257,15 @@ The first piece of information added to the contact is a blood pressure measurem
 `Service` (using its `DecryptedService` variation, since `Service` is an encryptable entity) is instantiated with the
 result of the exam:
 
-
 **kotlin:**
 
 
 ```kotlin test-AAFC
 import kotlin.random.Random
+import kotlin.uuid.Uuid
 
 val bloodPressureService = DecryptedService(
-	id = UUID.randomUUID().toString(),
+	id = Uuid.random().toString(),
 	label = "Blood pressure",
 	identifier = listOf(Identifier(system = "cardinal", value = "bloodPressure")),
 	content = mapOf(
@@ -1015,7 +1278,6 @@ val bloodPressureService = DecryptedService(
 	)
 )
 ```
-
 
 **python:**
 
@@ -1036,7 +1298,6 @@ blood_pressure_service = DecryptedService(
 )
 ```
 
-
 **typescript:**
 
 
@@ -1055,7 +1316,6 @@ const bloodPressureService = new DecryptedService({
 	}
 })
 ```
-
 
 **dart:**
 
@@ -1080,18 +1340,15 @@ final bloodPressureService = DecryptedService(
 In this case, a free-text `label` provides a description for the `Service`, and an `identifier` allows for a
 more structured labeling.
 
-
 > **caution:**
 When adding sensitive information to an encryptable entity, always remember that not all fields are encrypted.
 You can customize the encrypted fields as explained in [this how to](/how-to/initialize-the-sdk/configure-what-to-encrypt).
-
 
 The actual measurement is stored in the `content` of the `Service`. This field is a map that associates an
 [ISO language code](https://en.wikipedia.org/wiki/List_of_ISO_639_language_codes) with `Content`. In this case,
 the content contains a measure value that holds the blood pressure result and its unit.
 
 The `Service` can now be added to the existing `Contact`:
-
 
 **kotlin:**
 
@@ -1104,7 +1361,6 @@ val contactWithBloodPressure = sdk.contact.modifyContact(
 )
 ```
 
-
 **python:**
 
 
@@ -1114,7 +1370,6 @@ contact_with_blood_pressure = sdk.contact.modify_contact_blocking(
 	created_contact
 )
 ```
-
 
 **typescript:**
 
@@ -1127,7 +1382,6 @@ const contactWithBloodPressure = await sdk.contact.modifyContact(
 	})
 )
 ```
-
 
 **dart:**
 
@@ -1149,14 +1403,13 @@ A `Service` can also hold time-series data, signals, and, in general, vector-lik
 the resulting signal from an [ECG (Electrocardiography)](https://en.wikipedia.org/wiki/Electrocardiography) exam is
 added to the `Contact` through a `Service`:
 
-
 **kotlin:**
 
 
 ```kotlin test-AAFE
 val ecgSignal = List(10) { Random.nextInt(0, 100) / 100.0 }
 val heartRateService = DecryptedService(
-	id = UUID.randomUUID().toString(),
+	id = Uuid.random().toString(),
 	identifier = listOf(Identifier(system = "cardinal", value = "ecg")),
 	label = "Heart rate",
 	content = mapOf(
@@ -1173,7 +1426,6 @@ val contactWithECG = sdk.contact.modifyContact(
 	)
 )
 ```
-
 
 **python:**
 
@@ -1195,7 +1447,6 @@ heart_rate_service = DecryptedService(
 contact_with_blood_pressure.services = contact_with_blood_pressure.services + [heart_rate_service]
 contact_with_ecg = sdk.contact.modify_contact_blocking(contact_with_blood_pressure)
 ```
-
 
 **typescript:**
 
@@ -1221,7 +1472,6 @@ const contactWithECG = await sdk.contact.modifyContact(
 	})
 )
 ```
-
 
 **dart:**
 
@@ -1256,26 +1506,22 @@ Due to their larger size, the process of uploading medical images (such as those
 simple photos) differs from uploading single measurements or signals. This difference is intended to avoid
 performance loss when querying and retrieving entities that contain large files.
 
-
 > **note:**
 A `Content` has a `binaryData` field that can be used to store binary data, but for the aforementioned reasons,
 it should not be used to store large amounts of data.
 
-
 The first step in uploading a medical image (or another large file) is to create a new `Document` entity.
 A `Document` is an encryptable entity that represents medical documents (e.g., reports, certificates, images) in any format.
-
 
 **kotlin:**
 
 
 ```kotlin test-AAFF
 val document = DecryptedDocument(
-	id = UUID.randomUUID().toString(),
+	id = Uuid.random().toString(),
 	documentType = DocumentType.Labresult
 )
 ```
-
 
 **python:**
 
@@ -1287,7 +1533,6 @@ document = DecryptedDocument(
 )
 ```
 
-
 **typescript:**
 
 
@@ -1297,7 +1542,6 @@ const document = new DecryptedDocument({
 	documentType: DocumentType.Labresult
 })
 ```
-
 
 **dart:**
 
@@ -1313,7 +1557,6 @@ final document = DecryptedDocument(
 In this example, a new `DecryptedDocument` is instantiated with the type set to a laboratory result. Since a `Document`
 is encryptable, the encryption metadata must be initialized before it is created on the cloud.
 
-
 **kotlin:**
 
 
@@ -1322,7 +1565,6 @@ val createdDocument = sdk.document.createDocument(
 	sdk.document.withEncryptionMetadataUnlinked(document, null)
 )
 ```
-
 
 **python:**
 
@@ -1333,7 +1575,6 @@ created_document = sdk.document.create_document_blocking(
 )
 ```
 
-
 **typescript:**
 
 
@@ -1342,7 +1583,6 @@ const createdDocument = await sdk.document.createDocument(
 	await sdk.document.withEncryptionMetadataUnlinked(document)
 )
 ```
-
 
 **dart:**
 
@@ -1361,7 +1601,6 @@ will be linked to the `Patient`.
 Next, you can load the image as an attachment to the `Document`. A `Document` can have a single main attachment and
 multiple secondary attachments. In this case, an "image" is loaded as the main attachment to the document.
 
-
 **kotlin:**
 
 
@@ -1374,7 +1613,6 @@ val documentWithAttachment = sdk.document.encryptAndSetMainAttachment(
 )
 ```
 
-
 **python:**
 
 
@@ -1386,7 +1624,6 @@ document_with_attachment = sdk.document.encrypt_and_set_main_attachment_blocking
 	attachment=x_ray_image
 )
 ```
-
 
 **typescript:**
 
@@ -1402,7 +1639,6 @@ const documentWithAttachment = await sdk.document.encryptAndSetMainAttachment(
 	xRayImage
 )
 ```
-
 
 **dart:**
 
@@ -1425,13 +1661,12 @@ The bytes composing the image are encrypted and set as the attachment of the `Do
 
 Finally, it is possible to link this `Document` with a new `Service` representing the X-Ray image and add it to the `Contact`.
 
-
 **kotlin:**
 
 
 ```kotlin test-AAFI
 val xRayService = DecryptedService(
-	id = UUID.randomUUID().toString(),
+	id = Uuid.random().toString(),
 	label = "X-Ray image",
 	identifier = listOf(Identifier(system = "cardinal", value = "xRay")),
 	content = mapOf(
@@ -1446,7 +1681,6 @@ val contactWithImage = sdk.contact.modifyContact(
 	)
 )
 ```
-
 
 **python:**
 
@@ -1465,7 +1699,6 @@ x_ray_service = DecryptedService(
 contact_with_ecg.services = contact_with_ecg.services + [x_ray_service]
 contact_with_image = sdk.contact.modify_contact_blocking(contact_with_ecg)
 ```
-
 
 **typescript:**
 
@@ -1488,7 +1721,6 @@ const contactWithImage = await sdk.contact.modifyContact(
 	})
 )
 ```
-
 
 **dart:**
 
@@ -1515,7 +1747,6 @@ Diagnoses and other medical contexts that define the health condition of a patie
 `HealthElement` encryptable entity. In this example, the user will create a `HealthElement` containing the
 diagnosis elaborated after the examination.
 
-
 **kotlin:**
 
 
@@ -1523,14 +1754,13 @@ diagnosis elaborated after the examination.
 print("What is the diagnosis?: ")
 val diagnosis = readln().trim()
 val healthElement = DecryptedHealthElement(
-	id = UUID.randomUUID().toString(),
+	id = Uuid.random().toString(),
 	descr = diagnosis
 )
 val createdDiagnosis = sdk.healthElement.createHealthElement(
 	sdk.healthElement.withEncryptionMetadata(healthElement, patient)
 )
 ```
-
 
 **python:**
 
@@ -1546,7 +1776,6 @@ created_diagnosis = sdk.health_element.create_health_element_blocking(
 )
 ```
 
-
 **typescript:**
 
 
@@ -1560,7 +1789,6 @@ const createdDiagnosis = await sdk.healthElement.createHealthElement(
 	await sdk.healthElement.withEncryptionMetadata(healthElement, patient)
 )
 ```
-
 
 **dart:**
 
@@ -1583,7 +1811,6 @@ is instantiated with the desired information. Then, the encryption metadata are 
 
 It is possible to associate the `HealthElement` with a `Contact` by linking it to a `SubContact`:
 
-
 **kotlin:**
 
 
@@ -1598,7 +1825,6 @@ val contactWithDiagnosis = sdk.contact.modifyContact(
 )
 ```
 
-
 **python:**
 
 
@@ -1611,7 +1837,6 @@ contact_with_image.sub_contacts = [
 ]
 contact_with_diagnosis = sdk.contact.modify_contact_blocking(contact_with_image)
 ```
-
 
 **typescript:**
 
@@ -1629,7 +1854,6 @@ const contactWithDiagnosis = await sdk.contact.modifyContact(
 	})
 )
 ```
-
 
 **dart:**
 
@@ -1659,7 +1883,6 @@ To indicate that the medical examination has concluded, you can set the `closing
 This action signifies that the data collection session is finished and, ideally, that the `Contact` will not be
 modified further.
 
-
 **kotlin:**
 
 
@@ -1671,7 +1894,6 @@ val finalContact = sdk.contact.modifyContact(
 )
 ```
 
-
 **python:**
 
 
@@ -1679,7 +1901,6 @@ val finalContact = sdk.contact.modifyContact(
 contact_with_diagnosis.closing_date = int(datetime.now().strftime("%Y%m%d%H%M%S"))
 final_contact = sdk.contact.modify_contact_blocking(contact_with_diagnosis)
 ```
-
 
 **typescript:**
 
@@ -1692,7 +1913,6 @@ const finalContact = await sdk.contact.modifyContact(
 	})
 )
 ```
-
 
 **dart:**
 
@@ -1721,7 +1941,6 @@ understanding, check [this how to](/how-to/querying-data).
 In the first code snippet, all patients whose name matches the query string provided by the user and who are shared
 with the current user will be returned:
 
-
 **kotlin:**
 
 
@@ -1733,7 +1952,6 @@ val patientIterator = sdk.patient.filterPatientsBy(
 )
 ```
 
-
 **python:**
 
 
@@ -1744,7 +1962,6 @@ patient_iterator = sdk.patient.filter_patients_by_blocking(
 )
 ```
 
-
 **typescript:**
 
 
@@ -1754,7 +1971,6 @@ const patientIterator = await sdk.patient.filterPatientsBy(
 	PatientFilters.byNameForSelf(nameToSearch)
 )
 ```
-
 
 **dart:**
 
@@ -1773,7 +1989,6 @@ is responsible for actually getting them. This method returns an iterator with t
 entities, with a minimum of 1.
 
 Here’s an example of how to use this iterator:
-
 
 **kotlin:**
 
@@ -1795,7 +2010,6 @@ if (patient == null) {
 }
 ```
 
-
 **python:**
 
 
@@ -1812,7 +2026,6 @@ if patient is None:
 	print("No matching patient found")
 	return
 ```
-
 
 **typescript:**
 
@@ -1834,7 +2047,6 @@ if (patient == null) {
 }
 ```
 
-
 **dart:**
 
 
@@ -1854,7 +2066,6 @@ while ((await patientIterator.hasNext()) && patient == null) {
 The same logic can be applied to medical data, where you can leverage the
 [secret link](/tutorial/basic/modules/basic-tutorial-create-medical-data#initiating-a-medical-examination) between
 a patient and another entity:
-
 
 **kotlin:**
 
@@ -1876,7 +2087,6 @@ while(contactIterator.hasNext()) {
 }
 ```
 
-
 **python:**
 
 
@@ -1893,7 +2103,6 @@ while contact_iterator.has_next_blocking():
 	pretty_print_contact(contact)
 	input("Press enter for next contact")
 ```
-
 
 **typescript:**
 
@@ -1913,7 +2122,6 @@ while(await contactIterator.hasNext()) {
 	await readLn("Press enter for next contact")
 }
 ```
-
 
 **dart:**
 
@@ -1937,17 +2145,14 @@ while(await contactIterator.hasNext()) {
 In this case, the filter method returns all the `Contacts` shared with the current user that have an encrypted link to
 one of the `Patients` passed as a parameter.
 
-
 > **note:**
 Since the link between `Patient` and `Contact` is encrypted, the user must also have access to the `Patient` to use this filter.
-
 
 As with the previous example, the method returns an iterator that can be used to retrieve all the matching `Contacts`.
 
 The additional information stored in an entity to provide additional context (like the
 [identifiers in a Service](/tutorial/basic/modules/basic-tutorial-create-medical-data#creating-scalar-medical-data-blood-pressure))
 can also be used for filtering:
-
 
 **kotlin:**
 
@@ -1985,7 +2190,6 @@ while (serviceIterator.hasNext()) {
 }
 ```
 
-
 **python:**
 
 
@@ -2019,7 +2223,6 @@ while service_iterator.has_next_blocking():
 	pretty_print_service(service)
 	input("Press enter for next service")
 ```
-
 
 **typescript:**
 
@@ -2060,7 +2263,6 @@ while (await serviceIterator.hasNext()) {
 	await readLn("Press enter for next service")
 }
 ```
-
 
 **dart:**
 
@@ -2106,23 +2308,20 @@ In this example, the filter method returns all the `Services` that have the prov
 Sharing a piece of encrypted information means allowing another user to read it by encrypting the
 cryptographic key associated with the data using the recipient's key.
 
-
 > **note:**
 You can only share encrypted data with **Data Owners**, such as Healthcare Parties, Patients, or Devices. Additionally,
 the recipient Data Owner must have initialized their cryptographic keys. To initialize the keys, a Data Owner must log
 in to the SDK. Therefore, the Data Owner must be associated with a valid user to successfully complete the login and
 participate in a data-sharing procedure.
 
-
 ## Share Data with a Healthcare Party
 
 ### Share an Existing Entity with a Healthcare Party
 
 For this example, you need another Healthcare Party user. You can create one in the Cockpit by
-[following this guide](http://localhost:3000/cockpit/how-to/how-to-manage-hcp).
+[following this guide](/cockpit/managing-users).
 
 Once you have created the new user, log in to initialize their cryptographic keys:
-
 
 **kotlin:**
 
@@ -2143,7 +2342,6 @@ val otherSdk = CardinalSdk.initialize(
 val otherHcp = otherSdk.healthcareParty.getCurrentHealthcareParty()
 ```
 
-
 **python:**
 
 
@@ -2151,14 +2349,13 @@ val otherHcp = otherSdk.healthcareParty.getCurrentHealthcareParty()
 username = input("Login of the other hcp: ").strip()
 other_password = input("Insert the password for this hcp: ")
 other_sdk = CardinalSdk(
-	application_id=None,
+	project_id=None,
 	baseurl=CARDINAL_URL,
 	authentication_method=UsernamePassword(username, other_password),
 	storage_facade=FileSystemStorage("./scratch/storage")
 )
 other_hcp = other_sdk.healthcare_party.get_current_healthcare_party_blocking()
 ```
-
 
 **typescript:**
 
@@ -2174,7 +2371,6 @@ const otherSdk = await CardinalSdk.initialize(
 )
 const otherHcp = await otherSdk.healthcareParty.getCurrentHealthcareParty()
 ```
-
 
 **dart:**
 
@@ -2194,21 +2390,19 @@ final otherHcp = await otherSdk.healthcareParty.getCurrentHealthcareParty();
 
 Consider a `Document` entity created with the initial Healthcare Party user:
 
-
 **kotlin:**
 
 
 ```kotlin test-AAEG
 val oldDocument = sdk.document.createDocument(
 	DecryptedDocument(
-		id = UUID.randomUUID().toString(),
+		id = Uuid.random().toString(),
 		name = "An important document"
 	).let {
 		sdk.document.withEncryptionMetadataUnlinked(it, null)
 	}
 )
 ```
-
 
 **python:**
 
@@ -2223,7 +2417,6 @@ old_document = sdk.document.create_document_blocking(
 )
 ```
 
-
 **typescript:**
 
 
@@ -2236,7 +2429,6 @@ const oldDocument = await sdk.document.createDocument(
 	)
 )
 ```
-
 
 **dart:**
 
@@ -2256,7 +2448,6 @@ final oldDocument = await sdk.document.createDocument(
 
 If the other Healthcare Party tries to access it using the ID, the operation will fail with an error:
 
-
 **kotlin:**
 
 
@@ -2268,7 +2459,6 @@ try {
 }
 ```
 
-
 **python:**
 
 
@@ -2278,7 +2468,6 @@ try:
 except Exception as e:
 	print(f"This means I am not authorized to read the document -> {e}")
 ```
-
 
 **typescript:**
 
@@ -2290,7 +2479,6 @@ try {
 	console.error("This means I am not authorized to read the document -> ", e)
 }
 ```
-
 
 **dart:**
 
@@ -2307,7 +2495,6 @@ try {
 The initial Healthcare Party can then grant access using the `shareWith` method. This method takes two parameters:
 the ID of the recipient Data Owner (i.e., the Healthcare Party, Patient, or Device) and the entity to share:
 
-
 **kotlin:**
 
 
@@ -2317,7 +2504,6 @@ val updatedDocument = sdk.document.shareWith(
 	document = oldDocument
 )
 ```
-
 
 **python:**
 
@@ -2329,7 +2515,6 @@ updated_document = sdk.document.share_with_blocking(
 )
 ```
 
-
 **typescript:**
 
 
@@ -2339,7 +2524,6 @@ const updatedDocument = await sdk.document.shareWith(
 	oldDocument
 )
 ```
-
 
 **dart:**
 
@@ -2351,14 +2535,12 @@ final updatedDocument = await sdk.document.shareWith(otherHcp.id, oldDocument);
 
 At this point, the other Healthcare Party can access the document successfully:
 
-
 **kotlin:**
 
 
 ```kotlin test-AAEJ
 val oldDocumentOtherHcp = otherSdk.document.getDocument(oldDocument.id)
 ```
-
 
 **python:**
 
@@ -2367,14 +2549,12 @@ val oldDocumentOtherHcp = otherSdk.document.getDocument(oldDocument.id)
 old_document_other_hcp = other_sdk.document.get_document_blocking(old_document.id)
 ```
 
-
 **typescript:**
 
 
 ```typescript test-BUNA
 const oldDocumentOtherHcp = await otherSdk.document.getDocument(oldDocument.id)
 ```
-
 
 **dart:**
 
@@ -2389,13 +2569,12 @@ final oldDocumentOtherHcp = await otherSdk.document.getDocument(oldDocument.id);
 When creating an entity, you can directly specify the other Data Owner to share the entity with by including them when
 initializing the encryption metadata:
 
-
 **kotlin:**
 
 
 ```kotlin test-AAEK
 val newDocument = DecryptedDocument(
-	id = UUID.randomUUID().toString(),
+	id = Uuid.random().toString(),
 	name = "Another important document"
 )
 
@@ -2407,7 +2586,6 @@ val newDocumentWithMetadata = sdk.document.withEncryptionMetadataUnlinked(
 
 val createdNewDocument = sdk.document.createDocument(newDocumentWithMetadata)
 ```
-
 
 **python:**
 
@@ -2425,7 +2603,6 @@ new_document_with_metadata = sdk.document.with_encryption_metadata_blocking(
 created_new_document = sdk.document.create_document_blocking(new_document_with_metadata)
 ```
 
-
 **typescript:**
 
 
@@ -2440,7 +2617,6 @@ const newDocumentWithMetadata = await sdk.document.withEncryptionMetadataUnlinke
 )
 const createdNewDocument = await sdk.document.createDocument(newDocumentWithMetadata)
 ```
-
 
 **dart:**
 
@@ -2462,14 +2638,12 @@ final createdNewDocument = await sdk.document.createDocument(newDocumentWithMeta
 The other Healthcare Party is a delegate for the new `Document` with Read permissions. This means they can access the
 entity and read the encrypted information but cannot modify it:
 
-
 **kotlin:**
 
 
 ```kotlin test-AAEL
 val newDocumentOtherHcp = otherSdk.document.getDocument(createdNewDocument.id)
 ```
-
 
 **python:**
 
@@ -2478,14 +2652,12 @@ val newDocumentOtherHcp = otherSdk.document.getDocument(createdNewDocument.id)
 new_document_other_hcp = other_sdk.document.get_document_blocking(created_new_document.id)
 ```
 
-
 **typescript:**
 
 
 ```typescript test-HAJI
 const newDocumentOtherHcp = await otherSdk.document.getDocument(createdNewDocument.id)
 ```
-
 
 **dart:**
 
@@ -2502,20 +2674,18 @@ not possible to initialize a Patient User using the Cockpit.
 
 To create a Patient user, you first need to create a Patient:
 
-
 **kotlin:**
 
 
 ```kotlin test-AAEM
 val newPatient = DecryptedPatient(
-	id = UUID.randomUUID().toString(),
+	id = Uuid.random().toString(),
 	firstName = "Edmond",
 	lastName = "Dantes",
 )
 val patientWithMetadata = sdk.patient.withEncryptionMetadata(newPatient)
 val createdPatient = sdk.patient.createPatient(patientWithMetadata)
 ```
-
 
 **python:**
 
@@ -2530,7 +2700,6 @@ patient_with_metadata = sdk.patient.with_encryption_metadata_blocking(new_patien
 created_patient = sdk.patient.create_patient_blocking(patient_with_metadata)
 ```
 
-
 **typescript:**
 
 
@@ -2543,7 +2712,6 @@ const newPatient = new DecryptedPatient({
 const patientWithMetadata = await sdk.patient.withEncryptionMetadata(newPatient)
 const createdPatient = await sdk.patient.createPatient(patientWithMetadata)
 ```
-
 
 **dart:**
 
@@ -2562,21 +2730,19 @@ final createdPatient = await sdk.patient.createPatient(patientWithMetadata);
 Then, you need to create a User for that Patient. You can link the User to the Patient by setting the `patientId`
 property on the User to the id of the newly created Patient.
 
-
 **kotlin:**
 
 
 ```kotlin test-AAEN
-val login = "edmond.dantes.${UUID.randomUUID().toString().substring(0, 6)}@icure.com"
+val login = "edmond.dantes.${Uuid.random().toString().substring(0, 6)}@icure.com"
 val patientUser = User(
-	id = UUID.randomUUID().toString(),
+	id = Uuid.random().toString(),
 	patientId = createdPatient.id,
 	login = login,
 	email = login
 )
 val createdUser = sdk.user.createUser(patientUser)
 ```
-
 
 **python:**
 
@@ -2592,7 +2758,6 @@ patient_user = User(
 created_user = sdk.user.create_user_blocking(patient_user)
 ```
 
-
 **typescript:**
 
 
@@ -2606,7 +2771,6 @@ const patientUser = new User({
 })
 const createdUser = await sdk.user.createUser(patientUser)
 ```
-
 
 **dart:**
 
@@ -2625,14 +2789,12 @@ final createdUser = await sdk.user.createUser(patientUser);
 
 Finally, you have to create a temporary access token for the User, so that they can log in.
 
-
 **kotlin:**
 
 
 ```kotlin test-AAEO
 val loginToken = sdk.user.getToken(createdUser.id, "login")
 ```
-
 
 **python:**
 
@@ -2641,14 +2803,12 @@ val loginToken = sdk.user.getToken(createdUser.id, "login")
 login_token = sdk.user.get_token_blocking(created_user.id, "login")
 ```
 
-
 **typescript:**
 
 
 ```typescript test-GAZA
 const loginToken = await sdk.user.getToken(createdUser.id, "login")
 ```
-
 
 **dart:**
 
@@ -2659,7 +2819,6 @@ final loginToken = await sdk.user.getToken(createdUser.id, "login");
 
 
 Now, the User can log in to the SDK, initializing their cryptographic keys:
-
 
 **kotlin:**
 
@@ -2675,19 +2834,17 @@ CardinalSdk.initialize(
 )
 ```
 
-
 **python:**
 
 
 ```python
 CardinalSdk(
-	application_id=None,
+	project_id=None,
 	baseurl=CARDINAL_URL,
 	authentication_method=UsernamePassword(login, login_token),
 	storage_facade=FileSystemStorage("./scratch/storage")
 )
 ```
-
 
 **typescript:**
 
@@ -2700,7 +2857,6 @@ await CardinalSdk.initialize(
 	StorageFacade.usingFileSystem("../scratch/storage")
 )
 ```
-
 
 **dart:**
 
@@ -2719,7 +2875,6 @@ However, the Patient User cannot access itself, as the Patient entity could not 
 cryptographic keys were not initialized yet. Now that they are, the Healthcare Party that is managing this registration
 can share the Patient:
 
-
 **kotlin:**
 
 
@@ -2735,7 +2890,6 @@ val patient = sdk.patient.shareWith(
 )
 ```
 
-
 **python:**
 
 
@@ -2750,7 +2904,6 @@ patient = sdk.patient.share_with_blocking(
 	)
 )
 ```
-
 
 **typescript:**
 
@@ -2768,7 +2921,6 @@ const patient = await sdk.patient.shareWith(
 	}
 )
 ```
-
 
 **dart:**
 
@@ -2791,10 +2943,7 @@ const patient = await sdk.patient.shareWith(
 > **note:**
 A user that acts as a patient must be able to access their own patient entity to create, read, and share data
 through Cardinal.
-
-
 Now, the Patient can finally log in and have access to their full information:
-
 
 **kotlin:**
 
@@ -2810,19 +2959,17 @@ val patientSdk = CardinalSdk.initialize(
 )
 ```
 
-
 **python:**
 
 
 ```python
 patient_sdk = CardinalSdk(
-	application_id=None,
+	project_id=None,
 	baseurl=CARDINAL_URL,
 	authentication_method=UsernamePassword(login, login_token),
 	storage_facade=FileSystemStorage("./scratch/storage")
 )
 ```
-
 
 **typescript:**
 
@@ -2835,7 +2982,6 @@ const patientSdk = await CardinalSdk.initialize(
 	StorageFacade.usingFileSystem("../scratch/storage")
 )
 ```
-
 
 **dart:**
 
@@ -2854,26 +3000,23 @@ const patientSdk = await CardinalSdk.initialize(
 This registration flow makes sense only in the context of this example, to make it self-contained.
 To learn how to register a Patient in a real context, check [this how to](/how-to/registering-users).
 
-
 ### Share an Existing Entity with a Patient
 
 Sharing an entity with a Patient follows the same flow as sharing with a Healthcare Party. First, the Healthcare Party
 needs to create an entity, such as a `HealthElement`, to represent a medical condition or prolonged context:
-
 
 **kotlin:**
 
 
 ```kotlin test-AAES
 val healthElement = DecryptedHealthElement(
-	id = UUID.randomUUID().toString(),
+	id = Uuid.random().toString(),
 	descr = "This is some medical context"
 )
 
 val healthElementWithMetadata = sdk.healthElement.withEncryptionMetadata(healthElement, patient)
 val createdHealthElement = sdk.healthElement.createHealthElement(healthElementWithMetadata)
 ```
-
 
 **python:**
 
@@ -2887,7 +3030,6 @@ health_element_with_metadata = sdk.health_element.with_encryption_metadata_block
 created_health_element = sdk.health_element.create_health_element_blocking(health_element_with_metadata)
 ```
 
-
 **typescript:**
 
 
@@ -2899,7 +3041,6 @@ const healthElement = new DecryptedHealthElement({
 const healthElementWithMetadata = await sdk.healthElement.withEncryptionMetadata(healthElement, patient)
 const createdHealthElement = await sdk.healthElement.createHealthElement(healthElementWithMetadata)
 ```
-
 
 **dart:**
 
@@ -2917,7 +3058,6 @@ final createdHealthElement = await sdk.healthElement.createHealthElement(healthE
 It is important to note that even though the `HealthElement` is linked to the patient by the encryption metadata,
 the Patient does not yet have the right to access it:
 
-
 **kotlin:**
 
 
@@ -2929,7 +3069,6 @@ try {
 }
 ```
 
-
 **python:**
 
 
@@ -2939,7 +3078,6 @@ try:
 except Exception as e:
 	print(f"This means the patient cannot get this health element -> {e}")
 ```
-
 
 **typescript:**
 
@@ -2951,7 +3089,6 @@ try {
 	console.error("This means the patient cannot get this health element", e)
 }
 ```
-
 
 **dart:**
 
@@ -2967,7 +3104,6 @@ try {
 
 Next, the Healthcare Party can share the entity with the Patient:
 
-
 **kotlin:**
 
 
@@ -2977,7 +3113,6 @@ val healthElement = sdk.healthElement.shareWith(
 	healthElement = createdHealthElement
 )
 ```
-
 
 **python:**
 
@@ -2989,7 +3124,6 @@ health_element = sdk.health_element.share_with_blocking(
 )
 ```
 
-
 **typescript:**
 
 
@@ -2999,7 +3133,6 @@ const healthElement = await sdk.healthElement.shareWith(
 	createdHealthElement
 )
 ```
-
 
 **dart:**
 
@@ -3011,14 +3144,12 @@ final healthElement = await sdk.healthElement.shareWith(patient.id, createdHealt
 
 Finally, the Patient can access it:
 
-
 **kotlin:**
 
 
 ```kotlin test-AAEV
 patientSdk.healthElement.getHealthElement(createdHealthElement.id)
 ```
-
 
 **python:**
 
@@ -3027,14 +3158,12 @@ patientSdk.healthElement.getHealthElement(createdHealthElement.id)
 patient_sdk.health_element.get_health_element_blocking(created_health_element.id)
 ```
 
-
 **typescript:**
 
 
 ```typescript test-KUFA
 await patientSdk.healthElement.getHealthElement(createdHealthElement.id)
 ```
-
 
 **dart:**
 
@@ -3049,13 +3178,12 @@ await patientSdk.healthElement.getHealthElement(createdHealthElement.id);
 As with the Healthcare Party case, a Patient can be directly included in the delegations of the encryption metadata for
 a newly created entity.
 
-
 **kotlin:**
 
 
 ```kotlin test-AAEW
 val newHealthElement = DecryptedHealthElement(
-	id = UUID.randomUUID().toString(),
+	id = Uuid.random().toString(),
 	descr = "This is some other medical context"
 )
 
@@ -3067,7 +3195,6 @@ val newHealthElementWithMetadata = sdk.healthElement.withEncryptionMetadata(
 
 val newCreatedHealthElement = sdk.healthElement.createHealthElement(newHealthElementWithMetadata)
 ```
-
 
 **python:**
 
@@ -3085,7 +3212,6 @@ new_health_element_with_metadata = sdk.health_element.with_encryption_metadata_b
 new_created_health_element = sdk.health_element.create_health_element_blocking(new_health_element_with_metadata)
 ```
 
-
 **typescript:**
 
 
@@ -3101,7 +3227,6 @@ const newHealthElementWithMetadata = await sdk.healthElement.withEncryptionMetad
 )
 const newCreatedHealthElement = await sdk.healthElement.createHealthElement(newHealthElementWithMetadata)
 ```
-
 
 **dart:**
 
@@ -3126,14 +3251,12 @@ and creating the link does not set up a delegation.
 
 Now, the Patient has read and write access to the entity and can directly retrieve it:
 
-
 **kotlin:**
 
 
 ```kotlin test-AAEX
 val retrievedHealthElement = patientSdk.healthElement.getHealthElement(newCreatedHealthElement.id)
 ```
-
 
 **python:**
 
@@ -3142,14 +3265,12 @@ val retrievedHealthElement = patientSdk.healthElement.getHealthElement(newCreate
 retrieved_health_element = patient_sdk.health_element.get_health_element_blocking(new_created_health_element.id)
 ```
 
-
 **typescript:**
 
 
 ```typescript test-NUZA
 const retrievedHealthElement = await patientSdk.healthElement.getHealthElement(newCreatedHealthElement.id)
 ```
-
 
 **dart:**
 
@@ -3169,7 +3290,6 @@ or [LOINC](https://loinc.org/) are used to express medical concepts in a formal 
 
 In Cardinal, codifications are represented through the `Code` entity, which can also be used to represent internal
 codification systems:
-
 
 **kotlin:**
 
@@ -3207,7 +3327,6 @@ sdk.code.createCodes(listOf(
 	)
 ))
 ```
-
 
 **python:**
 
@@ -3248,7 +3367,6 @@ sdk.code.create_codes_blocking(
 )
 ```
 
-
 **typescript:**
 
 
@@ -3284,7 +3402,6 @@ await sdk.code.createCodes([
 	})
 ])
 ```
-
 
 **dart:**
 
@@ -3326,7 +3443,6 @@ await sdk.code.createCodes([
 > **note:**
 The codification systems are supported, but the codes themselves are not present by default in the cloud.
 
-
 A `Code` is defined by three properties:
 - `type`: Represents the codification system the code belongs to.
 - `code`: Represents the unique ID of the code within the codification system.
@@ -3335,14 +3451,15 @@ A `Code` is defined by three properties:
 and a new version.
 
 A `Code` is uniquely identified by the `type`, `code`, `version` triple, so the ID of a `Code` is not a UUID but rather
-the string `type|code|version`.
+the string `type|code|version`. Note that the usual [validity rules for ids](/explanations/data-model/#what-is-a-valid-id)
+still apply: while `|` is allowed, `type`, `code`, and `version` cannot contain whitespace, control characters, or any
+of the characters `/` `\` `?` `#` `%` `;`.
 
 A `Code` can be used to add additional context to other entities. In the following example, it is used to add a tag to
 a `Service`.
 
 Like other entities, it is possible to search code to facilitate the retrieval: for example, it is possible to retrieve
 codes of a certain type searching for a word that is present in the label for a specific language:
-
 
 **kotlin:**
 
@@ -3370,7 +3487,7 @@ requireNotNull(selectedCode) { "No code was selected" }
 
 val patient = sdk.patient.createPatient(
 	DecryptedPatient(
-		id = UUID.randomUUID().toString(),
+		id = Uuid.random().toString(),
 		firstName = "Annabelle",
 		lastName = "Hall",
 	).let { sdk.patient.withEncryptionMetadata(it) }
@@ -3378,12 +3495,12 @@ val patient = sdk.patient.createPatient(
 
 val formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss")
 val contact = DecryptedContact(
-	id = UUID.randomUUID().toString(),
+	id = Uuid.random().toString(),
 	descr = "Blood pressure measurement",
 	openingDate = LocalDateTime.now().format(formatter).toLong(),
 	services = setOf(
 		DecryptedService(
-			id = UUID.randomUUID().toString(),
+			id = Uuid.random().toString(),
 			label = "Blood pressure",
 			content = mapOf(
 				"en" to DecryptedContent(
@@ -3409,7 +3526,6 @@ val createdContact = sdk.contact.createContact(
 	sdk.contact.withEncryptionMetadata(contact, patient)
 )
 ```
-
 
 **python:**
 
@@ -3473,7 +3589,6 @@ created_contact = sdk.contact.create_contact_blocking(
 	sdk.contact.with_encryption_metadata_blocking(contact, patient)
 )
 ```
-
 
 **typescript:**
 
@@ -3543,7 +3658,6 @@ const createdContact = await sdk.contact.createContact(
 	await sdk.contact.withEncryptionMetadata(contact, patient)
 )
 ```
-
 
 **dart:**
 
@@ -3617,7 +3731,6 @@ includes only the `type`, `code`, and `version`.
 
 `Codes` can also be used to filter entities:
 
-
 **kotlin:**
 
 
@@ -3636,7 +3749,6 @@ while (serviceIterator.hasNext()) {
 }
 ```
 
-
 **python:**
 
 
@@ -3652,7 +3764,6 @@ while service_iterator.has_next_blocking():
 	service = service_iterator.next_blocking(1)[0]
 	pretty_print_service(service)
 ```
-
 
 **typescript:**
 
@@ -3671,7 +3782,6 @@ while (await serviceIterator.hasNext()) {
 	prettyPrintService(service)
 }
 ```
-
 
 **dart:**
 
@@ -3696,11 +3806,6 @@ shared with the current user.
 
 ---
 
-
-================================================================================
-## 3.2 Real-time Communication Tutorial
-================================================================================
-
 <!-- Source: sdk/tutorial/pubsub/index.mdx -->
 
 # Real-time Communication and Analysis Tutorial
@@ -3715,25 +3820,21 @@ This tutorial demonstrates an example application with two concurrent components
 This example is useful for scenarios where a backend service (e.g., an AI algorithm) needs to continuously analyze data 
 as soon as it's created.
 
-
 > **note:**
 You will not find the Subscriber Dart examples, as it is designed to represent a back-end application use case. You can
 still test your Publisher in Dart by launching the Subscriber in any other language.
-
 
 ## Prerequisites
 
 Before starting, ensure you have:
 
-1. Completed the [onboarding procedure](/cockpit/how-to/how-to-create-your-account) to register for Cardinal.
-2. Created a database and [added a healthcare party user](/cockpit/how-to/how-to-manage-hcp).
+1. Completed the [onboarding procedure](/cockpit/create-your-first-project) to register for Cardinal.
+2. Created a database and [added a healthcare party user](/cockpit/managing-users).
 3. Familiarized yourself with the Cardinal SDK by following the [introductory tutorial](/tutorial/basic/sdk-basic-tutorial).
 
-
 > **note:**
-Be sure to [generate an authentication token](/cockpit/how-to/how-to-manage-hcp#generating-an-authentication-token) (i.e.
+Be sure to [generate an authentication token](/cockpit/managing-users#authentication-tokens) (i.e.
 a temporary password) for your healthcare party to be able to instantiate the SDK in the code examples.
-
 
 > **note:**
 The full code examples in Kotlin, Python, and TypeScript are available [in this repo](https://github.com/icure/cardinal-real-time-analysis-tutorial),
@@ -3758,11 +3859,10 @@ then be used for the rest of the example.
 
 ## Create the Patient User
 
-
 **kotlin:**
 
 
-First, the user will be prompted to insert the credentials of a [healthcare party created through the cockpit](/cockpit/how-to/how-to-manage-hcp).
+First, the user will be prompted to insert the credentials of a [healthcare party created through the cockpit](/cockpit/managing-users).
 An SDK instance will be initialized for that healthcare party.
 
 ```kotlin test-AADD
@@ -3782,11 +3882,10 @@ val sdk = CardinalSdk.initialize(
 )
 ```
 
-
 **python:**
 
 
-First, the user will be prompted to insert the credentials of a [healthcare party created through the cockpit](/cockpit/how-to/how-to-manage-hcp).
+First, the user will be prompted to insert the credentials of a [healthcare party created through the cockpit](/cockpit/managing-users).
 An SDK instance will be initialized for that healthcare party.
 
 ```python
@@ -3795,18 +3894,17 @@ CARDINAL_URL = "https://api.icure.cloud"
 username = input("Username: ")
 password = input("Password: ")
 sdk = CardinalSdk(
-	application_id=None,
+	project_id=None,
 	baseurl=CARDINAL_URL,
 	authentication_method=UsernamePassword(username, password),
 	storage_facade=FileSystemStorage("../scratch/storage")
 )
 ```
 
-
 **typescript:**
 
 
-First, the user will be prompted to insert the credentials of a [healthcare party created through the cockpit](/cockpit/how-to/how-to-manage-hcp).
+First, the user will be prompted to insert the credentials of a [healthcare party created through the cockpit](/cockpit/managing-users).
 An SDK instance will be initialized for that healthcare party.
 
 ```typescript test-GOSI
@@ -3821,7 +3919,6 @@ sdk = await CardinalSdk.initialize(
 	StorageFacade.usingFileSystem("../scratch/storage")
 )
 ```
-
 
 **dart:**
 
@@ -3842,23 +3939,20 @@ Future<CardinalSdk> createSdk(String username, String password) async {
 }
 ```
 
-
 Npw, the healthcare party user can create a Patient entity.
-
 
 **kotlin:**
 
 
 ```kotlin test-AADE
 val newPatient = DecryptedPatient(
-	id = UUID.randomUUID().toString(),
+	id = Uuid.random().toString(),
 	firstName = "Edmond",
 	lastName = "Dantes",
 )
 val patientWithMetadata = sdk.patient.withEncryptionMetadata(newPatient)
 val createdPatient = sdk.patient.createPatient(patientWithMetadata)
 ```
-
 
 **python:**
 
@@ -3873,7 +3967,6 @@ patient_with_metadata = sdk.patient.with_encryption_metadata_blocking(new_patien
 created_patient = sdk.patient.create_patient_blocking(patient_with_metadata)
 ```
 
-
 **typescript:**
 
 
@@ -3886,7 +3979,6 @@ const newPatient = new DecryptedPatient({
 const patientWithMetadata = await sdk.patient.withEncryptionMetadata(newPatient)
 const createdPatient = await sdk.patient.createPatient(patientWithMetadata)
 ```
-
 
 **dart:**
 
@@ -3905,14 +3997,13 @@ final createdPatient = await sdk.patient.createPatient(patientWithMetadata);
 Then, it creates a user associated to the patient. The healthcare party also creates a temporary token that will allow
 the new user to log in.
 
-
 **kotlin:**
 
 
 ```kotlin test-AADF
-val login = "edmond.dantes.${UUID.randomUUID().toString().substring(0, 6)}@icure.com"
+val login = "edmond.dantes.${Uuid.random().toString().substring(0, 6)}@icure.com"
 val patientUser = User(
-	id = UUID.randomUUID().toString(),
+	id = Uuid.random().toString(),
 	patientId = createdPatient.id,
 	login = login,
 	email = login
@@ -3920,7 +4011,6 @@ val patientUser = User(
 val createdUser = sdk.user.createUser(patientUser)
 val loginToken = sdk.user.getToken(createdUser.id, "login")
 ```
-
 
 **python:**
 
@@ -3937,7 +4027,6 @@ created_user = sdk.user.create_user_blocking(patient_user)
 login_token = sdk.user.get_token_blocking(created_user.id, "login")
 ```
 
-
 **typescript:**
 
 
@@ -3952,7 +4041,6 @@ const patientUser = new User({
 const createdUser = await sdk.user.createUser(patientUser)
 const loginToken = await sdk.user.getToken(createdUser.id, "login")
 ```
-
 
 **dart:**
 
@@ -3972,7 +4060,6 @@ final loginToken = await sdk.user.getToken(createdUser.id, "login");
 
 Now, the patient user can log in and instantiate a new sdk. By doing so, they will also initialize their cryptographic key.
 
-
 **kotlin:**
 
 
@@ -3987,19 +4074,17 @@ CardinalSdk.initialize(
 )
 ```
 
-
 **python:**
 
 
 ```python
 CardinalSdk(
-	application_id=None,
+	project_id=None,
 	baseurl=CARDINAL_URL,
 	authentication_method=UsernamePassword(login, login_token),
 	storage_facade=FileSystemStorage("../scratch/storage")
 )
 ```
-
 
 **typescript:**
 
@@ -4012,7 +4097,6 @@ await CardinalSdk.initialize(
 	StorageFacade.usingFileSystem("../scratch/storage")
 )
 ```
-
 
 **dart:**
 
@@ -4030,11 +4114,9 @@ await CardinalSdk.initialize(
 However, the Patient (entity) is an encrypted entity. The healthcare party user could not share it with the Patient (user),
 because their key were not initialized yet. Now that they are, the healthcare party can share the patient with itself.
 
-
 > **note:**
 A user that acts as a patient must be able to access their own patient entity to create, read, and share data
 through Cardinal.
-
 
 **kotlin:**
 
@@ -4051,7 +4133,6 @@ val patient = sdk.patient.shareWith(
 )
 ```
 
-
 **python:**
 
 
@@ -4066,7 +4147,6 @@ patient = sdk.patient.share_with_blocking(
 	)
 )
 ```
-
 
 **typescript:**
 
@@ -4084,7 +4164,6 @@ const patient = await sdk.patient.shareWith(
 	}
 )
 ```
-
 
 **dart:**
 
@@ -4104,7 +4183,6 @@ await sdk.patient.shareWith(
 
 Now that the patient has the permission to access their own information, it can log in and create data.
 
-
 **kotlin:**
 
 
@@ -4119,19 +4197,17 @@ val patientSdk = CardinalSdk.initialize(
 )
 ```
 
-
 **python:**
 
 
 ```python
 patient_sdk = CardinalSdk(
-	application_id=None,
+	project_id=None,
 	baseurl=CARDINAL_URL,
 	authentication_method=UsernamePassword(login, login_token),
 	storage_facade=FileSystemStorage("../scratch/storage")
 )
 ```
-
 
 **typescript:**
 
@@ -4144,7 +4220,6 @@ const patientSdk = await CardinalSdk.initialize(
 	StorageFacade.usingFileSystem("../scratch/storage")
 )
 ```
-
 
 **dart:**
 
@@ -4163,13 +4238,11 @@ const patientSdk = await CardinalSdk.initialize(
 This registration flow makes sense only in the context of this example, to make it self-contained.
 To learn how to register a Patient in a real context, check [this how to](/how-to/registering-users).
 
-
 ## Create Medical Data
 
 The patient user is now completely initialized and can start creating data. The Publisher simulates a medical
 device capable of measuring glycemia. This measurement is stored through the Cardinal SDK as a `Service` inside of a
 `Contact`, as explained in the [previous tutorial](/tutorial/basic/modules/basic-tutorial-create-medical-data).
-
 
 **kotlin:**
 
@@ -4178,11 +4251,11 @@ device capable of measuring glycemia. This measurement is stored through the Car
 val glycemiaValue = Random.nextInt(60, 160).toDouble()
 val formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss")
 val contact = DecryptedContact(
-	id = UUID.randomUUID().toString(),
+	id = Uuid.random().toString(),
 	openingDate = LocalDateTime.now().format(formatter).toLong(),
 	services = setOf(
 		DecryptedService(
-			id = UUID.randomUUID().toString(),
+			id = Uuid.random().toString(),
 			content = mapOf(
 				"en" to DecryptedContent(
 					measureValue = Measure(
@@ -4216,7 +4289,6 @@ val contact = DecryptedContact(
 	)
 )
 ```
-
 
 **python:**
 
@@ -4263,7 +4335,6 @@ contact = DecryptedContact(
 )
 ```
 
-
 **typescript:**
 
 
@@ -4308,7 +4379,6 @@ const contact = new DecryptedContact({
 	]
 })
 ```
-
 
 **dart:**
 
@@ -4368,7 +4438,6 @@ For simplicity's sake, the Publisher is getting the id of the healthcare party t
 field of the patient. This is a field automatically filled at patient creating with the id of the healthcare party who
 created it. For more information about sharing data, check our tutorial on [data sharing](/tutorial/basic/modules/basic-tutorial-share-data).
 
-
 **kotlin:**
 
 
@@ -4381,7 +4450,6 @@ val contactWithEncryptionMetadata = patientSdk.contact.withEncryptionMetadata(
 )
 patientSdk.contact.createContact(contactWithEncryptionMetadata)
 ```
-
 
 **python:**
 
@@ -4396,7 +4464,6 @@ contact_with_encryption_metadata = patient_sdk.contact.with_encryption_metadata_
 patient_sdk.contact.create_contact_blocking(contact_with_encryption_metadata)
 ```
 
-
 **typescript:**
 
 
@@ -4409,7 +4476,6 @@ const contactWithEncryptionMetadata = await patientSdk.contact.withEncryptionMet
 )
 await patientSdk.contact.createContact(contactWithEncryptionMetadata)
 ```
-
 
 **dart:**
 
@@ -4439,7 +4505,6 @@ that a Service has been analyzed.
 
 To retrieve the Service where the Subscriber completed the analysis, the Publisher creates a filter.
 
-
 **kotlin:**
 
 
@@ -4450,7 +4515,6 @@ val filter = ServiceFilters.byTagAndValueDateForSelf(
 )
 val serviceIterator = patientSdk.contact.filterServicesBy(filter)
 ```
-
 
 **python:**
 
@@ -4463,7 +4527,6 @@ service_filter = ServiceFilters.by_tag_and_value_date_for_self(
 service_iterator = patient_sdk.contact.filter_services_by_blocking(service_filter)
 ```
 
-
 **typescript:**
 
 
@@ -4474,7 +4537,6 @@ const filter = ServiceFilters.byTagAndValueDateForSelf(
 )
 const serviceIterator = await patientSdk.contact.filterServicesBy(filter)
 ```
-
 
 **dart:**
 
@@ -4493,7 +4555,6 @@ This filter will retrieve all the services shared with the Patient that have in 
 Finally, for each retrieved service, the first CodeStub with type `SNOMED` is taken, the full Code is retrieved from the
 cloud and the label is shown.
 
-
 **kotlin:**
 
 
@@ -4510,7 +4571,6 @@ while(serviceIterator.hasNext()) {
 }
 ```
 
-
 **python:**
 
 
@@ -4524,7 +4584,6 @@ while service_iterator.has_next_blocking():
 	else:
 		print("No diagnosis for this sample")
 ```
-
 
 **typescript:**
 
@@ -4541,7 +4600,6 @@ while(await serviceIterator.hasNext()) {
 	}
 }
 ```
-
 
 **dart:**
 
@@ -4578,7 +4636,6 @@ them based on their value.
 The first step for the Subscriber is to log in as a healthcare party to initialize the SDK. You can use the credentials
 that you obtained from the cockpit and those should be the same credentials you used to initialize the Publisher.
 
-
 **kotlin:**
 
 
@@ -4599,7 +4656,6 @@ val sdk = CardinalSdk.initialize(
 )
 ```
 
-
 **python:**
 
 
@@ -4609,13 +4665,12 @@ CARDINAL_URL = "https://api.icure.cloud"
 username = input("Username: ")
 password = input("Password: ")
 sdk = CardinalSdk(
-	application_id=None,
+	project_id=None,
 	baseurl=CARDINAL_URL,
 	authentication_method=UsernamePassword(username, password),
 	storage_facade=FileSystemStorage("../scratch/storage")
 )
 ```
-
 
 **typescript:**
 
@@ -4641,7 +4696,6 @@ The following filter includes all the service entities that are:
 - Have a CodeStub in the `tag` field with type `LOINC` and code `2339-0`.
 - Have a CodeStub in the `tag` field with type `CARDINAL` and code `TO_BE_ANALYZED`.
 
-
 **kotlin:**
 
 
@@ -4656,7 +4710,6 @@ val filter = ServiceFilters.byTagAndValueDateForSelf(
 	)
 )
 ```
-
 
 **python:**
 
@@ -4673,7 +4726,6 @@ service_filter = intersection(
 	)
 )
 ```
-
 
 **typescript:**
 
@@ -4697,7 +4749,6 @@ the filter is created or updated.
 
 For more information about subscriptions and events, check [this how-to](/how-to/how-to-subscribe-to-events).
 
-
 **kotlin:**
 
 
@@ -4707,7 +4758,6 @@ val subscription = sdk.contact.subscribeToServiceCreateOrUpdateEvents(
 )
 ```
 
-
 **python:**
 
 
@@ -4716,7 +4766,6 @@ subscription = sdk.contact.subscribe_to_service_create_or_update_events_blocking
 	filter=service_filter
 )
 ```
-
 
 **typescript:**
 
@@ -4732,7 +4781,6 @@ const subscription = await sdk.contact.subscribeToServiceCreateOrUpdateEvents(
 
 Once the subscription is opened, the Subscriber can wait for the events to be produced:
 
-
 **kotlin:**
 
 
@@ -4742,7 +4790,6 @@ for (event in subscription.eventChannel) {
 }
 ```
 
-
 **python:**
 
 
@@ -4751,7 +4798,6 @@ while subscription.get_close_reason() is None:
 	event = subscription.wait_for_event_blocking(timedelta(seconds=10))
 	# The code for handling the event will go here
 ```
-
 
 **typescript:**
 
@@ -4766,7 +4812,6 @@ while (!subscription.isClosed) {
 
 [Different types of events can be produced](/how-to/how-to-subscribe-to-events#buffered-events) by the channel. In
 this example, the Subscriber will handle only the events related to opening a connection and receiving an entity.
-
 
 **kotlin:**
 
@@ -4785,7 +4830,6 @@ for (event in subscription.eventChannel) {
 }
 ```
 
-
 **python:**
 
 
@@ -4801,7 +4845,6 @@ while subscription.get_close_reason() is None:
 	else:
 		print(f"Unexpected event: {event.type}")
 ```
-
 
 **typescript:**
 
@@ -4825,7 +4868,6 @@ while (!subscription.isClosed) {
 When a new service shared with the healthcare party and with the defined tags is created or updated, the appropriate 
 event is fired. The event also contains the encrypted entity, so the first step for the Subscriber is to decrypt it.
 
-
 **kotlin:**
 
 
@@ -4840,7 +4882,6 @@ when (event) {
 }
 ```
 
-
 **python:**
 
 
@@ -4849,7 +4890,6 @@ elif event.type == EntitySubscriptionEvent.Type.EntityNotification:
 	service = sdk.contact.decrypt_service_blocking(event.entity)
 	print(f"Received service {service.id}")
 ```
-
 
 **typescript:**
 
@@ -4865,7 +4905,6 @@ if (event instanceof EntitySubscriptionEvent.EntityNotification) {
 
 Now the Subscriber can check if the service has a blood sugar level measurement. If it has, it will choose a CodeStub
 to represent the diagnosis based on that value.
-
 
 **kotlin:**
 
@@ -4912,7 +4951,6 @@ when (event) {
 }
 ```
 
-
 **python:**
 
 
@@ -4949,7 +4987,6 @@ elif event.type == EntitySubscriptionEvent.Type.EntityNotification:
 	else:
 		print(f"Service with id {service.id} does not contain a valid measure.")
 ```
-
 
 **typescript:**
 
@@ -5000,7 +5037,6 @@ diagnosis plus another internal tag to signal that the service was updated.
 However, a service is a nested entity inside a contact, therefore the Subscriber must access the contact and update the 
 service inside it. To access the contact containing the service, it is possible to use the `contactId` field on the
 service, that is automatically filled during the creation.
-
 
 **kotlin:**
 
@@ -5070,7 +5106,6 @@ when (event) {
 }
 ```
 
-
 **python:**
 
 
@@ -5122,7 +5157,6 @@ elif event.type == EntitySubscriptionEvent.Type.EntityNotification:
 	else:
 		print(f"Service with id {service.id} does not contain a valid measure.")
 ```
-
 
 **typescript:**
 
@@ -5198,7 +5232,6 @@ After updating the contact, the Subscriber will go back and wait for the followi
 
 Below, you will find the complete code of the loop for receiving and handling the events.
 
-
 **kotlin:**
 
 
@@ -5272,7 +5305,6 @@ Below, you will find the complete code of the loop for receiving and handling th
 }
 ```
 
-
 **python:**
 
 
@@ -5332,7 +5364,6 @@ while subscription.get_close_reason() is None:
 	else:
 		print(f"Unexpected event: {event.type}")
 ```
-
 
 **typescript:**
 
@@ -5423,21 +5454,18 @@ find the instruction on how to run them in the different programming languages.
 Be sure of running the Subscriber first, as the subscription will only be triggered by services created after the
 initialization.
 
-
 > **caution:**
 Both the Publisher and the Subscriber will ask for a login and a password. You can use the email and an authentication
-token for a healthcare party user [created through the Cockpit](/cockpit/how-to/how-to-manage-hcp).
+token for a healthcare party user [created through the Cockpit](/cockpit/managing-users).
 
 Make sure to use the same credentials for both the Publisher and Subscriber. The patient created in the Publisher will
 share data with the healthcare party associated with the logged-in credentials, and the Subscriber can only access the
 services that have been shared with that same healthcare party.
 
-
 > **info:**
 The Publisher and Subscriber are fully interoperable, even if they are written in different programming languages.
 For example, you could run the Publisher in Kotlin and the Subscriber in Python, and you would achieve the same result
 as if both were written in the same language.
-
 
 ## Prerequisite
 
@@ -5457,7 +5485,7 @@ the `Publisher.kt` file to run the Publisher.
 ## Launch the tutorial using Python
 
 To launch the tutorial in Python, navigate to the `python` folder in the tutorial repository. The minimum supported
-Python version is 3.9.
+Python version is **3.12**.
 
 ```bash
 cd python
@@ -5529,13 +5557,11 @@ yarn ts-node --esm src/publisher.ts
 
 ## Launch the tutorial using Dart
 
-
 > **caution:**
 As the Subscriber part of this tutorial is designed to represent the use case of a back-end application and so it was 
 not implemented in Dart.
 
 You can still run the Publisher part in Dart, using the subscriber from any other language.
-
 
 To launch the Publisher in dart, clone the [dart tutorial repository](https://github.com/icure/cardinal-dart-real-time-analysis-tutorial).
 Then, open a terminal and install the dependencies using pub and the iOS pod:
@@ -5602,6 +5628,7 @@ suspend fun initializeMySdk(username: String, password: String) =
 
 
 ```typescript test-VETE
+import {AuthenticationMethod, CardinalSdk, StorageFacade} from "@icure/cardinal-sdk";
 
 function initializeMySdk(username: string, password: string): Promise<CardinalSdk> {
 	return CardinalSdk.initialize(
@@ -5697,7 +5724,6 @@ initialization time, using an authentication process, or using a custom secret p
 During initialization, the SDK will use the provided authentication method to login the user and request JSON web tokens
 which will be used to authenticate the user for the future requests.
 
-
 > **info:**
 You don't need to worry about managing the login and JWTs of the user, you only need to provide the authentication method
 for the api initialization.
@@ -5729,6 +5755,7 @@ val auth = AuthenticationMethod.UsingCredentials(UsernamePassword("username", "p
 
 
 ```typescript test-NUQI
+import {AuthenticationMethod} from "@icure/cardinal-sdk";
 
 const auth = new AuthenticationMethod.UsingCredentials.UsernamePassword("username", "password")
 ```
@@ -5757,7 +5784,7 @@ final auth = AuthenticationMethod.UsingCredentials(Credentials.UsernamePassword(
 
 #### Username + login token
 
-You can generate login token through the [cockpit](/cockpit/how-to/how-to-manage-hcp#generating-an-authentication-token)
+You can generate login token through the [cockpit](/cockpit/managing-users#authentication-tokens)
 or through the Cardinal SDK itself (:construction:).
 The lifespan of a login token is configurable, and there may be multiple login tokens associated with a user.
 Login tokens can be revoked, but any JWTs generated through that login token won't be automatically revoked.
@@ -5778,6 +5805,7 @@ val auth = AuthenticationMethod.UsingCredentials(UsernameLongToken("username", "
 
 
 ```typescript test-BADA
+import {AuthenticationMethod} from "@icure/cardinal-sdk";
 
 const auth = new AuthenticationMethod.UsingCredentials.UsernameLongToken("username", "token")
 ```
@@ -5824,6 +5852,7 @@ val auth = AuthenticationMethod.UsingCredentials(ExternalAuthenticationToken("my
 
 
 ```typescript test-JAJO
+import {AuthenticationMethod} from "@icure/cardinal-sdk";
 
 const auth = new AuthenticationMethod.UsingCredentials.ExternalAuthenticationToken("my-auth-config-id", "google-token")
 ```
@@ -5860,7 +5889,7 @@ In this case authentication is done in two steps: the first step will generate a
 via email or sms, then, once the user provides the received token, the second step will actually complete the
 authentication and initialize the SDK.
 
-To initialize the SDK with an authentication process, you need to use a different initialization method which also 
+To initialize the SDK with an authentication process, you need to use a different initialization method which also
 requires some additional parameters.
 
 
@@ -6004,7 +6033,7 @@ Future<CardinalSdk> initializeMySdk(
 	// The user will receive a mail with the validation code required to proceed.
 	final validationCode = await askValidationCode();
 	return await authenticationStep.completeAuthentication(validationCode);
-} 
+}
 ```
 
 
@@ -6029,7 +6058,7 @@ on the type of process.
 The type of process you're using also determines whether you have to pass the email or phone number of the user.
 
 You can get the `specId` and `processId` from the cockpit.
-For a quick start, we suggest that you use the demo setup during the [cockpit onboarding](/cockpit/how-to/how-to-start),
+For a quick start, we suggest that you use the demo setup during the [cockpit onboarding](/cockpit/external-services-demo-setup),
 but you can also configure your services and custom processes.
 
 #### Captcha
@@ -6229,13 +6258,13 @@ On typescript you can use file-system storage when running on node, or local sto
 
 On other platforms you will need to provide your own storage implementation.
 
-
 > **info:**
 If you are on react-native we provide a supplementary package a storage facade and other required components.
 Refer to the expo boilerplate for more information (:construction:).
 
 
 ```typescript test-TECO
+import {StorageFacade, CardinalStorageOptions} from "@icure/cardinal-sdk";
 
 // On the typescript SDK the pre-implemented storage solutions are not available for use directly.
 // Instead you have `CardinalStorageOptions` which will be used by the SDK initializer to instantiate the
@@ -6302,9 +6331,8 @@ customStorage: StorageOptions = MyVolatileStorage()
 On dart currently the only storage option is the "platform default".
 This option uses the DataStore on Android and the UserDefaults on iOs.
 
-
 > **info:**
-The platform default will use local storage on web.  
+The platform default will use local storage on web.
 
 
 ```dart
@@ -6319,7 +6347,6 @@ final storageOptions = StorageOptions.PlatformDefault;
 When initializing the SDK you can provide some optional configurations through the `SdkOptions` parameter.
 
 Not all optional configuration parameters are available on all platforms.
-
 
 > **caution:**
 The parameters marked as occasionally required in the following sections are actually required if certain conditions
@@ -6360,6 +6387,7 @@ val options = SdkOptions(
 
 
 ```typescript test-GESA
+import {SdkOptions} from "@icure/cardinal-sdk";
 
 const options: SdkOptions = {
 	encryptedFields: {
@@ -6435,6 +6463,7 @@ suspend fun jwkEncodedKeyStorage() =
 
 
 ```typescript test-NUCO
+import {KeyStorageFacade, StorageFacade} from "@icure/cardinal-sdk";
 
 // This is the same encoding method as the default, but you can use a different underlying storage facade,
 // which for example, could store the key files at a different location from everything else
@@ -6454,7 +6483,6 @@ Custom key storage facades aren't supported on the dart SDK.
 
 
 ### Group selector (occasionally required)
-
 
 > **info:**
 if you don't know what groups and applications are in the Cardinal ecosystem you should read the dedicated documentation
@@ -6507,11 +6535,113 @@ keys using previously existing lost but verified keys of the user (:construction
 - `useHierarchicalDataOwners`: enables the hierarchical data owners key management when set to true.
 The SDK will expect to have keys for the [data owners parents](/how-to/share-data-with-many-users) (if any).
 
+
+### Ignore unknown fields
+
+By default, when the SDK deserializes data coming from the backend or from the decrypted content of an entity, it fails
+if the data contains fields that are not part of the data model. This can happen, for example, if data was created
+using third parties SDK, or if the encrypted content of an entity was created with a customized data model.
+
+You can make the SDK ignore these unknown fields instead, by setting the `ignoreUnknownFields` option to true.
+
+> **caution:**
+Modifying an entity where some fields were ignored during deserialization will result in the loss of the data in those
+fields. If the ignored fields come from the encrypted content of an entity, you can provide a `jsonPatcher` in the SDK
+options to specify how the unknown fields should be migrated instead.
+
+
+> **note:**
+In Kotlin and TypeScript, SDK versions older than 2.10.0 called this option `lenientJson`, and it only applied to the
+data coming from the backend, not to the decrypted content of entities.
+
+In Python the option was called `lenient_json` up to SDK 2.11.0, and is called `ignoreUnknownFields` since 2.12.0
+(note the camelCase spelling: `SdkOptions(ignoreUnknownFields=True)`).
+
+
+### Discard malformed entities in list reads
+
+By default, if a single entity returned by a list or page read can't be decoded, for example because one of its fields
+has an unexpected type, the whole read fails. This corresponds to the `Strict` entity list decoding strategy.
+
+With the `DiscardMalformed` strategy the SDK drops the entities that can't be decoded instead, and calls the handler
+you provide once for each dropped entity. The handler receives a `MalformedEntity` with:
+- `entityType`: the serial name of the expected type, e.g. `com.icure.cardinal.sdk.model.EncryptedPatient`.
+- `entityId`: the id of the entity, if it could be read from the raw json.
+- `json`: the raw entity as returned by the backend.
+- `error`: the decoding error (an `IllegalArgumentException` in Kotlin, the error message in TypeScript).
+- `requestUrl`: the url of the request that returned the entity.
+
+Keep in mind that:
+- Only the list and page reads of stored entities (get by ids, filter, find, list, ...) are affected: these methods may
+  return fewer entities than requested, and pages may contain fewer rows than their limit.
+- Single-entity reads, write operations and the entities used internally by the cryptographic layer are always decoded
+  strictly.
+- Only type mismatches inside valid json are recoverable: a response that is not valid json still makes the request fail.
+- If the handler throws, the request fails.
+
+> **caution:**
+The `json` of a malformed entity contains all its non-encrypted data, including personal data: don't log it as is.
+Log the `entityType` and `entityId` instead.
+
+
+> **note:**
+This option is available since SDK 2.13.4 in Kotlin and since 2.13.6 in TypeScript. TypeScript versions 2.13.4 and
+2.13.5 had an `onMalformedEntity` callback option instead, which was replaced by `entityListDecodingStrategy` in 2.13.6.
+
+The option is not available in the Python and Dart SDKs.
+
+
+**kotlin:**
+
+
+The `entityListDecodingStrategy` option is available on `SdkOptions`, `BasicSdkOptions`, `UnboundBasicSdkOptions` and
+`AnonymousSdkOptions`.
+
+```kotlin test-YAAA
+import com.icure.cardinal.sdk.options.EntityListDecodingStrategy
+import com.icure.cardinal.sdk.options.SdkOptions
+
+val discardingOptions = SdkOptions(
+	entityListDecodingStrategy = EntityListDecodingStrategy.DiscardMalformed { entity ->
+		println("Discarded malformed ${entity.entityType} with id ${entity.entityId}: ${entity.error.message}")
+	}
+)
+```
+
+
+**typescript:**
+
+
+```typescript test-YAAB
+import {EntityListDecodingStrategy, MalformedEntity, SdkOptions} from '@icure/cardinal-sdk'
+
+const discardingOptions: SdkOptions = {
+	entityListDecodingStrategy: new EntityListDecodingStrategy.DiscardMalformed((entity: MalformedEntity) => {
+		console.warn(`Discarded malformed ${entity.entityType} with id ${entity.entityId}: ${entity.error}`)
+	})
+}
+// The default behaviour
+const strictOptions: SdkOptions = {
+	entityListDecodingStrategy: EntityListDecodingStrategy.Strict
+}
+```
+
+
 ### Http client configuration (kotlin only)
 
+
 You can configure the ktor client used by the SDK perform requests to the backend through the `httpClient` property.
-If you configure the client you should also provide the configured Json serializer through the `httpClientJson` property,
-or there may be some inconsistencies in the behavior of the SDK.
+If you configure the client you must also provide the configured Json serializer through the `httpClientJson` property:
+since SDK 2.10.0 providing only one of the two properties fails with an `IllegalArgumentException` (previously, a custom
+`httpClient` without `httpClientJson` was accepted, but could cause inconsistencies in the behavior of the SDK).
+If you also set the `ignoreUnknownFields` option, its value must match the `ignoreUnknownKeys` configuration of the
+provided Json serializer.
+
+The custom kotlinx `Json` must use the Cardinal serializers module (`serializersModule = Serialization.CardinalSerializerModule`,
+from `com.icure.cardinal.sdk.utils.Serialization`). The simplest way is to start from one of the SDK configurations, for
+example `Json(Serialization.json) { ... }`. Note that `Serialization.lenientJson` has `ignoreUnknownKeys = true`, so
+if you start from it any `ignoreUnknownFields` value you set must be true.
+
 
 If you don't provide a custom client the SDK uses a client shared across all instances of the SDK. If you need to
 close this client you can use the `CardinalSdk.closeSharedClient` method.
@@ -6551,10 +6681,8 @@ You will not need to use these configurations unless you've been instructed to d
 
 ## Overview
 
-
 > **note:**
 This feature is unavailable on the Cardinal Python SDK
-
 
 When you authenticate a user using the Cardinal SDK, you can choose among several types of credentials:
 
@@ -6565,10 +6693,8 @@ When you authenticate a user using the Cardinal SDK, you can choose among severa
 - Username + OTP from two-factor authentication
 - OAuth
 
-
 > **info:**
 To use the two-factor authentication to authorize a user, you need first to enable it as explained in [this how-to](/how-to/set-up-2fa).
-
 
 The secret provider is a callback that you can define to ask your user their credentials among one of those types. The
 Cardinal SDK will then call it whenever it needs to get credentials from the user.
@@ -6990,7 +7116,6 @@ The following operations are considered safety critical and will require stronge
 
 In this section, we will see how to use the different captcha options available in the Cardinal SDK.
 
-
 > **note:**
 Authentication processes aren't supported on the Cardinal python SDK
 
@@ -7257,7 +7382,6 @@ To do so, you need to:
 2. Compute the challenge solution using the method `resolveChallenge`.
 3. Initialize the Cardinal SDK with the pre-computed solution.
 
-
 > **caution:**
 In Expo, you need to pass the `CryptoService` to the `resolveChallenge` method.
 
@@ -7433,7 +7557,6 @@ We recommend that you encrypt at least everything that could contain identifying
 In particular, you should encrypt data coming from free text fields and raw documents (such as pdfs and pictures),
 since these entries may contain the patient name or other similar information.
 
-
 > **note:**
 The Cardinal SDK automatically creates and encrypts links between entities when needed.
 For example, when creating medical data, the SDK will automatically create a link to the patient.
@@ -7512,6 +7635,7 @@ suspend fun initializeMySdk(username: String, password: String) =
 
 
 ```typescript test-BUVA
+import {AuthenticationMethod, CardinalSdk, StorageFacade} from "@icure/cardinal-sdk";
 
 function initializeMySdk(username: string, password: string): Promise<CardinalSdk> {
 	return CardinalSdk.initialize(
@@ -7598,7 +7722,6 @@ to json and only then they're encrypted.
 Therefore, when specifying the encrypted fields you will need to use the json names of the entities properties.
 The json names of properties, unless specified otherwise, are always the camel case representation of that property.
 
-
 > **info:**
 If you're using the kotlin or typescript SDK the model classes properties names are the same as the json names.
 
@@ -7629,7 +7752,6 @@ This grammar allows you to specify the fields to encrypt for the object and recu
   the array values.
   Note that the values of the array must be objects as well.
   The encrypted content of each array element is stored in that element.
-
 
 > **DANGER:**
 You can't encrypt the security and encrypted links metadata added automatically by the SDK.	
@@ -7750,11 +7872,6 @@ configuration.
 
 ---
 
-
-================================================================================
-## 4.2 Basic CRUD Operations
-================================================================================
-
 <!-- Source: sdk/how-to/basic-operations.mdx -->
 
 # Basic operations on entities
@@ -7769,7 +7886,6 @@ you to work almost as if there was no encryption happening.
 
 In this page we cover the basic operations that you can do when working with the Cardinal SDK
 
-
 > **note:**
 All entities directly connected to patients and medical data in the Cardinal SDK are encrypted end-to-end.
 However, there are also some entities like `HealthcareParty` that are never encrypted.
@@ -7782,6 +7898,13 @@ We will refer to the first kind of entities as "encryptable", and to the second 
 You can create non-encryptable entities by instantiating an instance of their model class and then passing it to the
 create method of the corresponding api, which "commits" the creation and saves the new entity in the backend.
 
+> **note:**
+The `id` of a new entity is always chosen by the client. We recommend using a
+[UUID v4](https://en.wikipedia.org/wiki/Universally_unique_identifier#Version_4_(random)), plain or base58-encoded as a
+short UUID, as done in the examples below. Ids are used as path parameters in the URLs of the REST API, so an id cannot
+contain whitespace, control characters, or any of the characters `/` `\` `?` `#` `%` `;`: the creation of an entity
+with such an id will fail. See [what is a valid id](/explanations/data-model/#what-is-a-valid-id) for more details.
+
 
 **kotlin:**
 
@@ -7789,12 +7912,12 @@ create method of the corresponding api, which "commits" the creation and saves t
 ```kotlin test-AAAA
 import com.icure.cardinal.sdk.CardinalSdk
 import com.icure.cardinal.sdk.model.HealthcareParty
-import com.icure.kryptom.crypto.defaultCryptoService
+import kotlin.uuid.Uuid
 
 suspend fun createDoctor(sdk: CardinalSdk, firstName: String, lastName: String): HealthcareParty {
 	return sdk.healthcareParty.createHealthcareParty(
 		HealthcareParty(
-			id = defaultCryptoService.strongRandom.randomUUID(),
+			id = Uuid.random().toString(),
 			firstName = firstName,
 			lastName = lastName
 		)
@@ -7807,6 +7930,7 @@ suspend fun createDoctor(sdk: CardinalSdk, firstName: String, lastName: String):
 
 
 ```typescript test-MANE
+import {CardinalSdk, HealthcareParty, randomUuid} from "@icure/cardinal-sdk";
 
 async function createDoctor(sdk: CardinalSdk, firstName: string, lastName: string): Promise<HealthcareParty> {
 	return sdk.healthcareParty.createHealthcareParty(
@@ -7851,13 +7975,13 @@ Note that you will still have to commit the creation using the create method aft
 ```kotlin test-AAAB
 import com.icure.cardinal.sdk.CardinalSdk
 import com.icure.cardinal.sdk.model.DecryptedPatient
-import com.icure.kryptom.crypto.defaultCryptoService
+import kotlin.uuid.Uuid
 
 suspend fun createPatient(sdk: CardinalSdk, firstName: String, lastName: String): DecryptedPatient {
 	// Initialize the metadata for the patient. Note that this doesn't save the patient in the backend.
 	val initializedPatient = sdk.patient.withEncryptionMetadata(
 		DecryptedPatient(
-			id = defaultCryptoService.strongRandom.randomUUID(),
+			id = Uuid.random().toString(),
 			firstName = firstName,
 			lastName = lastName,
 		)
@@ -7872,6 +7996,7 @@ suspend fun createPatient(sdk: CardinalSdk, firstName: String, lastName: String)
 
 
 ```typescript test-LOXO
+import {CardinalSdk, DecryptedPatient, randomUuid} from "@icure/cardinal-sdk";
 
 async function createPatient(sdk: CardinalSdk, firstName: string, lastName: string): Promise<DecryptedPatient> {
 	// Initialize the metadata for the patient. Note that this doesn't save the patient in the backend.
@@ -7936,7 +8061,7 @@ For example, when you initialize the encryption metadata of a health element, yo
 import com.icure.cardinal.sdk.CardinalSdk
 import com.icure.cardinal.sdk.model.DecryptedHealthElement
 import com.icure.cardinal.sdk.model.Patient
-import com.icure.kryptom.crypto.defaultCryptoService
+import kotlin.uuid.Uuid
 
 suspend fun createHealthElementForPatient(
 	sdk: CardinalSdk,
@@ -7945,7 +8070,7 @@ suspend fun createHealthElementForPatient(
 ): DecryptedHealthElement {
 	val initializedHealthElement = sdk.healthElement.withEncryptionMetadata(
 		DecryptedHealthElement(
-			id = defaultCryptoService.strongRandom.randomUUID(),
+			id = Uuid.random().toString(),
 			descr= description
 		),
 		patient // This is mandatory
@@ -7959,6 +8084,7 @@ suspend fun createHealthElementForPatient(
 
 
 ```typescript test-TELE
+import {CardinalSdk, DecryptedHealthElement, Patient, randomUuid} from "@icure/cardinal-sdk";
 
 async function createHealthElementForPatient(
 	sdk: CardinalSdk,
@@ -7997,7 +8123,7 @@ def create_health_element_for_patient(
 		),
 		patient  # This is mandatory
 	)
-	return sdk.health_element.create_patient_blocking(initialized_health_element)
+	return sdk.health_element.create_health_element_blocking(initialized_health_element)
 ```
 
 
@@ -8043,6 +8169,7 @@ suspend fun createPatient(sdk: CardinalSdk, firstName: String, lastName: String)
 
 
 ```typescript test-NUHA
+import {CardinalSdk, DecryptedPatient} from "@icure/cardinal-sdk";
 
 async function createPatient(sdk: CardinalSdk, firstName: string, lastName: string): Promise<DecryptedPatient> {
 	const initializedPatient = await sdk.patient.withEncryptionMetadata(null)
@@ -8064,7 +8191,7 @@ def create_patient(sdk: CardinalSdk, first_name: str, last_name: str) -> Decrypt
 	initialized_patient = sdk.patient.with_encryption_metadata_blocking(None)
 	initialized_patient.first_name = first_name
 	initialized_patient.last_name = last_name
-	return sdk.patient.create_patient_blocking()
+	return sdk.patient.create_patient_blocking(initialized_patient)
 ```
 
 
@@ -8088,12 +8215,12 @@ This is especially the case if you want the other delegates to be able to [liste
 import com.icure.cardinal.sdk.CardinalSdk
 import com.icure.cardinal.sdk.model.DecryptedPatient
 import com.icure.cardinal.sdk.model.embed.AccessLevel
-import com.icure.kryptom.crypto.defaultCryptoService
+import kotlin.uuid.Uuid
 
 suspend fun createPatient(sdk: CardinalSdk, firstName: String, lastName: String, sharedWith: String?): DecryptedPatient {
 	val initializedPatient = sdk.patient.withEncryptionMetadata(
 		DecryptedPatient(
-			id = defaultCryptoService.strongRandom.randomUUID(),
+			id = Uuid.random().toString(),
 			firstName = firstName,
 			lastName = lastName,
 		),
@@ -8108,6 +8235,7 @@ suspend fun createPatient(sdk: CardinalSdk, firstName: String, lastName: String,
 
 
 ```typescript test-XINO
+import {AccessLevel, CardinalSdk, DecryptedPatient, randomUuid} from "@icure/cardinal-sdk";
 
 async function createPatient(
 	sdk: CardinalSdk,
@@ -8160,6 +8288,150 @@ def create_patient(
 ```
 
 
+#### Fine-grained initial delegates {#fine-grained-initial-delegates}
+
+When you initialize the metadata with the `delegates` parameter of `withEncryptionMetadata`, the delegates get access
+to all the encrypted information of the entity. Since SDK 2.11.0, if you need more control, you can use the
+`withEncryptionMetadataAndDelegates` method instead. This method is similar to `withEncryptionMetadata`, but the
+`delegates` parameter is required and comes right after the base entity and, if any, the linked patient: it is the
+second parameter for `Patient`, `RelatedPerson` and `AccessLog` (for access logs, the optional `patient` comes after
+`delegates`), and the
+third parameter for the entities linked to a patient (`Contact`, `HealthElement`, `CalendarItem`, `Form`, ...).
+The remaining parameters (`user`, `secretId`, `alternateRootDelegateId`) are optional; in TypeScript they are passed
+in the `options` object.
+
+The `delegates` parameter is a map that associates each delegate to an entity-specific delegate options object
+(`PatientDelegateOptions`, `HealthElementDelegateOptions`, `ContactDelegateOptions`, ...) where you can specify:
+
+- `accessLevel`: the permission (read or read+write) granted on the entity.
+- `shareEncryptionKey`: whether the delegate can decrypt the encrypted content of the entity.
+- `shareSecretId`: whether the delegate gets access to the secret ids of the entity (needed for example to find the
+medical data of a patient).
+- For most entities that are linked to a patient (contacts, health elements, calendar items, forms, messages, ...),
+`sharePatientId`: whether the delegate can decrypt the id of the patient the entity is linked to. `PatientDelegateOptions`,
+`RelatedPersonDelegateOptions` and `ReceiptDelegateOptions` don't have this option.
+
+For documents there are three variants, matching the three variants of `withEncryptionMetadata` for documents:
+`withEncryptionMetadataAndDelegatesLinkedToMessage` and `withEncryptionMetadataAndDelegatesLinkedToPatient` (where
+`delegates` is the third parameter, after the message or patient), and `withEncryptionMetadataAndDelegatesUnlinked`
+(where `delegates` is the second parameter).
+`DocumentDelegateOptions` uses `shareMessageId` instead of `sharePatientId`, to choose whether the delegate can decrypt
+the id of the entity (message or patient) the document is linked to.
+
+Classifications and maintenance tasks don't have a `withEncryptionMetadataAndDelegates` method.
+
+
+**kotlin:**
+
+
+```kotlin test-AAZA
+import com.icure.cardinal.sdk.CardinalSdk
+import com.icure.cardinal.sdk.crypto.entities.PatientDelegateOptions
+import com.icure.cardinal.sdk.model.DecryptedPatient
+import com.icure.cardinal.sdk.model.embed.AccessLevel
+import kotlin.uuid.Uuid
+
+suspend fun createPatientWithLimitedDelegate(
+	sdk: CardinalSdk,
+	firstName: String,
+	lastName: String,
+	delegateId: String
+): DecryptedPatient {
+	val initializedPatient = sdk.patient.withEncryptionMetadataAndDelegates(
+		DecryptedPatient(
+			id = Uuid.random().toString(),
+			firstName = firstName,
+			lastName = lastName,
+		),
+		delegates = mapOf(
+			// The delegate can find and read the unencrypted part of the patient,
+			// but can't decrypt its encrypted content
+			delegateId to PatientDelegateOptions(
+				accessLevel = AccessLevel.Read,
+				shareEncryptionKey = false,
+				shareSecretId = true
+			)
+		)
+	)
+	return sdk.patient.createPatient(initializedPatient)
+}
+```
+
+
+**typescript:**
+
+
+```typescript test-ZUFA
+import {AccessLevel, CardinalSdk, DecryptedPatient, PatientDelegateOptions, randomUuid} from "@icure/cardinal-sdk";
+
+async function createPatientWithLimitedDelegate(
+	sdk: CardinalSdk,
+	firstName: string,
+	lastName: string,
+	delegateId: string
+): Promise<DecryptedPatient> {
+	const initializedPatient = await sdk.patient.withEncryptionMetadataAndDelegates(
+		new DecryptedPatient({
+			id: randomUuid(),
+			firstName: firstName,
+			lastName: lastName,
+		}),
+		{
+			// The delegate can find and read the unencrypted part of the patient,
+			// but can't decrypt its encrypted content
+			[delegateId]: new PatientDelegateOptions({
+				accessLevel: AccessLevel.Read,
+				shareEncryptionKey: false,
+				shareSecretId: true,
+			})
+		}
+	)
+	return sdk.patient.createPatient(initializedPatient)
+}
+```
+
+
+**python:**
+
+
+```python
+import uuid
+from cardinal_sdk import CardinalSdk
+from cardinal_sdk.model import DecryptedPatient, AccessLevel, PatientDelegateOptions
+
+def create_patient_with_limited_delegate(
+		sdk: CardinalSdk,
+		first_name: str,
+		last_name: str,
+		delegate_id: str
+) -> DecryptedPatient:
+	initialized_patient = sdk.patient.with_encryption_metadata_and_delegates_blocking(
+		DecryptedPatient(
+			id=str(uuid.uuid4()),
+			first_name=first_name,
+			last_name=last_name
+		),
+		delegates={
+			# The delegate can find and read the unencrypted part of the patient,
+			# but can't decrypt its encrypted content
+			delegate_id: PatientDelegateOptions(
+				access_level=AccessLevel.Read,
+				share_encryption_key=False,
+				share_secret_id=True
+			)
+		}
+	)
+	return sdk.patient.create_patient_blocking(initialized_patient)
+```
+
+
+> **caution:**
+The default values of the sharing flags in the delegate options differ between languages: in Kotlin all the flags
+default to `true` (full sharing, like `withEncryptionMetadata`), while in TypeScript and Python they default to
+`false`/`False` (nothing beyond the unencrypted content is shared). We recommend always setting all the flags
+explicitly.
+
+
 #### Auto delegations {#auto-delegations}
 
 If you're using the auto-delegations system (:construction:) you can pass the current sdk user instance (with the configured
@@ -8167,7 +8439,6 @@ auto-delegations).
 
 If you do, any auto-delegation setup for the user will be used in addition to any provided initial-delegate.
 Auto-delegations will be ignored if you don't pass the user.
-
 
 > **caution:**
 The configuration for initial delegates takes priority over auto-delegations.
@@ -8182,12 +8453,12 @@ provided through the initial delegates.
 import com.icure.cardinal.sdk.CardinalSdk
 import com.icure.cardinal.sdk.model.DecryptedPatient
 import com.icure.cardinal.sdk.model.User
-import com.icure.kryptom.crypto.defaultCryptoService
+import kotlin.uuid.Uuid
 
 suspend fun createPatient(sdk: CardinalSdk, currentUser: User, firstName: String, lastName: String): DecryptedPatient {
 	val initializedPatient = sdk.patient.withEncryptionMetadata(
 		DecryptedPatient(
-			id = defaultCryptoService.strongRandom.randomUUID(),
+			id = Uuid.random().toString(),
 			firstName = firstName,
 			lastName = lastName,
 		),
@@ -8202,6 +8473,7 @@ suspend fun createPatient(sdk: CardinalSdk, currentUser: User, firstName: String
 
 
 ```typescript test-QIWA
+import {CardinalSdk, DecryptedPatient, randomUuid, User} from "@icure/cardinal-sdk";
 
 async function createPatient(
 	sdk: CardinalSdk,
@@ -8272,6 +8544,7 @@ suspend fun getPatientOfUser(sdk: CardinalSdk, user: User): DecryptedPatient {
 
 
 ```typescript test-VOCO
+import {CardinalSdk, DecryptedPatient, User} from "@icure/cardinal-sdk";
 
 async function getPatientOfUser(sdk: CardinalSdk, user: User): Promise<DecryptedPatient> {
 	if (!user.patientId) throw new Error("Not a patient user")
@@ -8317,6 +8590,7 @@ suspend fun getContactsOfPatient(sdk: CardinalSdk, patient: Patient, limit: Int)
 
 
 ```typescript test-MECI
+import {CardinalSdk, ContactFilters, DecryptedContact, Patient} from "@icure/cardinal-sdk";
 
 async function getContactsOfPatient(sdk: CardinalSdk, patient: Patient, limit: number): Promise<DecryptedContact[]> {
 	const contactsIterator = await sdk.contact.filterContactsBy(ContactFilters.byPatientsForSelf([patient]))
@@ -8386,6 +8660,7 @@ suspend fun setPatientNote(sdk: CardinalSdk, patient: DecryptedPatient, newNote:
 
 
 ```typescript test-WERU
+import {CardinalSdk, DecryptedPatient} from "@icure/cardinal-sdk";
 
 async function setPatientNote(sdk: CardinalSdk, patient: DecryptedPatient, newNote: string): Promise<DecryptedPatient> {
 	return sdk.patient.modifyPatient(new DecryptedPatient({ ...patient, note: newNote }))
@@ -8455,6 +8730,7 @@ tailrec suspend fun setPatientNote(sdk: CardinalSdk, patient: DecryptedPatient, 
 
 
 ```typescript test-KONE
+import {CardinalSdk, DecryptedPatient, RevisionConflictException} from "@icure/cardinal-sdk";
 
 async function setPatientNote(sdk: CardinalSdk, patient: DecryptedPatient, newNote: string): Promise<DecryptedPatient> {
 	try {
@@ -8551,7 +8827,6 @@ Similarly to the update methods, the `delete`, `undelete`, and `purge` methods r
 revision of the affected entity, or the method will fail and throw a *conflict* exception.
 Each of these methods comes in two variants: one variant takes in input the full entity to update, and the other
 (*byId*) takes directly the id and rev of the entity.
-
 
 **kotlin:**
 
@@ -8662,7 +8937,6 @@ For each encryptable entity, the SDK model provides three different types: a dec
 These types are de-facto identical; the division exists only to support the development of applications by providing
 better type checking.
 
-
 > **info:**
 Depending on the language you're using, the encryptable entities flavors will be represents in different ways.
 
@@ -8676,7 +8950,6 @@ Similarly, the api for each encryptable entity comes in three flavors.
 Most methods that you use directly from the api take/return the decrypted flavor of the corresponding entity, but you
 can use the `encrypted` and the `tryAndRecover` properties of the api to access versions of the methods that work with
 the encrypted and polymorphic flavors of the entity, respectively.
-
 
 > **note:**
 Not all methods of the main api are available in the multiple flavors.
@@ -8745,6 +9018,7 @@ suspend fun printPatientDetails(
 
 
 ```typescript test-GACE
+import {CardinalSdk, DecryptedPatient, FilterOptions, Patient} from "@icure/cardinal-sdk";
 
 async function printMatchingPatientNames(
 	sdk: CardinalSdk,
@@ -8998,11 +9272,6 @@ def share_health_element_for_statistics(
 
 ---
 
-
-================================================================================
-## 4.3 Querying Data
-================================================================================
-
 <!-- Source: sdk/how-to/querying-data.mdx -->
 
 # Querying data
@@ -9032,6 +9301,7 @@ val hcpWithName = HealthcarePartyFilters.byName("joh")
 
 
 ```typescript test-WUVO
+import {HealthcarePartyFilters} from "@icure/cardinal-sdk";
 
 const hcpWithName = HealthcarePartyFilters.byName("joh")
 ```
@@ -9061,7 +9331,6 @@ If you want a comprehensive list of the available filter options refer to [Every
 
 ### Data owners in filters
 
-
 > **info:**
 [This section will be clearer if you have a good understanding of data owners and access control in iCure.](/explanations/end-to-end-encryption/data-owners-and-access-control)
 
@@ -9086,7 +9355,6 @@ Note that using a for-data-owner filter option with a data owner id other than t
 special permissions, depending on which method they're used for.
 
 #### Access for filter options
-
 
 > **info:**
 We recommend you understand the concepts of [hierarchical healthcare parties](/how-to/share-data-with-many-users.mdx)]
@@ -9169,6 +9437,7 @@ val myFilterWithOperators = (
 
 
 ```typescript test-POMO
+import {PatientFilters,Gender,intersection,union} from "@icure/cardinal-sdk";
 
 const myFilter = union(
 	intersection(
@@ -9229,6 +9498,7 @@ suspend fun getIdsOfPatientsMatching(sdk: CardinalSdk, patientFilterOptions: Fil
 
 
 ```typescript test-TEWO
+import {FilterOptions, CardinalSdk, Patient} from "@icure/cardinal-sdk";
 
 function getIdsOfPatientsMatching(sdk: CardinalSdk, patientFilterOptions: FilterOptions<Patient>): Promise<Array<string>> {
 	return sdk.patient.matchPatientsBy(patientFilterOptions)
@@ -9369,6 +9639,11 @@ of the filter/match method. If you don't need sorted data, you should always pre
 the filter/match method, as it may be faster, depending on the actual query.
 
 
+> **caution:**
+Starting from Cardinal SDK 2.6.0 many filter options that used to be sortable no longer are. You can find the current
+sortability of each filter option in [Everything about filters](/explanations/everything-about-filters).
+
+
 > **note:**
 You may notice that sometimes data is consistently sorted according to the filter options even when using the standard
 variant of the filter/match method.
@@ -9478,7 +9753,7 @@ def get_sorted_acute_or_long_covid_diagnoses_for_patient(sdk: CardinalSdk, patie
 			)
 		)
 	)
-	return sdk.health_element.filterHealthElementsBySorted(filter_options)
+	return sdk.health_element.filter_health_elements_by_sorted_blocking(filter_options)
 ```
 
 
@@ -9570,6 +9845,71 @@ Note that this requires that the user performing the query has access to all the
 obtained from the first query.
 If not, some items will be missing from the final result.
 
+
+### Finding the patient of a service
+
+Services are embedded in contacts, so the link to their patient is stored in the encrypted metadata of the contact.
+Since SDK 2.3.1, you can use `decryptPatientIdOfService` to get the patient linked to a service retrieved using
+`getServices` or `filterServicesBy`/`filterServicesBySorted`: only the services returned by these methods carry the
+metadata needed to find the patient.
+If you got the service from the `services` of a contact, use `decryptPatientIdOf` on the contact instead.
+
+The method returns a set (an array in TypeScript) of `EntityReferenceInGroup`: usually a service is linked to a single
+patient, but older data may be linked to multiple patients.
+The set is empty if the current user can't decrypt the patient id.
+The `entityId` of each reference is the id of the patient, and `groupId` is the id of the group of the patient if it is
+in a different group than the service (see [multi-group environments](/how-to/manage-a-multi-group-environment)).
+For services obtained in a different group, use `sdk.contact.inGroup.decryptPatientIdOfService`.
+
+
+**kotlin:**
+
+
+```kotlin test-YIAC
+import com.icure.cardinal.sdk.CardinalSdk
+import com.icure.cardinal.sdk.model.DecryptedPatient
+import com.icure.cardinal.sdk.model.embed.DecryptedService
+
+suspend fun getPatientOfService(sdk: CardinalSdk, service: DecryptedService): DecryptedPatient? {
+	val patientReference = sdk.contact.decryptPatientIdOfService(service).singleOrNull()
+		?: return null
+	// If patientReference.groupId is not null, use sdk.patient.inGroup.getPatient instead
+	return sdk.patient.getPatient(patientReference.entityId)
+}
+```
+
+
+**typescript:**
+
+
+```typescript test-YIAD
+import {CardinalSdk, DecryptedPatient, DecryptedService} from "@icure/cardinal-sdk";
+
+async function getPatientOfService(sdk: CardinalSdk, service: DecryptedService): Promise<DecryptedPatient | undefined> {
+	const patientReferences = await sdk.contact.decryptPatientIdOfService(service)
+	if (patientReferences.length !== 1) return undefined
+	// If patientReferences[0].groupId is defined, use sdk.patient.inGroup.getPatient instead
+	return sdk.patient.getPatient(patientReferences[0].entityId)
+}
+```
+
+
+**python:**
+
+
+```python
+from typing import Optional
+from cardinal_sdk import CardinalSdk
+from cardinal_sdk.model import DecryptedPatient, DecryptedService
+
+def get_patient_of_service(sdk: CardinalSdk, service: DecryptedService) -> Optional[DecryptedPatient]:
+	patient_references = sdk.contact.decrypt_patient_id_of_service_blocking(service)
+	if len(patient_references) != 1:
+		return None
+	return sdk.patient.get_patient_blocking(next(iter(patient_references)).entity_id)
+```
+
+
 ### Cross-entity queries with data denormalization.
 
 An alternative approach to the two-step query proposed early is to denormalize your data: if you know that you will
@@ -9600,11 +9940,6 @@ Unless you're certain that this brings value to your solution, and that it will 
 recommend you to avoid this.
 
 ---
-
-
-================================================================================
-## 4.4 Subscribing to Events
-================================================================================
 
 <!-- Source: sdk/how-to/how-to-subscribe-to-events.mdx -->
 
@@ -9667,7 +10002,6 @@ sdk.healthElement.subscribeToEvents (
 	println("HealthElement created: $it")
 }
 ```
-
 
 > **note:**
 This code needs to be executed in a coroutine context. The part managing this has been omitted
@@ -10104,11 +10438,6 @@ while subscription.get_close_reason() is None:
 
 ---
 
-
-================================================================================
-## 4.5 Registering Users
-================================================================================
-
 <!-- Source: sdk/how-to/registering-users.mdx -->
 
 # Registering users
@@ -10140,7 +10469,6 @@ You can register the user to your application by initializing an instance of the
 process id.
 For more information on how to instantiate the SDK using a process, refer to the
 [SDK initialization documentation](/how-to/initialize-the-sdk/#authentication-with-a-process).
-
 
 > **note:**
 Since authentication with processes is not supported on the Cardinal python SDK you can't have user self-registration
@@ -10258,7 +10586,7 @@ login.
 import com.icure.cardinal.sdk.CardinalSdk
 import com.icure.cardinal.sdk.model.Patient
 import com.icure.cardinal.sdk.model.User
-import com.icure.kryptom.crypto.defaultCryptoService
+import kotlin.uuid.Uuid
 
 suspend fun inviteExistingPatientAsUser(
 	doctorSdk: CardinalSdk,
@@ -10269,7 +10597,7 @@ suspend fun inviteExistingPatientAsUser(
 	// This permission is given for example to users with the role PATIENT_USER_MANAGER
 	doctorSdk.user.createUser(
 		User(
-			id = defaultCryptoService.strongRandom.randomUUID(),
+			id = Uuid.random().toString(),
 			email = email,
 			patientId = patient.id
 		)
@@ -10282,6 +10610,7 @@ suspend fun inviteExistingPatientAsUser(
 
 
 ```typescript test-QOJA
+import {CardinalSdk, Patient, randomUuid, User} from "@icure/cardinal-sdk";
 
 async function inviteExistingPatientAsUser(
 	doctorSdk: CardinalSdk,
@@ -10325,7 +10654,6 @@ def invite_existing_patient_as_user(
 
 
 After that the new user can login using the provided email/phone and a login process for your application or solution.
-
 
 > **note:**
 You can invite users from the Cardinal python SDK, but they will only be able to login using other SDKs, since
@@ -10559,7 +10887,7 @@ import com.icure.cardinal.sdk.crypto.entities.ShareMetadataBehaviour
 import com.icure.cardinal.sdk.model.DecryptedPatient
 import com.icure.cardinal.sdk.model.User
 import com.icure.cardinal.sdk.model.requests.RequestedPermission
-import com.icure.kryptom.crypto.defaultCryptoService
+import kotlin.uuid.Uuid
 
 suspend fun invitePatientAndPreShare(
 	doctorSdk: CardinalSdk,
@@ -10568,7 +10896,7 @@ suspend fun invitePatientAndPreShare(
 ) {
 	doctorSdk.user.createUser(
 		User(
-			id = defaultCryptoService.strongRandom.randomUUID(),
+			id = Uuid.random().toString(),
 			email = patientEmail,
 			patientId = patient.id
 		)
@@ -10732,11 +11060,6 @@ async function initializePatientSdkAfterInvite(
 
 ---
 
-
-================================================================================
-## 4.6 Key Management
-================================================================================
-
 <!-- Source: sdk/how-to/key-management.mdx -->
 
 # Key management and data recovery
@@ -10757,7 +11080,6 @@ In general, there are three categories of approaches you can take:
 - Create backup of the user keys
 - Share data with multiple users and ask for access back in case of key loss
 - Use the notary system to safely share a backup of the key with other people
-
 
 > **DANGER:**
 If a user loses their key and can't get it back through a backup or through notaries, any data they've created and
@@ -10823,6 +11145,7 @@ suspend fun exportKeysToFile(
 On browser you can export the keys as json and let the user download them as a file.
 
 ```typescript test-KOGO
+import { CardinalSdk, base64Encode } from "@icure/cardinal-sdk";
 
 async function exportAndDownloadKeysFile(sdk: CardinalSdk) {
 	const keysJson = JSON.stringify(
@@ -10845,7 +11168,6 @@ async function exportAndDownloadKeysFile(sdk: CardinalSdk) {
 During initialization, the Cardinal SDK automatically checks if all the keys of the current data owner (and parents) are
 available.
 If one or more keys are missing, the SDK will try to use the `CryptoStrategies` to recover any missing keys.
-
 
 > **note:**
 In this how-to we cover only the basic principles of key recovery.
@@ -11051,7 +11373,6 @@ the SDK needs to create a new key.
 If this happened, after the rest of the SDK is successfully initialized, the method `notifyNewKeyCreated` will be called
 with the newly created key.
 You can use this method to prompt the user to export key.
-
 
 > **note:**
 The SDK can only create a new key for the current data owner.
@@ -11303,6 +11624,12 @@ class MyCryptoStrategies extends CryptoStrategies {
 ```
 
 
+> **tip:**
+When using hierarchical data owners, a child data owner can also create recovery data for the keypairs of a parent, so
+that the other children of the same parent can recover them in the same way.
+See [configure keypairs for the parent data owners](/how-to/share-data-with-many-users#configure-keypairs-for-the-parent-data-owners).
+
+
 ### Multi-device key management
 
 If a user is using the cardinal SDK from multiple devices, you should make sure the same private keys are available on
@@ -11445,7 +11772,6 @@ Now the recipient of the give-access-back can respond to it and give back access
 directly by updating the give-access-back with the new public key of the requester, or indirectly by using the recovery
 data system.
 
-
 > **info:**
 Both give-access-back solutions don't need to directly update the medical data.
 Even if you have thousands of contacts and patients with different encryption keys shared between the sender and
@@ -11498,6 +11824,7 @@ suspend fun useRecoveryDataFromGiveAccessBack(
 
 
 ```typescript test-WACE
+import { CardinalSdk, RecoveryDataKey } from "@icure/cardinal-sdk";
 
 // Used by the recipient of the give-access-back request
 async function createRecoveryDataForGiveAccessBackAndPrint(
@@ -11647,11 +11974,6 @@ this extreme scenario.
 
 ---
 
-
-================================================================================
-## 4.7 Sharing Data with Many Users
-================================================================================
-
 <!-- Source: sdk/how-to/share-data-with-many-users.mdx -->
 
 # Sharing data between many data owners
@@ -11688,7 +12010,6 @@ all data that was created by or shared with any of their ancestors.
 This allows more easily sharing data with large groups of doctors: if a doctor needs to share data with its entire 
 department instead of sharing it with each other doctor in the department, they only need to share it with the 
 HCP for their department.
-
 
 > **info:**
 Currently, only healthcare parties can be part of data owner hierarchies.
@@ -11758,6 +12079,7 @@ suspend fun initializeMySdk(username: String, password: String) =
 
 
 ```typescript test-VONO
+import {AuthenticationMethod, CardinalSdk, StorageFacade} from "@icure/cardinal-sdk";
 
 function initializeMySdk(username: string, password: string): Promise<CardinalSdk> {
 	return CardinalSdk.initialize(
@@ -11796,8 +12118,115 @@ sdk = CardinalSdk(
 
 #### Configure keypairs for the parent data owners
 
-Healthcare parties can't create keypairs for their parents: the initialization of the keypairs for a parent data owner
-can instead be done by an administrator of the organization.
+
+Healthcare parties can't create keypairs for their parents: the initial keypair of a parent data owner has to be
+created by an administrator of the organization.
+
+Once the parent has a keypair, however, a child data owner whose SDK already has access to it can distribute it to the
+other children of the same parent, without any further intervention of the administrator.
+Since SDK 2.3.0, this is done using the `createRecoveryInfoForAvailableParentKeyPairs` method of the recovery API.
+This method works like `createRecoveryInfoForAvailableKeyPairs` (see
+[keys backup representation](/how-to/key-management#keys-backup-representation)): it stores the keypairs of the parent
+encrypted on the Cardinal backend and returns the recovery key that decrypts them.
+The difference is that the recovery data is created for the parent data owner instead of the current data owner, so
+any other child of `parentId` can use the recovery key to get the parent keypairs.
+
+- Only the parent keypairs that are available to the SDK of the current user and that are verified (or created on the
+  current device) are included in the recovery data. The SDK must be initialized with hierarchical data owners, and
+  `parentId` must be a (direct or indirect) parent of the current data owner, otherwise the method fails with an
+  `IllegalArgumentException`. The method also fails if none of the available keypairs can be included.
+- If `includeAncestorKeys` is `true`, the recovery data also includes the available keypairs of the parents of
+  `parentId`.
+- As for any recovery data, you can limit its lifetime with `lifetimeSeconds` and choose the size of the recovery key
+  (or provide a pre-generated key) with `recoveryKeyOptions`.
+- The user creating the recovery data needs the `RecoveryDataManagement.ExtendedCreate.ForParent` permission (or a
+  stronger one), and the users that will use the recovery key need the
+  `RecoveryDataManagement.ExtendedRead.ForParent` permission.
+
+> **warning:**
+The recovery key gives access to the private keys of the parent data owner: it must be kept secret, and shared only
+with other children of the same parent.
+
+
+**kotlin:**
+
+
+```kotlin test-YIAA
+import com.icure.cardinal.sdk.CardinalSdk
+import com.icure.cardinal.sdk.crypto.entities.RecoveryKeyOptions
+import com.icure.cardinal.sdk.crypto.entities.RecoveryKeySize
+
+suspend fun createParentKeysRecoveryKey(
+	sdk: CardinalSdk,
+	parentId: String
+): String {
+	val recoveryKey = sdk.recovery.createRecoveryInfoForAvailableParentKeyPairs(
+		parentId = parentId,
+		// The recovery data is deleted automatically after 1 week
+		lifetimeSeconds = 7 * 24 * 60 * 60,
+		recoveryKeyOptions = RecoveryKeyOptions.Generate(RecoveryKeySize.Bytes32),
+	)
+	// Share this value only with other children of the parent
+	return recoveryKey.asBase32()
+}
+```
+
+
+**typescript:**
+
+
+```typescript test-YIAB
+import {
+	CardinalSdk,
+	RecoveryKeyOptions,
+	RecoveryKeySize
+} from "@icure/cardinal-sdk";
+
+async function createParentKeysRecoveryKey(sdk: CardinalSdk, parentId: string): Promise<string> {
+	const recoveryKey = await sdk.recovery.createRecoveryInfoForAvailableParentKeyPairs(parentId, {
+		// The recovery data is deleted automatically after 1 week
+		lifetimeSeconds: 7 * 24 * 60 * 60,
+		recoveryKeyOptions: new RecoveryKeyOptions.Generate({
+			recoveryKeySize: RecoveryKeySize.Bytes32,
+		}),
+	})
+	// Share this value only with other children of the parent
+	return recoveryKey.asBase32()
+}
+```
+
+
+**python:**
+
+
+```python
+from cardinal_sdk import CardinalSdk
+from cardinal_sdk.model import RecoveryKeyOptionsGenerate, RecoveryKeySize
+
+def create_parent_keys_recovery_key(sdk: CardinalSdk, parent_id: str) -> str:
+	recovery_key = sdk.recovery.create_recovery_info_for_available_parent_key_pairs_blocking(
+		parent_id=parent_id,
+		# The recovery data is deleted automatically after 1 week
+		lifetime_seconds=7 * 24 * 60 * 60,
+		recovery_key_options=RecoveryKeyOptionsGenerate(RecoveryKeySize.Bytes32),
+	)
+	# Share this value only with other children of the parent
+	return recovery_key.as_base_32()
+```
+
+
+The other children of the parent use the recovery key in the same way as a recovery key for their own keys: when their
+SDK is initialized with hierarchical data owners and the keys of the parent are missing, the SDK asks the crypto
+strategies to recover them, and you can pass the recovery key to `keyPairRecoverer.recoverWithRecoveryKey`, as shown in
+[keys backup representation](/how-to/key-management#keys-backup-representation).
+The recovered keypairs are then stored by the SDK like any other recovered key.
+
+If multiple children have to use the same recovery key, make sure to pass `autoDelete = false` to
+`recoverWithRecoveryKey`, otherwise the recovery data is deleted after the first successful use.
+In this case, you should give the recovery data a limited lifetime or delete it with `purgeRecoveryInfo` once it is no
+longer needed.
+Alternatively, you can create a different recovery key for each child.
+
 
 ### Sharing data with parents and siblings
 
@@ -11814,11 +12243,6 @@ only with that colleague.
 <!-- TODO find somewhere to talk about partitioning using (confidential) secret id -->
 
 ---
-
-
-================================================================================
-## 4.8 Contact Group ID
-================================================================================
 
 <!-- Source: sdk/how-to/contact-group-id.mdx -->
 
@@ -11893,6 +12317,7 @@ val researchDoctorSdk = CardinalSdk.initialize(
 
 
 ```typescript test-JUSO
+import {AuthenticationMethod, CardinalSdk, StorageFacade} from "@icure/cardinal-sdk";
 
 const CARDINAL_URL = "https://api.icure.cloud"
 
@@ -11934,13 +12359,13 @@ research_doctor_username = RESEARCH_DOCTOR_USERNAME
 research_doctor_password = RESEARCH_DOCTOR_PASSWORD
 
 visiting_doctor_sdk = CardinalSdk(
-	application_id=None,
+	project_id=None,
 	baseurl=CARDINAL_URL,
 	authentication_method=UsernamePassword(visiting_doctor_username, visiting_doctor_password),
 	storage_facade=FileSystemStorage("../scratch/storage")
 )
 research_doctor_sdk = CardinalSdk(
-	application_id=None,
+	project_id=None,
 	baseurl=CARDINAL_URL,
 	authentication_method=UsernamePassword(research_doctor_username, research_doctor_password),
 	storage_facade=FileSystemStorage("../scratch/storage")
@@ -11960,10 +12385,10 @@ for the research study will not be able to access it.
 
 ```kotlin test-AAAO
 import com.icure.cardinal.sdk.model.DecryptedPatient
-import java.util.UUID
+import kotlin.uuid.Uuid
 
 val patientToCreate = DecryptedPatient(
-	id = UUID.randomUUID().toString(),
+	id = Uuid.random().toString(),
 	firstName = "Rupert",
 	lastName = "Venables",
 )
@@ -11977,7 +12402,8 @@ val patient = visitingDoctorSdk.patient.createPatient(
 
 
 ```typescript test-PUPA
-
+import {DecryptedPatient} from "@icure/cardinal-sdk";
+import {v4 as uuid} from 'uuid';
 
 const patientToCreate = new DecryptedPatient({
 	id: uuid(),
@@ -12059,11 +12485,11 @@ import com.icure.cardinal.sdk.model.embed.Measure
 import com.icure.cardinal.sdk.model.embed.Medication
 import com.icure.cardinal.sdk.model.embed.Substanceproduct
 import com.icure.cardinal.sdk.model.embed.TimeSeries
-import java.util.UUID
 import kotlin.random.Random
+import kotlin.uuid.Uuid
 
 val bloodPressureService = DecryptedService(
-	id = UUID.randomUUID().toString(),
+	id = Uuid.random().toString(),
 	label = "Blood pressure",
 	valueDate = 20240920154600,
 	content = mapOf(
@@ -12078,7 +12504,7 @@ val bloodPressureService = DecryptedService(
 
 val ecgSignal = List(10) { Random.nextInt(0, 100) / 100.0 }
 val heartRateService = DecryptedService(
-	id = UUID.randomUUID().toString(),
+	id = Uuid.random().toString(),
 	label = "Heart rate",
 	valueDate = 20240920154600,
 	content = mapOf(
@@ -12091,7 +12517,7 @@ val heartRateService = DecryptedService(
 )
 
 val medicationService = DecryptedService(
-	id = UUID.randomUUID().toString(),
+	id = Uuid.random().toString(),
 	label = "Prescription",
 	valueDate = 20240920154600,
 	content = mapOf(
@@ -12120,6 +12546,7 @@ import {
 	Substanceproduct,
 	TimeSeries
 } from "@icure/cardinal-sdk";
+import {v4 as uuid} from 'uuid';
 
 const bloodPressureService = new DecryptedService({
 	id: uuid(),
@@ -12233,14 +12660,14 @@ Both Contacts will share the same `groupId`: this way, they can be recognized as
 ```kotlin test-AAAR
 import com.icure.cardinal.sdk.model.DecryptedContact
 import com.icure.cardinal.sdk.model.embed.AccessLevel
-import com.icure.cardinal.sdk.model.embed.Annotation
-import java.util.UUID
+import com.icure.cardinal.sdk.model.embed.DecryptedAnnotation
+import kotlin.uuid.Uuid
 
 // The id of the "Logical Contact"
-val groupId = UUID.randomUUID().toString()
+val groupId = Uuid.random().toString()
 
 val contactForResearch = DecryptedContact(
-	id = UUID.randomUUID().toString(),
+	id = Uuid.random().toString(),
 	openingDate = 20240920154460,
 	groupId = groupId, // This indicates that the Contact is part of a "Logical Contact"
 	services = setOf(
@@ -12249,12 +12676,12 @@ val contactForResearch = DecryptedContact(
 )
 
 val contact = DecryptedContact(
-	id = UUID.randomUUID().toString(),
+	id = Uuid.random().toString(),
 	closingDate = 20240920164460,
 	groupId = groupId, // This indicates that the Contact is part of a "Logical Contact"
 	notes = listOf(
-		Annotation(
-			id = UUID.randomUUID().toString(),
+		DecryptedAnnotation(
+			id = Uuid.random().toString(),
 			markdown = mapOf(
 				"en" to "The Patient has hypertension."
 			)
@@ -12285,7 +12712,8 @@ visitingDoctorSdk.contact.createContact(
 
 
 ```typescript test-NURA
-
+import {AccessLevel, DecryptedAnnotation, DecryptedContact} from "@icure/cardinal-sdk";
+import {v4 as uuid} from 'uuid';
 
 // The id of the "Logical Contact"
 const groupId = uuid()
@@ -12302,7 +12730,7 @@ const contact = new DecryptedContact({
 	closingDate: 20240920164460,
 	groupId: groupId, // This indicates that the Contact is part of a "Logical Contact"
 	notes: [
-		new Annotation({
+		new DecryptedAnnotation({
 			id: uuid(),
 			markdown: {"en": "The Patient has hypertension."}
 		})
@@ -12329,7 +12757,7 @@ await visitingDoctorSdk.contact.createContact(
 
 ```python
 import uuid
-from cardinal_sdk.model import AccessLevel, Annotation, DecryptedContact
+from cardinal_sdk.model import AccessLevel, DecryptedAnnotation, DecryptedContact
 
 # The id of the "Logical Contact"
 group_id = str(uuid.uuid4())
@@ -12346,7 +12774,7 @@ contact = DecryptedContact(
 	closing_date=20240920164460,
 	group_id=group_id,  # This indicates that the Contact is part of a "Logical Contact"
 	notes=[
-		Annotation(
+		DecryptedAnnotation(
 			id=str(uuid.uuid4()),
 			markdown={"en": "The Patient has hypertension."}
 		)
@@ -12398,6 +12826,7 @@ while (allServicesIterator.hasNext()) {
 
 
 ```typescript test-SIJO
+import {ServiceFilters} from "@icure/cardinal-sdk";
 
 const allServicesIterator = await visitingDoctorSdk.contact.filterServicesBy(
 	ServiceFilters.byPatientsForSelf([patient])
@@ -12458,6 +12887,7 @@ while (researchContactIterator.hasNext()) {
 
 
 ```typescript test-VUNE
+import {ContactFilters} from "@icure/cardinal-sdk";
 
 const researchContactIterator = await researchDoctorSdk.contact.filterContactsBy(
 	ContactFilters.byOpeningDateForSelf(
@@ -12495,11 +12925,6 @@ while research_contact_iterator.has_next_blocking():
 
 ---
 
-
-================================================================================
-## 4.9 Storing Unstructured Data
-================================================================================
-
 <!-- Source: sdk/how-to/store-unstructured-data.mdx -->
 
 # Store unstructured data
@@ -12519,12 +12944,12 @@ To upload an Attachment, first you have to create a Document:
 
 ```kotlin test-AACU
 import com.icure.cardinal.sdk.model.DecryptedDocument
-import java.util.UUID
+import kotlin.uuid.Uuid
 
 val document = sdk.document.createDocument(
 	sdk.document.withEncryptionMetadataUnlinked(
 		DecryptedDocument(
-			id = UUID.randomUUID().toString(),
+			id = Uuid.random().toString(),
 			name = "My medical document"
 		),
 		null
@@ -12537,7 +12962,8 @@ val document = sdk.document.createDocument(
 
 
 ```typescript test-NUDI
-
+import {DecryptedDocument} from "@icure/cardinal-sdk";
+import {v4 as uuid} from 'uuid';
 
 const document = await sdk.document.createDocument(
 	await sdk.document.withEncryptionMetadataUnlinked(
@@ -12649,7 +13075,11 @@ sdk.document.set_raw_main_attachment_blocking(document.id, document.rev, ["publi
 
 
 Each Document can have one main attachment and many secondary attachments. Each secondary attachment must be identified by
-a unique identifier and can be stored both as an encrypted or unencrypted byte array.
+a unique identifier and can be stored both as an encrypted or unencrypted byte array. Since attachment ids, like entity
+ids, are used as path parameters when retrieving the attachment, follow the same rules as for
+[entity ids](/explanations/data-model/#what-is-a-valid-id): no whitespace, control characters, or any of the characters
+`/` `\` `?` `#` `%` `;`. A plain or base58-encoded [UUID v4](https://en.wikipedia.org/wiki/Universally_unique_identifier#Version_4_(random))
+is always safe.
 
 
 **kotlin:**
@@ -12851,11 +13281,9 @@ print(document_without_attachments.deleted_attachments)
 The information about deleted attachment, including id and deletion date, is stored in the `deletedAttachments` property
 of the document.
 
-
 > **note:**
 Once an attachment is deleted, there is no way of recovering it. Also, the deletion process may not be immediate: you may
 still be able to read the attachment content for some time after deletion.
-
 
 ## What happens if the Document is deleted or purged?
 When a Document is deleted, nothing happens to its attachments: you may always decide to undelete the document at a
@@ -12864,11 +13292,6 @@ later time, so the attachment will stay available as the rest of the Document co
 Instead, if you purge a Document, all its attachment will be irrevocably purged as well.
 
 ---
-
-
-================================================================================
-## 4.10 User Roles
-================================================================================
 
 <!-- Source: sdk/how-to/define-user-roles.mdx -->
 
@@ -12882,9 +13305,11 @@ The operations that a user can do on an entity are determined by two factors:
 This how-to focuses on assigning and removing roles from a user. You can read more about permissions and Data Owner
 users in [this explanation](/explanations/end-to-end-encryption/data-owners-and-access-control).
 
+
 ## Check user roles
 The user roles information are stored in the [systemMetadata](/explanations/data-model/user#systemmetadata) property.
-This property has 3 fields:
+The fields of this property that are relevant for roles are:
+
 
 - `isAdmin` is a boolean field that is `true` if the user is an admin.
 - `roles` is a set of the ids of all the roles assigned to the user.
@@ -12969,16 +13394,12 @@ sdk.user.set_user_roles_blocking(userId, user.system_metadata.roles + [all_roles
 
 Now the users has all their previous roles plus the new one.
 
-
 > **warning:**
 This operation sets the roles for a user, so it can be used both to add and remove roles: to add a role, just like in
 the example, you have to pass all the previous roles plus the ones that you want to add. To remove a role, you have to
 pass all the previous roles except for the one that you want to remove.
-
-
 > **note:**
 You can also modify the roles of a user manually in the Cockpit (:construction:)
-
 
 ## Reset user roles
 To remove any role configuration from a user and revert it to the configuration defined in the group, you can use the
@@ -13010,15 +13431,72 @@ sdk.user.reset_user_roles_blocking(userId)
 
 
 ## Creating custom roles
-It is not possible to create custom roles from existing permissions using Cardinal. However, this feature will be added
-in a release in the near future.
+
+
+You can create your own roles from the existing permissions using the `createRole` method in the `role` section of the
+SDK. You have to provide:
+
+- The name of the role: it can only contain uppercase letters (A-Z) and underscores, with a maximum length of 40
+characters. The id of the created role will automatically be set to `<GROUP_ID>:<ROLE_NAME>`.
+- The set of permissions granted by the role. You can retrieve all the available permissions using the `getPermissions`
+method in the `role` section of the SDK.
+- Optionally, a short description for the role (max 300 characters). The `description` parameter was added in SDK 2.5.0.
+- Optionally, `inheritsUpTo`: the maximum level in the downward group hierarchy where this role can be used (`null` =
+any child group at any level, `0` = only the current group, `1` = only the current group and its direct children, and
+so on).
+
+
+**kotlin:**
+
+
+```kotlin no-test
+val allPermissions = sdk.role.getPermissions()
+val customRole = sdk.role.createRole(
+	name = "MEDICAL_SECRETARY",
+	permissions = setOf(allPermissions.first()),
+	description = "A role for the medical secretaries of the practice"
+)
+```
+
+
+**typescript:**
+
+
+```typescript no-test
+const allPermissions = await sdk.role.getPermissions()
+const customRole = await sdk.role.createRole(
+	"MEDICAL_SECRETARY",
+	[allPermissions[0]],
+	"A role for the medical secretaries of the practice"
+)
+```
+
+
+**python:**
+
+
+```python
+all_permissions = sdk.role.get_permissions_blocking()
+custom_role = sdk.role.create_role_blocking(
+	"MEDICAL_SECRETARY",
+	{all_permissions[0]},
+	"A role for the medical secretaries of the practice"
+)
+```
+
+
+You can later change the permissions granted by a role using the `modifyRolePermissions` method, or permanently delete
+the role using the `purgeRole` method.
+
+There is also a `createRoleInGroup` variant that takes the id of the group where the role should be created as its
+first parameter.
+
+> **note:**
+In TypeScript and Python the `description` parameter is required (pass `undefined` / `None` if you don't want to
+provide one). It comes **before** the `options` argument (containing `inheritsUpTo`) in TypeScript, and **before**
+`inherits_up_to` in Python: check your existing `createRole` calls if you upgrade from an SDK version older than 2.5.0.
 
 ---
-
-
-================================================================================
-## 4.11 Two-Factor Authentication
-================================================================================
 
 <!-- Source: sdk/how-to/set-up-2fa.mdx -->
 
@@ -13030,9 +13508,15 @@ context (:construction:).
 
 ## Set up 2FA
 
-To enable 2FA for a user, you need to specify the length of the OTP that the backend should expect and the key used to
-generate and verify the OTP. The key should be generated using a Sha256-based HMAC algorithm and encoded as a Base32
-string.
+
+To enable 2FA for a user, you need to specify the length of the OTP that the backend should expect, the key used to
+generate and verify the OTP, and a valid OTP generated with the provided configuration at the current time. The OTP is
+used by the backend to verify that the provided key is correct before enabling the 2FA. The key should be encoded as a
+Base32 string.
+
+By default, the OTPs are generated and verified using a Sha1-based HMAC algorithm, as many authenticator apps still do
+not support other algorithms. You can choose a different algorithm (`Sha256` or `Sha512`) through the optional
+`algorithm` parameter of `Enable2faRequest`.
 
 
 > **note:**
@@ -13049,8 +13533,16 @@ import com.icure.kotp.Totp
 
 // val userId = The id of the user
 val otpLength = 8
-// val otpSecret = A Base32-encoded HMAC-Sha256 key
-sdk.user.enable2faForUser(userId, Enable2faRequest(otpSecret, otpLength))
+// val otpSecret = A Base32-encoded HMAC key
+// val currentOtp = An OTP generated with otpSecret at the current time, e.g. using a TOTP library
+sdk.user.enable2faForUser(
+	userId,
+	Enable2faRequest(
+		secret = otpSecret,
+		otpLength = otpLength,
+		otp = currentOtp
+	)
+)
 ```
 
 
@@ -13058,11 +13550,13 @@ sdk.user.enable2faForUser(userId, Enable2faRequest(otpSecret, otpLength))
 
 
 ```typescript test-WUCU
+import {Enable2faRequest} from "@icure/cardinal-sdk";
 
 // const userId = The id of the user
 const otpLength = 8
-// const otpSecret = A Base32-encoded HMAC-Sha256 key
-await sdk.user.enable2faForUser(userId, new Enable2faRequest({ secret: otpSecret, otpLength}))
+// const otpSecret = A Base32-encoded HMAC key
+// const currentOtp = An OTP generated with otpSecret at the current time, e.g. using a TOTP library
+await sdk.user.enable2faForUser(userId, new Enable2faRequest({ secret: otpSecret, otpLength, otp: currentOtp }))
 ```
 
 
@@ -13074,9 +13568,17 @@ from cardinal_sdk.model import Enable2faRequest
 
 # user_id = The id of the user
 otp_length = 8
-# otp_secret =  A Base32-encoded HMAC-Sha256 key
-sdk.user.enable_2fa_for_user_blocking(user_id, Enable2faRequest(otp_length, otp_secret))
+# otp_secret = A Base32-encoded HMAC key
+# current_otp = An OTP generated with otp_secret at the current time, e.g. using a TOTP library
+sdk.user.enable2fa_for_user_blocking(
+	user_id,
+	Enable2faRequest(secret=otp_secret, otp_length=otp_length, otp=current_otp)
+)
 ```
+
+
+You can check whether a user has 2FA enabled for password login through the read-only `uses2fa` field of the user's
+[systemMetadata](/explanations/data-model/user#systemmetadata).
 
 
 ## Use 2FA with the Smart Authentication Manager
@@ -13087,7 +13589,6 @@ instantiate it.
 
 Below you will find an example of a basic SecretProvider that asks for the 2FA token. To learn more about the SecretProvider,
 check this [how to](/how-to/initialize-the-sdk/authentication-with-secret-provider)
-
 
 > **note:**
 This functionality is not available on Python.
@@ -13128,6 +13629,7 @@ val authSecretProvider = object : AuthSecretProvider {
 
 
 ```typescript test-KOLI
+import {AuthenticationProcessApi, AuthSecretDetails, AuthenticationClass, AuthSecretProvider} from "@icure/cardinal-sdk";
 
 const askOneTimeCode = (): string => {
 	// This function will ask the user to enter their OTP
@@ -13198,6 +13700,14 @@ const sdk = await CardinalSdk.initialize(
 ```
 
 
+> **note:**
+Since SDK 2.6.0, initializing the SDK with only a password for a user that has 2FA enabled does not fail anymore:
+the SDK asks the secret provider for the OTP when it performs its first authenticated request. Since the SDK already
+performs authenticated requests during the initialization (for example, to retrieve the current data owner), this
+happens while `initialize` is still running: your secret provider must be able to prompt the user for the OTP at that
+point.
+
+
 ## Disable 2FA
 The two-factor authentication configuration can be also removed from a user:
 
@@ -13225,7 +13735,7 @@ await sdk.user.disable2faForUser(userId)
 
 ```python
 # user_id = The id of the user
-sdk.user.disable_2fa_for_user_blocking(user_id)
+sdk.user.disable2fa_for_user_blocking(user_id)
 ```
 
 
@@ -13234,11 +13744,6 @@ Disabling the 2FA for a user is a security-critical operation that requires the 
 [elevated security context](/how-to/initialize-the-sdk/authentication-with-secret-provider).
 
 ---
-
-
-================================================================================
-## 4.12 Persistent Sessions
-================================================================================
 
 <!-- Source: sdk/how-to/remember-me.mdx -->
 
@@ -13362,6 +13867,7 @@ val sdk = CardinalSdk.initialize(
 
 
 ```typescript test-TILA
+import {AuthenticationMethod, CardinalSdk, StorageFacade} from "@icure/cardinal-sdk";
 
 const [username, longToken] = await getCredentialsFromPersistentStorage();
 const auth = new AuthenticationMethod.UsingCredentials.UsernameLongToken(username, longToken);
@@ -13417,10 +13923,116 @@ method (e.g., short-lived token, password, etc.).
 
 ---
 
+<!-- Source: sdk/how-to/calendar-items-occupancy.mdx -->
 
-================================================================================
-## 4.13 Multi-Group Environment
-================================================================================
+# Compute appointment occupancy
+
+You can ask the backend to compute how many [calendar items](/explanations/data-model/calendaritem)
+are concurrently busy over a period, without having to retrieve and decrypt the individual calendar items. This is
+useful for scheduling features, such as displaying the availability of a practitioner, computing the load of a shared
+agenda, or rendering an occupancy heatmap.
+
+> **INFO: Availability**
+The occupancy methods are available on the base SDK (`CardinalBaseSdk`) since SDK 2.8.0, and on the full `CardinalSdk`
+since SDK 2.9.0. In the Python SDK they are available since SDK 2.11.0.
+
+
+The `calendarItem` section of the SDK exposes three methods, differing only in how the calendar items are scoped:
+
+- `getCalendarItemsOccupancyByPeriodForSelf(startDate, endDate, extensionInDays)`: occupancy of the calendar items of
+the current data owner.
+- `getCalendarItemsOccupancyByPeriodForHealthcareParty(startDate, endDate, hcPartyId, extensionInDays)`: occupancy of
+the calendar items of the provided healthcare party.
+- `getCalendarItemsOccupancyByPeriodAndAgendaId(startDate, endDate, agendaId, extensionInDays)`: occupancy of the
+calendar items of the provided [Agenda](/explanations/data-model/agenda).
+
+> **caution:**
+`startDate` and `endDate` are [FuzzyDateTimes](/explanations/data-model/#fuzzydatetime) in the `YYYYMMDDHHMMSS` format
+(like `CalendarItem.startTime`), **not** unix timestamps. Passing a unix timestamp will not fail, but it will silently
+return wrong results.
+
+
+## The result: an occupancy step function
+
+The result is a list of `CalendarItemOccupancy` points, each with two fields:
+
+- `timestamp`: a FuzzyDateTime at which the occupancy changes.
+- `occupancy`: the number of calendar items that are concurrently busy starting from `timestamp`.
+
+The points are ordered by `timestamp` and the occupancy is constant between two consecutive points. For example, the
+result `[(20260701090000, 1), (20260701093000, 3), (20260701103000, 1), (20260701110000, 0)]` means: one busy calendar
+item from 9:00 to 9:30, three from 9:30 to 10:30, one from 10:30 to 11:00, and none after 11:00. If you want to render
+this as a histogram or heatmap, you can sample the step function at the resolution you need.
+
+## Boundary handling with `extensionInDays`
+
+Only the calendar items whose whole interval fits within the searched range are considered: by default, a calendar item
+that starts before `startDate` or ends after `endDate` is ignored, even if it is busy during the period. You can pass
+the optional `extensionInDays` parameter to widen the searched range by that many days on each side, so that calendar
+items that start shortly before `startDate` or end shortly after `endDate` are also taken into account (items reaching
+beyond the extended range are still ignored). If the boundaries of your period can fall in the middle of an
+appointment, we recommend passing at least `1`, otherwise the occupancy at the edges of the period will be
+under-reported.
+
+## Example
+
+Compute the occupancy of the current data owner's appointments for the working hours of July 1st, 2026:
+
+
+**kotlin:**
+
+
+```kotlin no-test
+val occupancy = sdk.calendarItem.getCalendarItemsOccupancyByPeriodForSelf(
+	startDate = 20260701080000L,
+	endDate = 20260701180000L,
+	extensionInDays = 1
+)
+occupancy.forEach { point ->
+	println("From ${point.timestamp}: ${point.occupancy} concurrent appointments")
+}
+```
+
+
+**typescript:**
+
+
+```typescript no-test
+const occupancy = await sdk.calendarItem.getCalendarItemsOccupancyByPeriodForSelf(
+	20260701080000,
+	20260701180000,
+	1
+)
+occupancy.forEach((point) => {
+	console.log(`From ${point.timestamp}: ${point.occupancy} concurrent appointments`)
+})
+```
+
+
+**python:**
+
+
+```python
+occupancy = sdk.calendar_item.get_calendar_items_occupancy_by_period_for_self_blocking(
+	20260701080000,
+	20260701180000,
+	1
+)
+for point in occupancy:
+	print(f"From {point.timestamp}: {point.occupancy} concurrent appointments")
+```
+
+
+> **note:**
+In TypeScript and Python the `extensionInDays` parameter is not defaulted: pass `undefined` (TypeScript) or `None`
+(Python) explicitly if you don't want any extension.
+
+
+Since the backend computes the occupancy from the unencrypted timing information of the calendar items and only returns
+aggregated counts, these methods do not require any decryption: they are also available on the base (crypto-less) SDK,
+and there are in-group variants that take the group id as first parameter.
+
+---
 
 <!-- Source: sdk/how-to/manage-a-multi-group-environment.mdx -->
 
@@ -13434,11 +14046,6 @@ method (e.g., short-lived token, password, etc.).
 
 ---
 
-
-================================================================================
-## 4.14 Deleting User Data
-================================================================================
-
 <!-- Source: sdk/how-to/deleting-data-of-users.mdx -->
 
 # Deleting data on user request
@@ -13447,11 +14054,6 @@ method (e.g., short-lived token, password, etc.).
 
 ---
 
-
-================================================================================
-## 4.15 Deleting Inactive User Data
-================================================================================
-
 <!-- Source: sdk/how-to/deleting-data-of-inactive-users.mdx -->
 
 # Deleting data of inactive users
@@ -13459,6 +14061,140 @@ method (e.g., short-lived token, password, etc.).
 :construction: This page is under construction :construction:
 
 [//]: # (https://icure.atlassian.net/issues/ICBE-299)
+
+---
+
+<!-- Source: sdk/how-to/use-the-cardinal-mcp-server.md -->
+
+# Use the Cardinal MCP server
+
+`@icure/cardinal-mcp-server` is a [Model Context Protocol](https://modelcontextprotocol.io) server for the Cardinal
+SDK. Once it is connected to an AI assistant such as Claude, the assistant can:
+
+- search and read the Cardinal SDK documentation (APIs, models, filters, tutorials and how-to guides), with no
+  account needed;
+- call the TypeScript SDK against a Cardinal backend on your behalf, after you log in with `cardinal_init`.
+
+The server runs locally over stdio. Its version follows the SDK version it was generated from: install
+`@icure/cardinal-mcp-server@2.13.3` to get the documentation and method surface of SDK 2.13.3.
+
+## Requirements
+
+- Node.js 20 or later (`npx` comes with it).
+- For the operational tools only: the URL of a Cardinal backend (for example `https://api.icure.cloud`) and the
+  login and password of a user in it.
+
+## Install in Claude Code
+
+From the project where you want the server available:
+
+```bash
+claude mcp add cardinal -- npx -y @icure/cardinal-mcp-server
+```
+
+The default scope is `local`: the server is available to you, in this project only. Two other scopes exist:
+
+```bash
+# Everyone who clones the repository: writes .mcp.json at the repository root, commit it
+claude mcp add --scope project cardinal -- npx -y @icure/cardinal-mcp-server
+
+# You, in every project
+claude mcp add --scope user cardinal -- npx -y @icure/cardinal-mcp-server
+```
+
+The project scope produces this `.mcp.json`, which you can also write by hand:
+
+```json
+{
+  "mcpServers": {
+    "cardinal": {
+      "command": "npx",
+      "args": ["-y", "@icure/cardinal-mcp-server"]
+    }
+  }
+}
+```
+
+To pin the SDK version the assistant sees, replace the package name with `@icure/cardinal-mcp-server@<version>`.
+Check the connection with `claude mcp list`, or `/mcp` inside a Claude Code session.
+
+## Install in Claude Desktop
+
+Open the configuration file, add the same `mcpServers` entry, then restart Claude Desktop:
+
+- macOS: `~/Library/Application Support/Claude/claude_desktop_config.json`
+- Windows: `%APPDATA%\Claude\claude_desktop_config.json`
+
+```json
+{
+  "mcpServers": {
+    "cardinal": {
+      "command": "npx",
+      "args": ["-y", "@icure/cardinal-mcp-server"]
+    }
+  }
+}
+```
+
+Claude Desktop starts the server with a minimal environment. If the server does not appear, replace `"npx"` with
+the absolute path printed by `which npx` (macOS) or `where npx` (Windows).
+
+## What the assistant gets
+
+| Tool | Needs `cardinal_init` | Purpose |
+| --- | --- | --- |
+| `search_documentation` | no | Full-text search over the API, model, filter, tutorial and guide documentation |
+| `cardinal_init` | – | Logs in to a Cardinal backend and keeps the SDK instance for the rest of the session |
+| `cardinal_admin` | yes | Group, User, Role, Permission, System, Auth and Filter APIs |
+| `cardinal_data_owner` | yes | HealthcareParty, Patient and Device APIs, with a `flavour` of `decrypted`, `encrypted` or `tryAndRecover` |
+| `cardinal_crypto` | yes | Crypto, Recovery, ShamirKeysManager, DataOwner and CardinalMaintenanceTask APIs |
+| `cardinal_continue_iteration` | yes | Fetches the next page of a paginated result |
+
+The documentation is also exposed as MCP resources the assistant can read directly: `cardinal://docs/overview`,
+`cardinal://docs/api/{apiName}`, `cardinal://docs/model/{modelName}`, `cardinal://docs/filter/{entityName}`,
+`cardinal://docs/tutorial/{slug}` and `cardinal://docs/guide/{slug}`.
+
+## Using it
+
+Documentation questions work right away:
+
+> How do I share a patient with another healthcare party in the Cardinal TypeScript SDK?
+
+The assistant searches the documentation and reads `cardinal://docs/api/Patient` or the relevant how-to guide.
+
+To run operations, ask the assistant to log in first:
+
+> Initialise Cardinal against https://api.icure.cloud with the user alice@example.com and the password I will give you.
+
+This calls `cardinal_init`, which takes `baseUrl`, `username`, `password`, an optional `projectId` and a `storageDir`
+for the SDK's key storage (default `./cardinal-mcp-storage`, relative to the directory the server was started from).
+From then on the assistant can, for instance, list the patients of the current data owner, create an entity or
+inspect the keys of a data owner. Method parameters are passed by their declared name; a filter parameter is written
+as `{ "_factory": "<Entity>Filters.<method>", "<param>": ... }` using the factories listed under
+`cardinal://docs/filter/{entityName}` (see [Everything about filters](../explanations/everything-about-filters.mdx)).
+
+> **WARNING: Keep the credentials you hand over in mind**
+Everything you type reaches the model, and the assistant can call any method the SDK exposes with the rights of that
+user. Use a test group or a dedicated user with the least privileges that get the job done, never a production
+administrator. The `storageDir` holds the user's private keys: point it outside your repository and do not commit it.
+
+
+## Running from source
+
+```bash
+git clone https://github.com/icure/cardinal-sdk.git
+cd cardinal-sdk/cardinal-mcp-server
+corepack enable
+yarn install
+yarn run build
+claude mcp add cardinal-dev -- node "$PWD/dist/index.js"
+```
+
+`yarn test` runs the suite (an in-memory MCP client against the real server, no network). `yarn run generate`
+regenerates the documentation manifest and the method registry in `generated/`; it needs the parent repository
+checked out (for the Kotlin KDoc) and the matching `@icure/cardinal-sdk` in `node_modules`. See the
+[server's README](https://github.com/icure/cardinal-sdk/blob/main/cardinal-mcp-server/README.md) and its `CLAUDE.md`
+for the code layout and the release automation.
 
 ---
 
@@ -13571,39 +14307,30 @@ The patient observes a mild pain in the lower right side of the abdominal area o
 
 The patient loses sleep and on 3 July, early morning rushes to the hospital after having vomited multiple times and the pain now being unbearable. This is the n-th contact shown above. The patient complains to the doctor about the symptoms and after thorough examination, the doctor diagnoses him with appendicitis. The doctor recommends a surgical operation of appendectomy the next day. The doctor also prescribes antibiotic cefuroxime, intravenously, to reduce spread of infection in the abdomen.&#x20;
 
-
 > **info:**
 Several events take place before the patient makes the first consultation with the _healthcare party_, these events leading to the _contact_ (n). During the _contact_ (n), the physician's software creates a _contact_, the beginning moment of the contact is the moment of the consultation. It also creates a _health element_, appendicitis (beginning moment: July 1). Three _services_ are created during the course of the consultation: the complaint, the diagnosis and the prescription. These three _services_ are saved inside _contact_ (n) and they are connected by means of one _sub-contact_ with three links to the _health element_, appendicitis.
 
-
 During the next _contact_ (n+1) on July 4, the surgical operation of appendectomy, is carried out. After 3 days in observation, the patient is released from the hospital with a prescription of antibiotics for next 6 days and recommends a recovery period of 4 weeks.&#x20;
-
 
 > **info:**
 &#x20;This _contact_ (n+1) is a simple one. It holds only one _service_ (appendectomy) connected to one _health element_ (appendicitis).
-
 
 ![Figure 2: Timeline of the patient's medical history continued](/img/data-model-2.png)
 
 Sometime later, the patient is diagnosed with diabetes. The patient develops difficulties due to this. Few consultations were made with the doctors attempting to keep these conditions under control. One of the conditions the patient develops is necrosis in a toe. The doctor recommends amputation of the toe (figure 2). On March 7, the patient is asked to get admitted for the surgical procedures of toe amputation. After proper healing of the wound, on April 7, the patient begins sessions with a physiotherapist to help with walking again.&#x20;
 
-
 > **info:**
 Previous _contacts_ have already occurred diagnosing and recording diabetes and necrosis, prior to prescribing a follow-up plan of toe amputation (these are not shown in figure 2). The _contact_ (m) records a _service_ of toe amputation operation linked to multiple structuring element, here, the patient's existing _health element_, diabetes and the _healthcare approach_ of toe amputation. The _contact_ (m+1) for physiotherapy is only linked to the _healthcare approach_ of toe amputation. Note the _health element_ diabetes, continue to exist.
 
-
 As a result of diabetic condition, the patient later on, has an episode of heart attack. The patient is prescribed lifestyle changes, medication, cardiac rehabilitation, etc. and asked to consult again in 2 weeks for the follow up of the heart attack episode (not shown in figure 2). During this consultation, various bio-metric measures like, blood sugar level, blood pressure, etc. was recorded. The change in weight was also recorded in order to measure how much life style changes were effective.&#x20;
-
 
 > **info:**
 _Contact_ (p) holds service linked to two _health elements_, one already existing and chronic and the other previously recorded. _Services_ provided are follow-up consultation, bio-metric measurements and weight measurement which are linked to either of the _health elements_ (diabetes, heart attack). Note here that weight tracking is a _service_ for both _health elements_. Here diabetes does not have an ending point and continues along the timeline.
-
 
 ## Root-level Entities
 
 Root level entities are the one that can be manipulated using [basic operations](/how-to/basic-operations). Each
 root-level entity has its own section in the SDK, that exposes the operations that can be applied to the entity.
-
 
 **kotlin:**
 
@@ -13627,8 +14354,6 @@ val sdk = CardinalSdk.initialize(
 // Accessing the section for the HealthElement entity to retrieve a single HealthElement by id
 val healthElement = sdk.healthElement.getHealthElement(healthElementId)
 ```
-
-
 **python:**
 
 
@@ -13638,7 +14363,7 @@ CARDINAL_URL = "https://api.icure.cloud"
 username = input("Username: ")
 password = input("Password: ")
 sdk = CardinalSdk(
-	application_id=None,
+	project_id=None,
 	baseurl=CARDINAL_URL,
 	authentication_method=UsernamePassword(username, password),
 	storage_facade=FileSystemStorage("./scratch/storage")
@@ -13647,8 +14372,6 @@ sdk = CardinalSdk(
 # Accessing the section for the HealthElement entity to retrieve a single HealthElement by id
 health_element = sdk.health_element.get_health_element_blocking(health_element_id)
 ```
-
-
 **typescript:**
 
 
@@ -13668,7 +14391,6 @@ const sdk = await CardinalSdk.initialize(
 const healthElement = await sdk.healthElement.getHealthElement(healthElementId)
 ```
 
-
 ### Base Entities
 
 Base entities do not contain sensitive data and are therefore unencrypted. Any user with appropriate permissions can
@@ -13687,17 +14409,16 @@ in and manage data.
 - [**User**](/explanations/data-model/user): An entity that represents an actor able to log in to Cardinal. It can
 be linked to a HealthcareParty, Patient, or Device entity.
 
-
 > **info:**
 A registered user can log in but will not be able to create, retrieve, search, or share encryptable entities unless they
 are linked to a HealthcareParty, Patient, or Device. A user linked with one of these entities is called a **Data Owner**.
-
 
 ### Encrypted Entities
 
 Encryptable entities contain sensitive data and are encrypted on the client side before being stored in the cloud.
 Only Data Owners can create, share, retrieve, or delete these entities. Even if a non-Data Owner has permission to
 access an entity (e.g., an admin), they will only have access to the unencrypted portion of the data.
+
 
 - [**Contact**](/explanations/data-model/contact): a Contact is an encryptable entity that represents a situation that involves a patient where
 medical data is created. Usually it involves a doctor (healthcare party), like in the case of a medical examination.
@@ -13710,8 +14431,12 @@ conditions (e.g., fever) to chronic ones (e.g., allergies).
 both text and file attachments, all of which are encrypted.
 - [**Patient**](/explanations/data-model/patient): Represents a patient, the subject of treatment or medical data
 collection. A Patient entity can be linked to a User to allow login.
+- [**RelatedPerson**](/explanations/data-model/relatedperson): Represents a person related to one or more patients that
+is neither a patient nor a healthcare party, such as a contact person, a caregiver, or the parent of a child patient.
+Differently from the other person entities, a RelatedPerson cannot be linked to a User and is not a Data Owner.
 - [**Topic**](/explanations/data-model/topic): Used with the Message entity to support encrypted conversations
 between users.
+
 
 ## Nested Entities
 
@@ -13739,13 +14464,35 @@ The following fields are common across most entities.
 
 ### Id
 
-A unique identifier for an entity. It is recommended to use a [UUID v4](https://en.wikipedia.org/wiki/Universally_unique_identifier#Version_4_(random))
-to avoid conflicts. The exception is the [Code](/explanations/data-model/code) entity, where the ID format
+A unique identifier for an entity. The id is a string chosen by the client when the entity is created. It is
+recommended to use a [UUID v4](https://en.wikipedia.org/wiki/Universally_unique_identifier#Version_4_(random)), either
+in its plain form (e.g. `1b4e2c8a-6d3f-4b7a-9c2e-8f5a1d0b3c6e`) or as a short UUID (a
+[base58](https://en.wikipedia.org/wiki/Binary-to-text_encoding#Base58)-encoded UUID, e.g. `AhqLoLZSFTCLGkAkjivBgV`) if
+you prefer a more compact representation. Both guarantee uniqueness without any coordination between clients and always
+satisfy the validity rules below. The exception is the [Code](/explanations/data-model/code) entity, where the ID format
 is `type|code|version`.
+
+#### What is a valid id?
+
+Entity ids are used as path parameters in the URLs of the REST API (e.g. `/rest/v2/patient/{patientId}`). Characters
+that have a special meaning in a URL path would either break the routing or be silently truncated, leaving an entity
+that could never be retrieved by its id. For this reason, the id is validated when the entity is created, and the
+creation fails with an error if the id contains any of the following:
+
+- `/` or `\`: path separators.
+- `?` or `#`: they mark the start of the query string and of the fragment.
+- `%`: it marks the start of a percent-encoded sequence (e.g. `%2F` decodes to `/`).
+- `;`: it marks the start of a matrix variable, and everything after it would be silently stripped from the path segment.
+- Any whitespace character (space, tab, new line, ...).
+- Any ISO control character.
+
+Any other character is allowed. In particular, `|` is allowed, as it is used in composite ids like the id of a
+[Code](/explanations/data-model/code) (`type|code|version`). If you cannot use a plain or base58-encoded UUID and have
+to derive the id from external data, make sure the result never contains any of the characters above.
 
 ### Rev
 
-An internal fields that represents the version of the entity, in the format `{number}-{hash}`. This field is managed
+An internal fields that represents the version of the entity, in the format `<number>-<hash>`. This field is managed
 internally by Cardinal and is not present on nested entities.
 
 When you create an entity, its rev will start from 1, and it will increase with each operation that modifies or deletes it.
@@ -13762,7 +14509,6 @@ The difference between `tag` and `code` is purely conceptual: `tag` is strictly 
 CodeStubs in `code` may contain sensitive data. For example, a CodeStub for the region a patient lives in would go in
 `tag`, while a CodeStub on a Contact for the department of the hospital where an examination was performed would go in
 `code`.
-
 
 > **caution:**
 By default, both `tag` and `code` are unencrypted to allow you to be used in searching. However, if you feel that the
@@ -13817,17 +14563,14 @@ Below, you will find a list of all such types.
 A date, precise to the day, stored as a number in the `YYYYMMDD` format. If either the month or day information is
 unknown or unavailable, `00` should be used instead.
 
-
 > **note:**
 This format will be replaced by a data type in the near future.
-
 
 ### FuzzyDateTime
 A timestamp, precise to the second, stored as a number in the `YYYYMMDDhhmmss` format. If any part of the date, except
 for the year is unknown `00` can be used instead. Therefore:
 - `20240101230000` encodes `2024/01/01` at 23 hours, but minutes and seconds are unknown
 - `20240101235960` encodes `2024/01/02` at `00:00:00`
-
 
 > **note:**
 This format will be replaced by a data type in the near future.
@@ -13932,13 +14675,19 @@ The nationality of the Patient.
 ### notes
 Confidential annotations related to the Patient.
 
-
 > **note:**
 By default, only the `markdown` field of each note will be encrypted.
 
-
 ### partnerships
 A collection of objects that contains the relationships and contact people for this Patient.
+
+
+Each partnership contains the type and status of the relationship and the id of the partner in the `partnerId` field.
+The `partnerType` field indicates the type of entity `partnerId` refers to: a Patient, a HealthcareParty, or a
+[RelatedPerson](/explanations/data-model/relatedperson). When `partnerType` is null (which is always the case for data
+created before SDK 2.12.0), the partner is either a Patient or a HealthcareParty and it is up to the application to
+resolve the ambiguity.
+
 
 ### patientHealthCareParties
 A collection of objects that represent a relation in time between this Patient and a HealthcareParty (e.g. to indicate
@@ -13950,11 +14699,9 @@ Represents the Patient current social or relationship status (e.g. married, sing
 ### picture
 An image associated to the Patient as array of bytes.
 
-
 > **caution:**
 This field is meant to contain only a short byte array (a few kilobytes). Using it to store bigger data may result in
 a loss of performance while querying your database.
-
 
 ### placeOfBirth
 The place of birth of the patient as a free text.
@@ -13973,6 +14720,242 @@ The Social Security Number of the HealthcareParty.
 
 ### spouseName
 If the Patient is married, the last name of their spouse.
+
+---
+
+<!-- Source: sdk/explanations/data-model/relatedperson.mdx -->
+
+# RelatedPerson
+
+The RelatedPerson is an encryptable root-level entity, available since SDK 2.12.0, that represents a person related to
+one or more patients who is neither a patient nor a healthcare party: typically a contact person, such as the parent of
+a child patient, a caregiver, or a legal guardian.
+
+A RelatedPerson is referenced from the [partnerships](/explanations/data-model/patient#partnerships) of a Patient with
+`partnerType = RelatedPerson`. Note that, differently from patients and healthcare parties, a RelatedPerson is **not a
+data owner**: it cannot be associated to a User, cannot log in, and data cannot be shared with it.
+
+## Fields Encrypted by Default
+
+By default, the following fields of this entity will be encrypted:
+- `created`
+- `modified`
+- `companyName`
+- `languages`
+- `civility`
+
+You can customize the encrypted fields as [explained in this how to](/how-to/initialize-the-sdk/configure-what-to-encrypt).
+
+> **caution:**
+Note that, differently from most other entities, the `created` and `modified` timestamps of a RelatedPerson are
+encrypted by default.
+
+
+## Properties
+
+Below you will find an explanation of the most commonly used properties in the entity that are not among the
+[shared fields](/explanations/data-model/#shared-fields). For a full list, check the reference documentation (:construction:).
+
+### firstName
+
+The first name of the related person.
+
+### lastName
+
+The last name (surname) of the related person.
+
+### names
+
+The list of all the names of the related person, also containing the official full name information.
+
+### companyName
+
+The name of the company this related person is member of.
+
+### languages
+
+The list of languages spoken by the related person, in ISO 639-2 alpha-2 code.
+
+### addresses
+
+The addresses and telecoms (phone numbers, email addresses, ...) of the related person.
+
+### civility
+
+The civility of the related person (Mr., Ms., Pr., Dr., ...).
+
+### gender
+
+The gender of the related person.
+
+## Linking a related person to a patient
+
+A RelatedPerson is created like any other encryptable entity: you first initialize its encryption metadata, then you
+commit the creation. Since it is a root entity, it is not linked to any owning entity, so you don't have to pass a
+patient (or any other entity) when initializing the encryption metadata.
+
+The link between a Patient and a RelatedPerson is instead stored on the patient side, by adding to the
+[partnerships](/explanations/data-model/patient#partnerships) of the patient an entry with the id of the related person
+as `partnerId` and `PartnerType.RelatedPerson` as `partnerType`:
+
+
+**kotlin:**
+
+
+```kotlin no-test
+import com.icure.cardinal.sdk.model.DecryptedRelatedPerson
+import com.icure.cardinal.sdk.model.embed.DecryptedPartnership
+import com.icure.cardinal.sdk.model.embed.PartnerType
+import com.icure.cardinal.sdk.model.embed.PartnershipStatus
+import com.icure.cardinal.sdk.model.embed.PartnershipType
+import kotlin.uuid.Uuid
+
+// Create the related person
+val relatedPerson = sdk.relatedPerson.createRelatedPerson(
+	sdk.relatedPerson.withEncryptionMetadata(
+		DecryptedRelatedPerson(
+			id = Uuid.random().toString(),
+			firstName = "Anna",
+			lastName = "Dupont",
+		)
+	)
+)
+
+// Link it to the patient through a partnership
+val patient = sdk.patient.getPatient(patientId)!!
+sdk.patient.modifyPatient(
+	patient.copy(
+		partnerships = patient.partnerships + DecryptedPartnership(
+			partnerId = relatedPerson.id,
+			partnerType = PartnerType.RelatedPerson,
+			type = PartnershipType.Mother,
+			status = PartnershipStatus.Active,
+		)
+	)
+)
+```
+
+
+**typescript:**
+
+
+```typescript no-test
+import {
+	DecryptedPartnership,
+	DecryptedRelatedPerson,
+	PartnershipStatus,
+	PartnershipType,
+	PartnerType,
+} from "@icure/cardinal-sdk"
+
+// Create the related person
+const relatedPerson = await sdk.relatedPerson.createRelatedPerson(
+	await sdk.relatedPerson.withEncryptionMetadata(
+		new DecryptedRelatedPerson({
+			firstName: "Anna",
+			lastName: "Dupont",
+		})
+	)
+)
+
+// Link it to the patient through a partnership
+const patient = await sdk.patient.getPatient(patientId)
+patient.partnerships = [
+	...patient.partnerships,
+	new DecryptedPartnership({
+		partnerId: relatedPerson.id,
+		partnerType: PartnerType.RelatedPerson,
+		type: PartnershipType.Mother,
+		status: PartnershipStatus.Active,
+	}),
+]
+await sdk.patient.modifyPatient(patient)
+```
+
+
+**python:**
+
+
+```python
+import uuid
+from cardinal_sdk.model import (
+	DecryptedRelatedPerson,
+	DecryptedPartnership,
+	PartnerType,
+	PartnershipType,
+	PartnershipStatus,
+)
+
+# Create the related person
+related_person = sdk.related_person.create_related_person_blocking(
+	sdk.related_person.with_encryption_metadata_blocking(
+		DecryptedRelatedPerson(
+			id=str(uuid.uuid4()),
+			first_name="Anna",
+			last_name="Dupont",
+		)
+	)
+)
+
+# Link it to the patient through a partnership
+patient = sdk.patient.get_patient_blocking(patient_id)
+patient.partnerships.append(DecryptedPartnership(
+	partner_id=related_person.id,
+	partner_type=PartnerType.RelatedPerson,
+	type=PartnershipType.Mother,
+	status=PartnershipStatus.Active,
+))
+sdk.patient.modify_patient_blocking(patient)
+```
+
+
+To retrieve the related persons of a patient, collect the `partnerId`s of the partnerships with
+`partnerType = RelatedPerson` and retrieve them by id:
+
+
+**kotlin:**
+
+
+```kotlin no-test
+import com.icure.cardinal.sdk.model.embed.PartnerType
+
+val relatedPersonIds = patient.partnerships
+	.filter { it.partnerType == PartnerType.RelatedPerson }
+	.mapNotNull { it.partnerId }
+val relatedPersons = sdk.relatedPerson.getRelatedPersons(relatedPersonIds)
+```
+
+
+**typescript:**
+
+
+```typescript no-test
+import {PartnerType} from "@icure/cardinal-sdk"
+
+const relatedPersonIds = patient.partnerships
+	.filter((p) => p.partnerType == PartnerType.RelatedPerson)
+	.map((p) => p.partnerId)
+const relatedPersons = await sdk.relatedPerson.getRelatedPersons(relatedPersonIds)
+```
+
+
+**python:**
+
+
+```python
+from cardinal_sdk.model import PartnerType
+
+related_person_ids = [
+	p.partner_id for p in patient.partnerships
+	if p.partner_type == PartnerType.RelatedPerson
+]
+related_persons = sdk.related_person.get_related_persons_blocking(related_person_ids)
+```
+
+
+You can also search the related persons accessible to the current data owner by name or by identifier, using the
+[RelatedPersonFilters](/explanations/everything-about-filters#relatedpersonfilters) with the `filterRelatedPersonsBy`
+and `matchRelatedPersonsBy` methods of the `relatedPerson` api.
 
 ---
 
@@ -13998,13 +14981,26 @@ data starts and ends.
 Once a contact is closed (i.e. its `closingDate` is not null), it is a good practice not to modify it anymore. Instead,
 a new Contact should be created.
 
+
 ## Fields Encrypted by Default
 By default, the following fields of this entity will be encrypted:
 - `descr`
 - The `markdown` field in all the `notes`.
+- `location`
+- `encounterLocation`
+- `participantList`
+- `participants` (deprecated: only relevant when using the legacy SDK, ignored otherwise)
 - The Services in `service`, according to their [encryption configuration](/how-to/initialize-the-sdk/configure-what-to-encrypt#contact-service-and-service-content-encryption).
 
+
 You can customize the encrypted fields as [explained in this how to](/how-to/initialize-the-sdk/configure-what-to-encrypt).
+
+
+> **note:**
+The list above is the default of the Kotlin and TypeScript SDKs. The default lists of the Python and Dart SDKs do not
+include `participantList`: if you need the participants of your contacts to be encrypted when using these SDKs, pass a
+custom encrypted fields configuration for `contact` containing all the entries above.
+
 
 ## Properties
 
@@ -14038,11 +15034,9 @@ It is encoded as a [FuzzyDateTime](/explanations/data-model/#fuzzydatetime).
 ### participants
 The ids of all the other Data Owners that participated in this encounter, associated to their role in the encounter.
 
-
 > **caution:**
 This field is not encrypted by default, so be sure of not including any Patient id in this field as it will break the
 anonymization between Contact and Patient.
-
 
 ### services
 A collection of [Service](/explanations/data-model/service)s that contain the value of the examinations performed
@@ -14139,7 +15133,6 @@ Raw bytes to store in the Content.
 - In Python, it is a `bytearray`.
 - In Typescript, it is a `Int8Array`.
 
-
 > **caution:**
 This field is meant to contain only a short byte content (up to few kilobytes). Storing large amount of data in this field
 can affect the performance of retrieving your data.
@@ -14150,7 +15143,6 @@ If you want to store large files / big binary content, you can store it in a [Do
 and put the document id in the [documentId](/explanations/data-model/content#documentid) field of the Content.
 
 More information about how to store large files are available in [this how to](/how-to/store-unstructured-data).
-
 
 ### booleanValue
 A boolean value to store in the Content.
@@ -14238,18 +15230,86 @@ A HealthElement is an encryptable, root-level entity that represents a medical e
 it may represent an illness that lasts for a couple of days (e.g. a flu), a more prolonged state (e.g. pregnancy), or
 a permanent ailment (e.g. allergy).
 
+
 ## Fields Encrypted by Default
 By default, the following fields of this entity will be encrypted:
 - `descr`
 - `note`
+- `asserters` (since SDK 2.13.0; in 2.13.0 the default entry was `asserters[].*`, replaced by `asserters` in 2.13.1)
 - The `markdown` field in all the `notes`.
+- The `careTeamMemberType`, `healthcarePartyId` and `quality` fields in all the `careTeam` members.
+- The `name` and `comment` fields in all the `episodes`.
+
 
 You can customize the encrypted fields as [explained in this how to](/how-to/initialize-the-sdk/configure-what-to-encrypt).
+
+
+> **warning:**
+The list above is the default of the Kotlin and TypeScript SDKs. The Python SDK defines its own default
+(`EncryptedFieldsConfiguration.health_element`), which differs: it does **not** include `asserters`, it uses
+`careTeam[].*` instead of the three `careTeam` fields, and its episode entries (`episode[].name`, `episode[].comment`)
+do not match the `episodes` field of the entity. The Dart SDK default has the same differences.
+
+If you use the Python SDK and want the asserters (and episodes) of your health elements to be encrypted, pass a custom
+configuration. Note that the list you provide replaces the default list entirely, so it must contain all the fields you
+want to encrypt:
+
+```python
+from cardinal_sdk import CardinalSdk
+from cardinal_sdk.authentication import UsernamePassword
+from cardinal_sdk.storage import FileSystemStorage
+from cardinal_sdk.options import SdkOptions, EncryptedFieldsConfiguration
+
+sdk = CardinalSdk(
+	"com.mycompany.mycardinalapp",
+	"https://api.icure.cloud",
+	UsernamePassword("username", "password"),
+	FileSystemStorage("/path/to/storage/directory"),
+	SdkOptions(
+		encrypted_fields=EncryptedFieldsConfiguration(
+			health_element=[
+				"descr",
+				"note",
+				"asserters",
+				"notes[].markdown",
+				"careTeam[].careTeamMemberType",
+				"careTeam[].healthcarePartyId",
+				"careTeam[].quality",
+				"episodes[].name",
+				"episodes[].comment",
+			]
+		)
+	)
+)
+```
+
 
 ## Properties
 
 Below you will find an explanation of the most commonly used properties in the entity that are not among the
 [shared fields](/explanations/data-model/#shared-fields). For a full list, check the reference documentation (:construction:).
+
+
+### asserters
+Available since SDK 2.13.0 (the shape described here is final since SDK 2.13.3). Encrypted by default.
+
+The parties asserting that the patient has the condition described by this HealthElement, i.e. on whose word the
+HealthElement is held to be true. This is the FHIR *asserter* concept: it does not say who recorded the HealthElement.
+For example, a patient may self-report an allergy, a family member may report a condition on behalf of the patient, and
+a physician may assert a diagnosis: all of them are asserters, and the same HealthElement can have several of them.
+
+Each `HealthElementAsserter` names the asserting party in **exactly one** of two ways (the backend rejects an asserter
+with none or both of them set):
+- `localAsserterIdentifier`: a party stored in Cardinal, given by its `id` and its `type` (an `AsserterType`:
+`Patient`, `HealthcareParty` or `RelatedPerson`). The type tells which kind of entity the id refers to, not the role
+the party played. Organisations (hospitals, practices, ...) are stored as healthcare parties, so they use
+`HealthcareParty`.
+- `externalAsserterIdentifier`: a party that has no record in Cardinal, given by a business `identifier` (an
+`Identifier`) issued by another system, where `system` names the issuing
+system and `value` the identifier of the party in that system.
+
+See the [example below](#example-asserters-and-qualified-links).
+
 
 ### careTeam
 A collection of object that contain information about all the healthcare actor related to the condition of this 
@@ -14291,9 +15351,192 @@ It is encoded as a [FuzzyDateTime](/explanations/data-model/#fuzzydatetime).
 ### plansOfAction
 A collection of objects that contain information about all the healthcare approaches related to this HealthElement.
 
+
+### qualifiedLinks
+Available since SDK 2.13.0. Not encrypted.
+
+Directed, qualified links from this HealthElement to other HealthElements, for example to express that a condition is a
+complication of, or is caused by, another one. Each `HealthElementQualifiedLink` has:
+- `type`: the qualification of the link. It is a free string, but using the names of the `LinkQualification` entries
+(as serialized, e.g. `parent`, `child`, `basedOn`, `derivedFrom`) is encouraged when one of them fits.
+- `healthElementId`: the id of the linked HealthElement.
+- `associationId` (optional): a caller-chosen correlation id that groups related links across entities.
+
+Links should be created in a single direction only: the reverse direction is resolved by the backend (through a view),
+so you don't need to add a matching link on the target HealthElement.
+
 ### valueDate
 If the HealthElement was opened and closed on the same date, this field can be used instead of `openingDate` and `closingDate`.
 It is encoded as a [FuzzyDateTime](/explanations/data-model/#fuzzydatetime).
+
+## Example: asserters and qualified links
+
+The following example creates a HealthElement for a complication of an existing condition, asserted by the patient
+themselves and by their general practitioner, who is identified through an external identifier.
+
+
+**kotlin:**
+
+
+```kotlin test-YEAA
+import com.icure.cardinal.sdk.CardinalSdk
+import com.icure.cardinal.sdk.model.DecryptedHealthElement
+import com.icure.cardinal.sdk.model.Patient
+import com.icure.cardinal.sdk.model.base.Identifier
+import com.icure.cardinal.sdk.model.embed.AsserterType
+import com.icure.cardinal.sdk.model.embed.HealthElementAsserter
+import com.icure.cardinal.sdk.model.embed.HealthElementQualifiedLink
+import kotlin.uuid.Uuid
+
+suspend fun createComplication(
+	sdk: CardinalSdk,
+	patient: Patient,
+	underlyingConditionId: String
+): DecryptedHealthElement {
+	val healthElement = sdk.healthElement.withEncryptionMetadata(
+		DecryptedHealthElement(
+			id = Uuid.random().toString(),
+			descr = "Diabetic retinopathy",
+			asserters = listOf(
+				// Self-reported by the patient
+				HealthElementAsserter(
+					localAsserterIdentifier = HealthElementAsserter.LocalAsserterIdentifier(
+						id = patient.id,
+						type = AsserterType.Patient
+					)
+				),
+				// Asserted by a practitioner who has no record in Cardinal
+				HealthElementAsserter(
+					externalAsserterIdentifier = HealthElementAsserter.ExternalAsserterIdentifier(
+						identifier = Identifier(system = "https://example.org/practitioners", value = "GP-12345")
+					)
+				)
+			),
+			qualifiedLinks = listOf(
+				HealthElementQualifiedLink(
+					type = "complicationOf",
+					healthElementId = underlyingConditionId
+				)
+			)
+		),
+		patient
+	)
+	return sdk.healthElement.createHealthElement(healthElement)
+}
+```
+
+
+**typescript:**
+
+
+```typescript test-YEAB
+import {
+	AsserterType,
+	CardinalSdk,
+	DecryptedHealthElement,
+	HealthElementAsserter,
+	HealthElementQualifiedLink,
+	Identifier,
+	Patient,
+	randomUuid,
+} from "@icure/cardinal-sdk"
+
+async function createComplication(
+	sdk: CardinalSdk,
+	patient: Patient,
+	underlyingConditionId: string
+): Promise<DecryptedHealthElement> {
+	const healthElement = await sdk.healthElement.withEncryptionMetadata(
+		new DecryptedHealthElement({
+			id: randomUuid(),
+			descr: "Diabetic retinopathy",
+			asserters: [
+				// Self-reported by the patient
+				new HealthElementAsserter({
+					localAsserterIdentifier: new HealthElementAsserter.LocalAsserterIdentifier({
+						id: patient.id,
+						type: AsserterType.Patient,
+					}),
+				}),
+				// Asserted by a practitioner who has no record in Cardinal
+				new HealthElementAsserter({
+					externalAsserterIdentifier: new HealthElementAsserter.ExternalAsserterIdentifier({
+						identifier: new Identifier({ system: "https://example.org/practitioners", value: "GP-12345" }),
+					}),
+				}),
+			],
+			qualifiedLinks: [
+				new HealthElementQualifiedLink({
+					type: "complicationOf",
+					healthElementId: underlyingConditionId,
+				}),
+			],
+		}),
+		patient
+	)
+	return sdk.healthElement.createHealthElement(healthElement)
+}
+```
+
+
+**python:**
+
+
+```python
+import uuid
+from cardinal_sdk import CardinalSdk
+from cardinal_sdk.model import (
+	AsserterType,
+	DecryptedHealthElement,
+	HealthElementAsserter,
+	HealthElementAsserterExternalAsserterIdentifier,
+	HealthElementAsserterLocalAsserterIdentifier,
+	HealthElementQualifiedLink,
+	Identifier,
+	Patient,
+)
+
+def create_complication(
+	sdk: CardinalSdk,
+	patient: Patient,
+	underlying_condition_id: str
+) -> DecryptedHealthElement:
+	health_element = sdk.health_element.with_encryption_metadata_blocking(
+		DecryptedHealthElement(
+			id=str(uuid.uuid4()),
+			descr="Diabetic retinopathy",
+			asserters=[
+				# Self-reported by the patient
+				HealthElementAsserter(
+					local_asserter_identifier=HealthElementAsserterLocalAsserterIdentifier(
+						id=patient.id,
+						type=AsserterType.Patient
+					)
+				),
+				# Asserted by a practitioner who has no record in Cardinal
+				HealthElementAsserter(
+					external_asserter_identifier=HealthElementAsserterExternalAsserterIdentifier(
+						identifier=Identifier(system="https://example.org/practitioners", value="GP-12345")
+					)
+				),
+			],
+			qualified_links=[
+				HealthElementQualifiedLink(
+					type="complicationOf",
+					health_element_id=underlying_condition_id
+				)
+			]
+		),
+		patient
+	)
+	return sdk.health_element.create_health_element_blocking(health_element)
+```
+
+
+**dart:**
+
+
+The `asserters` and `qualifiedLinks` fields are not available in the Dart SDK yet.
 
 ---
 
@@ -14385,11 +15628,9 @@ Below you will find an explanation of the most commonly used properties in the e
 Any identifier that can be used to uniquely retrieve the User that sent the message. It can be the user id, the email,
 the login or any other property that fits your domain of application. 
 
-
 > **note:**
 If you choose a property that is not the user id, the email or the login, it will be your responsibility to ensure its 
 uniqueness.
-
 
 ### parentId
 The id of a parent Message. This feature can be used to implement a "reply" functions. In this case, the `parentId` of a
@@ -14411,11 +15652,9 @@ A short text containing the subject of the message.
 A collection of identifiers that can be used to uniquely retrieve the Users that are the recipients of the message. 
 It can be the user id, the email, the login or any other property that fits your domain of application.
 
-
 > **note:**
 If you choose a property that is not the user id, the email or the login, it will be your responsibility to ensure its
 uniqueness.
-
 
 ### transportGuid
 The id of the [Topic](/explanations/data-model/topic) that contains the Message.
@@ -14521,11 +15760,9 @@ A free text field to store additional unstructured text information in the entit
 ### picture
 An image associated to the HealthcareParty as array of bytes.
 
-
 > **caution:**
 This field is meant to contain only a short byte array (a few kilobytes). Using it to store bigger data may result in
 a loss of performance while querying your database.
-
 
 ### speciality
 The medical specialty for this HealthcareParty.
@@ -14571,11 +15808,9 @@ The model of the Device as a free text.
 ### picture
 An image associated to the device as array of bytes.
 
-
 > **caution:**
 This field is meant to contain only a short byte array (a few kilobytes). Using it to store bigger data may result in
 a loss of performance while querying your database.
-
 
 ### serialNumber
 The serial number of the Device.
@@ -14609,6 +15844,98 @@ Any of these field of the User entity is valid as login:
 
 As for the password, it is possible both to set a password (in the `passwordHash` field) or to use a [temporary token](/how-to/remember-me).
 
+
+## Updating a user's login identifiers
+
+You can change the email, mobile phone, and password of a user with a regular `modifyUser`, but this requires the
+latest revision of the user, and may fail if the user is modified concurrently (for example by a `SmartAuthProvider`
+that updates the authentication tokens of the user while performing the request).
+For this reason, the user API provides dedicated methods that don't require the revision of the user:
+
+- `modifyUserEmail(userId, newEmail, previousEmail)` and `modifyUserMobilePhone(userId, newMobilePhone, previousMobilePhone)`
+  (since SDK 2.2.0) replace the email or mobile phone of the user.
+- `removeUserMobilePhone(userId, previousMobilePhone)` (since SDK 2.11.0) removes the mobile phone of the user.
+- `modifyUserPassword(userId, newPassword)` (since SDK 2.2.0) sets a new password for the user.
+
+Instead of the revision, the email and mobile phone methods take the value you expect to be currently stored in the
+user (the previous parameters are nullable, but not optional): if it doesn't match the stored value, the method fails
+with a `RevisionConflictException`.
+
+`modifyUserPassword` doesn't require the previous password, so you can also use it to implement a "forgot password"
+flow. However, changing the password of a user is a [sensitive operation](/how-to/initialize-the-sdk/authentication-with-secret-provider#sensitive-operations)
+that requires an elevated security context, so you should use it with an SDK initialized with a `SmartAuthProvider`
+(for example through an [authentication secret provider](/how-to/initialize-the-sdk/authentication-with-secret-provider))
+that can provide the required credentials when needed.
+
+All these methods except `removeUserMobilePhone` also have an in-group variant, which takes the id of the group of the
+user as first parameter.
+To change the roles of a user, see [modify user roles](/how-to/define-user-roles).
+
+
+**kotlin:**
+
+
+```kotlin test-YIAE
+import com.icure.cardinal.sdk.CardinalSdk
+import com.icure.cardinal.sdk.model.User
+
+suspend fun updateLoginIdentifiers(
+	sdk: CardinalSdk,
+	userId: String,
+	newEmail: String,
+	newPassword: String
+): User {
+	val user = sdk.user.getUser(userId)!!
+	// Fails with a RevisionConflictException if the email of the user is no longer user.email
+	sdk.user.modifyUserEmail(userId, newEmail, user.email)
+	if (user.mobilePhone != null) {
+		sdk.user.removeUserMobilePhone(userId, user.mobilePhone)
+	}
+	return sdk.user.modifyUserPassword(userId, newPassword)
+}
+```
+
+
+**typescript:**
+
+
+```typescript test-YIAF
+import {CardinalSdk, User} from "@icure/cardinal-sdk";
+
+async function updateLoginIdentifiers(
+	sdk: CardinalSdk,
+	userId: string,
+	newEmail: string,
+	newPassword: string
+): Promise<User> {
+	const user = (await sdk.user.getUser(userId))!
+	// Fails with a RevisionConflictException if the email of the user is no longer user.email
+	await sdk.user.modifyUserEmail(userId, newEmail, user.email)
+	if (user.mobilePhone !== undefined) {
+		await sdk.user.removeUserMobilePhone(userId, user.mobilePhone)
+	}
+	return sdk.user.modifyUserPassword(userId, newPassword)
+}
+```
+
+
+**python:**
+
+
+```python
+from cardinal_sdk import CardinalSdk
+from cardinal_sdk.model import User
+
+def update_login_identifiers(sdk: CardinalSdk, user_id: str, new_email: str, new_password: str) -> User:
+	user = sdk.user.get_user_blocking(user_id)
+	# Fails with a RevisionConflictException if the email of the user is no longer user.email
+	sdk.user.modify_user_email_blocking(user_id, new_email, user.email)
+	if user.mobile_phone is not None:
+		sdk.user.remove_user_mobile_phone_blocking(user_id, user.mobile_phone)
+	return sdk.user.modify_user_password_blocking(user_id, new_password)
+```
+
+
 ## Roles
 The roles assigned to a User are stored in a nested object inside the `systemMetadata` property. It has 3 properties:
 
@@ -14626,11 +15953,9 @@ A User is a **Data Owner** User if exactly one of the following is true:
 - They have the id of a valid [Patient](/explanations/data-model/patient) in the `patientId` field.
 - They have the id of a valid [Device](/explanations/data-model/device) in the `deviceId` field.
 
-
 > **caution:**
 A User can be associate either to a HealthcareParty, or to a Patient, or to a Device, and it cannot be associated to
 more than one of those entities.
-
 
 When a Data Owner logs in, the SDK loads their available encryption keys or creates new one if no key is available.
 Then, the user will be able to create, modify and search encrypted data. You can read more about data owner users [here](/explanations/end-to-end-encryption/data-owners-and-access-control)
@@ -14654,10 +15979,8 @@ of the SDK. More information about application tokens can be found in [this how 
 The id of the [Device](/explanations/data-model/device) associated to this User. If this field is not null,
 then the `healthcarePartyId` and `patientId` fields should be null.
 
-
 > **info:**
 A User where this field is not null is a **Data Owner** User.
-
 
 ### email
 The email of the User. It can be used as username to log in.
@@ -14669,10 +15992,8 @@ The id of the group where this user belongs.
 The id of the [HealthcareParty](/explanations/data-model/healthcareparty) associated to this User. If this field
 is not null, then the `patientId` and `deviceId` fields should be null.
 
-
 > **info:**
 A User where this field is not null is a **Data Owner** User.
-
 
 ### login
 A username for the User. This field can be used in the log in phase.
@@ -14688,28 +16009,31 @@ If the current User has a password, this field will contain the character `*`, o
 This field can be used to create or update the password for the User. When the user is created or updated, if this field
 contains a clear-text password, the backend will store it hashed and salted.
 
-
 > **note:**
 If a User logged in with a long token (i.e. an authentication token with a duration > 5 minutes), they will not be able
 to create or update their own password or the password of any other user, even if they have the permission to do so.
 
-
 ### patientId
 The id of the [Patient](/explanations/data-model/patient) associated to this User. If this field is not null,
 then the `healthcarePartyId` and `deviceId` fields should be null.
-
 
 > **info:**
 A User where this field is not null is a **Data Owner** User.
 
 
 ### systemMetadata
-This field contains internal information about the User. It has 3 properties:
+This field contains internal information about the User. Its properties are:
 
 - `isAdmin` is a boolean field that is `true` if the user is an admin.
 - `roles` is a set of the ids of all the roles assigned to the user.
 - `inheritsRoles` is a boolean field that is `true` if the user has no role set and so inherits the roles from the group
   configuration.
+- `loginIdentifiers` is a list of the identifiers that the user can use to log in.
+- `verifiedEmail` is a boolean field that is `true` if the email of the user has been verified.
+- `verifiedMobilePhone` is a boolean field that is `true` if the mobile phone of the user has been verified.
+- `uses2fa` is a boolean field that is `true` if the user has [two-factor authentication](/how-to/set-up-2fa) enabled
+  for login with password.
+
 
 Any update to this property will be prohibited by the backend. To learn how to update the roles on a user, check this [how to](/how-to/define-user-roles).
 
@@ -14736,6 +16060,11 @@ Below you will find an explanation of the most commonly used properties in the e
 Uniquely identifies the Code. Differently from all the other entities, where the id should be a
 [UUID v4](https://en.wikipedia.org/wiki/Universally_unique_identifier#Version_4_(random)), the id of the Code should be
 `type|code|version`, where `type`, `code`, and `version` are the values of the homonymous properties.
+
+The `|` separator is explicitly allowed in ids, but the general
+[validity rules for ids](/explanations/data-model/#what-is-a-valid-id) still apply: since `type`, `code`, and `version`
+become part of the id, none of them can contain whitespace, control characters, or any of the characters
+`/` `\` `?` `#` `%` `;`.
 
 ### type 
 The type of the Code is the classification system where the code come from (e.g. `SNOMED-CT`, `LOINC`). All the codes 
@@ -14789,10 +16118,8 @@ The `id`, `type`, `code`, and `version` fields of a CodeStub must match the ones
 An Identifier is a non-encryptable nested entity that is used in the `identifiers` field of other entities to 
 uniquely identify them and link them to external resources, as specified in the [FHIR documentation](https://build.fhir.org/datatypes.html#Identifier).
 
-
 > **note:**
 The Cardinal backend does not enforce the uniqueness of a defined Identifier for any type of entity.
-
 
 Identifier's `system` and `value` can be used to [search data using filters](/how-to/querying-data).
 
@@ -14852,7 +16179,7 @@ A Right is a nested entity that contains the following properties:
 
 <!-- Source: sdk/explanations/data-model/calendaritem.mdx -->
 
-# Calendar item
+# CalendarItem
 
 The CalendarItem is an encryptable root-level entity that records the an appointment for a the patient.
 
@@ -14918,6 +16245,59 @@ The id of the Agenda where the appointment is scheduled.
 ### hcpId
 
 The id of the healthcare party that will take care of the patient during the appointment.
+
+
+## Linking a calendar item to a patient
+
+A calendar item is linked to a patient through its encryption metadata, usually by passing the patient when
+initializing the calendar item with `withEncryptionMetadata`. If you created a calendar item without a patient (for
+example an appointment booked before the patient was known), you can link it afterwards with
+`calendarItem.linkToPatient(calendarItem, patient, shareLinkWithDelegates)`. `shareLinkWithDelegates` contains the
+data owners, other than the current one, that should also be able to decrypt the id of the linked patient: those that
+don't have access to the calendar item yet are granted read access.
+
+The operation is not reversible: the method fails if the calendar item is already linked to a patient, and it is not
+possible to change the patient linked to a calendar item.
+
+> **caution:**
+Before SDK 2.12.1 `linkToPatient` had an inverted precondition: it rejected calendar items that were not linked to a
+patient yet, and accepted the ones that were already linked. Use SDK 2.12.1 or later if you need this method.
+
+
+**kotlin:**
+
+
+```kotlin no-test
+val linkedCalendarItem = sdk.calendarItem.linkToPatient(
+	calendarItem,
+	patient,
+	shareLinkWithDelegates = setOf(otherHcpId)
+)
+```
+
+
+**typescript:**
+
+
+```typescript no-test
+const linkedCalendarItem = await sdk.calendarItem.linkToPatient(calendarItem, patient, [otherHcpId])
+```
+
+
+**python:**
+
+
+```python
+linked_calendar_item = sdk.calendar_item.link_to_patient_blocking(calendar_item, patient, {other_hcp_id})
+```
+
+
+**dart:**
+
+
+```dart
+final linkedCalendarItem = await sdk.calendarItem.linkToPatient(calendarItem, patient, {otherHcpId});
+```
 
 ---
 
@@ -15062,7 +16442,6 @@ This allows you to pseudo-anonymize the data and be able to access it only if yo
 
 The encrypted link works by using secret ids. For each entity that can be on the one side of a one-to-many relationship we have a secret id, which is stored encrypted in the entity itself. This secret id will be added to the many linked entities, allowing for any user with access to the secret id of the one entity to search for the linked entities.
 
-
 > **note:**
 It is possible for a single entity to have multiple secret ids, which is useful in cases where you want to better separate the health data of patients that needs to be accessible to different groups of data owners. This however is a more advanced topic and won't be covered in this page.
 
@@ -15201,7 +16580,6 @@ The solution we implemented uses a two step process for the calculation of the s
 
 With this solution a pseudo-anonymised data owner can prove he has access to an entity by providing the access control key corresponding to a secure delegation in the entity. In cases where the data owner is not yet aware of which secure delegations are in the entity, for example because he is retrieving the entity for the first time, he can either pass all access control keys which could apply to the entity, or perform the retrievial in two steps: first request the security metadata, which can be safely given even to users without access to the entity content, then request the entity using the appropriate access control keys.
 
-
 > **note:**
 The two-step entity retrieval has not been implemented since normally anonymous users will not have many access control keys and we can fully cache them and pass them on each request. If in future we start having some exceptional cases when fully caching the access control keys of a pseudo-anonymised data owner is not feasible we will have to implement this solution as well.
 
@@ -15276,7 +16654,6 @@ ExchangeData --> E
 E --> End
 ```
 
-
 > **note:**
 If needed we may also start encrypting the exchange data id used for a secure delegation also with the public keys of anonymous delegators, as long as we do not include the public key fingerprint.
 
@@ -15290,7 +16667,6 @@ Access control with the legacy delegations is very limited: once a data owner ga
 - Children delegations can not have higher permissions than their parent delegations: if a data owner has read-only permissions on an entity he is not allowed to share the entity with read-write permissions.
 - Data owners can only modify their delegations or descendants of their delegations
 - A data owner can't increase the permissions on his delegation, but can freely modify the permissions in his descendants as long as the permissions of each delegation is lower or equal to the parent. In cases where a data owner has a delegation that is also a descendant to another of his delegations he may freely modify it (still respecting the child permission ≤ parent permissions relationship).
-
 
 > **info:**
 Since it is impossible to reconstruct an accurate delegation graph from the legacy delegations we consider them as having the same permissions as root delegations.
@@ -15367,7 +16743,6 @@ P1 -..-> C
 ```
 
 If a delegation has multiple parents the consistency rule is that the permission of the child delegation must be lower or equal to the permission of at least one parent delegation. This means that if `B` wants to revoke access to `P` by removing the delegation `B→P` or reduce his access to read-only, the delegation `P→C` will remain unchanged, since it still has a parent with R/W access.
-
 
 > **info:**
 This leaks information about `A→P` and `B→P`. Every observer will be able to learn that they refer to the same pseudo-anonymised data owner, and in the specific case of `A` and `B` they will learn that the other delegation refers to `P`. This however does not give any significant information to an attacker: in most cases it is reasonable to assume that anonymous delegations in an entity refer to the patient connected to that data.
@@ -15516,7 +16891,6 @@ Both delegator and delegate are data owners in your application (e.g. patients o
 *explicit* or *anonymous*. You can configure which data owners will be anonymous or explicit by implementing the
 `dataOwnerRequiresAnonymousDelegation` method in the `CryptoStrategies`.
 
-
 > **info:**
 If you are using the "Simple" crypto strategies implementation, by default only patients will be *anonymous* data
 owners, while `healthcare parties` and devices  will be *explicit* data owners.
@@ -15524,7 +16898,6 @@ owners, while `healthcare parties` and devices  will be *explicit* data owners.
 
 The most visible difference between explicit and pseudo-anonymised data owners is that explicit data owners have their id stored
 in clear in the sharing metadata, while the id of pseudo-anonymised data owner does not appear in clear in any metadata.
-
 
 > **info:**
 Additionally, the *explicit* or *anonymous* nature of a data owner will change the default values of the `author` and
@@ -15571,7 +16944,6 @@ The unencrypted tags in the data samples observations/conditions give
 away some limited, but still sensitive information about the patient, and therefore you should be careful to not leak
 the link between the patient and the data.
 
-
 > **note:**
 This does not mean that if you don't use pseudo-anonymised data owners then anyone will be able to infer some information about
 your users from the tags and the sharing metadata, since the Cardinal server will still enforce access control.
@@ -15597,7 +16969,6 @@ privacy the Cardinal server can't know or decrypt in any way the ids of *anonymo
 The solution we use in Cardinal consists in using a special password in the delegation that only the delegator or
 delegate of the delegation know. We call this password an *access control key* (AC key).
 
-
 > **info:**
 The AC keys are 16 bytes long, and are derived from a secret randomly generated by the Cardinal SDK and a constant that
 depends on the type of entity they are used in.
@@ -15613,7 +16984,6 @@ actually be used).
 Additionally, a user can't know in advance which AC key he should use to retrieve (or search for) an entity, therefore
 pseudo-anonymised data owners will have to send ALL their keys for each request that uses delegation-based access control. For
 this purpose the SDK will keep a cache of all the AC keys of the user.
-
 
 > **note:**
 The cache of AC keys is created automatically on instantiation of the SDK, and is NOT updated automatically.
@@ -15636,7 +17006,6 @@ data with at most ~10 other data owners and virtually never with more than 100.
 On the contrary in some applications HCP users will have to share data with thousands or even tens of thousands of other
 users (e.g. a general practitioner sharing prescriptions directly with the patient), and therefore they are not good
 candidates for pseudo-anonymised data owners.
-
 
 > **note:**
 Since the amount of AC keys is also proportional to the number of key pairs of data owners, you should avoid creating
@@ -15701,7 +17070,6 @@ Like for key recovery you can choose the verification method that best fits your
 the user to check the public key on the website of the doctor/clinic, or you could ask the user to scan a QR code
 generated by the delegate user app.
 
-
 > **note:**
 Although not directly related to the crypto strategies, this concept of trust also applies to the give-access-back
 mechanisms explained in the [how-to on a user losing his key](../how-to/how-to-authenticate-a-user/how-to-manage-lost-key#give-access-back-to-another-data-owner):
@@ -15719,7 +17087,6 @@ such pair.
 To prevent this from happening the Cardinal SDK will only use keys recovered through Cardinal means for decryption of existing
 data and NOT for the encryption of new data unless the user verifies the keys through the `recoverAndVerifyKeys` method
 (custom key recovery and key verification are done by the same method).
-
 
 > **note:**
 This means that if a key pair is recovered through Cardinal means and the user does not verify it, then new AC keys
@@ -15863,7 +17230,6 @@ An attacker could insert his own public key in Cardinal's database, therefore da
 
 This problem is unsolvable on the sdk and/or server level alone, and it requires interaction with the application, which in turn will usually ask for some action by the human user.
 
-
 > **note:**
 Data owner keys verification applies to recovered key pairs of the data owner using the api and public keys of other data owners, but it does not apply to key pairs generated on the device: the Cardinal SDK assumes that if a key pair was generated and stored in the device it is authentic.
 
@@ -15904,7 +17270,6 @@ A data owner which lost access to his own key pairs and managed to recover parti
 - Encrypting and signing new data, including medical data and key recovery data
 - Sharing new or existing data
 - Signature verification on existing data
-
 
 > **warning:**
 This means that an attacker could insert fake data in the database and make it seem legit by encrypting it with a fake encryption key. We currently do not have protection against this type of attack in case the attacker has already gained access to the database.
@@ -15956,6 +17321,20 @@ For more details, see [Data owners and access control](/explanations/end-to-end-
 ## Sorting
 Some filters return `SortableFilterOptions` (or `BaseSortableFilterOptions`) that can be used to sort results by specific criteria. The sorting rules are documented in the tables below.
 
+
+> **CAUTION: Sortability changes in SDK 2.6.0**
+Starting from Cardinal SDK 2.6.0 many filter factory methods are no longer sortable: their return type changed from
+`SortableFilterOptions` to `FilterOptions` (or from `BaseSortableFilterOptions` to `BaseFilterOptions`).
+This mostly affects the `byIdentifiers`, `byPatients`, `byPatientsSecretIds`, code/tag and demographic filters of
+Patient, Contact, Service, HealthElement, Document and Message.
+Sorting remains available mainly on the `byIds` filters (input order) and on the date-range filters (for example
+`byPatientsOpeningDate`, `byPatientsDate`, `byOpeningDate`).
+
+If you were passing one of the affected filters to a `...BySorted` method, you will have to switch to the non-sorted
+variant of the method (for example `filterPatientsBy` instead of `filterPatientsBySorted`). The tables below reflect
+the current sortability of each method.
+
+
 ## Combining filters
 
 Filter options can be combined using three operators:
@@ -15980,6 +17359,7 @@ val filter2 = filterA and filterB and filterC
 
 
 ```typescript no-test
+import {intersection} from "@icure/cardinal-sdk"
 
 const filter = intersection(filterA, filterB, filterC)
 ```
@@ -16014,6 +17394,7 @@ val filter2 = filterA or filterB
 
 
 ```typescript no-test
+import {union} from "@icure/cardinal-sdk"
 
 const filter = union(filterA, filterB)
 ```
@@ -16046,6 +17427,7 @@ val filter = difference(ofFilter, subtractingFilter)
 
 
 ```typescript no-test
+import {difference} from "@icure/cardinal-sdk"
 
 const filter = difference(ofFilter, subtractingFilter)
 ```
@@ -16076,9 +17458,7 @@ However, in some cases, the backend could optimized by the backend if the first 
 | `union`        | Never                         | —                                  |
 | `difference`   | If `of` is sortable           | Sorts by `of`'s criteria           |
 
-
 > **TIP: Kotlin infix syntax**
-
 In Kotlin, `and` is shorthand for `intersection` and `or` for `union`. You can also use the minus `-` sign for difference. You can chain them:
 ```kotlin test-AAGE
 val filter = (filterA and filterB) or (filterC and (filterD - filterE))
@@ -16155,28 +17535,30 @@ Methods with no data-owner scoping are marked with **—** in the Scoping column
 
 ### PatientFilters
 
-| Method                                  | Key parameters                               | Return type             | Sortable? | Sort order                         |
-|-----------------------------------------|----------------------------------------------|-------------------------|-----------|------------------------------------|
-| `allPatientsForSelf`                    | —                                            | `FilterOptions`         | No        | —                                  |
-| `byIds`                                 | `ids`                                        | `SortableFilterOptions` | Yes       | Input order                        |
-| `byIdentifiersForSelf`                  | `identifiers`                                | `SortableFilterOptions` | Yes       | Input order                        |
-| `bySsinsForSelf`                        | `ssins`                                      | `SortableFilterOptions` | Yes       | Input order                        |
-| `byDateOfBirthBetweenForSelf`           | `fromDate`, `toDate`                         | `SortableFilterOptions` | Yes       | Date of birth                      |
-| `byNameForSelf`                         | `searchString`                               | `FilterOptions`         | No        | —                                  |
-| `byGenderEducationProfessionForSelf`    | `gender`, `education?`, `profession?`        | `SortableFilterOptions` | Yes       | Education, profession              |
-| `byActiveForSelf`                       | `active`                                     | `FilterOptions`         | No        | —                                  |
-| `byTelecomForSelf`                      | `searchString`                               | `SortableFilterOptions` | Yes       | Telecom number                     |
-| `byAddressPostalCodeHouseNumberForSelf` | `searchString`, `postalCode`, `houseNumber?` | `SortableFilterOptions` | Yes       | Address, postal code, house number |
-| `byAddressForSelf`                      | `searchString`                               | `SortableFilterOptions` | Yes       | Address                            |
-| `byTagForSelf`                          | `tagType`, `tagCode?`                        | `FilterOptions`         | No        | —                                  |
 
+| Method                                  | Key parameters                               | Return type             | Sortable? | Sort order  |
+|-----------------------------------------|----------------------------------------------|-------------------------|-----------|-------------|
+| `allPatientsForSelf`                    | —                                            | `FilterOptions`         | No        | —           |
+| `byIds`                                 | `ids`                                        | `SortableFilterOptions` | Yes       | Input order |
+| `byIdentifiersForSelf`                  | `identifiers`                                | `FilterOptions`         | No        | —           |
+| `bySsinsForSelf`                        | `ssins`                                      | `FilterOptions`         | No        | —           |
+| `byDateOfBirthBetweenForSelf`           | `fromDate`, `toDate`                         | `FilterOptions`         | No        | —           |
+| `byNameForSelf`                         | `searchString`                               | `FilterOptions`         | No        | —           |
+| `byGenderEducationProfessionForSelf`    | `gender`, `education?`, `profession?`        | `FilterOptions`         | No        | —           |
+| `byActiveForSelf`                       | `active`                                     | `FilterOptions`         | No        | —           |
+| `byTelecomForSelf`                      | `searchString`                               | `FilterOptions`         | No        | —           |
+| `byAddressPostalCodeHouseNumberForSelf` | `searchString`, `postalCode`, `houseNumber?` | `FilterOptions`         | No        | —           |
+| `byAddressForSelf`                      | `searchString`                               | `FilterOptions`         | No        | —           |
+| `byTagForSelf`                          | `tagType`, `tagCode?`                        | `FilterOptions`         | No        | —           |
 
 > **note:**
 `byIds` has no data-owner scoping — it returns a `SortableFilterOptions` (not Base) and works the same for all users.
+It is also the only sortable patient filter since SDK 2.6.0.
 The `ForDataOwner` variants for the other methods also exist (e.g. `byFuzzyNameForDataOwner` accepts a `dataOwnerId` + `searchString`).
 
 
 ### ContactFilters
+
 
 | Method                                 | Key parameters                                                                    | Return type                 | Sortable? | Sort order          |
 |----------------------------------------|-----------------------------------------------------------------------------------|-----------------------------|-----------|---------------------|
@@ -16184,48 +17566,149 @@ The `ForDataOwner` variants for the other methods also exist (e.g. `byFuzzyNameF
 | `byFormIdsForSelf`                     | `formIds`                                                                         | `FilterOptions`             | No        | —                   |
 | `byPatientsOpeningDateForSelf`         | `patients`, `from?`, `to?`, `descending?`                                         | `SortableFilterOptions`     | Yes       | `openingDate`       |
 | `byPatientSecretIdsOpeningDateForSelf` | `secretIds`, `from?`, `to?`, `descending?`                                        | `SortableFilterOptions`     | Yes       | `openingDate`       |
-| `byIdentifiersForSelf`                 | `identifiers`                                                                     | `SortableFilterOptions`     | Yes       | Input order         |
+| `byIdentifiersForSelf`                 | `identifiers`                                                                     | `FilterOptions`             | No        | —                   |
 | `byCodeAndOpeningDateForSelf`          | `codeType`, `codeCode?`, `startOfContactOpeningDate?`, `endOfContactOpeningDate?` | `SortableFilterOptions`     | Yes       | Code, `openingDate` |
 | `byTagAndOpeningDateForSelf`           | `tagType`, `tagCode?`, `startOfContactOpeningDate?`, `endOfContactOpeningDate?`   | `SortableFilterOptions`     | Yes       | Tag, `openingDate`  |
 | `byOpeningDateForSelf`                 | `startDate?`, `endDate?`, `descending?`                                           | `SortableFilterOptions`     | Yes       | `openingDate`       |
 | `byServiceTagForSelf`                  | `tagType`, `tagCode?`                                                             | `FilterOptions`             | No        | —                   |
 | `byServiceCodeForSelf`                 | `codeType`, `codeCode?`                                                           | `FilterOptions`             | No        | —                   |
-| `byPatientsForSelf`                    | `patients`                                                                        | `SortableFilterOptions`     | Yes       | Input order         |
-| `byPatientsSecretIdsForSelf`           | `secretIds`                                                                       | `SortableFilterOptions`     | Yes       | Input order         |
+| `byPatientsForSelf`                    | `patients`                                                                        | `FilterOptions`             | No        | —                   |
+| `byPatientsSecretIdsForSelf`           | `secretIds`                                                                       | `FilterOptions`             | No        | —                   |
 | `byServiceIds`                         | `serviceIds`                                                                      | `BaseSortableFilterOptions` | Yes       | Input order         |
+
 
 ### ServiceFilters
 
-| Method                                   | Key parameters                                                                | Return type                 | Sortable? | Sort order        |
-|------------------------------------------|-------------------------------------------------------------------------------|-----------------------------|-----------|-------------------|
-| `allServicesForSelf`                     | —                                                                             | `FilterOptions`             | No        | —                 |
-| `byIdentifiersForSelf`                   | `identifiers`                                                                 | `SortableFilterOptions`     | Yes       | Input order       |
-| `byCodeAndValueDateForSelf`              | `codeType`, `codeCode?`, `startOfServiceValueDate?`, `endOfServiceValueDate?` | `SortableFilterOptions`     | Yes       | Code, `valueDate` |
-| `byTagAndValueDateForSelf`               | `tagType`, `tagCode?`, `startOfServiceValueDate?`, `endOfServiceValueDate?`   | `SortableFilterOptions`     | Yes       | Tag, `valueDate`  |
-| `byPatientsForSelf`                      | `patients`                                                                    | `SortableFilterOptions`     | Yes       | Input order       |
-| `byPatientsSecretIdsForSelf`             | `secretIds`                                                                   | `SortableFilterOptions`     | Yes       | Input order       |
-| `byHealthElementIdFromSubContactForSelf` | `healthElementIds`                                                            | `SortableFilterOptions`     | Yes       | Input order       |
-| `byPatientsDateForSelf`                  | `patients`, `from?`, `to?`, `descending?`                                     | `SortableFilterOptions`     | Yes       | `valueDate`       |
-| `byPatientSecretIdsDateForSelf`          | `secretIds`, `from?`, `to?`, `descending?`                                    | `SortableFilterOptions`     | Yes       | `valueDate`       |
-| `byIds`                                  | `ids`                                                                         | `BaseSortableFilterOptions` | Yes       | Input order       |
-| `byAssociationId`                        | `associationId`                                                               | `BaseFilterOptions`         | No        | —                 |
-| `byQualifiedLink`                        | `linkValues`, `linkQualification?`                                            | `BaseFilterOptions`         | No        | —                 |
+
+| Method                                            | Key parameters                                                                                  | Return type                 | Sortable? | Sort order  |
+|---------------------------------------------------|-------------------------------------------------------------------------------------------------|-----------------------------|-----------|-------------|
+| `allServicesForSelf`                              | —                                                                                               | `FilterOptions`             | No        | —           |
+| `byIdentifiersForSelf`                            | `identifiers`                                                                                   | `FilterOptions`             | No        | —           |
+| `byCodeAndValueDateForSelf`                       | `codeType`, `codeCode?`, `startOfServiceValueDate?`, `endOfServiceValueDate?`                   | `FilterOptions`             | No        | —           |
+| `byTagAndValueDateForSelf`                        | `tagType`, `tagCode?`, `startOfServiceValueDate?`, `endOfServiceValueDate?`                     | `FilterOptions`             | No        | —           |
+| `byCodesAndValueDateForSelf`                      | `codeCodes`, `startOfServiceValueDate?`, `endOfServiceValueDate?`                               | `FilterOptions`             | No        | —           |
+| `byCodePrefixAndValueDateForSelf`                 | `codeType`, `codeCodePrefix`, `startOfServiceValueDate?`, `endOfServiceValueDate?`              | `FilterOptions`             | No        | —           |
+| `byTagCodesAndValueDateForSelf`                   | `tagCodes`, `startOfServiceValueDate?`, `endOfServiceValueDate?`                                | `FilterOptions`             | No        | —           |
+| `byTagPrefixAndValueDateForSelf`                  | `tagType`, `tagCodePrefix`, `startOfServiceValueDate?`, `endOfServiceValueDate?`                | `FilterOptions`             | No        | —           |
+| `byPatientsCodesAndValueDateForSelf`              | `patients`, `codeCodes`, `startOfServiceValueDate?`, `endOfServiceValueDate?`                   | `FilterOptions`             | No        | —           |
+| `byPatientSecretIdsCodesAndValueDateForSelf`      | `secretIds`, `codeCodes`, `startOfServiceValueDate?`, `endOfServiceValueDate?`                  | `FilterOptions`             | No        | —           |
+| `byPatientsCodePrefixAndValueDateForSelf`         | `patients`, `codeType`, `codeCodePrefix`, `startOfServiceValueDate?`, `endOfServiceValueDate?`  | `FilterOptions`             | No        | —           |
+| `byPatientSecretIdsCodePrefixAndValueDateForSelf` | `secretIds`, `codeType`, `codeCodePrefix`, `startOfServiceValueDate?`, `endOfServiceValueDate?` | `FilterOptions`             | No        | —           |
+| `byPatientsTagCodesAndValueDateForSelf`           | `patients`, `tagCodes`, `startOfServiceValueDate?`, `endOfServiceValueDate?`                    | `FilterOptions`             | No        | —           |
+| `byPatientSecretIdsTagCodesAndValueDateForSelf`   | `secretIds`, `tagCodes`, `startOfServiceValueDate?`, `endOfServiceValueDate?`                   | `FilterOptions`             | No        | —           |
+| `byPatientsTagPrefixAndValueDateForSelf`          | `patients`, `tagType`, `tagCodePrefix`, `startOfServiceValueDate?`, `endOfServiceValueDate?`    | `FilterOptions`             | No        | —           |
+| `byPatientSecretIdsTagPrefixAndValueDateForSelf`  | `secretIds`, `tagType`, `tagCodePrefix`, `startOfServiceValueDate?`, `endOfServiceValueDate?`   | `FilterOptions`             | No        | —           |
+| `byPatientsForSelf`                               | `patients`                                                                                      | `FilterOptions`             | No        | —           |
+| `byPatientsSecretIdsForSelf`                      | `secretIds`                                                                                     | `FilterOptions`             | No        | —           |
+| `byHealthElementIdFromSubContactForSelf`          | `healthElementIds`                                                                              | `FilterOptions`             | No        | —           |
+| `byPatientsDateForSelf`                           | `patients`, `from?`, `to?`, `descending?`                                                       | `SortableFilterOptions`     | Yes       | `valueDate` |
+| `byPatientSecretIdsDateForSelf`                   | `secretIds`, `from?`, `to?`, `descending?`                                                      | `SortableFilterOptions`     | Yes       | `valueDate` |
+| `byIds`                                           | `ids`                                                                                           | `BaseSortableFilterOptions` | Yes       | Input order |
+| `byAssociationId`                                 | `associationId`                                                                                 | `BaseFilterOptions`         | No        | —           |
+| `byQualifiedLink`                                 | `linkValues`, `linkQualification?`                                                              | `BaseFilterOptions`         | No        | —           |
+
+The multi-code (`...CodesAndValueDate`, `...TagCodesAndValueDate`) and prefix (`...CodePrefixAndValueDate`,
+`...TagPrefixAndValueDate`) filters were introduced in SDK 2.3.2. Since SDK 2.4.2 the multi-code variants take the codes
+as a map from the code (or tag) type to the set of codes of that type (`Map<String, Set<String>>`): a service matches if
+it has **any** of the provided codes (or tags). The prefix variants match the services having a code (or tag) of the
+given type whose code starts with the given prefix. The optional `startOfServiceValueDate` and `endOfServiceValueDate`
+are fuzzy date times (`YYYYMMDDHHmmSS`) restricting `Service.valueDate`. Like `byCodeAndValueDateForSelf` and
+`byTagAndValueDateForSelf`, none of these options are sortable.
+Each of them also comes in `ForDataOwner` and `ForDataOwnerInGroup` variants, which return `BaseFilterOptions` and can
+therefore be used with `CardinalBaseApis`, except for the `byPatients...` ones (they need to extract the secret ids of the
+patients). These filters are not available in the Dart SDK.
+
+For example, to get all the systolic and diastolic blood pressure measurements of a patient recorded in 2025:
+
+
+**kotlin:**
+
+
+```kotlin test-YEAC
+import com.icure.cardinal.sdk.CardinalSdk
+import com.icure.cardinal.sdk.filters.ServiceFilters
+import com.icure.cardinal.sdk.model.Patient
+import com.icure.cardinal.sdk.model.embed.DecryptedService
+import com.icure.cardinal.sdk.utils.pagination.PaginatedListIterator
+
+suspend fun getBloodPressureMeasurements(
+	sdk: CardinalSdk,
+	patient: Patient
+): PaginatedListIterator<DecryptedService> =
+	sdk.contact.filterServicesBy(
+		ServiceFilters.byPatientsCodesAndValueDateForSelf(
+			patients = listOf(patient),
+			codeCodes = mapOf("LOINC" to setOf("8480-6", "8462-4")),
+			startOfServiceValueDate = 20250101000000,
+			endOfServiceValueDate = 20251231235959
+		)
+	)
+```
+
+
+**typescript:**
+
+
+```typescript test-YEAD
+import {CardinalSdk, DecryptedService, PaginatedListIterator, Patient, ServiceFilters} from "@icure/cardinal-sdk"
+
+function getBloodPressureMeasurements(
+	sdk: CardinalSdk,
+	patient: Patient
+): Promise<PaginatedListIterator<DecryptedService>> {
+	return sdk.contact.filterServicesBy(
+		ServiceFilters.byPatientsCodesAndValueDateForSelf(
+			[patient],
+			{ "LOINC": ["8480-6", "8462-4"] },
+			{ startOfServiceValueDate: 20250101000000, endOfServiceValueDate: 20251231235959 }
+		)
+	)
+}
+```
+
+
+**python:**
+
+
+```python no-test
+from cardinal_sdk import CardinalSdk
+from cardinal_sdk.model import Patient, DecryptedService
+from cardinal_sdk.filters import ServiceFilters
+from cardinal_sdk.pagination.PaginatedListIterator import PaginatedListIterator
+
+def get_blood_pressure_measurements(
+    sdk: CardinalSdk,
+    patient: Patient
+) -> PaginatedListIterator[DecryptedService]:
+    return sdk.contact.filter_services_by_blocking(
+        ServiceFilters.by_patients_codes_and_value_date_for_self(
+            [patient],
+            {"LOINC": {"8480-6", "8462-4"}},
+            start_of_service_value_date=20250101000000,
+            end_of_service_value_date=20251231235959
+        )
+    )
+```
+
 
 ### HealthElementFilters
+
 
 | Method                                 | Key parameters                             | Return type                 | Sortable? | Sort order    |
 |----------------------------------------|--------------------------------------------|-----------------------------|-----------|---------------|
 | `allHealthElementsForSelf`             | —                                          | `FilterOptions`             | No        | —             |
-| `byIdentifiersForSelf`                 | `identifiers`                              | `SortableFilterOptions`     | Yes       | Input order   |
-| `byCodeForSelf`                        | `codeType`, `codeCode?`                    | `SortableFilterOptions`     | Yes       | Code          |
-| `byTagForSelf`                         | `tagType`, `tagCode?`                      | `SortableFilterOptions`     | Yes       | Tag           |
-| `byPatientsForSelf`                    | `patients`                                 | `SortableFilterOptions`     | Yes       | Input order   |
-| `byPatientsSecretIdsForSelf`           | `secretIds`                                | `SortableFilterOptions`     | Yes       | Input order   |
+| `byIdentifiersForSelf`                 | `identifiers`                              | `FilterOptions`             | No        | —             |
+| `byCodeForSelf`                        | `codeType`, `codeCode?`                    | `FilterOptions`             | No        | —             |
+| `byTagForSelf`                         | `tagType`, `tagCode?`                      | `FilterOptions`             | No        | —             |
+| `byPatientsForSelf`                    | `patients`                                 | `FilterOptions`             | No        | —             |
+| `byPatientsSecretIdsForSelf`           | `secretIds`                                | `FilterOptions`             | No        | —             |
 | `byIds`                                | `ids`                                      | `BaseSortableFilterOptions` | Yes       | Input order   |
 | `byPatientsOpeningDateForSelf`         | `patients`, `from?`, `to?`, `descending?`  | `SortableFilterOptions`     | Yes       | `openingDate` |
 | `byPatientSecretIdsOpeningDateForSelf` | `secretIds`, `from?`, `to?`, `descending?` | `SortableFilterOptions`     | Yes       | `openingDate` |
 
+
 ### DocumentFilters
+
 
 | Method                                  | Key parameters                             | Return type             | Sortable? | Sort order |
 |-----------------------------------------|--------------------------------------------|-------------------------|-----------|------------|
@@ -16236,7 +17719,8 @@ The `ForDataOwner` variants for the other methods also exist (e.g. `byFuzzyNameF
 | `byMessagesAndTypeForSelf`              | `documentType`, `messages`                 | `FilterOptions`         | No        | —          |
 | `byOwningEntitySecretIdsAndTypeForSelf` | `documentType`, `secretIds`                | `FilterOptions`         | No        | —          |
 | `byCodeForSelf`                         | `codeType`, `codeCode?`                    | `SortableFilterOptions` | Yes       | Code       |
-| `byTagForSelf`                          | `tagType`, `tagCode?`                      | `SortableFilterOptions` | Yes       | Tag        |
+| `byTagForSelf`                          | `tagType`, `tagCode?`                      | `FilterOptions`         | No        | —          |
+
 
 ### HealthcarePartyFilters
 
@@ -16278,21 +17762,23 @@ Healthcare party filters are not data-owner scoped — they all return `Base*` t
 
 #### MessageFilters
 
+
 | Method                              | Key parameters                                   | Return type             | Sortable? |
 |-------------------------------------|--------------------------------------------------|-------------------------|-----------|
 | `allMessagesForSelf`                | —                                                | `FilterOptions`         | No        |
-| `byTransportGuidForSelf`            | `transportGuid`                                  | `SortableFilterOptions` | Yes       |
+| `byTransportGuidForSelf`            | `transportGuid`                                  | `FilterOptions`         | No        |
 | `fromAddressForSelf`                | `address`                                        | `FilterOptions`         | No        |
 | `toAddressForSelf`                  | `address`                                        | `FilterOptions`         | No        |
 | `byPatientsSentDateForSelf`         | `patients`, `from?`, `to?`, `descending?`        | `SortableFilterOptions` | Yes       |
 | `byPatientSecretIdsSentDateForSelf` | `secretIds`, `from?`, `to?`, `descending?`       | `SortableFilterOptions` | Yes       |
-| `byTransportGuidSentDateForSelf`    | `transportGuid`, `from`, `to`, `descending?`     | `SortableFilterOptions` | Yes       |
+| `byTransportGuidSentDateForSelf`    | `transportGuid`, `from`, `to`, `descending?`     | `FilterOptions`         | No        |
 | `latestByTransportGuidForSelf`      | `transportGuid`                                  | `FilterOptions`         | No        |
 | `lifecycleBetweenForSelf`           | `startTimestamp?`, `endTimestamp?`, `descending` | `FilterOptions`         | No        |
-| `byCodeForSelf`                     | `codeType`, `codeCode?`                          | `SortableFilterOptions` | Yes       |
-| `byTagForSelf`                      | `tagType`, `tagCode?`                            | `SortableFilterOptions` | Yes       |
+| `byCodeForSelf`                     | `codeType`, `codeCode?`                          | `FilterOptions`         | No        |
+| `byTagForSelf`                      | `tagType`, `tagCode?`                            | `FilterOptions`         | No        |
 | `byInvoiceIds`                      | `invoiceIds`                                     | `BaseFilterOptions`     | No        |
 | `byParentIds`                       | `parentIds`                                      | `BaseFilterOptions`     | No        |
+
 
 #### CalendarItemFilters
 
@@ -16359,6 +17845,128 @@ Healthcare party filters are not data-owner scoped — they all return `Base*` t
 |--------------------|-----------------|-----------------|-----------|
 | `allTopicsForSelf` | —               | `FilterOptions` | No        |
 | `byParticipant`    | `participantId` | `FilterOptions` | No        |
+
+
+#### InsuranceFilters
+
+Insurance filters were introduced in SDK 2.9.0, together with the `matchInsurancesBy`, `filterInsurancesBy`,
+`matchInsurancesBySorted` and `filterInsurancesBySorted` methods on the `insurance` api.
+Insurances are not data-owner scoped: all the filters return `Base*` types.
+
+| Method          | Key parameters          | Return type                 | Sortable? | Sort order |
+|-----------------|-------------------------|-----------------------------|-----------|------------|
+| `all`           | —                       | `BaseFilterOptions`         | No        | —          |
+| `byIdentifiers` | `identifiers`           | `BaseFilterOptions`         | No        | —          |
+| `byCode`        | `codeType`, `codeCode?` | `BaseSortableFilterOptions` | Yes       | Code       |
+| `byTag`         | `tagType`, `tagCode?`   | `BaseSortableFilterOptions` | Yes       | Tag        |
+
+> **note:**
+In SDK 2.9.0 the boolean fields `privateInsurance`, `hospitalisationInsurance` and `ambulatoryInsurance` were removed
+from the `Insurance` entity. The kind of coverage provided by an insurance is now modelled through the `tags` and
+`codes` fields, which you can query using the filters above.
+
+
+#### RelatedPersonFilters
+
+Filters for the [RelatedPerson](/explanations/data-model/relatedperson) entity, introduced in SDK 2.12.0.
+
+| Method                       | Key parameters | Return type                 | Sortable? | Sort order  |
+|------------------------------|----------------|-----------------------------|-----------|-------------|
+| `allRelatedPersonsForSelf`   | —              | `FilterOptions`             | No        | —           |
+| `byIdentifiersForSelf`       | `identifiers`  | `FilterOptions`             | No        | —           |
+| `byNameForSelf`              | `name`         | `FilterOptions`             | No        | —           |
+| `byIds`                      | `ids`          | `BaseSortableFilterOptions` | Yes       | Input order |
+
+`byNameForSelf` matches on the concatenation of the related person's last name and first names.
+
+#### MaintenanceTaskFilters
+
+Maintenance task filters have `ForSelf` and `ForDataOwner` variants, but no `ForDataOwnerInGroup` variants.
+
+| Method                 | Key parameters | Return type                 | Sortable? | Sort order  |
+|------------------------|----------------|-----------------------------|-----------|-------------|
+| `byIds`                | `ids`          | `BaseSortableFilterOptions` | Yes       | Input order |
+| `byIdentifiersForSelf` | `identifiers`  | `FilterOptions`             | No        | —           |
+| `byTypeForSelf`        | `type`         | `FilterOptions`             | No        | —           |
+| `afterDateForSelf`     | `date`         | `SortableFilterOptions`     | Yes       | `created`   |
+
+`afterDateForSelf` matches the maintenance tasks with a `created` after `date`, which is a unix timestamp in
+milliseconds (not a fuzzy date).
+
+## Discovering filters at runtime
+
+If you are building a dynamic query builder (for example a UI that lets the user pick a filter for an entity), you can
+retrieve the list of available filter options at runtime with `sdk.filter.getFilterOptionsDefinitions()`. It returns a
+map from the entity name (`"Patient"`, `"Service"`, `"MaintenanceTask"`, ...) to a list of
+`FilterOptionGroupWithViews`, each describing a group of factory methods that produce the same kind of filter and differ
+only in how the parameters are passed (`ForSelf`/`ForDataOwner`/`InGroup`, patients vs secret ids):
+
+- `name`: a short semantic name for the group (e.g. `byPatientsDate`).
+- `factoryMethods`: the names of the factory methods of the corresponding `XFilters` object that belong to this group.
+- `targetFilter`: the name of the filter that is actually sent to the backend (or the possible filters separated by
+`" or "`, for the few groups that depend on their input).
+- `views`: the database views that the backend uses to resolve this filter.
+
+The SDK builds this result from its static catalog of filter options, keeping only the filters that the backend you are
+connected to supports. In Kotlin the static catalog itself is also available, without any request to the backend, as
+`FilterOptionsCatalog.byEntity` (same content without the `views`).
+
+The filter api is available in Kotlin since SDK 2.7.0 and in TypeScript since SDK 2.13.6, on both the `CardinalSdk`
+and the `CardinalBaseSdk`.
+
+
+**kotlin:**
+
+
+```kotlin test-YEAE
+import com.icure.cardinal.sdk.CardinalSdk
+
+suspend fun printServiceFilterOptions(sdk: CardinalSdk) {
+	val definitions = sdk.filter.getFilterOptionsDefinitions()
+	definitions["Service"]?.forEach { group ->
+		println("${group.name}: ${group.factoryMethods.joinToString()} -> ${group.targetFilter}")
+	}
+}
+```
+
+
+**typescript:**
+
+
+```typescript test-YEAF
+import {CardinalSdk} from "@icure/cardinal-sdk"
+
+async function printServiceFilterOptions(sdk: CardinalSdk) {
+	const definitions = await sdk.filter.getFilterOptionsDefinitions()
+	for (const group of definitions["Service"] ?? []) {
+		console.log(`${group.name}: ${group.factoryMethods.join(", ")} -> ${group.targetFilter}`)
+	}
+}
+```
+
+
+**python:**
+
+
+The Python SDK contains a `FilterApi` class (since SDK 2.11.0), but it is not exposed yet as a `filter` property of
+`CardinalSdk`. Until it is, you can instantiate it yourself from your sdk instance:
+
+```python no-test
+from cardinal_sdk import CardinalSdk
+from cardinal_sdk.api import FilterApi
+
+def print_service_filter_options(sdk: CardinalSdk):
+    definitions = FilterApi(sdk).get_filter_options_definitions_blocking()
+    for group in definitions.get("Service", []):
+        print(f"{group.name}: {', '.join(group.factory_methods)} -> {group.target_filter}")
+```
+
+
+**dart:**
+
+
+The filter api is not available in the Dart SDK yet.
+
 
 ---
 
