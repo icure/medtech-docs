@@ -346,3 +346,25 @@ html[data-theme='dark'] {
 .card:hover{
   border-color: var(--ifm-color-primary) !important;
 }
+
+/* Proofreading highlight for new/changed documentation. Remove the `<div className="proofread">` wrappers once reviewed. */
+.proofread {
+  background-color: #fff3a3;
+  color: #1c1e21;
+  border-left: 4px solid #e6b800;
+  border-radius: 4px;
+  padding: 0.75rem 1rem 0.1rem;
+  margin-bottom: var(--ifm-leading);
+  --ifm-heading-color: #1c1e21;
+  --ifm-link-color: #0b5cad;
+  --ifm-table-border-color: #c9b44a;
+}
+.proofread table tr,
+.proofread table th {
+  background-color: #fff8c8;
+  color: #1c1e21;
+}
+.proofread code:not(pre code) {
+  color: #1c1e21;
+  background-color: #f3e28a;
+}

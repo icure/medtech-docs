@@ -1,0 +1,122 @@
+import TabItem from "@theme/TabItem";
+import {LanguageTabs} from "@site/src/components/LanguageTabs";
+
+<div className="proofread">
+
+# Compute appointment occupancy
+
+You can ask the backend to compute how many [calendar items](/explanations/data-model/calendaritem)
+are concurrently busy over a period, without having to retrieve and decrypt the individual calendar items. This is
+useful for scheduling features, such as displaying the availability of a practitioner, computing the load of a shared
+agenda, or rendering an occupancy heatmap.
+
+:::info Availability
+
+The occupancy methods are available on the base SDK (`CardinalBaseSdk`) since SDK 2.8.0, and on the full `CardinalSdk`
+since SDK 2.9.0. In the Python SDK they are available since SDK 2.11.0.
+
+:::
+
+The `calendarItem` section of the SDK exposes three methods, differing only in how the calendar items are scoped:
+
+- `getCalendarItemsOccupancyByPeriodForSelf(startDate, endDate, extensionInDays)`: occupancy of the calendar items of
+the current data owner.
+- `getCalendarItemsOccupancyByPeriodForHealthcareParty(startDate, endDate, hcPartyId, extensionInDays)`: occupancy of
+the calendar items of the provided healthcare party.
+- `getCalendarItemsOccupancyByPeriodAndAgendaId(startDate, endDate, agendaId, extensionInDays)`: occupancy of the
+calendar items of the provided [Agenda](/explanations/data-model/agenda).
+
+:::caution
+
+`startDate` and `endDate` are [FuzzyDateTimes](/explanations/data-model/#fuzzydatetime) in the `YYYYMMDDHHMMSS` format
+(like `CalendarItem.startTime`), **not** unix timestamps. Passing a unix timestamp will not fail, but it will silently
+return wrong results.
+
+:::
+
+## The result: an occupancy step function
+
+The result is a list of `CalendarItemOccupancy` points, each with two fields:
+
+- `timestamp`: a FuzzyDateTime at which the occupancy changes.
+- `occupancy`: the number of calendar items that are concurrently busy starting from `timestamp`.
+
+The points are ordered by `timestamp` and the occupancy is constant between two consecutive points. For example, the
+result `[(20260701090000, 1), (20260701093000, 3), (20260701103000, 1), (20260701110000, 0)]` means: one busy calendar
+item from 9:00 to 9:30, three from 9:30 to 10:30, one from 10:30 to 11:00, and none after 11:00. If you want to render
+this as a histogram or heatmap, you can sample the step function at the resolution you need.
+
+## Boundary handling with `extensionInDays`
+
+Only the calendar items whose whole interval fits within the searched range are considered: by default, a calendar item
+that starts before `startDate` or ends after `endDate` is ignored, even if it is busy during the period. You can pass
+the optional `extensionInDays` parameter to widen the searched range by that many days on each side, so that calendar
+items that start shortly before `startDate` or end shortly after `endDate` are also taken into account (items reaching
+beyond the extended range are still ignored). If the boundaries of your period can fall in the middle of an
+appointment, we recommend passing at least `1`, otherwise the occupancy at the edges of the period will be
+under-reported.
+
+## Example
+
+Compute the occupancy of the current data owner's appointments for the working hours of July 1st, 2026:
+
+<LanguageTabs>
+
+<TabItem value="kotlin">
+
+```kotlin no-test
+val occupancy = sdk.calendarItem.getCalendarItemsOccupancyByPeriodForSelf(
+	startDate = 20260701080000L,
+	endDate = 20260701180000L,
+	extensionInDays = 1
+)
+occupancy.forEach { point ->
+	println("From ${point.timestamp}: ${point.occupancy} concurrent appointments")
+}
+```
+
+</TabItem>
+
+<TabItem value="typescript">
+
+```typescript no-test
+const occupancy = await sdk.calendarItem.getCalendarItemsOccupancyByPeriodForSelf(
+	20260701080000,
+	20260701180000,
+	1
+)
+occupancy.forEach((point) => {
+	console.log(`From ${point.timestamp}: ${point.occupancy} concurrent appointments`)
+})
+```
+
+</TabItem>
+
+<TabItem value="python">
+
+```python
+occupancy = sdk.calendar_item.get_calendar_items_occupancy_by_period_for_self_blocking(
+	20260701080000,
+	20260701180000,
+	1
+)
+for point in occupancy:
+	print(f"From {point.timestamp}: {point.occupancy} concurrent appointments")
+```
+
+</TabItem>
+
+</LanguageTabs>
+
+:::note
+
+In TypeScript and Python the `extensionInDays` parameter is not defaulted: pass `undefined` (TypeScript) or `None`
+(Python) explicitly if you don't want any extension.
+
+:::
+
+Since the backend computes the occupancy from the unencrypted timing information of the calendar items and only returns
+aggregated counts, these methods do not require any decryption: they are also available on the base (crypto-less) SDK,
+and there are in-group variants that take the group id as first parameter.
+
+</div>

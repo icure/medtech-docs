@@ -101,6 +101,16 @@ By default, only the `markdown` field of each note will be encrypted.
 ### partnerships
 A collection of objects that contains the relationships and contact people for this Patient.
 
+<div className="proofread">
+
+Each partnership contains the type and status of the relationship and the id of the partner in the `partnerId` field.
+The `partnerType` field indicates the type of entity `partnerId` refers to: a Patient, a HealthcareParty, or a
+[RelatedPerson](/explanations/data-model/relatedperson). When `partnerType` is null (which is always the case for data
+created before SDK 2.12.0), the partner is either a Patient or a HealthcareParty and it is up to the application to
+resolve the ambiguity.
+
+</div>
+
 ### patientHealthCareParties
 A collection of objects that represent a relation in time between this Patient and a HealthcareParty (e.g. to indicate
 that a doctor was the referring doctor for that patient).

@@ -1,6 +1,6 @@
 plugins {
-    kotlin("jvm") version "2.1.10"
-    kotlin("plugin.serialization") version "2.1.10"
+    kotlin("jvm") version "2.3.20"
+    kotlin("plugin.serialization") version "2.3.20"
     application
 }
 
@@ -11,7 +11,8 @@ repositories {
 dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.3")
 
-    testImplementation("com.icure:cardinal-sdk:2.2.0")
+    testImplementation("com.icure:cardinal-sdk:2.13.6")
+    testImplementation("com.icure.kotp:kotp:1.2.0")
     testImplementation("io.ktor:ktor-client-core:3.2.1")
     testImplementation("io.ktor:ktor-client-cio:3.2.1")
     testImplementation("io.ktor:ktor-client-content-negotiation:3.2.1")

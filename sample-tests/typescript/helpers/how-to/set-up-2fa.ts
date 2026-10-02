@@ -9,7 +9,7 @@ import {
 // ── preTestProvides ──────────────────────────────────────────────────
 
 export const preTestProvides: Record<string, string[]> = {
-	'set-up-2fa block 1 (WUCU)': ['userId', 'otpSecret'],
+	'set-up-2fa block 1 (WUCU)': ['userId', 'otpSecret', 'currentOtp'],
 	'set-up-2fa block 3 (GOSO)': ['authSecretProvider'],
 	'set-up-2fa block 4 (RAWE)': ['userId'],
 }
@@ -20,6 +20,7 @@ export const preTest: Record<string, (sdk?: CardinalSdk) => Promise<Record<strin
 	'set-up-2fa block 1 (WUCU)': async () => ({
 		userId: 'test-user-id',
 		otpSecret: 'JBSWY3DPEHPK3PXP',
+		currentOtp: '12345678',
 	}),
 	'set-up-2fa block 2 (KOLI)': async () => ({}),
 	'set-up-2fa block 3 (GOSO)': async () => ({

@@ -27,6 +27,25 @@ For more details, see [Data owners and access control](/explanations/end-to-end-
 ## Sorting
 Some filters return `SortableFilterOptions` (or `BaseSortableFilterOptions`) that can be used to sort results by specific criteria. The sorting rules are documented in the tables below.
 
+<div className="proofread">
+
+:::caution Sortability changes in SDK 2.6.0
+
+Starting from Cardinal SDK 2.6.0 many filter factory methods are no longer sortable: their return type changed from
+`SortableFilterOptions` to `FilterOptions` (or from `BaseSortableFilterOptions` to `BaseFilterOptions`).
+This mostly affects the `byIdentifiers`, `byPatients`, `byPatientsSecretIds`, code/tag and demographic filters of
+Patient, Contact, Service, HealthElement, Document and Message.
+Sorting remains available mainly on the `byIds` filters (input order) and on the date-range filters (for example
+`byPatientsOpeningDate`, `byPatientsDate`, `byOpeningDate`).
+
+If you were passing one of the affected filters to a `...BySorted` method, you will have to switch to the non-sorted
+variant of the method (for example `filterPatientsBy` instead of `filterPatientsBySorted`). The tables below reflect
+the current sortability of each method.
+
+:::
+
+</div>
+
 ## Combining filters
 
 Filter options can be combined using three operators:
@@ -238,27 +257,34 @@ Methods with no data-owner scoping are marked with **—** in the Scoping column
 
 ### PatientFilters
 
-| Method                                  | Key parameters                               | Return type             | Sortable? | Sort order                         |
-|-----------------------------------------|----------------------------------------------|-------------------------|-----------|------------------------------------|
-| `allPatientsForSelf`                    | —                                            | `FilterOptions`         | No        | —                                  |
-| `byIds`                                 | `ids`                                        | `SortableFilterOptions` | Yes       | Input order                        |
-| `byIdentifiersForSelf`                  | `identifiers`                                | `SortableFilterOptions` | Yes       | Input order                        |
-| `bySsinsForSelf`                        | `ssins`                                      | `SortableFilterOptions` | Yes       | Input order                        |
-| `byDateOfBirthBetweenForSelf`           | `fromDate`, `toDate`                         | `SortableFilterOptions` | Yes       | Date of birth                      |
-| `byNameForSelf`                         | `searchString`                               | `FilterOptions`         | No        | —                                  |
-| `byGenderEducationProfessionForSelf`    | `gender`, `education?`, `profession?`        | `SortableFilterOptions` | Yes       | Education, profession              |
-| `byActiveForSelf`                       | `active`                                     | `FilterOptions`         | No        | —                                  |
-| `byTelecomForSelf`                      | `searchString`                               | `SortableFilterOptions` | Yes       | Telecom number                     |
-| `byAddressPostalCodeHouseNumberForSelf` | `searchString`, `postalCode`, `houseNumber?` | `SortableFilterOptions` | Yes       | Address, postal code, house number |
-| `byAddressForSelf`                      | `searchString`                               | `SortableFilterOptions` | Yes       | Address                            |
-| `byTagForSelf`                          | `tagType`, `tagCode?`                        | `FilterOptions`         | No        | —                                  |
+<div className="proofread">
+
+| Method                                  | Key parameters                               | Return type             | Sortable? | Sort order  |
+|-----------------------------------------|----------------------------------------------|-------------------------|-----------|-------------|
+| `allPatientsForSelf`                    | —                                            | `FilterOptions`         | No        | —           |
+| `byIds`                                 | `ids`                                        | `SortableFilterOptions` | Yes       | Input order |
+| `byIdentifiersForSelf`                  | `identifiers`                                | `FilterOptions`         | No        | —           |
+| `bySsinsForSelf`                        | `ssins`                                      | `FilterOptions`         | No        | —           |
+| `byDateOfBirthBetweenForSelf`           | `fromDate`, `toDate`                         | `FilterOptions`         | No        | —           |
+| `byNameForSelf`                         | `searchString`                               | `FilterOptions`         | No        | —           |
+| `byGenderEducationProfessionForSelf`    | `gender`, `education?`, `profession?`        | `FilterOptions`         | No        | —           |
+| `byActiveForSelf`                       | `active`                                     | `FilterOptions`         | No        | —           |
+| `byTelecomForSelf`                      | `searchString`                               | `FilterOptions`         | No        | —           |
+| `byAddressPostalCodeHouseNumberForSelf` | `searchString`, `postalCode`, `houseNumber?` | `FilterOptions`         | No        | —           |
+| `byAddressForSelf`                      | `searchString`                               | `FilterOptions`         | No        | —           |
+| `byTagForSelf`                          | `tagType`, `tagCode?`                        | `FilterOptions`         | No        | —           |
 
 :::note
 `byIds` has no data-owner scoping — it returns a `SortableFilterOptions` (not Base) and works the same for all users.
+It is also the only sortable patient filter since SDK 2.6.0.
 The `ForDataOwner` variants for the other methods also exist (e.g. `byFuzzyNameForDataOwner` accepts a `dataOwnerId` + `searchString`).
 :::
 
+</div>
+
 ### ContactFilters
+
+<div className="proofread">
 
 | Method                                 | Key parameters                                                                    | Return type                 | Sortable? | Sort order          |
 |----------------------------------------|-----------------------------------------------------------------------------------|-----------------------------|-----------|---------------------|
@@ -266,48 +292,159 @@ The `ForDataOwner` variants for the other methods also exist (e.g. `byFuzzyNameF
 | `byFormIdsForSelf`                     | `formIds`                                                                         | `FilterOptions`             | No        | —                   |
 | `byPatientsOpeningDateForSelf`         | `patients`, `from?`, `to?`, `descending?`                                         | `SortableFilterOptions`     | Yes       | `openingDate`       |
 | `byPatientSecretIdsOpeningDateForSelf` | `secretIds`, `from?`, `to?`, `descending?`                                        | `SortableFilterOptions`     | Yes       | `openingDate`       |
-| `byIdentifiersForSelf`                 | `identifiers`                                                                     | `SortableFilterOptions`     | Yes       | Input order         |
+| `byIdentifiersForSelf`                 | `identifiers`                                                                     | `FilterOptions`             | No        | —                   |
 | `byCodeAndOpeningDateForSelf`          | `codeType`, `codeCode?`, `startOfContactOpeningDate?`, `endOfContactOpeningDate?` | `SortableFilterOptions`     | Yes       | Code, `openingDate` |
 | `byTagAndOpeningDateForSelf`           | `tagType`, `tagCode?`, `startOfContactOpeningDate?`, `endOfContactOpeningDate?`   | `SortableFilterOptions`     | Yes       | Tag, `openingDate`  |
 | `byOpeningDateForSelf`                 | `startDate?`, `endDate?`, `descending?`                                           | `SortableFilterOptions`     | Yes       | `openingDate`       |
 | `byServiceTagForSelf`                  | `tagType`, `tagCode?`                                                             | `FilterOptions`             | No        | —                   |
 | `byServiceCodeForSelf`                 | `codeType`, `codeCode?`                                                           | `FilterOptions`             | No        | —                   |
-| `byPatientsForSelf`                    | `patients`                                                                        | `SortableFilterOptions`     | Yes       | Input order         |
-| `byPatientsSecretIdsForSelf`           | `secretIds`                                                                       | `SortableFilterOptions`     | Yes       | Input order         |
+| `byPatientsForSelf`                    | `patients`                                                                        | `FilterOptions`             | No        | —                   |
+| `byPatientsSecretIdsForSelf`           | `secretIds`                                                                       | `FilterOptions`             | No        | —                   |
 | `byServiceIds`                         | `serviceIds`                                                                      | `BaseSortableFilterOptions` | Yes       | Input order         |
+
+</div>
 
 ### ServiceFilters
 
-| Method                                   | Key parameters                                                                | Return type                 | Sortable? | Sort order        |
-|------------------------------------------|-------------------------------------------------------------------------------|-----------------------------|-----------|-------------------|
-| `allServicesForSelf`                     | —                                                                             | `FilterOptions`             | No        | —                 |
-| `byIdentifiersForSelf`                   | `identifiers`                                                                 | `SortableFilterOptions`     | Yes       | Input order       |
-| `byCodeAndValueDateForSelf`              | `codeType`, `codeCode?`, `startOfServiceValueDate?`, `endOfServiceValueDate?` | `SortableFilterOptions`     | Yes       | Code, `valueDate` |
-| `byTagAndValueDateForSelf`               | `tagType`, `tagCode?`, `startOfServiceValueDate?`, `endOfServiceValueDate?`   | `SortableFilterOptions`     | Yes       | Tag, `valueDate`  |
-| `byPatientsForSelf`                      | `patients`                                                                    | `SortableFilterOptions`     | Yes       | Input order       |
-| `byPatientsSecretIdsForSelf`             | `secretIds`                                                                   | `SortableFilterOptions`     | Yes       | Input order       |
-| `byHealthElementIdFromSubContactForSelf` | `healthElementIds`                                                            | `SortableFilterOptions`     | Yes       | Input order       |
-| `byPatientsDateForSelf`                  | `patients`, `from?`, `to?`, `descending?`                                     | `SortableFilterOptions`     | Yes       | `valueDate`       |
-| `byPatientSecretIdsDateForSelf`          | `secretIds`, `from?`, `to?`, `descending?`                                    | `SortableFilterOptions`     | Yes       | `valueDate`       |
-| `byIds`                                  | `ids`                                                                         | `BaseSortableFilterOptions` | Yes       | Input order       |
-| `byAssociationId`                        | `associationId`                                                               | `BaseFilterOptions`         | No        | —                 |
-| `byQualifiedLink`                        | `linkValues`, `linkQualification?`                                            | `BaseFilterOptions`         | No        | —                 |
+<div className="proofread">
+
+| Method                                            | Key parameters                                                                                  | Return type                 | Sortable? | Sort order  |
+|---------------------------------------------------|-------------------------------------------------------------------------------------------------|-----------------------------|-----------|-------------|
+| `allServicesForSelf`                              | —                                                                                               | `FilterOptions`             | No        | —           |
+| `byIdentifiersForSelf`                            | `identifiers`                                                                                   | `FilterOptions`             | No        | —           |
+| `byCodeAndValueDateForSelf`                       | `codeType`, `codeCode?`, `startOfServiceValueDate?`, `endOfServiceValueDate?`                   | `FilterOptions`             | No        | —           |
+| `byTagAndValueDateForSelf`                        | `tagType`, `tagCode?`, `startOfServiceValueDate?`, `endOfServiceValueDate?`                     | `FilterOptions`             | No        | —           |
+| `byCodesAndValueDateForSelf`                      | `codeCodes`, `startOfServiceValueDate?`, `endOfServiceValueDate?`                               | `FilterOptions`             | No        | —           |
+| `byCodePrefixAndValueDateForSelf`                 | `codeType`, `codeCodePrefix`, `startOfServiceValueDate?`, `endOfServiceValueDate?`              | `FilterOptions`             | No        | —           |
+| `byTagCodesAndValueDateForSelf`                   | `tagCodes`, `startOfServiceValueDate?`, `endOfServiceValueDate?`                                | `FilterOptions`             | No        | —           |
+| `byTagPrefixAndValueDateForSelf`                  | `tagType`, `tagCodePrefix`, `startOfServiceValueDate?`, `endOfServiceValueDate?`                | `FilterOptions`             | No        | —           |
+| `byPatientsCodesAndValueDateForSelf`              | `patients`, `codeCodes`, `startOfServiceValueDate?`, `endOfServiceValueDate?`                   | `FilterOptions`             | No        | —           |
+| `byPatientSecretIdsCodesAndValueDateForSelf`      | `secretIds`, `codeCodes`, `startOfServiceValueDate?`, `endOfServiceValueDate?`                  | `FilterOptions`             | No        | —           |
+| `byPatientsCodePrefixAndValueDateForSelf`         | `patients`, `codeType`, `codeCodePrefix`, `startOfServiceValueDate?`, `endOfServiceValueDate?`  | `FilterOptions`             | No        | —           |
+| `byPatientSecretIdsCodePrefixAndValueDateForSelf` | `secretIds`, `codeType`, `codeCodePrefix`, `startOfServiceValueDate?`, `endOfServiceValueDate?` | `FilterOptions`             | No        | —           |
+| `byPatientsTagCodesAndValueDateForSelf`           | `patients`, `tagCodes`, `startOfServiceValueDate?`, `endOfServiceValueDate?`                    | `FilterOptions`             | No        | —           |
+| `byPatientSecretIdsTagCodesAndValueDateForSelf`   | `secretIds`, `tagCodes`, `startOfServiceValueDate?`, `endOfServiceValueDate?`                   | `FilterOptions`             | No        | —           |
+| `byPatientsTagPrefixAndValueDateForSelf`          | `patients`, `tagType`, `tagCodePrefix`, `startOfServiceValueDate?`, `endOfServiceValueDate?`    | `FilterOptions`             | No        | —           |
+| `byPatientSecretIdsTagPrefixAndValueDateForSelf`  | `secretIds`, `tagType`, `tagCodePrefix`, `startOfServiceValueDate?`, `endOfServiceValueDate?`   | `FilterOptions`             | No        | —           |
+| `byPatientsForSelf`                               | `patients`                                                                                      | `FilterOptions`             | No        | —           |
+| `byPatientsSecretIdsForSelf`                      | `secretIds`                                                                                     | `FilterOptions`             | No        | —           |
+| `byHealthElementIdFromSubContactForSelf`          | `healthElementIds`                                                                              | `FilterOptions`             | No        | —           |
+| `byPatientsDateForSelf`                           | `patients`, `from?`, `to?`, `descending?`                                                       | `SortableFilterOptions`     | Yes       | `valueDate` |
+| `byPatientSecretIdsDateForSelf`                   | `secretIds`, `from?`, `to?`, `descending?`                                                      | `SortableFilterOptions`     | Yes       | `valueDate` |
+| `byIds`                                           | `ids`                                                                                           | `BaseSortableFilterOptions` | Yes       | Input order |
+| `byAssociationId`                                 | `associationId`                                                                                 | `BaseFilterOptions`         | No        | —           |
+| `byQualifiedLink`                                 | `linkValues`, `linkQualification?`                                                              | `BaseFilterOptions`         | No        | —           |
+
+The multi-code (`...CodesAndValueDate`, `...TagCodesAndValueDate`) and prefix (`...CodePrefixAndValueDate`,
+`...TagPrefixAndValueDate`) filters were introduced in SDK 2.3.2. Since SDK 2.4.2 the multi-code variants take the codes
+as a map from the code (or tag) type to the set of codes of that type (`Map<String, Set<String>>`): a service matches if
+it has **any** of the provided codes (or tags). The prefix variants match the services having a code (or tag) of the
+given type whose code starts with the given prefix. The optional `startOfServiceValueDate` and `endOfServiceValueDate`
+are fuzzy date times (`YYYYMMDDHHmmSS`) restricting `Service.valueDate`. Like `byCodeAndValueDateForSelf` and
+`byTagAndValueDateForSelf`, none of these options are sortable.
+Each of them also comes in `ForDataOwner` and `ForDataOwnerInGroup` variants, which return `BaseFilterOptions` and can
+therefore be used with `CardinalBaseApis`, except for the `byPatients...` ones (they need to extract the secret ids of the
+patients). These filters are not available in the Dart SDK.
+
+For example, to get all the systolic and diastolic blood pressure measurements of a patient recorded in 2025:
+
+<LanguageTabs>
+
+<TabItem value="kotlin">
+
+```kotlin test-YEAC
+import com.icure.cardinal.sdk.CardinalSdk
+import com.icure.cardinal.sdk.filters.ServiceFilters
+import com.icure.cardinal.sdk.model.Patient
+import com.icure.cardinal.sdk.model.embed.DecryptedService
+import com.icure.cardinal.sdk.utils.pagination.PaginatedListIterator
+
+suspend fun getBloodPressureMeasurements(
+	sdk: CardinalSdk,
+	patient: Patient
+): PaginatedListIterator<DecryptedService> =
+	sdk.contact.filterServicesBy(
+		ServiceFilters.byPatientsCodesAndValueDateForSelf(
+			patients = listOf(patient),
+			codeCodes = mapOf("LOINC" to setOf("8480-6", "8462-4")),
+			startOfServiceValueDate = 20250101000000,
+			endOfServiceValueDate = 20251231235959
+		)
+	)
+```
+
+</TabItem>
+
+<TabItem value="typescript">
+
+```typescript test-YEAD
+import {CardinalSdk, DecryptedService, PaginatedListIterator, Patient, ServiceFilters} from "@icure/cardinal-sdk"
+
+function getBloodPressureMeasurements(
+	sdk: CardinalSdk,
+	patient: Patient
+): Promise<PaginatedListIterator<DecryptedService>> {
+	return sdk.contact.filterServicesBy(
+		ServiceFilters.byPatientsCodesAndValueDateForSelf(
+			[patient],
+			{ "LOINC": ["8480-6", "8462-4"] },
+			{ startOfServiceValueDate: 20250101000000, endOfServiceValueDate: 20251231235959 }
+		)
+	)
+}
+```
+
+</TabItem>
+
+<TabItem value="python">
+
+```python no-test
+from cardinal_sdk import CardinalSdk
+from cardinal_sdk.model import Patient, DecryptedService
+from cardinal_sdk.filters import ServiceFilters
+from cardinal_sdk.pagination.PaginatedListIterator import PaginatedListIterator
+
+def get_blood_pressure_measurements(
+    sdk: CardinalSdk,
+    patient: Patient
+) -> PaginatedListIterator[DecryptedService]:
+    return sdk.contact.filter_services_by_blocking(
+        ServiceFilters.by_patients_codes_and_value_date_for_self(
+            [patient],
+            {"LOINC": {"8480-6", "8462-4"}},
+            start_of_service_value_date=20250101000000,
+            end_of_service_value_date=20251231235959
+        )
+    )
+```
+
+</TabItem>
+
+</LanguageTabs>
+
+</div>
 
 ### HealthElementFilters
+
+<div className="proofread">
 
 | Method                                 | Key parameters                             | Return type                 | Sortable? | Sort order    |
 |----------------------------------------|--------------------------------------------|-----------------------------|-----------|---------------|
 | `allHealthElementsForSelf`             | —                                          | `FilterOptions`             | No        | —             |
-| `byIdentifiersForSelf`                 | `identifiers`                              | `SortableFilterOptions`     | Yes       | Input order   |
-| `byCodeForSelf`                        | `codeType`, `codeCode?`                    | `SortableFilterOptions`     | Yes       | Code          |
-| `byTagForSelf`                         | `tagType`, `tagCode?`                      | `SortableFilterOptions`     | Yes       | Tag           |
-| `byPatientsForSelf`                    | `patients`                                 | `SortableFilterOptions`     | Yes       | Input order   |
-| `byPatientsSecretIdsForSelf`           | `secretIds`                                | `SortableFilterOptions`     | Yes       | Input order   |
+| `byIdentifiersForSelf`                 | `identifiers`                              | `FilterOptions`             | No        | —             |
+| `byCodeForSelf`                        | `codeType`, `codeCode?`                    | `FilterOptions`             | No        | —             |
+| `byTagForSelf`                         | `tagType`, `tagCode?`                      | `FilterOptions`             | No        | —             |
+| `byPatientsForSelf`                    | `patients`                                 | `FilterOptions`             | No        | —             |
+| `byPatientsSecretIdsForSelf`           | `secretIds`                                | `FilterOptions`             | No        | —             |
 | `byIds`                                | `ids`                                      | `BaseSortableFilterOptions` | Yes       | Input order   |
 | `byPatientsOpeningDateForSelf`         | `patients`, `from?`, `to?`, `descending?`  | `SortableFilterOptions`     | Yes       | `openingDate` |
 | `byPatientSecretIdsOpeningDateForSelf` | `secretIds`, `from?`, `to?`, `descending?` | `SortableFilterOptions`     | Yes       | `openingDate` |
 
+</div>
+
 ### DocumentFilters
+
+<div className="proofread">
 
 | Method                                  | Key parameters                             | Return type             | Sortable? | Sort order |
 |-----------------------------------------|--------------------------------------------|-------------------------|-----------|------------|
@@ -318,7 +455,9 @@ The `ForDataOwner` variants for the other methods also exist (e.g. `byFuzzyNameF
 | `byMessagesAndTypeForSelf`              | `documentType`, `messages`                 | `FilterOptions`         | No        | —          |
 | `byOwningEntitySecretIdsAndTypeForSelf` | `documentType`, `secretIds`                | `FilterOptions`         | No        | —          |
 | `byCodeForSelf`                         | `codeType`, `codeCode?`                    | `SortableFilterOptions` | Yes       | Code       |
-| `byTagForSelf`                          | `tagType`, `tagCode?`                      | `SortableFilterOptions` | Yes       | Tag        |
+| `byTagForSelf`                          | `tagType`, `tagCode?`                      | `FilterOptions`         | No        | —          |
+
+</div>
 
 ### HealthcarePartyFilters
 
@@ -360,21 +499,25 @@ Healthcare party filters are not data-owner scoped — they all return `Base*` t
 
 #### MessageFilters
 
+<div className="proofread">
+
 | Method                              | Key parameters                                   | Return type             | Sortable? |
 |-------------------------------------|--------------------------------------------------|-------------------------|-----------|
 | `allMessagesForSelf`                | —                                                | `FilterOptions`         | No        |
-| `byTransportGuidForSelf`            | `transportGuid`                                  | `SortableFilterOptions` | Yes       |
+| `byTransportGuidForSelf`            | `transportGuid`                                  | `FilterOptions`         | No        |
 | `fromAddressForSelf`                | `address`                                        | `FilterOptions`         | No        |
 | `toAddressForSelf`                  | `address`                                        | `FilterOptions`         | No        |
 | `byPatientsSentDateForSelf`         | `patients`, `from?`, `to?`, `descending?`        | `SortableFilterOptions` | Yes       |
 | `byPatientSecretIdsSentDateForSelf` | `secretIds`, `from?`, `to?`, `descending?`       | `SortableFilterOptions` | Yes       |
-| `byTransportGuidSentDateForSelf`    | `transportGuid`, `from`, `to`, `descending?`     | `SortableFilterOptions` | Yes       |
+| `byTransportGuidSentDateForSelf`    | `transportGuid`, `from`, `to`, `descending?`     | `FilterOptions`         | No        |
 | `latestByTransportGuidForSelf`      | `transportGuid`                                  | `FilterOptions`         | No        |
 | `lifecycleBetweenForSelf`           | `startTimestamp?`, `endTimestamp?`, `descending` | `FilterOptions`         | No        |
-| `byCodeForSelf`                     | `codeType`, `codeCode?`                          | `SortableFilterOptions` | Yes       |
-| `byTagForSelf`                      | `tagType`, `tagCode?`                            | `SortableFilterOptions` | Yes       |
+| `byCodeForSelf`                     | `codeType`, `codeCode?`                          | `FilterOptions`         | No        |
+| `byTagForSelf`                      | `tagType`, `tagCode?`                            | `FilterOptions`         | No        |
 | `byInvoiceIds`                      | `invoiceIds`                                     | `BaseFilterOptions`     | No        |
 | `byParentIds`                       | `parentIds`                                      | `BaseFilterOptions`     | No        |
+
+</div>
 
 #### CalendarItemFilters
 
@@ -441,6 +584,136 @@ Healthcare party filters are not data-owner scoped — they all return `Base*` t
 |--------------------|-----------------|-----------------|-----------|
 | `allTopicsForSelf` | —               | `FilterOptions` | No        |
 | `byParticipant`    | `participantId` | `FilterOptions` | No        |
+
+<div className="proofread">
+
+#### InsuranceFilters
+
+Insurance filters were introduced in SDK 2.9.0, together with the `matchInsurancesBy`, `filterInsurancesBy`,
+`matchInsurancesBySorted` and `filterInsurancesBySorted` methods on the `insurance` api.
+Insurances are not data-owner scoped: all the filters return `Base*` types.
+
+| Method          | Key parameters          | Return type                 | Sortable? | Sort order |
+|-----------------|-------------------------|-----------------------------|-----------|------------|
+| `all`           | —                       | `BaseFilterOptions`         | No        | —          |
+| `byIdentifiers` | `identifiers`           | `BaseFilterOptions`         | No        | —          |
+| `byCode`        | `codeType`, `codeCode?` | `BaseSortableFilterOptions` | Yes       | Code       |
+| `byTag`         | `tagType`, `tagCode?`   | `BaseSortableFilterOptions` | Yes       | Tag        |
+
+:::note
+
+In SDK 2.9.0 the boolean fields `privateInsurance`, `hospitalisationInsurance` and `ambulatoryInsurance` were removed
+from the `Insurance` entity. The kind of coverage provided by an insurance is now modelled through the `tags` and
+`codes` fields, which you can query using the filters above.
+
+:::
+
+#### RelatedPersonFilters
+
+Filters for the [RelatedPerson](/explanations/data-model/relatedperson) entity, introduced in SDK 2.12.0.
+
+| Method                       | Key parameters | Return type                 | Sortable? | Sort order  |
+|------------------------------|----------------|-----------------------------|-----------|-------------|
+| `allRelatedPersonsForSelf`   | —              | `FilterOptions`             | No        | —           |
+| `byIdentifiersForSelf`       | `identifiers`  | `FilterOptions`             | No        | —           |
+| `byNameForSelf`              | `name`         | `FilterOptions`             | No        | —           |
+| `byIds`                      | `ids`          | `BaseSortableFilterOptions` | Yes       | Input order |
+
+`byNameForSelf` matches on the concatenation of the related person's last name and first names.
+
+#### MaintenanceTaskFilters
+
+Maintenance task filters have `ForSelf` and `ForDataOwner` variants, but no `ForDataOwnerInGroup` variants.
+
+| Method                 | Key parameters | Return type                 | Sortable? | Sort order  |
+|------------------------|----------------|-----------------------------|-----------|-------------|
+| `byIds`                | `ids`          | `BaseSortableFilterOptions` | Yes       | Input order |
+| `byIdentifiersForSelf` | `identifiers`  | `FilterOptions`             | No        | —           |
+| `byTypeForSelf`        | `type`         | `FilterOptions`             | No        | —           |
+| `afterDateForSelf`     | `date`         | `SortableFilterOptions`     | Yes       | `created`   |
+
+`afterDateForSelf` matches the maintenance tasks with a `created` after `date`, which is a unix timestamp in
+milliseconds (not a fuzzy date).
+
+## Discovering filters at runtime
+
+If you are building a dynamic query builder (for example a UI that lets the user pick a filter for an entity), you can
+retrieve the list of available filter options at runtime with `sdk.filter.getFilterOptionsDefinitions()`. It returns a
+map from the entity name (`"Patient"`, `"Service"`, `"MaintenanceTask"`, ...) to a list of
+`FilterOptionGroupWithViews`, each describing a group of factory methods that produce the same kind of filter and differ
+only in how the parameters are passed (`ForSelf`/`ForDataOwner`/`InGroup`, patients vs secret ids):
+
+- `name`: a short semantic name for the group (e.g. `byPatientsDate`).
+- `factoryMethods`: the names of the factory methods of the corresponding `XFilters` object that belong to this group.
+- `targetFilter`: the name of the filter that is actually sent to the backend (or the possible filters separated by
+`" or "`, for the few groups that depend on their input).
+- `views`: the database views that the backend uses to resolve this filter.
+
+The SDK builds this result from its static catalog of filter options, keeping only the filters that the backend you are
+connected to supports. In Kotlin the static catalog itself is also available, without any request to the backend, as
+`FilterOptionsCatalog.byEntity` (same content without the `views`).
+
+The filter api is available in Kotlin since SDK 2.7.0 and in TypeScript since SDK 2.13.6, on both the `CardinalSdk`
+and the `CardinalBaseSdk`.
+
+<LanguageTabs>
+
+<TabItem value="kotlin">
+
+```kotlin test-YEAE
+import com.icure.cardinal.sdk.CardinalSdk
+
+suspend fun printServiceFilterOptions(sdk: CardinalSdk) {
+	val definitions = sdk.filter.getFilterOptionsDefinitions()
+	definitions["Service"]?.forEach { group ->
+		println("${group.name}: ${group.factoryMethods.joinToString()} -> ${group.targetFilter}")
+	}
+}
+```
+
+</TabItem>
+
+<TabItem value="typescript">
+
+```typescript test-YEAF
+import {CardinalSdk} from "@icure/cardinal-sdk"
+
+async function printServiceFilterOptions(sdk: CardinalSdk) {
+	const definitions = await sdk.filter.getFilterOptionsDefinitions()
+	for (const group of definitions["Service"] ?? []) {
+		console.log(`${group.name}: ${group.factoryMethods.join(", ")} -> ${group.targetFilter}`)
+	}
+}
+```
+
+</TabItem>
+
+<TabItem value="python">
+
+The Python SDK contains a `FilterApi` class (since SDK 2.11.0), but it is not exposed yet as a `filter` property of
+`CardinalSdk`. Until it is, you can instantiate it yourself from your sdk instance:
+
+```python no-test
+from cardinal_sdk import CardinalSdk
+from cardinal_sdk.api import FilterApi
+
+def print_service_filter_options(sdk: CardinalSdk):
+    definitions = FilterApi(sdk).get_filter_options_definitions_blocking()
+    for group in definitions.get("Service", []):
+        print(f"{group.name}: {', '.join(group.factory_methods)} -> {group.target_filter}")
+```
+
+</TabItem>
+
+<TabItem value="dart">
+
+The filter api is not available in the Dart SDK yet.
+
+</TabItem>
+
+</LanguageTabs>
+
+</div>
 
 ---
 

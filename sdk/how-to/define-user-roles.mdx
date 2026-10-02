@@ -11,9 +11,13 @@ The operations that a user can do on an entity are determined by two factors:
 This how-to focuses on assigning and removing roles from a user. You can read more about permissions and Data Owner
 users in [this explanation](/explanations/end-to-end-encryption/data-owners-and-access-control).
 
+<div className="proofread">
+
 ## Check user roles
 The user roles information are stored in the [systemMetadata](/explanations/data-model/user#systemmetadata) property.
-This property has 3 fields:
+The fields of this property that are relevant for roles are:
+
+</div>
 
 - `isAdmin` is a boolean field that is `true` if the user is an admin.
 - `roles` is a set of the ids of all the roles assigned to the user.
@@ -146,5 +150,76 @@ sdk.user.reset_user_roles_blocking(userId)
 </LanguageTabs>
 
 ## Creating custom roles
-It is not possible to create custom roles from existing permissions using Cardinal. However, this feature will be added
-in a release in the near future.
+
+<div className="proofread">
+
+You can create your own roles from the existing permissions using the `createRole` method in the `role` section of the
+SDK. You have to provide:
+
+- The name of the role: it can only contain uppercase letters (A-Z) and underscores, with a maximum length of 40
+characters. The id of the created role will automatically be set to `<GROUP_ID>:<ROLE_NAME>`.
+- The set of permissions granted by the role. You can retrieve all the available permissions using the `getPermissions`
+method in the `role` section of the SDK.
+- Optionally, a short description for the role (max 300 characters). The `description` parameter was added in SDK 2.5.0.
+- Optionally, `inheritsUpTo`: the maximum level in the downward group hierarchy where this role can be used (`null` =
+any child group at any level, `0` = only the current group, `1` = only the current group and its direct children, and
+so on).
+
+<LanguageTabs>
+
+<TabItem value="kotlin">
+
+```kotlin no-test
+val allPermissions = sdk.role.getPermissions()
+val customRole = sdk.role.createRole(
+	name = "MEDICAL_SECRETARY",
+	permissions = setOf(allPermissions.first()),
+	description = "A role for the medical secretaries of the practice"
+)
+```
+
+</TabItem>
+
+<TabItem value="typescript">
+
+```typescript no-test
+const allPermissions = await sdk.role.getPermissions()
+const customRole = await sdk.role.createRole(
+	"MEDICAL_SECRETARY",
+	[allPermissions[0]],
+	"A role for the medical secretaries of the practice"
+)
+```
+
+</TabItem>
+
+<TabItem value="python">
+
+```python
+all_permissions = sdk.role.get_permissions_blocking()
+custom_role = sdk.role.create_role_blocking(
+	"MEDICAL_SECRETARY",
+	{all_permissions[0]},
+	"A role for the medical secretaries of the practice"
+)
+```
+
+</TabItem>
+
+</LanguageTabs>
+
+You can later change the permissions granted by a role using the `modifyRolePermissions` method, or permanently delete
+the role using the `purgeRole` method.
+
+There is also a `createRoleInGroup` variant that takes the id of the group where the role should be created as its
+first parameter.
+
+:::note
+
+In TypeScript and Python the `description` parameter is required (pass `undefined` / `None` if you don't want to
+provide one). It comes **before** the `options` argument (containing `inheritsUpTo`) in TypeScript, and **before**
+`inherits_up_to` in Python: check your existing `createRole` calls if you upgrade from an SDK version older than 2.5.0.
+
+:::
+
+</div>

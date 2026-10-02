@@ -1,21 +1,101 @@
+import TabItem from "@theme/TabItem";
+import {LanguageTabs} from "@site/src/components/LanguageTabs";
+
 # HealthElement
 
 A HealthElement is an encryptable, root-level entity that represents a medical event persistent in time. For example,
 it may represent an illness that lasts for a couple of days (e.g. a flu), a more prolonged state (e.g. pregnancy), or
 a permanent ailment (e.g. allergy).
 
+<div className="proofread">
+
 ## Fields Encrypted by Default
 By default, the following fields of this entity will be encrypted:
 - `descr`
 - `note`
+- `asserters` (since SDK 2.13.0; in 2.13.0 the default entry was `asserters[].*`, replaced by `asserters` in 2.13.1)
 - The `markdown` field in all the `notes`.
+- The `careTeamMemberType`, `healthcarePartyId` and `quality` fields in all the `careTeam` members.
+- The `name` and `comment` fields in all the `episodes`.
+
+</div>
 
 You can customize the encrypted fields as [explained in this how to](/how-to/initialize-the-sdk/configure-what-to-encrypt).
+
+<div className="proofread">
+
+:::warning
+
+The list above is the default of the Kotlin and TypeScript SDKs. The Python SDK defines its own default
+(`EncryptedFieldsConfiguration.health_element`), which differs: it does **not** include `asserters`, it uses
+`careTeam[].*` instead of the three `careTeam` fields, and its episode entries (`episode[].name`, `episode[].comment`)
+do not match the `episodes` field of the entity. The Dart SDK default has the same differences.
+
+If you use the Python SDK and want the asserters (and episodes) of your health elements to be encrypted, pass a custom
+configuration. Note that the list you provide replaces the default list entirely, so it must contain all the fields you
+want to encrypt:
+
+```python
+from cardinal_sdk import CardinalSdk
+from cardinal_sdk.authentication import UsernamePassword
+from cardinal_sdk.storage import FileSystemStorage
+from cardinal_sdk.options import SdkOptions, EncryptedFieldsConfiguration
+
+sdk = CardinalSdk(
+	"com.mycompany.mycardinalapp",
+	"https://api.icure.cloud",
+	UsernamePassword("username", "password"),
+	FileSystemStorage("/path/to/storage/directory"),
+	SdkOptions(
+		encrypted_fields=EncryptedFieldsConfiguration(
+			health_element=[
+				"descr",
+				"note",
+				"asserters",
+				"notes[].markdown",
+				"careTeam[].careTeamMemberType",
+				"careTeam[].healthcarePartyId",
+				"careTeam[].quality",
+				"episodes[].name",
+				"episodes[].comment",
+			]
+		)
+	)
+)
+```
+
+:::
+
+</div>
 
 ## Properties
 
 Below you will find an explanation of the most commonly used properties in the entity that are not among the
 [shared fields](/explanations/data-model/#shared-fields). For a full list, check the reference documentation (:construction:).
+
+<div className="proofread">
+
+### asserters
+Available since SDK 2.13.0 (the shape described here is final since SDK 2.13.3). Encrypted by default.
+
+The parties asserting that the patient has the condition described by this HealthElement, i.e. on whose word the
+HealthElement is held to be true. This is the FHIR *asserter* concept: it does not say who recorded the HealthElement.
+For example, a patient may self-report an allergy, a family member may report a condition on behalf of the patient, and
+a physician may assert a diagnosis: all of them are asserters, and the same HealthElement can have several of them.
+
+Each `HealthElementAsserter` names the asserting party in **exactly one** of two ways (the backend rejects an asserter
+with none or both of them set):
+- `localAsserterIdentifier`: a party stored in Cardinal, given by its `id` and its `type` (an `AsserterType`:
+`Patient`, `HealthcareParty` or `RelatedPerson`). The type tells which kind of entity the id refers to, not the role
+the party played. Organisations (hospitals, practices, ...) are stored as healthcare parties, so they use
+`HealthcareParty`.
+- `externalAsserterIdentifier`: a party that has no record in Cardinal, given by a business `identifier` (an
+`Identifier`) issued by another system, where `system` names the issuing
+system and `value` the identifier of the party in that system.
+
+See the [example below](#example-asserters-and-qualified-links).
+
+</div>
 
 ### careTeam
 A collection of object that contain information about all the healthcare actor related to the condition of this 
@@ -57,6 +137,196 @@ It is encoded as a [FuzzyDateTime](/explanations/data-model/#fuzzydatetime).
 ### plansOfAction
 A collection of objects that contain information about all the healthcare approaches related to this HealthElement.
 
+<div className="proofread">
+
+### qualifiedLinks
+Available since SDK 2.13.0. Not encrypted.
+
+Directed, qualified links from this HealthElement to other HealthElements, for example to express that a condition is a
+complication of, or is caused by, another one. Each `HealthElementQualifiedLink` has:
+- `type`: the qualification of the link. It is a free string, but using the names of the `LinkQualification` entries
+(as serialized, e.g. `parent`, `child`, `basedOn`, `derivedFrom`) is encouraged when one of them fits.
+- `healthElementId`: the id of the linked HealthElement.
+- `associationId` (optional): a caller-chosen correlation id that groups related links across entities.
+
+Links should be created in a single direction only: the reverse direction is resolved by the backend (through a view),
+so you don't need to add a matching link on the target HealthElement.
+
 ### valueDate
 If the HealthElement was opened and closed on the same date, this field can be used instead of `openingDate` and `closingDate`.
 It is encoded as a [FuzzyDateTime](/explanations/data-model/#fuzzydatetime).
+
+## Example: asserters and qualified links
+
+The following example creates a HealthElement for a complication of an existing condition, asserted by the patient
+themselves and by their general practitioner, who is identified through an external identifier.
+
+<LanguageTabs>
+
+<TabItem value="kotlin">
+
+```kotlin test-YEAA
+import com.icure.cardinal.sdk.CardinalSdk
+import com.icure.cardinal.sdk.model.DecryptedHealthElement
+import com.icure.cardinal.sdk.model.Patient
+import com.icure.cardinal.sdk.model.base.Identifier
+import com.icure.cardinal.sdk.model.embed.AsserterType
+import com.icure.cardinal.sdk.model.embed.HealthElementAsserter
+import com.icure.cardinal.sdk.model.embed.HealthElementQualifiedLink
+import com.icure.kryptom.crypto.defaultCryptoService
+
+suspend fun createComplication(
+	sdk: CardinalSdk,
+	patient: Patient,
+	underlyingConditionId: String
+): DecryptedHealthElement {
+	val healthElement = sdk.healthElement.withEncryptionMetadata(
+		DecryptedHealthElement(
+			id = defaultCryptoService.strongRandom.randomUUID(),
+			descr = "Diabetic retinopathy",
+			asserters = listOf(
+				// Self-reported by the patient
+				HealthElementAsserter(
+					localAsserterIdentifier = HealthElementAsserter.LocalAsserterIdentifier(
+						id = patient.id,
+						type = AsserterType.Patient
+					)
+				),
+				// Asserted by a practitioner who has no record in Cardinal
+				HealthElementAsserter(
+					externalAsserterIdentifier = HealthElementAsserter.ExternalAsserterIdentifier(
+						identifier = Identifier(system = "https://example.org/practitioners", value = "GP-12345")
+					)
+				)
+			),
+			qualifiedLinks = listOf(
+				HealthElementQualifiedLink(
+					type = "complicationOf",
+					healthElementId = underlyingConditionId
+				)
+			)
+		),
+		patient
+	)
+	return sdk.healthElement.createHealthElement(healthElement)
+}
+```
+
+</TabItem>
+
+<TabItem value="typescript">
+
+```typescript test-YEAB
+import {
+	AsserterType,
+	CardinalSdk,
+	DecryptedHealthElement,
+	HealthElementAsserter,
+	HealthElementQualifiedLink,
+	Identifier,
+	Patient,
+	randomUuid,
+} from "@icure/cardinal-sdk"
+
+async function createComplication(
+	sdk: CardinalSdk,
+	patient: Patient,
+	underlyingConditionId: string
+): Promise<DecryptedHealthElement> {
+	const healthElement = await sdk.healthElement.withEncryptionMetadata(
+		new DecryptedHealthElement({
+			id: randomUuid(),
+			descr: "Diabetic retinopathy",
+			asserters: [
+				// Self-reported by the patient
+				new HealthElementAsserter({
+					localAsserterIdentifier: new HealthElementAsserter.LocalAsserterIdentifier({
+						id: patient.id,
+						type: AsserterType.Patient,
+					}),
+				}),
+				// Asserted by a practitioner who has no record in Cardinal
+				new HealthElementAsserter({
+					externalAsserterIdentifier: new HealthElementAsserter.ExternalAsserterIdentifier({
+						identifier: new Identifier({ system: "https://example.org/practitioners", value: "GP-12345" }),
+					}),
+				}),
+			],
+			qualifiedLinks: [
+				new HealthElementQualifiedLink({
+					type: "complicationOf",
+					healthElementId: underlyingConditionId,
+				}),
+			],
+		}),
+		patient
+	)
+	return sdk.healthElement.createHealthElement(healthElement)
+}
+```
+
+</TabItem>
+
+<TabItem value="python">
+
+```python
+import uuid
+from cardinal_sdk import CardinalSdk
+from cardinal_sdk.model import (
+	AsserterType,
+	DecryptedHealthElement,
+	HealthElementAsserter,
+	HealthElementAsserterExternalAsserterIdentifier,
+	HealthElementAsserterLocalAsserterIdentifier,
+	HealthElementQualifiedLink,
+	Identifier,
+	Patient,
+)
+
+def create_complication(
+	sdk: CardinalSdk,
+	patient: Patient,
+	underlying_condition_id: str
+) -> DecryptedHealthElement:
+	health_element = sdk.health_element.with_encryption_metadata_blocking(
+		DecryptedHealthElement(
+			id=str(uuid.uuid4()),
+			descr="Diabetic retinopathy",
+			asserters=[
+				# Self-reported by the patient
+				HealthElementAsserter(
+					local_asserter_identifier=HealthElementAsserterLocalAsserterIdentifier(
+						id=patient.id,
+						type=AsserterType.Patient
+					)
+				),
+				# Asserted by a practitioner who has no record in Cardinal
+				HealthElementAsserter(
+					external_asserter_identifier=HealthElementAsserterExternalAsserterIdentifier(
+						identifier=Identifier(system="https://example.org/practitioners", value="GP-12345")
+					)
+				),
+			],
+			qualified_links=[
+				HealthElementQualifiedLink(
+					type="complicationOf",
+					health_element_id=underlying_condition_id
+				)
+			]
+		),
+		patient
+	)
+	return sdk.health_element.create_health_element_blocking(health_element)
+```
+
+</TabItem>
+
+<TabItem value="dart">
+
+The `asserters` and `qualifiedLinks` fields are not available in the Dart SDK yet.
+
+</TabItem>
+
+</LanguageTabs>
+
+</div>

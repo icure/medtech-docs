@@ -420,6 +420,8 @@ other doctor, while the second one will be shared with the other doctor with rea
 
 Both Contacts will share the same `groupId`: this way, they can be recognized as part of a single examination.
 
+<div className="proofread">
+
 <LanguageTabs>
 
 <TabItem value="kotlin">
@@ -427,7 +429,7 @@ Both Contacts will share the same `groupId`: this way, they can be recognized as
 ```kotlin test-AAAR
 import com.icure.cardinal.sdk.model.DecryptedContact
 import com.icure.cardinal.sdk.model.embed.AccessLevel
-import com.icure.cardinal.sdk.model.embed.Annotation
+import com.icure.cardinal.sdk.model.embed.DecryptedAnnotation
 import java.util.UUID
 
 // The id of the "Logical Contact"
@@ -447,7 +449,7 @@ val contact = DecryptedContact(
 	closingDate = 20240920164460,
 	groupId = groupId, // This indicates that the Contact is part of a "Logical Contact"
 	notes = listOf(
-		Annotation(
+		DecryptedAnnotation(
 			id = UUID.randomUUID().toString(),
 			markdown = mapOf(
 				"en" to "The Patient has hypertension."
@@ -479,7 +481,7 @@ visitingDoctorSdk.contact.createContact(
 <TabItem value="typescript">
 
 ```typescript test-NURA
-import {AccessLevel, Annotation, DecryptedContact} from "@icure/cardinal-sdk";
+import {AccessLevel, DecryptedAnnotation, DecryptedContact} from "@icure/cardinal-sdk";
 import {v4 as uuid} from 'uuid';
 
 // The id of the "Logical Contact"
@@ -497,7 +499,7 @@ const contact = new DecryptedContact({
 	closingDate: 20240920164460,
 	groupId: groupId, // This indicates that the Contact is part of a "Logical Contact"
 	notes: [
-		new Annotation({
+		new DecryptedAnnotation({
 			id: uuid(),
 			markdown: {"en": "The Patient has hypertension."}
 		})
@@ -524,7 +526,7 @@ await visitingDoctorSdk.contact.createContact(
 
 ```python
 import uuid
-from cardinal_sdk.model import AccessLevel, Annotation, DecryptedContact
+from cardinal_sdk.model import AccessLevel, DecryptedAnnotation, DecryptedContact
 
 # The id of the "Logical Contact"
 group_id = str(uuid.uuid4())
@@ -541,7 +543,7 @@ contact = DecryptedContact(
 	closing_date=20240920164460,
 	group_id=group_id,  # This indicates that the Contact is part of a "Logical Contact"
 	notes=[
-		Annotation(
+		DecryptedAnnotation(
 			id=str(uuid.uuid4()),
 			markdown={"en": "The Patient has hypertension."}
 		)
@@ -565,6 +567,8 @@ visiting_doctor_sdk.contact.create_contact_blocking(
 </TabItem>
 
 </LanguageTabs>
+
+</div>
 
 ## Retrieving the data
 

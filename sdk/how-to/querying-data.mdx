@@ -386,6 +386,17 @@ If you want to retrieve sorted data using sortable filter options you can use th
 of the filter/match method. If you don't need sorted data, you should always prefer using the standard version of
 the filter/match method, as it may be faster, depending on the actual query.
 
+<div className="proofread">
+
+:::caution
+
+Starting from Cardinal SDK 2.6.0 many filter options that used to be sortable no longer are. You can find the current
+sortability of each filter option in [Everything about filters](/explanations/everything-about-filters).
+
+:::
+
+</div>
+
 :::note
 
 You may notice that sometimes data is consistently sorted according to the filter options even when using the standard
@@ -401,6 +412,8 @@ sortability of the other provided options. Union filter options are never sortab
 
 For example, you can create a filter that gets all diagnoses (health element) of long or acute covid for a certain patient,
 sorting from most to least recent:
+
+<div className="proofread">
 
 <LanguageTabs>
 
@@ -497,12 +510,14 @@ def get_sorted_acute_or_long_covid_diagnoses_for_patient(sdk: CardinalSdk, patie
 			)
 		)
 	)
-	return sdk.health_element.filterHealthElementsBySorted(filter_options)
+	return sdk.health_element.filter_health_elements_by_sorted_blocking(filter_options)
 ```
 
 </TabItem>
 
 </LanguageTabs>
+
+</div>
 
 ## Cross-entity queries
 
@@ -594,6 +609,77 @@ def get_heart_rate_measurements(sdk: CardinalSdk) -> PaginatedListIterator[Decry
 Note that this requires that the user performing the query has access to all the [secret ids](/explanations/end-to-end-encryption/encrypted-links) of the patients
 obtained from the first query.
 If not, some items will be missing from the final result.
+
+<div className="proofread">
+
+### Finding the patient of a service
+
+Services are embedded in contacts, so the link to their patient is stored in the encrypted metadata of the contact.
+Since SDK 2.3.1, you can use `decryptPatientIdOfService` to get the patient linked to a service retrieved using
+`getServices` or `filterServicesBy`/`filterServicesBySorted`: only the services returned by these methods carry the
+metadata needed to find the patient.
+If you got the service from the `services` of a contact, use `decryptPatientIdOf` on the contact instead.
+
+The method returns a set (an array in TypeScript) of `EntityReferenceInGroup`: usually a service is linked to a single
+patient, but older data may be linked to multiple patients.
+The set is empty if the current user can't decrypt the patient id.
+The `entityId` of each reference is the id of the patient, and `groupId` is the id of the group of the patient if it is
+in a different group than the service (see [multi-group environments](/how-to/manage-a-multi-group-environment)).
+For services obtained in a different group, use `sdk.contact.inGroup.decryptPatientIdOfService`.
+
+<LanguageTabs>
+
+<TabItem value="kotlin">
+
+```kotlin test-YIAC
+import com.icure.cardinal.sdk.CardinalSdk
+import com.icure.cardinal.sdk.model.DecryptedPatient
+import com.icure.cardinal.sdk.model.embed.DecryptedService
+
+suspend fun getPatientOfService(sdk: CardinalSdk, service: DecryptedService): DecryptedPatient? {
+	val patientReference = sdk.contact.decryptPatientIdOfService(service).singleOrNull()
+		?: return null
+	// If patientReference.groupId is not null, use sdk.patient.inGroup.getPatient instead
+	return sdk.patient.getPatient(patientReference.entityId)
+}
+```
+
+</TabItem>
+
+<TabItem value="typescript">
+
+```typescript test-YIAD
+import {CardinalSdk, DecryptedPatient, DecryptedService} from "@icure/cardinal-sdk";
+
+async function getPatientOfService(sdk: CardinalSdk, service: DecryptedService): Promise<DecryptedPatient | undefined> {
+	const patientReferences = await sdk.contact.decryptPatientIdOfService(service)
+	if (patientReferences.length !== 1) return undefined
+	// If patientReferences[0].groupId is defined, use sdk.patient.inGroup.getPatient instead
+	return sdk.patient.getPatient(patientReferences[0].entityId)
+}
+```
+
+</TabItem>
+
+<TabItem value="python">
+
+```python
+from typing import Optional
+from cardinal_sdk import CardinalSdk
+from cardinal_sdk.model import DecryptedPatient, DecryptedService
+
+def get_patient_of_service(sdk: CardinalSdk, service: DecryptedService) -> Optional[DecryptedPatient]:
+	patient_references = sdk.contact.decrypt_patient_id_of_service_blocking(service)
+	if len(patient_references) != 1:
+		return None
+	return sdk.patient.get_patient_blocking(next(iter(patient_references)).entity_id)
+```
+
+</TabItem>
+
+</LanguageTabs>
+
+</div>
 
 ### Cross-entity queries with data denormalization.
 

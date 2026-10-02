@@ -1,3 +1,6 @@
+import TabItem from "@theme/TabItem";
+import {LanguageTabs} from "@site/src/components/LanguageTabs";
+
 # User
 
 A User is a non-encryptable, root-level entity that represents an actor that can log in to the system and perform actions
@@ -19,6 +22,104 @@ Any of these field of the User entity is valid as login:
 - `mobilePhone`
 
 As for the password, it is possible both to set a password (in the `passwordHash` field) or to use a [temporary token](/how-to/remember-me).
+
+<div className="proofread">
+
+## Updating a user's login identifiers
+
+You can change the email, mobile phone, and password of a user with a regular `modifyUser`, but this requires the
+latest revision of the user, and may fail if the user is modified concurrently (for example by a `SmartAuthProvider`
+that updates the authentication tokens of the user while performing the request).
+For this reason, the user API provides dedicated methods that don't require the revision of the user:
+
+- `modifyUserEmail(userId, newEmail, previousEmail)` and `modifyUserMobilePhone(userId, newMobilePhone, previousMobilePhone)`
+  (since SDK 2.2.0) replace the email or mobile phone of the user.
+- `removeUserMobilePhone(userId, previousMobilePhone)` (since SDK 2.11.0) removes the mobile phone of the user.
+- `modifyUserPassword(userId, newPassword)` (since SDK 2.2.0) sets a new password for the user.
+
+Instead of the revision, the email and mobile phone methods take the value you expect to be currently stored in the
+user (the previous parameters are nullable, but not optional): if it doesn't match the stored value, the method fails
+with a `RevisionConflictException`.
+
+`modifyUserPassword` doesn't require the previous password, so you can also use it to implement a "forgot password"
+flow. However, changing the password of a user is a [sensitive operation](/how-to/initialize-the-sdk/authentication-with-secret-provider#sensitive-operations)
+that requires an elevated security context, so you should use it with an SDK initialized with a `SmartAuthProvider`
+(for example through an [authentication secret provider](/how-to/initialize-the-sdk/authentication-with-secret-provider))
+that can provide the required credentials when needed.
+
+All these methods except `removeUserMobilePhone` also have an in-group variant, which takes the id of the group of the
+user as first parameter.
+To change the roles of a user, see [modify user roles](/how-to/define-user-roles).
+
+<LanguageTabs>
+
+<TabItem value="kotlin">
+
+```kotlin test-YIAE
+import com.icure.cardinal.sdk.CardinalSdk
+import com.icure.cardinal.sdk.model.User
+
+suspend fun updateLoginIdentifiers(
+	sdk: CardinalSdk,
+	userId: String,
+	newEmail: String,
+	newPassword: String
+): User {
+	val user = sdk.user.getUser(userId)!!
+	// Fails with a RevisionConflictException if the email of the user is no longer user.email
+	sdk.user.modifyUserEmail(userId, newEmail, user.email)
+	if (user.mobilePhone != null) {
+		sdk.user.removeUserMobilePhone(userId, user.mobilePhone)
+	}
+	return sdk.user.modifyUserPassword(userId, newPassword)
+}
+```
+
+</TabItem>
+
+<TabItem value="typescript">
+
+```typescript test-YIAF
+import {CardinalSdk, User} from "@icure/cardinal-sdk";
+
+async function updateLoginIdentifiers(
+	sdk: CardinalSdk,
+	userId: string,
+	newEmail: string,
+	newPassword: string
+): Promise<User> {
+	const user = (await sdk.user.getUser(userId))!
+	// Fails with a RevisionConflictException if the email of the user is no longer user.email
+	await sdk.user.modifyUserEmail(userId, newEmail, user.email)
+	if (user.mobilePhone !== undefined) {
+		await sdk.user.removeUserMobilePhone(userId, user.mobilePhone)
+	}
+	return sdk.user.modifyUserPassword(userId, newPassword)
+}
+```
+
+</TabItem>
+
+<TabItem value="python">
+
+```python
+from cardinal_sdk import CardinalSdk
+from cardinal_sdk.model import User
+
+def update_login_identifiers(sdk: CardinalSdk, user_id: str, new_email: str, new_password: str) -> User:
+	user = sdk.user.get_user_blocking(user_id)
+	# Fails with a RevisionConflictException if the email of the user is no longer user.email
+	sdk.user.modify_user_email_blocking(user_id, new_email, user.email)
+	if user.mobile_phone is not None:
+		sdk.user.remove_user_mobile_phone_blocking(user_id, user.mobile_phone)
+	return sdk.user.modify_user_password_blocking(user_id, new_password)
+```
+
+</TabItem>
+
+</LanguageTabs>
+
+</div>
 
 ## Roles
 The roles assigned to a User are stored in a nested object inside the `systemMetadata` property. It has 3 properties:
@@ -109,13 +210,22 @@ then the `healthcarePartyId` and `deviceId` fields should be null.
 A User where this field is not null is a **Data Owner** User.
 :::
 
+<div className="proofread">
+
 ### systemMetadata
-This field contains internal information about the User. It has 3 properties:
+This field contains internal information about the User. Its properties are:
 
 - `isAdmin` is a boolean field that is `true` if the user is an admin.
 - `roles` is a set of the ids of all the roles assigned to the user.
 - `inheritsRoles` is a boolean field that is `true` if the user has no role set and so inherits the roles from the group
   configuration.
+- `loginIdentifiers` is a list of the identifiers that the user can use to log in.
+- `verifiedEmail` is a boolean field that is `true` if the email of the user has been verified.
+- `verifiedMobilePhone` is a boolean field that is `true` if the mobile phone of the user has been verified.
+- `uses2fa` is a boolean field that is `true` if the user has [two-factor authentication](/how-to/set-up-2fa) enabled
+  for login with password.
+
+</div>
 
 Any update to this property will be prohibited by the backend. To learn how to update the roles on a user, check this [how to](/how-to/define-user-roles).
 

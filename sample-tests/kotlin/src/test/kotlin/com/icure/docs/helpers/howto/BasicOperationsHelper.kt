@@ -10,7 +10,7 @@ fun askUserToResolveNoteConflict(existingNote: String?, newNote: String): String
 
 object BasicOperationsHelper {
     val preTest: Map<String, suspend (sdk: CardinalSdk) -> Map<String, Any?>> = mapOf(
-        "basic-operations block 10 (AAAJ)" to { _ -> emptyMap() },
+        "basic-operations block 11 (AAAJ)" to { _ -> emptyMap() },
     )
     val postTest: Map<String, suspend (sdk: CardinalSdk, extracted: Map<String, Any?>) -> Unit> = mapOf()
 }

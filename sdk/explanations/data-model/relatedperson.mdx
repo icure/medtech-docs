@@ -1,0 +1,246 @@
+import TabItem from "@theme/TabItem";
+import {LanguageTabs} from "@site/src/components/LanguageTabs";
+
+<div className="proofread">
+
+# Related person
+
+The RelatedPerson is an encryptable root-level entity, available since SDK 2.12.0, that represents a person related to
+one or more patients who is neither a patient nor a healthcare party: typically a contact person, such as the parent of
+a child patient, a caregiver, or a legal guardian.
+
+A RelatedPerson is referenced from the [partnerships](/explanations/data-model/patient#partnerships) of a Patient with
+`partnerType = RelatedPerson`. Note that, differently from patients and healthcare parties, a RelatedPerson is **not a
+data owner**: it cannot be associated to a User, cannot log in, and data cannot be shared with it.
+
+## Fields Encrypted by Default
+
+By default, the following fields of this entity will be encrypted:
+- `created`
+- `modified`
+- `companyName`
+- `languages`
+- `civility`
+
+You can customize the encrypted fields as [explained in this how to](/how-to/initialize-the-sdk/configure-what-to-encrypt).
+
+:::caution
+
+Note that, differently from most other entities, the `created` and `modified` timestamps of a RelatedPerson are
+encrypted by default.
+
+:::
+
+## Properties
+
+Below you will find an explanation of the most commonly used properties in the entity that are not among the
+[shared fields](/explanations/data-model/#shared-fields). For a full list, check the reference documentation (:construction:).
+
+### firstName
+
+The first name of the related person.
+
+### lastName
+
+The last name (surname) of the related person.
+
+### names
+
+The list of all the names of the related person, also containing the official full name information.
+
+### companyName
+
+The name of the company this related person is member of.
+
+### languages
+
+The list of languages spoken by the related person, in ISO 639-2 alpha-2 code.
+
+### addresses
+
+The addresses and telecoms (phone numbers, email addresses, ...) of the related person.
+
+### civility
+
+The civility of the related person (Mr., Ms., Pr., Dr., ...).
+
+### gender
+
+The gender of the related person.
+
+## Linking a related person to a patient
+
+A RelatedPerson is created like any other encryptable entity: you first initialize its encryption metadata, then you
+commit the creation. Since it is a root entity, it is not linked to any owning entity, so you don't have to pass a
+patient (or any other entity) when initializing the encryption metadata.
+
+The link between a Patient and a RelatedPerson is instead stored on the patient side, by adding to the
+[partnerships](/explanations/data-model/patient#partnerships) of the patient an entry with the id of the related person
+as `partnerId` and `PartnerType.RelatedPerson` as `partnerType`:
+
+<LanguageTabs>
+
+<TabItem value="kotlin">
+
+```kotlin no-test
+import com.icure.cardinal.sdk.model.DecryptedRelatedPerson
+import com.icure.cardinal.sdk.model.embed.DecryptedPartnership
+import com.icure.cardinal.sdk.model.embed.PartnerType
+import com.icure.cardinal.sdk.model.embed.PartnershipStatus
+import com.icure.cardinal.sdk.model.embed.PartnershipType
+import com.icure.kryptom.crypto.defaultCryptoService
+
+// Create the related person
+val relatedPerson = sdk.relatedPerson.createRelatedPerson(
+	sdk.relatedPerson.withEncryptionMetadata(
+		DecryptedRelatedPerson(
+			id = defaultCryptoService.strongRandom.randomUUID(),
+			firstName = "Anna",
+			lastName = "Dupont",
+		)
+	)
+)
+
+// Link it to the patient through a partnership
+val patient = sdk.patient.getPatient(patientId)!!
+sdk.patient.modifyPatient(
+	patient.copy(
+		partnerships = patient.partnerships + DecryptedPartnership(
+			partnerId = relatedPerson.id,
+			partnerType = PartnerType.RelatedPerson,
+			type = PartnershipType.Mother,
+			status = PartnershipStatus.Active,
+		)
+	)
+)
+```
+
+</TabItem>
+
+<TabItem value="typescript">
+
+```typescript no-test
+import {
+	DecryptedPartnership,
+	DecryptedRelatedPerson,
+	PartnershipStatus,
+	PartnershipType,
+	PartnerType,
+} from "@icure/cardinal-sdk"
+
+// Create the related person
+const relatedPerson = await sdk.relatedPerson.createRelatedPerson(
+	await sdk.relatedPerson.withEncryptionMetadata(
+		new DecryptedRelatedPerson({
+			firstName: "Anna",
+			lastName: "Dupont",
+		})
+	)
+)
+
+// Link it to the patient through a partnership
+const patient = await sdk.patient.getPatient(patientId)
+patient.partnerships = [
+	...patient.partnerships,
+	new DecryptedPartnership({
+		partnerId: relatedPerson.id,
+		partnerType: PartnerType.RelatedPerson,
+		type: PartnershipType.Mother,
+		status: PartnershipStatus.Active,
+	}),
+]
+await sdk.patient.modifyPatient(patient)
+```
+
+</TabItem>
+
+<TabItem value="python">
+
+```python
+import uuid
+from cardinal_sdk.model import (
+	DecryptedRelatedPerson,
+	DecryptedPartnership,
+	PartnerType,
+	PartnershipType,
+	PartnershipStatus,
+)
+
+# Create the related person
+related_person = sdk.related_person.create_related_person_blocking(
+	sdk.related_person.with_encryption_metadata_blocking(
+		DecryptedRelatedPerson(
+			id=str(uuid.uuid4()),
+			first_name="Anna",
+			last_name="Dupont",
+		)
+	)
+)
+
+# Link it to the patient through a partnership
+patient = sdk.patient.get_patient_blocking(patient_id)
+patient.partnerships.append(DecryptedPartnership(
+	partner_id=related_person.id,
+	partner_type=PartnerType.RelatedPerson,
+	type=PartnershipType.Mother,
+	status=PartnershipStatus.Active,
+))
+sdk.patient.modify_patient_blocking(patient)
+```
+
+</TabItem>
+
+</LanguageTabs>
+
+To retrieve the related persons of a patient, collect the `partnerId`s of the partnerships with
+`partnerType = RelatedPerson` and retrieve them by id:
+
+<LanguageTabs>
+
+<TabItem value="kotlin">
+
+```kotlin no-test
+import com.icure.cardinal.sdk.model.embed.PartnerType
+
+val relatedPersonIds = patient.partnerships
+	.filter { it.partnerType == PartnerType.RelatedPerson }
+	.mapNotNull { it.partnerId }
+val relatedPersons = sdk.relatedPerson.getRelatedPersons(relatedPersonIds)
+```
+
+</TabItem>
+
+<TabItem value="typescript">
+
+```typescript no-test
+import {PartnerType} from "@icure/cardinal-sdk"
+
+const relatedPersonIds = patient.partnerships
+	.filter((p) => p.partnerType == PartnerType.RelatedPerson)
+	.map((p) => p.partnerId)
+const relatedPersons = await sdk.relatedPerson.getRelatedPersons(relatedPersonIds)
+```
+
+</TabItem>
+
+<TabItem value="python">
+
+```python
+from cardinal_sdk.model import PartnerType
+
+related_person_ids = [
+	p.partner_id for p in patient.partnerships
+	if p.partner_type == PartnerType.RelatedPerson
+]
+related_persons = sdk.related_person.get_related_persons_blocking(related_person_ids)
+```
+
+</TabItem>
+
+</LanguageTabs>
+
+You can also search the related persons accessible to the current data owner by name or by identifier, using the
+[RelatedPersonFilters](/explanations/everything-about-filters#relatedpersonfilters) with the `filterRelatedPersonsBy`
+and `matchRelatedPersonsBy` methods of the `relatedPerson` api.
+
+</div>

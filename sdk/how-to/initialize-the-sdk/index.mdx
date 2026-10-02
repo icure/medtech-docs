@@ -321,7 +321,7 @@ In this case authentication is done in two steps: the first step will generate a
 via email or sms, then, once the user provides the received token, the second step will actually complete the
 authentication and initialize the SDK.
 
-To initialize the SDK with an authentication process, you need to use a different initialization method which also 
+To initialize the SDK with an authentication process, you need to use a different initialization method which also
 requires some additional parameters.
 
 <LanguageTabs>
@@ -468,7 +468,7 @@ Future<CardinalSdk> initializeMySdk(
 	// The user will receive a mail with the validation code required to proceed.
 	final validationCode = await askValidationCode();
 	return await authenticationStep.completeAuthentication(validationCode);
-} 
+}
 ```
 
 </TabItem>
@@ -782,7 +782,7 @@ This option uses the DataStore on Android and the UserDefaults on iOs.
 
 :::info
 
-The platform default will use local storage on web.  
+The platform default will use local storage on web.
 
 :::
 
@@ -1005,11 +1005,130 @@ keys using previously existing lost but verified keys of the user (:construction
 - `useHierarchicalDataOwners`: enables the hierarchical data owners key management when set to true.
 The SDK will expect to have keys for the [data owners parents](/how-to/share-data-with-many-users) (if any).
 
+<div className="proofread">
+
+### Ignore unknown fields
+
+By default, when the SDK deserializes data coming from the backend or from the decrypted content of an entity, it fails
+if the data contains fields that are not part of the data model. This can happen, for example, if data was created
+using third parties SDK, or if the encrypted content of an entity was created with a customized data model.
+
+You can make the SDK ignore these unknown fields instead, by setting the `ignoreUnknownFields` option to true.
+
+:::caution
+
+Modifying an entity where some fields were ignored during deserialization will result in the loss of the data in those
+fields. If the ignored fields come from the encrypted content of an entity, you can provide a `jsonPatcher` in the SDK
+options to specify how the unknown fields should be migrated instead.
+
+:::
+
+:::note
+
+In Kotlin and TypeScript, SDK versions older than 2.10.0 called this option `lenientJson`, and it only applied to the
+data coming from the backend, not to the decrypted content of entities.
+
+In Python the option was called `lenient_json` up to SDK 2.11.0, and is called `ignoreUnknownFields` since 2.12.0
+(note the camelCase spelling: `SdkOptions(ignoreUnknownFields=True)`).
+
+:::
+
+### Discard malformed entities in list reads
+
+By default, if a single entity returned by a list or page read can't be decoded, for example because one of its fields
+has an unexpected type, the whole read fails. This corresponds to the `Strict` entity list decoding strategy.
+
+With the `DiscardMalformed` strategy the SDK drops the entities that can't be decoded instead, and calls the handler
+you provide once for each dropped entity. The handler receives a `MalformedEntity` with:
+- `entityType`: the serial name of the expected type, e.g. `com.icure.cardinal.sdk.model.EncryptedPatient`.
+- `entityId`: the id of the entity, if it could be read from the raw json.
+- `json`: the raw entity as returned by the backend.
+- `error`: the decoding error (an `IllegalArgumentException` in Kotlin, the error message in TypeScript).
+- `requestUrl`: the url of the request that returned the entity.
+
+Keep in mind that:
+- Only the list and page reads of stored entities (get by ids, filter, find, list, ...) are affected: these methods may
+  return fewer entities than requested, and pages may contain fewer rows than their limit.
+- Single-entity reads, write operations and the entities used internally by the cryptographic layer are always decoded
+  strictly.
+- Only type mismatches inside valid json are recoverable: a response that is not valid json still makes the request fail.
+- If the handler throws, the request fails.
+
+:::caution
+
+The `json` of a malformed entity contains all its non-encrypted data, including personal data: don't log it as is.
+Log the `entityType` and `entityId` instead.
+
+:::
+
+:::note
+
+This option is available since SDK 2.13.4 in Kotlin and since 2.13.6 in TypeScript. TypeScript versions 2.13.4 and
+2.13.5 had an `onMalformedEntity` callback option instead, which was replaced by `entityListDecodingStrategy` in 2.13.6.
+
+The option is not available in the Python and Dart SDKs.
+
+:::
+
+<LanguageTabs>
+
+<TabItem value="kotlin">
+
+The `entityListDecodingStrategy` option is available on `SdkOptions`, `BasicSdkOptions`, `UnboundBasicSdkOptions` and
+`AnonymousSdkOptions`.
+
+```kotlin test-YAAA
+import com.icure.cardinal.sdk.options.EntityListDecodingStrategy
+import com.icure.cardinal.sdk.options.SdkOptions
+
+val discardingOptions = SdkOptions(
+	entityListDecodingStrategy = EntityListDecodingStrategy.DiscardMalformed { entity ->
+		println("Discarded malformed ${entity.entityType} with id ${entity.entityId}: ${entity.error.message}")
+	}
+)
+```
+
+</TabItem>
+
+<TabItem value="typescript">
+
+```typescript test-YAAB
+import {EntityListDecodingStrategy, MalformedEntity, SdkOptions} from '@icure/cardinal-sdk'
+
+const discardingOptions: SdkOptions = {
+	entityListDecodingStrategy: new EntityListDecodingStrategy.DiscardMalformed((entity: MalformedEntity) => {
+		console.warn(`Discarded malformed ${entity.entityType} with id ${entity.entityId}: ${entity.error}`)
+	})
+}
+// The default behaviour
+const strictOptions: SdkOptions = {
+	entityListDecodingStrategy: EntityListDecodingStrategy.Strict
+}
+```
+
+</TabItem>
+
+</LanguageTabs>
+
+</div>
+
 ### Http client configuration (kotlin only)
 
+<div className="proofread">
+
 You can configure the ktor client used by the SDK perform requests to the backend through the `httpClient` property.
-If you configure the client you should also provide the configured Json serializer through the `httpClientJson` property,
-or there may be some inconsistencies in the behavior of the SDK.
+If you configure the client you must also provide the configured Json serializer through the `httpClientJson` property:
+since SDK 2.10.0 providing only one of the two properties fails with an `IllegalArgumentException` (previously, a custom
+`httpClient` without `httpClientJson` was accepted, but could cause inconsistencies in the behavior of the SDK).
+If you also set the `ignoreUnknownFields` option, its value must match the `ignoreUnknownKeys` configuration of the
+provided Json serializer.
+
+The custom kotlinx `Json` must use the Cardinal serializers module (`serializersModule = Serialization.CardinalSerializerModule`,
+from `com.icure.cardinal.sdk.utils.Serialization`). The simplest way is to start from one of the SDK configurations, for
+example `Json(Serialization.json) { ... }`. Note that `Serialization.lenientJson` has `ignoreUnknownKeys = true`, so
+if you start from it any `ignoreUnknownFields` value you set must be true.
+
+</div>
 
 If you don't provide a custom client the SDK uses a client shared across all instances of the SDK. If you need to
 close this client you can use the `CardinalSdk.closeSharedClient` method.

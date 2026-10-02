@@ -148,8 +148,123 @@ sdk = CardinalSdk(
 
 #### Configure keypairs for the parent data owners
 
-Healthcare parties can't create keypairs for their parents: the initialization of the keypairs for a parent data owner
-can instead be done by an administrator of the organization.
+<div className="proofread">
+
+Healthcare parties can't create keypairs for their parents: the initial keypair of a parent data owner has to be
+created by an administrator of the organization.
+
+Once the parent has a keypair, however, a child data owner whose SDK already has access to it can distribute it to the
+other children of the same parent, without any further intervention of the administrator.
+Since SDK 2.3.0, this is done using the `createRecoveryInfoForAvailableParentKeyPairs` method of the recovery API.
+This method works like `createRecoveryInfoForAvailableKeyPairs` (see
+[keys backup representation](/how-to/key-management#keys-backup-representation)): it stores the keypairs of the parent
+encrypted on the Cardinal backend and returns the recovery key that decrypts them.
+The difference is that the recovery data is created for the parent data owner instead of the current data owner, so
+any other child of `parentId` can use the recovery key to get the parent keypairs.
+
+- Only the parent keypairs that are available to the SDK of the current user and that are verified (or created on the
+  current device) are included in the recovery data. The SDK must be initialized with hierarchical data owners, and
+  `parentId` must be a (direct or indirect) parent of the current data owner, otherwise the method fails with an
+  `IllegalArgumentException`. The method also fails if none of the available keypairs can be included.
+- If `includeAncestorKeys` is `true`, the recovery data also includes the available keypairs of the parents of
+  `parentId`.
+- As for any recovery data, you can limit its lifetime with `lifetimeSeconds` and choose the size of the recovery key
+  (or provide a pre-generated key) with `recoveryKeyOptions`.
+- The user creating the recovery data needs the `RecoveryDataManagement.ExtendedCreate.ForParent` permission (or a
+  stronger one), and the users that will use the recovery key need the
+  `RecoveryDataManagement.ExtendedRead.ForParent` permission.
+
+:::warning
+
+The recovery key gives access to the private keys of the parent data owner: it must be kept secret, and shared only
+with other children of the same parent.
+
+:::
+
+<LanguageTabs>
+
+<TabItem value="kotlin">
+
+```kotlin test-YIAA
+import com.icure.cardinal.sdk.CardinalSdk
+import com.icure.cardinal.sdk.crypto.entities.RecoveryKeyOptions
+import com.icure.cardinal.sdk.crypto.entities.RecoveryKeySize
+
+suspend fun createParentKeysRecoveryKey(
+	sdk: CardinalSdk,
+	parentId: String
+): String {
+	val recoveryKey = sdk.recovery.createRecoveryInfoForAvailableParentKeyPairs(
+		parentId = parentId,
+		// The recovery data is deleted automatically after 1 week
+		lifetimeSeconds = 7 * 24 * 60 * 60,
+		recoveryKeyOptions = RecoveryKeyOptions.Generate(RecoveryKeySize.Bytes32),
+	)
+	// Share this value only with other children of the parent
+	return recoveryKey.asBase32()
+}
+```
+
+</TabItem>
+
+<TabItem value="typescript">
+
+```typescript test-YIAB
+import {
+	CardinalSdk,
+	RecoveryKeyOptions,
+	RecoveryKeySize
+} from "@icure/cardinal-sdk";
+
+async function createParentKeysRecoveryKey(sdk: CardinalSdk, parentId: string): Promise<string> {
+	const recoveryKey = await sdk.recovery.createRecoveryInfoForAvailableParentKeyPairs(parentId, {
+		// The recovery data is deleted automatically after 1 week
+		lifetimeSeconds: 7 * 24 * 60 * 60,
+		recoveryKeyOptions: new RecoveryKeyOptions.Generate({
+			recoveryKeySize: RecoveryKeySize.Bytes32,
+		}),
+	})
+	// Share this value only with other children of the parent
+	return recoveryKey.asBase32()
+}
+```
+
+</TabItem>
+
+<TabItem value="python">
+
+```python
+from cardinal_sdk import CardinalSdk
+from cardinal_sdk.model import RecoveryKeyOptionsGenerate, RecoveryKeySize
+
+def create_parent_keys_recovery_key(sdk: CardinalSdk, parent_id: str) -> str:
+	recovery_key = sdk.recovery.create_recovery_info_for_available_parent_key_pairs_blocking(
+		parent_id=parent_id,
+		# The recovery data is deleted automatically after 1 week
+		lifetime_seconds=7 * 24 * 60 * 60,
+		recovery_key_options=RecoveryKeyOptionsGenerate(RecoveryKeySize.Bytes32),
+	)
+	# Share this value only with other children of the parent
+	return recovery_key.as_base_32()
+```
+
+</TabItem>
+
+</LanguageTabs>
+
+The other children of the parent use the recovery key in the same way as a recovery key for their own keys: when their
+SDK is initialized with hierarchical data owners and the keys of the parent are missing, the SDK asks the crypto
+strategies to recover them, and you can pass the recovery key to `keyPairRecoverer.recoverWithRecoveryKey`, as shown in
+[keys backup representation](/how-to/key-management#keys-backup-representation).
+The recovered keypairs are then stored by the SDK like any other recovered key.
+
+If multiple children have to use the same recovery key, make sure to pass `autoDelete = false` to
+`recoverWithRecoveryKey`, otherwise the recovery data is deleted after the first successful use.
+In this case, you should give the recovery data a limited lifetime or delete it with `purgeRecoveryInfo` once it is no
+longer needed.
+Alternatively, you can create a different recovery key for each child.
+
+</div>
 
 ### Sharing data with parents and siblings
 

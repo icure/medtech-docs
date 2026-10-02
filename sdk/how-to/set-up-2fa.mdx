@@ -9,14 +9,25 @@ context (:construction:).
 
 ## Set up 2FA
 
-To enable 2FA for a user, you need to specify the length of the OTP that the backend should expect and the key used to
-generate and verify the OTP. The key should be generated using a Sha256-based HMAC algorithm and encoded as a Base32
-string.
+<div className="proofread">
+
+To enable 2FA for a user, you need to specify the length of the OTP that the backend should expect, the key used to
+generate and verify the OTP, and a valid OTP generated with the provided configuration at the current time. The OTP is
+used by the backend to verify that the provided key is correct before enabling the 2FA. The key should be encoded as a
+Base32 string.
+
+By default, the OTPs are generated and verified using a Sha1-based HMAC algorithm, as many authenticator apps still do
+not support other algorithms. You can choose a different algorithm (`Sha256` or `Sha512`) through the optional
+`algorithm` parameter of `Enable2faRequest`.
+
+</div>
 
 :::note
 Enabling the 2FA for a user is a security-critical operation that requires the permission to edit the user and an
 [elevated security context](/how-to/initialize-the-sdk/authentication-with-secret-provider#sensitive-operations).
 :::
+
+<div className="proofread">
 
 <LanguageTabs>
 
@@ -28,8 +39,16 @@ import com.icure.kotp.Totp
 
 // val userId = The id of the user
 val otpLength = 8
-// val otpSecret = A Base32-encoded HMAC-Sha256 key
-sdk.user.enable2faForUser(userId, Enable2faRequest(otpSecret, otpLength))
+// val otpSecret = A Base32-encoded HMAC key
+// val currentOtp = An OTP generated with otpSecret at the current time, e.g. using a TOTP library
+sdk.user.enable2faForUser(
+	userId,
+	Enable2faRequest(
+		secret = otpSecret,
+		otpLength = otpLength,
+		otp = currentOtp
+	)
+)
 ```
 
 </TabItem>
@@ -41,8 +60,9 @@ import {Enable2faRequest} from "@icure/cardinal-sdk";
 
 // const userId = The id of the user
 const otpLength = 8
-// const otpSecret = A Base32-encoded HMAC-Sha256 key
-await sdk.user.enable2faForUser(userId, new Enable2faRequest({ secret: otpSecret, otpLength}))
+// const otpSecret = A Base32-encoded HMAC key
+// const currentOtp = An OTP generated with otpSecret at the current time, e.g. using a TOTP library
+await sdk.user.enable2faForUser(userId, new Enable2faRequest({ secret: otpSecret, otpLength, otp: currentOtp }))
 ```
 
 </TabItem>
@@ -54,13 +74,22 @@ from cardinal_sdk.model import Enable2faRequest
 
 # user_id = The id of the user
 otp_length = 8
-# otp_secret =  A Base32-encoded HMAC-Sha256 key
-sdk.user.enable_2fa_for_user_blocking(user_id, Enable2faRequest(otp_length, otp_secret))
+# otp_secret = A Base32-encoded HMAC key
+# current_otp = An OTP generated with otp_secret at the current time, e.g. using a TOTP library
+sdk.user.enable2fa_for_user_blocking(
+	user_id,
+	Enable2faRequest(secret=otp_secret, otp_length=otp_length, otp=current_otp)
+)
 ```
 
 </TabItem>
 
 </LanguageTabs>
+
+You can check whether a user has 2FA enabled for password login through the read-only `uses2fa` field of the user's
+[systemMetadata](/explanations/data-model/user#systemmetadata).
+
+</div>
 
 ## Use 2FA with the Smart Authentication Manager
 
@@ -188,8 +217,24 @@ const sdk = await CardinalSdk.initialize(
 
 </LanguageTabs>
 
+<div className="proofread">
+
+:::note
+
+Since SDK 2.6.0, initializing the SDK with only a password for a user that has 2FA enabled does not fail anymore:
+the SDK asks the secret provider for the OTP when it performs its first authenticated request. Since the SDK already
+performs authenticated requests during the initialization (for example, to retrieve the current data owner), this
+happens while `initialize` is still running: your secret provider must be able to prompt the user for the OTP at that
+point.
+
+:::
+
+</div>
+
 ## Disable 2FA
 The two-factor authentication configuration can be also removed from a user:
+
+<div className="proofread">
 
 <LanguageTabs>
 
@@ -215,12 +260,14 @@ await sdk.user.disable2faForUser(userId)
 
 ```python
 # user_id = The id of the user
-sdk.user.disable_2fa_for_user_blocking(user_id)
+sdk.user.disable2fa_for_user_blocking(user_id)
 ```
 
 </TabItem>
 
 </LanguageTabs>
+
+</div>
 
 :::note
 Disabling the 2FA for a user is a security-critical operation that requires the permission to edit the user and an
