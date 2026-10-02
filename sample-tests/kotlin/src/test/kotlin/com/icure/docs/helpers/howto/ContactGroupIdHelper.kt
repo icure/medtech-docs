@@ -13,8 +13,8 @@ import com.icure.cardinal.sdk.model.embed.Substanceproduct
 import com.icure.cardinal.sdk.model.embed.TimeSeries
 import com.icure.cardinal.sdk.options.AuthenticationMethod
 import com.icure.cardinal.sdk.storage.impl.FileStorageFacade
-import java.util.UUID
 import kotlin.random.Random
+import kotlin.uuid.Uuid
 
 object ContactGroupIdHelper {
 
@@ -51,7 +51,7 @@ object ContactGroupIdHelper {
 
     private suspend fun createPatient(visitingDoctorSdk: CardinalSdk): DecryptedPatient {
         val patientToCreate = DecryptedPatient(
-            id = UUID.randomUUID().toString(),
+            id = Uuid.random().toString(),
             firstName = "Rupert",
             lastName = "Venables",
         )
@@ -62,7 +62,7 @@ object ContactGroupIdHelper {
 
     private fun createServices(): Triple<DecryptedService, DecryptedService, DecryptedService> {
         val bloodPressureService = DecryptedService(
-            id = UUID.randomUUID().toString(),
+            id = Uuid.random().toString(),
             label = "Blood pressure",
             valueDate = 20240920154600,
             content = mapOf(
@@ -77,7 +77,7 @@ object ContactGroupIdHelper {
 
         val ecgSignal = List(10) { Random.nextInt(0, 100) / 100.0 }
         val heartRateService = DecryptedService(
-            id = UUID.randomUUID().toString(),
+            id = Uuid.random().toString(),
             label = "Heart rate",
             valueDate = 20240920154600,
             content = mapOf(
@@ -90,7 +90,7 @@ object ContactGroupIdHelper {
         )
 
         val medicationService = DecryptedService(
-            id = UUID.randomUUID().toString(),
+            id = Uuid.random().toString(),
             label = "Prescription",
             valueDate = 20240920154600,
             content = mapOf(
@@ -149,15 +149,15 @@ object ContactGroupIdHelper {
         val (bloodPressureService, heartRateService, medicationService) = createServices()
 
         // Create the contacts so the services can be found by filters
-        val groupId = UUID.randomUUID().toString()
+        val groupId = Uuid.random().toString()
         val contactForResearch = com.icure.cardinal.sdk.model.DecryptedContact(
-            id = UUID.randomUUID().toString(),
+            id = Uuid.random().toString(),
             openingDate = 20240920154460,
             groupId = groupId,
             services = setOf(heartRateService)
         )
         val contact = com.icure.cardinal.sdk.model.DecryptedContact(
-            id = UUID.randomUUID().toString(),
+            id = Uuid.random().toString(),
             closingDate = 20240920164460,
             groupId = groupId,
             services = setOf(bloodPressureService, medicationService)

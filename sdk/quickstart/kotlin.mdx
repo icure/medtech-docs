@@ -6,15 +6,24 @@ To include the SDK in your kotlin project, you just need to add the dependency t
 
 ```bash
 dependencies {
-    implementation(group = "com.icure", name = "cardinal-sdk", version = "2.13.6")
+    implementation(group = "com.icure", name = "cardinal-sdk", version = "2.14.0")
 }
 ```
 
 The SDK is a Kotlin Multiplatform library supporting the following targets: JVM (Java 11+), Android, JS, iOS (`iosArm64`,
 `iosX64`, `iosSimulatorArm64`), macOS (`macosArm64`), Linux (`linuxX64`, `linuxArm64`) and Windows (`mingwX64`).
-## Template app
+
+:::note
+
+The Kotlin code samples of this documentation generate entity ids with `Uuid.random()` from `kotlin.uuid`, which is
+stable since Kotlin 2.4.0. With Kotlin 2.0.20 to 2.3, the `Uuid` API is experimental: opt in with
+`@OptIn(ExperimentalUuidApi::class)` or with the `-opt-in=kotlin.uuid.ExperimentalUuidApi` compiler option.
+
+:::
 
 </div>
+
+## Template app
 
 We provide a [template for Kotlin](https://github.com/icure/cardinal-introductory-tutorial) that showcases several self-contained use cases that highlight the main features of the Cardinal SDK.
 

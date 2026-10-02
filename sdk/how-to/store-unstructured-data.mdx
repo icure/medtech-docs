@@ -18,12 +18,12 @@ To upload an Attachment, first you have to create a Document:
 
 ```kotlin test-AACU
 import com.icure.cardinal.sdk.model.DecryptedDocument
-import java.util.UUID
+import kotlin.uuid.Uuid
 
 val document = sdk.document.createDocument(
 	sdk.document.withEncryptionMetadataUnlinked(
 		DecryptedDocument(
-			id = UUID.randomUUID().toString(),
+			id = Uuid.random().toString(),
 			name = "My medical document"
 		),
 		null

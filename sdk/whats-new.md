@@ -9,9 +9,14 @@ title: What's new
 
 This page lists what each Cardinal SDK release has added, newest first. Changes that can break existing code are
 marked **Breaking** and come with migration instructions in
-[Migrating between SDK versions](./how-to/migrating-between-sdk-versions.md).
+[Migration](./migration.md).
 
 Releases that only contain internal, build or CI changes are not listed.
+
+## 2.14.0 — 2026-10-01
+
+- **Breaking (TypeScript and Kotlin/JS)**: the SDK requires Node.js 24 or later. The JavaScript build no longer uses
+  `eval`, so bundlers that reject it, such as Rolldown, can now bundle the SDK. See [Migration](./migration.md#2140).
 
 ## 2.13.6 — 2026-10-01
 
@@ -57,7 +62,7 @@ Releases that only contain internal, build or CI changes are not listed.
   complication of another condition.
 - New `HealthElement.asserters`: who asserts that the condition is true (FHIR asserter): a patient, a healthcare
   party or a related person. Asserters are encrypted by default.
-- See [Health element](./explanations/data-model/healthelement.mdx). These fields are not yet available in the
+- See [HealthElement](./explanations/data-model/healthelement.mdx). These fields are not yet available in the
   Dart SDK.
 
 ## 2.12.1 — 2026-08-03
@@ -68,7 +73,7 @@ Releases that only contain internal, build or CI changes are not listed.
 ## 2.12.0 — 2026-07-30
 
 - New `RelatedPerson` entity and `sdk.relatedPerson` API, with `RelatedPersonFilters`, to store a patient's
-  relatives and other contact persons. See [Related person](./explanations/data-model/relatedperson.mdx).
+  relatives and other contact persons. See [RelatedPerson](./explanations/data-model/relatedperson.mdx).
 - New `Partnership.partnerType` (`PartnerType`) to link a patient to a related person.
 - Python: the `lenient_json` option is renamed to `ignoreUnknownFields` (see 2.10.0).
 

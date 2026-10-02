@@ -2,7 +2,7 @@ package com.icure.docs.helpers.howto
 
 import com.icure.cardinal.sdk.CardinalSdk
 import com.icure.cardinal.sdk.model.DecryptedDocument
-import java.util.UUID
+import kotlin.uuid.Uuid
 
 object StoreUnstructuredDataHelper {
 
@@ -10,7 +10,7 @@ object StoreUnstructuredDataHelper {
         return sdk.document.createDocument(
             sdk.document.withEncryptionMetadataUnlinked(
                 DecryptedDocument(
-                    id = UUID.randomUUID().toString(),
+                    id = Uuid.random().toString(),
                     name = "My medical document"
                 ),
                 null
@@ -35,8 +35,8 @@ object StoreUnstructuredDataHelper {
     private suspend fun createDocumentWithAllAttachments(sdk: CardinalSdk): Triple<DecryptedDocument, String, String> {
         val (documentWithMainAttachment, _) = createDocumentWithAttachment(sdk)
         val image = kotlin.random.Random.nextBytes(100)
-        val attachmentId = "medical-image-${UUID.randomUUID()}"
-        val decryptedAttachmentId = "decrypted-medical-image-${UUID.randomUUID()}"
+        val attachmentId = "medical-image-${Uuid.random()}"
+        val decryptedAttachmentId = "decrypted-medical-image-${Uuid.random()}"
         val documentWithSecondaryAttachment = sdk.document.encryptAndSetSecondaryAttachment(
             documentWithMainAttachment, attachmentId, listOf("public.tiff"), image
         ).let { sdk.document.decrypt(it) }

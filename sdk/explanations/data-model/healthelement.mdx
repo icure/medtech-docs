@@ -173,7 +173,7 @@ import com.icure.cardinal.sdk.model.base.Identifier
 import com.icure.cardinal.sdk.model.embed.AsserterType
 import com.icure.cardinal.sdk.model.embed.HealthElementAsserter
 import com.icure.cardinal.sdk.model.embed.HealthElementQualifiedLink
-import com.icure.kryptom.crypto.defaultCryptoService
+import kotlin.uuid.Uuid
 
 suspend fun createComplication(
 	sdk: CardinalSdk,
@@ -182,7 +182,7 @@ suspend fun createComplication(
 ): DecryptedHealthElement {
 	val healthElement = sdk.healthElement.withEncryptionMetadata(
 		DecryptedHealthElement(
-			id = defaultCryptoService.strongRandom.randomUUID(),
+			id = Uuid.random().toString(),
 			descr = "Diabetic retinopathy",
 			asserters = listOf(
 				// Self-reported by the patient

@@ -12,7 +12,7 @@ import com.icure.cardinal.sdk.model.embed.DecryptedService
 import com.icure.cardinal.sdk.model.embed.Measure
 import com.icure.cardinal.sdk.utils.pagination.PaginatedListIterator
 import java.io.ByteArrayInputStream
-import java.util.UUID
+import kotlin.uuid.Uuid
 
 object _3SearchingDataHelper {
     private var patient: Patient? = null
@@ -24,7 +24,7 @@ object _3SearchingDataHelper {
         val testPatient = sdk.patient.createPatient(
             sdk.patient.withEncryptionMetadata(
                 DecryptedPatient(
-                    id = UUID.randomUUID().toString(),
+                    id = Uuid.random().toString(),
                     firstName = "Annabelle",
                     lastName = "Hall",
                 )
@@ -41,7 +41,7 @@ object _3SearchingDataHelper {
                 val testPatient = sdk.patient.createPatient(
                     sdk.patient.withEncryptionMetadata(
                         DecryptedPatient(
-                            id = UUID.randomUUID().toString(),
+                            id = Uuid.random().toString(),
                             firstName = "Annabelle",
                             lastName = "Hall",
                         )
@@ -65,7 +65,7 @@ object _3SearchingDataHelper {
             val testPatient = sdk.patient.createPatient(
                 sdk.patient.withEncryptionMetadata(
                     DecryptedPatient(
-                        id = UUID.randomUUID().toString(),
+                        id = Uuid.random().toString(),
                         firstName = "Annabelle",
                         lastName = "Hall",
                     )
@@ -75,11 +75,11 @@ object _3SearchingDataHelper {
         }
         // Create a contact linked to the patient so filter has results
         val contact = DecryptedContact(
-            id = UUID.randomUUID().toString(),
+            id = Uuid.random().toString(),
             descr = "Test contact",
             services = setOf(
                 DecryptedService(
-                    id = UUID.randomUUID().toString(),
+                    id = Uuid.random().toString(),
                     label = "Test service",
                     identifier = listOf(Identifier(system = "cardinal", value = "bloodPressure")),
                     content = mapOf(
