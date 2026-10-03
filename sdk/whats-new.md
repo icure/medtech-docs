@@ -3,8 +3,6 @@ slug: /whats-new
 title: What's new
 ---
 
-<div className="proofread">
-
 # What's new
 
 This page lists what each Cardinal SDK release has added, newest first. Changes that can break existing code are
@@ -150,5 +148,3 @@ Releases that only contain internal, build or CI changes are not listed.
 
 - New `user.modifyUserPassword`, `modifyUserEmail` and `modifyUserMobilePhone`, which don't need the user revision
   and work with a smart authentication provider. See [User](./explanations/data-model/user.mdx).
-
-</div>

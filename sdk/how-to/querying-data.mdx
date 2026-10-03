@@ -47,7 +47,6 @@ hcpWithName = HealthcarePartyFilters.by_name("joh")
 
 </LanguageTabs>
 
-
 :::info
 
 In this page we're showing how to use filter options for querying data, but they're also used in other contexts.
@@ -386,16 +385,12 @@ If you want to retrieve sorted data using sortable filter options you can use th
 of the filter/match method. If you don't need sorted data, you should always prefer using the standard version of
 the filter/match method, as it may be faster, depending on the actual query.
 
-<div className="proofread">
-
 :::caution
 
 Starting from Cardinal SDK 2.6.0 many filter options that used to be sortable no longer are. You can find the current
 sortability of each filter option in [Everything about filters](/explanations/everything-about-filters).
 
 :::
-
-</div>
 
 :::note
 
@@ -412,8 +407,6 @@ sortability of the other provided options. Union filter options are never sortab
 
 For example, you can create a filter that gets all diagnoses (health element) of long or acute covid for a certain patient,
 sorting from most to least recent:
-
-<div className="proofread">
 
 <LanguageTabs>
 
@@ -517,8 +510,6 @@ def get_sorted_acute_or_long_covid_diagnoses_for_patient(sdk: CardinalSdk, patie
 
 </LanguageTabs>
 
-</div>
-
 ## Cross-entity queries
 
 Sometimes you need to perform queries that span across multiple types of entities.
@@ -610,8 +601,6 @@ Note that this requires that the user performing the query has access to all the
 obtained from the first query.
 If not, some items will be missing from the final result.
 
-<div className="proofread">
-
 ### Finding the patient of a service
 
 Services are embedded in contacts, so the link to their patient is stored in the encrypted metadata of the contact.
@@ -678,8 +667,6 @@ def get_patient_of_service(sdk: CardinalSdk, service: DecryptedService) -> Optio
 </TabItem>
 
 </LanguageTabs>
-
-</div>
 
 ### Cross-entity queries with data denormalization.
 

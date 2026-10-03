@@ -222,8 +222,6 @@ Encryptable entities contain sensitive data and are encrypted on the client side
 Only Data Owners can create, share, retrieve, or delete these entities. Even if a non-Data Owner has permission to
 access an entity (e.g., an admin), they will only have access to the unencrypted portion of the data.
 
-<div className="proofread">
-
 - [**Contact**](/explanations/data-model/contact): a Contact is an encryptable entity that represents a situation that involves a patient where
 medical data is created. Usually it involves a doctor (healthcare party), like in the case of a medical examination.
 - [**Document**](/explanations/data-model/document): a Document is an encryptable entity that is used to store a medical document in any format.
@@ -240,8 +238,6 @@ is neither a patient nor a healthcare party, such as a contact person, a caregiv
 Differently from the other person entities, a RelatedPerson cannot be linked to a User and is not a Data Owner.
 - [**Topic**](/explanations/data-model/topic): Used with the Message entity to support encrypted conversations
 between users.
-
-</div>
 
 ## Nested Entities
 
@@ -261,7 +257,6 @@ and represent an instance of medical data collected in it. Multiple Services can
 multiple measurements are taken in the same session.
 - [**SubContact**](/explanations/data-model/subcontact): a SubContact is an encryptable entity that is embedded into
 a Contact and can provide additional medical context to it and to the Service it contains.
-
 
 ## Shared Fields
 

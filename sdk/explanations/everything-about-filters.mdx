@@ -27,8 +27,6 @@ For more details, see [Data owners and access control](/explanations/end-to-end-
 ## Sorting
 Some filters return `SortableFilterOptions` (or `BaseSortableFilterOptions`) that can be used to sort results by specific criteria. The sorting rules are documented in the tables below.
 
-<div className="proofread">
-
 :::caution Sortability changes in SDK 2.6.0
 
 Starting from Cardinal SDK 2.6.0 many filter factory methods are no longer sortable: their return type changed from
@@ -43,8 +41,6 @@ variant of the method (for example `filterPatientsBy` instead of `filterPatients
 the current sortability of each method.
 
 :::
-
-</div>
 
 ## Combining filters
 
@@ -257,8 +253,6 @@ Methods with no data-owner scoping are marked with **—** in the Scoping column
 
 ### PatientFilters
 
-<div className="proofread">
-
 | Method                                  | Key parameters                               | Return type             | Sortable? | Sort order  |
 |-----------------------------------------|----------------------------------------------|-------------------------|-----------|-------------|
 | `allPatientsForSelf`                    | —                                            | `FilterOptions`         | No        | —           |
@@ -280,11 +274,7 @@ It is also the only sortable patient filter since SDK 2.6.0.
 The `ForDataOwner` variants for the other methods also exist (e.g. `byFuzzyNameForDataOwner` accepts a `dataOwnerId` + `searchString`).
 :::
 
-</div>
-
 ### ContactFilters
-
-<div className="proofread">
 
 | Method                                 | Key parameters                                                                    | Return type                 | Sortable? | Sort order          |
 |----------------------------------------|-----------------------------------------------------------------------------------|-----------------------------|-----------|---------------------|
@@ -302,11 +292,7 @@ The `ForDataOwner` variants for the other methods also exist (e.g. `byFuzzyNameF
 | `byPatientsSecretIdsForSelf`           | `secretIds`                                                                       | `FilterOptions`             | No        | —                   |
 | `byServiceIds`                         | `serviceIds`                                                                      | `BaseSortableFilterOptions` | Yes       | Input order         |
 
-</div>
-
 ### ServiceFilters
-
-<div className="proofread">
 
 | Method                                            | Key parameters                                                                                  | Return type                 | Sortable? | Sort order  |
 |---------------------------------------------------|-------------------------------------------------------------------------------------------------|-----------------------------|-----------|-------------|
@@ -422,11 +408,7 @@ def get_blood_pressure_measurements(
 
 </LanguageTabs>
 
-</div>
-
 ### HealthElementFilters
-
-<div className="proofread">
 
 | Method                                 | Key parameters                             | Return type                 | Sortable? | Sort order    |
 |----------------------------------------|--------------------------------------------|-----------------------------|-----------|---------------|
@@ -440,11 +422,7 @@ def get_blood_pressure_measurements(
 | `byPatientsOpeningDateForSelf`         | `patients`, `from?`, `to?`, `descending?`  | `SortableFilterOptions`     | Yes       | `openingDate` |
 | `byPatientSecretIdsOpeningDateForSelf` | `secretIds`, `from?`, `to?`, `descending?` | `SortableFilterOptions`     | Yes       | `openingDate` |
 
-</div>
-
 ### DocumentFilters
-
-<div className="proofread">
 
 | Method                                  | Key parameters                             | Return type             | Sortable? | Sort order |
 |-----------------------------------------|--------------------------------------------|-------------------------|-----------|------------|
@@ -456,8 +434,6 @@ def get_blood_pressure_measurements(
 | `byOwningEntitySecretIdsAndTypeForSelf` | `documentType`, `secretIds`                | `FilterOptions`         | No        | —          |
 | `byCodeForSelf`                         | `codeType`, `codeCode?`                    | `SortableFilterOptions` | Yes       | Code       |
 | `byTagForSelf`                          | `tagType`, `tagCode?`                      | `FilterOptions`         | No        | —          |
-
-</div>
 
 ### HealthcarePartyFilters
 
@@ -499,8 +475,6 @@ Healthcare party filters are not data-owner scoped — they all return `Base*` t
 
 #### MessageFilters
 
-<div className="proofread">
-
 | Method                              | Key parameters                                   | Return type             | Sortable? |
 |-------------------------------------|--------------------------------------------------|-------------------------|-----------|
 | `allMessagesForSelf`                | —                                                | `FilterOptions`         | No        |
@@ -516,8 +490,6 @@ Healthcare party filters are not data-owner scoped — they all return `Base*` t
 | `byTagForSelf`                      | `tagType`, `tagCode?`                            | `FilterOptions`         | No        |
 | `byInvoiceIds`                      | `invoiceIds`                                     | `BaseFilterOptions`     | No        |
 | `byParentIds`                       | `parentIds`                                      | `BaseFilterOptions`     | No        |
-
-</div>
 
 #### CalendarItemFilters
 
@@ -584,8 +556,6 @@ Healthcare party filters are not data-owner scoped — they all return `Base*` t
 |--------------------|-----------------|-----------------|-----------|
 | `allTopicsForSelf` | —               | `FilterOptions` | No        |
 | `byParticipant`    | `participantId` | `FilterOptions` | No        |
-
-<div className="proofread">
 
 #### InsuranceFilters
 
@@ -712,8 +682,6 @@ The filter api is not available in the Dart SDK yet.
 </TabItem>
 
 </LanguageTabs>
-
-</div>
 
 ---
 

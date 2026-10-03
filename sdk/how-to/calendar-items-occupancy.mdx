@@ -5,8 +5,6 @@ title: Compute appointment occupancy
 import TabItem from "@theme/TabItem";
 import {LanguageTabs} from "@site/src/components/LanguageTabs";
 
-<div className="proofread">
-
 # Compute appointment occupancy
 
 You can ask the backend to compute how many [calendar items](/explanations/data-model/calendaritem)
@@ -122,5 +120,3 @@ In TypeScript and Python the `extensionInDays` parameter is not defaulted: pass 
 Since the backend computes the occupancy from the unencrypted timing information of the calendar items and only returns
 aggregated counts, these methods do not require any decryption: they are also available on the base (crypto-less) SDK,
 and there are in-group variants that take the group id as first parameter.
-
-</div>

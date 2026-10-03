@@ -7,8 +7,6 @@ A HealthElement is an encryptable, root-level entity that represents a medical e
 it may represent an illness that lasts for a couple of days (e.g. a flu), a more prolonged state (e.g. pregnancy), or
 a permanent ailment (e.g. allergy).
 
-<div className="proofread">
-
 ## Fields Encrypted by Default
 By default, the following fields of this entity will be encrypted:
 - `descr`
@@ -18,11 +16,7 @@ By default, the following fields of this entity will be encrypted:
 - The `careTeamMemberType`, `healthcarePartyId` and `quality` fields in all the `careTeam` members.
 - The `name` and `comment` fields in all the `episodes`.
 
-</div>
-
 You can customize the encrypted fields as [explained in this how to](/how-to/initialize-the-sdk/configure-what-to-encrypt).
-
-<div className="proofread">
 
 :::warning
 
@@ -66,14 +60,10 @@ sdk = CardinalSdk(
 
 :::
 
-</div>
-
 ## Properties
 
 Below you will find an explanation of the most commonly used properties in the entity that are not among the
 [shared fields](/explanations/data-model/#shared-fields). For a full list, check the reference documentation (:construction:).
-
-<div className="proofread">
 
 ### asserters
 Available since SDK 2.13.0 (the shape described here is final since SDK 2.13.3). Encrypted by default.
@@ -94,8 +84,6 @@ the party played. Organisations (hospitals, practices, ...) are stored as health
 system and `value` the identifier of the party in that system.
 
 See the [example below](#example-asserters-and-qualified-links).
-
-</div>
 
 ### careTeam
 A collection of object that contain information about all the healthcare actor related to the condition of this 
@@ -136,8 +124,6 @@ It is encoded as a [FuzzyDateTime](/explanations/data-model/#fuzzydatetime).
 
 ### plansOfAction
 A collection of objects that contain information about all the healthcare approaches related to this HealthElement.
-
-<div className="proofread">
 
 ### qualifiedLinks
 Available since SDK 2.13.0. Not encrypted.
@@ -328,5 +314,3 @@ The `asserters` and `qualifiedLinks` fields are not available in the Dart SDK ye
 </TabItem>
 
 </LanguageTabs>
-
-</div>

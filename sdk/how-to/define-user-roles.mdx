@@ -11,13 +11,9 @@ The operations that a user can do on an entity are determined by two factors:
 This how-to focuses on assigning and removing roles from a user. You can read more about permissions and Data Owner
 users in [this explanation](/explanations/end-to-end-encryption/data-owners-and-access-control).
 
-<div className="proofread">
-
 ## Check user roles
 The user roles information are stored in the [systemMetadata](/explanations/data-model/user#systemmetadata) property.
 The fields of this property that are relevant for roles are:
-
-</div>
 
 - `isAdmin` is a boolean field that is `true` if the user is an admin.
 - `roles` is a set of the ids of all the roles assigned to the user.
@@ -151,8 +147,6 @@ sdk.user.reset_user_roles_blocking(userId)
 
 ## Creating custom roles
 
-<div className="proofread">
-
 You can create your own roles from the existing permissions using the `createRole` method in the `role` section of the
 SDK. You have to provide:
 
@@ -221,5 +215,3 @@ provide one). It comes **before** the `options` argument (containing `inheritsUp
 `inherits_up_to` in Python: check your existing `createRole` calls if you upgrade from an SDK version older than 2.5.0.
 
 :::
-
-</div>

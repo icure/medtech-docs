@@ -3,8 +3,6 @@ slug: /migration
 title: Migration
 ---
 
-<div className="proofread">
-
 # Migration
 
 This page lists the changes that may require you to update your code when you upgrade the Cardinal SDK, newest
@@ -144,5 +142,3 @@ The Kotlin Multiplatform library no longer publishes the `macosX64` target. A `l
 
 - 2.3.1: `Patient.preferredUserId` is removed.
 - 2.3.0: `group.createGroup` no longer takes a `role` parameter.
-
-</div>

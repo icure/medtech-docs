@@ -26,7 +26,6 @@ We will refer to the first kind of entities as "encryptable", and to the second 
 
 ## Creating new entities
 
-
 You can create non-encryptable entities by instantiating an instance of their model class and then passing it to the
 create method of the corresponding api, which "commits" the creation and saves the new entity in the backend.
 
@@ -194,8 +193,6 @@ the rest of the encryption metadata.
 
 For example, when you initialize the encryption metadata of a health element, you also have to pass the linked patient.
 
-<div className="proofread">
-
 <LanguageTabs>
 
 <TabItem value="kotlin">
@@ -273,8 +270,6 @@ def create_health_element_for_patient(
 
 </LanguageTabs>
 
-</div>
-
 :::info
 
 Refer to the [encrypted links explanation page](/explanations/end-to-end-encryption/encrypted-links) to learn more about how the
@@ -297,8 +292,6 @@ The entity with initialized metadata will copy its content from the base (as sho
 
 If not passed, the returned entity will only have the id and encryption metadata set, and you will have to modify it
 to add your content before commiting the entity creation.
-
-<div className="proofread">
 
 <LanguageTabs>
 
@@ -351,8 +344,6 @@ def create_patient(sdk: CardinalSdk, first_name: str, last_name: str) -> Decrypt
 </TabItem>
 
 </LanguageTabs>
-
-</div>
 
 #### Initial delegates for the entity {#initial-delegates}
 
@@ -449,8 +440,6 @@ def create_patient(
 </TabItem>
 
 </LanguageTabs>
-
-<div className="proofread">
 
 #### Fine-grained initial delegates {#fine-grained-initial-delegates}
 
@@ -600,8 +589,6 @@ default to `true` (full sharing, like `withEncryptionMetadata`), while in TypeSc
 explicitly.
 
 :::
-
-</div>
 
 #### Auto delegations {#auto-delegations}
 
@@ -1162,7 +1149,6 @@ The following table summarizes the behavior of the APIs' flavors.
 | Encrypted                   | Best-effort validation to verify that the entities don't contain any data which should be encrypted according to the configuration. Fails if some entity doesn't pass the validation. | Returns the entities as is.                                                                                            | You don't need the encrypted content of an entity                                                          |
 | Polymorphic (tryAndRecover) | Encrypts or validate the entity depending on the actual type. Fails if some entity can't be encrypted or doesn't pass validation.                                                     | Tries to decrypt the entities, any entity that can't be decrypted is returned as is.                                   | You don't know if the user can decrypt the entity but you want to display as much information as possible. |
 
-
 :::caution
 
 The validation of encrypted input performed by the encrypted and polymorphic flavors of the apis are best-effort and
@@ -1363,7 +1349,6 @@ This configuration option uses the same values as the `shareEncryptionKey`
 When present, the default configuration for this option is always `ShareMetadataBehaviour.IfAvailable`.
 
 ### Example
-
 
 <LanguageTabs>
 

@@ -174,7 +174,6 @@ val auth = AuthenticationMethod.UsingCredentials(UsernamePassword("username", "p
 
 </TabItem>
 
-
 <TabItem value="typescript">
 
 ```typescript test-NUQI
@@ -895,7 +894,6 @@ implement your own.
 The implementations currently provided by the SDK are wrappers around a standard storage facade that use different
 encoding solutions for the keys (for example, encoding the key as a JsonWebKey then storing it using a `StorageFacade`).
 
-
 :::note
 
 Custom key storage facades aren't yet supported on the python SDK.
@@ -1005,8 +1003,6 @@ keys using previously existing lost but verified keys of the user (:construction
 - `useHierarchicalDataOwners`: enables the hierarchical data owners key management when set to true.
 The SDK will expect to have keys for the [data owners parents](/how-to/share-data-with-many-users) (if any).
 
-<div className="proofread">
-
 ### Ignore unknown fields
 
 By default, when the SDK deserializes data coming from the backend or from the decrypted content of an entity, it fails
@@ -1110,11 +1106,7 @@ const strictOptions: SdkOptions = {
 
 </LanguageTabs>
 
-</div>
-
 ### Http client configuration (kotlin only)
-
-<div className="proofread">
 
 You can configure the ktor client used by the SDK perform requests to the backend through the `httpClient` property.
 If you configure the client you must also provide the configured Json serializer through the `httpClientJson` property:
@@ -1127,8 +1119,6 @@ The custom kotlinx `Json` must use the Cardinal serializers module (`serializers
 from `com.icure.cardinal.sdk.utils.Serialization`). The simplest way is to start from one of the SDK configurations, for
 example `Json(Serialization.json) { ... }`. Note that `Serialization.lenientJson` has `ignoreUnknownKeys = true`, so
 if you start from it any `ignoreUnknownFields` value you set must be true.
-
-</div>
 
 If you don't provide a custom client the SDK uses a client shared across all instances of the SDK. If you need to
 close this client you can use the `CardinalSdk.closeSharedClient` method.

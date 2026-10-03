@@ -2,8 +2,6 @@
 title: Use the Cardinal MCP server
 ---
 
-<div className="proofread">
-
 # Use the Cardinal MCP server
 
 `@icure/cardinal-mcp-server` is a [Model Context Protocol](https://modelcontextprotocol.io) server for the Cardinal
@@ -135,5 +133,3 @@ regenerates the documentation manifest and the method registry in `generated/`; 
 checked out (for the Kotlin KDoc) and the matching `@icure/cardinal-sdk` in `node_modules`. See the
 [server's README](https://github.com/icure/cardinal-sdk/blob/main/cardinal-mcp-server/README.md) and its `CLAUDE.md`
 for the code layout and the release automation.
-
-</div>

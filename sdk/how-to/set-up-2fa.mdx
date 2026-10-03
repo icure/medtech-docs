@@ -9,8 +9,6 @@ context (:construction:).
 
 ## Set up 2FA
 
-<div className="proofread">
-
 To enable 2FA for a user, you need to specify the length of the OTP that the backend should expect, the key used to
 generate and verify the OTP, and a valid OTP generated with the provided configuration at the current time. The OTP is
 used by the backend to verify that the provided key is correct before enabling the 2FA. The key should be encoded as a
@@ -20,14 +18,10 @@ By default, the OTPs are generated and verified using a Sha1-based HMAC algorith
 not support other algorithms. You can choose a different algorithm (`Sha256` or `Sha512`) through the optional
 `algorithm` parameter of `Enable2faRequest`.
 
-</div>
-
 :::note
 Enabling the 2FA for a user is a security-critical operation that requires the permission to edit the user and an
 [elevated security context](/how-to/initialize-the-sdk/authentication-with-secret-provider#sensitive-operations).
 :::
-
-<div className="proofread">
 
 <LanguageTabs>
 
@@ -88,8 +82,6 @@ sdk.user.enable2fa_for_user_blocking(
 
 You can check whether a user has 2FA enabled for password login through the read-only `uses2fa` field of the user's
 [systemMetadata](/explanations/data-model/user#systemmetadata).
-
-</div>
 
 ## Use 2FA with the Smart Authentication Manager
 
@@ -217,8 +209,6 @@ const sdk = await CardinalSdk.initialize(
 
 </LanguageTabs>
 
-<div className="proofread">
-
 :::note
 
 Since SDK 2.6.0, initializing the SDK with only a password for a user that has 2FA enabled does not fail anymore:
@@ -229,12 +219,8 @@ point.
 
 :::
 
-</div>
-
 ## Disable 2FA
 The two-factor authentication configuration can be also removed from a user:
-
-<div className="proofread">
 
 <LanguageTabs>
 
@@ -266,8 +252,6 @@ sdk.user.disable2fa_for_user_blocking(user_id)
 </TabItem>
 
 </LanguageTabs>
-
-</div>
 
 :::note
 Disabling the 2FA for a user is a security-critical operation that requires the permission to edit the user and an

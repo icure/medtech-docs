@@ -23,8 +23,6 @@ Any of these field of the User entity is valid as login:
 
 As for the password, it is possible both to set a password (in the `passwordHash` field) or to use a [temporary token](/how-to/remember-me).
 
-<div className="proofread">
-
 ## Updating a user's login identifiers
 
 You can change the email, mobile phone, and password of a user with a regular `modifyUser`, but this requires the
@@ -119,8 +117,6 @@ def update_login_identifiers(sdk: CardinalSdk, user_id: str, new_email: str, new
 
 </LanguageTabs>
 
-</div>
-
 ## Roles
 The roles assigned to a User are stored in a nested object inside the `systemMetadata` property. It has 3 properties:
 
@@ -210,8 +206,6 @@ then the `healthcarePartyId` and `deviceId` fields should be null.
 A User where this field is not null is a **Data Owner** User.
 :::
 
-<div className="proofread">
-
 ### systemMetadata
 This field contains internal information about the User. Its properties are:
 
@@ -224,8 +218,6 @@ This field contains internal information about the User. Its properties are:
 - `verifiedMobilePhone` is a boolean field that is `true` if the mobile phone of the user has been verified.
 - `uses2fa` is a boolean field that is `true` if the user has [two-factor authentication](/how-to/set-up-2fa) enabled
   for login with password.
-
-</div>
 
 Any update to this property will be prohibited by the backend. To learn how to update the roles on a user, check this [how to](/how-to/define-user-roles).
 

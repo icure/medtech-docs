@@ -18,8 +18,6 @@ data starts and ends.
 Once a contact is closed (i.e. its `closingDate` is not null), it is a good practice not to modify it anymore. Instead,
 a new Contact should be created.
 
-<div className="proofread">
-
 ## Fields Encrypted by Default
 By default, the following fields of this entity will be encrypted:
 - `descr`
@@ -30,11 +28,7 @@ By default, the following fields of this entity will be encrypted:
 - `participants` (deprecated: only relevant when using the legacy SDK, ignored otherwise)
 - The Services in `service`, according to their [encryption configuration](/how-to/initialize-the-sdk/configure-what-to-encrypt#contact-service-and-service-content-encryption).
 
-</div>
-
 You can customize the encrypted fields as [explained in this how to](/how-to/initialize-the-sdk/configure-what-to-encrypt).
-
-<div className="proofread">
 
 :::note
 
@@ -43,8 +37,6 @@ include `participantList`: if you need the participants of your contacts to be e
 custom encrypted fields configuration for `contact` containing all the entries above.
 
 :::
-
-</div>
 
 ## Properties
 
