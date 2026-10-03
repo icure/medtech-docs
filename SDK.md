@@ -19,6 +19,7 @@
 - SDK Overview and purpose
 - What's new in each SDK release
 - Migration between SDK versions (breaking changes)
+- MCP server: using the SDK documentation and API from Claude, Codex and other AI agents
 
 ## Part 2: Quickstart Guides
 - Kotlin setup
@@ -64,7 +65,6 @@
 - Calendar items occupancy (appointment availability histograms)
 - Multi-group environment
 - Deleting user data
-- Using the Cardinal MCP server
 
 ## Part 5: Data Model Reference
 - Entity overview (base vs encryptable entities)
@@ -421,6 +421,283 @@ The Kotlin Multiplatform library no longer publishes the `macosX64` target. A `l
 
 ---
 
+<!-- Source: sdk/mcp-server.md -->
+
+# MCP Server
+
+`@icure/cardinal-mcp-server` is a [Model Context Protocol](https://modelcontextprotocol.io) (MCP) server for the
+Cardinal SDK. MCP is the open standard that AI assistants and coding agents use to call external tools: connect the
+server once, and Claude, Codex, Cursor, GitHub Copilot or an agent you build yourself can:
+
+- search and read the Cardinal SDK documentation (APIs, models, filters, tutorials and how-to guides), with no
+  account needed;
+- call the TypeScript SDK against a Cardinal backend on your behalf, after you log in with `cardinal_init`.
+
+The server runs locally, on your machine, and talks to the assistant over stdio. It is published on
+[npm](https://www.npmjs.com/package/@icure/cardinal-mcp-server) and its source lives in the
+[`cardinal-mcp-server`](https://github.com/icure/cardinal-sdk/tree/main/cardinal-mcp-server) folder of the SDK
+repository.
+
+## Why use it
+
+- **Answers that match your SDK version.** A model only knows what was in its training data: it may not know the
+  Cardinal SDK, or know an older version of it, and then writes calls to methods that look plausible but do not
+  exist. The server gives the assistant the documentation and the method signatures of the exact SDK release it was
+  generated from, so the assistant looks them up instead of guessing.
+- **The whole documentation, on demand.** The assistant searches every method of every API, the models, the filter
+  factories and the guides, and reads only the pages it needs. You no longer paste documentation into the
+  conversation.
+- **Try a call before you write the code.** Once logged in, the assistant runs real SDK calls against a backend:
+  check what a filter returns, look at an entity as the SDK decrypts it, inspect the keys of a data owner, or
+  reproduce a bug step by step.
+- **The same SDK as your application.** Calls go through `@icure/cardinal-sdk`, running on your machine: encryption,
+  decryption and access control behave as they do in your own code.
+- **One server for every assistant.** Any MCP client that can start a local process works with it, whether it is a
+  coding agent in your terminal or IDE, a desktop assistant, or an agent you build with the Claude Agent SDK or the
+  OpenAI Agents SDK.
+
+## Requirements
+
+- Node.js 24 or later (`npx` comes with it). Since version 2.14.0 the server depends on a Cardinal SDK that requires
+  Node.js 24, see [Migration](./migration.md#2140). Versions up to 2.13 run on Node.js 20.
+- For the operational tools only: the URL of a Cardinal backend (for example `https://api.icure.cloud`) and the
+  login and password of a user in it.
+
+The version of the server follows the SDK version it was generated from: `@icure/cardinal-mcp-server@2.14.0` serves
+the documentation and the method surface of SDK 2.14.0. The commands below always start the latest release; to make
+the assistant see the SDK version your project uses, replace the package name with
+`@icure/cardinal-mcp-server@<version>`.
+
+> **TIP: First start**
+The first time it runs, `npx` downloads the server and the Cardinal SDK, which takes longer than later starts. If a
+client gives up waiting for the server, raise its startup timeout, or install the server once with
+`npm install -g @icure/cardinal-mcp-server` and use `cardinal-mcp-server` as the command, with no arguments.
+
+
+## Connect Claude
+
+### Claude Code
+
+From the project where you want the server available:
+
+```bash
+claude mcp add cardinal -- npx -y @icure/cardinal-mcp-server
+```
+
+The default scope is `local`: the server is available to you, in this project only. Two other scopes exist:
+
+```bash
+# Everyone who clones the repository: writes .mcp.json at the repository root, commit it
+claude mcp add --scope project cardinal -- npx -y @icure/cardinal-mcp-server
+
+# You, in every project
+claude mcp add --scope user cardinal -- npx -y @icure/cardinal-mcp-server
+```
+
+The project scope produces this `.mcp.json`, which you can also write by hand:
+
+```json
+{
+  "mcpServers": {
+    "cardinal": {
+      "command": "npx",
+      "args": ["-y", "@icure/cardinal-mcp-server"]
+    }
+  }
+}
+```
+
+Check the connection with `claude mcp list`, or `/mcp` inside a Claude Code session. The tools then appear to Claude
+as `mcp__cardinal__search_documentation`, `mcp__cardinal__cardinal_init` and so on.
+
+### Claude Desktop
+
+Open the configuration file, add the same `mcpServers` entry, then restart Claude Desktop:
+
+- macOS: `~/Library/Application Support/Claude/claude_desktop_config.json`
+- Windows: `%APPDATA%\Claude\claude_desktop_config.json`
+
+```json
+{
+  "mcpServers": {
+    "cardinal": {
+      "command": "npx",
+      "args": ["-y", "@icure/cardinal-mcp-server"]
+    }
+  }
+}
+```
+
+Claude Desktop starts the server with a minimal environment. If the server does not appear, replace `"npx"` with
+the absolute path printed by `which npx` (macOS) or `where npx` (Windows).
+
+## Connect Codex
+
+The Codex CLI and the Codex IDE extension read their MCP servers from the same `~/.codex/config.toml`. Add the
+server from a terminal:
+
+```bash
+codex mcp add cardinal -- npx -y @icure/cardinal-mcp-server
+```
+
+or write the entry by hand:
+
+```toml
+[mcp_servers.cardinal]
+command = "npx"
+args = ["-y", "@icure/cardinal-mcp-server"]
+startup_timeout_sec = 60
+```
+
+Codex waits 10 seconds for a server to start by default, which the first `npx` download can exceed:
+`startup_timeout_sec` gives it more time. To share the server with everyone working on a repository, put the same
+entry in `.codex/config.toml` at the root of the project; Codex reads it once you trust the project. Check the
+connection with `codex mcp list`, or `/mcp` inside a Codex session.
+
+## Connect other agents
+
+Any MCP client that supports local (stdio) servers can start the Cardinal server: give it the command `npx` and
+the arguments `-y @icure/cardinal-mcp-server`.
+
+- **Cursor**: `.cursor/mcp.json` in the project, or `~/.cursor/mcp.json` for every project, with the same
+  `mcpServers` entry as [Claude Code](#claude-code).
+- **VS Code (GitHub Copilot agent mode)**: `.vscode/mcp.json` in the project. Its top-level key is `servers`, not
+  `mcpServers`:
+
+  ```json
+  {
+    "servers": {
+      "cardinal": {
+        "type": "stdio",
+        "command": "npx",
+        "args": ["-y", "@icure/cardinal-mcp-server"]
+      }
+    }
+  }
+  ```
+
+- **Other clients** (Gemini CLI, Windsurf, Zed, …): most of them accept the same `mcpServers` JSON entry. See their
+  documentation for the location of the file.
+
+### Agents you build
+
+Agent frameworks connect to MCP servers the same way. With the
+[Claude Agent SDK](https://code.claude.com/docs/en/agent-sdk/overview) for TypeScript:
+
+```typescript
+import { query } from '@anthropic-ai/claude-agent-sdk'
+
+for await (const message of query({
+  prompt: 'How do I share a patient with another healthcare party in the Cardinal TypeScript SDK?',
+  options: {
+    mcpServers: {
+      cardinal: { command: 'npx', args: ['-y', '@icure/cardinal-mcp-server'] },
+    },
+    allowedTools: ['mcp__cardinal__search_documentation'],
+  },
+})) {
+  if (message.type === 'result' && message.subtype === 'success') console.log(message.result)
+}
+```
+
+With the [OpenAI Agents SDK](https://openai.github.io/openai-agents-python/mcp/) for Python:
+
+```python
+import asyncio
+
+from agents import Agent, Runner
+from agents.mcp import MCPServerStdio
+
+
+async def main():
+    async with MCPServerStdio(
+        name="cardinal",
+        params={"command": "npx", "args": ["-y", "@icure/cardinal-mcp-server"]},
+    ) as cardinal:
+        agent = Agent(
+            name="Cardinal assistant",
+            instructions="Answer questions about the Cardinal SDK. Look up the documentation before answering.",
+            mcp_servers=[cardinal],
+        )
+        result = await Runner.run(agent, "How do I share a patient with another healthcare party?")
+        print(result.final_output)
+
+
+asyncio.run(main())
+```
+
+An agent that only answers questions about the SDK does not need the operational tools: allow it
+`search_documentation` alone, as `allowedTools` does in the Claude Agent SDK example.
+
+## What the assistant gets
+
+| Tool | Needs `cardinal_init` | Purpose |
+| --- | --- | --- |
+| `search_documentation` | no | Full-text search over the API, model, filter, tutorial and guide documentation |
+| `cardinal_init` | – | Logs in to a Cardinal backend and keeps the SDK instance for the rest of the session |
+| `cardinal_admin` | yes | Group, User, Role, Permission, System, Auth and Filter APIs |
+| `cardinal_data_owner` | yes | HealthcareParty, Patient and Device APIs, with a `flavour` of `decrypted`, `encrypted` or `tryAndRecover` |
+| `cardinal_crypto` | yes | Crypto, Recovery, ShamirKeysManager, DataOwner and CardinalMaintenanceTask APIs |
+| `cardinal_continue_iteration` | yes | Fetches the next page of a paginated result |
+
+The documentation is also exposed as MCP resources the assistant can read directly: `cardinal://docs/overview`,
+`cardinal://docs/api/{apiName}`, `cardinal://docs/model/{modelName}`, `cardinal://docs/filter/{entityName}`,
+`cardinal://docs/tutorial/{slug}` and `cardinal://docs/guide/{slug}`.
+
+## Using it
+
+Documentation questions work right away:
+
+> How do I share a patient with another healthcare party in the Cardinal TypeScript SDK?
+
+The assistant searches the documentation and reads `cardinal://docs/api/Patient` or the relevant how-to guide. The
+same applies when it writes code for you: in a coding agent, ask it to check the Cardinal documentation before it
+calls the SDK, for instance:
+
+> Write a function that creates a patient and shares it with the healthcare party whose id I pass. Check the
+> signatures in the Cardinal documentation first.
+
+To run operations, ask the assistant to log in first:
+
+> Initialise Cardinal against https://api.icure.cloud with the user alice@example.com and the password I will give you.
+
+This calls `cardinal_init`, which takes `baseUrl`, `username`, `password`, an optional `projectId` and a `storageDir`
+for the SDK's key storage (default `./cardinal-mcp-storage`, relative to the directory the server was started from).
+From then on the assistant can, for instance, list the patients of the current data owner, create an entity or
+inspect the keys of a data owner. Method parameters are passed by their declared name; a filter parameter is written
+as `{ "_factory": "<Entity>Filters.<method>", "<param>": ... }` using the factories listed under
+`cardinal://docs/filter/{entityName}` (see [Everything about filters](./explanations/everything-about-filters.mdx)).
+
+> **WARNING: Keep the credentials and the data you hand over in mind**
+Everything you type reaches the model, and so does every result the tools return, including the data the SDK
+decrypts for the assistant. The assistant can call any method the SDK exposes with the rights of the user you log in
+with.
+
+- Use a test group or a dedicated user with the least privileges that get the job done, never a production
+  administrator, and never a user with access to real patient data.
+- Keep tool-call approval on for the operational tools, so that you see each call before it runs.
+- The `storageDir` holds the user's private keys: point it outside your repository and do not commit it.
+
+
+## Running from source
+
+```bash
+git clone https://github.com/icure/cardinal-sdk.git
+cd cardinal-sdk/cardinal-mcp-server
+corepack enable
+yarn install
+yarn run build
+claude mcp add cardinal-dev -- node "$PWD/dist/index.js"
+```
+
+`yarn test` runs the suite (an in-memory MCP client against the real server, no network). `yarn run generate`
+regenerates the documentation manifest and the method registry in `generated/`; it needs the parent repository
+checked out (for the Kotlin KDoc) and the matching `@icure/cardinal-sdk` in `node_modules`. See the
+[server's README](https://github.com/icure/cardinal-sdk/blob/main/cardinal-mcp-server/README.md) and its `CLAUDE.md`
+for the code layout and the release automation.
+
+---
+
 
 ================================================================================
 # PART 2: QUICKSTART GUIDES
@@ -431,7 +708,6 @@ The Kotlin Multiplatform library no longer publishes the `macosX64` target. A `l
 # Kotlin
 
 To include the SDK in your kotlin project, you just need to add the dependency to your gradle configuration.
-
 
 ```bash
 dependencies {
@@ -472,7 +748,6 @@ Please proceed to the [Introductory Tutorial](/tutorial/basic/sdk-basic-tutorial
 
 # Typescript
 
-
 To use the Cardinal SDK in Typescript, you can install it using yarn:
 ```bash
 yarn add @icure/cardinal-sdk@2.14.0
@@ -482,10 +757,8 @@ You can also use npm:
 npm install @icure/cardinal-sdk@2.14.0
 ```
 
-
 We strongly recommend using [strict null checks](https://www.typescriptlang.org/tsconfig/#strictNullChecks) when 
 developing your application.
-
 
 > **note:**
 To use the Cardinal SDK on Node.js, you need Node.js 24 or greater (Node.js 19 or greater before SDK 2.14.0).
@@ -560,9 +833,7 @@ git clone https://github.com/icure/cardinal-introductory-tutorial.git
 cd cardinal-introductory-tutorial
 ```
 
-
 It is recommended to use a virtual environment, to avoid conflicting dependencies.
-
 
 ```python
 cd python
@@ -6436,7 +6707,6 @@ implement your own.
 The implementations currently provided by the SDK are wrappers around a standard storage facade that use different
 encoding solutions for the keys (for example, encoding the key as a JsonWebKey then storing it using a `StorageFacade`).
 
-
 > **note:**
 Custom key storage facades aren't yet supported on the python SDK.
 
@@ -6535,7 +6805,6 @@ keys using previously existing lost but verified keys of the user (:construction
 - `useHierarchicalDataOwners`: enables the hierarchical data owners key management when set to true.
 The SDK will expect to have keys for the [data owners parents](/how-to/share-data-with-many-users) (if any).
 
-
 ### Ignore unknown fields
 
 By default, when the SDK deserializes data coming from the backend or from the decrypted content of an entity, it fails
@@ -6629,7 +6898,6 @@ const strictOptions: SdkOptions = {
 
 ### Http client configuration (kotlin only)
 
-
 You can configure the ktor client used by the SDK perform requests to the backend through the `httpClient` property.
 If you configure the client you must also provide the configured Json serializer through the `httpClientJson` property:
 since SDK 2.10.0 providing only one of the two properties fails with an `IllegalArgumentException` (previously, a custom
@@ -6641,7 +6909,6 @@ The custom kotlinx `Json` must use the Cardinal serializers module (`serializers
 from `com.icure.cardinal.sdk.utils.Serialization`). The simplest way is to start from one of the SDK configurations, for
 example `Json(Serialization.json) { ... }`. Note that `Serialization.lenientJson` has `ignoreUnknownKeys = true`, so
 if you start from it any `ignoreUnknownFields` value you set must be true.
-
 
 If you don't provide a custom client the SDK uses a client shared across all instances of the SDK. If you need to
 close this client you can use the `CardinalSdk.closeSharedClient` method.
@@ -7894,7 +8161,6 @@ We will refer to the first kind of entities as "encryptable", and to the second 
 
 ## Creating new entities
 
-
 You can create non-encryptable entities by instantiating an instance of their model class and then passing it to the
 create method of the corresponding api, which "commits" the creation and saves the new entity in the backend.
 
@@ -8964,7 +9230,6 @@ The following table summarizes the behavior of the APIs' flavors.
 | Encrypted                   | Best-effort validation to verify that the entities don't contain any data which should be encrypted according to the configuration. Fails if some entity doesn't pass the validation. | Returns the entities as is.                                                                                            | You don't need the encrypted content of an entity                                                          |
 | Polymorphic (tryAndRecover) | Encrypts or validate the entity depending on the actual type. Fails if some entity can't be encrypted or doesn't pass validation.                                                     | Tries to decrypt the entities, any entity that can't be decrypted is returned as is.                                   | You don't know if the user can decrypt the entity but you want to display as much information as possible. |
 
-
 > **caution:**
 The validation of encrypted input performed by the encrypted and polymorphic flavors of the apis are best-effort and
 may not always be accurate.
@@ -9638,7 +9903,6 @@ If you want to retrieve sorted data using sortable filter options you can use th
 of the filter/match method. If you don't need sorted data, you should always prefer using the standard version of
 the filter/match method, as it may be faster, depending on the actual query.
 
-
 > **caution:**
 Starting from Cardinal SDK 2.6.0 many filter options that used to be sortable no longer are. You can find the current
 sortability of each filter option in [Everything about filters](/explanations/everything-about-filters).
@@ -9844,7 +10108,6 @@ def get_heart_rate_measurements(sdk: CardinalSdk) -> PaginatedListIterator[Decry
 Note that this requires that the user performing the query has access to all the [secret ids](/explanations/end-to-end-encryption/encrypted-links) of the patients
 obtained from the first query.
 If not, some items will be missing from the final result.
-
 
 ### Finding the patient of a service
 
@@ -12118,7 +12381,6 @@ sdk = CardinalSdk(
 
 #### Configure keypairs for the parent data owners
 
-
 Healthcare parties can't create keypairs for their parents: the initial keypair of a parent data owner has to be
 created by an administrator of the organization.
 
@@ -12226,7 +12488,6 @@ If multiple children have to use the same recovery key, make sure to pass `autoD
 In this case, you should give the recovery data a limited lifetime or delete it with `purgeRecoveryInfo` once it is no
 longer needed.
 Alternatively, you can create a different recovery key for each child.
-
 
 ### Sharing data with parents and siblings
 
@@ -13305,11 +13566,9 @@ The operations that a user can do on an entity are determined by two factors:
 This how-to focuses on assigning and removing roles from a user. You can read more about permissions and Data Owner
 users in [this explanation](/explanations/end-to-end-encryption/data-owners-and-access-control).
 
-
 ## Check user roles
 The user roles information are stored in the [systemMetadata](/explanations/data-model/user#systemmetadata) property.
 The fields of this property that are relevant for roles are:
-
 
 - `isAdmin` is a boolean field that is `true` if the user is an admin.
 - `roles` is a set of the ids of all the roles assigned to the user.
@@ -13432,7 +13691,6 @@ sdk.user.reset_user_roles_blocking(userId)
 
 ## Creating custom roles
 
-
 You can create your own roles from the existing permissions using the `createRole` method in the `role` section of the
 SDK. You have to provide:
 
@@ -13508,7 +13766,6 @@ context (:construction:).
 
 ## Set up 2FA
 
-
 To enable 2FA for a user, you need to specify the length of the OTP that the backend should expect, the key used to
 generate and verify the OTP, and a valid OTP generated with the provided configuration at the current time. The OTP is
 used by the backend to verify that the provided key is correct before enabling the 2FA. The key should be encoded as a
@@ -13517,7 +13774,6 @@ Base32 string.
 By default, the OTPs are generated and verified using a Sha1-based HMAC algorithm, as many authenticator apps still do
 not support other algorithms. You can choose a different algorithm (`Sha256` or `Sha512`) through the optional
 `algorithm` parameter of `Enable2faRequest`.
-
 
 > **note:**
 Enabling the 2FA for a user is a security-critical operation that requires the permission to edit the user and an
@@ -13579,7 +13835,6 @@ sdk.user.enable2fa_for_user_blocking(
 
 You can check whether a user has 2FA enabled for password login through the read-only `uses2fa` field of the user's
 [systemMetadata](/explanations/data-model/user#systemmetadata).
-
 
 ## Use 2FA with the Smart Authentication Manager
 
@@ -14064,140 +14319,6 @@ and there are in-group variants that take the group id as first parameter.
 
 ---
 
-<!-- Source: sdk/how-to/use-the-cardinal-mcp-server.md -->
-
-# Use the Cardinal MCP server
-
-`@icure/cardinal-mcp-server` is a [Model Context Protocol](https://modelcontextprotocol.io) server for the Cardinal
-SDK. Once it is connected to an AI assistant such as Claude, the assistant can:
-
-- search and read the Cardinal SDK documentation (APIs, models, filters, tutorials and how-to guides), with no
-  account needed;
-- call the TypeScript SDK against a Cardinal backend on your behalf, after you log in with `cardinal_init`.
-
-The server runs locally over stdio. Its version follows the SDK version it was generated from: install
-`@icure/cardinal-mcp-server@2.13.3` to get the documentation and method surface of SDK 2.13.3.
-
-## Requirements
-
-- Node.js 20 or later (`npx` comes with it).
-- For the operational tools only: the URL of a Cardinal backend (for example `https://api.icure.cloud`) and the
-  login and password of a user in it.
-
-## Install in Claude Code
-
-From the project where you want the server available:
-
-```bash
-claude mcp add cardinal -- npx -y @icure/cardinal-mcp-server
-```
-
-The default scope is `local`: the server is available to you, in this project only. Two other scopes exist:
-
-```bash
-# Everyone who clones the repository: writes .mcp.json at the repository root, commit it
-claude mcp add --scope project cardinal -- npx -y @icure/cardinal-mcp-server
-
-# You, in every project
-claude mcp add --scope user cardinal -- npx -y @icure/cardinal-mcp-server
-```
-
-The project scope produces this `.mcp.json`, which you can also write by hand:
-
-```json
-{
-  "mcpServers": {
-    "cardinal": {
-      "command": "npx",
-      "args": ["-y", "@icure/cardinal-mcp-server"]
-    }
-  }
-}
-```
-
-To pin the SDK version the assistant sees, replace the package name with `@icure/cardinal-mcp-server@<version>`.
-Check the connection with `claude mcp list`, or `/mcp` inside a Claude Code session.
-
-## Install in Claude Desktop
-
-Open the configuration file, add the same `mcpServers` entry, then restart Claude Desktop:
-
-- macOS: `~/Library/Application Support/Claude/claude_desktop_config.json`
-- Windows: `%APPDATA%\Claude\claude_desktop_config.json`
-
-```json
-{
-  "mcpServers": {
-    "cardinal": {
-      "command": "npx",
-      "args": ["-y", "@icure/cardinal-mcp-server"]
-    }
-  }
-}
-```
-
-Claude Desktop starts the server with a minimal environment. If the server does not appear, replace `"npx"` with
-the absolute path printed by `which npx` (macOS) or `where npx` (Windows).
-
-## What the assistant gets
-
-| Tool | Needs `cardinal_init` | Purpose |
-| --- | --- | --- |
-| `search_documentation` | no | Full-text search over the API, model, filter, tutorial and guide documentation |
-| `cardinal_init` | – | Logs in to a Cardinal backend and keeps the SDK instance for the rest of the session |
-| `cardinal_admin` | yes | Group, User, Role, Permission, System, Auth and Filter APIs |
-| `cardinal_data_owner` | yes | HealthcareParty, Patient and Device APIs, with a `flavour` of `decrypted`, `encrypted` or `tryAndRecover` |
-| `cardinal_crypto` | yes | Crypto, Recovery, ShamirKeysManager, DataOwner and CardinalMaintenanceTask APIs |
-| `cardinal_continue_iteration` | yes | Fetches the next page of a paginated result |
-
-The documentation is also exposed as MCP resources the assistant can read directly: `cardinal://docs/overview`,
-`cardinal://docs/api/{apiName}`, `cardinal://docs/model/{modelName}`, `cardinal://docs/filter/{entityName}`,
-`cardinal://docs/tutorial/{slug}` and `cardinal://docs/guide/{slug}`.
-
-## Using it
-
-Documentation questions work right away:
-
-> How do I share a patient with another healthcare party in the Cardinal TypeScript SDK?
-
-The assistant searches the documentation and reads `cardinal://docs/api/Patient` or the relevant how-to guide.
-
-To run operations, ask the assistant to log in first:
-
-> Initialise Cardinal against https://api.icure.cloud with the user alice@example.com and the password I will give you.
-
-This calls `cardinal_init`, which takes `baseUrl`, `username`, `password`, an optional `projectId` and a `storageDir`
-for the SDK's key storage (default `./cardinal-mcp-storage`, relative to the directory the server was started from).
-From then on the assistant can, for instance, list the patients of the current data owner, create an entity or
-inspect the keys of a data owner. Method parameters are passed by their declared name; a filter parameter is written
-as `{ "_factory": "<Entity>Filters.<method>", "<param>": ... }` using the factories listed under
-`cardinal://docs/filter/{entityName}` (see [Everything about filters](../explanations/everything-about-filters.mdx)).
-
-> **WARNING: Keep the credentials you hand over in mind**
-Everything you type reaches the model, and the assistant can call any method the SDK exposes with the rights of that
-user. Use a test group or a dedicated user with the least privileges that get the job done, never a production
-administrator. The `storageDir` holds the user's private keys: point it outside your repository and do not commit it.
-
-
-## Running from source
-
-```bash
-git clone https://github.com/icure/cardinal-sdk.git
-cd cardinal-sdk/cardinal-mcp-server
-corepack enable
-yarn install
-yarn run build
-claude mcp add cardinal-dev -- node "$PWD/dist/index.js"
-```
-
-`yarn test` runs the suite (an in-memory MCP client against the real server, no network). `yarn run generate`
-regenerates the documentation manifest and the method registry in `generated/`; it needs the parent repository
-checked out (for the Kotlin KDoc) and the matching `@icure/cardinal-sdk` in `node_modules`. See the
-[server's README](https://github.com/icure/cardinal-sdk/blob/main/cardinal-mcp-server/README.md) and its `CLAUDE.md`
-for the code layout and the release automation.
-
----
-
 
 ================================================================================
 # PART 5: DATA MODEL REFERENCE
@@ -14419,7 +14540,6 @@ Encryptable entities contain sensitive data and are encrypted on the client side
 Only Data Owners can create, share, retrieve, or delete these entities. Even if a non-Data Owner has permission to
 access an entity (e.g., an admin), they will only have access to the unencrypted portion of the data.
 
-
 - [**Contact**](/explanations/data-model/contact): a Contact is an encryptable entity that represents a situation that involves a patient where
 medical data is created. Usually it involves a doctor (healthcare party), like in the case of a medical examination.
 - [**Document**](/explanations/data-model/document): a Document is an encryptable entity that is used to store a medical document in any format.
@@ -14436,7 +14556,6 @@ is neither a patient nor a healthcare party, such as a contact person, a caregiv
 Differently from the other person entities, a RelatedPerson cannot be linked to a User and is not a Data Owner.
 - [**Topic**](/explanations/data-model/topic): Used with the Message entity to support encrypted conversations
 between users.
-
 
 ## Nested Entities
 
@@ -14456,7 +14575,6 @@ and represent an instance of medical data collected in it. Multiple Services can
 multiple measurements are taken in the same session.
 - [**SubContact**](/explanations/data-model/subcontact): a SubContact is an encryptable entity that is embedded into
 a Contact and can provide additional medical context to it and to the Service it contains.
-
 
 ## Shared Fields
 
@@ -14681,13 +14799,11 @@ By default, only the `markdown` field of each note will be encrypted.
 ### partnerships
 A collection of objects that contains the relationships and contact people for this Patient.
 
-
 Each partnership contains the type and status of the relationship and the id of the partner in the `partnerId` field.
 The `partnerType` field indicates the type of entity `partnerId` refers to: a Patient, a HealthcareParty, or a
 [RelatedPerson](/explanations/data-model/relatedperson). When `partnerType` is null (which is always the case for data
 created before SDK 2.12.0), the partner is either a Patient or a HealthcareParty and it is up to the application to
 resolve the ambiguity.
-
 
 ### patientHealthCareParties
 A collection of objects that represent a relation in time between this Patient and a HealthcareParty (e.g. to indicate
@@ -14981,7 +15097,6 @@ data starts and ends.
 Once a contact is closed (i.e. its `closingDate` is not null), it is a good practice not to modify it anymore. Instead,
 a new Contact should be created.
 
-
 ## Fields Encrypted by Default
 By default, the following fields of this entity will be encrypted:
 - `descr`
@@ -14992,9 +15107,7 @@ By default, the following fields of this entity will be encrypted:
 - `participants` (deprecated: only relevant when using the legacy SDK, ignored otherwise)
 - The Services in `service`, according to their [encryption configuration](/how-to/initialize-the-sdk/configure-what-to-encrypt#contact-service-and-service-content-encryption).
 
-
 You can customize the encrypted fields as [explained in this how to](/how-to/initialize-the-sdk/configure-what-to-encrypt).
-
 
 > **note:**
 The list above is the default of the Kotlin and TypeScript SDKs. The default lists of the Python and Dart SDKs do not
@@ -15230,7 +15343,6 @@ A HealthElement is an encryptable, root-level entity that represents a medical e
 it may represent an illness that lasts for a couple of days (e.g. a flu), a more prolonged state (e.g. pregnancy), or
 a permanent ailment (e.g. allergy).
 
-
 ## Fields Encrypted by Default
 By default, the following fields of this entity will be encrypted:
 - `descr`
@@ -15240,9 +15352,7 @@ By default, the following fields of this entity will be encrypted:
 - The `careTeamMemberType`, `healthcarePartyId` and `quality` fields in all the `careTeam` members.
 - The `name` and `comment` fields in all the `episodes`.
 
-
 You can customize the encrypted fields as [explained in this how to](/how-to/initialize-the-sdk/configure-what-to-encrypt).
-
 
 > **warning:**
 The list above is the default of the Kotlin and TypeScript SDKs. The Python SDK defines its own default
@@ -15289,7 +15399,6 @@ sdk = CardinalSdk(
 Below you will find an explanation of the most commonly used properties in the entity that are not among the
 [shared fields](/explanations/data-model/#shared-fields). For a full list, check the reference documentation (:construction:).
 
-
 ### asserters
 Available since SDK 2.13.0 (the shape described here is final since SDK 2.13.3). Encrypted by default.
 
@@ -15309,7 +15418,6 @@ the party played. Organisations (hospitals, practices, ...) are stored as health
 system and `value` the identifier of the party in that system.
 
 See the [example below](#example-asserters-and-qualified-links).
-
 
 ### careTeam
 A collection of object that contain information about all the healthcare actor related to the condition of this 
@@ -15350,7 +15458,6 @@ It is encoded as a [FuzzyDateTime](/explanations/data-model/#fuzzydatetime).
 
 ### plansOfAction
 A collection of objects that contain information about all the healthcare approaches related to this HealthElement.
-
 
 ### qualifiedLinks
 Available since SDK 2.13.0. Not encrypted.
@@ -15844,7 +15951,6 @@ Any of these field of the User entity is valid as login:
 
 As for the password, it is possible both to set a password (in the `passwordHash` field) or to use a [temporary token](/how-to/remember-me).
 
-
 ## Updating a user's login identifiers
 
 You can change the email, mobile phone, and password of a user with a regular `modifyUser`, but this requires the
@@ -16020,7 +16126,6 @@ then the `healthcarePartyId` and `deviceId` fields should be null.
 > **info:**
 A User where this field is not null is a **Data Owner** User.
 
-
 ### systemMetadata
 This field contains internal information about the User. Its properties are:
 
@@ -16033,7 +16138,6 @@ This field contains internal information about the User. Its properties are:
 - `verifiedMobilePhone` is a boolean field that is `true` if the mobile phone of the user has been verified.
 - `uses2fa` is a boolean field that is `true` if the user has [two-factor authentication](/how-to/set-up-2fa) enabled
   for login with password.
-
 
 Any update to this property will be prohibited by the backend. To learn how to update the roles on a user, check this [how to](/how-to/define-user-roles).
 
@@ -16245,7 +16349,6 @@ The id of the Agenda where the appointment is scheduled.
 ### hcpId
 
 The id of the healthcare party that will take care of the patient during the appointment.
-
 
 ## Linking a calendar item to a patient
 
@@ -17321,7 +17424,6 @@ For more details, see [Data owners and access control](/explanations/end-to-end-
 ## Sorting
 Some filters return `SortableFilterOptions` (or `BaseSortableFilterOptions`) that can be used to sort results by specific criteria. The sorting rules are documented in the tables below.
 
-
 > **CAUTION: Sortability changes in SDK 2.6.0**
 Starting from Cardinal SDK 2.6.0 many filter factory methods are no longer sortable: their return type changed from
 `SortableFilterOptions` to `FilterOptions` (or from `BaseSortableFilterOptions` to `BaseFilterOptions`).
@@ -17535,7 +17637,6 @@ Methods with no data-owner scoping are marked with **—** in the Scoping column
 
 ### PatientFilters
 
-
 | Method                                  | Key parameters                               | Return type             | Sortable? | Sort order  |
 |-----------------------------------------|----------------------------------------------|-------------------------|-----------|-------------|
 | `allPatientsForSelf`                    | —                                            | `FilterOptions`         | No        | —           |
@@ -17556,9 +17657,7 @@ Methods with no data-owner scoping are marked with **—** in the Scoping column
 It is also the only sortable patient filter since SDK 2.6.0.
 The `ForDataOwner` variants for the other methods also exist (e.g. `byFuzzyNameForDataOwner` accepts a `dataOwnerId` + `searchString`).
 
-
 ### ContactFilters
-
 
 | Method                                 | Key parameters                                                                    | Return type                 | Sortable? | Sort order          |
 |----------------------------------------|-----------------------------------------------------------------------------------|-----------------------------|-----------|---------------------|
@@ -17576,9 +17675,7 @@ The `ForDataOwner` variants for the other methods also exist (e.g. `byFuzzyNameF
 | `byPatientsSecretIdsForSelf`           | `secretIds`                                                                       | `FilterOptions`             | No        | —                   |
 | `byServiceIds`                         | `serviceIds`                                                                      | `BaseSortableFilterOptions` | Yes       | Input order         |
 
-
 ### ServiceFilters
-
 
 | Method                                            | Key parameters                                                                                  | Return type                 | Sortable? | Sort order  |
 |---------------------------------------------------|-------------------------------------------------------------------------------------------------|-----------------------------|-----------|-------------|
@@ -17693,7 +17790,6 @@ def get_blood_pressure_measurements(
 
 ### HealthElementFilters
 
-
 | Method                                 | Key parameters                             | Return type                 | Sortable? | Sort order    |
 |----------------------------------------|--------------------------------------------|-----------------------------|-----------|---------------|
 | `allHealthElementsForSelf`             | —                                          | `FilterOptions`             | No        | —             |
@@ -17706,9 +17802,7 @@ def get_blood_pressure_measurements(
 | `byPatientsOpeningDateForSelf`         | `patients`, `from?`, `to?`, `descending?`  | `SortableFilterOptions`     | Yes       | `openingDate` |
 | `byPatientSecretIdsOpeningDateForSelf` | `secretIds`, `from?`, `to?`, `descending?` | `SortableFilterOptions`     | Yes       | `openingDate` |
 
-
 ### DocumentFilters
-
 
 | Method                                  | Key parameters                             | Return type             | Sortable? | Sort order |
 |-----------------------------------------|--------------------------------------------|-------------------------|-----------|------------|
@@ -17720,7 +17814,6 @@ def get_blood_pressure_measurements(
 | `byOwningEntitySecretIdsAndTypeForSelf` | `documentType`, `secretIds`                | `FilterOptions`         | No        | —          |
 | `byCodeForSelf`                         | `codeType`, `codeCode?`                    | `SortableFilterOptions` | Yes       | Code       |
 | `byTagForSelf`                          | `tagType`, `tagCode?`                      | `FilterOptions`         | No        | —          |
-
 
 ### HealthcarePartyFilters
 
@@ -17762,7 +17855,6 @@ Healthcare party filters are not data-owner scoped — they all return `Base*` t
 
 #### MessageFilters
 
-
 | Method                              | Key parameters                                   | Return type             | Sortable? |
 |-------------------------------------|--------------------------------------------------|-------------------------|-----------|
 | `allMessagesForSelf`                | —                                                | `FilterOptions`         | No        |
@@ -17778,7 +17870,6 @@ Healthcare party filters are not data-owner scoped — they all return `Base*` t
 | `byTagForSelf`                      | `tagType`, `tagCode?`                            | `FilterOptions`         | No        |
 | `byInvoiceIds`                      | `invoiceIds`                                     | `BaseFilterOptions`     | No        |
 | `byParentIds`                       | `parentIds`                                      | `BaseFilterOptions`     | No        |
-
 
 #### CalendarItemFilters
 
@@ -17845,7 +17936,6 @@ Healthcare party filters are not data-owner scoped — they all return `Base*` t
 |--------------------|-----------------|-----------------|-----------|
 | `allTopicsForSelf` | —               | `FilterOptions` | No        |
 | `byParticipant`    | `participantId` | `FilterOptions` | No        |
-
 
 #### InsuranceFilters
 

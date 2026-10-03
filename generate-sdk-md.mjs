@@ -8,7 +8,7 @@ import { fileURLToPath } from 'node:url'
 export const PARTS = [
   {
     title: 'INTRODUCTION',
-    files: ['intro.md', 'whats-new.md', 'migration.md'],
+    files: ['intro.md', 'whats-new.md', 'migration.md', 'mcp-server.md'],
   },
   {
     title: 'QUICKSTART GUIDES',
@@ -55,7 +55,6 @@ export const PARTS = [
       'how-to/manage-a-multi-group-environment.mdx',
       'how-to/deleting-data-of-users.mdx',
       'how-to/deleting-data-of-inactive-users.mdx',
-      'how-to/use-the-cardinal-mcp-server.md',
     ],
   },
   {
@@ -126,6 +125,7 @@ const HEADER = `# Cardinal SDK — Complete Documentation Reference
 - SDK Overview and purpose
 - What's new in each SDK release
 - Migration between SDK versions (breaking changes)
+- MCP server: using the SDK documentation and API from Claude, Codex and other AI agents
 
 ## Part 2: Quickstart Guides
 - Kotlin setup
@@ -171,7 +171,6 @@ const HEADER = `# Cardinal SDK — Complete Documentation Reference
 - Calendar items occupancy (appointment availability histograms)
 - Multi-group environment
 - Deleting user data
-- Using the Cardinal MCP server
 
 ## Part 5: Data Model Reference
 - Entity overview (base vs encryptable entities)
