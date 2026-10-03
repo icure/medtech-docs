@@ -19,7 +19,7 @@ val firstName = readln().trim()
 print("Last name: ")
 val lastName = readln().trim()
 val patient = DecryptedPatient(
-	id = UUID.randomUUID().toString(),
+	id = Uuid.random().toString(),
 	firstName = firstName,
 	lastName = lastName,
 )

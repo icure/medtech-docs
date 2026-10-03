@@ -101,7 +101,7 @@ Consider a `Document` entity created with the initial Healthcare Party user:
 ```kotlin test-AAEG
 val oldDocument = sdk.document.createDocument(
 	DecryptedDocument(
-		id = UUID.randomUUID().toString(),
+		id = Uuid.random().toString(),
 		name = "An important document"
 	).let {
 		sdk.document.withEncryptionMetadataUnlinked(it, null)
@@ -287,7 +287,7 @@ initializing the encryption metadata:
 
 ```kotlin test-AAEK
 val newDocument = DecryptedDocument(
-	id = UUID.randomUUID().toString(),
+	id = Uuid.random().toString(),
 	name = "Another important document"
 )
 
@@ -396,7 +396,7 @@ To create a Patient user, you first need to create a Patient:
 
 ```kotlin test-AAEM
 val newPatient = DecryptedPatient(
-	id = UUID.randomUUID().toString(),
+	id = Uuid.random().toString(),
 	firstName = "Edmond",
 	lastName = "Dantes",
 )
@@ -453,9 +453,9 @@ property on the User to the id of the newly created Patient.
 <TabItem value="kotlin">
 
 ```kotlin test-AAEN
-val login = "edmond.dantes.${UUID.randomUUID().toString().substring(0, 6)}@icure.com"
+val login = "edmond.dantes.${Uuid.random().toString().substring(0, 6)}@icure.com"
 val patientUser = User(
-	id = UUID.randomUUID().toString(),
+	id = Uuid.random().toString(),
 	patientId = createdPatient.id,
 	login = login,
 	email = login
@@ -741,7 +741,7 @@ needs to create an entity, such as a `HealthElement`, to represent a medical con
 
 ```kotlin test-AAES
 val healthElement = DecryptedHealthElement(
-	id = UUID.randomUUID().toString(),
+	id = Uuid.random().toString(),
 	descr = "This is some medical context"
 )
 
@@ -922,7 +922,7 @@ a newly created entity.
 
 ```kotlin test-AAEW
 val newHealthElement = DecryptedHealthElement(
-	id = UUID.randomUUID().toString(),
+	id = Uuid.random().toString(),
 	descr = "This is some other medical context"
 )
 

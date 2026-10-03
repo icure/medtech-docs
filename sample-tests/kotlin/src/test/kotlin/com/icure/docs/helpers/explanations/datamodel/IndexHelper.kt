@@ -1,6 +1,7 @@
 package com.icure.docs.helpers.explanations.datamodel
 
 import com.icure.cardinal.sdk.CardinalSdk
+import kotlin.uuid.Uuid
 
 object IndexHelper {
     val preTest = mapOf<String, suspend (sdk: CardinalSdk) -> Map<String, Any?>>(
@@ -9,7 +10,7 @@ object IndexHelper {
                 "CARDINAL_URL" to (System.getenv("CARDINAL_URL") ?: "https://api.icure.cloud"),
                 "username" to (System.getenv("CARDINAL_USERNAME") ?: "test"),
                 "password" to (System.getenv("CARDINAL_PASSWORD") ?: "test"),
-                "healthElementId" to java.util.UUID.randomUUID().toString(),
+                "healthElementId" to Uuid.random().toString(),
             )
         },
     )

@@ -18,8 +18,8 @@ import com.icure.cardinal.sdk.options.AuthenticationMethod
 import com.icure.cardinal.sdk.auth.UsernamePassword
 import com.icure.cardinal.sdk.filters.ServiceFilters
 import com.icure.cardinal.sdk.storage.impl.FileStorageFacade
-import java.util.UUID
 import kotlin.random.Random
+import kotlin.uuid.Uuid
 
 object _0PublisherHelper {
     private const val CARDINAL_URL = "https://api.icure.cloud"
@@ -37,7 +37,7 @@ object _0PublisherHelper {
     private suspend fun preBlock3(sdk: CardinalSdk): Map<String, Any?> {
         if (createdPatient == null) {
             val newPatient = DecryptedPatient(
-                id = UUID.randomUUID().toString(),
+                id = Uuid.random().toString(),
                 firstName = "Edmond",
                 lastName = "Dantes",
             )
@@ -50,9 +50,9 @@ object _0PublisherHelper {
     private suspend fun preBlock4(sdk: CardinalSdk): Map<String, Any?> {
         if (login == null || loginToken == null) {
             preBlock3(sdk)
-            val l = "edmond.dantes.${UUID.randomUUID().toString().substring(0, 6)}@icure.com"
+            val l = "edmond.dantes.${Uuid.random().toString().substring(0, 6)}@icure.com"
             val patientUser = User(
-                id = UUID.randomUUID().toString(),
+                id = Uuid.random().toString(),
                 patientId = createdPatient!!.id,
                 login = l,
                 email = l
@@ -118,11 +118,11 @@ object _0PublisherHelper {
         // Create a contact for the test
         val glycemiaValue = Random.nextInt(60, 160).toDouble()
         val contact = DecryptedContact(
-            id = UUID.randomUUID().toString(),
+            id = Uuid.random().toString(),
             openingDate = java.time.LocalDateTime.now().format(java.time.format.DateTimeFormatter.ofPattern("yyyyMMddHHmmss")).toLong(),
             services = setOf(
                 DecryptedService(
-                    id = UUID.randomUUID().toString(),
+                    id = Uuid.random().toString(),
                     content = mapOf(
                         "en" to DecryptedContent(
                             measureValue = Measure(

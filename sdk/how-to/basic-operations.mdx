@@ -47,12 +47,12 @@ with such an id will fail. See [what is a valid id](/explanations/data-model/#wh
 ```kotlin test-AAAA
 import com.icure.cardinal.sdk.CardinalSdk
 import com.icure.cardinal.sdk.model.HealthcareParty
-import com.icure.kryptom.crypto.defaultCryptoService
+import kotlin.uuid.Uuid
 
 suspend fun createDoctor(sdk: CardinalSdk, firstName: String, lastName: String): HealthcareParty {
 	return sdk.healthcareParty.createHealthcareParty(
 		HealthcareParty(
-			id = defaultCryptoService.strongRandom.randomUUID(),
+			id = Uuid.random().toString(),
 			firstName = firstName,
 			lastName = lastName
 		)
@@ -113,13 +113,13 @@ Note that you will still have to commit the creation using the create method aft
 ```kotlin test-AAAB
 import com.icure.cardinal.sdk.CardinalSdk
 import com.icure.cardinal.sdk.model.DecryptedPatient
-import com.icure.kryptom.crypto.defaultCryptoService
+import kotlin.uuid.Uuid
 
 suspend fun createPatient(sdk: CardinalSdk, firstName: String, lastName: String): DecryptedPatient {
 	// Initialize the metadata for the patient. Note that this doesn't save the patient in the backend.
 	val initializedPatient = sdk.patient.withEncryptionMetadata(
 		DecryptedPatient(
-			id = defaultCryptoService.strongRandom.randomUUID(),
+			id = Uuid.random().toString(),
 			firstName = firstName,
 			lastName = lastName,
 		)
@@ -204,7 +204,7 @@ For example, when you initialize the encryption metadata of a health element, yo
 import com.icure.cardinal.sdk.CardinalSdk
 import com.icure.cardinal.sdk.model.DecryptedHealthElement
 import com.icure.cardinal.sdk.model.Patient
-import com.icure.kryptom.crypto.defaultCryptoService
+import kotlin.uuid.Uuid
 
 suspend fun createHealthElementForPatient(
 	sdk: CardinalSdk,
@@ -213,7 +213,7 @@ suspend fun createHealthElementForPatient(
 ): DecryptedHealthElement {
 	val initializedHealthElement = sdk.healthElement.withEncryptionMetadata(
 		DecryptedHealthElement(
-			id = defaultCryptoService.strongRandom.randomUUID(),
+			id = Uuid.random().toString(),
 			descr= description
 		),
 		patient // This is mandatory
@@ -374,12 +374,12 @@ This is especially the case if you want the other delegates to be able to [liste
 import com.icure.cardinal.sdk.CardinalSdk
 import com.icure.cardinal.sdk.model.DecryptedPatient
 import com.icure.cardinal.sdk.model.embed.AccessLevel
-import com.icure.kryptom.crypto.defaultCryptoService
+import kotlin.uuid.Uuid
 
 suspend fun createPatient(sdk: CardinalSdk, firstName: String, lastName: String, sharedWith: String?): DecryptedPatient {
 	val initializedPatient = sdk.patient.withEncryptionMetadata(
 		DecryptedPatient(
-			id = defaultCryptoService.strongRandom.randomUUID(),
+			id = Uuid.random().toString(),
 			firstName = firstName,
 			lastName = lastName,
 		),
@@ -493,7 +493,7 @@ import com.icure.cardinal.sdk.CardinalSdk
 import com.icure.cardinal.sdk.crypto.entities.PatientDelegateOptions
 import com.icure.cardinal.sdk.model.DecryptedPatient
 import com.icure.cardinal.sdk.model.embed.AccessLevel
-import com.icure.kryptom.crypto.defaultCryptoService
+import kotlin.uuid.Uuid
 
 suspend fun createPatientWithLimitedDelegate(
 	sdk: CardinalSdk,
@@ -503,7 +503,7 @@ suspend fun createPatientWithLimitedDelegate(
 ): DecryptedPatient {
 	val initializedPatient = sdk.patient.withEncryptionMetadataAndDelegates(
 		DecryptedPatient(
-			id = defaultCryptoService.strongRandom.randomUUID(),
+			id = Uuid.random().toString(),
 			firstName = firstName,
 			lastName = lastName,
 		),
@@ -627,12 +627,12 @@ provided through the initial delegates.
 import com.icure.cardinal.sdk.CardinalSdk
 import com.icure.cardinal.sdk.model.DecryptedPatient
 import com.icure.cardinal.sdk.model.User
-import com.icure.kryptom.crypto.defaultCryptoService
+import kotlin.uuid.Uuid
 
 suspend fun createPatient(sdk: CardinalSdk, currentUser: User, firstName: String, lastName: String): DecryptedPatient {
 	val initializedPatient = sdk.patient.withEncryptionMetadata(
 		DecryptedPatient(
-			id = defaultCryptoService.strongRandom.randomUUID(),
+			id = Uuid.random().toString(),
 			firstName = firstName,
 			lastName = lastName,
 		),

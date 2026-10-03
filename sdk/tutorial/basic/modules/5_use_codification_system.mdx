@@ -212,7 +212,7 @@ requireNotNull(selectedCode) { "No code was selected" }
 
 val patient = sdk.patient.createPatient(
 	DecryptedPatient(
-		id = UUID.randomUUID().toString(),
+		id = Uuid.random().toString(),
 		firstName = "Annabelle",
 		lastName = "Hall",
 	).let { sdk.patient.withEncryptionMetadata(it) }
@@ -220,12 +220,12 @@ val patient = sdk.patient.createPatient(
 
 val formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss")
 val contact = DecryptedContact(
-	id = UUID.randomUUID().toString(),
+	id = Uuid.random().toString(),
 	descr = "Blood pressure measurement",
 	openingDate = LocalDateTime.now().format(formatter).toLong(),
 	services = setOf(
 		DecryptedService(
-			id = UUID.randomUUID().toString(),
+			id = Uuid.random().toString(),
 			label = "Blood pressure",
 			content = mapOf(
 				"en" to DecryptedContent(

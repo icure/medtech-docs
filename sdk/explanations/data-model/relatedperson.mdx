@@ -1,5 +1,5 @@
 ---
-title: Related person
+title: RelatedPerson
 ---
 
 import TabItem from "@theme/TabItem";
@@ -7,7 +7,7 @@ import {LanguageTabs} from "@site/src/components/LanguageTabs";
 
 <div className="proofread">
 
-# Related person
+# RelatedPerson
 
 The RelatedPerson is an encryptable root-level entity, available since SDK 2.12.0, that represents a person related to
 one or more patients who is neither a patient nor a healthcare party: typically a contact person, such as the parent of
@@ -92,13 +92,13 @@ import com.icure.cardinal.sdk.model.embed.DecryptedPartnership
 import com.icure.cardinal.sdk.model.embed.PartnerType
 import com.icure.cardinal.sdk.model.embed.PartnershipStatus
 import com.icure.cardinal.sdk.model.embed.PartnershipType
-import com.icure.kryptom.crypto.defaultCryptoService
+import kotlin.uuid.Uuid
 
 // Create the related person
 val relatedPerson = sdk.relatedPerson.createRelatedPerson(
 	sdk.relatedPerson.withEncryptionMetadata(
 		DecryptedRelatedPerson(
-			id = defaultCryptoService.strongRandom.randomUUID(),
+			id = Uuid.random().toString(),
 			firstName = "Anna",
 			lastName = "Dupont",
 		)

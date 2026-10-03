@@ -16,6 +16,7 @@ const sidebars = {
   apiSidebar: [
     'intro',
     'whats-new',
+    'migration',
     {
       type: 'category',
       label: 'Quickstart',

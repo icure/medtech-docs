@@ -15,7 +15,8 @@
     "serve": "yarn make && docusaurus serve",
     "write-translations": "yarn make && docusaurus write-translations",
     "write-heading-ids": "yarn make && docusaurus write-heading-ids",
-    "typecheck": "tsc"
+    "typecheck": "tsc",
+    "sdk-md": "node generate-sdk-md.mjs"
   },
   "dependencies": {
     "@akebifiky/remark-simple-plantuml": "^1.0.2",

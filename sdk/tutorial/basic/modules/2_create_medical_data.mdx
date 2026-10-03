@@ -27,7 +27,7 @@ val patientId = readlnOrNull()
 val patient = if (patientId.isNullOrBlank()) {
 	sdk.patient.createPatient(
 		DecryptedPatient(
-			id = UUID.randomUUID().toString(),
+			id = Uuid.random().toString(),
 			firstName = "Annabelle",
 			lastName = "Hall",
 		).let { sdk.patient.withEncryptionMetadata(it) }
@@ -107,7 +107,7 @@ val formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss")
 print("Examination description: ")
 val description = readln().trim()
 val contact = DecryptedContact(
-	id = UUID.randomUUID().toString(),
+	id = Uuid.random().toString(),
 	descr = description,
 	openingDate = LocalDateTime.now().format(formatter).toLong()
 )
@@ -244,9 +244,10 @@ result of the exam:
 
 ```kotlin test-AAFC
 import kotlin.random.Random
+import kotlin.uuid.Uuid
 
 val bloodPressureService = DecryptedService(
-	id = UUID.randomUUID().toString(),
+	id = Uuid.random().toString(),
 	label = "Blood pressure",
 	identifier = listOf(Identifier(system = "cardinal", value = "bloodPressure")),
 	content = mapOf(
@@ -395,7 +396,7 @@ added to the `Contact` through a `Service`:
 ```kotlin test-AAFE
 val ecgSignal = List(10) { Random.nextInt(0, 100) / 100.0 }
 val heartRateService = DecryptedService(
-	id = UUID.randomUUID().toString(),
+	id = Uuid.random().toString(),
 	identifier = listOf(Identifier(system = "cardinal", value = "ecg")),
 	label = "Heart rate",
 	content = mapOf(
@@ -507,7 +508,7 @@ A `Document` is an encryptable entity that represents medical documents (e.g., r
 
 ```kotlin test-AAFF
 val document = DecryptedDocument(
-	id = UUID.randomUUID().toString(),
+	id = Uuid.random().toString(),
 	documentType = DocumentType.Labresult
 )
 ```
@@ -661,7 +662,7 @@ Finally, it is possible to link this `Document` with a new `Service` representin
 
 ```kotlin test-AAFI
 val xRayService = DecryptedService(
-	id = UUID.randomUUID().toString(),
+	id = Uuid.random().toString(),
 	label = "X-Ray image",
 	identifier = listOf(Identifier(system = "cardinal", value = "xRay")),
 	content = mapOf(
@@ -751,7 +752,7 @@ diagnosis elaborated after the examination.
 print("What is the diagnosis?: ")
 val diagnosis = readln().trim()
 val healthElement = DecryptedHealthElement(
-	id = UUID.randomUUID().toString(),
+	id = Uuid.random().toString(),
 	descr = diagnosis
 )
 val createdDiagnosis = sdk.healthElement.createHealthElement(

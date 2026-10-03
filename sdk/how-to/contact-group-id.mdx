@@ -143,10 +143,10 @@ for the research study will not be able to access it.
 
 ```kotlin test-AAAO
 import com.icure.cardinal.sdk.model.DecryptedPatient
-import java.util.UUID
+import kotlin.uuid.Uuid
 
 val patientToCreate = DecryptedPatient(
-	id = UUID.randomUUID().toString(),
+	id = Uuid.random().toString(),
 	firstName = "Rupert",
 	lastName = "Venables",
 )
@@ -249,11 +249,11 @@ import com.icure.cardinal.sdk.model.embed.Measure
 import com.icure.cardinal.sdk.model.embed.Medication
 import com.icure.cardinal.sdk.model.embed.Substanceproduct
 import com.icure.cardinal.sdk.model.embed.TimeSeries
-import java.util.UUID
 import kotlin.random.Random
+import kotlin.uuid.Uuid
 
 val bloodPressureService = DecryptedService(
-	id = UUID.randomUUID().toString(),
+	id = Uuid.random().toString(),
 	label = "Blood pressure",
 	valueDate = 20240920154600,
 	content = mapOf(
@@ -268,7 +268,7 @@ val bloodPressureService = DecryptedService(
 
 val ecgSignal = List(10) { Random.nextInt(0, 100) / 100.0 }
 val heartRateService = DecryptedService(
-	id = UUID.randomUUID().toString(),
+	id = Uuid.random().toString(),
 	label = "Heart rate",
 	valueDate = 20240920154600,
 	content = mapOf(
@@ -281,7 +281,7 @@ val heartRateService = DecryptedService(
 )
 
 val medicationService = DecryptedService(
-	id = UUID.randomUUID().toString(),
+	id = Uuid.random().toString(),
 	label = "Prescription",
 	valueDate = 20240920154600,
 	content = mapOf(
@@ -430,13 +430,13 @@ Both Contacts will share the same `groupId`: this way, they can be recognized as
 import com.icure.cardinal.sdk.model.DecryptedContact
 import com.icure.cardinal.sdk.model.embed.AccessLevel
 import com.icure.cardinal.sdk.model.embed.DecryptedAnnotation
-import java.util.UUID
+import kotlin.uuid.Uuid
 
 // The id of the "Logical Contact"
-val groupId = UUID.randomUUID().toString()
+val groupId = Uuid.random().toString()
 
 val contactForResearch = DecryptedContact(
-	id = UUID.randomUUID().toString(),
+	id = Uuid.random().toString(),
 	openingDate = 20240920154460,
 	groupId = groupId, // This indicates that the Contact is part of a "Logical Contact"
 	services = setOf(
@@ -445,12 +445,12 @@ val contactForResearch = DecryptedContact(
 )
 
 val contact = DecryptedContact(
-	id = UUID.randomUUID().toString(),
+	id = Uuid.random().toString(),
 	closingDate = 20240920164460,
 	groupId = groupId, // This indicates that the Contact is part of a "Logical Contact"
 	notes = listOf(
 		DecryptedAnnotation(
-			id = UUID.randomUUID().toString(),
+			id = Uuid.random().toString(),
 			markdown = mapOf(
 				"en" to "The Patient has hypertension."
 			)
