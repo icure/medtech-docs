@@ -17,6 +17,7 @@ const sidebars = {
     'intro',
     'whats-new',
     'migration',
+    'mcp-server',
     {
       type: 'category',
       label: 'Quickstart',

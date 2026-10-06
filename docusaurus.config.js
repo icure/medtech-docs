@@ -81,6 +81,17 @@ async function createConfig() {
                     filename: 'sitemap.xml',
                 },
             ],
+            [
+                '@docusaurus/plugin-client-redirects',
+                {
+                    redirects: [
+                        {
+                            from: '/how-to/use-the-cardinal-mcp-server',
+                            to: '/mcp-server',
+                        },
+                    ],
+                },
+            ],
         ],
 
         themes: [
