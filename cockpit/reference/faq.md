@@ -31,6 +31,17 @@ Account status and key initialization are separate. The user (or its parent orga
 You can't from Cockpit — adding admins grants **Project Access**. Contact the iCure team for Environment
 Access. See [Administrators & Access Levels](/cockpit/administrators-and-access-levels).
 
+**What is the business model, and can I change it?**
+It's what the project is invoiced on — **Per Healthcare Professional (HCP)**, **Per Patient**, or **Per Device
+or Institution Bed** — and it sizes the storage allowance. You pick it on the wizard's Users step and can
+change it from **Configuration → Project overview** or the project card's **Edit**; changing it affects
+invoicing, so check with the iCure team first. Older projects without one are treated as Per HCP. See
+[Project Overview & Configuration](/cockpit/project-overview-and-configuration#business-model).
+
+**Why does the user count differ from what I just created?**
+Counts and storage come from the metrics service and lag by up to **24 hours**; check the **Last update**
+date. See [Metrics](/cockpit/metrics).
+
 **Can I make a multi-tenant project single-tenant again?**
 Only while it has exactly **one** tenant. See [Managing Tenants](/cockpit/managing-tenants).
 

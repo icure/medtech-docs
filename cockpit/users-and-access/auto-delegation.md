@@ -42,14 +42,14 @@ it doesn't retroactively share records that already existed when the delegation 
 
 ### Data categories
 
-When you add an auto-delegation, Cockpit asks for one or more **Categories**. **Use `All`** — it covers every
-category, so all data the user creates is shared with the delegate.
+When you add an auto-delegation, Cockpit asks for one or more **Categories**. **`All`** is preselected —
+it covers every category, so all data the user creates is shared with the delegate.
 
-:::caution
-The **Categories** dropdown also lists finer-grained tags — broad buckets (**MedicalInformation**,
-**AdministrativeData**, **FinancialInformation**, …) and specific medical items (**CdItemMedication**,
-**CdItemLab**, **CdItemDiagnosis**, …) — but **only `All` is currently supported** in practice. Pick `All`;
-the narrower categories are exposed but not yet reliably honoured.
+:::info
+The **Categories** dropdown also lists finer-grained tags — broad buckets (**Medical Information**,
+**Administrative Data**, **Financial Information**, …) and specific medical items (**Medication**,
+**Lab**, **Diagnosis**, …) — but they are **disabled** and tagged **Not available standalone**: *"Only the
+"All" category is available for now. Support for selecting more specific categories is coming soon."*
 :::
 
 :::caution
@@ -90,13 +90,21 @@ delegations**. Each entry reads as *category → delegate*. **Add auto delegatio
 - **Delegate** — the data owner to share with (search for a healthcare party).
 
 A delegate in a single category has one delete button; a delegate in **multiple categories** has two — remove
-them from that one category, or from all categories at once.
+them from that one category, or from all categories at once. Either way Cockpit asks you to confirm before
+the delegation is removed.
 
 :::danger
-A warning icon means the delegate has **no initialized key**. Until that delegate sets up their key, the user
-**can't create encrypted data for this delegation** — there's no delegate key to share it with. It starts
-working once the delegate initializes their key by logging in through your app — or you can remove the
-delegation. See [Recovery & Private Keys](/cockpit/recovery-and-private-keys).
+A warning icon flags a delegation that **won't work**, for one of two reasons:
+
+- **The delegate no longer exists** — it was [deleted](/cockpit/managing-users#overflow-menu-actions) (the
+  data owner is gone, or comes back flagged with a deletion date). Data sharing to it will fail permanently;
+  **remove this delegation** — a deleted delegate can't be recovered by initializing a key.
+- **The delegate has no initialized key.** Until that delegate sets up their key, the user **can't create
+  encrypted data for this delegation** — there's no delegate key to share it with. It starts working once the
+  delegate initializes their key by logging in through your app — or you can remove the delegation.
+
+Deletion takes priority as the reported reason, since a deleted delegate can't be fixed by a key. See
+[Recovery & Private Keys](/cockpit/recovery-and-private-keys).
 :::
 
 <!-- TODO(screenshot): users/auto-delegations — an expanded user row showing the Auto delegations list (with a

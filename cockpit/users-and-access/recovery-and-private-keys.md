@@ -6,7 +6,8 @@ title: Recovery & Private Keys
 
 # Recovery & Private Keys
 
-iCure data is **end-to-end encrypted**, so every [data owner](/explanations/data-model/#data-owners) (HCP, patient, device, organization) needs
+iCure data is **end-to-end encrypted**, so every [data owner](/explanations/data-model/#data-owners) (HCP, patient,
+device, organization) needs
 its own **key pair**. Having a private key is what the SDK calls *initializing* the key — **until a data
 owner's key is initialized, it can't create or read encrypted data.** This page covers where those keys come
 from and how to safeguard them.
@@ -23,8 +24,10 @@ owner's encrypted data is **gone for good**. If not shared with anyone else.
 - **Real end users** (patients, devices, and HCPs who are actual practitioners) initialize their **own**
   keys through **your application** — typically automatically the first time they log in via an
   [authentication process](/cockpit/authentication-processes).
-- **The parent [organization](/cockpit/organization)'s** private key is initialized **automatically** during project creation,
-  so the users that share through it can work immediately. See [Create project / Ready to go](/cockpit/create-your-first-project#6-ready-to-go).
+- **The parent [organization](/cockpit/organization)'s** private key is initialized **automatically** during project
+  creation,
+  so the users that share through it can work immediately.
+  See [Create project / Ready to go](/cockpit/create-your-first-project#6-ready-to-go).
 - **Your own test/admin HCP** can be initialized manually in Cockpit (below).
 
 A user's **Enrolment status** in the Users table tells you which state they're in — **Initialized** or
@@ -50,10 +53,10 @@ Initializing fails if the HCP has no valid parent organization — fix the paren
 `*.pem` file you download when it's generated — that data owner is fully covered. A recovery key is a
 *convenience* layered on top of that backup, never a requirement, and you can go without one entirely.
 
-|                  | What it is                                                              | Lifecycle                                                                                                  |
-|------------------|------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------|
+|                  | What it is                                                              | Lifecycle                                                                                                              |
+|------------------|------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------|
 | **Private key**  | required for the data owner to access encrypted data and create new data | generated once; **not stored by Cardinal**, **shown only once**, downloadable as `*.pem`, **can't be displayed again** |
-| **Recovery key** | an *optional* short key that can restore the private key if it's lost   | downloadable as `*.txt`; in Cockpit it's generated **together with** the private key                       |
+| **Recovery key** | an *optional* short key that can restore the private key if it's lost   | downloadable as `*.txt`; in Cockpit it's generated **together with** the private key                                   |
 
 ### What a recovery key actually is
 
@@ -67,7 +70,7 @@ stored copy and obtain the private key.
 
 :::caution
 A recovery key can grant access to the private key, so **keep it as secret as the private key itself**.
-Cockpit notes keys are best used for **demo purposes** — production apps should use a workflow that
+Cockpit notes recovery keys are best used for **demo purposes** — production apps should use a workflow that
 doesn't expose them to intermediaries.
 :::
 

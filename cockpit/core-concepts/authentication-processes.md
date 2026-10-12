@@ -23,8 +23,8 @@ on top of the right channel and user type.
 :::
 
 :::caution
-Authentication processes are **Environment-Access only**. A Project-Access admin sees: *"Only
-administrators with 'Environment Access' can view and manage Processes."* See
+Managing authentication processes is **Environment-Access only**. A Project-Access admin can view the
+Processes tabs but not add, edit, transfer or delete anything there. See
 [Administrators & Access Levels](/cockpit/administrators-and-access-levels).
 :::
 

@@ -14,9 +14,11 @@ project's users. The modal has four tabs.
 
 Edit your account details — your **email** and **mobile phone**. Changes are saved per field.
 
+
 ## Password
 
 **Set password** (or change it); minimum **10 characters**.
+
 
 :::info
 **Passwords are per-environment.** *"If you use the same email across multiple environments, your password
@@ -30,9 +32,11 @@ Add two-factor authentication with an authenticator app: **scan the QR code with
 then enter the verification code** (a 6-digit token) to complete setup. Once enabled you can **Disable 2FA**
 again (with confirmation). The 2FA tab appears once you have a password set.
 
+
 ## Danger Zone
 
 **Delete** your account.
+
 
 :::danger
 If you're the **last administrator with Environment Access**, deleting your account **permanently removes

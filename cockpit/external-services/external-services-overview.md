@@ -27,7 +27,8 @@ your Environment. You set them up in two places:
 
 :::caution
 External Services are **Environment-Access only.** A Project-Access admin sees *"Only administrators with
-'Environment Access' can view and manage this data."* See [Administrators & Access Levels](/cockpit/administrators-and-access-levels).
+'Environment Access' can view and manage the other environment variables (Spec and captcha keys), the external services
+and the operation tokens."* See [Administrators & Access Levels](/cockpit/administrators-and-access-levels).
 :::
 
 :::info

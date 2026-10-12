@@ -10,9 +10,10 @@ Common issues and how to resolve them.
 
 ## "Access restricted" / an action is disabled
 
-Some areas are **Environment-Access only** — External Services, the Spec ID, Operation tokens, authentication
-processes, and transfer/delete. If you have **Project Access** you'll see *"Only administrators with
-'Environment Access' can view and manage this data"* or a disabled control. Ask an Environment-Access admin,
+Some areas are **Environment-Access only** — External Services, the Spec ID, Operation tokens, managing
+authentication processes (Project Access can view them), creating projects, and transfer/delete. If you have **Project Access** you'll see *"Only administrators with
+'Environment Access' can view and manage the other environment variables (Spec and captcha keys), the external services
+and the operation tokens"* or a disabled control. Ask an Environment-Access admin,
 or have iCure grant you Environment Access. See [Administrators & Access Levels](/cockpit/administrators-and-access-levels).
 
 ## A user can't create or read encrypted data
@@ -32,10 +33,36 @@ access data. Initialize the parent's key (or have the parent HCP log in). See [O
 You can only use a channel you've configured in **External Services**. Add the matching
 [email](/cockpit/external-services-email) or [SMS](/cockpit/external-services-sms) gateway first. See [Authentication Processes (setup)](/cockpit/authentication-processes-setup).
 
-## I can't add another project / tenant
+## I can't add another project / tenant / user
 
-You've hit a **plan limit** (Free: 2 projects, 5 tenants). Upgrade with the iCure team. See [Limits](/cockpit/limits) and
-[Storage & Plans](/cockpit/storage-and-plans).
+You've hit a **plan limit** (Free: 2 projects, 5 tenants per project, 10 healthcare professionals,
+10 devices, and 100 patients per project; no bulk import). Upgrade with the iCure team. See [Limits](/cockpit/limits) and
+[Storage & Plans](/cockpit/storage-and-plans). If the **Add** menu says the user count couldn't be verified,
+reload and try again — adding stays blocked until Cockpit can count the project's users.
+
+## The storage limit says "N/A" or "Per HCP (default)"
+
+The allowance is derived from the project's **business model** and the number of users it bills on. *N/A*
+means it can't be calculated yet (no billable user, or more than one model on the project); *Per HCP
+(default)* means no model was selected, so Cockpit assumes Per-HCP. Select the real model from
+**Configuration → Project overview**. See [Storage & Plans](/cockpit/storage-and-plans).
+
+## I can't delete an HCP
+
+The HCP is the **parent organization of other HCPs**; the confirmation lists them and keeps **Yes**
+disabled. Change those users' parent organization first. See [Managing Users](/cockpit/managing-users).
+
+## Counts or storage look wrong
+
+Metrics are **updated every 24 hours** — check the **Last update** date next to the figure. The user
+breakdown, storage charts and the Metrics page all share that lag; only the Free-plan **Add** caps use live
+counts. See [Metrics](/cockpit/metrics).
+
+## "You are about to log in to Cockpit Dev / Staging"
+
+You're on a **non-production** Cockpit (the header shows a **DEV** or **STAGING** badge). It runs
+experimental features against a test backend — don't use a production database there. **Go to Cockpit
+Prod** takes you to [cockpit.icure.cloud](https://cockpit.icure.cloud). See [Register & Log In](/cockpit/register-and-log-in).
 
 ## I can't switch a project back to single-tenant
 
