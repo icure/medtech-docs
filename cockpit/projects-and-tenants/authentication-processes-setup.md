@@ -10,8 +10,10 @@ This is the practical how-to for **creating and managing** authentication proces
 *is* and how your application calls it, see the concept page: [Authentication Processes](/cockpit/authentication-processes).
 
 :::caution
-Processes are **Environment-Access only**. A Project-Access admin sees: *"Only administrators with
-'Environment Access' can view and manage Processes."* See [Administrators & Access Levels](/cockpit/administrators-and-access-levels).
+Managing processes is **Environment-Access only**. A Project-Access admin can **view** the Processes tabs
+(the table and each process's ID and template) but every create, edit, transfer, and delete control is
+disabled: *"Viewing only: adding, editing, transferring and deleting processes is restricted to
+administrators with 'Environment Access'."* See [Administrators & Access Levels](/cockpit/administrators-and-access-levels).
 :::
 
 ## Where processes live
@@ -23,7 +25,15 @@ Processes are **Environment-Access only**. A Project-Access admin sees: *"Only a
 
 :::info
 Rule of thumb: **Login and Generic at the project**, **Registration inside the tenant**. In a single-tenant
-project the tenant is hidden, so you manage everything from the project's Configuration.
+project the tenant is hidden, so you manage everything from the project's Configuration — the **Project
+scope / Tenant scope** switch on the tab picks which (see [Managing Tenants](/cockpit/managing-tenants#project-and-tenant-settings-one-scope-at-a-time)).
+:::
+
+:::info
+**You rarely start from scratch.** The project wizard and the tenant wizard create the registration
+processes for the end-user types you selected (named `DEMO: …`), and switching a project to multi-tenant
+offers to create its **Login** process. This page is for everything beyond that. See
+[Create Your First Project](/cockpit/create-your-first-project) and [Managing Tenants](/cockpit/managing-tenants).
 :::
 
 ## Creating a process

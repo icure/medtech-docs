@@ -6,16 +6,22 @@ title: Switch Environment
 
 # Switch Environment
 
-One email can be an administrator in more than one place — multiple **[Environments](/cockpit/environment)** (granted by the
-iCure team) and/or multiple **[Projects](/cockpit/project)** (granted from Cockpit). When it can, Cockpit lets you choose
+One email can be an administrator in more than one place — multiple **[Environments](/cockpit/environment)** (granted by
+the
+iCure team) and/or multiple **[Projects](/cockpit/project)** (granted from Cockpit). When it can, Cockpit lets you
+choose
 which one you're working in.
 
 ## Choosing at login
 
 If your account reaches more than one environment, right after you authenticate Cockpit shows a
-**Choose your environment** prompt. The available accounts are grouped by **[access level](/cockpit/administrators-and-access-levels)** — you pick
+**Choose your environment** prompt. The available accounts are grouped by *
+*[access level](/cockpit/administrators-and-access-levels)** — you pick
 the level first (**Environment Access** or **Project Access**), then the specific account within it. The
-actions you can perform then depend on your role in whichever you enter.
+actions you can perform then depend on your role in whichever you enter. Pick within a few minutes: the
+prompt times out (*"Environment selection timed out. Please sign in again."*) and closing it cancels the
+login.
+
 
 ## Switching anytime
 

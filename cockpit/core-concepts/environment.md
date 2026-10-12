@@ -64,8 +64,9 @@ Open the **Account dropdown** in the header and choose **Manage environment**. T
   environment** (the receiving environment generates the token; see [Transfer ownership](/cockpit/transfer-ownership)).
 
 :::caution
-**Only administrators with "Environment Access" can view and manage this data.** Project-Access admins see an **"
-Access restricted"** message and must ask an Environment-Access admin.
+**Only administrators with "Environment Access" can view and manage this data.** Project-Access admins see only the
+Environment group Id and the subscription plan, followed by an **"Access restricted"** message, and must ask an
+Environment-Access admin for anything else.
 :::
 
 <!-- TODO(screenshot): manage-environment — the Manage Environment modal showing its three tabs
@@ -119,8 +120,10 @@ for the environment where it was set; you can always get in elsewhere with a one
 
 The Environment is also where your **Cardinal plan limits** apply. Cockpit itself is free; your
 [Cardinal pricing tier](https://cardinalsdk.com/en/pricing/) defines how many **projects** the Environment
-can hold, how many **tenants** a multi-tenant project may have, and how much **storage** each project gets.
-Upgrading your tier raises these limits for the whole Environment.
+can hold, how many **tenants** a multi-tenant project may have, how many users of each type a project may
+hold, and the **storage** allowance per billable user. The plan (**Free** / **Paid**) is shown as the
+**Environment subscription plan** in **Manage environment**, and a **Free tier** ribbon on the account menu
+lists the caps. Upgrading your tier raises these limits for the whole Environment. See [Limits](/cockpit/limits).
 
 ## Deleting an Environment
 

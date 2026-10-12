@@ -41,6 +41,14 @@ pick whichever suits you:
 
 However you sign in, you land on your Environment's dashboard — empty and ready for your first project.
 
+:::caution
+**Production vs. test Cockpits.** The production Cockpit is **[cockpit.icure.cloud](https://cockpit.icure.cloud)**.
+Other hosts (such as `cockpit.icure.dev` or a staging URL) are experimental environments that run against
+a test backend: they warn you before you log in or register — *"You are about to log in to Cockpit Dev"* —
+with a **Go to Cockpit Prod** button, and show a **DEV** / **STAGING** badge in the header. Don't use a
+production database there; your data could be affected.
+:::
+
 ## Choosing an environment
 
 One email can wear several hats. The same user can be an administrator in:

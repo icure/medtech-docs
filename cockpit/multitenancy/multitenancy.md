@@ -39,7 +39,8 @@ id to pass to the SDK. See [Initialize the Cardinal SDK](/cockpit/initialize-the
 ## Switching between the two
 
 The single ↔ multi-tenant switch lives in the project's **[Danger zone](/cockpit/danger-zone)** (*Configuration → Danger zone →
-Deployment model*), and is restricted to administrators with **Environment Access**:
+Deployment model*). Unlike Transfer ownership and Delete on the same tab, this action is available to both
+**Project Access** and **Environment Access** administrators — it's gated only by tenant-count eligibility:
 
 - **Switch to Multi-tenant** — reveals the Tenants page and lets the project hold more than one tenant.
 - **Switch to Single-tenant** — only possible while the project has **exactly one** tenant.
@@ -76,6 +77,10 @@ tenant (sharing via a parent organization), not in separate tenants.
 - **Place settings at the right scope.** Keep **Login** and generic processes at the **project** level and
   put **Registration** on the **tenant**; the same project-vs-tenant choice applies to
   [custom properties](/cockpit/custom-properties) and [external JWT](/cockpit/external-jwt-configuration).
+  Cockpit nudges you that way: switching to multi-tenant offers to create the project's **Login** process,
+  and the tenant wizard creates each tenant's **Registration** processes. See [Managing Tenants](/cockpit/managing-tenants).
+- **Mind the user caps.** On the Free plan the per-type user caps count across the **whole project**, so
+  splitting users over tenants doesn't raise them. See [Limits](/cockpit/limits).
 - **Mind the plan limit.** The number of tenants a project can hold depends on your
   [Cardinal plan](https://cardinalsdk.com/en/pricing/) (the Free plan allows 5). See [Storage & Plans](/cockpit/storage-and-plans).
 

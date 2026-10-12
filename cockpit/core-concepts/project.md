@@ -76,10 +76,12 @@ deployment model:
 `Configuration` has six tabs:
 
 1. **Project overview** — the project's name, both [identifiers](#a-projects-two-identifiers), its
-   **Deployment model** and tenant count, a per-type **user breakdown** (single-tenant), and **storage**
-   usage (data size, attachments, clusters).
+   **Business model** (what the project is invoiced on), its **Deployment model** and tenant count, a
+   per-type **user breakdown** whose badges open the matching user list, and **storage** usage against the
+   allowance (structured and file storage, clusters).
 2. **Processes** — the project's **[authentication processes](/cockpit/authentication-processes)** (the email/SMS one-time-code flows your
-   end users register and log in with). Each has a **Process ID** your app references.
+   end users register and log in with). Each has a **Process ID** your app references. Read-only with
+   Project Access.
 3. **Roles** — the roles assigned to the **users** inside the project, and the permissions attached to each
    role. Every user type comes with a **default set of roles**; from here you can adjust that default list
    or create a new role with a different set of permissions.

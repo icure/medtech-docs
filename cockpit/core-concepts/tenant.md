@@ -44,12 +44,12 @@ Healthcare parties, Patients, and Devices counts.
 
 ### Adding a tenant
 
-Click **Add** to open **Add tenant**. You only provide:
-
-- **Tenant name**
-- **Cluster** — the region where this tenant's database is hosted (it can differ from other tenants).
-
-Submitting provisions a brand-new **database** under the project, inheriting the project's Project ID.
+Click **Add** to open the **Create a tenant** wizard: **Tenant** (name and cluster — the region where this
+tenant's database is hosted, defaulting to the project's), **Users** (which end-user types it serves and
+how they share data), **Organisation** when sharing needs one, and **Ready to go**. It provisions a
+brand-new **database** under the project, inheriting the project's Project ID, plus the parent organisation
+and registration processes the answers call for — or just the empty database if you **Skip and create an
+empty tenant**. See [Managing Tenants](/cockpit/managing-tenants#adding-a-tenant).
 
 :::info
 **Plan limit.** The number of tenants a project can hold depends on your
@@ -63,12 +63,14 @@ limit, **Add** is disabled with a prompt to upgrade.
 
 Open a tenant to manage it through its own tabs — the tenant is a self-contained unit:
 
-1. **Overview** — the tenant's name, its **Tenant group ID**, the inherited Project ID, a per-type user
-   breakdown, and storage usage.
-2. **Users** — the tenant's own HCPs, organizations, patients, and devices (including bulk import). Each
-   tenant has a **separate** user set.
+1. **Overview** — the tenant's name, its **Tenant group ID**, the inherited Project ID, the project's
+   business model, a per-type user breakdown (each count opens the Users tab filtered to that type), and
+   storage charts.
+2. **Users** — the tenant's own HCPs, organizations, patients, and devices (including bulk import on paid
+   plans). Each tenant has a **separate** user set.
 3. **Processes** — the tenant's own **[authentication processes](/cockpit/authentication-processes)**. All process types are available at
    the tenant level; Cockpit still recommends configuring **Login at the project level** where possible.
+   Project-Access admins can view them but not change them.
 4. **Custom properties** — key/value properties scoped to this tenant (and you can copy them to/from the
    project or other tenants).
 5. **External JWT** — the tenant's external JWT configuration.

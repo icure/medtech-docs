@@ -14,6 +14,7 @@ away from everyday settings.
 Most actions here can't be undone, and two of them (**Transfer ownership**, **Delete**) are restricted to
 administrators with **Environment Access** — a Project-Access admin sees: *"This action is restricted to
 administrators with 'Environment Access'."* See [Administrators & Access Levels](/cockpit/administrators-and-access-levels).
+**Update indexes** is shown but currently disabled for every admin.
 :::
 
 ## Project Danger zone
@@ -22,7 +23,9 @@ administrators with 'Environment Access'."* See [Administrators & Access Levels]
 
 Switch the project between single- and multi-tenant:
 
-- **Switch to Multi-tenant** — *"Reversible only while there is 1 tenant."*
+- **Switch to Multi-tenant** — *"Reversible only while there is 1 tenant."* Once switched, Cockpit offers
+  to create the project's **Login** process if it has none, so users of every tenant can sign in through
+  one URL (**Create Login process** / **Later**). See [Managing Tenants](/cockpit/managing-tenants#switching-the-deployment-model).
 - **Switch to Single-tenant** — *"Best for projects with a single tenant."*
 
 Changing the model reshapes where your users live (directly under the project vs inside [tenants](/cockpit/tenant)), which

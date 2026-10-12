@@ -22,6 +22,13 @@ The login page offers three ways in:
 See [Register & Log In](/cockpit/register-and-log-in).
 
 :::info
+**Saved sessions expire.** Cockpit keeps you signed in between visits; when that saved session lapses you're
+returned to the login form with *"Your saved session has expired. Please sign in again."* A one-time code
+that isn't entered in time expires too — request a new one. On a non-production Cockpit (DEV / STAGING
+badge) you're also warned before each login; see [Register & Log In](/cockpit/register-and-log-in).
+:::
+
+:::info
 **Passwords are per-environment.** If you reuse the same email across [environments](/cockpit/environment), a password only
 works for the environment where it was set — but you can always get in elsewhere with a one-time code.
 :::

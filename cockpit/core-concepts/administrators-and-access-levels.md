@@ -16,8 +16,8 @@ and do. Cockpit exposes **two**:
 | | **Environment Access** | **Project Access** |
 |---|---|---|
 | **Scope** | the whole [Environment](/cockpit/environment) | a single [Project](/cockpit/project) |
-| **Can do** | manage environment data & settings, **all** projects and tenants, and the authentication (communication) processes | manage that project's settings, **[roles & permissions](/cockpit/roles-and-permissions)**, and view its metrics |
-| **Can't do** | — | view or manage environment data, the authentication processes, or any **sensitive project actions** (transfer / delete) |
+| **Can do** | manage environment data & settings, **all** projects and tenants, and the authentication (communication) processes | manage that project's settings, users, **[roles & permissions](/cockpit/roles-and-permissions)**, create (empty) tenants, view its processes and metrics |
+| **Can't do** | — | view or manage environment data, create or change authentication processes, or any **sensitive project actions** (transfer / delete) |
 
 When you **register**, you become the **sole administrator with Environment Access** over the Environment
 that registration creates (see [Register & Log In](/cockpit/register-and-log-in)). From there you can add more administrators.
@@ -37,8 +37,8 @@ am I allowed to do right now," especially if your email has access to more than 
 
 You manage a project's administrators from its **Administrators** page. Click **Add** and provide the
 new admin's **Name**, **Email**, and optionally a **Mobile phone** — there's no access-level picker, because
-an administrator added from a project's page gets **Project Access scoped to that project**. You can also
-**Import** administrators in bulk from a spreadsheet (the same CSV/XLSX import used for users).
+an administrator added from a project's page gets **Project Access scoped to that project**. Administrators
+are always added one at a time — the spreadsheet import is for end users only.
 
 :::caution
 **Environment-Access administrators can't be created from Cockpit.** Adding admins in Cockpit only ever
@@ -61,14 +61,21 @@ or blocked, with a clear message — *"Only administrators with 'Environment Acc
 data. Please contact them to request changes…"* (and on individual controls,
 *"This action is restricted to administrators with 'Environment Access'."*). These include:
 
-- **External services** and the **Spec ID** (the [Environment](/cockpit/environment)-level gateways and config);
+- **External services**, the **Spec ID** and captcha keys (the [Environment](/cockpit/environment)-level
+  gateways and config) — **Manage environment** shows a Project-Access admin only the **Environment group
+  Id** and **Environment subscription plan**;
 - **Operation tokens** (used to transfer project ownership);
-- **Authentication processes** — *"Only administrators with 'Environment Access' can view and manage
-  Processes."* — at both project and tenant level;
-- **Transfer ownership** and **Delete** a project (the project's [Danger zone](/cockpit/danger-zone)).
+- **Authentication processes** — **view only**, at both project and tenant level: *"You can view the
+  processes of this project, but only administrators with 'Environment Access' can add, edit, transfer or
+  delete them."*;
+- **Creating a project**, and **Transfer ownership** / **Delete** of a project (the project's
+  [Danger zone](/cockpit/danger-zone));
+- **Provisioning a new tenant's users and processes** — a Project-Access admin creates **empty** tenants
+  only (see [Managing Tenants](/cockpit/managing-tenants#adding-a-tenant));
+- the **storage charts** — a Project-Access admin sees storage as plain figures.
 
-Everything else inside a project — its users, roles & permissions, custom properties, metrics — is open to
-a Project-Access admin for that project.
+Everything else inside a project — its users, roles & permissions, custom properties, business model,
+deployment model, metrics — is open to a Project-Access admin for that project.
 
 ## The last Environment-Access administrator
 
@@ -88,7 +95,7 @@ or use **Transfer ownership** to move your projects elsewhere before leaving. Se
 
 - **[Environment](/cockpit/environment)** — the scope an Environment-Access admin controls.
 - **[Project](/cockpit/project)** — the scope a Project-Access admin controls.
-- **[Administrators](/cockpit/administrators)** — the practical how-to for adding, importing, and managing admins.
+- **[Administrators](/cockpit/administrators)** — the practical how-to for adding and managing admins.
 - **[Switch Environment](/cockpit/switch-environment)** — using one email across several environments and access levels.
 
 > **Cardinal SDK reference:** an administrator is a [`User`](/explanations/data-model/user); what it can do comes from its [roles](/how-to/define-user-roles).
