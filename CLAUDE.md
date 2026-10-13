@@ -4,7 +4,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-CardinalSDK documentation site built with **Docusaurus 3.5.2**. Deployed at `https://docs.icure.com`.
+Cardinal SDK documentation site built with **Docusaurus 3.9**. Deployed at `https://docs.icure.com`.
+
+Requires **Node.js >= 20** (see `.nvmrc`; run `nvm use`).
 
 ## Commands
 
@@ -12,17 +14,14 @@ CardinalSDK documentation site built with **Docusaurus 3.5.2**. Deployed at `htt
 # Install dependencies (uses Yarn classic)
 yarn
 
-# Dev server (no template generation)
+# Dev server
 yarn start
 
-# Template generation + code sample injection, then dev server
-yarn old-start    # equivalent to: yarn make && docusaurus start
+# Production build
+yarn build
 
-# Full build with template generation
-yarn old-build    # equivalent to: yarn make && docusaurus build
-
-# Template generation only (Mustache + code injection)
-yarn make         # node make.mjs && node fill.mjs
+# Serve the production build locally
+yarn serve
 
 # Type checking
 yarn typecheck
@@ -31,33 +30,24 @@ yarn typecheck
 yarn clear
 ```
 
-**Code samples** (in `code-samples/`):
+**Sample tests** (in `sample-tests/`): the TypeScript code blocks in `sdk/**/*.mdx` are extracted and run as Vitest tests against a real Cardinal backend. Kotlin samples have an equivalent Gradle setup.
 ```bash
-cd code-samples
+cd sample-tests/typescript
 yarn
-yarn start        # lint-fix + build + run all samples
-yarn lint         # ESLint check
-yarn lint-fix     # ESLint auto-fix
+yarn generate     # generate test files only
+yarn test         # generate + run tests
 ```
+Mark a code block ` ```typescript no-test ` to exclude it. See `sample-tests/typescript/README.md`.
 
 ## Architecture
 
-### Two-Stage Content Pipeline
-
-1. **`make.mjs` — Mustache templating**: Templates in `sdks/` are rendered into `medtech-sdk/` and `ehr-lite-sdk/` with different terminology (e.g., "data sample" vs "observation", "healthcare professional" vs "practitioner"). Files prefixed with `!!medtech` or `!!ehrlite` are conditionally included/excluded per SDK.
-
-2. **`fill.mjs` — Code sample injection**: Markdown files contain `<!-- file://code-samples/path.ts snippet:name -->` comments. `fill.mjs` extracts code between `//tech-doc: snippetName` markers in TypeScript files and injects them into markdown code fences. Supports `/* truncate */` for long strings and `//skip` to exclude lines.
-
-**Important**: `medtech-sdk/` and `ehr-lite-sdk/` directories are **generated** — edit `sdks/` templates instead.
-
 ### Documentation Sections
 
-- **`sdk/`** — Cardinal SDK (new, primary docs), routed to `/`
-- **`cockpit/`** — Cockpit product docs, routed to `/cockpit`
-- **`sdks/`** — Templates that generate `medtech-sdk/` and `ehr-lite-sdk/`
+- **`sdk/`** — Cardinal SDK docs (primary), routed to `/`, sidebar `sidebarsNsdk.js`
+- **`cockpit/`** — Cockpit product docs, routed to `/cockpit`, sidebar `sidebarsCockpit.js`
 - **`api/`** — API reference docs
 
-Each section has its own sidebar file (`sidebarsNsdk.js`, `sidebarsCockpit.js`, etc.).
+Content is plain Markdown/MDX edited in place. There is no template or code-injection step anymore: the former `sdks/` Mustache templates, generated `medtech-sdk/` and `ehr-lite-sdk/` outputs, and `code-samples/` snippet injection were removed in March 2026.
 
 ### Custom Components
 
@@ -69,6 +59,10 @@ Each section has its own sidebar file (`sidebarsNsdk.js`, `sidebarsCockpit.js`, 
 
 - **Mermaid** — native via `@docusaurus/theme-mermaid`
 - **Kroki/PlantUML** — via `remark-kroki` plugin (aliased as `plantuml`)
+
+## MDX Gotchas
+
+MDX parses `<word>` as a JSX tag. Escape literal angle-bracket placeholders in prose as `\<date\>`, or the build fails.
 
 ## Formatting
 

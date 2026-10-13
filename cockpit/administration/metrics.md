@@ -46,7 +46,7 @@ Two consequences worth knowing:
 - **Storage and counts elsewhere in Cockpit come from the same lagging source**, so a project's storage
   on the dashboard card, on its Configuration page and in this table are all the same delayed figure —
   they agree with each other, not with "right now". Each of those places carries a **Last update** date
-  (and the project and tenant overviews a banner: *"…updated every 24 hours. Last updated on <date>."*)
+  (and the project and tenant overviews a banner: *"…updated every 24 hours. Last updated on \<date\>."*)
   so you always know which day you're looking at.
 - **The Free-plan user caps are the exception**: the **Add** menu checks live counts, not these figures.
 :::
