@@ -41,15 +41,7 @@ next step.
   your application.
 - The **cluster** is the region where your data is hosted; choose the one closest to your users.
 
-:::caution
-Changing the business model of an existing project affects how it is invoiced — contact the iCure team if
-you are not sure which model to select. You can change it from either of two places: **[Project
-Configuration](/cockpit/project-overview-and-configuration) → Project overview**, where the **Business
-model** field carries an edit button, or the dashboard's project card, via its **Edit project** action. It
-is also shown on the project card and on a tenant's overview (read-only in both); projects created before
-this feature show **Per HCP (default)** there and are prompted to select a real model. See
-[Project Overview & Configuration](/cockpit/project-overview-and-configuration#business-model).
-:::
+![The Project step: the project name, the reverse-domain Project ID, and the cluster selector.](img/onboarding/project.png)
 
 *Creates:* a new **[Project](/cockpit/project)** (a fresh iCure environment/group) and its first **database**. In Cockpit a
 database is called a **[Tenant](/cockpit/tenant)**. A project starts with a single database — that is, **one tenant** — so by
@@ -72,14 +64,23 @@ share data; the answers decide which registration processes and which parent org
 **authentication process IDs** you get at the end. Registration for other end-user types can be added later
 from **[Project Configuration](/cockpit/project-overview-and-configuration) → Processes**.
 
+:::caution
+Changing the business model of an existing project affects how it is invoiced — contact the iCure team if
+you are not sure which model to select. You can change it from either of two places: **[Project
+Configuration](/cockpit/project-overview-and-configuration) → Project overview**, where the **Business
+model** field carries an edit button, or the dashboard's project card, via its **Edit project** action. It
+is also shown on the project card and on a tenant's overview (read-only in both); projects created before
+this feature show **Per HCP (default)** there and are prompted to select a real model. See
+[Project Overview & Configuration](/cockpit/project-overview-and-configuration#business-model).
+:::
+
 :::info
 If the Environment has no email or SMS gateway yet, the step warns that the registration processes will use
 the **demo SendGrid access** provided by the iCure team, which has a limited sending quota. Configure a
 gateway in [External Services](/cockpit/external-services-overview) to lift it.
 :::
 
-<!-- TODO(screenshot): onboarding/users-step — the Users step with the end-user multi-select, the
-business model select and the two data-sharing questions -->
+![The Users step: the end-user multi-select with Healthcare professionals and Patients, the Per Healthcare Professional business model, and the two data-sharing questions.](img/onboarding/users-step.png)
 
 ### 4. Organization *(only when needed)*
 
