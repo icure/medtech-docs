@@ -14,6 +14,11 @@ Uniquely identifies the Code. Differently from all the other entities, where the
 [UUID v4](https://en.wikipedia.org/wiki/Universally_unique_identifier#Version_4_(random)), the id of the Code should be
 `type|code|version`, where `type`, `code`, and `version` are the values of the homonymous properties.
 
+The `|` separator is explicitly allowed in ids, but the general
+[validity rules for ids](/explanations/data-model/#what-is-a-valid-id) still apply: since `type`, `code`, and `version`
+become part of the id, none of them can contain whitespace, control characters, or any of the characters
+`/` `\` `?` `#` `%` `;`.
+
 ### type 
 The type of the Code is the classification system where the code come from (e.g. `SNOMED-CT`, `LOINC`). All the codes 
 from the same source should have the same type. 

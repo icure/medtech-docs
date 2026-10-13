@@ -26,9 +26,18 @@ We will refer to the first kind of entities as "encryptable", and to the second 
 
 ## Creating new entities
 
-
 You can create non-encryptable entities by instantiating an instance of their model class and then passing it to the
 create method of the corresponding api, which "commits" the creation and saves the new entity in the backend.
+
+:::note
+
+The `id` of a new entity is always chosen by the client. We recommend using a
+[UUID v4](https://en.wikipedia.org/wiki/Universally_unique_identifier#Version_4_(random)), plain or base58-encoded as a
+short UUID, as done in the examples below. Ids are used as path parameters in the URLs of the REST API, so an id cannot
+contain whitespace, control characters, or any of the characters `/` `\` `?` `#` `%` `;`: the creation of an entity
+with such an id will fail. See [what is a valid id](/explanations/data-model/#what-is-a-valid-id) for more details.
+
+:::
 
 <LanguageTabs>
 
@@ -37,12 +46,12 @@ create method of the corresponding api, which "commits" the creation and saves t
 ```kotlin test-AAAA
 import com.icure.cardinal.sdk.CardinalSdk
 import com.icure.cardinal.sdk.model.HealthcareParty
-import com.icure.kryptom.crypto.defaultCryptoService
+import kotlin.uuid.Uuid
 
 suspend fun createDoctor(sdk: CardinalSdk, firstName: String, lastName: String): HealthcareParty {
 	return sdk.healthcareParty.createHealthcareParty(
 		HealthcareParty(
-			id = defaultCryptoService.strongRandom.randomUUID(),
+			id = Uuid.random().toString(),
 			firstName = firstName,
 			lastName = lastName
 		)
@@ -103,13 +112,13 @@ Note that you will still have to commit the creation using the create method aft
 ```kotlin test-AAAB
 import com.icure.cardinal.sdk.CardinalSdk
 import com.icure.cardinal.sdk.model.DecryptedPatient
-import com.icure.kryptom.crypto.defaultCryptoService
+import kotlin.uuid.Uuid
 
 suspend fun createPatient(sdk: CardinalSdk, firstName: String, lastName: String): DecryptedPatient {
 	// Initialize the metadata for the patient. Note that this doesn't save the patient in the backend.
 	val initializedPatient = sdk.patient.withEncryptionMetadata(
 		DecryptedPatient(
-			id = defaultCryptoService.strongRandom.randomUUID(),
+			id = Uuid.random().toString(),
 			firstName = firstName,
 			lastName = lastName,
 		)
@@ -192,7 +201,7 @@ For example, when you initialize the encryption metadata of a health element, yo
 import com.icure.cardinal.sdk.CardinalSdk
 import com.icure.cardinal.sdk.model.DecryptedHealthElement
 import com.icure.cardinal.sdk.model.Patient
-import com.icure.kryptom.crypto.defaultCryptoService
+import kotlin.uuid.Uuid
 
 suspend fun createHealthElementForPatient(
 	sdk: CardinalSdk,
@@ -201,7 +210,7 @@ suspend fun createHealthElementForPatient(
 ): DecryptedHealthElement {
 	val initializedHealthElement = sdk.healthElement.withEncryptionMetadata(
 		DecryptedHealthElement(
-			id = defaultCryptoService.strongRandom.randomUUID(),
+			id = Uuid.random().toString(),
 			descr= description
 		),
 		patient // This is mandatory
@@ -254,7 +263,7 @@ def create_health_element_for_patient(
 		),
 		patient  # This is mandatory
 	)
-	return sdk.health_element.create_patient_blocking(initialized_health_element)
+	return sdk.health_element.create_health_element_blocking(initialized_health_element)
 ```
 
 </TabItem>
@@ -329,7 +338,7 @@ def create_patient(sdk: CardinalSdk, first_name: str, last_name: str) -> Decrypt
 	initialized_patient = sdk.patient.with_encryption_metadata_blocking(None)
 	initialized_patient.first_name = first_name
 	initialized_patient.last_name = last_name
-	return sdk.patient.create_patient_blocking()
+	return sdk.patient.create_patient_blocking(initialized_patient)
 ```
 
 </TabItem>
@@ -356,12 +365,12 @@ This is especially the case if you want the other delegates to be able to [liste
 import com.icure.cardinal.sdk.CardinalSdk
 import com.icure.cardinal.sdk.model.DecryptedPatient
 import com.icure.cardinal.sdk.model.embed.AccessLevel
-import com.icure.kryptom.crypto.defaultCryptoService
+import kotlin.uuid.Uuid
 
 suspend fun createPatient(sdk: CardinalSdk, firstName: String, lastName: String, sharedWith: String?): DecryptedPatient {
 	val initializedPatient = sdk.patient.withEncryptionMetadata(
 		DecryptedPatient(
-			id = defaultCryptoService.strongRandom.randomUUID(),
+			id = Uuid.random().toString(),
 			firstName = firstName,
 			lastName = lastName,
 		),
@@ -432,6 +441,155 @@ def create_patient(
 
 </LanguageTabs>
 
+#### Fine-grained initial delegates {#fine-grained-initial-delegates}
+
+When you initialize the metadata with the `delegates` parameter of `withEncryptionMetadata`, the delegates get access
+to all the encrypted information of the entity. Since SDK 2.11.0, if you need more control, you can use the
+`withEncryptionMetadataAndDelegates` method instead. This method is similar to `withEncryptionMetadata`, but the
+`delegates` parameter is required and comes right after the base entity and, if any, the linked patient: it is the
+second parameter for `Patient`, `RelatedPerson` and `AccessLog` (for access logs, the optional `patient` comes after
+`delegates`), and the
+third parameter for the entities linked to a patient (`Contact`, `HealthElement`, `CalendarItem`, `Form`, ...).
+The remaining parameters (`user`, `secretId`, `alternateRootDelegateId`) are optional; in TypeScript they are passed
+in the `options` object.
+
+The `delegates` parameter is a map that associates each delegate to an entity-specific delegate options object
+(`PatientDelegateOptions`, `HealthElementDelegateOptions`, `ContactDelegateOptions`, ...) where you can specify:
+
+- `accessLevel`: the permission (read or read+write) granted on the entity.
+- `shareEncryptionKey`: whether the delegate can decrypt the encrypted content of the entity.
+- `shareSecretId`: whether the delegate gets access to the secret ids of the entity (needed for example to find the
+medical data of a patient).
+- For most entities that are linked to a patient (contacts, health elements, calendar items, forms, messages, ...),
+`sharePatientId`: whether the delegate can decrypt the id of the patient the entity is linked to. `PatientDelegateOptions`,
+`RelatedPersonDelegateOptions` and `ReceiptDelegateOptions` don't have this option.
+
+For documents there are three variants, matching the three variants of `withEncryptionMetadata` for documents:
+`withEncryptionMetadataAndDelegatesLinkedToMessage` and `withEncryptionMetadataAndDelegatesLinkedToPatient` (where
+`delegates` is the third parameter, after the message or patient), and `withEncryptionMetadataAndDelegatesUnlinked`
+(where `delegates` is the second parameter).
+`DocumentDelegateOptions` uses `shareMessageId` instead of `sharePatientId`, to choose whether the delegate can decrypt
+the id of the entity (message or patient) the document is linked to.
+
+Classifications and maintenance tasks don't have a `withEncryptionMetadataAndDelegates` method.
+
+<LanguageTabs>
+
+<TabItem value="kotlin">
+
+```kotlin test-AAZA
+import com.icure.cardinal.sdk.CardinalSdk
+import com.icure.cardinal.sdk.crypto.entities.PatientDelegateOptions
+import com.icure.cardinal.sdk.model.DecryptedPatient
+import com.icure.cardinal.sdk.model.embed.AccessLevel
+import kotlin.uuid.Uuid
+
+suspend fun createPatientWithLimitedDelegate(
+	sdk: CardinalSdk,
+	firstName: String,
+	lastName: String,
+	delegateId: String
+): DecryptedPatient {
+	val initializedPatient = sdk.patient.withEncryptionMetadataAndDelegates(
+		DecryptedPatient(
+			id = Uuid.random().toString(),
+			firstName = firstName,
+			lastName = lastName,
+		),
+		delegates = mapOf(
+			// The delegate can find and read the unencrypted part of the patient,
+			// but can't decrypt its encrypted content
+			delegateId to PatientDelegateOptions(
+				accessLevel = AccessLevel.Read,
+				shareEncryptionKey = false,
+				shareSecretId = true
+			)
+		)
+	)
+	return sdk.patient.createPatient(initializedPatient)
+}
+```
+
+</TabItem>
+
+<TabItem value="typescript">
+
+```typescript test-ZUFA
+import {AccessLevel, CardinalSdk, DecryptedPatient, PatientDelegateOptions, randomUuid} from "@icure/cardinal-sdk";
+
+async function createPatientWithLimitedDelegate(
+	sdk: CardinalSdk,
+	firstName: string,
+	lastName: string,
+	delegateId: string
+): Promise<DecryptedPatient> {
+	const initializedPatient = await sdk.patient.withEncryptionMetadataAndDelegates(
+		new DecryptedPatient({
+			id: randomUuid(),
+			firstName: firstName,
+			lastName: lastName,
+		}),
+		{
+			// The delegate can find and read the unencrypted part of the patient,
+			// but can't decrypt its encrypted content
+			[delegateId]: new PatientDelegateOptions({
+				accessLevel: AccessLevel.Read,
+				shareEncryptionKey: false,
+				shareSecretId: true,
+			})
+		}
+	)
+	return sdk.patient.createPatient(initializedPatient)
+}
+```
+
+</TabItem>
+
+<TabItem value="python">
+
+```python
+import uuid
+from cardinal_sdk import CardinalSdk
+from cardinal_sdk.model import DecryptedPatient, AccessLevel, PatientDelegateOptions
+
+def create_patient_with_limited_delegate(
+		sdk: CardinalSdk,
+		first_name: str,
+		last_name: str,
+		delegate_id: str
+) -> DecryptedPatient:
+	initialized_patient = sdk.patient.with_encryption_metadata_and_delegates_blocking(
+		DecryptedPatient(
+			id=str(uuid.uuid4()),
+			first_name=first_name,
+			last_name=last_name
+		),
+		delegates={
+			# The delegate can find and read the unencrypted part of the patient,
+			# but can't decrypt its encrypted content
+			delegate_id: PatientDelegateOptions(
+				access_level=AccessLevel.Read,
+				share_encryption_key=False,
+				share_secret_id=True
+			)
+		}
+	)
+	return sdk.patient.create_patient_blocking(initialized_patient)
+```
+
+</TabItem>
+
+</LanguageTabs>
+
+:::caution
+
+The default values of the sharing flags in the delegate options differ between languages: in Kotlin all the flags
+default to `true` (full sharing, like `withEncryptionMetadata`), while in TypeScript and Python they default to
+`false`/`False` (nothing beyond the unencrypted content is shared). We recommend always setting all the flags
+explicitly.
+
+:::
+
 #### Auto delegations {#auto-delegations}
 
 If you're using the auto-delegations system (:construction:) you can pass the current sdk user instance (with the configured
@@ -456,12 +614,12 @@ provided through the initial delegates.
 import com.icure.cardinal.sdk.CardinalSdk
 import com.icure.cardinal.sdk.model.DecryptedPatient
 import com.icure.cardinal.sdk.model.User
-import com.icure.kryptom.crypto.defaultCryptoService
+import kotlin.uuid.Uuid
 
 suspend fun createPatient(sdk: CardinalSdk, currentUser: User, firstName: String, lastName: String): DecryptedPatient {
 	val initializedPatient = sdk.patient.withEncryptionMetadata(
 		DecryptedPatient(
-			id = defaultCryptoService.strongRandom.randomUUID(),
+			id = Uuid.random().toString(),
 			firstName = firstName,
 			lastName = lastName,
 		),
@@ -991,7 +1149,6 @@ The following table summarizes the behavior of the APIs' flavors.
 | Encrypted                   | Best-effort validation to verify that the entities don't contain any data which should be encrypted according to the configuration. Fails if some entity doesn't pass the validation. | Returns the entities as is.                                                                                            | You don't need the encrypted content of an entity                                                          |
 | Polymorphic (tryAndRecover) | Encrypts or validate the entity depending on the actual type. Fails if some entity can't be encrypted or doesn't pass validation.                                                     | Tries to decrypt the entities, any entity that can't be decrypted is returned as is.                                   | You don't know if the user can decrypt the entity but you want to display as much information as possible. |
 
-
 :::caution
 
 The validation of encrypted input performed by the encrypted and polymorphic flavors of the apis are best-effort and
@@ -1192,7 +1349,6 @@ This configuration option uses the same values as the `shareEncryptionKey`
 When present, the default configuration for this option is always `ShareMetadataBehaviour.IfAvailable`.
 
 ### Example
-
 
 <LanguageTabs>
 

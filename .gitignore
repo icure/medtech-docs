@@ -7,8 +7,6 @@
 # Generated files
 .docusaurus
 .cache-loader
-/medtech-sdk
-/ehr-lite-sdk
 
 
 # Misc
@@ -23,5 +21,4 @@ yarn-debug.log*
 yarn-error.log*
 
 /.idea
-code-samples/test
 .worktrees

@@ -6,6 +6,8 @@ import com.icure.cardinal.sdk.auth.AuthSecretProvider
 import com.icure.cardinal.sdk.auth.AuthenticationProcessApi
 import com.icure.cardinal.sdk.model.embed.AuthenticationClass
 import com.icure.cardinal.sdk.model.security.Enable2faRequest
+import com.icure.kotp.ShaVersion
+import com.icure.kotp.Totp
 
 object SetUp2faHelper {
 
@@ -17,6 +19,7 @@ object SetUp2faHelper {
         return mapOf(
             "userId" to user.id,
             "otpSecret" to TEST_OTP_SECRET,
+            "currentOtp" to Totp(secret = TEST_OTP_SECRET, shaVersion = ShaVersion.Sha1).generate(digits = 8),
         )
     }
 
@@ -48,7 +51,14 @@ object SetUp2faHelper {
         val user = sdk.user.getCurrentUser()
         val userId = user.id
         try {
-            sdk.user.enable2faForUser(userId, Enable2faRequest(TEST_OTP_SECRET, 8))
+            sdk.user.enable2faForUser(
+                userId,
+                Enable2faRequest(
+                    secret = TEST_OTP_SECRET,
+                    otpLength = 8,
+                    otp = Totp(secret = TEST_OTP_SECRET, shaVersion = ShaVersion.Sha1).generate(digits = 8),
+                )
+            )
         } catch (_: Exception) {
             // 2FA may already be enabled from block 1
         }

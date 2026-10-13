@@ -107,7 +107,7 @@ Npw, the healthcare party user can create a Patient entity.
 
 ```kotlin test-AADE
 val newPatient = DecryptedPatient(
-	id = UUID.randomUUID().toString(),
+	id = Uuid.random().toString(),
 	firstName = "Edmond",
 	lastName = "Dantes",
 )
@@ -164,9 +164,9 @@ the new user to log in.
 <TabItem value="kotlin">
 
 ```kotlin test-AADF
-val login = "edmond.dantes.${UUID.randomUUID().toString().substring(0, 6)}@icure.com"
+val login = "edmond.dantes.${Uuid.random().toString().substring(0, 6)}@icure.com"
 val patientUser = User(
-	id = UUID.randomUUID().toString(),
+	id = Uuid.random().toString(),
 	patientId = createdPatient.id,
 	login = login,
 	email = login
@@ -424,11 +424,11 @@ device capable of measuring glycemia. This measurement is stored through the Car
 val glycemiaValue = Random.nextInt(60, 160).toDouble()
 val formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss")
 val contact = DecryptedContact(
-	id = UUID.randomUUID().toString(),
+	id = Uuid.random().toString(),
 	openingDate = LocalDateTime.now().format(formatter).toLong(),
 	services = setOf(
 		DecryptedService(
-			id = UUID.randomUUID().toString(),
+			id = Uuid.random().toString(),
 			content = mapOf(
 				"en" to DecryptedContent(
 					measureValue = Measure(

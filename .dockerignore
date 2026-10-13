@@ -1,0 +1,12 @@
+.git
+.github
+.gradle
+.idea
+.docusaurus
+.playwright-mcp
+.worktrees
+**/node_modules
+build
+sample-tests
+gradle
+ci

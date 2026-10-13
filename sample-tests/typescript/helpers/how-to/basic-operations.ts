@@ -28,7 +28,7 @@ async function createTestPatient(sdk: CardinalSdk, first = 'Test', last = 'Patie
 // All blocks in basic-operations are self-contained — no cross-block deps.
 
 export const preTestProvides: Record<string, string[]> = {
-	'basic-operations block 10 (KONE)': ['askUserToResolveNoteConflict'],
+	'basic-operations block 11 (KONE)': ['askUserToResolveNoteConflict'],
 }
 
 // ── preTest ──────────────────────────────────────────────────────────
@@ -39,17 +39,17 @@ export const preTest: Record<string, (sdk: CardinalSdk) => Promise<Record<string
 	'basic-operations block 3 (TELE)': async () => ({}),
 	'basic-operations block 4 (NUHA)': async () => ({}),
 	'basic-operations block 5 (XINO)': async () => ({}),
-	'basic-operations block 6 (QIWA)': async () => ({}),
-	'basic-operations block 7 (VOCO)': async () => ({}),
-	'basic-operations block 8 (MECI)': async () => ({}),
-	'basic-operations block 9 (WERU)': async () => ({}),
-	'basic-operations block 10 (KONE)': async () => ({
+	'basic-operations block 7 (QIWA)': async () => ({}),
+	'basic-operations block 8 (VOCO)': async () => ({}),
+	'basic-operations block 9 (MECI)': async () => ({}),
+	'basic-operations block 10 (WERU)': async () => ({}),
+	'basic-operations block 11 (KONE)': async () => ({
 		// Simple conflict resolution: always pick the incoming note
 		askUserToResolveNoteConflict: (existingNote: string | undefined, newNote: string) => newNote,
 	}),
-	'basic-operations block 11 (FESE)': async () => ({}),
-	'basic-operations block 12 (GACE)': async () => ({}),
-	'basic-operations block 13 (XELU)': async () => ({}),
+	'basic-operations block 12 (FESE)': async () => ({}),
+	'basic-operations block 13 (GACE)': async () => ({}),
+	'basic-operations block 14 (XELU)': async () => ({}),
 }
 
 // ── postTest ─────────────────────────────────────────────────────────
@@ -116,7 +116,7 @@ export const postTest: Record<string, (...args: any[]) => void | Promise<void>> 
 	},
 
 	// Block 6: createPatient(sdk, currentUser, firstName, lastName) → DecryptedPatient
-	'basic-operations block 6 (QIWA)': async (
+	'basic-operations block 7 (QIWA)': async (
 		sdk: CardinalSdk,
 		createPatient: (sdk: CardinalSdk, currentUser: User, firstName: string, lastName: string) => Promise<DecryptedPatient>,
 	) => {
@@ -130,7 +130,7 @@ export const postTest: Record<string, (...args: any[]) => void | Promise<void>> 
 
 	// Block 7: getPatientOfUser(sdk, user) → DecryptedPatient
 	// We can only verify the function exists and throws for non-patient users
-	'basic-operations block 7 (VOCO)': async (
+	'basic-operations block 8 (VOCO)': async (
 		sdk: CardinalSdk,
 		getPatientOfUser: (sdk: CardinalSdk, user: User) => Promise<DecryptedPatient>,
 	) => {
@@ -145,7 +145,7 @@ export const postTest: Record<string, (...args: any[]) => void | Promise<void>> 
 	},
 
 	// Block 8: getContactsOfPatient(sdk, patient, limit) → DecryptedContact[]
-	'basic-operations block 8 (MECI)': async (
+	'basic-operations block 9 (MECI)': async (
 		sdk: CardinalSdk,
 		getContactsOfPatient: (sdk: CardinalSdk, patient: Patient, limit: number) => Promise<DecryptedContact[]>,
 	) => {
@@ -155,7 +155,7 @@ export const postTest: Record<string, (...args: any[]) => void | Promise<void>> 
 	},
 
 	// Block 9: setPatientNote(sdk, patient, newNote) → DecryptedPatient
-	'basic-operations block 9 (WERU)': async (
+	'basic-operations block 10 (WERU)': async (
 		sdk: CardinalSdk,
 		setPatientNote: (sdk: CardinalSdk, patient: DecryptedPatient, newNote: string) => Promise<DecryptedPatient>,
 	) => {
@@ -167,7 +167,7 @@ export const postTest: Record<string, (...args: any[]) => void | Promise<void>> 
 
 	// Block 10: setPatientNote with conflict handling — uses undefined askUserToResolveNoteConflict
 	// We can only test the happy path (no conflict)
-	'basic-operations block 10 (KONE)': async (
+	'basic-operations block 11 (KONE)': async (
 		sdk: CardinalSdk,
 		setPatientNote: (sdk: CardinalSdk, patient: DecryptedPatient, newNote: string) => Promise<DecryptedPatient>,
 	) => {
@@ -178,7 +178,7 @@ export const postTest: Record<string, (...args: any[]) => void | Promise<void>> 
 	},
 
 	// Block 11: deletePatient, undeletePatient, purgeUser
-	'basic-operations block 11 (FESE)': async (
+	'basic-operations block 12 (FESE)': async (
 		sdk: CardinalSdk,
 		deletePatient: (sdk: CardinalSdk, patient: Patient) => Promise<void>,
 		undeletePatient: (sdk: CardinalSdk, patientId: string, patientRev: string) => Promise<DecryptedPatient>,
@@ -197,7 +197,7 @@ export const postTest: Record<string, (...args: any[]) => void | Promise<void>> 
 	},
 
 	// Block 12: printMatchingPatientNames, printPatientDetails
-	'basic-operations block 12 (GACE)': async (
+	'basic-operations block 13 (GACE)': async (
 		sdk: CardinalSdk,
 		printMatchingPatientNames: (sdk: CardinalSdk, filter: FilterOptions<Patient>, limit: number) => Promise<void>,
 		printPatientDetails: (sdk: CardinalSdk, patientId: string) => Promise<void>,
@@ -210,7 +210,7 @@ export const postTest: Record<string, (...args: any[]) => void | Promise<void>> 
 
 	// Block 13: shareHealthElementForStatistics — uses a placeholder STATISTICS_DATA_OWNER_ID = "..."
 	// Cannot meaningfully test without a real second data owner, so just verify the function is defined
-	'basic-operations block 13 (XELU)': async (
+	'basic-operations block 14 (XELU)': async (
 		_sdk: CardinalSdk,
 		shareHealthElementForStatistics: (...args: any[]) => Promise<any>,
 		STATISTICS_DATA_OWNER_ID: string,

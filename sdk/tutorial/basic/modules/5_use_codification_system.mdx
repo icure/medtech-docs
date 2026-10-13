@@ -176,7 +176,9 @@ A `Code` is defined by three properties:
 and a new version.
 
 A `Code` is uniquely identified by the `type`, `code`, `version` triple, so the ID of a `Code` is not a UUID but rather
-the string `type|code|version`.
+the string `type|code|version`. Note that the usual [validity rules for ids](/explanations/data-model/#what-is-a-valid-id)
+still apply: while `|` is allowed, `type`, `code`, and `version` cannot contain whitespace, control characters, or any
+of the characters `/` `\` `?` `#` `%` `;`.
 
 A `Code` can be used to add additional context to other entities. In the following example, it is used to add a tag to
 a `Service`.
@@ -210,7 +212,7 @@ requireNotNull(selectedCode) { "No code was selected" }
 
 val patient = sdk.patient.createPatient(
 	DecryptedPatient(
-		id = UUID.randomUUID().toString(),
+		id = Uuid.random().toString(),
 		firstName = "Annabelle",
 		lastName = "Hall",
 	).let { sdk.patient.withEncryptionMetadata(it) }
@@ -218,12 +220,12 @@ val patient = sdk.patient.createPatient(
 
 val formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss")
 val contact = DecryptedContact(
-	id = UUID.randomUUID().toString(),
+	id = Uuid.random().toString(),
 	descr = "Blood pressure measurement",
 	openingDate = LocalDateTime.now().format(formatter).toLong(),
 	services = setOf(
 		DecryptedService(
-			id = UUID.randomUUID().toString(),
+			id = Uuid.random().toString(),
 			label = "Blood pressure",
 			content = mapOf(
 				"en" to DecryptedContent(

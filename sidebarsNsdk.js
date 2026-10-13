@@ -15,6 +15,9 @@
 const sidebars = {
   apiSidebar: [
     'intro',
+    'whats-new',
+    'migration',
+    'mcp-server',
     {
       type: 'category',
       label: 'Quickstart',

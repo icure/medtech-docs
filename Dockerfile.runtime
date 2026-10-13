@@ -1,0 +1,37 @@
+ARG SERVER_VERSION=2.36.1
+
+# Stage 1 — build the Docusaurus site.
+# Built and pushed to ghcr.io/icure/medtech-docs by .github/workflows/build-and-push.yml. Build context is the
+# repo root: `docker buildx build -t ghcr.io/icure/medtech-docs -f Dockerfile.runtime .`
+FROM node:24-slim AS node-build
+WORKDIR /app
+COPY package.json yarn.lock ./
+RUN yarn install --frozen-lockfile
+COPY . .
+# Outputs to /app/build. PlantUML diagrams are rendered by remark-kroki, which needs network access.
+RUN NODE_OPTIONS="--max_old_space_size=4096" yarn build
+
+# Stage 2 — source the static-web-server binary.
+FROM joseluisq/static-web-server:${SERVER_VERSION}-alpine AS sws
+
+# Stage 3 — final runtime image: scratch base (server binary + static assets only).
+FROM scratch
+ARG SERVER_VERSION=2.36.1
+ENV SERVER_VERSION=${SERVER_VERSION}
+
+LABEL description="iCure / Cardinal SDK documentation (Docusaurus static site)" \
+      org.opencontainers.image.source="https://github.com/icure/medtech-docs"
+
+# Docusaurus emits one index.html per route plus a 404.html: serve missing paths with a real 404 status
+# rather than an SPA fallback.
+ENV SERVER_ROOT=/public \
+    SERVER_ERROR_PAGE_404=/public/404.html \
+    SERVER_PORT=80
+
+COPY --from=sws /usr/local/bin/static-web-server /
+COPY --from=node-build /app/build /public
+
+EXPOSE 80
+STOPSIGNAL SIGQUIT
+
+ENTRYPOINT ["/static-web-server"]

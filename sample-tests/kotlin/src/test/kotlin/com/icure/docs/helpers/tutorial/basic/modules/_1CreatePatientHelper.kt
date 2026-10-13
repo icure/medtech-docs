@@ -3,7 +3,7 @@ package com.icure.docs.helpers.tutorial.basic.modules
 import com.icure.cardinal.sdk.CardinalSdk
 import com.icure.cardinal.sdk.model.DecryptedPatient
 import java.io.ByteArrayInputStream
-import java.util.UUID
+import kotlin.uuid.Uuid
 
 object _1CreatePatientHelper {
     private var patient: DecryptedPatient? = null
@@ -19,7 +19,7 @@ object _1CreatePatientHelper {
     private suspend fun preBlock2(sdk: CardinalSdk): Map<String, Any?> {
         if (patient == null) {
             patient = DecryptedPatient(
-                id = UUID.randomUUID().toString(),
+                id = Uuid.random().toString(),
                 firstName = "John",
                 lastName = "Doe",
             )
@@ -30,7 +30,7 @@ object _1CreatePatientHelper {
     private suspend fun preBlock3(sdk: CardinalSdk): Map<String, Any?> {
         if (patientWithMetadata == null) {
             val p = patient ?: DecryptedPatient(
-                id = UUID.randomUUID().toString(),
+                id = Uuid.random().toString(),
                 firstName = "John",
                 lastName = "Doe",
             )
@@ -43,7 +43,7 @@ object _1CreatePatientHelper {
         if (createdPatient == null) {
             val p = patientWithMetadata ?: sdk.patient.withEncryptionMetadata(
                 DecryptedPatient(
-                    id = UUID.randomUUID().toString(),
+                    id = Uuid.random().toString(),
                     firstName = "John",
                     lastName = "Doe",
                 )
@@ -59,7 +59,7 @@ object _1CreatePatientHelper {
             val cp = createdPatient ?: sdk.patient.createPatient(
                 sdk.patient.withEncryptionMetadata(
                     DecryptedPatient(
-                        id = UUID.randomUUID().toString(),
+                        id = Uuid.random().toString(),
                         firstName = "John",
                         lastName = "Doe",
                     )
