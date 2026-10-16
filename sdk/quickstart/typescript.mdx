@@ -17,6 +17,13 @@ developing your application.
 To use the Cardinal SDK on Node.js, you need Node.js 24 or greater (Node.js 19 or greater before SDK 2.14.0).
 
 :::
+:::warning Minified web bundles
+
+If you bundle the SDK in a web application, do not let the minifier's **compress** pass process it: it miscompiles the SDK's
+coroutines, and the application freezes right after a successful login. Keep identifier mangling and disable compression, as explained
+in [Login hangs in a minified web bundle](/troubleshooting/web-bundling#login-hangs-in-a-minified-web-bundle).
+
+:::
 
 ## Template app
 
