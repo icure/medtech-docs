@@ -42,10 +42,19 @@ reload and try again — adding stays blocked until Cockpit can count the projec
 
 ## The storage limit says "N/A" or "Per HCP (default)"
 
-The allowance is derived from the project's **business model** and the number of users it bills on. *N/A*
-means it can't be calculated yet (no billable user, or more than one model on the project); *Per HCP
-(default)* means no model was selected, so Cockpit assumes Per-HCP. Select the real model from
-**Configuration → Project overview**. See [Storage & Plans](/cockpit/storage-and-plans).
+On a **paid plan** the allowance is derived from the project's **business model** and the number of users
+it bills on. *N/A* means it can't be calculated yet (no billable user, or more than one model on the
+project); *Per HCP (default)* means no model was selected, so Cockpit assumes Per-HCP. Select the real model
+from **Configuration → Project overview**. On the **Free plan** the quota is a fixed **500 MB per project**,
+so neither case changes the figure. See [Storage & Plans](/cockpit/storage-and-plans).
+
+## A banner says my environment exceeds the plan limits
+
+The environment is **over** a plan limit: on the Free plan a cap (projects, tenants, users per type) or the
+500 MB storage quota, on a paid plan a project's structured or file storage allowance. The banner lists each
+limit per project; closing it keeps an indicator beside the account menu whose **Read more** reopens it.
+Contact iCure through the banner's link — on the Free plan the excess data may be deleted. See
+[Storage & Plans](/cockpit/storage-and-plans#plan-limits).
 
 ## I can't delete an HCP
 

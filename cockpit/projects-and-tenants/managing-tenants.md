@@ -116,7 +116,10 @@ Selecting a tenant opens it in its own tabs, each scoped to that tenant alone:
 The **Overview** tab carries the editable **Tenant Name**, the **Tenant group ID**, the inherited
 **Project ID (set up by you)**, the project's **Business model** (read-only here), the **User breakdown**
 — whose badges open the tenant's **Users** tab filtered to that type — and the **Structured storage** /
-**File storage** charts sized from the project's business model and this tenant's own user count. The
+**File storage** charts sized from the project's business model and this tenant's own user count (on the
+Free plan, a single **Combined storage** chart measured against this tenant's equal share of the project's
+fixed 500 MB quota — remove unused tenants, or contact iCure for a personalised offer, to get more per
+tenant). The
 figures come from the metrics service and are refreshed every 24 hours; the tab says when they were last
 updated. (An **Inspect tenant Group JSON** button shows the raw Group object.) See
 [Storage & Plans](/cockpit/storage-and-plans).

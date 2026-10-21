@@ -71,8 +71,7 @@ data. Please contact them to request changes…"* (and on individual controls,
 - **Creating a project**, and **Transfer ownership** / **Delete** of a project (the project's
   [Danger zone](/cockpit/danger-zone));
 - **Provisioning a new tenant's users and processes** — a Project-Access admin creates **empty** tenants
-  only (see [Managing Tenants](/cockpit/managing-tenants#adding-a-tenant));
-- the **storage charts** — a Project-Access admin sees storage as plain figures.
+  only (see [Managing Tenants](/cockpit/managing-tenants#adding-a-tenant)).
 
 Everything else inside a project — its users, roles & permissions, custom properties, business model,
 deployment model, metrics — is open to a Project-Access admin for that project.
