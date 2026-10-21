@@ -865,6 +865,10 @@ In case of a mismatch, the method will fail and throw a *Conflict* exception.
 This could happen if another user updated the entity after you retrieved it and before you committed the update, which
 in a collaborative environment could be a normal occurrence.
 
+The revision check is not a lock, though: when two modifications of the same revision arrive at almost the same time,
+the replicated database can accept both of them. The extra modification is then kept as a conflict rather than lost.
+See [Concurrent modifications and conflicts](/explanations/concurrent-modifications) for details.
+
 If the logic of your application could allow multiple users to work on a single entity at the same time, you should
 handle the conflict exceptions, requesting the end-user help if necessary:
 
@@ -1099,6 +1103,8 @@ The Cardinal SDK provides bulk methods for the basic CRUD operations.
 The bulk read, update, and delete methods, unlike their single-entity counterparts, won't throw an exception in case
 you don't have access to one of the entities or (for update and delete) in case you provide the wrong revision.
 Instead, any inaccessible or conflicting entity will be ignored and won't be included in the returned entities.
+As with single-entity updates, a modification of an outdated revision can occasionally be accepted when it happens at
+the same time as another one: see [Concurrent modifications and conflicts](/explanations/concurrent-modifications).
 
 ## Flavours
 
