@@ -13,6 +13,9 @@ of them.
 
 - **Password & 2FA** — set a password and enable two-factor authentication from
   **[Manage Account](/cockpit/manage-account)** (the Password and 2FA tabs). See [Authentication](/cockpit/authentication).
+- **Your authentication tokens** — list, generate and **revoke** the tokens that log in as you, including the
+  **Auto-login** token of the browser you are using, from the **Auth tokens** tab of
+  **[Manage Account](/cockpit/manage-account#auth-tokens)**.
 - **Sensitive-action verification** — safety-critical operations require a fresh **one-time code** (or your
   2FA / password) before they proceed — Cockpit shows a *"Security Verification Required"* step.
 

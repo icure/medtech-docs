@@ -25,6 +25,7 @@ the Cardinal documentation — **[Cockpit Glossary](/cockpit/glossary)**.
 | **External Services** | The email/SMS/captcha gateways (environment-wide). See [External Services](/cockpit/external-services-overview). |
 | **Spec ID** | The identifier for your External Services configuration; passed to the SDK as `externalServicesSpecId`. |
 | **Project ID** | Your project's reverse-domain [Application ID](/how-to/initialize-the-sdk/#application-id) (set by you); passed to the SDK as `projectId`. |
+| **Authentication token** | A long-lived credential that logs in as a user or administrator without their password, for scripts and integrations; shown once at creation, revocable at any time. Your own are in [Manage Account](/cockpit/manage-account#auth-tokens). |
 | **Operation token** | A one-time, single-use token authorising a project ownership transfer. See [Transfer ownership](/cockpit/transfer-ownership). |
 | **Custom property** | Typed key–value metadata on a Group or user. See [Custom Properties](/cockpit/custom-properties). |
 | **Role / Permission** | A role is a named bundle of permissions assigned to users. See [Roles & Permissions](/cockpit/roles-and-permissions). |

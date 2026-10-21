@@ -49,7 +49,8 @@ one-time code sent to your email (or your 2FA / password) before the action proc
 ## Authentication tokens (programmatic access)
 
 Beyond interactive login, a [user](/cockpit/user) or administrator can hold **authentication tokens** for
-**programmatic / API** access — found in the expanded row on the **Users** (or **Administrators**) page.
+**programmatic / API** access — found in the expanded row on the **Users** (or **Administrators**) page, and,
+for **your own** account, in the **Auth tokens** tab of [Manage Account](/cockpit/manage-account#auth-tokens).
 **Generate authentication token** takes a **Token name** and an **Expiration date and time**.
 
 :::caution

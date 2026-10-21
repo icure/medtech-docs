@@ -6,6 +6,15 @@ title: Changelog
 
 ## Recent changes
 
+- **Your own authentication tokens** — a new **Auth tokens** tab in **Manage Account** lists the tokens that
+  log in as you, lets you generate new ones and revoke any of them, and marks the **Auto-login** token of
+  the browser you are using. See [Manage Account](/cockpit/manage-account#auth-tokens).
+- **Free plan storage is a fixed 500 MB per project** of combined storage, shared by all users and tenants
+  (no longer 50 MB per billable user); a tenant's chart shows its equal share of the quota. A **plan-limits
+  banner** under the header warns when an environment is **over** a limit (Free: any cap or the quota;
+  paid: a project past its structured or file allowance), with an indicator beside the account menu that
+  reopens it. **Project Access** admins now see the storage charts too. See
+  [Storage & Plans](/cockpit/storage-and-plans).
 - **Tenant creation wizard** — **Add** on the Tenants page now walks through Tenant → Users → Organisation
   → Ready to go, provisioning the parent organisation and registration processes with the tenant (or an
   empty tenant on **Skip**). See [Managing Tenants](/cockpit/managing-tenants).
