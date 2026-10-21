@@ -106,14 +106,15 @@ first tenant you open shows its **Users** tab already filtered. See [Managing Us
 The storage section reports how much room the project uses against its allowance:
 
 - **Structured storage** and **File storage** charts (one **Combined storage** chart on the Free plan) —
-  usage against the limit derived from the business model and the number of users it bills on. Hover a
-  chart for the rate and the date of the figures.
+  usage against the limit: a fixed 500 MB per project on the Free plan, or, on a paid plan, the allowance
+  derived from the business model and the number of users it bills on. Hover a chart for the rate and the
+  date of the figures.
 - **Clusters** — the region(s) where the project's data is hosted.
 
 :::info
 **The counts and storage figures are refreshed every 24 hours** by the metrics service; a banner on the
 overview tells you when they were last updated, so what you changed today is not counted yet. See
-[Metrics](/cockpit/metrics). Project-Access admins see the storage as plain figures instead of charts.
+[Metrics](/cockpit/metrics). The charts are the same for Environment-Access and Project-Access admins.
 **Most recent backup** / **Oldest backup** are reserved here but not yet shown. Storage usage counts
 against your [Cardinal plan](https://cardinalsdk.com/en/pricing/); see [Storage & Plans](/cockpit/storage-and-plans).
 :::

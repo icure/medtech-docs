@@ -121,7 +121,8 @@ for the environment where it was set; you can always get in elsewhere with a one
 The Environment is also where your **Cardinal plan limits** apply. Cockpit itself is free; your
 [Cardinal pricing tier](https://cardinalsdk.com/en/pricing/) defines how many **projects** the Environment
 can hold, how many **tenants** a multi-tenant project may have, how many users of each type a project may
-hold, and the **storage** allowance per billable user. The plan (**Free** / **Paid**) is shown as the
+hold, and the **storage** allowance (a fixed quota per project on the Free plan, a rate per billable user
+on a paid plan). The plan (**Free** / **Paid**) is shown as the
 **Environment subscription plan** in **Manage environment**, and a **Free tier** ribbon on the account menu
 lists the caps. Upgrading your tier raises these limits for the whole Environment. See [Limits](/cockpit/limits).
 
