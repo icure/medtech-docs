@@ -52,6 +52,9 @@ token's **Status**, **Created** and **Valid until** dates.
 - The token tagged **Auto-login** is the one Cockpit created when you logged in: it keeps you signed in on
   this browser between visits. Revoking it signs you out on the next reload; the tab you are in keeps
   working until then.
+- The **system-processes** token was created by iCure when your account was registered and is used by
+  Cockpit's system processes. It is listed but **cannot be revoked**: its bin icon is disabled, and the
+  tooltip explains why.
 
 :::caution
 A token logs in to your account with **the same rights you have**, so treat it like a password. Revoke any
