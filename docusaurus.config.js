@@ -152,7 +152,6 @@ async function createConfig() {
                     respectPrefersColorScheme: false,
                 },
                 navbar: {
-                    // title: 'iCure MedTech Docs',
                     logo: {
                         alt: 'Cardinal Logo',
                         src: 'img/logo_bigger_blue.svg',
@@ -160,20 +159,6 @@ async function createConfig() {
                         className: 'logoBtn'
                     },
                     items: [
-                        // {
-                        //     type: 'doc',
-                        //     docId: 'intro',
-                        //     position: 'right',
-                        //     label: 'EHR Lite SDK',
-                        //     docsPluginId: 'ehrlite',
-                        // },
-                        // {
-                        //     type: 'doc',
-                        //     docId: 'intro',
-                        //     position: 'right',
-                        //     label: 'Medical Device SDK',
-                        //     docsPluginId: 'medtech',
-                        // },
                         {
                             type: 'doc',
                             docId: 'intro',
@@ -188,13 +173,6 @@ async function createConfig() {
                             label: 'Cockpit',
                             docsPluginId: 'cockpit',
                         },
-                        // {
-                        //     type: 'doc',
-                        //     docId: 'intro',
-                        //     position: 'right',
-                        //     label: 'iCure API',
-                        //     docsPluginId: 'api',
-                        // },
                         {
                             to: '/pages/presentations',
                             position: 'right',
