@@ -34,6 +34,5 @@ Before start using the Cardinal SDK, you have to [create your account on the Coc
 :::info Build on a database you own
 Cardinal is for building applications on a database you own, created in Cockpit, or on a database whose owner
 authorized you. If you use a medical application built on Cardinal, your account in it belongs to the vendor's database:
-see [Acceptable use](/acceptable-use) before you build anything on it. If you code with an AI assistant, give it
-[AGENTS.md](https://docs.icure.com/AGENTS.md).
+see [Acceptable use](/acceptable-use) before you build anything on it.
 :::

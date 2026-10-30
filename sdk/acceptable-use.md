@@ -14,12 +14,6 @@ applications that iCure once distributed. This page covers their users, healthca
 patients, and the IT providers or developers who work for them, when they want to build their own application, script
 or AI-assisted tool on the data of such an application.
 
-:::tip Coding with an AI assistant
-Put [AGENTS.md](https://docs.icure.com/AGENTS.md) at the root of your project. It gives Claude, Codex, Cursor, Copilot
-and other coding assistants the rules on this page, and tells them to stop before they connect to a database you don't
-own. The [MCP server](./mcp-server.md) gives them the same instructions.
-:::
-
 ## Who owns the database
 
 Every Cardinal application has a [project](/cockpit/project) in Cockpit, created by the company that runs the
