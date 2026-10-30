@@ -4,11 +4,15 @@ import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 
+// Instructions for AI assistants, published at https://docs.icure.com/AGENTS.md and put first in SDK.md.
+// The path is relative to the parent of the sdk directory.
+export const AGENTS_MD = 'static/AGENTS.md'
+
 // Reading order of SDK.md. Paths are relative to the sdk directory.
 export const PARTS = [
   {
     title: 'INTRODUCTION',
-    files: ['intro.md', 'whats-new.md', 'migration.md', 'mcp-server.md'],
+    files: ['intro.md', 'acceptable-use.md', 'whats-new.md', 'migration.md', 'mcp-server.md'],
   },
   {
     title: 'QUICKSTART GUIDES',
@@ -121,8 +125,12 @@ const HEADER = `# Cardinal SDK — Complete Documentation Reference
 
 # TABLE OF CONTENTS
 
+## Before you write code
+- AGENTS.md: instructions for AI assistants, read it before writing code that initializes the SDK or calls the iCure API
+
 ## Part 1: Introduction
 - SDK Overview and purpose
+- Acceptable use: build on a database you own, not on the database of a medical application you use
 - What's new in each SDK release
 - Migration between SDK versions (breaking changes)
 - MCP server: using the SDK documentation and API from Claude, Codex and other AI agents
@@ -252,12 +260,13 @@ export function convert(source) {
 }
 
 export function build(sdkDir) {
+  const agents = `\n\n<!-- Source: ${AGENTS_MD} -->\n\n${fs.readFileSync(path.join(sdkDir, '..', AGENTS_MD), 'utf8').trimEnd()}\n\n---\n`
   const sections = PARTS.map(
     (part, i) =>
       `\n\n${'='.repeat(80)}\n# PART ${i + 1}: ${part.title}\n${'='.repeat(80)}\n\n` +
       part.files.map((file) => `<!-- Source: sdk/${file} -->\n\n${convert(fs.readFileSync(path.join(sdkDir, file), 'utf8'))}\n\n---\n`).join('\n'),
   )
-  return HEADER + sections.join('') + '\n'
+  return HEADER + agents + sections.join('') + '\n'
 }
 
 function listPages(dir, prefix = '') {

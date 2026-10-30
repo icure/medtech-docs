@@ -226,6 +226,10 @@ The documentation is also exposed as MCP resources the assistant can read direct
 `cardinal://docs/api/{apiName}`, `cardinal://docs/model/{modelName}`, `cardinal://docs/filter/{entityName}`,
 `cardinal://docs/tutorial/{slug}` and `cardinal://docs/guide/{slug}`.
 
+When it connects, the server tells the assistant to read [AGENTS.md](https://docs.icure.com/AGENTS.md), served as
+`cardinal://docs/guide/policy-agents`, before it writes code that initializes the SDK: the assistant then checks whose
+database it works on, as described in [Acceptable use](./acceptable-use.md).
+
 ## Using it
 
 Documentation questions work right away:
@@ -256,6 +260,8 @@ Everything you type reaches the model, and so does every result the tools return
 decrypts for the assistant. The assistant can call any method the SDK exposes with the rights of the user you log in
 with.
 
+- Log in only to a database you own, or to a database whose owner authorized you. The account someone uses in a
+  medical application built on Cardinal belongs to the vendor's database: see [Acceptable use](./acceptable-use.md).
 - Use a test group or a dedicated user with the least privileges that get the job done, never a production
   administrator, and never a user with access to real patient data.
 - Keep tool-call approval on for the operational tools, so that you see each call before it runs.
