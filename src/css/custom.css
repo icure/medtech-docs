@@ -346,39 +346,3 @@ html[data-theme='dark'] {
 .card:hover{
   border-color: var(--ifm-color-primary) !important;
 }
-
-/* Review highlights for medtech-docs#126: revert the commit that adds them before merging. */
-.review-change {
-  margin-bottom: var(--ifm-leading);
-  padding: 0.5rem 0.75rem 0.1rem;
-  border-left: 3px solid var(--ifm-color-primary);
-  border-radius: 4px;
-  background: rgba(239, 118, 47, 0.08);
-}
-
-.review-change::before {
-  content: attr(data-review);
-  display: block;
-  margin-bottom: 0.4rem;
-  color: var(--ifm-color-primary);
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-}
-
-mark.review-change {
-  padding: 0 0.15rem;
-  border: none;
-  border-radius: 2px;
-  background: rgba(239, 118, 47, 0.18);
-  color: inherit;
-}
-
-mark.review-change::before {
-  content: none;
-}
-
-.menu__link[href='/acceptable-use'] {
-  background: rgba(239, 118, 47, 0.12);
-}

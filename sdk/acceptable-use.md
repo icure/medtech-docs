@@ -5,12 +5,6 @@ title: Acceptable use
 
 # Acceptable use: build on a project you own
 
-<div className="review-change" data-review="New page in #126: the whole page is up for review">
-
-Also new in #126: the sidebar entry, and links from Introduction, Initialize the SDK and MCP Server.
-
-</div>
-
 Cardinal is made for developers and companies that build healthcare applications. If you build on a
 [project](/cockpit/project) you created in Cockpit, or on a project whose owner authorized you, nothing on this page
 restricts you.
