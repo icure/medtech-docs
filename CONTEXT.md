@@ -14,7 +14,7 @@ _Avoid_: client, customer (when the meaning is "the company that builds on Cardi
 
 **Project owner**:
 The party that administers a **Project** in Cockpit, through Environment Access or project administration.
-_Avoid_: account owner, database owner
+_Avoid_: account owner
 
 **End user**:
 A healthcare professional, patient or device user that exists inside a **Software vendor**'s **Project** and reaches
@@ -57,6 +57,8 @@ _Avoid_: hacked client, rogue client
 
 ## Flagged ambiguities
 
+- "Database" is the word AGENTS.md and the pages written for **End users** use for the data of a **Project**: "a
+  database you own" means a database of an **Own project**. Keep **Project** for the Cockpit object and its project ID.
 - "Client" was used both for the **Software vendor** (the company paying for Cardinal) and for the **Client
   application** (the software calling the backend). Resolved: say **Software vendor** for the company and **Client
   application** for the software.
