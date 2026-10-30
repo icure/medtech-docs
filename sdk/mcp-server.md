@@ -256,6 +256,8 @@ Everything you type reaches the model, and so does every result the tools return
 decrypts for the assistant. The assistant can call any method the SDK exposes with the rights of the user you log in
 with.
 
+- Log in only to a project you own, or to a project whose owner authorized you. The account someone uses in a
+  medical application built on Cardinal belongs to the vendor's project: see [Acceptable use](./acceptable-use.md).
 - Use a test group or a dedicated user with the least privileges that get the job done, never a production
   administrator, and never a user with access to real patient data.
 - Keep tool-call approval on for the operational tools, so that you see each call before it runs.

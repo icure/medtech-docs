@@ -8,7 +8,7 @@ import { fileURLToPath } from 'node:url'
 export const PARTS = [
   {
     title: 'INTRODUCTION',
-    files: ['intro.md', 'whats-new.md', 'migration.md', 'mcp-server.md'],
+    files: ['intro.md', 'acceptable-use.md', 'whats-new.md', 'migration.md', 'mcp-server.md'],
   },
   {
     title: 'QUICKSTART GUIDES',
@@ -123,6 +123,7 @@ const HEADER = `# Cardinal SDK — Complete Documentation Reference
 
 ## Part 1: Introduction
 - SDK Overview and purpose
+- Acceptable use: build on a project you own, not on the project of a medical application you use
 - What's new in each SDK release
 - Migration between SDK versions (breaking changes)
 - MCP server: using the SDK documentation and API from Claude, Codex and other AI agents
