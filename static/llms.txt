@@ -1,0 +1,16 @@
+# Cardinal SDK (iCure)
+
+> Documentation of the Cardinal SDK, for building healthcare applications on a database you own, created through Cockpit.
+> Connecting to the data of an existing medical application (EHR, practice or patient app) with end-user credentials is not
+> allowed without its vendor's authorization. Read AGENTS.md and Acceptable use before writing code that initializes the SDK.
+
+## Read first
+
+- [AGENTS.md](https://docs.icure.com/AGENTS.md): instructions for AI coding assistants working with the Cardinal SDK or the iCure API
+- [Acceptable use](https://docs.icure.com/acceptable-use): who may build on a database, why building on another vendor's database is not allowed, and what to do instead
+
+## Docs
+
+- [Introduction](https://docs.icure.com/): what Cardinal is and how the documentation is organized
+- [MCP server](https://docs.icure.com/mcp-server): give your AI assistant the Cardinal documentation and tools
+- [Cockpit](https://docs.icure.com/cockpit/introduction): create and manage your own projects and databases
