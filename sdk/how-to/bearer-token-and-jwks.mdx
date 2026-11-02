@@ -17,7 +17,8 @@ This page covers:
 
 1. getting the bearer token from an initialized SDK;
 2. what happens to the refresh token;
-3. validating the bearer token on your backend with the JWKS endpoint.
+3. validating the bearer token on your backend with the JWKS endpoint;
+4. using the bearer token to get the user's roles, and caching them.
 
 ## Prerequisites
 
@@ -123,9 +124,6 @@ require them. Cardinal uses these short claim names instead:
 |--------|-----------------------------------------------------------------------|
 | `u`    | id of the user                                                        |
 | `g`    | id of the group the user is logged in to                              |
-| `doId` | id of the data owner (healthcare party, patient or device) of the user |
-| `doTp` | type of that data owner                                               |
-| `a`    | authorities of the user                                               |
 | `exp`  | expiration time, in seconds since epoch                               |
 
 The examples below use [`jose`](https://github.com/panva/jose) in Node.js and
@@ -153,7 +151,6 @@ export async function authenticate(authorizationHeader: string | undefined) {
   return {
     userId: payload.u as string,
     groupId: payload.g as string,
-    dataOwnerId: payload.doId as string | undefined,
   }
 }
 ```
@@ -196,9 +193,209 @@ fun authenticate(bearerToken: String): Pair<String, String> {
 :::note
 
 A valid signature proves that Cardinal issued the token for that user. It does **not** check what the user is allowed
-to do in your backend. Apply your own authorization rules to the `u`, `g` and `doId` claims.
+to do in your backend. Apply your own authorization rules to the `u` and `g` claims, or fetch the user's roles as
+described in the next section.
 
 :::
+
+## Get more information about the user
+
+The token only carries the user id and the group id. To make authorization decisions based on the user's **roles**
+(or on any other property of the `User`), your backend can call Cardinal **with the user's own bearer token** and ask
+for the current user. The backend then sees exactly what the user is allowed to see, and you don't need an
+administrator account in your backend.
+
+### Use the bearer token with an unbound SDK
+
+On a Kotlin/JVM backend, use a `CardinalUnboundBaseSdk`. Unlike a regular SDK, it is not bound to one user: it asks
+its authentication provider for a token before each request, so a single instance can serve all your users. The
+provider below reads the bearer token from the coroutine context, where your request handler puts it.
+
+```kotlin no-test
+import com.icure.cardinal.sdk.CardinalUnboundBaseSdk
+import com.icure.cardinal.sdk.auth.JwtBearer
+import com.icure.cardinal.sdk.auth.JwtBearerAndRefresh
+import com.icure.cardinal.sdk.auth.services.AuthProvider
+import com.icure.cardinal.sdk.auth.services.JwtBasedAuthProvider
+import com.icure.cardinal.sdk.auth.services.TokenBasedAuthService
+import com.icure.cardinal.sdk.model.embed.AuthenticationClass
+import com.icure.cardinal.sdk.options.AuthenticationMethod
+import com.icure.cardinal.sdk.utils.RequestStatusException
+import com.icure.utils.InternalIcureApi
+import io.ktor.client.request.HttpRequestBuilder
+import io.ktor.client.request.bearerAuth
+import kotlin.coroutines.AbstractCoroutineContextElement
+import kotlin.coroutines.CoroutineContext
+import kotlinx.coroutines.currentCoroutineContext
+
+// Carries the bearer token of the user who sent the current request
+class CardinalBearerToken(val token: String) : AbstractCoroutineContextElement(Key) {
+	companion object Key : CoroutineContext.Key<CardinalBearerToken>
+}
+
+@OptIn(InternalIcureApi::class)
+object BearerTokenFromContextAuthProvider : JwtBasedAuthProvider {
+	private suspend fun tokenFromContext(): String =
+		currentCoroutineContext()[CardinalBearerToken]?.token
+			?: throw IllegalStateException("No Cardinal bearer token in the coroutine context")
+
+	private val authService = object : TokenBasedAuthService<JwtBearer> {
+		override suspend fun setAuthenticationInRequest(builder: HttpRequestBuilder, authenticationClass: AuthenticationClass?) {
+			builder.bearerAuth(tokenFromContext())
+		}
+
+		override suspend fun getToken(): JwtBearer = JwtBearer(tokenFromContext())
+
+		// The backend cannot refresh the user's token: let the request fail, the client will retry with a new token
+		override suspend fun invalidateCurrentAuthentication(error: RequestStatusException, requiredAuthClass: AuthenticationClass?) {
+			throw error
+		}
+	}
+
+	override fun getAuthService(): TokenBasedAuthService<JwtBearer> = authService
+
+	override suspend fun getBearerAndRefreshToken(): JwtBearerAndRefresh =
+		throw UnsupportedOperationException("The refresh token is not available on the backend")
+
+	override suspend fun switchGroup(newGroupId: String): AuthProvider =
+		throw UnsupportedOperationException("Not supported on an unbound SDK")
+
+	override suspend fun changeScope(dataOwnerId: String): AuthProvider =
+		throw UnsupportedOperationException("Not supported on an unbound SDK")
+}
+
+// Initialize it once, when your backend starts
+@OptIn(InternalIcureApi::class)
+suspend fun initializeUnboundSdk(): CardinalUnboundBaseSdk = CardinalUnboundBaseSdk.initialize(
+	baseUrl = "https://api.icure.cloud",
+	authenticationMethod = AuthenticationMethod.UsingAuthProvider(BearerTokenFromContextAuthProvider),
+)
+```
+
+Then wrap the SDK calls with `withContext(CardinalBearerToken(...))` and call `sdk.user.getCurrentUser()`. It returns
+the `User` the token was issued for. Its roles are in
+[`systemMetadata`](/explanations/data-model/user#systemmetadata): `systemMetadata.roles` holds the ids of the roles
+of the user (including the roles inherited from the group when `systemMetadata.inheritsRoles` is `true`), and
+`systemMetadata.isAdmin` tells whether the user is an administrator.
+
+```kotlin no-test
+import com.icure.cardinal.sdk.model.User
+import kotlinx.coroutines.withContext
+
+suspend fun currentUser(unboundSdk: CardinalUnboundBaseSdk, bearerToken: String): User =
+	withContext(CardinalBearerToken(bearerToken)) {
+		unboundSdk.user.getCurrentUser()
+	}
+```
+
+:::caution
+
+`CardinalUnboundBaseSdk` and `AuthenticationMethod.UsingAuthProvider` are marked `@InternalIcureApi`: you need
+`@OptIn(InternalIcureApi::class)` to use them, and their signatures may change between SDK versions. The unbound SDK
+only exposes the base (non-encrypting) APIs, and it is only available in Kotlin.
+
+:::
+
+On a backend that is not written in Kotlin, call the REST endpoint directly with the same token:
+
+```typescript no-test
+const response = await fetch('https://api.icure.cloud/rest/v2/user/current', {
+  headers: { Authorization: `Bearer ${bearerToken}` },
+})
+if (!response.ok) throw new Error(`Cannot get the current user: ${response.status}`)
+const user = await response.json()
+const roles: string[] = user.systemMetadata?.roles ?? []
+```
+
+### Cache the user information
+
+Getting the current user costs a request to Cardinal, and you don't want to make it for each request your backend
+receives. Cache the result instead, using the `g` and `u` claims of the **validated** token as the key:
+
+- `u` alone is not enough: a user id is only unique inside its group, and a user that has access to several groups can
+  have different roles in each one. Use `g` **and** `u`, for example `"$g:$u"`.
+- Only read `g` and `u` from a token whose signature and expiration you have already checked
+  (see [Validate the bearer token with JWKS](#validate-the-bearer-token-with-jwks)). Never build the cache key from an
+  unverified token, or a forged token could read the cached information of another user.
+- Give the entries a short time to live (a few minutes). The cache doesn't know when an administrator changes the
+  roles of a user: the change is only visible once the entry expires.
+- Don't use the bearer token itself as the key: it changes every time the SDK gets a new one, so the cache would
+  almost never be hit.
+
+The example below uses the `authenticate` function and the unbound SDK defined above, with a minimal in-memory cache.
+In production, you can use a library such as [Caffeine](https://github.com/ben-manes/caffeine), or a shared cache
+such as Redis if you run several instances of your backend.
+
+<LanguageTabs>
+
+<TabItem value="kotlin">
+
+```kotlin no-test
+import com.icure.cardinal.sdk.model.User
+import java.util.concurrent.ConcurrentHashMap
+import kotlin.time.Duration
+import kotlin.time.Duration.Companion.minutes
+import kotlin.time.TimeSource
+import kotlinx.coroutines.withContext
+
+class CurrentUserCache(
+	private val unboundSdk: CardinalUnboundBaseSdk,
+	private val timeToLive: Duration = 5.minutes,
+) {
+	private class Entry(val user: User, val expiresAt: TimeSource.Monotonic.ValueTimeMark)
+
+	private val entries = ConcurrentHashMap<String, Entry>()
+
+	suspend fun getUser(bearerToken: String): User {
+		// Checks the signature and `exp` first: the key comes from a validated token
+		val (userId, groupId) = authenticate(bearerToken)
+		val key = "$groupId:$userId"
+		entries[key]?.takeIf { it.expiresAt.hasNotPassedNow() }?.let { return it.user }
+		val user = withContext(CardinalBearerToken(bearerToken)) {
+			unboundSdk.user.getCurrentUser()
+		}
+		entries[key] = Entry(user, TimeSource.Monotonic.markNow() + timeToLive)
+		return user
+	}
+
+	suspend fun getRoles(bearerToken: String): Set<String> =
+		getUser(bearerToken).systemMetadata?.roles.orEmpty()
+}
+```
+
+</TabItem>
+
+<TabItem value="typescript">
+
+```typescript no-test
+const TIME_TO_LIVE_MS = 5 * 60 * 1000
+const userCache = new Map<string, { user: any; expiresAt: number }>()
+
+export async function getCurrentUser(authorizationHeader: string | undefined) {
+  // Checks the signature and `exp` first: the key comes from a validated token
+  const { userId, groupId } = await authenticate(authorizationHeader)
+  const key = `${groupId}:${userId}`
+  const cached = userCache.get(key)
+  if (cached && cached.expiresAt > Date.now()) return cached.user
+
+  const bearerToken = authorizationHeader!.replace(/^Bearer /, '')
+  const response = await fetch('https://api.icure.cloud/rest/v2/user/current', {
+    headers: { Authorization: `Bearer ${bearerToken}` },
+  })
+  if (!response.ok) throw new Error(`Cannot get the current user: ${response.status}`)
+  const user = await response.json()
+  userCache.set(key, { user, expiresAt: Date.now() + TIME_TO_LIVE_MS })
+  return user
+}
+
+export async function getRoles(authorizationHeader: string | undefined): Promise<string[]> {
+  return (await getCurrentUser(authorizationHeader)).systemMetadata?.roles ?? []
+}
+```
+
+</TabItem>
+
+</LanguageTabs>
 
 :::info
 
