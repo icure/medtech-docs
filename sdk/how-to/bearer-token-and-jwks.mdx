@@ -9,8 +9,8 @@ import TabItem from "@theme/TabItem";
 # Bearer tokens and JWKS validation
 
 The SDK logs in the user and manages the JSON Web Tokens (JWTs) it uses to call the Cardinal backend. Sometimes you need
-that identity outside the SDK, for example to call **your own backend** on behalf of the logged-in user. Your
-application sends the Cardinal bearer token along with each request, and your backend checks the token's signature
+that identity outside the SDK, for example to call **your own backend** on behalf of the logged-in user, giving you the possibility to use Cardinal also for authentication and access control on your backend. To do so, your
+application will send the Cardinal bearer token along with each request, and your backend will check that it's not expired and that its signature
 against the public keys that Cardinal publishes at `/.well-known/jwks.json`.
 
 This page covers:
