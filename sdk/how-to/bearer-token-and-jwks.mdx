@@ -74,7 +74,7 @@ switch groups and to change scopes. The public SDK API **does not expose it**, a
 
 - The refresh token is signed with a **different key** from bearer tokens. That key is **not** published at
   `/.well-known/jwks.json`, so a third party cannot validate a refresh token.
-- Only the Cardinal backend uses refresh tokens, through `POST /rest/v2/auth/refresh` with a `Refresh-Token` header.
+- Only the Cardinal backend uses refresh tokens.
   Forwarding a refresh token to another service would hand that service a long-lived credential for no benefit.
 
 If your backend has to act for the user after the bearer token expires, have the client send a new bearer token with
