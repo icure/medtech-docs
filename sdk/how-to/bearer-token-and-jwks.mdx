@@ -1,0 +1,209 @@
+---
+title: Bearer tokens and JWKS validation
+description: Get the Cardinal bearer token from the SDK and validate it on your own backend using the /.well-known/jwks.json endpoint.
+---
+
+import {LanguageTabs} from "@site/src/components/LanguageTabs";
+import TabItem from "@theme/TabItem";
+
+# Bearer tokens and JWKS validation
+
+The SDK logs in the user and manages the JSON Web Tokens (JWTs) it uses to call the Cardinal backend. Sometimes you need
+that identity outside the SDK, for example to call **your own backend** on behalf of the logged-in user. Your
+application sends the Cardinal bearer token along with each request, and your backend checks the token's signature
+against the public keys that Cardinal publishes at `/.well-known/jwks.json`.
+
+This page covers:
+
+1. getting the bearer token from an initialized SDK;
+2. what happens to the refresh token;
+3. validating the bearer token on your backend with the JWKS endpoint.
+
+## Prerequisites
+
+You need an SDK initialized with a JWT-based authentication method (credentials, authentication process or secret
+provider). See [Initialize the SDK](/how-to/initialize-the-sdk).
+
+## Get the bearer token
+
+Call `sdk.auth.getBearerToken()` to get the bearer token. It is the same JWT the SDK sends in the `Authorization: Bearer ...`
+header of its own requests.
+
+<LanguageTabs>
+
+<TabItem value="kotlin">
+
+```kotlin test-JWBK
+val bearerToken: String = sdk.auth.getBearerToken()
+```
+
+</TabItem>
+
+<TabItem value="typescript">
+
+```typescript test-JWBT
+const bearerToken: string = await sdk.auth.getBearerToken()
+```
+
+</TabItem>
+
+</LanguageTabs>
+
+:::note
+
+`sdk.auth` is available in Kotlin and TypeScript. The Python and Dart wrappers ship an `AuthApi` class, but their
+`CardinalSdk` does not expose it yet.
+
+:::
+
+Things to keep in mind:
+
+- **Bearer tokens are short-lived.** The SDK returns the token it has cached. It only gets a new one once the cached
+  token has expired, so the token you get may expire soon. Call `getBearerToken()` right before each request to your
+  backend instead of storing the token, and have your backend reject expired tokens (your client can then retry
+  with a new one).
+- **Calls fail on non-JWT authentication methods.** If the SDK was not initialized with a JWT-based authentication
+  provider, the call throws an `UnsupportedOperationException`.
+- **The token is bound to a group and a scope.** After `sdk.switchGroup(...)` or a scope change, get the bearer token
+  from the SDK instance that switch or change returned. That token carries the new group (and data owner scope).
+
+## What about the refresh token?
+
+Cardinal also issues a **refresh token** at login. The SDK keeps it internally and uses it to get new bearer tokens, to
+switch groups and to change scopes. The public SDK API **does not expose it**, and you do not need it:
+
+- The refresh token is signed with a **different key** from bearer tokens. That key is **not** published at
+  `/.well-known/jwks.json`, so a third party cannot validate a refresh token.
+- Only the Cardinal backend uses refresh tokens, through `POST /rest/v2/auth/refresh` with a `Refresh-Token` header.
+  Forwarding a refresh token to another service would hand that service a long-lived credential for no benefit.
+
+If your backend has to act for the user after the bearer token expires, have the client send a new bearer token with
+each request. If your app needs to log the user back in later, use a long-lived token from `sdk.user.getToken(...)`
+(see [Persistent user session](/how-to/remember-me)).
+
+## Validate the bearer token with JWKS
+
+The Cardinal cloud backend publishes the public keys that verify its bearer tokens as a standard
+[JSON Web Key Set](https://datatracker.ietf.org/doc/html/rfc7517):
+
+```
+GET https://api.icure.cloud/.well-known/jwks.json
+```
+
+```json
+{
+  "keys": [
+    {
+      "kty": "RSA",
+      "use": "sig",
+      "alg": "RS256",
+      "kid": "rsa-key-2026",
+      "n": "...",
+      "e": "AQAB"
+    }
+  ]
+}
+```
+
+You can also discover the URL from the Cardinal discovery document at `GET /.well-known`, which returns a `jwksUri`
+field. This is not an OpenID Connect discovery document, and there is no `/.well-known/openid-configuration`.
+
+To validate a token:
+
+1. Read the `kid` from the token header and find the key with the same `kid` in the JWKS. Cache the key set. If the
+   `kid` is unknown, fetch the key set again, because the signing key may have rotated.
+2. Check the RS256 signature with that key. Accept only `RS256`.
+3. Check the `exp` claim (allowing a small clock skew).
+4. Read the user's identity from the Cardinal claims below.
+
+Cardinal bearer tokens do **not** carry the standard `iss`, `aud` or `sub` claims, so don't make your JWT library
+require them. Cardinal uses these short claim names instead:
+
+| Claim  | Meaning                                                               |
+|--------|-----------------------------------------------------------------------|
+| `u`    | id of the user                                                        |
+| `g`    | id of the group the user is logged in to                              |
+| `doId` | id of the data owner (healthcare party, patient or device) of the user |
+| `doTp` | type of that data owner                                               |
+| `a`    | authorities of the user                                               |
+| `exp`  | expiration time, in seconds since epoch                               |
+
+The examples below use [`jose`](https://github.com/panva/jose) in Node.js and
+[Nimbus JOSE + JWT](https://connect2id.com/products/nimbus-jose-jwt) in Kotlin/JVM. Any library that supports JWKS
+works the same way.
+
+<LanguageTabs>
+
+<TabItem value="typescript">
+
+```typescript no-test
+import { createRemoteJWKSet, jwtVerify } from 'jose'
+
+// Fetched once and cached; refetched automatically when an unknown `kid` shows up
+const cardinalJwks = createRemoteJWKSet(new URL('https://api.icure.cloud/.well-known/jwks.json'))
+
+export async function authenticate(authorizationHeader: string | undefined) {
+  const token = authorizationHeader?.replace(/^Bearer /, '')
+  if (!token) throw new Error('Missing bearer token')
+  // Checks the signature and `exp`; throws if either is invalid
+  const { payload } = await jwtVerify(token, cardinalJwks, {
+    algorithms: ['RS256'],
+    clockTolerance: 30,
+  })
+  return {
+    userId: payload.u as string,
+    groupId: payload.g as string,
+    dataOwnerId: payload.doId as string | undefined,
+  }
+}
+```
+
+</TabItem>
+
+<TabItem value="kotlin">
+
+```kotlin no-test
+import com.nimbusds.jose.JWSAlgorithm
+import com.nimbusds.jose.jwk.source.JWKSourceBuilder
+import com.nimbusds.jose.proc.JWSVerificationKeySelector
+import com.nimbusds.jose.proc.SecurityContext
+import com.nimbusds.jwt.proc.DefaultJWTClaimsVerifier
+import com.nimbusds.jwt.proc.DefaultJWTProcessor
+import java.net.URI
+
+// Caches the key set and refetches it when an unknown `kid` shows up
+val cardinalJwks = JWKSourceBuilder
+	.create<SecurityContext>(URI("https://api.icure.cloud/.well-known/jwks.json").toURL())
+	.build()
+
+val jwtProcessor = DefaultJWTProcessor<SecurityContext>().apply {
+	jwsKeySelector = JWSVerificationKeySelector(JWSAlgorithm.RS256, cardinalJwks)
+	// No required issuer/audience: Cardinal tokens only need a valid signature and `exp`
+	jwtClaimsSetVerifier = DefaultJWTClaimsVerifier(null, null, setOf("exp", "u", "g"))
+}
+
+fun authenticate(bearerToken: String): Pair<String, String> {
+	// Throws if the signature or `exp` is invalid
+	val claims = jwtProcessor.process(bearerToken, null)
+	return claims.getStringClaim("u") to claims.getStringClaim("g")
+}
+```
+
+</TabItem>
+
+</LanguageTabs>
+
+:::note
+
+A valid signature proves that Cardinal issued the token for that user. It does **not** check what the user is allowed
+to do in your backend. Apply your own authorization rules to the `u`, `g` and `doId` claims.
+
+:::
+
+:::info
+
+The JWKS endpoint was added to the Cardinal cloud backend in 2026. Before that, the backend exposed the same public key
+as a PEM string at `GET /rest/v2/auth/publicKey/authJwt`, and that endpoint still works. Prefer the JWKS endpoint: it
+includes the key id, and standard libraries can use it as is.
+
+:::
