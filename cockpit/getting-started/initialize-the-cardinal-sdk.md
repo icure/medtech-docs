@@ -143,6 +143,7 @@ and plug them into your SDK configuration.
 - **[Authentication Processes (setup)](/cockpit/authentication-processes-setup)** — create and edit the processes whose IDs you pass to the SDK.
 - **[Project Overview & Configuration](/cockpit/project-overview-and-configuration)** — where the Project ID and processes live.
 - **[External Services](/cockpit/external-services-overview)** — the Spec ID and the gateways behind it.
+- **[Connect an AI Agent (MCP)](/cockpit/connect-an-ai-agent)** — set up an AI assistant's user, token and `cardinal_init` values for your project.
 - **[Managing Users](/cockpit/managing-users)** — add your first end users (HCPs, patients, devices).
 
 > **Cardinal SDK reference:** **[Initialize the SDK](/how-to/initialize-the-sdk/)** and the **[quickstarts](/quickstart/typescript)** — the full developer walkthrough.

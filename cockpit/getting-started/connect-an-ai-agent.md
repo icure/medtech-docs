@@ -1,6 +1,6 @@
 ---
 slug: /connect-an-ai-agent
-sidebar_position: 9
+sidebar_position: 5
 title: Connect an AI Agent (MCP)
 ---
 

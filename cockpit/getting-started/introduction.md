@@ -163,6 +163,7 @@ Cockpit gives friendly names to the underlying iCure concepts:
 - **[Register & Log In](/cockpit/register-and-log-in)** — create your Cockpit account (and Environment) and sign in.
 - **[Create Your First Project](/cockpit/create-your-first-project)** — walk the project-creation wizard.
 - **[Initialize the Cardinal SDK](/cockpit/initialize-the-cardinal-sdk)** — plug the "Ready to go" values into your app.
+- **[Connect an AI Agent (MCP)](/cockpit/connect-an-ai-agent)** — set up an AI assistant's user, token and `cardinal_init` values for your project.
 - **[Managing Users](/cockpit/managing-users)** — add your first end users (HCPs, patients, devices).
 
 > **Core concepts** — the building blocks referenced above:
