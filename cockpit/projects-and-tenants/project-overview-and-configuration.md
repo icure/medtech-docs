@@ -19,11 +19,12 @@ Configuration page (`/configuration/<id>`), which lands on the **Project overvie
 
 ## The Configuration tabs
 
-The Configuration page has six tabs:
+The Configuration page has seven tabs:
 
 | Tab | What it's for |
 |-----|---------------|
 | **Project overview** | the project's name, identifiers, business model, deployment model, user breakdown, and storage (below) |
+| **AI agent** | the MCP server entry, an agent user and token, and the `cardinal_init` values — see [Connect an AI Agent (MCP)](/cockpit/connect-an-ai-agent) |
 | **Processes** | the project's [authentication processes](/cockpit/authentication-processes) — see [Authentication Processes (setup)](/cockpit/authentication-processes-setup) |
 | **Roles** | the roles assigned to the project's users — see [Roles & Permissions](/cockpit/roles-and-permissions) |
 | **External JWT** | external-JWT authentication — see [External JWT Configuration](/cockpit/external-jwt-configuration) |
@@ -126,5 +127,6 @@ against your [Cardinal plan](https://cardinalsdk.com/en/pricing/); see [Storage 
   **[Authentication Processes (setup)](/cockpit/authentication-processes-setup)** — the other Configuration tabs.
 - **[Danger Zone](/cockpit/danger-zone)** — transfer ownership or delete the project.
 - **[Initialize the Cardinal SDK](/cockpit/initialize-the-cardinal-sdk)** — where the Project ID and other values plug into your app.
+- **[Connect an AI Agent (MCP)](/cockpit/connect-an-ai-agent)** — give an AI assistant a user, a token and the values to log in to this project.
 
 > **Cardinal SDK reference:** a project is a [`Group`](/how-to/manage-a-multi-group-environment) in the Cardinal SDK; its Project ID is the [Application ID](/how-to/initialize-the-sdk/#application-id) (`projectId` in `SdkOptions`).
