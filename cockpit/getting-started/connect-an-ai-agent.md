@@ -109,6 +109,19 @@ repository and do not commit it.
 <!-- TODO(screenshot): configuration/ai-agent-initialise — step 3: the Backend choice, Backend URL and
      Project ID fields, and the cardinal_init arguments block. -->
 
+## If the agent drives Cockpit itself
+
+An agent that operates a browser — to open this tab, read an id or create a user for you — can read Cockpit's
+own navigation guide at **[cockpit.icure.cloud/llms.txt](https://cockpit.icure.cloud/llms.txt)**. It is a
+plain-text page that describes the [Environment](/cockpit/environment) → [Project](/cockpit/project) →
+[Tenant](/cockpit/tenant) hierarchy, what each URL and tab holds, how to log in, and where each id and
+one-time secret is shown.
+
+:::info
+An agent cannot log in to Cockpit on its own: the one-time code arrives in your mailbox, and Google sign-in
+needs you. Log in yourself, or give the agent the code when it asks.
+:::
+
 ## Good practice
 
 - **One user per agent.** A dedicated user keeps the agent's actions distinguishable from a person's, and

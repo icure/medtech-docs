@@ -14,3 +14,4 @@
 - [Introduction](https://docs.icure.com/): what Cardinal is and how the documentation is organized
 - [MCP server](https://docs.icure.com/mcp-server): give your AI assistant the Cardinal documentation and tools
 - [Cockpit](https://docs.icure.com/cockpit/introduction): create and manage your own projects and databases
+- [Cockpit navigation guide for agents](https://cockpit.icure.cloud/llms.txt): how Cockpit is organised, what each URL holds, and where each id and secret is shown
