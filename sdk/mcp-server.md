@@ -41,7 +41,8 @@ repository.
 - Node.js 24 or later (`npx` comes with it). Since version 2.14.0 the server depends on a Cardinal SDK that requires
   Node.js 24, see [Migration](./migration.md#2140). Versions up to 2.13 run on Node.js 20.
 - For the operational tools only: the URL of a Cardinal backend (for example `https://api.icure.cloud`) and the
-  login and password of a user in it.
+  login and password of a user in it. The **AI agent** tab of your project in Cockpit creates a dedicated user and
+  token and lists every value: see [Connect an AI Agent (MCP)](/cockpit/connect-an-ai-agent).
 
 The version of the server follows the SDK version it was generated from: `@icure/cardinal-mcp-server@2.14.0` serves
 the documentation and the method surface of SDK 2.14.0. The commands below always start the latest release; to make
@@ -249,6 +250,9 @@ To run operations, ask the assistant to log in first:
 
 This calls `cardinal_init`, which takes `baseUrl`, `username`, `password`, an optional `projectId` and a `storageDir`
 for the SDK's key storage (default `./cardinal-mcp-storage`, relative to the directory the server was started from).
+In Cockpit, the **AI agent** tab of your project's Configuration page gives you all four values, ready to paste, and
+creates the agent's user and token: follow [Connect an AI Agent (MCP)](/cockpit/connect-an-ai-agent). The token it
+generates is what you pass as `password`.
 From then on the assistant can, for instance, list the patients of the current data owner, create an entity or
 inspect the keys of a data owner. Method parameters are passed by their declared name; a filter parameter is written
 as `{ "_factory": "<Entity>Filters.<method>", "<param>": ... }` using the factories listed under
@@ -264,6 +268,7 @@ with.
   medical application built on Cardinal belongs to the vendor's database: see [Acceptable use](./acceptable-use.md).
 - Use a test group or a dedicated user with the least privileges that get the job done, never a production
   administrator, and never a user with access to real patient data.
+  [Set up your AI agent user from Cockpit](/cockpit/connect-an-ai-agent) to get one with its own token.
 - Keep tool-call approval on for the operational tools, so that you see each call before it runs.
 - The `storageDir` holds the user's private keys: point it outside your repository and do not commit it.
 
