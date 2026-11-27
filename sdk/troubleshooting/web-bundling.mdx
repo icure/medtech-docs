@@ -1,0 +1,83 @@
+# Web Bundling Troubleshooting
+
+### Login hangs in a minified web bundle
+
+A web application that embeds the Cardinal SDK (`@icure/cardinal-sdk`) works in development and in unminified production builds,
+but as soon as the JavaScript bundle is **minified**, users can no longer get past the login:
+
+* the login request `POST /rest/v2/auth/login` is sent and returns `200`: authentication itself succeeds;
+* the application then freezes: the login spinner never resolves and the next screen never loads;
+* no further request is sent, and the browser tab becomes unresponsive (one CPU core at 100%);
+* there is no error in the console.
+
+#### Cause
+
+The Cardinal SDK is compiled from Kotlin Multiplatform to JavaScript. Every `suspend` function is emitted as a state machine of the form:
+
+```js
+while (true) {
+  switch (state) {
+    case 0: /* ... */ state = 1; continue
+    case 1: /* ... */ return result
+  }
+}
+```
+
+The **compress** pass of JavaScript minifiers such as SWC (used by Rsbuild and Rspack) and Terser (used by webpack) can miscompile these
+state machines: after a successful login, the coroutine never leaves its loop, which results in an infinite loop on the main thread.
+
+Identifier **mangling** (renaming variables to short names) is safe; only the compressor breaks the coroutines. This is why development
+and unminified builds are not affected.
+
+#### Solution
+
+Keep minification, but disable the compressor and keep only mangling. The size cost is small (around 1% of the gzipped bundle), since
+mangling provides most of the savings.
+
+**Rsbuild / Rspack (SWC):**
+
+```ts
+// rsbuild.config.ts
+export default defineConfig({
+  output: {
+    minify: {
+      js: true,
+      jsOptions: {
+        minimizerOptions: {
+          // The compress pass miscompiles the Cardinal SDK coroutines (infinite loop after login): keep mangle, disable compress.
+          compress: false,
+        },
+      },
+    },
+  },
+})
+```
+
+**webpack (Terser):**
+
+```js
+// webpack.config.js
+const TerserPlugin = require('terser-webpack-plugin')
+
+module.exports = {
+  optimization: {
+    minimizer: [
+      new TerserPlugin({
+        terserOptions: {
+          compress: false, // keep mangle, disable the compressor
+          mangle: true,
+        },
+      }),
+    ],
+  },
+}
+```
+
+**Other bundlers:** apply the same principle: disable the compressor (or "optimize" pass) and keep identifier mangling. If you want to keep
+compression for your own code, exclude `@icure/cardinal-sdk` and its `ktor-*` and `kotlin*` modules from the compressor instead.
+
+#### How to confirm you are affected
+
+1. In the network tab, `POST /rest/v2/auth/login` returns `200`, but the application stays on the login screen and sends no further request.
+2. The tab is unresponsive, with one CPU core at 100%: this is an infinite loop, not a pending request.
+3. Rebuild with the compressor disabled as shown above: if login works again, you were affected.
