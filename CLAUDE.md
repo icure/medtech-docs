@@ -45,13 +45,11 @@ Mark a code block ` ```typescript no-test ` to exclude it. See `sample-tests/typ
 
 - **`sdk/`** — Cardinal SDK docs (primary), routed to `/`, sidebar `sidebarsNsdk.js`
 - **`cockpit/`** — Cockpit product docs, routed to `/cockpit`, sidebar `sidebarsCockpit.js`
-- **`api/`** — API reference docs
 
 Content is plain Markdown/MDX edited in place. There is no template or code-injection step anymore: the former `sdks/` Mustache templates, generated `medtech-sdk/` and `ehr-lite-sdk/` outputs, and `code-samples/` snippet injection were removed in March 2026.
 
 ### Custom Components
 
-- **`src/components/SdkCode/`** — Tabbed multi-language code display (Kotlin, TypeScript, Python, Swift, Dart) with synchronized tab selection via Docusaurus `groupId`
 - **`src/components/LanguageTabs.tsx`** — Language tab switcher
 - **`src/theme/`** — Swizzled Docusaurus components: forced dark mode (ColorModeToggle hidden), custom footer layout
 
